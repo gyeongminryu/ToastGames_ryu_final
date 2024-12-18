@@ -89,4 +89,8 @@ update employee set statement_idx = #{param2}, empl_resig_date = now() where emp
 update appointment set transfer_date = #{param2} where appo_idx = #{param1}
 </update>
 
+<update id="deptHeadAdd">
+update department set dept_head_idx = #{param2} where dept_idx = #{param1}
+</update>
+
 </mapper>
