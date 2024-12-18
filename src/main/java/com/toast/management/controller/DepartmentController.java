@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,12 +29,14 @@ public class DepartmentController {
 		this.departmentService = departmentService;
 	}
 	
+	// 부서 추가하러 가기
 	@GetMapping(value="/organization.go")
 	public String organizationAddGo() {
 		
 		return "organization_add";
 	}
 	
+	// 부서 추가하기
 	@PostMapping(value="/organization.do")
 	public String organizationAdd(@RequestParam Map<String,String> param) {
 		departmentService.organizationAdd(param);
@@ -55,10 +58,10 @@ public class DepartmentController {
 		map.put("dept", dept);
 		map.put("posi", posi);
 		map.put("dudy", dudy);
-		
-		
+				
 		return map;
 	}
+	
 	@GetMapping(value="/deptlist.ajax") // 직급 직책 부서명 가져오기
 	@ResponseBody
 	public Map<String, Object> deptlist(){
@@ -70,4 +73,31 @@ public class DepartmentController {
 		
 		return map;
 	}
+	
+	@GetMapping(value="/organizationUpdate.go")
+	public String organizationUpdateGo(@RequestParam String dept_idx,Model model) {
+		
+		DepartmentDTO dept = new DepartmentDTO();
+		
+		dept = departmentService.getdeptinfo(dept_idx);
+		
+		model.addAttribute("dept",dept);
+		
+		return "organization_update";
+	}
+	
+	@PostMapping(value="/organizationUpdate.do")
+	public String organizationUpdateDo(@RequestParam Map<String,String> param) {
+	
+		departmentService.organizationUpdate(param);
+	
+		
+		return "organization_update";
+	}
+	
+	@GetMapping(value="/organizationTree.go")
+	public String organizationTreeGo() {
+		return "organization_tree";
+	}
+	
 }

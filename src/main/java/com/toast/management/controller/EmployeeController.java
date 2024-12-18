@@ -68,6 +68,7 @@ public class EmployeeController {
 		return "employee_detail";
 	}
 	
+	// 사원 인사발령
 	@PostMapping(value="/employeeAppo.do")
 	public String employeeAppoDo(@RequestParam String empl_idx,String dept_idx,String position_idx,String duty_idx,String movein_date) {
 		
@@ -83,6 +84,7 @@ public class EmployeeController {
 		return "redirect:/employee_detail";
 	}
 	
+	// 사원 근무상태 변경
 	@PostMapping(value="/employeeChange.do")
 	public String employeeChangeDo(@RequestParam String empl_idx,String statement_idx) {
 		

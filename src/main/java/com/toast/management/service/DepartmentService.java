@@ -28,7 +28,7 @@ public class DepartmentService {
 		String dept_name = param.get("dept_name");
 		String duty_name = dept_name + "장";
 		departmentDAO.organizationAdd(param);
-		departmentDAO.organizationDudyAdd(duty_name);
+	//	departmentDAO.organizationDudyAdd(duty_name);
 	
 	}
 
@@ -45,6 +45,17 @@ public class DepartmentService {
 	public List<DepartmentDTO> getdept() {
 		
 		return departmentDAO.getdept();
+	}
+
+	public DepartmentDTO getdeptinfo(String dept_idx) {
+		
+		return departmentDAO.getdeptinfo(dept_idx);
+	}
+
+	public int organizationUpdate(Map<String, String> param) {
+		
+		return departmentDAO.organizationUpdate(param);
+		
 	}
 
 }

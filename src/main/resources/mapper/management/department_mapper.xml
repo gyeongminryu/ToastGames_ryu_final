@@ -9,7 +9,7 @@
         #{dept_duty},
         #{dept_addr},
         <choose>
-            <when test="dept_high != null and dept_high != ''">
+            <when test="dept_high !=1">
                 #{dept_high}
             </when>
             <otherwise>
@@ -18,11 +18,11 @@
         </choose>
     );
 </insert>
-
+<!--  
 <insert id="organizationDudyAdd">
 	insert into duty (duty_name) values (#{param1})
 </insert>
-
+-->
 <select id="getduty" resultType="com.toast.management.dto.DutyDTO">
 	select * from duty
 </select>
@@ -35,6 +35,12 @@
 	select * from position_
 </select>
 
+<select id="getdeptinfo" resultType="com.toast.management.dto.DepartmentDTO">
+	select * from department where dept_idx = #{param1}
+</select>
 
+<update id="organizationUpdate" parameterType="Map">
+	update department set dept_name = #{dept_name}, dept_duty = #{dept_duty}, dept_high = #{dept_high}, dept_addr = #{dept_addr} where dept_idx = #{dept_idx}
+</update>
 
 </mapper>

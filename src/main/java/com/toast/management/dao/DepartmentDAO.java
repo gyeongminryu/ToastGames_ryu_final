@@ -20,7 +20,11 @@ public interface DepartmentDAO {
 
 	List<DutyDTO> getduty();
 
-	int organizationDudyAdd(String duty_name);
+	DepartmentDTO getdeptinfo(String dept_idx);
+
+	int organizationUpdate(Map<String, String> param);
+
+	//	int organizationDudyAdd(String duty_name);
 
 
 
