@@ -1,6 +1,7 @@
 package com.toast.schedule.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class MeetingDTO {
 
@@ -24,9 +25,15 @@ public class MeetingDTO {
 	private int meet_parti_idx;
 	//private int meet_rent_idx;
 	private int meet_parti_empl_idx;
+	private List<Integer> meet_parti_empl_idxs;
 	
 	
-	
+	public List<Integer> getMeet_parti_empl_idxs() {
+		return meet_parti_empl_idxs;
+	}
+	public void setMeet_parti_empl_idxs(List<Integer> meet_parti_empl_idxs) {
+		this.meet_parti_empl_idxs = meet_parti_empl_idxs;
+	}
 	public int getRoom_idx() {
 		return room_idx;
 	}

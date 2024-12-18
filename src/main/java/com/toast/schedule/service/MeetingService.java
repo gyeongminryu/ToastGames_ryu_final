@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.schedule.dao.MeetingDAO;
@@ -111,10 +112,37 @@ public class MeetingService {
 	
 	//회의 일정 보기
 	public List<Map<String, Object>> getMeeting(Map<String, Object> params) {
-		Integer room_idx = Integer.parseInt((String) params.get("room"));
-		List<MeetingDTO> list = meetingDao.getMeeting(room_idx);
-		List<Map<String, Object>> meeting_list = new ArrayList<Map<String,Object>>();
+		Integer roomIdx = Integer.parseInt((String) params.get("room"));
+		List<MeetingDTO> list = meetingDao.getMeeting(roomIdx);
+		List<Map<String, Object>> meetingList = new ArrayList<Map<String,Object>>();
 		for (MeetingDTO dto : list) {
+			List<Integer> partiList = meetingDao.getAllParti(dto.getMeet_rent_idx());
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("meet_rent_idx", dto.getMeet_rent_idx());
+			map.put("room", dto.getRoom_idx());
+			map.put("start", dto.getMeet_start_date());
+			map.put("end", dto.getMeet_end_date());
+			map.put("title", dto.getMeet_subject());
+			map.put("description", dto.getMeet_content());
+			map.put("empl", dto.getMeet_rent_empl_idx());
+			map.put("parti",partiList);
+			meetingList.add(map);
+		}
+		return  meetingList;
+	}
+	
+	//내가 포함된 회의 보기
+	public List<Map<String, Object>> getMyMeeting(Map<String, Object> params) {
+		Integer myMeeting = Integer.parseInt((String) params.get("my_meeting"));
+		Integer roomIdx = Integer.parseInt((String) params.get("room"));
+		MeetingDTO searchMeeting = new MeetingDTO();
+		searchMeeting.setMeet_parti_empl_idx(myMeeting);
+		searchMeeting.setRoom_idx(roomIdx);
+		searchMeeting.setMeet_rent_empl_idx(myMeeting);
+		List<MeetingDTO> meetingList = meetingDao.getMyMeeting(searchMeeting);
+		
+		List<Map<String, Object>> myMeetingList = new ArrayList<Map<String,Object>>();
+		for (MeetingDTO dto : meetingList) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("meet_rent_idx", dto.getMeet_rent_idx());
 			map.put("room", dto.getRoom_idx());
@@ -124,29 +152,77 @@ public class MeetingService {
 			map.put("description", dto.getMeet_content());
 			map.put("empl", dto.getMeet_rent_empl_idx());
 			
-			meeting_list.add(map);
+			myMeetingList.add(map);
 		}
-		return  meeting_list;
+		return  myMeetingList;
 	}
 	
 	//회의 일정 추가
-	public int addMeeting(MeetingDTO dto) {
+	@Transactional
+	public boolean addMeeting(MeetingDTO dto) {
 		logger.info("dto:{}",dto);
-		int row = meetingDao.addMeeting(dto);
-		return row;
+		//회의 일정 추가
+		MeetingDTO meeting = new MeetingDTO();
+		meeting.setRoom_idx(dto.getRoom_idx());
+		meeting.setMeet_rent_empl_idx(dto.getMeet_rent_empl_idx());
+		meeting.setMeet_subject(dto.getMeet_subject());
+		meeting.setMeet_content(dto.getMeet_content());
+		meeting.setMeet_start_date(dto.getMeet_start_date());
+		meeting.setMeet_end_date(dto.getMeet_end_date());
+		int row = meetingDao.addMeeting(meeting);
+		
+		boolean parti_row=false;
+		//성공하면 참여자 설정
+		if(row>0) {
+			MeetingDTO meeting_parti = new MeetingDTO();
+			meeting_parti.setMeet_rent_idx(meeting.getMeet_rent_idx());
+			List<Integer> partiList = dto.getMeet_parti_empl_idxs();
+			for (Integer parti : partiList) {
+				meeting_parti.setMeet_parti_empl_idx(parti);
+				meetingDao.addMeetingParti(meeting_parti);
+			}
+			parti_row=true;
+		}
+		return parti_row;
 	}
 
 
 	//회의 일정 수정
-	public int updateMeeting(MeetingDTO dto) {
+	@Transactional
+	public boolean updateMeeting(MeetingDTO dto) {
 		logger.info("dto:{}",dto);
-		int row = meetingDao.updateMeeting(dto);
+		//회의 일정 추가
+		MeetingDTO meeting = new MeetingDTO();
+		meeting.setRoom_idx(dto.getRoom_idx());
+		meeting.setMeet_rent_empl_idx(dto.getMeet_rent_empl_idx());
+		meeting.setMeet_rent_idx(dto.getMeet_rent_idx());
+		meeting.setMeet_subject(dto.getMeet_subject());
+		meeting.setMeet_content(dto.getMeet_content());
+		meeting.setMeet_start_date(dto.getMeet_start_date());
+		meeting.setMeet_end_date(dto.getMeet_end_date());
+		int row = meetingDao.updateMeeting(meeting);
+		
+		boolean parti_row=false;
+		//성공하면 참여자 설정
+		if(row>0) {
+			meetingDao.deleteParti(dto.getMeet_rent_idx());
+			MeetingDTO meeting_parti = new MeetingDTO();
+			meeting_parti.setMeet_rent_idx(meeting.getMeet_rent_idx());
+			List<Integer> partiList = dto.getMeet_parti_empl_idxs();
+			for (Integer parti : partiList) {
+				meeting_parti.setMeet_parti_empl_idx(parti);
+				meetingDao.addMeetingParti(meeting_parti);
+			}
+			parti_row=true;
+		}
 		logger.info("success:"+row);
-		return row;
+		return parti_row;
 	}
 
 	//회의 일정 삭제
+	@Transactional
 	public int deleteMeeting(int rent_idx) {
+		meetingDao.deleteParti(rent_idx);
 		return meetingDao.deleteMeeting(rent_idx);
 		
 	}
@@ -157,9 +233,6 @@ public class MeetingService {
 	}
 
 	
-
-	
-	
 	//내가 포함된 일정만 보기
 	
 	
@@ -168,6 +241,4 @@ public class MeetingService {
 	
 	//내가 포함된 회의 수정/ 삭제시 알림 발송
 	
-	
-	//회의 참여자 추가/ 수정
 }
