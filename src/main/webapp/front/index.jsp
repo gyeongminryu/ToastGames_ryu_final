@@ -74,6 +74,13 @@
                         <th>마감 일시</th>
                     </tr>
                     </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <i class="bi bi-reply-fill"></i>
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

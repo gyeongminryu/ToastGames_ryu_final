@@ -115,10 +115,6 @@ p.min{
     color: var(--tst-color-warning);
 }
 
-.tst_title{
-    margin: 0 0 24px;
-}
-
 
 
 /* flex */
@@ -255,6 +251,7 @@ p.min{
 
 /* list > title tab */
 
+.tst_title,
 ul.tst_title.list_no_desc{
     margin: 0 0 36px;
 }
