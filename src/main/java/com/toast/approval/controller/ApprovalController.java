@@ -6,11 +6,10 @@ import org.springframework.stereotype.Controller;
 
 import com.toast.approval.service.ApprovalService;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,5 +83,21 @@ public class ApprovalController {
 		logger.info("doc_idx: " + doc_idx);
 		Map<String,Object> data = approvalService.doc_get(doc_idx,empl_idx);
 		return data;
+	}
+
+	@PostMapping (value = "/doc_write.do")
+	public String doc_write_do (String doc_idx, String doc_end_date, String subject, String content, String form_content, @RequestParam MultipartFile[]files) {
+		//현재 시간 계산하기 - 작성 일자용
+		logger.info("doc_idx:{}",doc_idx);
+		logger.info("doc_end_date:{}",doc_end_date);
+		logger.info("subject:{}",subject);
+		logger.info("content:{}",content);
+		logger.info("form_content:{}",form_content);
+
+		//update로 하기
+
+
+
+		return "doc_write"; //목록으로 나중에 바꾸기
 	}
 }

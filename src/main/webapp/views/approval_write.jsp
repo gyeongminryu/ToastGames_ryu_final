@@ -18,30 +18,27 @@
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="/resources/js/approval_form_row.js"></script>
-<%--  <script type="text/javascript" src="/resources/richtexteditor/rte.js"></script>--%>
-<%--  <script type="text/javascript" src="/resources/richtexteditor/plugins/all_plugins.js"></script>--%>
-<%--  <!-- Underscore CDN -->--%>
-<%--  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>--%>
-<%--  <!-- Backbone CDN -->--%>
-<%--  <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>--%>
 
 
 </head>
 <body>
-<form action="doc_write.do" method="POST">
+<form action="doc_write.do" method="POST" enctype="multipart/form-data">
+  <input type = "hidden" name = "doc_idx" id="hidden_doc_idx"/>
   <table>
-    <tr><td></td></tr>
+    <tr>
+      <td>결재 마감일</td>
+      <td><input type="date" name="doc_end_date"/></td>
+    </tr>
+
     <tr>
       <td>보고 제목</td>
       <td><input type="text" name="subject" placeholder="제목을 입력 하세요!"/></td>
     </tr>
-    <tr>
-      <td>보고 내용</td>
-      <td><input type="text" name="work_content" placeholder="내용"/></td>
-    </tr>
 
     <tr>
+
       <td colspan="2">
+        보고 내용
         <%--<div id="div_editor"></div>--%>
         <div id="editor"></div>
         <input type="hidden" name="content" class ="content"/>
@@ -52,6 +49,7 @@
     </tr>
     <tr>
       <td colspan="2" id ="form_content"></td>
+      <input type = "hidden" name = "form_content"/>
       <td>
       </td>
     </tr>
