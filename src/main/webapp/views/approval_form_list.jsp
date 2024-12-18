@@ -28,6 +28,7 @@
     </div>
 </div>
 </body>
+
 <script src="/resources/js/approval_form_row.js"></script>
 <script src="/resources/js/approval_form_list.js"></script>
 

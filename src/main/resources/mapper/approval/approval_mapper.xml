@@ -22,7 +22,11 @@
         <if test="doc_content_sub!=null">doc_content_sub,</if>
         <if test="form_idx!=null">form_idx,</if>
         <if test="doc_subject!=null">doc_subject</if>
-        FROM document WHERE doc_idx = #{docIdx}
+        FROM document WHERE doc_idx = #{doc_idx}
+    </select>
+    
+    <select id="doc_empl_name" resultType="String">
+        SELECT empl_name FROM employee WHERE empl_idx = ${empl_idx}
     </select>
 
 </mapper>
