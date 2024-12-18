@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toast.approval.dao.ApprovalDAO"></mapper>
+<mapper namespace="com.toast.approval.dao.ApprovalDAO">
+    <select id="form_list" resultType="Map">
+        SELECT form_subject,form_idx FROM form
+    </select>
+
+    <select id="form" resultType="Map">
+        SELECT form_idx, form_subject,form_content,form_handler_idx FROM form WHERE form_idx = #{idx}
+    </select>
+
+    <insert id="doc_write" useGeneratedKeys="true" keyColumn="doc_idx" keyProperty="doc_idx" parameterType="com.toast.approval.dto.ApprovalDTO">
+        INSERT INTO document(doc_empl_idx,doc_content,form_idx,doc_state)
+        VALUES(#{doc_empl_idx},#{doc_content},#{form_idx},0)
+    </insert>
+
+    <select id="doc_get" resultType="Map">
+        SELECT doc_idx,doc_empl_idx,
+        <if test="doc_subject!=null">doc_subject,</if>
+        <if test="doc_content!=null">doc_content,</if>
+        <if test="doc_content_sub!=null">doc_content_sub,</if>
+        <if test="form_idx!=null">form_idx,</if>
+        <if test="doc_subject!=null">doc_subject</if>
+        FROM document WHERE doc_idx = #{docIdx}
+    </select>
+
+</mapper>
