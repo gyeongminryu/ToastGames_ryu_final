@@ -177,8 +177,8 @@ document.getElementById('meeting_room_select').addEventListener('change', functi
 //회의실+내가 포함된 회의
 document.getElementById('meeting_only_mine').addEventListener('change', function () {
     if (calendar) {
-        const isMineOnly = this.checked;
-        console.log(isMineOnly ? "내가 포함된 회의만 보기 활성화" : "전체 회의 보기");
+        const is_mine = this.checked;
+        console.log(is_mine ? "내가 포함된 회의만 보기 활성화" : "전체 회의 보기");
         calendar.refetchEvents(); // FullCalendar 이벤트 갱신
     } else {
         console.error('FullCalendar 인스턴스가 초기화되지 않았습니다.');
@@ -240,11 +240,18 @@ document.addEventListener('DOMContentLoaded', function() {
         events: function (fetchInfo, successCallback, failureCallback) {
             // AJAX 요청으로 일정 데이터 가져오기
             var selectedRoomIdx = document.getElementById('meeting_room_select').value;
+            
+            var my_meeting = document.getElementById('meeting_only_mine').checked .value 
+            ? document.getElementById('meeting_only_mine').value 
+            : null;
+            
             $.ajax({
                 url: '/meeting/getMeeting.do',  // 실제 경로에 맞게 수정
                 type: 'POST',
                 contentType: 'application/json', // 서버가 JSON을 처리하도록 설정
-                data: JSON.stringify({ room: selectedRoomIdx }), // JSON 형식으로 데이터를 보냄
+                data: JSON.stringify({ // JSON 형식으로 데이터를 보냄
+                	room: selectedRoomIdx,
+                	my_meeting: my_meeting}), 
                 success: function(data) {
                     console.log(data);
                     successCallback(data); // FullCalendar에 일정 데이터 추가
@@ -262,7 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
         	console.log('arg.start:'+arg.start);
         	console.log('arg.start format:'+meeting_format_local(arg.start));
         	
-        	console.log('arg.end:'+arg.end);
+        	
+        	const participantFieldset = document.querySelector('fieldset');
         	// 모달 제목 변경
             $('#meeting_modal_title').text('일정 추가');
         	
@@ -282,38 +290,40 @@ document.addEventListener('DOMContentLoaded', function() {
 					id: 'addMeeting',
 					type: 'button',
 					click: function() {
-                            // 예약 처리 로직
+                        // 예약 처리 로직
 						const title = $('#meeting_title').val();
 						const content = $('#meeting_content').val();
 						const empl = $('#meeting_room_empl').val();
 						const room = $('#meeting_room_select_modal').val();
 						const start =  meeting_format_local($('#meeting_start_time').val());
 						const end =  meeting_format_local($('#meeting_end_time').val());
+			            // 체크된 참여자 가져오기
+			            const meeting_parti = Array.from(
+			                document.querySelectorAll('input[name="meeting_parti"]:checked')
+			            ).map(function(input) {
+			                return input.value;
+			            });
 						console.log('title:'+title);
 						console.log('content:'+content);
 						console.log('empl:'+empl);
 						console.log('room:'+room);
 						console.log('start:'+start);
 						console.log('end:'+end);
+						console.log('parti:'+meeting_parti);
+						
                 		// 입력 값이 모두 채워졌는지 확인
 		                if (title && content && empl) {
-		                    // FullCalendar에 이벤트 추가
-		                   /*  calendar.addEvent({
-		                        title: title,
-		                        start: start,
-		                        end: end,
-		                        description: content,
-		                        empl: empl,
-		                        room: room
-		                    }) */
+
 		                    const meeting_add_data = {
 		                            title: title,
 		                            start: start,
 		                            end: end,
 		                            content: content,
 		                            empl: empl,
-		                            room: room
+		                            room: room,
+		                            meeting_parti: meeting_parti 
 		                        };
+
 
 		                    meeting_add(meeting_add_data); // 서버로 전송
 		                    meeting_close_modal(); // 모달 닫기
@@ -346,6 +356,19 @@ document.addEventListener('DOMContentLoaded', function() {
             $('#meeting_end_time').val(meeting_format_date_time(info.event.end));
             $('#meeting_room_select_modal').val(info.event.extendedProps.room).prop('disabled', true);
 
+            // 기존 참여자 데이터 가져오기
+            var participants = info.event.extendedProps.parti; // 배열 형태로 저장된 참여자 ID
+
+            // 체크박스 상태 업데이트
+		    $('input[name="meeting_parti"]').each(function() {
+		        var value = $(this).val(); // 체크박스의 값
+		        if (participants.includes(parseInt(value))) { // 체크박스 값을 숫자로 변환
+		            $(this).prop('checked', true).prop('disabled', true);;
+		        } else {
+		            $(this).prop('checked', false);
+		        }
+		    });
+            
             // 버튼 초기화 및 추가
             $('#meeting_modal_buttons').empty().append(
                 $('<button>', {
@@ -356,7 +379,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         // 수정 가능 상태로 전환
                         $('#meeting_title, #meeting_content, #meeting_room_empl').prop('readonly', false);
                         $('#meeting_room_select_modal').prop('disabled', false);
-
+                        $('input[name="meeting_parti"]').prop('disabled', false);
+                        
                         // 버튼 교체: 수정 -> 수정 확인
                         $('#meeting_modal_buttons').empty().append(
                             $('<button>', {
@@ -372,7 +396,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                         info.event.setExtendedProp('room', $('#meeting_room_select_modal').val());
                                         info.event.setStart($('#meeting_start_time').val());
                                         info.event.setEnd($('#meeting_end_time').val());
-
+                                        
+                			            var meeting_parti = Array.from(
+                				                document.querySelectorAll('input[name="meeting_parti"]:checked')
+                				            ).map(function(input) {
+                				                return input.value;
+                				            });
+                			            
                                         // 서버 전송
                                         const meeting_update_data = {
                                             title: $('#meeting_title').val(),
@@ -381,7 +411,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                             room: $('#meeting_room_select_modal').val(),
                                             start: meeting_format_local($('#meeting_start_time').val()),
                                             end: meeting_format_local($('#meeting_end_time').val()),
-                                            rent_idx: info.event._def.extendedProps["meet_rent_idx"]
+                                            rent_idx: info.event._def.extendedProps["meet_rent_idx"],
+                                            meeting_parti:meeting_parti
                                         };
                                         meeting_update(meeting_update_data);
 
@@ -463,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-//일정 DB 저장(회의일정 추가)
+//일정 DB 저장(회의일정 추가 + 참여자 추가)
 function meeting_add(allData) {
     console.log('서버에 전송할 이벤트 데이터:', allData);
     $.ajax({

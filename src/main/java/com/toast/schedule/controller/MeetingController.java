@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +72,7 @@ public class MeetingController {
 	}
 	
 	//회의실 정보 등록
-	@PostMapping(value="/meetingRoom.add")
+	@PostMapping(value="/meetingRoomAdd.do")
 	public ModelAndView roomAdd(@RequestParam MultipartFile file,@RequestParam Map<String,String> param) {
 		logger.info("Received params: " + param);
 		logger.info("file count:"+file);
@@ -96,12 +97,22 @@ public class MeetingController {
 	}
 	
 
-	//회의 일정 보기
+	//회의 일정 보기(회의실별+ 내가 포함된 회의)
 	@PostMapping(value="/getMeeting.do")
 	@ResponseBody
 	public List<Map<String, Object>> getMeeting(@RequestBody Map<String, Object> params) {
-	    List<Map<String, Object>> meetings = meetingService.getMeeting(params);
-	    logger.info("일정 왜  events없어:"+meetings);
+		
+	    String room = (String) params.get("room");
+	    logger.info("room:"+room);
+	    String myMeeting = (String) params.get("my_meeting");
+	    
+	    List<Map<String, Object>> meetings = new ArrayList<Map<String,Object>>();
+		if (myMeeting != null) {
+			meetings = meetingService.getMyMeeting(params);
+		} else {
+			meetings = meetingService.getMeeting(params);
+			logger.info("일정 왜  events없어:"+meetings);
+		}
 	    return meetings;
 	}
 	
@@ -138,15 +149,23 @@ public class MeetingController {
 	    dto.setRoom_idx(Integer.parseInt((String) params.get("room")));
 	    dto.setMeet_rent_empl_idx(Integer.parseInt((String) params.get("empl")));
 	    
-//	    logger.info("title: " + dto.getMeet_subject());
-//	    logger.info("content: " + dto.getMeet_content());
-//	    logger.info("start: " + dto.getMeet_start_date());
-//	    logger.info("end: " + dto.getMeet_end_date());
-//	    logger.info("room: " + dto.getRoom_idx());
-//	    logger.info("empl: " + dto.getMeet_rent_empl_idx());
+	    List<Integer> meeting_parti = new ArrayList<>();
+	    
+	    //Object로 넘어오는 타입이 뭔지 몰라 경고 발생으로 데이터가 리스트인지 먼저 확인
+	    Object participantsObj = params.get("meeting_parti");
+	    if (participantsObj instanceof List<?>) {
+	        List<?> partiList = (List<?>) participantsObj;
+	        for (Object parti : partiList) {
+	            if (parti instanceof String) {
+	            	meeting_parti.add(Integer.parseInt((String) parti));
+	            }
+	        }
+	    }
+	    dto.setMeet_parti_empl_idxs(meeting_parti);
+
 	    
 	    boolean success = false;
-	    if (meetingService.addMeeting(dto) > 0) {
+	    if (meetingService.addMeeting(dto)) {
 	        success = true;
 	    }
 	    return success;
@@ -182,20 +201,29 @@ public class MeetingController {
             logger.error("Failed to parse start or end date");
         }
 	    
-	    // room, empl 값을 Integer로 변환
+	    // room, empl, rent_idx 값을 Integer로 변환
 	    dto.setRoom_idx(Integer.parseInt((String) params.get("room")));
 	    dto.setMeet_rent_empl_idx(Integer.parseInt((String) params.get("empl")));
 	    dto.setMeet_rent_idx((int) params.get("rent_idx"));
 	    
 	    logger.info("title: " + dto.getMeet_subject());
-	    logger.info("content: " + dto.getMeet_content());
-	    logger.info("start: " + dto.getMeet_start_date());
-	    logger.info("end: " + dto.getMeet_end_date());
-	    logger.info("room: " + dto.getRoom_idx());
-	    logger.info("empl: " + dto.getMeet_rent_empl_idx());
+
+	    List<Integer> meeting_parti = new ArrayList<>();
+	    
+	    //Object로 넘어오는 타입이 뭔지 몰라 경고 발생으로 데이터가 리스트인지 먼저 확인
+	    Object participantsObj = params.get("meeting_parti");
+	    if (participantsObj instanceof List<?>) {
+	        List<?> partiList = (List<?>) participantsObj;
+	        for (Object parti : partiList) {
+	            if (parti instanceof String) {
+	            	meeting_parti.add(Integer.parseInt((String) parti));
+	            }
+	        }
+	    }
+	    dto.setMeet_parti_empl_idxs(meeting_parti);
 	    
 	    boolean success = false;
-	    if (meetingService.updateMeeting(dto) > 0) {
+	    if (meetingService.updateMeeting(dto)) {
 	        success = true;
 	    }
 	    return success;
@@ -284,8 +312,6 @@ public class MeetingController {
 		return success;
 	}
 
-	//내가 포함된 일정만 보기
-	
 	
 	//회의 일정 1시간 전 알림 발송
 	
