@@ -45,7 +45,9 @@ public class ApprovalService {
 		return doc_idx;
 	}
 
-	public Map<String, Object> doc_get(int docIdx) {
-		return approvalDAO.doc_get(docIdx);
+	public Map<String, Object> doc_get(int docIdx, int empl_idx) {
+		Map<String, Object> map = approvalDAO.doc_get(docIdx);
+		map.put("empl_name", approvalDAO.doc_empl_name(empl_idx));
+		return map;
 	}
 }
