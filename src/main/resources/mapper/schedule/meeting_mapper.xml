@@ -1,4 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
-<mapper namespace="com.toast.schedule.dao.MeetingDAO"></mapper>
+<mapper namespace="com.toast.schedule.dao.MeetingDAO">
+	
+	
+	<!-- 회의실 정보 일부(회의실 가기) -->
+	<select id="meetingGo" resultType="map">
+		SELECT room_idx, room_name FROM meeting_room
+	</select>
+	
+	<!-- 회사 사원 정보 가져오기 -->
+	<select id="meetingParti" resultType="map">
+		SELECT empl_idx, empl_name FROM employee
+	</select>
+	
+	<!-- 회의실 (정보) 추가 -->
+	<insert 
+		id="roomAdd" 
+		useGeneratedKeys="true"
+		keyColumn="room_idx"
+		keyProperty="room_idx" 
+		parameterType="com.toast.schedule.dto.MeetingDTO">
+		INSERT INTO meeting_room(room_name,room_addr, room_empl_idx, room_info, room_min, room_max)
+			VALUES(#{room_name}, #{room_addr}, #{room_empl_idx}, #{room_info}, #{room_min}, #{room_max})
+	</insert>
+	<!-- 첨부파일 키 추가  -->
+	<insert id="roomKeyAdd">
+		UPDATE meeting_room SET file_key=#{param1} WHERE room_idx=#{param2}
+	</insert>
+	
+	<!-- 회의실 사진 추가 -->
+	<insert id="roomFileAdd"
+		useGeneratedKeys="true"
+		keyColumn="file_key"
+		keyProperty="file_key" 
+		parameterType="com.toast.schedule.dto.MeetingPhotoDTO">
+		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
+			VALUES(#{file_key},#{uploader_idx},#{ori_filename},#{new_filename},#{file_type},#{file_addr})
+	</insert>
+	
+	<!-- 회의실 정보보기 -->  
+	<select id="meetingDetail" resultType="map">
+		SELECT 
+		    mr.room_name, 
+		    mr.room_addr, 
+		    mr.room_empl_idx, 
+		    mr.room_info, 
+		    mr.file_key, 
+		    mr.room_min, 
+		    mr.room_max, 
+		    e.empl_name
+		FROM 
+		    meeting_room mr
+		INNER JOIN employee e ON mr.room_empl_idx = e.empl_idx
+		WHERE 
+		    mr.room_idx = #{room_idx}
+	</select>
+	
+	<!-- 회의실 사진 보기 -->
+	<select id="meetingPhoto">
+		SELECT ori_filename, new_filename FROM file 
+			WHERE file_key = #{param1}
+	</select>
+	
+	<!-- 회의실별 회의 일정보기 --> 
+	<select id="getMeeting" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT meet_rent_idx,room_idx, meet_rent_empl_idx, meet_subject, meet_content, meet_start_date, meet_end_date 
+			FROM meeting_rent
+			WHERE room_idx=#{room_idx}
+	</select>
+	
+	<!-- 회의실 내가 포함된 회의 보기
+	<select id="">
+	    SELECT room_idx, meet_rent_empl_idx, meet_subject, meet_content, meet_start_date, meet_end_date 
+	    FROM meeting_rent
+	    WHERE meet_rent_idx IN (
+	        SELECT meet_rent_idx 
+	        FROM meeting_participant 
+	        WHERE meet_parti_empl_idx = #{meet_parti_empl_idx}
+	    )
+	</select> -->
+
+
+	<!-- 회의 일정 추가-->
+	<insert id="addMeeting" parameterType="com.toast.schedule.dto.MeetingDTO">
+		INSERT INTO meeting_rent(room_idx, meet_rent_empl_idx, meet_subject, meet_content, meet_start_date, meet_end_date)
+			VALUES (#{room_idx}, #{meet_rent_empl_idx}, #{meet_subject}, #{meet_content}, #{meet_start_date}, #{meet_end_date})
+	</insert>
+	
+	
+	<!-- 회의 참여 인원 추가 -->
+	
+	<!-- 회의 일정 수정-->
+	<update id="updateMeeting" parameterType="com.toast.schedule.dto.MeetingDTO">
+		UPDATE meeting_rent
+			SET
+			    meet_subject = #{meet_subject},
+			    meet_content = #{meet_content},
+			    meet_start_date = #{meet_start_date},
+			    meet_end_date = #{meet_end_date},
+			    room_idx = #{room_idx}
+			WHERE
+				meet_rent_idx = #{meet_rent_idx}
+	</update>
+	
+	<!-- 회의 일정 시간 수정 -->
+	<update id="dateUpdateMeeting" parameterType="com.toast.schedule.dto.MeetingDTO">
+		UPDATE meeting_rent
+			SET 
+				meet_start_date = #{meet_start_date},
+			    meet_end_date = #{meet_end_date}
+			WHERE
+				meet_rent_idx = #{meet_rent_idx}
+	</update>
+	
+	
+	<!-- 회의 참여 인원 수정 -->
+	
+	<!-- 회의 일정 삭제-->
+	<delete id="deleteMeeting">
+		DELETE FROM meeting_rent WHERE meet_rent_idx=#{param1}
+	</delete>
+	
+	
+	
+	
+	<!-- 회의 참여 인원 삭제 -->
+	
+	<!-- 회의 일정 알림-->
+	
+	<!-- 회의 일정 추가 알림-->
+	
+	<!-- 회의 일정 수정 알림-->
+	
+	<!-- 회의 일정 삭제 알림-->
+	
+	<!--회의 일정 1시간 전 알림 발송 -->
+	
+
+
+
+
+</mapper>
