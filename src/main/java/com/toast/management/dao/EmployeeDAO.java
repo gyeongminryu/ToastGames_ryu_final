@@ -30,6 +30,8 @@ public interface EmployeeDAO {
 
 	int employeeTransfer(int appo_idx,String movein_date);
 
+	int deptHeadAdd(String dept_idx, String empl_idx);
+
 	
 
 	

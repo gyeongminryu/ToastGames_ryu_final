@@ -114,14 +114,22 @@ public class EmployeeService {
 			String movein_date) {
 		AppointmentDTO appolast = new AppointmentDTO();
 		appolast = employeeDAO.employeeAppolast(empl_idx);
+		
+		int dutyidx = Integer.parseInt(duty_idx);
+		
+		
 		if(appolast==null) { // 이전 인사발령 이력이 없으면
 			employeeDAO.employeeAppoDo(empl_idx,dept_idx,position_idx,duty_idx,movein_date);
 		}
 		else { // 인사발령이력이 있으면
 		int appo_idx =appolast.getAppo_idx();
 			employeeDAO.employeeAppoDo(empl_idx,dept_idx,position_idx,duty_idx,movein_date);
-			
+			// 전출날짜 넣기
 			employeeDAO.employeeTransfer(appo_idx,movein_date);
+		}
+		
+		if(dutyidx>=100) { // 부서장 직책이라면? 
+			employeeDAO.deptHeadAdd(dept_idx,empl_idx);
 		}
 		
 		
