@@ -20,6 +20,8 @@ public interface DepartmentDAO {
 
 	List<DutyDTO> getduty();
 
+	int organizationDudyAdd(String duty_name);
+
 
 
 }

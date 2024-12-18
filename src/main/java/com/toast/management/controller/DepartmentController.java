@@ -59,4 +59,15 @@ public class DepartmentController {
 		
 		return map;
 	}
+	@GetMapping(value="/deptlist.ajax") // 직급 직책 부서명 가져오기
+	@ResponseBody
+	public Map<String, Object> deptlist(){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<DepartmentDTO> dept = new ArrayList<>();
+		dept = departmentService.getdept();
+		map.put("dept", dept);	
+		
+		return map;
+	}
 }

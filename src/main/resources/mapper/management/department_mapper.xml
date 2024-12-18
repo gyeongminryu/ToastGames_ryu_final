@@ -19,6 +19,10 @@
     );
 </insert>
 
+<insert id="organizationDudyAdd">
+	insert into duty (duty_name) values (#{param1})
+</insert>
+
 <select id="getduty" resultType="com.toast.management.dto.DutyDTO">
 	select * from duty
 </select>
@@ -30,6 +34,7 @@
 <select id="getposi" resultType="com.toast.management.dto.PositionDTO">
 	select * from position_
 </select>
+
 
 
 </mapper>
