@@ -16,7 +16,7 @@ table, th, td{
 </head>
 <body>
 <div>
-	<form action="/meeting/meetingRoom.add" method="post" enctype="multipart/form-data">
+	<form action="/meeting/meetingRoomAdd.do" method="post" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<th>회의실 이름</th>
