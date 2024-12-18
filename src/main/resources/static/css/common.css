@@ -26,8 +26,8 @@
     --tst-margin-vertical: 10px;
     --tst-margin-flex: 8px;
     --tst-body-font-family: var(--tst-font-sans-serif);
-    --tst-body-font-size: 12px;
-    --tst-body-font-weight: 400;
+    --tst-body-font-size: 13px;
+    --tst-body-font-weight: 500;
     --tst-body-line-height: 1.6;
     --tst-body-color: #2e3846;
     --tst-body-bg: #e1e4ea;
@@ -98,7 +98,7 @@ h2{
 }
 
 h3{
-    font-size: 13px;
+    font-size: var(--tst-body-font-size);
     font-weight: 600;
 }
 
@@ -113,6 +113,27 @@ p.min{
 
 .font_caution{
     color: var(--tst-color-warning);
+}
+
+.font_subtle{
+    color: var(--tst-color-medium);
+    font-weight: 400;
+}
+
+.tst_badge_min{
+    width: fit-content;
+    min-width: 60px;
+    padding: 2px 4px 3px;
+    display: inline-block;
+    font-size: calc(var(--tst-body-font-size) - 2px);
+    font-weight: 700;
+    text-align: center;
+    border-radius: var(--tst-border-radius);
+    vertical-align: 1px;
+}
+
+.tst_badge_min.margin_right{
+    margin-right: var(--tst-margin-horizontal);
 }
 
 
@@ -253,11 +274,11 @@ p.min{
 
 .tst_title,
 ul.tst_title.list_no_desc{
-    margin: 0 0 36px;
+    margin: 0 66px 36px -36px;
 }
 
 ul.tst_title .tst_title_item{
-    margin: 0 66px 0 -36px;
+    margin: 0 30px 0 0;
     cursor: pointer;
 }
 
@@ -276,20 +297,20 @@ ul.tst_title .tst_title_item.tst_title_item_active *{
 /* list > tab */
 
 .tst_tablist {
-    margin: 0 0 16px;
+    margin: 0 51px 0 -36px;
 }
 
-.tst_tablist .tst_tablist_item{
-    margin: 0 51px 0 -36px;
+.tst_tablist li.tst_tablist_item{
+    margin: 0 25px 0 0;
     cursor: pointer;
 }
 
-.tst_tablist .tst_tablist_item *{
+.tst_tablist li.tst_tablist_item *{
     color: var(--tst-color-medium);
     font-weight: 400;
 }
 
-.tst_tablist .tst_tablist_item.tst_tablist_item_active *{
+.tst_tablist li.tst_tablist_item.tst_tablist_item_active *{
     color: var(--tst-body-color);
     font-weight: 800;
 }
@@ -365,6 +386,15 @@ input[type="submit"].btn_full,
 input[type="button"].btn_full,
 button.btn_full{
     width: 100%;
+}
+
+.btn_min{
+    width: fit-content;
+    min-width: 60px;
+    padding: 2px 4px;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
 }
 
 .btn_primary{

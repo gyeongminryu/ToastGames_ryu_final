@@ -1,0 +1,26 @@
+.pagination{
+    padding: 8px 0 0;
+}
+
+.pagination .page-item{
+    margin: 0 -36px 0 36px;
+    padding: 0 10px;
+    display: inline-block;
+    list-style-type: none;
+    font-size: calc(var(--tst-body-font-size) + 1px);
+}
+
+.pagination .page-item.first,
+.pagination .page-item.last{
+    padding: 0 2px;
+}
+
+.pagination .page-item .page-link{
+    color: var(--tst-color-medium);
+    text-decoration: none;
+}
+
+.pagination .page-item.active .page-link{
+    color: var(--tst-color-dark);
+    font-weight: 800;
+}
