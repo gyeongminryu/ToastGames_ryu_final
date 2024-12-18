@@ -108,8 +108,8 @@
 	<a href="#" id="meeting_room_link">회의실 보기</a>
 
 	<!-- 내가 포함된 회의만 보기 필터 -->
-	<fieldset>                                                     <!-- 로그인 생성전 임시값 -->
-		<input type="checkbox" name="meeting_mine" value="10333"/>내가 포함된 회의만 보기
+	<fieldset>                                                                                           <!-- 로그인 생성전 임시값 -->
+		<input type="checkbox" name="meeting_mine" id="meeting_only_mine" value="10003"/>내가 포함된 회의만 보기
 	</fieldset>
 	
 	
@@ -132,6 +132,11 @@
 	                    <option value="${room.room_idx}">${room.room_name}</option>
 	                </c:forEach>
 	            </select>
+	            <fieldset>
+	            	<c:forEach items="${partiList}" var="parti">
+	            		<input type="checkbox" name="meeting_parti" value="${parti.empl_idx}"/> ${parti.empl_name}
+	            	</c:forEach>
+	            </fieldset>
 	            <!-- 버튼 컨테이너 -->
 	            <div id="meeting_modal_buttons"></div>
 	        </form>
@@ -170,7 +175,15 @@ document.getElementById('meeting_room_select').addEventListener('change', functi
 
 
 //회의실+내가 포함된 회의
-
+document.getElementById('meeting_only_mine').addEventListener('change', function () {
+    if (calendar) {
+        const isMineOnly = this.checked;
+        console.log(isMineOnly ? "내가 포함된 회의만 보기 활성화" : "전체 회의 보기");
+        calendar.refetchEvents(); // FullCalendar 이벤트 갱신
+    } else {
+        console.error('FullCalendar 인스턴스가 초기화되지 않았습니다.');
+    }
+});
 
 //달력
 document.addEventListener('DOMContentLoaded', function() {

@@ -48,12 +48,16 @@ public class MeetingController {
 		}
 	}
 	
-	//회의실 예약 가기(회의실 이름+idx)
+	//회의실 예약 가기(회의실 + 사원)
 	@RequestMapping(value="/meeting.go")
 	public ModelAndView meetingGo () {
 		ModelAndView mv = new ModelAndView();
+		//회의실
 		List<Map<String, Object>> roomList = meetingService.meetingGo();
 		mv.addObject("roomList", roomList);
+		//사원
+		List<Map<String, Object>> partiList = meetingService.meetingParti();
+		mv.addObject("partiList", partiList);
 		mv.setViewName("meeting");
 		return mv;
 	}

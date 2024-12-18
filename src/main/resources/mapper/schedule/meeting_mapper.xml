@@ -11,6 +11,11 @@
 		SELECT room_idx, room_name FROM meeting_room
 	</select>
 	
+	<!-- 회사 사원 정보 가져오기 -->
+	<select id="meetingParti" resultType="map">
+		SELECT empl_idx, empl_name FROM employee
+	</select>
+	
 	<!-- 회의실 (정보) 추가 -->
 	<insert 
 		id="roomAdd" 
@@ -31,7 +36,7 @@
 		useGeneratedKeys="true"
 		keyColumn="file_key"
 		keyProperty="file_key" 
-		parameterType="com.toast.schedule.dto.MeetingPhoto">
+		parameterType="com.toast.schedule.dto.MeetingPhotoDTO">
 		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
 			VALUES(#{file_key},#{uploader_idx},#{ori_filename},#{new_filename},#{file_type},#{file_addr})
 	</insert>
