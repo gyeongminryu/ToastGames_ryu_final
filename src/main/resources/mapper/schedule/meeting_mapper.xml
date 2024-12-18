@@ -72,26 +72,58 @@
 			WHERE room_idx=#{room_idx}
 	</select>
 	
-	<!-- 회의실 내가 포함된 회의 보기
-	<select id="">
-	    SELECT room_idx, meet_rent_empl_idx, meet_subject, meet_content, meet_start_date, meet_end_date 
-	    FROM meeting_rent
-	    WHERE meet_rent_idx IN (
-	        SELECT meet_rent_idx 
-	        FROM meeting_participant 
-	        WHERE meet_parti_empl_idx = #{meet_parti_empl_idx}
-	    )
-	</select> -->
+	<!-- 회의실별 일정 모든 참여자 보기 -->
+	<select id="getAllParti">
+		SELECT meet_parti_empl_idx FROM meeting_participant
+			WHERE meet_rent_idx=#{param1}
+	</select>
+	
+	
+	<!-- 회의실 내가 포함된 회의 보기 -->
+	<select id="getMyMeeting" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+		    mr.room_idx, 
+		    mr.meet_rent_empl_idx, 
+		    mr.meet_subject, 
+		    mr.meet_content, 
+		    mr.meet_start_date, 
+		    mr.meet_end_date
+		FROM 
+		    meeting_rent mr
+		JOIN 
+		    meeting_participant mp
+		ON 
+		    mr.meet_rent_idx = mp.meet_rent_idx
+	    WHERE 
+	        (
+	            (mp.meet_parti_empl_idx = #{meet_parti_empl_idx} AND mr.room_idx = #{room_idx})
+	            OR 
+	            (mr.meet_rent_empl_idx = #{meet_rent_empl_idx} AND mr.room_idx = #{room_idx})
+	        )
+	</select> 
 
 
 	<!-- 회의 일정 추가-->
-	<insert id="addMeeting" parameterType="com.toast.schedule.dto.MeetingDTO">
+	<insert id="addMeeting" 
+		useGeneratedKeys="true"
+		keyColumn="meet_rent_idx"
+		keyProperty="meet_rent_idx"
+		parameterType="com.toast.schedule.dto.MeetingDTO">
 		INSERT INTO meeting_rent(room_idx, meet_rent_empl_idx, meet_subject, meet_content, meet_start_date, meet_end_date)
 			VALUES (#{room_idx}, #{meet_rent_empl_idx}, #{meet_subject}, #{meet_content}, #{meet_start_date}, #{meet_end_date})
 	</insert>
-	
-	
+
 	<!-- 회의 참여 인원 추가 -->
+	<insert id="addMeetingParti" parameterType="com.toast.schedule.dto.MeetingDTO">
+		INSERT INTO meeting_participant(meet_rent_idx, meet_parti_empl_idx)
+			VALUES(#{meet_rent_idx},#{meet_parti_empl_idx})
+	</insert>
+	
+	<!-- 회의 참여인원 삭제 -->
+	<delete id="deleteParti" >
+		DELETE FROM meeting_participant WHERE meet_rent_idx = #{param1}
+	</delete>
+	
 	
 	<!-- 회의 일정 수정-->
 	<update id="updateMeeting" parameterType="com.toast.schedule.dto.MeetingDTO">
@@ -123,8 +155,6 @@
 	<delete id="deleteMeeting">
 		DELETE FROM meeting_rent WHERE meet_rent_idx=#{param1}
 	</delete>
-	
-	
 	
 	
 	<!-- 회의 참여 인원 삭제 -->

@@ -35,17 +35,37 @@ public interface MeetingDAO {
 	//회의 일정 추가
 	int addMeeting(MeetingDTO dto);
 
+	//회의 참여자 추가
+	int addMeetingParti(MeetingDTO meeting_parti);	
+	
 	//회의 일정 보기
 	List<MeetingDTO> getMeeting(int room_idx);
 
+	//모든일정에 관한 참여자 가져오기
+	List<Integer> getAllParti(int meet_rent_idx);
+	
+	//내가 포함된 회의일정 보기
+	List<MeetingDTO> getMyMeeting(MeetingDTO searchMeeting);
+	
 	//회의 일정 수정
 	int updateMeeting(MeetingDTO dto);
 
+	//회의 참여자 삭제
+	int deleteParti(int meet_rent_idx);
+	
 	//회의 일정 삭제
 	int deleteMeeting(int rent_idx);
 
 	//회의 일정 시간변경
 	int dateUpdateMeeting(MeetingDTO dto);
+
+
+
+
+
+
+
+
 
 
 
