@@ -4,8 +4,89 @@
 <mapper namespace="com.toast.management.dao.EmployeeDAO">
 
 <insert id="employeeAdd" parameterType="Map">
-	insert into employee (empl_name,empl_id,empl_pw,empl_gender,empl_birth,empl_ssn1,empl_ssn2,empl_cmp_phone,empl_cmp_email,empl_per_phone,empl_per_email,empl_join_date,bank_idx,empl_account,empl_addr,file_key)
-	values (#{empl_name},#{empl_id},#{empl_pw},#{empl_gender},#{empl_birth},#{empl_ssn1},#{empl_ssn2},#{empl_cmp_phone},#{empl_cmp_email},#{empl_per_phone},#{empl_per_email},#{empl_join_date},#{bank_idx},#{empl_account},#{empl_addr},#{file_key})
+	insert into employee (empl_name,empl_id,empl_pw,empl_gender,empl_birth,empl_ssn1,empl_ssn2,empl_cmp_phone,empl_cmp_email,empl_per_phone,empl_per_email,empl_join_date,bank_idx,empl_account,empl_addr,file_key,empl_stamp,empl_profile)
+	values (#{empl_name},#{empl_id},#{empl_pw},#{empl_gender},#{empl_birth},#{empl_ssn1},#{empl_ssn2},#{empl_cmp_phone},#{empl_cmp_email},#{empl_per_phone},#{empl_per_email},#{empl_join_date},#{bank_idx},#{empl_account},#{empl_addr},#{file_key},#{empl_stamp},#{empl_profile})
 </insert>
+
+<select id="employeeDetail" resultType="com.toast.management.dto.EmployeeDTO">
+	select * from employee where empl_idx = #{param1}
+</select>
+
+<select id="employeeAppolast" resultType="com.toast.management.dto.AppointmentDTO">
+	SELECT 
+    a.appo_idx,
+    a.appo_empl_idx,
+    a.dept_idx,
+    d.dept_name,
+    a.position_idx,
+    p.position_name,
+    a.duty_idx,
+    t.duty_name,
+    a.movein_date,
+    a.transfer_date,
+    a.appo_handler_idx,
+    a.update_date
+FROM 
+    appointment a
+LEFT JOIN 
+    department d ON a.dept_idx = d.dept_idx
+LEFT JOIN 
+    position_ p ON a.position_idx = p.position_idx
+LEFT JOIN 
+    duty t ON a.duty_idx = t.duty_idx
+WHERE 
+    a.appo_empl_idx = #{param1}
+ORDER BY 
+    a.update_date DESC
+	LIMIT 1
+</select>
+
+<select id="employeeAppoList" resultType="com.toast.management.dto.AppointmentDTO">
+	SELECT 
+    a.appo_idx,
+    a.appo_empl_idx,
+    a.dept_idx,
+    d.dept_name,
+    a.position_idx,
+    p.position_name,
+    a.duty_idx,
+    t.duty_name,
+    a.movein_date,
+    a.transfer_date,
+    a.appo_handler_idx,
+    a.update_date
+FROM 
+    appointment a
+LEFT JOIN 
+    department d ON a.dept_idx = d.dept_idx
+LEFT JOIN 
+    position_ p ON a.position_idx = p.position_idx
+LEFT JOIN 
+    duty t ON a.duty_idx = t.duty_idx
+WHERE 
+    a.appo_empl_idx = #{param1}
+ORDER BY 
+    a.update_date DESC
+</select>
+
+<select id="employeeFile" resultType="com.toast.management.dto.MainFileDTO">
+	select * from file where file_key = #{param1}
+</select>
+
+<insert id="employeeAppoDo">
+	insert into appointment (appo_empl_idx,dept_idx,position_idx,duty_idx,movein_date,update_date) values (#{param1},#{param2},#{param3},#{param4},#{param5},now())
+</insert>
+
+<update id="employeeChangeDo">
+	update employee set statement_idx = #{param2} where empl_idx = #{param1}
+</update>
+
+<update id="employeeResigDo">
+update employee set statement_idx = #{param2}, empl_resig_date = now() where empl_idx = #{param1}
+</update>
+
+<update id="employeeTransfer">
+update appointment set transfer_date = #{param2} where appo_idx = #{param1}
+</update>
 
 </mapper>

@@ -4,7 +4,32 @@
 <mapper namespace="com.toast.management.dao.DepartmentDAO">
 
 <insert id="organizationAdd" parameterType="Map">
-	insert into department (dept_name,dept_duty,dept_addr,dept_high) values (#{dept_name},#{dept_duty},#{dept_addr},#{dept_high});
+	 insert into department (dept_name, dept_duty, dept_addr, dept_high) values (
+        #{dept_name},
+        #{dept_duty},
+        #{dept_addr},
+        <choose>
+            <when test="dept_high != null and dept_high != ''">
+                #{dept_high}
+            </when>
+            <otherwise>
+                NULL
+            </otherwise>
+        </choose>
+    );
 </insert>
+
+<select id="getduty" resultType="com.toast.management.dto.DutyDTO">
+	select * from duty
+</select>
+
+<select id="getdept" resultType="com.toast.management.dto.DepartmentDTO">
+	select * from department
+</select>
+
+<select id="getposi" resultType="com.toast.management.dto.PositionDTO">
+	select * from position_
+</select>
+
 
 </mapper>
