@@ -43,4 +43,28 @@
 	update department set dept_name = #{dept_name}, dept_duty = #{dept_duty}, dept_high = #{dept_high}, dept_addr = #{dept_addr} where dept_idx = #{dept_idx}
 </update>
 
+<select id="getdeptTree" resultType="com.toast.management.dto.DeptInfoTreeDTO" >
+SELECT 
+    d.dept_idx,  
+    d.dept_name,  
+    CASE 
+        WHEN head_e.empl_name IS NOT NULL THEN duty.duty_name  
+        ELSE NULL  
+    END AS dept_duty,
+    head_e.empl_name AS dept_head_name, 
+    high_d.dept_name AS high_dept_name, 
+    high_head_e.empl_name AS high_dept_empl_name,  
+    COUNT(DISTINCT a.appo_empl_idx) AS total_dept_count  
+FROM appointment a
+LEFT JOIN department d ON a.dept_idx = d.dept_idx
+LEFT JOIN duty ON a.duty_idx = duty.duty_idx 
+LEFT JOIN employee head_e ON d.dept_head_idx = head_e.empl_idx
+LEFT JOIN department high_d ON d.dept_high = high_d.dept_idx
+LEFT JOIN employee high_head_e ON high_d.dept_head_idx = high_head_e.empl_idx
+WHERE a.transfer_date IS NULL
+GROUP BY 
+    d.dept_idx 
+</select>
+
+
 </mapper>

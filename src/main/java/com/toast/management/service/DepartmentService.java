@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.toast.management.dao.DepartmentDAO;
 import com.toast.management.dto.DepartmentDTO;
+import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.PositionDTO;
 
@@ -56,6 +57,11 @@ public class DepartmentService {
 		
 		return departmentDAO.organizationUpdate(param);
 		
+	}
+
+	public List<DeptInfoTreeDTO> getdeptTree() {
+		
+		return departmentDAO.getdeptTree();
 	}
 
 }
