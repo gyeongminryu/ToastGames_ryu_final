@@ -113,6 +113,7 @@ public class MeetingController {
 			meetings = meetingService.getMeeting(params);
 			logger.info("일정 왜  events없어:"+meetings);
 		}
+		logger.info("meetings의길이:"+meetings.size());
 	    return meetings;
 	}
 	

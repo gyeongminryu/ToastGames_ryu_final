@@ -241,10 +241,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // AJAX 요청으로 일정 데이터 가져오기
             var selectedRoomIdx = document.getElementById('meeting_room_select').value;
             
-            var my_meeting = document.getElementById('meeting_only_mine').checked .value 
+            var my_meeting = document.getElementById('meeting_only_mine').checked
             ? document.getElementById('meeting_only_mine').value 
             : null;
             
+            console.log('my_meeting'+my_meeting);
             $.ajax({
                 url: '/meeting/getMeeting.do',  // 실제 경로에 맞게 수정
                 type: 'POST',
@@ -282,7 +283,8 @@ document.addEventListener('DOMContentLoaded', function() {
             $('#meeting_start_time').val(meeting_format_date_time(arg.start));
             $('#meeting_end_time').val(meeting_format_date_time(arg.end));
             $('#meeting_room_select_modal').prop('disabled', false).val($('#meeting_room_select').val());
-
+            $('input[name="meeting_parti"]').prop('checked', false);
+            
             // 버튼 초기화 및 추가
 			$('#meeting_modal_buttons').empty().append(
 				$('<button>', {

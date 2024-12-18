@@ -81,7 +81,7 @@
 	
 	<!-- 회의실 내가 포함된 회의 보기 -->
 	<select id="getMyMeeting" resultType="com.toast.schedule.dto.MeetingDTO">
-		SELECT 
+		SELECT DISTINCT
 		    mr.room_idx, 
 		    mr.meet_rent_empl_idx, 
 		    mr.meet_subject, 
