@@ -12,16 +12,31 @@
     border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
 }
 
-.tst_table th{
+.tst_table thead th{
     padding: 4px 10px;
     background-color: var(--tst-color-medium);
     font-size: var(--tst-body-font-size);
     color: var(--tst-color-white);
 }
 
-.tst_table td{
+.tst_table tbody th{
     padding: 8px 10px;
     text-align: center;
+    font-weight: 700;
+}
+
+.tst_table tbody td,
+.tst_table tfoot td{
+    padding: 8px 10px;
+    text-align: center;
+}
+
+.tst_table.table_align_left tbody th{
+    text-align: left;
+}
+
+.tst_table.table_align_left tbody td{
+    text-align: left;
 }
 
 .tst_table .td_align_left{

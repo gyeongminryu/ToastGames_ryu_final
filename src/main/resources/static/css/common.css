@@ -27,7 +27,7 @@
     --tst-margin-flex: 8px;
     --tst-body-font-family: var(--tst-font-sans-serif);
     --tst-body-font-size: 13px;
-    --tst-body-font-weight: 500;
+    --tst-body-font-weight: 400;
     --tst-body-line-height: 1.6;
     --tst-body-color: #2e3846;
     --tst-body-bg: #e1e4ea;
@@ -134,6 +134,10 @@ p.min{
 
 .tst_badge_min.margin_right{
     margin-right: var(--tst-margin-horizontal);
+}
+
+.tst_badge_min.margin_left{
+    margin-left: var(--tst-margin-horizontal);
 }
 
 
