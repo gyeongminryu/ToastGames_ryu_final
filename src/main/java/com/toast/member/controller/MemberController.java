@@ -2,6 +2,7 @@ package com.toast.member.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -152,26 +153,40 @@ public class MemberController {
 		// 직인도 포함해서 가져와야 함.
 		// 인사 변경 내역도 가져와야 함(페이지 네이션..?).
 		String id = (String) session.getAttribute("loginId");
-		MemberDTO memberInfo = memberService.memberInfo(id);
+		List<MemberDTO> memberInfo = memberService.memberInfo(id); // 리스트 형태로 가져옴..
 		model.addAttribute("memberInfo", memberInfo);
-		return "myPage";
+		return "mypage";
 	}
 
+	@ResponseBody
+	@GetMapping(value = "/employmentHistory.ajax")
+	public Map<String, Object> employmentHistory(String page, String cnt, HttpSession session, Model model) {
+		logger.info("list called with page: {}, cnt: {}", page, cnt);
+		String id = (String) session.getAttribute("loginId");
+		// 페이지와 항목 수 변환
+		int page_ = Integer.parseInt(page);
+		int cnt_ = Integer.parseInt(cnt);
+
+		// 서비스 호출 시 ID 전달
+		Map<String, Object> result = memberService.employmentHistory(page_, cnt_, id);
+		logger.info("Result from service: {}", result);
+		return result;
+	}
+	
 	// 마이페이지(수정) 이동
 	@GetMapping(value = "/myPageUpdate.go")
 	public String myPageUpdateForm(Model model, HttpSession session) {
-		// 비밀번호 변경, 이름 변경 신청하기, 사내 연락처 정정 신청하기,
+		// 비밀번호 변경, 이름 변경 신청하기, 사내 연락처 정정 신청하기, 페이지네이션 처리.
 		// 서류 제출하기
 		// 직인 제출하기. 이 항목들이 go로 가야할지 do로 처리해야 할지 고민해봐야 할 듯!
 		String id = (String) session.getAttribute("loginId");
-		MemberDTO memberInfo = memberService.memberInfo(id);
+		List<MemberDTO> memberInfo = memberService.memberInfo(id);
 		model.addAttribute("memberInfo", memberInfo);
-		return "myPage_update";
+		return "mypage_update";
 	}
-
-	// 비밀번호 변경 처리 로직
+	
 	@ResponseBody // 응답을 JSON 형태로 반환
-	@PostMapping(value = "/changePw.do")
+	@PostMapping(value = "/changePw.ajax") 	// 비밀번호 변경 처리 로직
 	public Map<String, String> changePw(HttpSession session, @RequestParam("currentPassword") String currentPw,
 			@RequestParam("newPassword") String newPw, @RequestParam("confirmPassword") String confirmPw) {
 		Map<String, String> response = new HashMap<>();

@@ -37,10 +37,7 @@ public class MemberDTO {
 	private String bank_name;
 	private int appo_idx;
 	private int appo_empl_idx;
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date movein_date;
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date transfer_date;
+
 	
 	public int getAppo_idx() {
 		return appo_idx;
@@ -53,18 +50,6 @@ public class MemberDTO {
 	}
 	public void setAppo_empl_idx(int appo_empl_idx) {
 		this.appo_empl_idx = appo_empl_idx;
-	}
-	public Date getMovein_date() {
-		return movein_date;
-	}
-	public void setMovein_date(Date movein_date) {
-		this.movein_date = movein_date;
-	}
-	public Date getTransfer_date() {
-		return transfer_date;
-	}
-	public void setTransfer_date(Date transfer_date) {
-		this.transfer_date = transfer_date;
 	}
 	public String getBank_name() {
 		return bank_name;

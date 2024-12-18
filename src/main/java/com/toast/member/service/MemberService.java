@@ -2,6 +2,8 @@ package com.toast.member.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -62,8 +64,27 @@ public class MemberService {
 		return memberDAO.UpdatePw(id, encryptPw);
 	}
 
-	public MemberDTO memberInfo(String id) {
+	public List<MemberDTO> memberInfo(String id) {
 		return memberDAO.memberInfo(id);
+	}
+	
+	public Map<String, Object> employmentHistory(int page, int cnt, String id) {
+		logger.info("Service list called with page: {}, cnt: {}, memberId: {}", page, cnt, id);
+		int limit = cnt;
+		int offset = (page - 1) * cnt;
+
+		// 전체 페이지 수 계산
+		int totalPages = memberDAO.countHistory(id, cnt); // ID를 이용해 전체 페이지 수 계산
+		logger.info("Total pages: {}", totalPages);
+
+		// 결과 맵 생성
+		Map<String, Object> result = new HashMap<>();
+		result.put("totalpages", totalPages);
+		result.put("currPage", page);
+		result.put("list", memberDAO.employmentHistory(limit, offset, id)); // ID를 이용해 리스트 가져오기
+		logger.info("Result map: {}", result);
+
+		return result;
 	}
 	
 	public String profileImage(MultipartFile file) throws IOException {
@@ -71,7 +92,7 @@ public class MemberService {
 		String originalFileName = file.getOriginalFilename();
 		String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 		String newFileName = UUID.randomUUID().toString();
-		String fileAddr = uploadAddr + newFileName + fileType;
+		String fileAddr = uploadAddr + "/" + newFileName + fileType; // 프로퍼티즈 값이 C:/files 라서 + "/" 한것!!!
 		
 		// 파일을 서버에 저장..
 		File dest = new File(fileAddr);
@@ -102,5 +123,5 @@ public class MemberService {
 		int changed = memberDAO.mypageUpdate(memberDTO);
 		return changed;
 	}
-	
+
 }
