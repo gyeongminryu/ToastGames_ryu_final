@@ -20,7 +20,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
 </head>
 <body>
-<form action="form_write.do" method="POST">
+<form action="doc_write.do" method="POST">
   <table>
     <tr><td></td></tr>
     <tr>
