@@ -1,0 +1,15 @@
+.tst_table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tst_table thead th{
+    padding: 4px 10px;
+    background-color: var(--tst-color-medium);
+    font-size: var(--tst-body-font-size);
+    color: var(--tst-color-white);
+}
+
+.tst_table tbody tr{
+    border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+}

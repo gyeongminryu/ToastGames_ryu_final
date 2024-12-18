@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.toast.management.dao.EmployeeDAO">
+
+<insert id="employeeAdd" parameterType="Map">
+	insert into employee (empl_name,empl_id,empl_pw,empl_gender,empl_birth,empl_ssn1,empl_ssn2,empl_cmp_phone,empl_cmp_email,empl_per_phone,empl_per_email,empl_join_date,bank_idx,empl_account,empl_addr,file_key)
+	values (#{empl_name},#{empl_id},#{empl_pw},#{empl_gender},#{empl_birth},#{empl_ssn1},#{empl_ssn2},#{empl_cmp_phone},#{empl_cmp_email},#{empl_per_phone},#{empl_per_email},#{empl_join_date},#{bank_idx},#{empl_account},#{empl_addr},#{file_key})
+</insert>
+
+</mapper>

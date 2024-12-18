@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.toast.management.dao.DepartmentDAO">
+
+<insert id="organizationAdd" parameterType="Map">
+	insert into department (dept_name,dept_duty,dept_addr,dept_high) values (#{dept_name},#{dept_duty},#{dept_addr},#{dept_high});
+</insert>
+
+</mapper>
