@@ -35,7 +35,7 @@ public class MemberController {
 	}
 
 	// 로그인 페이지 이동
-	@GetMapping(value = {"/", "/login.go"})
+	@GetMapping(value = "/login.go")
 	public String loginView() {
 		return "login";
 	}
