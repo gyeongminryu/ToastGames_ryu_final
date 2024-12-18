@@ -1,7 +1,5 @@
-var editor = new RichTextEditor("#div_editor", config);
+//var editor = new RichTextEditor("#div_editor", config);
 window.onload = function initialize(){
-
-
 
     $.ajax({
         type : 'get',
@@ -10,11 +8,26 @@ window.onload = function initialize(){
         dataType : 'JSON',
         success : function(data){
             console.log(data);
+
             console.log(data.doc_content);
+            console.log(data.doc_idx);
+            console.log(data.empl_name);
             //editor.setHTMLCode(data.form_content);//편집기 안의 HTML code 설정
 
+            //document.getElementById('form_content').innerHTML =data.doc_content;
             $('#form_content').html(data.doc_content);
-            content_edit();
+
+            //문서 정보란에 1차 정보 기입 (문서번호, 작성자, 부서명* -> 추가예정)
+            $('#doc_idx').html(data.doc_idx);
+            $('#hidden_doc_idx').html(data.doc_idx);
+
+
+            $('#doc_write_empl').html(data.empl_name);
+
+
+
+            approval_content_edit();
+
         },
         error : function(e){
             console.log(e);
@@ -25,22 +38,26 @@ window.onload = function initialize(){
 }
 
 
+function approval_write_save(){
+
+    //결재 잘못 작성했을 때 알럿
+    approval_write_save_alert();
+
+    //보고 내용 (*quill 에디터에 작성한 내용) - form에 저장
+    const quill_content = quill.getContents();
+    console.log(quill_content.ops[0]);
+    console.log(quill_content.ops[0].insert);
+
+    $('input[name="content"]').val(quill_content.ops[0].insert);
+
+    //form 내용 - form에 저장
+    var form_content = $('#form_content').html()
+    //console.log(form_content);
+    $('input[name="form_content"]').val(form_content);
+    $('form').submit();
+}
 
 
-
-//richtexteditor 상세 설정
-var config = {}
-config.toolbar = "default";
-
-config.editorResizeMode="none";
-
-//파일 업로드 시 설정
-config.file_upload_handler = function(file,pathReplace){ //파일객체, 경로변경 함수
-
-    console.log(file);
-
-    if(file.size>(2*1024*1024)){
-        alert('2MB 이상의 파일은 올릴 수 없습니다.');
-        pathReplace('/img/no_image.png');
-    }
+function approval_write_save_alert(){
+    //만약 결재 마감일이 작성일보다
 }

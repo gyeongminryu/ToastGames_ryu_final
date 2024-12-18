@@ -9,7 +9,6 @@ $('#html_rendering').on('click','#plus1',function(){
     console.log(copy_row);
     $('.copyRow').last().after(copy_row);
     i++;
-
 });
 
 
