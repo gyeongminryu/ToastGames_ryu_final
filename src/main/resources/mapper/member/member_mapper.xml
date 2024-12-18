@@ -1,4 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toast.member.dao.MemberDAO"></mapper>
+<mapper namespace="com.toast.member.dao.MemberDAO">
+	
+	<select id="isValidId" parameterType="String" resultType="boolean">
+		SELECT COUNT(*) 
+		FROM employee 
+		WHERE empl_id = #{id}
+	</select>
+	
+	<select id="login" parameterType="String" resultType="String"> 
+		SELECT empl_pw 
+		FROM employee 
+		WHERE empl_id = #{id} 
+	</select>
+	
+	<!-- 로그인할 때, DB에서 changepw가 0인지 1인지 구분하기 위함. -->
+	<select id="changePwCheck" parameterType="String"> 
+		SELECT empl_changepw
+		FROM employee 
+		WHERE empl_id = #{id}
+	</select>
+	
+	<!-- 아이디 찾기: 이름과 이메일로 조회 -->
+	<select id="findId" parameterType="map" resultType="String"> 
+		SELECT empl_id 
+		FROM employee 
+		WHERE empl_name = #{name} AND empl_per_email = #{email} 
+	</select>
+	
+	<select id="isValidName" parameterType="String" resultType="boolean">
+		SELECT COUNT(*) 
+		FROM employee 
+		WHERE empl_name = #{name}
+	</select>
+	
+	<!-- 비밀번호 찾기: 아이디와 이메일로 조회 + name도 프론트에 보여주기 위해 같이 가져온다!! -->
+	<select id="findPw" parameterType="map" resultType="map"> 
+		SELECT empl_name, empl_per_email
+		FROM employee WHERE empl_id = #{id} AND empl_per_email = #{email} 
+	</select>
+	
+	<!-- 비밀번호 업데이트: 사용자(이메일)의 비밀번호를 자동 업데이트 -->
+	<update id="UpdatePw" parameterType="map"> 
+		UPDATE employee 
+		SET empl_pw = #{encryptPw} 
+		WHERE empl_id = #{id} 
+	</update>
+	
+	<!-- myPage 멤버정보 가져오기 -->
+	<select id="memberInfo" parameterType="String" resultType="com.toast.member.dto.MemberDTO">
+		SELECT e.empl_idx, e.empl_name, e.empl_id, e.empl_pw,
+		e.empl_gender, e.empl_birth, e.empl_ssn1, e.empl_ssn2, e.empl_account,
+		e.empl_cmp_email, e.empl_cmp_phone, e.empl_per_email, e.empl_per_phone,
+		e.empl_addr, e.empl_emp_state, e.empl_join_date, e.empl_resig_date,
+		e.empl_stamp, e.empl_profile, e.bank_idx, e.empl_changepw,
+		e.file_key,
+		a.dept_idx, a.position_idx, a.duty_idx, a.appo_idx, a.appo_empl_idx, a.empl_job, a.movein_date, a.transfer_date, 
+		p.position_name, dt.duty_name, d.dept_name 
+		FROM employee e 
+		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
+		JOIN department d ON a.dept_idx = d.dept_idx
+		JOIN position_ p ON a.position_idx = p.position_idx
+		JOIN duty dt ON a.duty_idx = dt.duty_idx
+		WHERE e.empl_id = #{id}
+	</select>
+	
+	<!-- 비밀번호 업데이트 -->
+	<update id="changePw" parameterType="String">
+		UPDATE employee SET empl_pw = #{encryptPw}
+		WHERE empl_id = #{id} 
+	</update>
+	
+	<!-- pw를 수정하고 난 뒤, changepw를 1로 바꾼다. -->
+	<update id="changedPw" parameterType="String"> 
+		UPDATE employee 
+		SET empl_changepw = 1 
+		WHERE empl_id = #{id} 
+	</update>
+	
+	<!-- 이메일, 연락처, 이름, 주소를 수정할 수 있어야 한다. + 은행 idx, 계좌 -->
+	<update id="mypageUpdate" parameterType="com.toast.member.dto.MemberDTO">
+		UPDATE employee
+		<set>
+			<if test="empl_name != null">empl_name = #{empl_name},</if>
+			<if test="bank_idx != null">bank_idx = #{bank_idx},</if>
+			<if test="empl_account != null">empl_account = #{empl_account},</if>
+			<if test="empl_per_email != null">empl_per_email = #{empl_per_email},</if>
+			<if test="empl_per_phone != null">empl_per_phone = #{empl_per_phone},</if>
+			<if test="empl_addr != null">empl_addr = #{empl_addr},</if>
+			<if test="empl_profile != null">empl_profile = #{empl_profile},</if>
+		</set>
+		WHERE empl_id = #{empl_id}		
+	</update>
+	
+</mapper>
