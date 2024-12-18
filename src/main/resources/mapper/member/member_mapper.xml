@@ -56,7 +56,7 @@
 		e.empl_addr, e.empl_emp_state, e.empl_join_date, e.empl_resig_date,
 		e.empl_stamp, e.empl_profile, e.bank_idx, e.empl_changepw,
 		e.file_key,
-		a.dept_idx, a.position_idx, a.duty_idx, a.appo_idx, a.appo_empl_idx, a.empl_job, a.movein_date, a.transfer_date, 
+		a.dept_idx, a.position_idx, a.duty_idx, 
 		p.position_name, dt.duty_name, d.dept_name 
 		FROM employee e 
 		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
@@ -65,6 +65,26 @@
 		JOIN duty dt ON a.duty_idx = dt.duty_idx
 		WHERE e.empl_id = #{id}
 	</select>
+	 	
+	<select id="employmentHistory" resultType="map">
+		SELECT a.dept_idx, a.position_idx, a.duty_idx, a.appo_idx, a.empl_job, a.movein_date, a.transfer_date,
+			p.position_name, dt.duty_name, d.dept_name 
+		FROM appointment a
+		JOIN employee e ON a.appo_empl_idx = e.empl_idx
+		JOIN department d ON a.dept_idx = d.dept_idx
+		JOIN position_ p ON a.position_idx = p.position_idx
+		JOIN duty dt ON a.duty_idx = dt.duty_idx  
+	    WHERE e.empl_id = #{id} 
+	    ORDER BY a.appo_idx DESC 
+	    LIMIT #{limit} OFFSET #{offset}  
+	</select>
+
+	<select id="countHistory" resultType="int">
+	    SELECT CEIL(COUNT(*) / #{cnt}) AS pages
+	    FROM appointment a
+	    JOIN employee e ON a.appo_empl_idx = e.empl_idx  
+	    WHERE e.empl_id = #{id}
+</select>
 	
 	<!-- 비밀번호 업데이트 -->
 	<update id="changePw" parameterType="String">

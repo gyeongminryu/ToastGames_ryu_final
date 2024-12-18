@@ -1,5 +1,6 @@
 package com.toast.member.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -22,7 +23,7 @@ public interface MemberDAO {
 
 	int changePwCheck(String id);
 
-	MemberDTO memberInfo(String id);
+	List<MemberDTO> memberInfo(String id);
 
 	boolean checkCurrentPassword(String id, String encryptPw);
 	
@@ -32,6 +33,10 @@ public interface MemberDAO {
 	void changedPw(String id);
 
 	int mypageUpdate(MemberDTO memberDTO);
+
+	int countHistory(String id, int cnt);
+
+	List<Map<String, Object>> employmentHistory(int limit, int offset, String id);
 	
 }
 
