@@ -150,7 +150,7 @@ p.min{
 /* anker */
 
 a, a:hover, a:visited {
-    color: var(--tst-body-color);
+    color: inherit;
     font-weight: calc(var(--tst-body-font-weight) + 100);
     text-decoration: none;
 }
@@ -396,6 +396,7 @@ textarea{
 .input_underline{
     border: none;
     border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-color-dark);
+    border-radius: 0;
 }
 
 input[type="submit"],

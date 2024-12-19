@@ -183,7 +183,7 @@
                         <!-- //결재할 문서 목록 -->
 
                     </div>
-                    <div class="tst_col3">
+                    <div class="tst_col3 wrote_documents">
                         <h1>문서 작성하기</h1>
                         <hr class="separator" />
                         <ul class="tst_list list_no_desc list_block">
@@ -200,18 +200,45 @@
                                 <h2>기존에 작성한 문서 양식 불러오기</h2>
                                 <button onclick="location.href='/'" class="btn_secondary btn_full">사내 문서함 참조하기</button>
                                 <ul class="tst_list list_block">
+
+                                    <!-- 기존에 작성한 문서 -->
                                     <li>
-                                        <h3>{문서 제목}</h3>
-                                        <p class="font_subtle">{문서 종류}</p>
                                         <div class="tst_flex">
-                                            <div class="tst_col6">
-                                                <button onclick="location.href='/'" class="btn_primary btn_full">내용+양식 복사하기</button>
+                                            <div class="tst_flex tst_col3 align_center">
+                                                <i class="bi bi-file-earmark-text"></i>
                                             </div>
-                                            <div class="tst_col6">
-                                                <button onclick="location.href='/'" class="btn_secondary btn_full">양식만 복사하기</button>
+                                            <div class="tst_col9">
+                                                <h3>{문서 제목}</h3>
+                                                <p class="font_subtle">
+                                                    <!-- 문서 양식만 복사 --><a href="/">
+                                                        <i class="bi bi-file-earmark-text"></i>{문서 종류}
+                                                    </a>
+                                                </p>
+                                                <!-- 문서+내용 복사 --><button onclick="location.href='/'" class="btn_secondary btn_min">복사</button>
                                             </div>
                                         </div>
                                     </li>
+                                    <!-- //기존에 작성한 문서 -->
+
+                                    <!-- 예시 -->
+                                    <li>
+                                        <div class="tst_flex">
+                                            <div class="tst_flex tst_col3 align_center">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+                                            <div class="tst_col9">
+                                                <h3>12월 10일 화요일에 연차 신청합니다.</h3>
+                                                <p class="font_subtle">
+                                                    <a href="/">
+                                                    <i class="bi bi-file-earmark-text"></i>연차 신청서
+                                                </a>
+                                                </p>
+                                                <button onclick="location.href='/'" class="btn_secondary btn_min">복사</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!-- //예시 -->
+
                                 </ul>
                             </li>
                             <!-- //기존에 작성한 문서 양식 불러오기 -->
