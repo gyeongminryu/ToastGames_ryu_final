@@ -73,6 +73,24 @@ public class MeetingService {
 		
 	}
 	
+	//회의실 정보 변경(관리자, 사진 제외)
+	public int updateMeetingRoom(MeetingDTO meetingDto) {
+		return meetingDao.updateMeetingRoom(meetingDto);
+		
+	}	
+	
+	
+	//회의실 일정 존재 확인
+	public int checkMeetingRoom(Integer room_idx) {
+		return meetingDao.checkMeetingRoom(room_idx);
+	}
+	
+	//회의실 삭제
+	public int deleteMeetingRoom(Integer room_idx) {
+		return meetingDao.deleteMeetingRoom(room_idx);
+		
+	}
+	
 	//회의실 (정보) 추가 사진
 	private void roomFileAdd(MultipartFile file, int room_idx) {
 		
@@ -109,6 +127,10 @@ public class MeetingService {
 		
 		
 	}
+	
+	
+
+	
 	
 	//회의 일정 보기
 	public List<Map<String, Object>> getMeeting(Map<String, Object> params) {
@@ -232,8 +254,11 @@ public class MeetingService {
 		return meetingDao.dateUpdateMeeting(dto);
 	}
 
-	
-	//내가 포함된 일정만 보기
+
+
+
+
+
 	
 	
 	//회의 일정 1시간 전 알림 발송
