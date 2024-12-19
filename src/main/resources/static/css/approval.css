@@ -1,3 +1,5 @@
+/* approval received/sent detail */
+
 .bi.bi-paperclip:after{
     margin-left: 4px;
 }
@@ -25,4 +27,23 @@
 .approval_line_info .approval_reject_reason{
     font-size: 12px;
     margin-top: 4px;
+}
+
+
+
+/* approval writing list */
+
+.tst_col3 .tst_list.list_block li{
+    margin-bottom: 28px;
+}
+
+.tst_col3 .tst_list.list_block h2{
+    margin-bottom: 8px;
+}
+
+.tst_col3 .tst_list.list_block li ul li{
+    margin-top: 16px;
+    padding: 16px 20px 20px;
+    border: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+    border-radius: var(--tst-border-radius);
 }

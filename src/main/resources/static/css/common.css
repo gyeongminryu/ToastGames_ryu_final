@@ -93,7 +93,7 @@ h1{
 }
 
 h2{
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 800;
 }
 
@@ -143,6 +143,16 @@ p.min{
 
 .tst_badge_min.margin_left{
     margin-left: var(--tst-margin-horizontal);
+}
+
+
+
+/* anker */
+
+a, a:hover, a:visited {
+    color: var(--tst-body-color);
+    font-weight: calc(var(--tst-body-font-weight) + 100);
+    text-decoration: none;
 }
 
 

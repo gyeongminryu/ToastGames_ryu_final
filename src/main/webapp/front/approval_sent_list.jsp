@@ -100,190 +100,106 @@
 
                     <!-- 기본 -->
                     <tr>
-                        <td class="td_align_left">
-                            {직원명 (부서명/직급명)}
-                        </td>
-                        <td>
-                            {문서 유형}
-                        </td>
+                        <td class="td_align_left">{직원명 (부서명/직급명)}</td>
+                        <td>{문서 유형}</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_primary margin_right">{결재 현황}</span>
-                            {제목}
+                            <a href="/" target="_blank">{제목}</a>
                         </td>
-                        <td>
-                            {상신 일시}
-                        </td>
-                        <td>
-                            {수신 일시}
-                        </td>
-                        <td>
-                            {처리 일시}
-                        </td>
-                        <td>
-                            {마감 일시}
-                        </td>
+                        <td>{상신 일시}</td>
+                        <td>{수신 일시}</td>
+                        <td>{처리 일시}</td>
+                        <td>{마감 일시}</td>
                     </tr>
                     <!-- //기본 -->
 
                     <!-- 예시) 수신자가 문서를 읽지 않았을 경우 -->
                     <tr>
-                        <td class="td_align_left">
-                            김이름 (영업/대리)
-                        </td>
-                        <td>
-                            출장 결과 보고서
-                        </td>
+                        <td class="td_align_left">김이름 (영업/대리)</td>
+                        <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_secondary margin_right">결재 대기</span>
-                            제목이 여기에 출력됩니다.
+                            <a href="/" target="_blank">제목이 여기에 출력됩니다.</a>
                         </td>
-                        <td>
-                            2024-12-18 09:30
-                        </td>
-                        <td>
-                            2024-12-18 10:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
+                        <td>2024-12-18 09:30</td>
+                        <td>2024-12-18 10:00</td>
+                        <td>2024-12-20 18:00</td>
+                        <td>2024-12-20 18:00</td>
                     </tr>
                     <!-- //예시) 수신자가 문서를 읽지 않았을 경우 -->
 
                     <!-- 예시) 수신자가 문서를 읽었으나 아직 결재를 마치지 않았을 경우 -->
                     <tr>
-                        <td class="td_align_left">
-                            김이름 (영업/대리)
-                        </td>
-                        <td>
-                            출장 결과 보고서
-                        </td>
+                        <td class="td_align_left">김이름 (영업/대리)</td>
+                        <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_secondary margin_right">결재 진행</span>
-                            제목이 여기에 출력됩니다.
+                            <a href="/" target="_blank">제목이 여기에 출력됩니다.</a>
                         </td>
-                        <td>
-                            2024-12-18 09:30
-                        </td>
-                        <td>
-                            2024-12-18 10:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
+                        <td>2024-12-18 09:30</td>
+                        <td>2024-12-18 10:00</td>
+                        <td>2024-12-20 18:00</td>
+                        <td>2024-12-20 18:00</td>
                     </tr>
                     <!-- //예시) 수신자가 문서를 읽었으나 아직 결재를 마치지 않았을 경우 -->
 
                     <!-- 예시) 문서 결재 이후 윗선으로 상신한 문서가 아직 결재되지 않았을 경우 -->
                     <tr>
-                        <td class="td_align_left">
-                            김이름 (영업/대리)
-                        </td>
-                        <td>
-                            출장 결과 보고서
-                        </td>
+                        <td class="td_align_left">김이름 (영업/대리)</td>
+                        <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_secondary margin_right">결재 진행</span>
-                            제목이 여기에 출력됩니다.
+                            <a href="/" target="_blank">제목이 여기에 출력됩니다.</a>
                         </td>
-                        <td>
-                            2024-12-18 09:30
-                        </td>
-                        <td>
-                            2024-12-18 10:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
+                        <td>2024-12-18 09:30</td>
+                        <td>2024-12-18 10:00</td>
+                        <td>2024-12-20 18:00</td>
+                        <td>2024-12-20 18:00</td>
                     </tr>
                     <!-- //예시) 문서 결재 이후 윗선으로 상신한 문서가 아직 결재되지 않았을 경우 -->
 
                     <!-- 예시) 상급자가 결재를 최종 승인하여 시스템이 자동으로 알림을 발송했을 경우 -->
                     <tr>
-                        <td class="td_align_left">
-                            김이름 (경영지원/대리)
-                        </td>
-                        <td>
-                            교육 참가 신청서
-                        </td>
+                        <td class="td_align_left">김이름 (경영지원/대리)</td>
+                        <td>교육 참가 신청서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">최종 승인</span>
-                            <span class="font_subtle">(시스템 자동 발송) 결재가 최종 승인되었습니다.</span>
+                            <a href="/" target="_blank"><span class="font_subtle">(시스템 자동 발송) 결재가 최종 승인되었습니다.</span></a>
                         </td>
-                        <td>
-                            2024-12-18 09:30
-                        </td>
-                        <td>
-                            2024-12-18 10:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
+                        <td>2024-12-18 09:30</td>
+                        <td>2024-12-18 10:00</td>
+                        <td>2024-12-20 18:00</td>
+                        <td>2024-12-20 18:00</td>
                     </tr>
                     <!-- //예시) 상급자가 결재를 최종 승인하여 시스템이 자동으로 알림을 발송했을 경우 -->
 
                     <!-- 예시) 상급자가 결재를 최종 반려하여 시스템이 자동으로 알림을 발송했을 경우 -->
                     <tr>
-                        <td class="td_align_left">
-                            김이름 (경영지원/대리)
-                        </td>
-                        <td>
-                            교육 참가 신청서
-                        </td>
+                        <td class="td_align_left">김이름 (경영지원/대리)</td>
+                        <td>교육 참가 신청서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_primary margin_right">반려</span>
-                            <span class="font_subtle">(시스템 자동 발송) 결재가 반려되었습니다.</span>
+                            <a href="/" target="_blank"><span class="font_subtle">(시스템 자동 발송) 결재가 반려되었습니다.</span></a>
                         </td>
-                        <td>
-                            2024-12-18 09:30
-                        </td>
-                        <td>
-                            2024-12-18 10:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
+                        <td>2024-12-18 09:30</td>
+                        <td>2024-12-18 10:00</td>
+                        <td>2024-12-20 18:00</td>
+                        <td>2024-12-20 18:00</td>
                     </tr>
                     <!-- //예시) 상급자가 결재를 최종 반려하여 시스템이 자동으로 알림을 발송했을 경우 -->
 
                     <!-- 예시) 수신자가 문서를 반려했을 경우 -->
                     <tr>
-                        <td class="td_align_left">
-                            김이름 (영업/대리)
-                        </td>
-                        <td>
-                            출장 결과 보고서
-                        </td>
+                        <td class="td_align_left">김이름 (영업/대리)</td>
+                        <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_primary margin_right">반려</span>
-                            제목이 여기에 출력됩니다.
+                            <a href="/" target="_blank">제목이 여기에 출력됩니다.</a>
                         </td>
-                        <td>
-                            2024-12-18 09:30
-                        </td>
-                        <td>
-                            2024-12-18 10:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
-                        <td>
-                            2024-12-20 18:00
-                        </td>
+                        <td>2024-12-18 09:30</td>
+                        <td>2024-12-18 10:00</td>
+                        <td>2024-12-20 18:00</td>
+                        <td>2024-12-20 18:00</td>
                     </tr>
                     </tbody>
                     <!-- //예시) 수신자가 문서를 반려했을 경우 -->
