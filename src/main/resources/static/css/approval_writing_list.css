@@ -1,0 +1,47 @@
+.wrote_documents .tst_list.list_block li{
+    margin-bottom: 28px;
+}
+
+.wrote_documents .tst_list.list_block h2{
+    margin-bottom: 8px;
+}
+
+.wrote_documents .tst_list.list_block li ul li{
+    height: fit-content;
+    min-height: 110px;
+    margin: 12px 0 0 -40px;
+    padding: 0 var(--tst-margin-flex);
+    border: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+    border-radius: var(--tst-border-radius);
+}
+
+.wrote_documents .tst_list.list_block li ul li .tst_col3{
+    background-color: var(--tst-color-subtle);
+    color: var(--tst-color-white);
+    font-size: 28px;
+}
+
+.wrote_documents .tst_list.list_block li ul li .tst_col9{
+    min-height: 110px;
+    padding: 10px 12px 55px;
+    position: relative;
+}
+
+.wrote_documents .tst_list.list_block li ul li .tst_col9 i{
+    margin-right: 4px;
+}
+
+.wrote_documents .tst_list.list_block li ul li .tst_col9 p.font_subtle{
+    position: absolute;
+    bottom: 15px;
+    left: 12px;
+}
+
+.wrote_documents .tst_list.list_block li ul li .tst_col9 button{
+    width: 50px;
+    padding: 4px 6px;
+    font-size: 13px;
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+}
