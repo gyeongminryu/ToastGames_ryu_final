@@ -8,13 +8,5 @@ import java.util.Map;
 
 @Mapper
 public interface ApprovalDAO {
-    List<Map<String, Object>> form_list();
 
-    Map<String, Object> form(int idx);
-
-    int doc_write(ApprovalDTO app_dto);
-
-    Map<String, Object> doc_get(int doc_idx);
-
-    String doc_empl_name(int empl_idx);
 }
