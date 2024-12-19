@@ -140,10 +140,6 @@ public class MeetingController {
 	    return ResponseEntity.ok(response);
 	}
 	
-	
-	
-	
-	
 
 	//회의 일정 보기(회의실별+ 내가 포함된 회의)
 	@PostMapping(value="/getMeeting.do")

@@ -35,6 +35,9 @@ public interface MeetingDAO {
 	//회의실 일정 존재 확인
 	int checkMeetingRoom(int roomIdx);
 	
+	//회의실 삭제
+	int deleteMeetingRoom(int roomIdx);
+	
 	//회의실 사진보기
 	MeetingPhotoDTO meetingPhoto(String file_key);
 	
@@ -65,8 +68,7 @@ public interface MeetingDAO {
 	//회의 일정 시간변경
 	int dateUpdateMeeting(MeetingDTO dto);
 
-	//회의실 삭제
-	int deleteMeetingRoom(int roomIdx);
+
 
 
 
