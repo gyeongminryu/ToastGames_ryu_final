@@ -44,6 +44,7 @@
 	<!-- 회의실 정보보기 -->  
 	<select id="meetingDetail" resultType="map">
 		SELECT 
+			mr.room_idx,
 		    mr.room_name, 
 		    mr.room_addr, 
 		    mr.room_empl_idx, 
@@ -64,6 +65,32 @@
 		SELECT ori_filename, new_filename FROM file 
 			WHERE file_key = #{param1}
 	</select>
+	
+	<!-- 회의실 정보 수정(관리자, 사진 제외)-->
+	<update id="updateMeetingRoom" parameterType="com.toast.schedule.dto.MeetingPhotoDTO">
+		UPDATE 
+			meeting_room 
+			SET 
+			room_name=#{room_name}, 
+			room_addr=#{room_addr}, 
+			room_info=#{room_info}, 
+			room_min=#{room_min}, 
+			room_max=#{room_max} 
+		WHERE room_idx=#{room_idx}
+	</update>
+	
+	<!-- 회의실 일정 존재 확인 -->
+	<select id="checkMeetingRoom" resultType="int">
+		SELECT COUNT(meet_rent_idx) FROM meeting_rent WHERE room_idx=#{room_idx}
+	</select>
+	
+	
+	<!-- 회의실 삭제 -->
+	<delete id="deleteMeetingRoom">
+		DELETE FROM meeting_room WHERE room_idx=#{param1}
+	</delete>
+	
+	
 	
 	<!-- 회의실별 회의 일정보기 --> 
 	<select id="getMeeting" resultType="com.toast.schedule.dto.MeetingDTO">
