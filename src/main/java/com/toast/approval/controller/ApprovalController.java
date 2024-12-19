@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,7 +69,7 @@ public class ApprovalController {
 		model.addAttribute("doc_idx", doc_idx);
 		model.addAttribute("form_idx", form_idx);
 
-		return "approval_write";
+		return "approval_writing_write";
 	}
 
 	@GetMapping (value = "/doc_get.ajax")
