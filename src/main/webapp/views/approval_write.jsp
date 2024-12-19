@@ -9,20 +9,16 @@
   <link rel="stylesheet" href="/resources/css/approval_form.css" />
   <%--퀼 css--%>
   <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-<%--  <link rel="stylesheet" href="/resources/richtexteditor/res/style.css" />--%>
-<%--  <link rel="stylesheet" href="/resources/richtexteditor/rte_theme_default.css" />--%>
-
-
 
   <%--퀼 script--%>
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="/resources/js/approval_form_row.js"></script>
+
 
 
 </head>
 <body>
-<form action="approval_doc_write.do" method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
   <input type = "hidden" name = "doc_idx" id="hidden_doc_idx"/>
   <input type = "hidden" name = "doc_write_date" id="hidden_doc_date"/>
 
@@ -41,9 +37,8 @@
 
       <td colspan="2">
         보고 내용
-        <%--<div id="div_editor"></div>--%>
         <div id="editor"></div>
-        <%--<input type="hidden" name="doc_content_sub" class ="content"/>--%>
+        <input type="hidden" name="doc_content_sub" class ="content"/>
       </td>
       <td>
 
@@ -51,7 +46,7 @@
     </tr>
     <tr>
       <td colspan="2" id ="form_content"></td>
-      <%--<input type = "hidden" name = "doc_content"/>--%>
+      <input type = "hidden" name = "doc_content"/>
       <td>
       </td>
     </tr>
@@ -78,9 +73,12 @@
 </form>
 </body>
 
-<script src="/resources/js/approval_form_row.js"></script>
-<script src="/resources/js/approval_form_adjust.js"></script>
-<script src="/resources/js/approval_write.js"></script>
+<%--기능 script--%>
+<script src="/resources/js/approval_request_form_row.js"></script>
+<script src="/resources/js/approval_request_form_adjust.js"></script>
+<script src="/resources/js/approval_request_write.js"></script>
+<script src="/resources/js/approval_request_save.js"></script>
+
 <script>
   //모델앤뷰로 받은 파라메터
   console.log("${form_idx}");
@@ -89,6 +87,10 @@
 
   var doc_idx = "${doc_idx}";
   var form_idx = "${form_idx}";
+
+
+
+
 
   //quill editor
   const quill = new Quill('#editor', {
