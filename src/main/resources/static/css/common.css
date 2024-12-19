@@ -419,8 +419,8 @@ button.btn_full{
     min-width: 60px;
     padding: 2px 4px;
     display: inline-block;
-    font-size: 10px;
-    font-weight: 800;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .btn_primary{

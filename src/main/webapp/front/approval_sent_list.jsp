@@ -85,7 +85,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- //상신한 문서 목록 -->
 
                     <!-- 상신한 전자 문서가 없을 경우 -->
                     <tr class="approval_received_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
