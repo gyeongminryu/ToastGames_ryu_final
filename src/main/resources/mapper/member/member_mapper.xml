@@ -65,6 +65,19 @@
 		JOIN duty dt ON a.duty_idx = dt.duty_idx
 		WHERE e.empl_id = #{id}
 	</select>
+	
+	<select id="fileList" parameterType="String" resultType="com.toast.member.dto.FileDTO">
+		SELECT f.file_idx, f.file_key, f.uploader_idx, f.ori_filename, f.new_filename, f.file_type, f.file_addr
+		FROM file f
+		JOIN employee e ON f.uploader_idx = e.empl_idx
+		WHERE e.empl_id = #{id} 
+	</select>
+	
+	<select id="originalFileName" parameterType="String">
+		SELECT ori_filename
+		FROM file
+		WHERE new_filename = #{filename}
+	</select>
 	 	
 	<select id="employmentHistory" resultType="map">
 		SELECT a.dept_idx, a.position_idx, a.duty_idx, a.appo_idx, a.empl_job, a.movein_date, a.transfer_date,
@@ -113,5 +126,22 @@
 		</set>
 		WHERE empl_id = #{empl_id}		
 	</update>
+	
+	<select id="getUploaderIdx" parameterType="String" resultType="int">
+		SELECT empl_idx
+		FROM employee
+		WHERE empl_id = #{id}
+	</select>
+	
+	<insert id="fileUpload" parameterType="com.toast.member.dto.FileDTO">
+		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
+			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr})
+	</insert>
+	
+	<select id="getUploadedFiles" parameterType="int" resultType="com.toast.member.dto.FileDTO">
+		SELECT file_key, ori_filename, new_filename, file_type, file_addr
+	    FROM file
+	    WHERE uploader_idx = #{empl_idx}
+	</select>
 	
 </mapper>

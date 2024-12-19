@@ -1,6 +1,9 @@
 package com.toast.member.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,15 +13,22 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.toast.member.dto.FileDTO;
 import com.toast.member.dto.MemberDTO;
 import com.toast.member.service.MailService;
 import com.toast.member.service.MemberService;
@@ -146,15 +156,16 @@ public class MemberController {
 		return page;
 	}
 
-	// 마이페이지(상세보기) 이동 이거 데이터 가져오는거 다시 해야함.. 착각했다..
+	// 마이페이지(상세보기)
 	@GetMapping(value = "/myPage.go")
 	public String myPageForm(Model model, HttpSession session) {
-		// 첨부파일을 불러오는 로직도 추가.
-		// 직인도 포함해서 가져와야 함.
-		// 인사 변경 내역도 가져와야 함(페이지 네이션..?).
 		String id = (String) session.getAttribute("loginId");
-		List<MemberDTO> memberInfo = memberService.memberInfo(id); // 리스트 형태로 가져옴..
-		model.addAttribute("memberInfo", memberInfo);
+		List<MemberDTO> memberInfo = memberService.memberInfo(id); // 리스트 형태로 가져옴.
+		model.addAttribute("memberInfo", memberInfo); // 인포에 직인 정보도 포함!!
+		List<FileDTO> fileList = memberService.fileList(id); // 사용자가 첨부한 파일 리스트를 불러온다.
+		logger.info("fileList : ? " + fileList);
+		model.addAttribute("fileList", fileList);
+
 		return "mypage";
 	}
 
@@ -173,16 +184,77 @@ public class MemberController {
 		return result;
 	}
 	
+	// spring.servlet.multipart.location=C:/files 이 경로로 주입. !!! 파일 저장위치 !!!
+    @Value("${spring.servlet.multipart.location}")
+    private String uploadAddr;
+	
+	@GetMapping(value = "/download/{filename}") // 다운로드 요청이 들어오면 작동되는 메서드.
+	public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+	    Resource resource = new FileSystemResource(uploadAddr + "/" + filename);
+	    logger.info("isFileExist ? : " + resource);
+	    if (resource.exists()) { // 파일이 존재 한다면.
+	    	String originalFileName = memberService.originalFileName(filename); 
+	        return ResponseEntity.ok()
+	            .header("Content-Disposition", "attachment; filename=\"" + originalFileName + "\"")
+	            .body(resource);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+	
+	@GetMapping(value = "/files/{filename}") // 직인 이미지 파일 요청이 들어오면 작동되는 메서드.
+	public ResponseEntity<Resource> Image(@PathVariable String filename) {
+		Path filePath = Paths.get(uploadAddr + "/" + filename);
+	    // 파일이 존재하는지 확인
+	    if (Files.exists(filePath)) {
+	        // 파일을 Resource로 반환
+	        Resource resource = new FileSystemResource(filePath);
+	        // Content-Type을 자동으로 설정하고 파일을 반환
+	        return ResponseEntity.ok()
+	            //.contentType(MediaType.IMAGE_JPEG)  // 이미지의 경우 예시로 JPEG 사용, 실제 이미지 타입에 맞게 설정
+	            .body(resource);
+	    } else {
+	        // 파일이 존재하지 않으면 404 반환
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+	
 	// 마이페이지(수정) 이동
 	@GetMapping(value = "/myPageUpdate.go")
 	public String myPageUpdateForm(Model model, HttpSession session) {
-		// 비밀번호 변경, 이름 변경 신청하기, 사내 연락처 정정 신청하기, 페이지네이션 처리.
-		// 서류 제출하기
 		// 직인 제출하기. 이 항목들이 go로 가야할지 do로 처리해야 할지 고민해봐야 할 듯!
 		String id = (String) session.getAttribute("loginId");
 		List<MemberDTO> memberInfo = memberService.memberInfo(id);
+		//List<FileDTO> fileList = memberService.fileList(id); // 사용자가 첨부한 파일 리스트를 불러온다.
 		model.addAttribute("memberInfo", memberInfo);
+		//model.addAttribute("fileList", fileList);
 		return "mypage_update";
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/fileUpload.do")
+	public ResponseEntity<List<FileDTO>> fileUpload(@RequestParam("file") MultipartFile[] files, HttpSession session, Model model) {
+		String id = (String) session.getAttribute("loginId");
+		int empl_idx = memberService.getUploaderIdx(id);
+		try {
+			memberService.fileUpload(empl_idx, files);
+	        List<FileDTO> fileList = memberService.getUploadedFiles(empl_idx);  // 업로드된 파일 리스트
+			return ResponseEntity.ok(fileList);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	// 파일 목록 조회
+	@ResponseBody
+	@GetMapping("/getFileList.do")
+	public ResponseEntity<List<FileDTO>> getFileList(HttpSession session) {
+	    String id = (String) session.getAttribute("loginId");
+	    int empl_idx = memberService.getUploaderIdx(id);
+
+	    List<FileDTO> fileList = memberService.getUploadedFiles(empl_idx);  // 업로드된 파일 목록 조회
+	    return ResponseEntity.ok(fileList);  // 파일 목록을 JSON으로 반환
 	}
 	
 	@ResponseBody // 응답을 JSON 형태로 반환
