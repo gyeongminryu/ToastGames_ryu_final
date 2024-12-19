@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.toast.member.dto.FileDTO;
 import com.toast.member.dto.MemberDTO;
 
 @Mapper
@@ -25,6 +26,10 @@ public interface MemberDAO {
 
 	List<MemberDTO> memberInfo(String id);
 
+	List<FileDTO> fileList(String id);
+	
+	String originalFileName(String filename);
+
 	boolean checkCurrentPassword(String id, String encryptPw);
 	
 	// 이건 pw를 바꿈.
@@ -37,6 +42,12 @@ public interface MemberDAO {
 	int countHistory(String id, int cnt);
 
 	List<Map<String, Object>> employmentHistory(int limit, int offset, String id);
-	
+
+	int getUploaderIdx(String id);
+
+	void fileUpload(FileDTO fileDTO);
+
+	List<FileDTO> getUploadedFiles(int empl_idx);
+
 }
 
