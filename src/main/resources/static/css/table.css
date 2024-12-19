@@ -43,6 +43,14 @@
     text-align: left;
 }
 
+.tst_table .td_align_right{
+    text-align: right;
+}
+
+.tst_table .td_align_top{
+    vertical-align: top;
+}
+
 .tst_table .td_no_data{
     padding: 240px 0;
 }
@@ -55,4 +63,8 @@
 
 .tst_table .td_no_data h3{
     color: var(--tst-color-medium);
+}
+
+.tst_table .list_no_desc{
+    margin: 0;
 }

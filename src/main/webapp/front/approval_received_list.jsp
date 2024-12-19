@@ -63,7 +63,7 @@
                 <!-- //게시물 분류 -->
 
                 <!-- 결재할 문서 목록 -->
-                <table class="tst_table">
+                <table class="tst_table approval_received_list">
                     <colgroup>
                         <col style="width: 180px" />
                         <col style="width: 180px" />
@@ -88,7 +88,7 @@
                     <!-- //결재할 문서 목록 -->
 
                     <!-- 결재할 전자 문서가 없을 경우 -->
-                    <tr>
+                    <tr class="approval_received_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
                         <td colspan="7" class="td_no_data">
                             <p>
                                 <i class="bi bi-file-earmark-break"></i>
@@ -124,6 +124,33 @@
                         </td>
                     </tr>
                     <!-- //기본 -->
+
+                    <!-- 예시) 문서를 읽지 않았을 경우 -->
+                    <tr>
+                        <td class="td_align_left">
+                            김이름 (영업/대리)
+                        </td>
+                        <td>
+                            출장 결과 보고서
+                        </td>
+                        <td class="td_align_left">
+                            <span class="tst_badge_min btn_primary margin_right">읽지 않음</span>
+                            제목이 여기에 출력됩니다.
+                        </td>
+                        <td>
+                            <span class="tst_badge_min btn_secondary">결재 대기</span>
+                        </td>
+                        <td>
+                            2024-12-18 09:30
+                        </td>
+                        <td>
+                            2024-12-18 10:00
+                        </td>
+                        <td>
+                            2024-12-20 18:00
+                        </td>
+                    </tr>
+                    <!-- //예시) 문서를 읽지 않았을 경우 -->
 
                     <!-- 예시) 문서를 읽었으나 아직 결재를 마치지 않았을 경우 -->
                     <tr>

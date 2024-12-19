@@ -80,7 +80,7 @@ body{
     line-height: var(--tst-body-line-height);
 }
 
-p, h1, h2, h3{
+p, h1, h2, h3, h4{
     margin: 0;
     padding: 0;
     color: var(--tst-body-color);
@@ -100,6 +100,11 @@ h2{
 h3{
     font-size: var(--tst-body-font-size);
     font-weight: 600;
+}
+
+h4{
+    font-size: 10px;
+    font-weight: 800;
 }
 
 p{
@@ -262,13 +267,13 @@ p.min{
 
 .list_no_desc.list_inline li{
     display: inline-block;
-    margin: 0 46px 0 -36px;
+    margin: 0 50px 0 -40px;
     padding: 0;
 }
 
 .list_no_desc.list_block li{
     display: block;
-    margin: 0 0 var(--tst-margin-vertical) -36px;
+    margin: 0 0 var(--tst-margin-vertical) -40px;
     padding: 0;
 }
 
@@ -278,7 +283,7 @@ p.min{
 
 .tst_title,
 ul.tst_title.list_no_desc{
-    margin: 0 66px 36px -36px;
+    margin: 0 70px 36px -40px;
 }
 
 ul.tst_title .tst_title_item{
@@ -422,6 +427,12 @@ button.btn_full{
 .btn_disable{
     border-color: var(--tst-color-disabled);
     background-color: var(--tst-color-disabled);
+    color: var(--tst-color-white);
+}
+
+.btn_caution{
+    border-color: var(--tst-color-warning);
+    background-color: var(--tst-color-warning);
     color: var(--tst-color-white);
 }
 

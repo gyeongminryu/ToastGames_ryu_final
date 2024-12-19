@@ -1,0 +1,28 @@
+.bi.bi-paperclip:after{
+    margin-left: 4px;
+}
+
+.approval_profile_image{
+    width: 40px;
+    height: 40px;
+    border-radius: var(--tst-border-radius);
+    object-fit: cover;
+}
+
+.approval_line_info{
+    position: relative;
+}
+
+.approval_line_info .approval_datetime_subtle{
+    float: right;
+    vertical-align: top;
+}
+
+.approval_line_info .approval_result_badge{
+    margin-top: 8px;
+}
+
+.approval_line_info .approval_reject_reason{
+    font-size: 12px;
+    margin-top: 4px;
+}
