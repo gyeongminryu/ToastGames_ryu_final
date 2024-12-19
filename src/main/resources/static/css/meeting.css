@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+  /* 전체 타이틀 스타일 */
+  .fc-toolbar-title {
+    text-align: center; /* 가운데 정렬 */
+    display: block;     /* 컨테이너 블록으로 설정 */
+    line-height: 1.2;   /* 줄 간격 조정 */
+  }
+
+  /* 월(yearMonth)와 날짜 범위(dayRange) 스타일 */
+  .fc-toolbar-title .year-month {
+    font-size: 24px; /* 기본 크기 */
+    font-weight: bold;
+  }
+
+  .fc-toolbar-title .day-range {
+    font-size: 18px; /* 작은 크기 */
+    color: gray; /* 선택 사항: 색상 변경 */
+    display: block; /* 줄바꿈 유지 */
+  }
+ 
+
+  /* 버튼 컨테이너 스타일 */
+  .fc-toolbar-chunk:first-child {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .fc-toolbar-chunk:last-child {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+
+  
+	#calendar {
+	  width: 80%; /* 원하는 너비 */
+	  height: 80%; /* 원하는 높이 */
+	}
+
+	    /* 모달 배경 스타일 */
+    .modal {
+        display: none; /* 기본적으로 숨김 */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    }
+
+    /* 모달 콘텐츠 스타일 */
+    .modal_content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 15px;
+        border: 1px solid #888;
+        width: 40%;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    /* 닫기 버튼 스타일 */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+    }
+    
+    .meeting_add_modal {
+    	margin: 10px 0px;
+    	padding:0px;
+    }
