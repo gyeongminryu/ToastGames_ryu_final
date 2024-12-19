@@ -7,10 +7,17 @@ public class DeptInfoTreeDTO {
 	private String dept_duty;
 	private String dept_head_name;
 	private String high_dept_name;
-	private String high_dept_empl_name;
-	private String high_dept_duty;
+	private String high_dept_head_name;
+	private String high_dept_head_duty;
 	private String total_dept_count;
+	private String total_high_dept_count;
 	
+	public String getTotal_high_dept_count() {
+		return total_high_dept_count;
+	}
+	public void setTotal_high_dept_count(String total_high_dept_count) {
+		this.total_high_dept_count = total_high_dept_count;
+	}
 	public String getTotal_dept_count() {
 		return total_dept_count;
 	}
@@ -42,17 +49,18 @@ public class DeptInfoTreeDTO {
 	public void setHigh_dept_name(String high_dept_name) {
 		this.high_dept_name = high_dept_name;
 	}
-	public String getHigh_dept_empl_name() {
-		return high_dept_empl_name;
+	
+	public String getHigh_dept_head_name() {
+		return high_dept_head_name;
 	}
-	public void setHigh_dept_empl_name(String high_dept_empl_name) {
-		this.high_dept_empl_name = high_dept_empl_name;
+	public void setHigh_dept_head_name(String high_dept_head_name) {
+		this.high_dept_head_name = high_dept_head_name;
 	}
-	public String getHigh_dept_duty() {
-		return high_dept_duty;
+	public String getHigh_dept_head_duty() {
+		return high_dept_head_duty;
 	}
-	public void setHigh_dept_duty(String high_dept_duty) {
-		this.high_dept_duty = high_dept_duty;
+	public void setHigh_dept_head_duty(String high_dept_head_duty) {
+		this.high_dept_head_duty = high_dept_head_duty;
 	}
 	public String getDept_idx() {
 		return dept_idx;

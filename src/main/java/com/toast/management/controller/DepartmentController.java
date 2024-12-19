@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.toast.management.dto.DepartmentDTO;
+import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.PositionDTO;
@@ -119,5 +120,22 @@ public class DepartmentController {
 		return map;
 	}
 	
+	@GetMapping(value="/organizationDetail.go")
+	public String organizationDetailGo(@RequestParam String dept_idx,Model model) {
+		
+		// 부서 히스토리 정보
+		List<DeptHistoryDTO> dept_his = departmentService.getdepthistory(dept_idx);
+		
+		// 부서정보
+		DepartmentDTO dept =departmentService.getdeptinfo(dept_idx);
+		
+		// 사원 리스트
+		
+	//	departmentService.organizationTree();	
+		model.addAttribute("deptinfo",dept);
+		model.addAttribute("depthis",dept_his);
+		
+		return "organization_detail";
+	}
 	
 }

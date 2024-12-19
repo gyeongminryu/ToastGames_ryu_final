@@ -65,9 +65,13 @@
   <label>은행 정보</label><br />
   <label>은행 선택</label>
   <select name="bank_idx">
-    <option value="1">은행 A</option>
-    <option value="2">은행 B</option>
-    <option value="3">은행 C</option>
+    <option value="1">농협</option>
+    <option value="2">수협</option>
+    <option value="3">국민</option>
+    <option value="4">우리</option>
+    <option value="5">신한</option>
+    <option value="6">KEB하나</option>
+    <option value="7">기업</option>
   </select><br />
   
   <label>계좌번호</label>

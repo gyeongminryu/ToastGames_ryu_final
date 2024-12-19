@@ -39,12 +39,7 @@
 </head>
 
 <body>
-    <!-- Form for input -->
-    <form action="go" method="get">
-        <input type="text" id="test_id" name="test_id"/>
-        <input type="text" id="test_name" name="test_name"/>
-        <button type="submit">저장</button>
-    </form>
+   
 
     <!-- Chart Box -->
     <div class="chart-box">
@@ -97,20 +92,18 @@
     // 서버에서 데이터를 가져오고 차트를 렌더링
     function fetchDataAndRenderChart(option) {
         $.ajax({
-            url: './deptTreelist.ajax',
+            url: './deptTreelist.ajax', // 경로설정
             type: 'GET',
             dataType: 'json',
             success: function(response) {
                 console.log(response.deptlist);
-
+         
                 // 서버로부터 받은 데이터를 Google OrgChart 데이터 테이블에 반영
                 response.deptlist.forEach(function(dept) {
                 	data.addRow([
-                	    '<div>' + dept.dept_name + '<div><div>' + dept.dept_duty + '<div><div>' + dept.total_dept_count + '<div>', // Name
-                	    dept.high_dept_name 
-                	        ? '<div>' + dept.high_dept_name + '<div><div>' + dept.dept_duty + '<div><div>' + dept.total_dept_count + '<div>' // Manager
-                	        : '', // Manager를 완전한 비어있는 div로 대체
-                	    '<div>부서장: ' + dept.dept_head_name + '<div><div>직책: ' + dept.dept_duty + '<div><div>부서원 수: ' + dept.total_dept_count + '<div>' // ToolTip
+                		  {v:dept.dept_name, f:dept.dept_name+'<div>'+dept.dept_duty +'-' +dept.dept_head_name+'</div>'+'<div>'+dept.total_dept_count+'</div>'}, // Name
+                	    dept.high_dept_name, // Manager를 완전한 비어있는 div로 대체
+                	    dept.dept_idx // ToolTip
                 	]);
                 });
 
