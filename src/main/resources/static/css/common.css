@@ -150,7 +150,8 @@ p.min{
 /* flex */
 
 .tst_flex{
-    margin: 0;
+    width: calc((100% + (var(--tst-margin-flex)) * 2));
+    margin: 0 calc(var(--tst-margin-flex) * -1);
     padding: 0;
     display: flex;
 }
@@ -354,6 +355,10 @@ button{
     display: block;
     font-size: var(--tst-form-font-size);
     font-family: var(--tst-font-sans-serif), serif;
+}
+
+textarea{
+    resize: none;
 }
 
 input[type="text"],

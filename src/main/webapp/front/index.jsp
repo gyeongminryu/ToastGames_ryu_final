@@ -262,7 +262,7 @@
                                 <button class="btn_primary btn_full" onclick="location.href='/'">결재하기</button>
                             </li>
                             <li>
-                                <button class="btn_secondary btn_full" onclick="tst_approval_reject('{문서 번호}')">반려하기</button>
+                                <button class="btn_secondary btn_full" onclick="tst_approval_reject('tst_approval_reject_modal')">반려하기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->
@@ -278,19 +278,9 @@
     </div>
 
     <!-- 결재 반려사유 기재하는 모달 -->
-    <link rel="stylesheet" type="text/css" href="resources/css/modal.css" />
-    <div class="tst_modal tst_approval_reject_modal">
-        <div class="tst_modal_backdrop"></div>
-        <div class="tst_modal_container">
-            <div class="tst_modal_header">
-                <h1 class="tst_modal_title"></h1>
-                <i class="bi bi-dash-circle-dotted"></i>
-            </div>
-            <div class="tst_modal_body"></div>
-            <div class="tst_modal_footer"></div>
-        </div>
-    </div>
+    <c:import url="approval_received_reject_modal.jsp" />
     <!-- //결재 반려사유 기재하는 모달 -->
+
 </div>
 </body>
 <script src="resources/js/common.js"></script>
