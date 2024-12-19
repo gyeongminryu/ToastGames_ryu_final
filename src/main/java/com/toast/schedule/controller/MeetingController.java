@@ -7,11 +7,14 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,7 +82,6 @@ public class MeetingController {
 		meetingService.meetingRoomAdd(param,file);
 		return new ModelAndView("redirect:/meeting/meeting.go");
 	}
-	
 
 	//회의실 정보 상세보기(회의실 정보 전체)+사진 추가
 	@RequestMapping(value="/meetingRoom.detail")
@@ -94,6 +96,48 @@ public class MeetingController {
 		mv.addObject("file", file);
 		mv.setViewName("meeting_room");
 		return mv;
+	}
+	
+	//회의실 정보 수정(관리자, 사진제외)
+	@PostMapping("/updateMeetingRoomDetail.do")
+	public ResponseEntity<?> updateRoomDetail(
+			@ModelAttribute MeetingDTO meetingDto) {  // room_idx 추가
+	        
+	    logger.info("회의실 ID (room_idx): {}", meetingDto.getRoom_idx());
+	    int row = meetingService.updateMeetingRoom(meetingDto);
+	    
+	    // 응답에 담을 데이터 준비
+	    Map<String, String> response = new HashMap<>();
+	    if(row >0) {
+	    	response.put("message", "수정 성공");
+	    }else {
+	    	response.put("message", "수정 실패");
+	    }
+	    
+	    // 수정 처리 후 응답
+	    return ResponseEntity.ok(response);
+	}
+
+	//회의실 정보 삭제
+	@PostMapping("/deleteMeetingRoom.do")
+	public ResponseEntity<?> deleteMeetingRoom(
+			@RequestBody Map<String, Integer> params) {  // room_idx 추가
+	        
+	    logger.info("회의실 ID (room_idx): {}", params.get("room_idx"));
+	    int row = meetingService.checkMeetingRoom(params.get("room_idx"));
+	    
+	    // 응답에 담을 데이터 준비
+	    Map<String, String> response = new HashMap<>();
+
+	    if(row >0) {
+	    	response.put("message", "수정 실패");
+	    }else {
+	    	meetingService.deleteMeetingRoom(params.get("room_idx"));
+	    	response.put("message", "수정 성공");
+	    }
+	    
+	    // 수정 처리 후 응답
+	    return ResponseEntity.ok(response);
 	}
 	
 
@@ -113,6 +157,7 @@ public class MeetingController {
 			meetings = meetingService.getMeeting(params);
 			logger.info("일정 왜  events없어:"+meetings);
 		}
+		logger.info("meetings의길이:"+meetings.size());
 	    return meetings;
 	}
 	
@@ -139,7 +184,6 @@ public class MeetingController {
             dto.setMeet_end_date(endLocalDateTime);
 
             logger.info("Start Time (Local): " + startLocalDateTime);
-            logger.info("End Time (Local): " + endLocalDateTime);
 
         } else {
             logger.error("Failed to parse start or end date");
@@ -250,7 +294,6 @@ public class MeetingController {
             dto.setMeet_end_date(endLocalDateTime);
 
             logger.info("Start Time (Local): " + startLocalDateTime);
-            logger.info("End Time (Local): " + endLocalDateTime);
 
         } else {
             logger.error("Failed to parse start or end date");
@@ -285,7 +328,6 @@ public class MeetingController {
 			dto.setMeet_end_date(endLocalDateTime);
 			
 			logger.info("Start Time (Local): " + startLocalDateTime);
-			logger.info("End Time (Local): " + endLocalDateTime);
 			
 		} else {
 			logger.error("Failed to parse start or end date");
@@ -319,7 +361,6 @@ public class MeetingController {
 	//내가 포함된 회의 수정/ 삭제시 알림 발송
 	
 	
-	//회의 참여자 추가/ 수정
 	
 
 }
