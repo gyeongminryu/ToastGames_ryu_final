@@ -64,7 +64,7 @@ public class DepartmentController {
 		return map;
 	}
 	
-	@GetMapping(value="/deptlist.ajax") // 직급 직책 부서명 가져오기
+	@GetMapping(value="/deptlist.ajax") // 부서 선택시 리스트 나열
 	@ResponseBody
 	public Map<String, Object> deptlist(){
 		
@@ -124,7 +124,7 @@ public class DepartmentController {
 	public String organizationDetailGo(@RequestParam String dept_idx,Model model) {
 		
 		// 부서 히스토리 정보
-		List<DeptHistoryDTO> dept_his = departmentService.getdepthistory(dept_idx);
+		List<DeptHistoryDTO> dept_his = departmentService.getdeptheadhistory(dept_idx);
 		
 		// 부서정보
 		DepartmentDTO dept =departmentService.getdeptinfo(dept_idx);

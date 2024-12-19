@@ -30,7 +30,7 @@ public interface DepartmentDAO {
 
 	List<Map<String, Object>> getDeptMemberCounts();
 
-	List<DeptHistoryDTO> getdepthistory(String dept_idx);
+	List<DeptHistoryDTO> getdeptheadhistory(String dept_idx);
 
 	 
 

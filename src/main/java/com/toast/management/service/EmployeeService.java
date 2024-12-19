@@ -132,8 +132,7 @@ public class EmployeeService {
 		
 		if(dutyidx>=100) { // 부서장 직책이라면? 
 			// department의 head_idx가 비어있지 않으면 - 부서장이 있는 경우라면 
-			DepartmentDTO dept =deptDAO.getdeptinfo(dept_idx);
-			
+			DepartmentDTO dept =deptDAO.getdeptinfo(dept_idx);			
 			int head_idx = dept.getDept_head_idx();
 			
 			if(head_idx != 0) { // 이전 부서장이 존재한다면
@@ -149,10 +148,14 @@ public class EmployeeService {
 			
 			// department 테이블에 부서장 업데이트
 			employeeDAO.deptHeadAdd(dept_idx,empl_idx);
-			
-			
+	
 		}
 		
+		// 부서장인데 부서장으로 발령한다면? >> dept 테이블에서 empl_idx 조회 만약 있다면 부서장이다 
+		if(employeeDAO.deptheadcheck(empl_idx)>0) {
+			// 이전 부서의 head_idx를 null로 바꿈
+			employeeDAO.headgetdept(empl_idx);
+		}
 		
 	}
 	

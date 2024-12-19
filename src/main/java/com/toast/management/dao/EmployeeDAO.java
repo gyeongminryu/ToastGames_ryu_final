@@ -32,6 +32,8 @@ public interface EmployeeDAO {
 
 	int deptHeadAdd(String dept_idx, String empl_idx);
 
+	int deptheadcheck(String empl_idx);
+
 	
 
 	

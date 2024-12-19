@@ -80,8 +80,35 @@ GROUP BY
     a.dept_idx
 </select>
 
-<select id="getdepthistory" resultType="com.toast.management.dto.DeptHistoryDTO">
-
+<select id="getdeptheadhistory" resultType="com.toast.management.dto.DeptHistoryDTO">
+SELECT 
+    dept_history_idx, 
+    dept_idx, 
+    dept_name, 
+    dept_head_idx, 
+    dept_duty, 
+    dept_addr, 
+    dept_change_date, 
+    dept_high, 
+    dept_state
+FROM (
+    SELECT 
+        dept_history_idx, 
+        dept_idx, 
+        dept_name, 
+        dept_head_idx, 
+        dept_duty, 
+        dept_addr, 
+        dept_change_date, 
+        dept_high, 
+        dept_state,
+        LAG(dept_head_idx) OVER (PARTITION BY dept_idx ORDER BY dept_change_date) AS prev_dept_head_idx
+    FROM department_history
+    WHERE dept_idx = #{param1}
+     AND dept_head_idx IS NOT NULL
+) AS subquery
+WHERE dept_head_idx != prev_dept_head_idx OR prev_dept_head_idx IS NULL
+ORDER BY dept_change_date;
 </select>
 
 

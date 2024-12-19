@@ -93,4 +93,9 @@ update appointment set transfer_date = #{param2} where appo_idx = #{param1}
 update department set dept_head_idx = #{param2} where dept_idx = #{param1}
 </update>
 
+<select id="deptheadcheck">
+select count(dept_idx) from department where dept_head_idx = #{param1}
+</select>
+
+
 </mapper>

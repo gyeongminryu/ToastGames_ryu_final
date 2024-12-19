@@ -102,10 +102,10 @@ public class DepartmentService {
 		return dept;
 	} // public List<DeptInfoTreeDTO> getdeptTree()
 
-	public List<DeptHistoryDTO> getdepthistory(String dept_idx) {
+	public List<DeptHistoryDTO> getdeptheadhistory(String dept_idx) {
 		
 		
-		List<DeptHistoryDTO> dept_his =	departmentDAO.getdepthistory(dept_idx);
+		List<DeptHistoryDTO> dept_his =	departmentDAO.getdeptheadhistory(dept_idx);
 		
 		for (DeptHistoryDTO deptHistoryDTO : dept_his) {
 			String head_idx =deptHistoryDTO.getDept_head_idx();
