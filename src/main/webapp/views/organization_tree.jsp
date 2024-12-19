@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -37,12 +39,7 @@
 </head>
 
 <body>
-    <!-- Form for input -->
-    <form action="go" method="get">
-        <input type="text" id="test_id" name="test_id"/>
-        <input type="text" id="test_name" name="test_name"/>
-        <button type="submit">저장</button>
-    </form>
+   
 
     <!-- Chart Box -->
     <div class="chart-box">
@@ -58,63 +55,80 @@
 </body>
 
  <!-- FullCalendar Script -->
-    <script>
-    
+   <script>
     google.charts.load('current', { packages: ["orgchart"] });
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(initChart);
 
-    function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Name');  // 이름
-        data.addColumn('string', 'Manager');  // 상사
-        data.addColumn('string', 'ToolTip');  // 툴팁 (툴팁을 HTML로 처리)
+    var chart; // 차트 객체를 전역 변수로 선언
+    var data; // 데이터 테이블 객체
 
-        // 데이터 추가: HTML을 이용하여 이름과 직급을 함께 표시
-        data.addRows([ // 이름이 같으면 하나만 나옴
-        	 ['<div>보스<div><div>ceo<div><div>1<div>', '', 'CEO'], // John은 HTML 스타일 적용
-             ['<div>사업부<div><div>부장<div><div>1<div>', '<div>보스<div><div>ceo<div><div>1<div>', 'VP of Marketing'], // Manager에는 텍스트만
-             ['<div>영업부<div><div>부장<div><div>1<div>', '<div>보스<div><div>ceo<div><div>1<div>', 'VP of Sales'],
-             ['<div>기술부<div><div>부장<div><div>1<div>', '<div>보스<div><div>ceo<div><div>1<div>', 'Marketing Manager'],
-             ['<div>해외부<div><div>부장<div><div>1<div>', '<div>보스<div><div>ceo<div><div>1<div>', 'Sales Manager'],
-             ['<div>바부<div><div>부장<div><div>1<div>', '<div>보스<div><div>ceo<div><div>1<div>', 'SEO Specialist'],
-             ['<div>밥부<div><div>부장<div><div>1<div>', '<div>보스<div><div>ceo<div><div>1<div>', 'Sales Specialist']
-        ]);
-		
-        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+    // 차트를 초기화하는 함수
+    function initChart() {
+        data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name'); // 이름
+        data.addColumn('string', 'Manager'); // 상사
+        data.addColumn('string', 'ToolTip'); // 툴팁 (HTML 형태로 렌더링)
 
-        // 차트 옵션 설정
+        chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+
         var option = {
-        		 allowHtml: true,
-        		  size: 'small',
-        		  color: '#ffcc00',
-        		  highlightColor: '#ffff00',
-        		  selectionColor: '#ff0000',
-        		//  layout: 'vertical',
-        		  allowCollapse: true,
-        		  animationDuration: 400,
-        		  nodeContent: 'title',
-        		  maxDepth: 3,
-        		  width: '10%',
-        		  height: '60px'
-		};
-        chart.draw(data, option);  // 데이터와 옵션을 사용해 차트를 그리기
-        
-        // 클릭 이벤트 처리
-        google.visualization.events.addListener(chart, 'select', function() {
-            var selectedItem = chart.getSelection()[0];
-            if (selectedItem) {
-                var name = data.getValue(selectedItem.row, 0);
-                var manager = data.getValue(selectedItem.row, 1);
-                var idx = data.getValue(selectedItem.row, 2);
-               console.log(idx);
+            allowHtml: true,
+            size: 'small',
+            color: '#ffcc00',
+            highlightColor: '#ffff00',
+            selectionColor: '#ff0000',
+            allowCollapse: true,
+            animationDuration: 400,
+            nodeContent: 'title',
+            maxDepth: 3,
+            width: '100%',
+            height: '400px'
+        };
+
+        // AJAX를 통해 서버 데이터 가져오기
+        fetchDataAndRenderChart(option);
+    }
+
+    // 서버에서 데이터를 가져오고 차트를 렌더링
+    function fetchDataAndRenderChart(option) {
+        $.ajax({
+            url: './deptTreelist.ajax', // 경로설정
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                console.log(response.deptlist);
+         
+                // 서버로부터 받은 데이터를 Google OrgChart 데이터 테이블에 반영
+                response.deptlist.forEach(function(dept) {
+                	data.addRow([
+                		  {v:dept.dept_name, f:dept.dept_name+'<div>'+dept.dept_duty +'-' +dept.dept_head_name+'</div>'+'<div>'+dept.total_dept_count+'</div>'}, // Name
+                	    dept.high_dept_name, // Manager를 완전한 비어있는 div로 대체
+                	    dept.dept_idx // ToolTip
+                	]);
+                });
+
+                // 차트 렌더링
+                chart.draw(data, option);
+
+                // 클릭 이벤트 처리
+                google.visualization.events.addListener(chart, 'select', function() {
+                    var selectedItem = chart.getSelection()[0];
+                    if (selectedItem) {
+                        var name = data.getValue(selectedItem.row, 0);
+                        var manager = data.getValue(selectedItem.row, 1);
+                        var tooltip = data.getValue(selectedItem.row, 2);
+                        console.log('Selected Name: ', name);
+                        console.log('Manager: ', manager);
+                        console.log('Tooltip: ', tooltip);
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX 요청 실패: ', error);
             }
         });
-        
     }
-    
-    
-   
-    </script>
+</script>
 
 
 
