@@ -1,4 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toast.approval.dao.ApprovalRequestDAO"></mapper>
+<mapper namespace="com.toast.approval.dao.ApprovalRequestDAO">
+    <select id="form_list" resultType="Map">
+        SELECT form_subject,form_idx FROM form
+    </select>
+
+    <select id="form" resultType="Map">
+        SELECT form_idx, form_subject,form_content,form_handler_idx FROM form WHERE form_idx = #{idx}
+    </select>
+
+    <insert id="doc_write_initial" useGeneratedKeys="true" keyColumn="doc_idx" keyProperty="doc_idx" parameterType="com.toast.approval.dto.ApprovalRequestDTO">
+        INSERT INTO document(doc_empl_idx,doc_content,form_idx,doc_state)
+        VALUES(#{doc_empl_idx},#{doc_content},#{form_idx},0)
+    </insert>
+
+    <select id="doc_get" resultType="Map">
+        SELECT doc_idx,doc_empl_idx,
+        <if test="doc_subject!=''">doc_subject,</if>
+        <if test="doc_content!=''">doc_content,</if>
+        <if test="doc_content_sub!=''">doc_content_sub,</if>
+        <if test="form_idx!=''">form_idx,</if>
+        <if test="doc_subject!=''">doc_subject</if>
+        FROM document WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <!--결재 양식 채우기 위한 데이터 조회 쿼리-->
+    <select id="doc_empl_name" resultType="String">
+        SELECT empl_name FROM employee WHERE empl_idx = ${empl_idx}
+    </select>
+
+
+    <select id="doc_dept_idx">
+        SELECT max(appo_idx ), dept_idx FROM appointment WHERE appo_empl_idx =  #{empl_idx} AND appo_idx =(SELECT max(appo_idx) FROM appointment WHERE appo_empl_idx = #{empl_idx});
+    </select>
+
+
+    <!--문서 작성 -->
+    <update id="doc_write">
+        UPDATE document
+        <set>
+        <if test="doc_end_date != ''">doc_end_date = #{doc_end_date},</if>
+        <if test="doc_subject != ''">doc_subject = #{doc_subject},</if>
+        <if test="doc_content_sub!= ''"> doc_content_sub = #{doc_content_sub},</if>
+        <if test="doc_content!= ''">doc_content = #{doc_content},</if>
+        <if test="doc_write_date!= ''">doc_write_date=#{doc_write_date},</if>
+        <if test="doc_write_date!= ''">doc_update_date = #{doc_write_date}</if>
+        </set>
+        WHERE doc_idx = #{doc_idx}
+    </update>
+
+    <insert id="approval_doc_file_write">
+        INSERT INTO file (uploader_idx,file_key,ori_filename, new_filename,file_type,file_addr)
+        VALUES(#{empl_idx},#{file_key},#{ori_filename},#{new_filename},#{file_type},#{file_addr})
+    </insert>
+
+    <!--document의 file_key update-->
+    <update id="doc_write_file_key">
+        UPDATE document SET file_key = #{file_key} WHERE doc_idx = #{doc_idx}
+    </update>
+
+    <!--저장된 파일키 있는지 확인-->
+    <select id="doc_saved_filekey_count" resultType="int">
+        SELECT count(file_key) FROM document WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <!--저장된 파일키 가져오기-->
+    <select id="doc_saved_filekey" resultType="String">
+        SELECT file_key FROM document WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <!--이전 파일의 path를 가져오기-->
+    <select id="get_previous_file_addr" parameterType="Map">
+        SELECT file_addr FROM file WHERE file_key = #{prev_file_key}
+    </select>
+
+
+    <!--이전 파일들 DB에서 삭제하기-->
+    <delete id="delete_previous_files">
+        DELETE FROM file WHERE file_key = #{previous_filekey}
+    </delete>
+    
+    
+    <!--파일 있었는데 수정 후 없어진 경우 doc_file_key 없애주는 쿼리-->
+    <update id="doc_filekey_delete">
+        UPDATE document SET file_key = '' WHERE doc_idx = #{doc_idx}
+    </update>
+</mapper>
