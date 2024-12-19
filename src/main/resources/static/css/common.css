@@ -392,6 +392,7 @@ input[type="submit"],
 input[type="button"],
 button{
     width: var(--tst-form-btn-width);
+    font-size: var(--tst-body-font-size);
     font-weight: var(--tst-form-btn-weight);
     cursor: pointer;
 }
