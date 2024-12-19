@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -110,6 +111,7 @@ public class EmployeeService {
 
 
 	// 인사발령 서비스
+	@Transactional
 	public void employeeAppoDo(String empl_idx, String dept_idx, String position_idx, String duty_idx,
 			String movein_date) {
 		AppointmentDTO appolast = new AppointmentDTO();
@@ -129,12 +131,32 @@ public class EmployeeService {
 		}
 		
 		if(dutyidx>=100) { // 부서장 직책이라면? 
+			// department의 head_idx가 비어있지 않으면 - 부서장이 있는 경우라면 
+			DepartmentDTO dept =deptDAO.getdeptinfo(dept_idx);
+			
+			int head_idx = dept.getDept_head_idx();
+			
+			if(head_idx != 0) { // 이전 부서장이 존재한다면
+				AppointmentDTO appolasthead = new AppointmentDTO();
+				String headidx = String.valueOf(head_idx);
+				appolasthead = employeeDAO.employeeAppolast(headidx);
+				int head_appo_idx = appolasthead.getAppo_idx();
+				String headdudy = String.valueOf(20);
+				employeeDAO.employeeAppoDo(headidx,dept_idx,position_idx,headdudy,movein_date);
+				// 전출날짜 넣기
+				employeeDAO.employeeTransfer(head_appo_idx,movein_date);
+			}
+			
+			// department 테이블에 부서장 업데이트
 			employeeDAO.deptHeadAdd(dept_idx,empl_idx);
+			
+			
 		}
 		
 		
 	}
-
+	
+	// 직원 퇴사, 근무, 휴직 처리
 	public void employeeChangeDo(String empl_idx, String statement_idx) {
 		if(statement_idx.equals("3")) { // 퇴직처리이면
 		employeeDAO.employeeResigDo(empl_idx,statement_idx);

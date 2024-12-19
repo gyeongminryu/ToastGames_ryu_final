@@ -43,4 +43,46 @@
 	update department set dept_name = #{dept_name}, dept_duty = #{dept_duty}, dept_high = #{dept_high}, dept_addr = #{dept_addr} where dept_idx = #{dept_idx}
 </update>
 
+<select id="getdeptTree" resultType="com.toast.management.dto.DeptInfoTreeDTO" >
+SELECT 
+    d1.dept_idx AS dept_idx,              
+    d1.dept_name AS dept_name,           
+    e1.empl_name AS dept_head_name,       
+    du1.duty_name AS dept_duty,          
+    d2.dept_name AS high_dept_name,      
+    e2.empl_name AS high_dept_head_name, 
+    du2.duty_name AS high_dept_head_duty  
+FROM 
+    department d1
+LEFT JOIN 
+    employee e1 ON d1.dept_head_idx = e1.empl_idx  
+LEFT JOIN 
+    duty du1 ON d1.dept_idx = du1.duty_idx         
+LEFT JOIN 
+    department d2 ON d1.dept_high = d2.dept_idx   
+LEFT JOIN 
+    employee e2 ON d2.dept_head_idx = e2.empl_idx 
+LEFT JOIN 
+    duty du2 ON d2.dept_idx = du2.duty_idx
+    where
+    d1.dept_idx >= 2 
+</select>
+
+<select id="getDeptMemberCounts" resultType="java.util.HashMap">
+SELECT 
+    a.dept_idx, 
+    COUNT(a.appo_idx) AS member_count
+FROM 
+    appointment a
+WHERE 
+    a.transfer_date IS NULL  
+GROUP BY 
+    a.dept_idx
+</select>
+
+<select id="getdepthistory" resultType="com.toast.management.dto.DeptHistoryDTO">
+
+</select>
+
+
 </mapper>
