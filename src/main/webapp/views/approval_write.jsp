@@ -22,12 +22,14 @@
 
 </head>
 <body>
-<form action="doc_write.do" method="POST" enctype="multipart/form-data">
+<form action="approval_doc_write.do" method="POST" enctype="multipart/form-data">
   <input type = "hidden" name = "doc_idx" id="hidden_doc_idx"/>
+  <input type = "hidden" name = "doc_write_date" id="hidden_doc_date"/>
+
   <table>
     <tr>
       <td>결재 마감일</td>
-      <td><input type="date" name="doc_end_date"/></td>
+      <td><input type="datetime-local" name="doc_end_date"/></td>
     </tr>
 
     <tr>
@@ -41,7 +43,7 @@
         보고 내용
         <%--<div id="div_editor"></div>--%>
         <div id="editor"></div>
-        <input type="hidden" name="content" class ="content"/>
+        <%--<input type="hidden" name="doc_content_sub" class ="content"/>--%>
       </td>
       <td>
 
@@ -49,7 +51,7 @@
     </tr>
     <tr>
       <td colspan="2" id ="form_content"></td>
-      <input type = "hidden" name = "form_content"/>
+      <%--<input type = "hidden" name = "doc_content"/>--%>
       <td>
       </td>
     </tr>

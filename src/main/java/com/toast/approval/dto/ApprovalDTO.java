@@ -12,7 +12,7 @@ public class ApprovalDTO {
     private int doc_state;
     private Date doc_write_date;
     private Date doc_update_date;
-    private Date doc_end_date;
+    private String doc_end_date;
 
     public int getDoc_idx() {
         return doc_idx;
@@ -86,11 +86,11 @@ public class ApprovalDTO {
         this.doc_update_date = doc_update_date;
     }
 
-    public Date getDoc_end_date() {
+    public String getDoc_end_date() {
         return doc_end_date;
     }
 
-    public void setDoc_end_date(Date doc_end_date) {
+    public void setDoc_end_date(String doc_end_date) {
         this.doc_end_date = doc_end_date;
     }
 }

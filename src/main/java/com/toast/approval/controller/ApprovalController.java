@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +65,7 @@ public class ApprovalController {
 		int empl_idx = 10002;
 
 		//작성하기부터는 update로 하기
-		int doc_idx = approvalService.doc_write(Integer.parseInt(form_idx),form_content,empl_idx);
+		int doc_idx = approvalService.doc_write_initial(Integer.parseInt(form_idx),form_content,empl_idx);
 
 
 
@@ -73,7 +76,10 @@ public class ApprovalController {
 		return "approval_write";
 	}
 
-	@GetMapping (value = "/doc_get.ajax")
+
+
+
+	@GetMapping (value = "/approval_doc_get.ajax")
 	@ResponseBody
 	public Map<String,Object> doc_get (int doc_idx) {
 		//세션 처리
@@ -85,19 +91,23 @@ public class ApprovalController {
 		return data;
 	}
 
-	@PostMapping (value = "/doc_write.do")
-	public String doc_write_do (String doc_idx, String doc_end_date, String subject, String content, String form_content, @RequestParam MultipartFile[]files) {
-		//현재 시간 계산하기 - 작성 일자용
+	@PostMapping (value = "/approval_doc_write.do")
+	public String doc_write_do (String doc_idx, String doc_write_date, String doc_end_date, String subject, String doc_content_sub, String doc_content,@RequestParam MultipartFile[]files) {
+		//세션 처리
+		int empl_idx = 10002;
+
+		logger.info("write_date:{}", doc_write_date);
 		logger.info("doc_idx:{}",doc_idx);
 		logger.info("doc_end_date:{}",doc_end_date);
 		logger.info("subject:{}",subject);
-		logger.info("content:{}",content);
-		logger.info("form_content:{}",form_content);
+		logger.info("content:{}",doc_content_sub);
+
+		//logger.info("form_content:{}",doc_content);
 
 		//update로 하기
+		approvalService.doc_write(doc_idx,doc_end_date,subject,doc_content_sub,doc_content,doc_write_date,files,empl_idx);
 
 
-
-		return "doc_write"; //목록으로 나중에 바꾸기
+		return "approval_writing_list"; //목록으로 나중에 바꾸기
 	}
 }

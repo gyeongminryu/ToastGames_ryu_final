@@ -26,6 +26,7 @@
                         <h1>내게 온 업무 요청</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/'">
+                        <%--링크 넣기--%>
                         <h1>내가 보낸 업무 요청</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/'">
@@ -56,6 +57,7 @@
                             <div class="tst_search_container">
                                 <h3>검색</h3>
                                 <input type="text" name="search" maxlength="50" class="input_min input_underline" />
+                                <%--버튼 없이 enter 문서 이름 검색--%>
                             </div>
                         </form>
                     </li>
@@ -135,6 +137,7 @@
                         </td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_secondary margin_right">결재중</span>
+                            <%--문서를 안읽었으면 primary--%>
                             제목이 여기에 출력됩니다.
                         </td>
                         <td>
@@ -162,6 +165,7 @@
                         </td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">승인</span>
+                            <%--btn_subtle 승인,반려--%>
                             제목이 여기에 출력됩니다.
                         </td>
                         <td>
@@ -220,6 +224,7 @@
                         </td>
                         <td>
                             <span class="tst_badge_min btn_subtle">반려</span>
+                            <%--반려 subtle--%>
                         </td>
                         <td>
                             2024-12-18 09:30
