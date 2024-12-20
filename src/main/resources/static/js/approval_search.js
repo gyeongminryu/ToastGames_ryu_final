@@ -1,1 +1,1 @@
-$('#input[name ="search"]').keyup
+//$('#input[name ="search"]').keyup
