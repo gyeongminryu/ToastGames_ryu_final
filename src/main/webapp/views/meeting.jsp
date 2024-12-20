@@ -48,11 +48,25 @@
 	                    <option value="${room.room_idx}">${room.room_name}</option>
 	                </c:forEach>
 	            </select>
-	            <fieldset>
-	            	<c:forEach items="${partiList}" var="parti">
-	            		<input type="checkbox" name="meeting_parti" value="${parti.empl_idx}"/> ${parti.empl_name}
-	            	</c:forEach>
-	            </fieldset>
+				<!-- 검색 필드 -->
+				<div>
+				    <select id="search_option">
+				        <option value="name">이름</option>
+				        <option value="dept">부서</option>
+				    </select>
+				    <input type="text" id="search_input" placeholder="이름 또는 부서를 검색하세요" onkeyup="search_parti()">
+				</div>
+				<fieldset id="participant_list">
+				    <c:forEach items="${partiList}" var="parti">
+				        <div class="participant" data-name="${parti.empl_name}" data-dept="${parti.dept_name}">
+				            <input type="checkbox" name="meeting_parti" value="${parti.empl_idx}" />
+				            <span>
+				                ${parti.empl_idx} ${parti.empl_name} ${parti.dept_name} ${parti.position_name} ${parti.duty_name}
+				            </span>
+				        </div>
+				    </c:forEach>
+				</fieldset>
+
 	            <!-- 버튼 컨테이너 -->
 	            <div id="meeting_modal_buttons"></div>
 	        </form>
@@ -61,4 +75,5 @@
 
 </body>
 <script src="/resources/js/meeting.js"></script>
+
 </html>

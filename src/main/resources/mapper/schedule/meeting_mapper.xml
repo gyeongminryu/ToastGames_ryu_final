@@ -11,10 +11,28 @@
 		SELECT room_idx, room_name FROM meeting_room
 	</select>
 	
-	<!-- 회사 사원 정보 가져오기 -->
+	<!-- 회사 사원 정보 가져오기  사원 직급 직책 부서 추가해야함.......검색도-->
 	<select id="meetingParti" resultType="map">
-		SELECT empl_idx, empl_name FROM employee
+	    SELECT 
+	        pos.position_name,
+	        dt.duty_name,
+	        dp.dept_name,
+	        empl.empl_name,
+	        empl.empl_idx
+	    FROM 
+	        appointment AS ap
+	    JOIN 
+	        department AS dp ON ap.dept_idx = dp.dept_idx
+	    JOIN 
+	        position_ AS pos ON ap.position_idx = pos.position_idx
+	    JOIN 
+	        duty AS dt ON ap.duty_idx = dt.duty_idx
+	    JOIN 
+	        employee AS empl ON ap.appo_empl_idx = empl.empl_idx
+	    WHERE 
+	        ap.appo_idx = empl.appolast_idx
 	</select>
+
 	
 	<!-- 회의실 (정보) 추가 -->
 	<insert 
@@ -84,13 +102,10 @@
 		SELECT COUNT(meet_rent_idx) FROM meeting_rent WHERE room_idx=#{room_idx}
 	</select>
 	
-	
 	<!-- 회의실 삭제 -->
 	<delete id="deleteMeetingRoom">
 		DELETE FROM meeting_room WHERE room_idx=#{param1}
 	</delete>
-	
-	
 	
 	<!-- 회의실별 회의 일정보기 --> 
 	<select id="getMeeting" resultType="com.toast.schedule.dto.MeetingDTO">
