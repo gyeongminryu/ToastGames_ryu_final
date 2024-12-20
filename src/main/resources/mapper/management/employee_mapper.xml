@@ -45,6 +45,7 @@ ORDER BY
 	SELECT 
     a.appo_idx,
     a.appo_empl_idx,
+    a.empl_job,
     a.dept_idx,
     d.dept_name,
     a.position_idx,
@@ -74,7 +75,7 @@ ORDER BY
 </select>
 
 <insert id="employeeAppoDo">
-	insert into appointment (appo_empl_idx,dept_idx,position_idx,duty_idx,movein_date,update_date) values (#{param1},#{param2},#{param3},#{param4},#{param5},now())
+	insert into appointment (appo_empl_idx,dept_idx,position_idx,duty_idx,movein_date,update_date,empl_job) values (#{param1},#{param2},#{param3},#{param4},#{param5},now(),#{param6})
 </insert>
 
 <update id="employeeChangeDo">
@@ -91,6 +92,14 @@ update appointment set transfer_date = #{param2} where appo_idx = #{param1}
 
 <update id="deptHeadAdd">
 update department set dept_head_idx = #{param2} where dept_idx = #{param1}
+</update>
+
+<select id="deptheadcheck">
+select count(dept_idx) from department where dept_head_idx = #{param1}
+</select>
+
+<update id="deptheadmoveout">
+update department set dept_head_idx = null where dept_head_idx = #{param1}
 </update>
 
 </mapper>
