@@ -63,7 +63,8 @@
     background-color: var(--tst-color-subtle);
 }
 
-.tst_table .td_no_data{
+.tst_table td.td_no_data:first-child,
+.tst_table td.td_no_data:last-child{
     padding: 240px 0;
 }
 

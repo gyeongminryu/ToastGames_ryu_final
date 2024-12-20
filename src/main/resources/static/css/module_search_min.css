@@ -1,0 +1,17 @@
+.tst_search_container{
+    margin: var(--tst-margin-vertical) 0;
+    padding: 0;
+    width: 180px;
+    display: flex;
+}
+
+.tst_search_container.width_full{
+    width: 100%;
+}
+
+.tst_search_container .tst_search_icon
+
+.tst_search_container .tst_search_icon{
+    width: calc(var(--tst-body-font-size) + var(--tst-margin-horizontal));
+    text-align: left;
+}

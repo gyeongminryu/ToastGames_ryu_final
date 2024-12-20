@@ -45,7 +45,7 @@
                             <tr>
                                 <td colspan="2">
                                     <form>
-                                        <input type="text" name="search" maxlength="50" placeholder="검색어를 입력하세요" />
+                                        <input type="text" name="search_form" maxlength="50" placeholder="검색어를 입력하세요" />
                                     </form>
                                 </td>
                             </tr>
