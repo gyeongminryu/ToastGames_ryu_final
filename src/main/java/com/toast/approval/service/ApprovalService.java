@@ -26,4 +26,19 @@ public class ApprovalService {
 		this.approvalDAO = approvalDAO;
 	}
 
+
+	public List<Map<String,Object>> highdept() {
+		return approvalDAO.highdept();
+	}
+
+	public List<Map<String,Object>> dept_allempl(int deptIdx) {
+
+		return approvalDAO.dept_allempl(deptIdx);
+	}
+
+	public List<Map<String,Object>> form_list_searched(String search_val) {
+		logger.info("서비스 단 searchVal:{}", search_val);
+
+		return approvalDAO.form_list_searched(search_val);
+	}
 }

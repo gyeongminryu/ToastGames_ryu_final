@@ -21,19 +21,19 @@ public class ApprovalRequestController {
 	public ApprovalRequestController(ApprovalRequestService approvalRequestService) {
 		this.approvalRequestService = approvalRequestService;
 	}
-	//결재 목록 조회
+	//결재 목록 조회 - 옮기기
 	@RequestMapping(value = "/approval_writing_list.go")
 	public String approval_writing_list() {
 		return "approval_writing_list";
 	}
 
-	//결재 양식 목록 조회
+	//결재 양식 목록 조회 - 옮기기
 	@RequestMapping (value = "/approval_form_list.go")
 	public String approval_form_list_go () {
 		return "approval_form_list";
 	}
 
-	//결재 목록 양식 제목들 가져오기
+	//결재 목록 양식 제목들 가져오기 - 옮기기
 	@GetMapping(value = "/approval_form_list.ajax")
 	@ResponseBody
 	public Map<String, Object> approval_form_list() {
@@ -42,7 +42,7 @@ public class ApprovalRequestController {
 		return data;
 	}
 
-	//선택한 결재 목록 양식 가져오기
+	//선택한 결재 목록 양식 가져오기 - 옮기기
 	@GetMapping (value = "/approval_form.ajax")
 	@ResponseBody
 	public Map<String, Object> approval_form(int form_idx) {
@@ -74,7 +74,7 @@ public class ApprovalRequestController {
 
 
 
-
+	//미리보기에서 수정한 결재 문서 가져오기
 	@GetMapping (value = "/approval_doc_get.ajax")
 	@ResponseBody
 	public Map<String,Object> doc_get (int doc_idx) {
@@ -87,6 +87,7 @@ public class ApprovalRequestController {
 		return data;
 	}
 
+	//결재 문서 저장
 	@PostMapping (value = "/approval_doc_write.ajax")
 	@ResponseBody
 	public Map<String,Object> doc_write_do (String doc_idx, String doc_write_date, String doc_end_date, String subject, String doc_content_sub, String doc_content,@RequestParam MultipartFile[]files) {
@@ -113,4 +114,6 @@ public class ApprovalRequestController {
 
 		return data;
 	}
+
+
 }
