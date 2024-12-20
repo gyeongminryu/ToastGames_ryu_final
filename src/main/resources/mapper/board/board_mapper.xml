@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toast.board.dao.BoardDAO"></mapper>
+<mapper namespace="com.toast.board.dao.BoardDAO">
+
+	<!-- 게시글 작성할 때, 필요한 개인 정보들을 가져온다. (사원번호, 부서번호) -->
+	<!-- 발령정보에서 가져와야 하는데, 인사 이동이 있을 시 여러개의 값이 있을 수 있다. 가장 최신걸 가져오는 쿼리 필요. -->
+	<select id="memberInfo" parameterType="String" resultType="map">
+		SELECT a.appo_empl_idx, a.dept_idx
+		FROM employee e
+		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
+		WHERE e.empl_id = #{id}
+		ORDER BY appo_idx DESC
+		LIMIT 1
+	</select>
+
+	<insert id="boardWrite" parameterType="map">
+		INSERT INTO board(board_empl_idx, board_type_idx, dept_idx, board_title, board_content, file_key)
+			VALUES(#{appo_empl_idx}, #{board_type_idx}, #{dept_idx}, #{board_title}, #{board_content}, #{file_key})
+	</insert>
+	
+	<insert id="saveFile" parameterType="map">
+		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
+			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr})
+	</insert>
+	
+</mapper>
