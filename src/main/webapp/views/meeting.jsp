@@ -65,10 +65,6 @@
 				            </span>
 				        </div>
 				    </c:forEach>
-				        <div class="participant" data-name="홍길동" data-dept="기획부">
-						    <input type="checkbox" name="meeting_parti" value="1" />
-						    <span>1 홍길동 기획부 사원 업무담당</span>
-						</div>
 				</fieldset>
 
 	            <!-- 버튼 컨테이너 -->

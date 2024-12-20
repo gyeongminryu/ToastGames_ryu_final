@@ -102,13 +102,10 @@
 		SELECT COUNT(meet_rent_idx) FROM meeting_rent WHERE room_idx=#{room_idx}
 	</select>
 	
-	
 	<!-- 회의실 삭제 -->
 	<delete id="deleteMeetingRoom">
 		DELETE FROM meeting_room WHERE room_idx=#{param1}
 	</delete>
-	
-	
 	
 	<!-- 회의실별 회의 일정보기 --> 
 	<select id="getMeeting" resultType="com.toast.schedule.dto.MeetingDTO">
