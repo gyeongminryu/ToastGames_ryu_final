@@ -449,3 +449,36 @@ function convertToISO(inputDateString) {
     // Date 객체를 ISO 8601 UTC 형식으로 변환
     return date.toISOString();
 }
+
+
+//이름부서검색
+function search_parti() {
+    const search_option = document.getElementById("search_option").value; // 검색 옵션 (empl_name 또는 dept_name)
+    const search_input = document.getElementById("search_input").value.toLowerCase().trim(); // 입력된 검색어
+    const participants = document.querySelectorAll("#participant_list .participant"); // 참가자 리스트
+
+    
+    console.log(search_option);
+    console.log(search_input);
+    console.log(participants);
+    
+    participants.forEach(function(participant) {
+        // data-* 속성 값 가져오기
+        const data_value = participant.dataset[search_option]; // 'empl_name' 또는 'dept_name'에 해당하는 데이터 값
+
+        console.log("현재 참가자 데이터:", data_value); // 디버깅용 출력
+
+        // 데이터 값이 존재하면 소문자로 변환 후, 검색어가 포함되어 있는지 확인
+        if (data_value) {
+            const search_value = data_value.toLowerCase().trim(); // 소문자로 변환하고 공백 제거
+            if (search_value.includes(search_input)) {
+                participant.style.display = ""; // 표시
+            } else {
+                participant.style.display = "none"; // 숨기기
+            }
+        } else {
+            participant.style.display = "none"; // 데이터가 없으면 숨기기
+        }
+    });
+}
+

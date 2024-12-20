@@ -52,7 +52,7 @@ public class MeetingController {
 		}
 	}
 	
-	//회의실 예약 가기(회의실 + 사원)
+	//회의실 예약 가기(회의실 + 사원)-> 사원 직급 직책 부서 추가해야함.......
 	@RequestMapping(value="/meeting.go")
 	public ModelAndView meetingGo () {
 		ModelAndView mv = new ModelAndView();
@@ -308,7 +308,7 @@ public class MeetingController {
 	}
 	
 	//회의 시간 변경
-	@PostMapping(value="/meetingResize.do")
+	@PostMapping(value="/resizeMeeting.do")
 	@ResponseBody
 	public boolean resizeMeeting(
 			@RequestParam("rent_idx") int rentIdx,
