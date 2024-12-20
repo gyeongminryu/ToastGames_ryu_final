@@ -21,8 +21,10 @@ window.onload = function initialize(){
 
 };
 
-
-//클릭하면 부서 idx 아래 팀 목록 가져오는 함수
+//팀 가져오는 함수
+function dept_open(dept_idx){
+    console.log(dept_idx);
+}
 
 
 //가져온 부서/팀 이름 뿌리기
