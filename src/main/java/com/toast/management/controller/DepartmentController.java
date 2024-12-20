@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +16,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.toast.management.dto.DepartmentDTO;
+import com.toast.management.dto.DeptDetailMemberDTO;
 import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.PositionDTO;
 import com.toast.management.service.DepartmentService;
+import com.toast.management.service.EmployeeService;
 
 @Controller
 public class DepartmentController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private final DepartmentService departmentService;
+	
+	@Autowired EmployeeService employeeService;
 	
 	public DepartmentController(DepartmentService departmentService) {
 		this.departmentService = departmentService;
@@ -123,19 +128,46 @@ public class DepartmentController {
 	@GetMapping(value="/organizationDetail.go")
 	public String organizationDetailGo(@RequestParam String dept_idx,Model model) {
 		
+		departmentService.organizationDetailGo(dept_idx,model);
+		
+		// 부서장 히스토리
+		List<DeptHistoryDTO> dept_his = departmentService.getdeptheadhistory(dept_idx);
+		model.addAttribute("depthis",dept_his);
+		/*
 		// 부서 히스토리 정보
 		List<DeptHistoryDTO> dept_his = departmentService.getdeptheadhistory(dept_idx);
 		
-		// 부서정보
+		// 부서정보 가져오기 - 부서명 부서idx 부서직무 부서주소 부서상태
 		DepartmentDTO dept =departmentService.getdeptinfo(dept_idx);
-		
+		int high_int_idx = dept.getDept_high();
+		String high_dept_idx =	String.valueOf(high_int_idx);
+		// 부서장 이름 직책 직급 가져오기
+		employeeService.employeeDetail(high_dept_idx, model);
+		// 상위 부서명 가져오기
+		DepartmentDTO high_dept = departmentService.getdeptinfo(high_dept_idx);
 		// 사원 리스트
 		
 	//	departmentService.organizationTree();	
 		model.addAttribute("deptinfo",dept);
 		model.addAttribute("depthis",dept_his);
-		
+		model.addAttribute("highdeptinfo",high_dept);
+		*/
 		return "organization_detail";
 	}
 	
+	@GetMapping(value="/searchDeptMember.ajax")
+	@ResponseBody
+	public Map<String, Object>searchDeptMember(@RequestParam(required = false) String emplName,
+            @RequestParam(required = false) String cmpEmail, String dept_idx){
+		logger.info(dept_idx+" = dept_idx, cmpemail = "+cmpEmail +" emplName = "+emplName);
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<DeptDetailMemberDTO> dept_member = new ArrayList<>();
+		dept_member = departmentService.searchDeptMember(emplName,cmpEmail,dept_idx);
+		map.put("searchmember", dept_member);	
+		
+		return map;
+	}
+
+
+
 }

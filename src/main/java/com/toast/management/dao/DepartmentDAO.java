@@ -6,10 +6,12 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.toast.management.dto.DepartmentDTO;
+import com.toast.management.dto.DeptDetailMemberDTO;
 import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.PositionDTO;
+
 
 @Mapper
 public interface DepartmentDAO {
@@ -31,6 +33,14 @@ public interface DepartmentDAO {
 	List<Map<String, Object>> getDeptMemberCounts();
 
 	List<DeptHistoryDTO> getdeptheadhistory(String dept_idx);
+
+	DeptHistoryDTO getfirstdate(String dept_idx);
+
+	List<DeptDetailMemberDTO> getdeptmeberlist(String dept_idx);
+
+	List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx);
+
+	
 
 	 
 

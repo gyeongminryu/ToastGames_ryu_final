@@ -22,7 +22,7 @@ public interface EmployeeDAO {
 
 	List<MainFileDTO> employeeFile(String file_key);
 
-	int employeeAppoDo(String empl_idx, String dept_idx, String position_idx, String duty_idx, String movein_date);
+	int employeeAppoDo(String empl_idx, String dept_idx, String position_idx, String duty_idx, String movein_date,String empl_job);
 
 	int employeeChangeDo(String empl_idx, String statement_idx);
 
@@ -33,6 +33,8 @@ public interface EmployeeDAO {
 	int deptHeadAdd(String dept_idx, String empl_idx);
 
 	int deptheadcheck(String empl_idx);
+
+	int deptheadmoveout(String empl_idx);
 
 	
 

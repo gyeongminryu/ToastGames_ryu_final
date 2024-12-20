@@ -8,11 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.toast.management.dao.DepartmentDAO;
 import com.toast.management.dao.EmployeeDAO;
 import com.toast.management.dto.AppointmentDTO;
 import com.toast.management.dto.DepartmentDTO;
+import com.toast.management.dto.DeptDetailMemberDTO;
 import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
@@ -125,6 +127,45 @@ public class DepartmentService {
 		
 		
 		return dept_his;
+	}
+
+	public void organizationDetailGo(String dept_idx, Model model) {
+		// 부서 히스토리 정보
+				
+				
+				// 부서정보 가져오기 - 부서명 부서idx 부서직무 부서주소 부서상태
+				DepartmentDTO dept =departmentDAO.getdeptinfo(dept_idx);
+				int high_int_idx = dept.getDept_high();
+				String high_dept_idx =	String.valueOf(high_int_idx);
+				int head_idx =	dept.getDept_head_idx();
+				String str_head_idx = String.valueOf(head_idx);
+				// 부서장 이름 직책 직급 가져오기
+				EmployeeDTO employee = employeeDAO.employeeDetail(str_head_idx);
+				AppointmentDTO appolast =employeeDAO.employeeAppolast(str_head_idx);
+				
+				// 상위 부서명 가져오기
+				DepartmentDTO high_dept = departmentDAO.getdeptinfo(high_dept_idx);
+				
+				// 조직 최초 일시
+				DeptHistoryDTO dept_his = departmentDAO.getfirstdate(dept_idx);
+				
+				// 조직원 수 >> 리스트 길이 체크
+				// 사원 리스트 employee + appointment + duty + position
+				List<DeptDetailMemberDTO> dept_member = departmentDAO.getdeptmeberlist(dept_idx);
+				
+			//	departmentService.organizationTree();	
+				model.addAttribute("deptinfo",dept);
+				model.addAttribute("deptmember",dept_member);
+				model.addAttribute("highdeptinfo",high_dept);
+				model.addAttribute("appoLast",appolast);
+				model.addAttribute("employee",employee);
+				model.addAttribute("deptfirstdate",dept_his);
+		
+	}
+
+	public List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx) {
+		
+		return departmentDAO.searchDeptMember(emplName,cmpEmail,dept_idx);
 	}
 
 }
