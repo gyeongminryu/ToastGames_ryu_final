@@ -1,5 +1,5 @@
 .tst_modal{
-    --tst-modal-container-padding: 36px 36px 20px;
+    --tst-modal-container-padding: 30px 30px 14px;
     --tst-modal-container-listblock-margin-bottom: 24px;
     --tst-modal-z-index: 1050;
     width: 100vw;
@@ -18,7 +18,6 @@
 }
 
 .tst_modal .tst_modal_container{
-    width: 480px;
     margin: 0 auto;
     padding: var(--tst-modal-container-padding);
     background-color: var(--tst-color-white);
@@ -27,11 +26,25 @@
     z-index: calc(var(--tst-modal-z-index) + 50);
 }
 
+.tst_modal.tst_modal_alert .tst_modal_container{
+    width: 440px;
+}
+
+.tst_modal.tst_modal_input .tst_modal_container{
+    width: 480px;
+}
+
 .tst_modal .tst_modal_container .tst_modal_header,
 .tst_modal .tst_modal_container .tst_modal_body,
 .tst_modal .tst_modal_container .tst_modal_footer{
     width: 100%;
     position: relative;
+}
+
+.tst_modal .tst_modal_container .tst_modal_header{
+    margin-bottom: calc(var(--tst-margin-vertical) + 10px);
+    padding-bottom: var(--tst-margin-vertical);
+    border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
 }
 
 .tst_modal .tst_modal_container .tst_modal_header h1{

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link rel="stylesheet" type="text/css" href="resources/css/modal.css" />
-<div class="tst_modal tst_approval_reject_modal">
+<div class="tst_modal tst_modal_input tst_approval_reject_modal">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">결재 반려 사유 입력하기</h1>

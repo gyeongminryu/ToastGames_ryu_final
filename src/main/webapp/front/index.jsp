@@ -68,7 +68,7 @@
                                 <td class="td_align_left">
                                     <ul class="list_no_desc list_inline">
                                         <li>
-                                            <button onclick="location.href='/'" class="btn_primary">상신하기</button>
+                                            <button onclick="tst_modal_call('tst_approval_send_modal')" class="btn_primary">상신하기</button>
                                         </li>
                                         <li>
                                             <button onclick="location.href='/'" class="btn_secondary">임시 저장하기</button>
@@ -190,12 +190,12 @@
                         <!-- //첨부 파일 편집 -->
 
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+<c:import url="approval_send_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 </html>
