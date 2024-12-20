@@ -14,11 +14,11 @@
 <body>
 
 <div>
-<input type ="text" name ="search" placeholder="문서 이름으로 검색하기"/>
+<input type ="text" id ="search" placeholder="문서 이름으로 검색하기"/>
 </div>
 
 <div id = "content_box">
-    <div class="form_subject" onclick=""></div>
+    <div class="form_subject"></div>
 </div>
 
 
@@ -36,5 +36,6 @@
 
 <script src="/resources/js/approval_request_form_row.js"></script>
 <script src="/resources/js/approval_request_form_list.js"></script>
+<script src="/resources/js/approval_search.js"></script>
 
 </html>
