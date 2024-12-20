@@ -74,7 +74,7 @@
                                             <button onclick="location.href='/'" class="btn_secondary">임시 저장하기</button>
                                         </li>
                                         <li>
-                                            <button onclick="location.href='/'" class="btn_subtle">작성 취소하기</button>
+                                            <button onclick="tst_modal_call('tst_approval_cancel_modal')" class="btn_subtle">작성 취소하기</button>
                                         </li>
                                     </ul>
                                 </td>

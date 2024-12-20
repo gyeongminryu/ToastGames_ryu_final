@@ -476,3 +476,11 @@ hr.separator{
     margin: var(--tst-margin-vertical) 0;
     border: none;
 }
+
+
+
+/* form */
+form{
+    margin: 0;
+    padding: 0;
+}

@@ -31,14 +31,8 @@
     text-align: center;
 }
 
-.tst_table.table_align_left tbody th{
-    text-align: left;
-}
-
-.tst_table.table_align_left tbody td{
-    text-align: left;
-}
-
+.tst_table.table_align_left tbody th,
+.tst_table.table_align_left tbody td,
 .tst_table .td_align_left{
     text-align: left;
 }

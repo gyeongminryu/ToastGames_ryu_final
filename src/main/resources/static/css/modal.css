@@ -1,5 +1,5 @@
 .tst_modal{
-    --tst-modal-container-padding: 30px 30px 14px;
+    --tst-modal-container-padding: 30px;
     --tst-modal-container-listblock-margin-bottom: 24px;
     --tst-modal-z-index: 1050;
     width: 100vw;
