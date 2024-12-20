@@ -36,11 +36,13 @@ public interface ApprovalRequestDAO {
 
     String doc_saved_filekey(String docIdx);
 
-    Map<String,String> get_previous_file_addr(String prev_file_key);
+    List<Map<String,String>> get_previous_file_addr(String prev_file_key);
 
     void delete_previous_files(String previous_filekey);
 
     void doc_filekey_delete(String doc_idx);
+
+
 
 
 
