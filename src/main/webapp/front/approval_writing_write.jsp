@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -68,13 +69,13 @@
                                 <td class="td_align_left">
                                     <ul class="list_no_desc list_inline">
                                         <li>
-                                            <button onclick="location.href='/'" class="btn_primary">상신하기</button>
+                                            <button onclick="tst_modal_call('tst_approval_send_modal')" class="btn_primary">상신하기</button>
                                         </li>
                                         <li>
                                             <button onclick="location.href='/'" class="btn_secondary">임시 저장하기</button>
                                         </li>
                                         <li>
-                                            <button onclick="location.href='/'" class="btn_subtle">작성 취소하기</button>
+                                            <button onclick="tst_modal_call('tst_approval_cancel_modal')" class="btn_subtle">작성 취소하기</button>
                                         </li>
                                     </ul>
                                 </td>
@@ -91,33 +92,36 @@
                             <colgroup>
                                 <col style="width: 90px;" />
                                 <col style="width: auto;" />
+                                <col style="width: 60px;" />
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">결재선</th>
+                                <th colspan="3">결재선</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <th>1차 결재</th>
                                 <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                <td>
+                                    <button onclick="tst_modal_call('tst_approval_select_modal')" class="btn_primary btn_min">변경하기</button>
+                                </td>
                             </tr>
                             <tr>
                                 <th>2차 결재</th>
                                 <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                <td>
+                                    <button onclick="tst_modal_call('tst_approval_select_modal')" class="btn_primary btn_min">변경하기</button>
+                                </td>
                             </tr>
                             <tr>
                                 <th>최종 결재</th>
                                 <td class="td_align_left">{직원명 (부서/직급)}</td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="2">
-                                    <button onclick="location.href='/'" class="btn_subtle btn_full">결재선 수정하기</button>
+                                <td>
+                                    <button onclick="tst_modal_call('tst_approval_select_modal')" class="btn_primary btn_min">변경하기</button>
                                 </td>
                             </tr>
-                            </tfoot>
+                            </tbody>
                         </table>
                         <hr class="separator" />
                         <!-- //결재선 편집 -->
@@ -127,26 +131,33 @@
                             <colgroup>
                                 <col style="width: 90px;" />
                                 <col style="width: auto;" />
+                                <col style="width: 60px;" />
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">참조</th>
+                                <th colspan="3">참조</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <th>참조 1</th>
                                 <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                <td>
+                                    <!-- 참조인에서 제외하는 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
+                                </td>
                             </tr>
                             <tr>
                                 <th>참조 2</th>
                                 <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                <td>
+                                    <button onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
+                                </td>
                             </tr>
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td colspan="2">
-                                    <button onclick="location.href='/'" class="btn_subtle btn_full">참조 수정하기</button>
+                                <td colspan="3">
+                                    <button onclick="tst_modal_call('tst_approval_select_modal')" class="btn_subtle btn_full">참조 추가하기</button>
                                 </td>
                             </tr>
                             </tfoot>
@@ -190,12 +201,12 @@
                         <!-- //첨부 파일 편집 -->
 
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+<c:import url="approval_send_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 </html>

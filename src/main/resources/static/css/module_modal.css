@@ -34,6 +34,10 @@
     width: 480px;
 }
 
+.tst_modal.tst_modal_auto .tst_modal_container{
+    width: auto;
+}
+
 .tst_modal .tst_modal_container .tst_modal_header,
 .tst_modal .tst_modal_container .tst_modal_body,
 .tst_modal .tst_modal_container .tst_modal_footer{

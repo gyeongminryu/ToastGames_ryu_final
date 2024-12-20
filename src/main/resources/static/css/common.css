@@ -348,18 +348,6 @@ ul.tst_title .tst_title_item.tst_title_item_active *{
 
 
 
-/* list > node list */
-
-ul.tst_node.list_no_desc li.tst_node_primary{
-    margin: 0 70px 36px -40px;
-}
-
-ul.tst_node.list_no_desc li.tst_node_secondary{
-    margin: 0 70px 36px -40px;
-}
-
-
-
 /* form, button */
 
 label.form_label{

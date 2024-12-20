@@ -13,3 +13,29 @@
     top: -16px;
     right: 0;
 }
+
+.tst_modal.tst_approval_select_modal .tst_modal_container{
+    width: 700px;
+}
+
+.tst_modal.tst_approval_select_modal .tst_modal_body .tst_flex{
+    margin-bottom: calc(var(--tst-margin-vertical) * 2);
+}
+
+.tst_modal.tst_approval_select_modal .tst_modal_body .tst_flex > div{
+    height: 550px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.tst_modal.tst_approval_select_modal .tst_modal_body .tst_table .tst_table{
+    margin: -9px 0;
+}
+
+.tst_modal.tst_approval_select_modal .tst_modal_body .td_no_data{
+    padding-top: 200px;
+}
+
+.tst_modal.tst_approval_select_modal .tst_modal_footer > *{
+    display: inline-block;
+}
