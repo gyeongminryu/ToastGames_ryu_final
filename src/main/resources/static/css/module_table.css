@@ -31,14 +31,14 @@
     text-align: center;
 }
 
-.tst_table tbody th:first-child,
-.tst_table tbody td:first-child{
-    padding: 8px 10px 8px 0;
-}
-
 .tst_table tbody th:last-child,
 .tst_table tbody td:last-child{
     padding: 8px 0 8px 10px;
+}
+
+.tst_table tbody th:first-child,
+.tst_table tbody td:first-child{
+    padding: 8px 10px 8px 0;
 }
 
 .tst_table tfoot td:first-child{

@@ -337,15 +337,6 @@ ul.tst_title .tst_title_item.tst_title_item_active *{
     font-weight: 800;
 }
 
-.tst_search_container,
-.tst_search_container *{
-    display: inline-block;
-}
-
-.tst_search_container .input_min.input_underline{
-    width: 200px;
-}
-
 
 
 /* form, button */
@@ -392,11 +383,11 @@ textarea{
     border-color: var(--tst-form-invalid-border-color);
 }
 
-.input_min{
-    padding: 0 0 2px;
+input.input_min{
+    padding: 0 0 4px;
 }
 
-.input_underline{
+input.input_underline{
     border: none;
     border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-color-dark);
     border-radius: 0;

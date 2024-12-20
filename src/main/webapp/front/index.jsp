@@ -33,8 +33,15 @@
                 <!-- //제목 -->
 
                 <div class="tst_flex">
-
                     <div class="tst_col2">
+                        <form>
+                            <div class="tst_search_container width_full">
+                                <div class="tst_search_input">
+                                    <input type="text" name="keyword_kind" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                                </div>
+                                <div class="tst_search_icon"><i class="bi bi-search"></i></div>
+                            </div>
+                        </form>
                         <table class="tst_table table_align_left">
                             <tbody>
 
@@ -59,11 +66,16 @@
 
                     <div class="tst_col10">
                         <form>
-                            <div class="tst_search_container width_full">
-                                <div class="tst_search_icon"><i class="bi bi-search"></i></div>
-                                <div class="tst_search_input">
-                                    <input type="text" name="search" maxlength="50" class="input_min input_underline" />
+                            <div class="tst_search_container with_filtering">
+                                <div class="tst_search_select">
+                                    <select class="input_min input_underline" placeholder="검색 내용을 선택하세요">
+                                        <option value="{제품명 변수}">제품명</option>
+                                    </select>
                                 </div>
+                                <div class="tst_search_input">
+                                    <input type="text" name="keyword_kind" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                                </div>
+                                <div class="tst_search_icon"><i class="bi bi-search"></i></div>
                             </div>
                         </form>
                         <table class="tst_table">
