@@ -71,7 +71,7 @@ LEFT JOIN
 <select id="getDeptMemberCounts" resultType="java.util.HashMap">
 SELECT 
     a.dept_idx, 
-    COUNT(a.appo_idx) AS member_count
+    COUNT(a.appo_empl_idx) AS member_count
 FROM 
     appointment a
 WHERE 
@@ -80,8 +80,82 @@ GROUP BY
     a.dept_idx
 </select>
 
-<select id="getdepthistory" resultType="com.toast.management.dto.DeptHistoryDTO">
+<select id="getdeptheadhistory" resultType="com.toast.management.dto.DeptHistoryDTO">
+SELECT 
+    dept_history_idx, 
+    dept_idx, 
+    dept_name, 
+    dept_head_idx, 
+    dept_duty, 
+    dept_addr, 
+    dept_change_date, 
+    dept_high, 
+    dept_state
+FROM (
+    SELECT 
+        dept_history_idx, 
+        dept_idx, 
+        dept_name, 
+        dept_head_idx, 
+        dept_duty, 
+        dept_addr, 
+        dept_change_date, 
+        dept_high, 
+        dept_state,
+        LAG(dept_head_idx) OVER (PARTITION BY dept_idx ORDER BY dept_change_date) AS prev_dept_head_idx
+    FROM department_history
+    WHERE dept_idx = #{param1}
+     AND dept_head_idx IS NOT NULL
+) AS subquery
+WHERE dept_head_idx != prev_dept_head_idx OR prev_dept_head_idx IS NULL
+ORDER BY dept_change_date;
+</select>
 
+<select id="getfirstdate" resultType="com.toast.management.dto.DeptHistoryDTO">
+SELECT * 
+FROM department_history dh 
+WHERE dept_idx = #{param1}
+ORDER BY dept_history_idx
+LIMIT 1; 
+</select>
+
+<select id="getdeptmeberlist" resultType="com.toast.management.dto.DeptDetailMemberDTO">
+SELECT 
+e.empl_name,
+d.duty_name,
+e.empl_job,
+p.position_name,
+e.empl_cmp_email,
+a.movein_date,
+s.statement_name
+from employee e
+join appointment a on e.appolast_idx = a.appo_idx
+join `statement` s on e.statement_idx = s.statement_idx
+join duty d on a.duty_idx = d.duty_idx
+join position_ p on a.position_idx = p.position_idx
+where a.dept_idx = #{param1} and e.statement_idx = 1
+</select>
+
+<select id="searchDeptMember" resultType="com.toast.management.dto.DeptDetailMemberDTO">
+SELECT 
+        e.empl_name,
+        d.duty_name,
+        e.empl_job,
+        p.position_name,
+        e.empl_cmp_email,
+        a.movein_date,
+        s.statement_name
+    FROM employee e
+    JOIN appointment a ON e.appolast_idx = a.appo_idx
+    JOIN `statement` s ON e.statement_idx = s.statement_idx
+    JOIN duty d ON a.duty_idx = d.duty_idx
+    JOIN position_ p ON a.position_idx = p.position_idx
+    WHERE a.dept_idx = #{param3}  <!-- dept_idx는 param3으로 전달됨 -->
+      AND e.statement_idx = 1
+      AND (
+          (#{param1} IS NULL OR e.empl_name LIKE CONCAT('%', #{param1}, '%')) 
+          OR (#{param2} IS NULL OR e.empl_cmp_email LIKE CONCAT('%', #{param2}, '%'))
+      );
 </select>
 
 
