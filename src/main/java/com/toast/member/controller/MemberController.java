@@ -1,6 +1,7 @@
 package com.toast.member.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -44,6 +45,10 @@ public class MemberController {
 		this.memberService = memberService;
 		this.mailService = mailService;
 	}
+	
+	// spring.servlet.multipart.location=C:/files 이 경로로 주입. !!! 파일 저장위치 !!!
+    @Value("${spring.servlet.multipart.location}")
+    private String uploadAddr;
 
 	// 로그인 페이지 이동
 	@GetMapping(value = "/login.go")
@@ -161,10 +166,9 @@ public class MemberController {
 	public String myPageForm(Model model, HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
 		List<MemberDTO> memberInfo = memberService.memberInfo(id); // 리스트 형태로 가져옴.
-		model.addAttribute("memberInfo", memberInfo); // 인포에 직인 정보도 포함!!
 		List<FileDTO> fileList = memberService.fileList(id); // 사용자가 첨부한 파일 리스트를 불러온다.
-		logger.info("fileList : ? " + fileList);
-		model.addAttribute("fileList", fileList);
+		model.addAttribute("memberInfo", memberInfo); // 인포에 직인 정보도 포함!!
+		model.addAttribute("fileList", fileList); // 사용자가 업로드한 파일리스트를 불러온다.
 
 		return "mypage";
 	}
@@ -184,18 +188,15 @@ public class MemberController {
 		return result;
 	}
 	
-	// spring.servlet.multipart.location=C:/files 이 경로로 주입. !!! 파일 저장위치 !!!
-    @Value("${spring.servlet.multipart.location}")
-    private String uploadAddr;
-	
 	@GetMapping(value = "/download/{filename}") // 다운로드 요청이 들어오면 작동되는 메서드.
-	public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+	public ResponseEntity<Resource> downloadFile(@PathVariable String filename) throws Exception {
 	    Resource resource = new FileSystemResource(uploadAddr + "/" + filename);
-	    logger.info("isFileExist ? : " + resource);
 	    if (resource.exists()) { // 파일이 존재 한다면.
 	    	String originalFileName = memberService.originalFileName(filename); 
+	    	String fileName = URLEncoder.encode(originalFileName, "UTF-8"); // 이걸 써야 한글로된 파일을 다운 받을 때, 오류 X.
+	        fileName = fileName.replaceAll("\\+", "%20"); // 위와 동일한 이유.
 	        return ResponseEntity.ok()
-	            .header("Content-Disposition", "attachment; filename=\"" + originalFileName + "\"")
+	            .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
 	            .body(resource);
 	    } else {
 	        return ResponseEntity.notFound().build();
@@ -222,12 +223,9 @@ public class MemberController {
 	// 마이페이지(수정) 이동
 	@GetMapping(value = "/myPageUpdate.go")
 	public String myPageUpdateForm(Model model, HttpSession session) {
-		// 직인 제출하기. 이 항목들이 go로 가야할지 do로 처리해야 할지 고민해봐야 할 듯!
 		String id = (String) session.getAttribute("loginId");
 		List<MemberDTO> memberInfo = memberService.memberInfo(id);
-		//List<FileDTO> fileList = memberService.fileList(id); // 사용자가 첨부한 파일 리스트를 불러온다.
 		model.addAttribute("memberInfo", memberInfo);
-		//model.addAttribute("fileList", fileList);
 		return "mypage_update";
 	}
 	
@@ -248,7 +246,7 @@ public class MemberController {
 	
 	// 파일 목록 조회
 	@ResponseBody
-	@GetMapping("/getFileList.do")
+	@GetMapping(value = "/getFileList.do")
 	public ResponseEntity<List<FileDTO>> getFileList(HttpSession session) {
 	    String id = (String) session.getAttribute("loginId");
 	    int empl_idx = memberService.getUploaderIdx(id);
@@ -257,21 +255,22 @@ public class MemberController {
 	    return ResponseEntity.ok(fileList);  // 파일 목록을 JSON으로 반환
 	}
 	
-	@ResponseBody // 응답을 JSON 형태로 반환
+	@ResponseBody
 	@PostMapping(value = "/changePw.ajax") 	// 비밀번호 변경 처리 로직
 	public Map<String, String> changePw(HttpSession session, @RequestParam("currentPassword") String currentPw,
 			@RequestParam("newPassword") String newPw, @RequestParam("confirmPassword") String confirmPw) {
 		Map<String, String> response = new HashMap<>();
-
-		// 현재 로그인한 사용자의 ID를 얻어옵니다.
-		String id = (String) session.getAttribute("loginId");
-
-		// 사용자가 입력한 현재 비밀번호와 DB에 저장된 비밀번호 비교
-		boolean isValidCurrentPassword = memberService.checkCurrentPassword(id, currentPw);
-		logger.info("check" + isValidCurrentPassword);
+		String id = (String) session.getAttribute("loginId");		
+		boolean isValidCurrentPassword = memberService.checkCurrentPassword(id, currentPw);	// 사용자가 입력한 현재 비밀번호와 DB에 저장된 비밀번호 비교
+		
 		if (!isValidCurrentPassword) {
 			response.put("status", "error");
 			response.put("message", "기존 비밀번호를 확인하세요.");
+			return response;
+		}
+		if (newPw == null || newPw.trim().isEmpty()) {
+			response.put("status", "error");
+			response.put("message", "새 비밀번호를 입력하세요.");
 			return response;
 		}
 		// 새 비밀번호와 확인 비밀번호가 일치하는지 확인

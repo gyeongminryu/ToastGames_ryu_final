@@ -40,7 +40,7 @@ public class MailService {
             message.setRecipients(MimeMessage.RecipientType.TO, email);
             message.setSubject("임시 비밀번호 안내");
             String body = "<h3>안녕하세요.</h3>";
-            body += "<p>" + "요청하신 임시 비밀번호는 <strong>" + tempPw + "</strong> 입니다." + "</p>";
+            body += "<p>" + "요청하신 임시 비밀번호는 <strong>" + tempPw + "</strong>입니다." + "</p>";
             body += "<p>" + "로그인 후 반드시 비밀번호를 변경해주세요." + "</p>";
             body += "<p>" + "감사합니다." + "</p>";
             message.setText(body, "UTF-8", "html");
