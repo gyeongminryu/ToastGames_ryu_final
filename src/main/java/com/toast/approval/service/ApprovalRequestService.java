@@ -155,20 +155,22 @@ public class ApprovalRequestService {
 		//파일 키가 있을 경우
 		if(previous_filekey_count >0){
 			String previous_filekey = approvalRequestDAO.doc_saved_filekey(doc_idx);
+			logger.info(previous_filekey);
 
 			//[1]path 삭제
 			//파일키의 파일 URL 가져오기 - SELECT file_addr FROM file WHERE file_key = #{file_key}
-			Map<String,String> previous_path = approvalRequestDAO.get_previous_file_addr(previous_filekey);
+			List<Map<String,String>> previous_paths = approvalRequestDAO.get_previous_file_addr(previous_filekey);
 			//파일 url이 여러 개일 수 있음
-			for (String key : previous_path.keySet()) {
-				File file = new File(previous_path.get(key));
+			for (Map<String,String> previous_path : previous_paths) {
+				for (String key : previous_path.keySet()) {
+					File file = new File(previous_path.get(key));
 
-				if(!file.exists()){
-					boolean path_file_deleted = file.delete();
-					logger.info("이전에 있던 파일 삭제되었음:{}",path_file_deleted);
+					if(!file.exists()){
+						boolean path_file_deleted = file.delete();
+						logger.info("이전에 있던 파일 삭제되었음:{}",path_file_deleted);
+					}
 				}
 			}
-
 			//[2]file DB 안의 file 삭제
 			approvalRequestDAO.delete_previous_files(previous_filekey);
 

@@ -71,7 +71,8 @@
     </select>
 
     <!--이전 파일의 path를 가져오기-->
-    <select id="get_previous_file_addr" parameterType="Map">
+
+    <select id="get_previous_file_addr" resultType="Map">
         SELECT file_addr FROM file WHERE file_key = #{prev_file_key}
     </select>
 
@@ -84,6 +85,6 @@
     
     <!--파일 있었는데 수정 후 없어진 경우 doc_file_key 없애주는 쿼리-->
     <update id="doc_filekey_delete">
-        UPDATE document SET file_key = '' WHERE doc_idx = #{doc_idx}
+        UPDATE document SET file_key = null WHERE doc_idx = #{doc_idx}
     </update>
 </mapper>

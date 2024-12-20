@@ -12,6 +12,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
 </head>
 <body>
+
+<div>
+<input type ="text" name ="search" placeholder="문서 이름으로 검색하기"/>
+</div>
+
 <div id = "content_box">
     <div class="form_subject" onclick=""></div>
 </div>
