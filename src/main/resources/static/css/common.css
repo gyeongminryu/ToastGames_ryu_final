@@ -401,7 +401,7 @@ button.btn_full{
 .btn_min{
     width: fit-content;
     min-width: 60px;
-    padding: 2px 4px;
+    padding: 2px 4px 3px;
     display: inline-block;
     font-size: 12px;
     font-weight: 700;
