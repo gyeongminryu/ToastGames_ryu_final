@@ -383,16 +383,6 @@ textarea{
     border-color: var(--tst-form-invalid-border-color);
 }
 
-input.input_min{
-    padding: 0 0 4px;
-}
-
-input.input_underline{
-    border: none;
-    border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-color-dark);
-    border-radius: 0;
-}
-
 input[type="submit"],
 input[type="button"],
 button{
