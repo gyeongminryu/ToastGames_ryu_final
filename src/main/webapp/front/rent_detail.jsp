@@ -7,7 +7,7 @@
     <title>TOAST Games Groupware</title>
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" /
+    <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -29,10 +29,9 @@
                 </ul>
                 <!-- //제목 -->
 
-                <!-- 상신한 사항 상세보기 -->
                 <div class="tst_flex">
 
-                    <!-- 문서 상세보기 -->
+                    <!-- 물품 정보 상세보기 -->
                     <div class="tst_col9">
                         <table class="tst_table table_align_left">
                             <colgroup>
@@ -60,7 +59,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- //문서 상세보기 -->
+                    <!-- //물품 정보 상세보기 -->
 
                     <div class="tst_col3">
 
@@ -157,7 +156,7 @@
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
                             <li>
-                                <button class="btn_primary btn_full" onclick="location.href='/'">물품 대여 신청하기</button>
+                                <button class="btn_primary btn_full" onclick="tst_modal_call('tst_rent_detail_modal')">물품 대여 신청하기</button>
                             </li>
                             <li>
                                 <button class="btn_secondary btn_full" onclick="location.href='/'">목록으로 돌아가기</button>
@@ -166,16 +165,14 @@
                         <!-- //버튼 -->
 
                     </div>
-                    <!-- //상신한 문서 정보 확인 -->
 
                 </div>
-                <!-- //상신한 사항 상세보기 -->
 
             </div>
         </div>
     </div>
 </div>
-<c:import url="approval_send_modal.jsp" />
+<c:import url="rent_detail_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/rent_list.js"></script>
