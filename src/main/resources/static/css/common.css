@@ -18,7 +18,7 @@
     --tst-color-info: #bccee4;
     --tst-font-sans-serif: "Noto Sans KR", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --tst-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    --tst-container-min-width: 1600px;
+    --tst-container-min-width: 1400px;
     --tst-container-margin: 16px;
     --tst-topnav-height: 50px;
     --tst-leftnav-width: 230px;

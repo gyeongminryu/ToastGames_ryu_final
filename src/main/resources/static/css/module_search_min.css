@@ -1,3 +1,5 @@
+/* tst_search_container */
+
 .tst_search_container{
     margin: 0 0 var(--tst-margin-vertical);
     padding: 0;
@@ -55,4 +57,21 @@
     padding: 5px 0 0;
     border: none;
     background: none;
+}
+
+
+
+/* tst_filtering_container */
+
+.tst_filtering_container{
+    width: 100%;
+    text-align: right;
+    position: relative;
+    top: 4px;
+}
+
+.tst_filtering_container i{
+    margin-right: 6px;
+    font-size: 16px;
+    vertical-align: middle;
 }
