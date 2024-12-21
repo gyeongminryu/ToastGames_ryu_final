@@ -2,21 +2,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link rel="stylesheet" type="text/css" href="resources/css/module_modal.css" />
-<div class="tst_modal tst_modal_input tst_approval_reject_modal">
+<div class="tst_modal tst_modal_input tst_rent_detail_modal">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
-            <h1 class="tst_modal_title">결재 반려 사유 입력하기</h1>
+            <h1 class="tst_modal_title">물품 대여 신청하기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_approval_reject_modal')"></i>
         </div>
         <form>
             <div class="tst_modal_body">
                 <ul class="list_no_desc list_block">
                     <li>
-                        <p class="min font_subtle">반려할 문서</p>
-                        <h3>{반려할 문서명}</h3>
+                        <p class="min font_subtle">신청할 물품</p>
+                        <h3>{물품명}</h3>
+                        <input type="hidden" name="name" value="{물품명}" />
                     </li>
                     <li>
-                        <label class="form_label">반려 사유</label>
+                        <label class="form_label">반납 예정일</label>
+                        <input type="date" name="return" />
+                    </li>
+                    <li>
+                        <label class="form_label">대여 사유</label>
                         <textarea rows="5" maxlength="1000"></textarea>
                     </li>
                 </ul>
