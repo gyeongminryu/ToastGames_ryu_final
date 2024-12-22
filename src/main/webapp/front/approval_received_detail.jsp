@@ -262,7 +262,7 @@
                                 <button class="btn_primary btn_full" onclick="location.href='/'">결재하기</button>
                             </li>
                             <li>
-                                <button class="btn_secondary btn_full" onclick="tst_modal_call('tst_approval_reject_modal')">반려하기</button>
+                                <button class="btn_secondary btn_full" onclick="tst_modal_call('tst_modal_reject')">반려하기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->

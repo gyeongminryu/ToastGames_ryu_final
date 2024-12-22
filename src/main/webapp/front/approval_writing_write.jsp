@@ -27,22 +27,23 @@
                 </ul>
                 <!-- //제목 -->
 
-                <div class="tst_flex">
+                <form>
+                    <div class="tst_flex">
 
-                    <!-- 문서 작성하기 -->
-                    <div class="tst_col9">
-                        <table class="tst_table table_align_left table_no_padding">
-                            <colgroup>
-                                <col style="width: 120px;" />
-                                <col style="width: auto;" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th colspan="2">문서 작성</th>
-                            </tr>
-                            </thead>
+                        <!-- 문서 작성하기 -->
+                        <div class="tst_col9">
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: 120px;" />
+                                    <col style="width: auto;" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="2">문서 작성</th>
+                                </tr>
+                                </thead>
 
-                            <form>
+
                                 <tbody>
                                 <tr>
                                     <th class="td_align_top">문서 제목</th>
@@ -61,154 +62,154 @@
                                     <td>{문서 소스}</td>
                                 </tr>
                                 </tbody>
-                            </form>
 
-                            <tfoot>
-                            <tr>
-                                <th class="td_align_top"></th>
-                                <td class="td_align_left">
-                                    <ul class="list_no_desc list_inline">
-                                        <li>
-                                            <button onclick="tst_modal_call('tst_approval_send_modal')" class="btn_primary">상신하기</button>
-                                        </li>
-                                        <li>
-                                            <button onclick="location.href='/'" class="btn_secondary">임시 저장하기</button>
-                                        </li>
-                                        <li>
-                                            <button onclick="tst_modal_call('tst_approval_cancel_modal')" class="btn_subtle">작성 취소하기</button>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
+                                <tfoot>
+                                <tr>
+                                    <th class="td_align_top"></th>
+                                    <td class="td_align_left">
+                                        <ul class="list_no_desc list_inline">
+                                            <li>
+                                                <button type="button" onclick="tst_modal_call('tst_modal_send')" class="btn_primary">상신하기</button>
+                                            </li>
+                                            <li>
+                                                <button type="button" onclick="location.href='/'" class="btn_secondary">임시 저장하기</button>
+                                            </li>
+                                            <li>
+                                                <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_subtle">작성 취소하기</button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- //문서 작성하기 -->
+
+                        <div class="tst_col3">
+
+                            <!-- 결재선 편집 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: 90px;" />
+                                    <col style="width: auto;" />
+                                    <col style="width: 60px;" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="3">결재선</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>1차 결재</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>2차 결재</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>최종 결재</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <hr class="separator" />
+                            <!-- //결재선 편집 -->
+
+                            <!-- 참조 편집 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: 90px;" />
+                                    <col style="width: auto;" />
+                                    <col style="width: 60px;" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="3">참조</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>참조 1</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <!-- 참조인에서 제외하는 경로를 입력하세요 --><button type="button" onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>참조 2</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <button type="button" onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="3">
+                                        <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_subtle btn_full">참조 추가하기</button>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <hr class="separator" />
+                            <!-- //참조 편집 -->
+
+                            <!-- 첨부 파일 편집 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: auto;" />
+                                    <col style="width: 60px;" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="2">첨부 파일</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
+                                    <td>
+                                        <button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
+                                    <td>
+                                        <button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <form>
+                                            <input type="file" name="attached_file" multiple />
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <!-- //첨부 파일 편집 -->
+
+                        </div>
                     </div>
-                    <!-- //문서 작성하기 -->
-
-                    <div class="tst_col3">
-
-                        <!-- 결재선 편집 -->
-                        <table class="tst_table table_align_left table_no_padding">
-                            <colgroup>
-                                <col style="width: 90px;" />
-                                <col style="width: auto;" />
-                                <col style="width: 60px;" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th colspan="3">결재선</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>1차 결재</th>
-                                <td class="td_align_left">{직원명 (부서/직급)}</td>
-                                <td>
-                                    <button onclick="tst_modal_call('tst_approval_select_modal')" class="btn_primary btn_min">변경하기</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>2차 결재</th>
-                                <td class="td_align_left">{직원명 (부서/직급)}</td>
-                                <td>
-                                    <button onclick="tst_modal_call('tst_approval_select_modal')" class="btn_primary btn_min">변경하기</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>최종 결재</th>
-                                <td class="td_align_left">{직원명 (부서/직급)}</td>
-                                <td>
-                                    <button onclick="tst_modal_call('tst_approval_select_modal')" class="btn_primary btn_min">변경하기</button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <hr class="separator" />
-                        <!-- //결재선 편집 -->
-
-                        <!-- 참조 편집 -->
-                        <table class="tst_table table_align_left table_no_padding">
-                            <colgroup>
-                                <col style="width: 90px;" />
-                                <col style="width: auto;" />
-                                <col style="width: 60px;" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th colspan="3">참조</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>참조 1</th>
-                                <td class="td_align_left">{직원명 (부서/직급)}</td>
-                                <td>
-                                    <!-- 참조인에서 제외하는 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>참조 2</th>
-                                <td class="td_align_left">{직원명 (부서/직급)}</td>
-                                <td>
-                                    <button onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
-                                </td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="3">
-                                    <button onclick="tst_modal_call('tst_approval_select_modal')" class="btn_subtle btn_full">참조 추가하기</button>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                        <hr class="separator" />
-                        <!-- //참조 편집 -->
-
-                        <!-- 첨부 파일 편집 -->
-                        <table class="tst_table table_align_left table_no_padding">
-                            <colgroup>
-                                <col style="width: auto;" />
-                                <col style="width: 60px;" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th colspan="2">첨부 파일</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
-                                <td>
-                                    <button onclick="location.href=''" class="btn_primary btn_min">삭제하기</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
-                                <td>
-                                    <button onclick="location.href=''" class="btn_primary btn_min">삭제하기</button>
-                                </td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="2">
-                                    <form>
-                                        <input type="file" name="attached_file" multiple />
-                                    </form>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                        <!-- //첨부 파일 편집 -->
-
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<c:import url="approval_send_modal.jsp" />
+<c:import url="approval_writing_write_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 </html>

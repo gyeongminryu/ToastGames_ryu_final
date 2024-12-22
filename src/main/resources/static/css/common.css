@@ -346,6 +346,7 @@ label.form_label{
 
 input,
 textarea,
+select,
 button{
     margin: 0;
     padding: var(--tst-form-padding);
@@ -370,7 +371,8 @@ input[type="time"],
 input[type="email"],
 input[type="file"],
 input[type="image"],
-textarea{
+textarea,
+select{
     width: 100%;
     border-color: var(--tst-border-color);
 }

@@ -5,11 +5,11 @@
 <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />
 
 <!-- 결재선 선택하기 -->
-<div class="tst_modal tst_modal_auto tst_approval_select_modal">
+<div class="tst_modal tst_modal_auto tst_modal_select">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">결재선 선택하기</h1>
-            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_approval_select_modal')"></i>
+            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_select')"></i>
         </div>
         <div class="tst_modal_body">
             <div class="tst_flex">
@@ -152,19 +152,19 @@
         </div>
         <div class="tst_modal_footer">
             <!-- 결재선 선택 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_primary">결재선 변경하기</button>
-            <button onclick="tst_modal_close('tst_approval_select_modal')" class="btn_secondary">이전 화면으로 돌아가기</button>
+            <button onclick="tst_modal_close('tst_modal_select')" class="btn_secondary">이전 화면으로 돌아가기</button>
         </div>
     </div>
-    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_approval_select_modal')"></div>
+    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_select')"></div>
 </div>
 <!-- //결재선 선택하기 -->
 
 <!-- 상신하기 > 서명하기/직인찍기 -->
-<div class="tst_modal tst_modal_input tst_approval_send_modal">
+<div class="tst_modal tst_modal_input tst_modal_send">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">서명/직인</h1>
-            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_approval_send_modal')"></i>
+            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_send')"></i>
         </div>
         <form>
             <div class="tst_modal_body">
@@ -201,13 +201,13 @@
                         <!-- 상신 경로를 입력하세요 --><button type="submit" onclick="location.href='/'" class="btn_primary btn_full">상신하기</button>
                     </div>
                     <div class="tst_col6">
-                        <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_approval_send_modal')">취소하기</button>
+                        <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_modal_select')">취소하기</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_approval_send_modal')"></div>
+    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_send')"></div>
 </div>
 <!-- //상신하기 > 서명하기/직인찍기 -->
 
@@ -216,7 +216,7 @@
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">작성 취소하기</h1>
-            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_approval_cancel_modal')"></i>
+            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_cancel')"></i>
         </div>
         <div class="tst_modal_body">
             <ul class="tst_list list_no_desc list_block">
@@ -234,12 +234,12 @@
                     <!-- 삭제 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_primary btn_full">삭제하기</button>
                 </div>
                 <div class="tst_col6">
-                    <button onclick="tst_modal_close('tst_approval_cancel_modal')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
+                    <button onclick="tst_modal_close('tst_modal_cancel')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_approval_cancel_modal')"></div>
+    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_cancel')"></div>
 </div>
 <!-- //취소하기 -->
 
