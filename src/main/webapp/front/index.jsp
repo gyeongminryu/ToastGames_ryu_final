@@ -8,7 +8,10 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <body>
 <c:import url="layout_topnav.jsp" />
@@ -20,162 +23,260 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                    <li class="tst_title_item" onclick="location.href='/'">
                         <h1>공용 물품 대여</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
                         <h1>내가 대여한 물품</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->
 
-                <!-- 상신한 사항 상세보기 -->
                 <div class="tst_flex">
-
-                    <!-- 문서 상세보기 -->
-                    <div class="tst_col9">
+                    <div class="tst_col2">
                         <table class="tst_table table_align_left">
-                            <colgroup>
-                                <col style="width: 120px" />
-                                <col style="width: auto" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th colspan="2">공용 물품 정보</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>제품명</th>
-                                <th>{제품명}</th>
-                            </tr>
-                            <tr>
-                                <th>제품 정보</th>
-                                <td>{제품 정보}</td>
-                            </tr>
-                            <tr>
-                                <th>제품 설명</th>
-                                <td>{제품 설명}</td>
-                            </tr>
+                            <tbody class="tst_pointer">
+
+                            <!-- 전체 제품 조회 (필터링 초기화) -->
+                            <tr><th><span onclick="location.href='/'">전체 물품</span></th></tr>
+                            <!-- //전체 제품 조회 (필터링 초기화) -->
+
+                            <!-- 분류 목록 (필터링) -->
+                            <tr><td><span onclick="location.href='/'">대여 신청한 물품 목록</span></td></tr>
+                            <!-- //분류 목록 (필터링) -->
+
+                            <!-- 분류 목록 > 선택한 항목 (필터링) -->
+                            <tr><td class="td_bg_medium"><span onclick="location.href='/'">대여중인 물품 목록</span></td></tr>
+                            <!-- //분류 목록 > 선택한 항목 (필터링) -->
+
+                            <tr><td><span onclick="location.href='/'">반납한 물품 목록</span></td></tr>
+                            <tr><td><span onclick="location.href='/'">반납 기한이 지난 물품 목록</span></td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- //문서 상세보기 -->
 
-                    <div class="tst_col3">
+                    <div class="tst_col10">
 
-                        <!-- 첨부 파일 목록 -->
-                        <table class="tst_table table_align_left">
+                        <!-- 물품 검색 -->
+                        <form>
+                            <div class="tst_search_container">
+                                <div class="tst_search_select">
+                                    <select id="tst_search_select_category" onchange="location.href='/'">
+                                        <option value="{검색 분류}">검색 분류</option>
+                                    </select>
+                                </div>
+                                <div class="tst_search_input">
+                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                </div>
+                                <div class="tst_search_icon">
+                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- //물품 검색 -->
+
+                        <table class="tst_table">
                             <colgroup>
-                                <col style="width: auto" />
-                                <col style="width: 60px" />
+                                <col style="width: 60px;" />
+                                <col style="width: 150px;" />
+                                <col style="width: 200px;" />
+                                <col style="width: auto;" />
+                                <col style="width: 60px;" />
+                                <col style="width: 150px;" />
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">첨부 파일</th>
+                                <th>번호</th>
+                                <th>분류</th>
+                                <th>제품명</th>
+                                <th>제품 정보</th>
+                                <th>상태</th>
+                                <th>반납 예정 일시</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>{파일명 (파일 용량kb)}</td>
-                                <td>
-                                    <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_min btn_primary">다운로드</button>
+
+                            <!-- 검색되는 공유 물품이 없을 경우 -->
+                            <tr class="rent_list_no_data disp_hide"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
+                                <td colspan="6" class="td_no_data">
+                                    <p><i class="bi bi-box-seam"></i></p>
+                                    <h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                        <!-- //첨부 파일 목록 -->
+                            <!-- //검색되는 공유 물품이 없을 경우 -->
 
-                        <hr class="separator" />
+                            <!-- 공유 물품 목록 > 대여 신청한 물품 -->
+                            <tr>
+                                <td>{번호}</td>
+                                <td>
+                                    <!-- 해당 분류로 필터링하는 주소 혹은 함수를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{분류}</span>
+                                </td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/'" class="tst_pointer">{제품명}</h3>
+                                </td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
+                                </td>
+                                <td>
+                                    <span onclick="location.href='/'" class="tst_badge_min btn_primary">대여 신청</span>
+                                </td>
+                                <td>없음</td>
+                            </tr>
+                            <!-- //공유 물품 목록 > 대여 신청한 물품 -->
 
-                        <!-- 대여 정보 > 대여 가능한 경우 -->
-                        <table class="tst_table table_align_left">
-                            <colgroup>
-                                <col style="width: 100px" />
-                                <col style="width: auto" />
-                            </colgroup>
-                            <thead>
+                            <!-- 공유 물품 목록 > 대여중인 물품 -->
                             <tr>
-                                <th colspan="2">대여 정보</th>
+                                <td>{번호}</td>
+                                <td>
+                                    <!-- 해당 분류로 필터링하는 주소 혹은 함수를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{분류}</span>
+                                </td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/'" class="tst_pointer">{제품명}</h3>
+                                </td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
+                                </td>
+                                <td>
+                                    <span onclick="location.href='/'" class="tst_badge_min btn_secondary">대여중</span>
+                                </td>
+                                <td>{반납 예정 일시}</td>
                             </tr>
-                            </thead>
-                            <tbody>
+                            <!-- //공유 물품 목록 > 대여중인 물품 -->
+
+                            <!-- 공유 물품 목록 > 연체중인 물품 -->
                             <tr>
-                                <th>대여 가능 여부</th>
-                                <td>대여 가능</td>
+                                <td>{번호}</td>
+                                <td>
+                                    <!-- 해당 분류로 필터링하는 주소 혹은 함수를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{분류}</span>
+                                </td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/'" class="tst_pointer">{제품명}</h3>
+                                </td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
+                                </td>
+                                <td>
+                                    <span onclick="location.href='/'" class="tst_badge_min btn_subtle">대여 가능</span>
+                                </td>
+                                <td><h3 class="font_caution">{반납 예정 일시}</h3></td>
                             </tr>
+                            <!-- //공유 물품 목록 > 연체중인 물품 -->
+
+                            <!-- 공유 물품 목록 > 반납한 물품 -->
                             <tr>
-                                <th>대여 상태</th>
-                                <td>대여 가능</td>
+                                <td>{번호}</td>
+                                <td>
+                                    <!-- 해당 분류로 필터링하는 주소 혹은 함수를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{분류}</span>
+                                </td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/'" class="tst_pointer">{제품명}</h3>
+                                </td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
+                                </td>
+                                <td>
+                                    <span onclick="location.href='/'" class="tst_badge_min btn_subtle">반납 완료</span>
+                                </td>
+                                <td>{반납 예정 일시}</td>
                             </tr>
+                            <!-- //공유 물품 목록 > 대여 가능한 물품 -->
+
+                            <!-- 예시 -->
                             <tr>
-                                <th>반납 예정일</th>
+                                <td>1278</td>
+                                <td><span onclick="location.href='/'" class="tst_pointer">윈도 노트북</span></td>
+                                <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">갤럭시북 Pro 16" (1)</h3></td>
+                                <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">갤럭시 북 5 Pro 360 (40.6cm) Core Ultra 7 / iTB NVMe SSD</span></td>
+                                <td><span onclick="location.href='/'" class="tst_badge_min btn_primary">대여 신청</span></td>
                                 <td>없음</td>
                             </tr>
                             <tr>
-                                <th colspan="2" class="td_align_center td_bg_subtle">대여 장소는 본관 3층 312호 경영 지원실입니다.</th>
+                                <td>1277</td>
+                                <td><span onclick="location.href='/'" class="tst_pointer">맥북</span></td>
+                                <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
+                                <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
+                                <td><span onclick="location.href='/'" class="tst_badge_min btn_secondary">대여중</span></td>
+                                <td>2025-01-23 18:00</td>
                             </tr>
-                            </tbody>
+                            <tr>
+                                <td>1277</td>
+                                <td><span onclick="location.href='/'" class="tst_pointer">맥북</span></td>
+                                <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
+                                <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
+                                <td><span onclick="location.href='/'" class="tst_badge_min btn_caution">연체</span></td>
+                                <td><h3 class="font_caution">2025-01-23 18:00</h3></td>
+                            </tr>
+                            <tr>
+                                <td>1277</td>
+                                <td><span onclick="location.href='/'" class="tst_pointer">맥북</span></td>
+                                <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
+                                <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
+                                <td><span onclick="location.href='/'" class="tst_badge_min btn_subtle">반납 완료</span></td>
+                                <td>2025-01-23 18:00</td>
+                            </tr>
+                            <!-- //예시 -->
+
+                            <!-- pagination -->
+                            <tfoot>
+                            <tr>
+                                <td colspan="7">
+                                    <ul id="pagination" class="pagination-sm pagination">
+                                        <li class="page-item first disabled">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+                                        </li>
+                                        <li class="page-item prev disabled">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
+                                        </li>
+                                        <li class="page-item active">
+                                            <a href="#" class="page-link">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">4</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">5</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">6</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">7</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">8</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">9</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">10</a>
+                                        </li>
+                                        <li class="page-item next">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
+                                        </li>
+                                        <li class="page-item last">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tfoot>
+                            <!-- //pagination -->
                         </table>
-                        <!-- //대여 정보 > 대여 가능한 경우 -->
-
-                        <hr class="separator" />
-
-                        <!-- 대여 정보 > 대여 불가한 경우 -->
-                        <table class="tst_table table_align_left">
-                            <colgroup>
-                                <col style="width: 100px" />
-                                <col style="width: auto" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th colspan="2">대여 정보</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>대여 가능 여부</th>
-                                <td>대여 불가</td>
-                            </tr>
-                            <tr>
-                                <th>대여 상태</th>
-                                <td>대여중 ({대여 시작일|yyyy-MM-dd}부터)</td>
-                            </tr>
-                            <tr>
-                                <th>반납 예정일</th>
-                                <td>{반납 예정일|yyyy-MM-dd}</td>
-                            </tr>
-                            <tr>
-                                <th colspan="2" class="td_align_center td_bg_subtle disp_hide">대여 장소는 본관 3층 312호 경영 지원실입니다.</th>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <!-- //대여 정보 > 대여 불가한 경우 -->
-
-                        <hr class="separator" />
-
-                        <!-- 버튼 -->
-                        <ul class="list_no_desc list_block">
-                            <li>
-                                <button class="btn_primary btn_full" onclick="tst_modal_call('tst_rent_detail_modal')">물품 대여 신청하기</button>
-                            </li>
-                            <li>
-                                <button class="btn_secondary btn_full" onclick="location.href='/'">목록으로 돌아가기</button>
-                            </li>
-                        </ul>
-                        <!-- //버튼 -->
-
                     </div>
-                    <!-- //상신한 문서 정보 확인 -->
 
                 </div>
-                <!-- //상신한 사항 상세보기 -->
-
             </div>
         </div>
     </div>
 </div>
-<c:import url="rent_detail_modal.jsp" />
+<c:import url="approval_send_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/rent_list.js"></script>

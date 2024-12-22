@@ -83,7 +83,7 @@
                                 <form>
                                     <div class="tst_search_container">
                                         <div class="tst_search_select">
-                                            <select id="tst_search_select_selector" onchange="location.href='/'">
+                                            <select id="tst_search_select_category" onchange="location.href='/'">
                                                 <option value="{검색 분류}">검색 분류</option>
                                             </select>
                                         </div>
