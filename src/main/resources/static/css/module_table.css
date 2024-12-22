@@ -66,6 +66,11 @@
     background-color: var(--tst-color-subtle);
 }
 
+.tst_table .td_bg_caution{
+    background-color: #f8d7da;
+    color: var(--tst-color-warning);
+}
+
 .tst_table.table_emphasis tr:hover {
     background-color: var(--tst-color-subtle);
 }
