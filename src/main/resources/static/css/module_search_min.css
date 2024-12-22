@@ -59,6 +59,13 @@
     background: none;
 }
 
+.tst_search_container select.btn_secondary{
+    padding: 4px 4px 3px;
+    border-radius: var(--tst-border-radius);
+    position: relative;
+    top: -3px;
+}
+
 
 
 /* tst_filtering_container */

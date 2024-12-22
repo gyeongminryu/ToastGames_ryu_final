@@ -61,7 +61,7 @@
                         <form>
                             <div class="tst_search_container">
                                 <div class="tst_search_select">
-                                    <select id="tst_search_select_category" onchange="location.href='/'">
+                                    <select id="tst_search_select_category" name="category" onchange="location.href='/'">
                                         <option value="{검색 분류}">검색 분류</option>
                                     </select>
                                 </div>
@@ -276,7 +276,6 @@
         </div>
     </div>
 </div>
-<c:import url="approval_send_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 </html>

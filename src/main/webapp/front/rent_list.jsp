@@ -39,7 +39,7 @@
                         <form>
                             <div class="tst_search_container width_full">
                                 <div class="tst_search_input">
-                                    <input type="text" name="keyword_kind" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                                    <input type="text" name="keyword_category" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
                                 </div>
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
@@ -263,7 +263,6 @@
         </div>
     </div>
 </div>
-<c:import url="approval_send_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/rent_list.js"></script>

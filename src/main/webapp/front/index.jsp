@@ -133,6 +133,9 @@
 
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
+                            <li><!-- 대여 신청시가 아닐 때는 'class="disp_hide"'를 추가하여 보이지 않게 처리해 주세요 -->
+                                <button class="btn_primary btn_full" onclick="tst_modal_call('tst_rent_detail_cancel_modal')">대여 신청 취소하기</button>
+                            </li>
                             <li>
                                 <button class="btn_secondary btn_full" onclick="location.href='/'">목록으로 돌아가기</button>
                             </li>
@@ -147,7 +150,7 @@
         </div>
     </div>
 </div>
-<c:import url="rent_detail_modal.jsp" />
+<c:import url="rent_mylist_detail_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/rent_list.js"></script>
