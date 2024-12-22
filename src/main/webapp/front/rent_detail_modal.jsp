@@ -6,7 +6,7 @@
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">물품 대여 신청하기</h1>
-            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_approval_reject_modal')"></i>
+            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_rent_detail_modal')"></i>
         </div>
         <form>
             <div class="tst_modal_body">
@@ -32,12 +32,12 @@
                         <input type="submit" value="반려하기" class="btn_primary btn_full" />
                     </div>
                     <div class="tst_col6">
-                        <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_approval_reject_modal')">취소하기</button>
+                        <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_rent_detail_modal')">취소하기</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_approval_reject_modal')"></div>
+    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_rent_detail_modal')"></div>
 </div>
 <script src="resources/js/module_modal.js"></script>

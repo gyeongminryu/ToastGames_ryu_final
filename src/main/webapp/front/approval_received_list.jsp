@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="resources/js/jquery.twbsPagination.js"></script>
@@ -52,12 +53,18 @@
                         <h3>결재 반려</h3>
                     </li>
                     <li class="tst_tablist_item">
+                        <!-- 문서 검색 -->
                         <form>
                             <div class="tst_search_container">
-                                <h3>검색</h3>
-                                <input type="text" name="search" maxlength="50" class="input_min input_underline" />
+                                <div class="tst_search_input">
+                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                </div>
+                                <div class="tst_search_icon">
+                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                </div>
                             </div>
                         </form>
+                        <!-- //문서 검색 -->
                     </li>
                 </ul>
                 <!-- //게시물 분류 -->
@@ -65,13 +72,13 @@
                 <!-- 결재할 문서 목록 -->
                 <table class="tst_table approval_received_list">
                     <colgroup>
-                        <col style="width: 180px" />
-                        <col style="width: 180px" />
+                        <col style="width: 150px" />
+                        <col style="width: 150px" />
                         <col style="width: auto" />
                         <col style="width: 100px" />
-                        <col style="width: 150px" />
-                        <col style="width: 150px" />
-                        <col style="width: 150px" />
+                        <col style="width: 140px" />
+                        <col style="width: 140px" />
+                        <col style="width: 140px" />
                     </colgroup>
                     <thead>
                     <tr>
@@ -100,7 +107,7 @@
 
                     <!-- 기본 -->
                     <tr>
-                        <td class="td_align_left">{직원명 (부서명/직급명)}</td>
+                        <td class="td_align_left td_no_padding">{직원명 (부서명/직급명)}</td>
                         <td>{문서 유형}</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_primary margin_right">{처리 현황}</span>
@@ -115,7 +122,7 @@
 
                     <!-- 예시) 문서를 읽지 않았을 경우 -->
                     <tr>
-                        <td class="td_align_left">김이름 (영업/대리)</td>
+                        <td class="td_align_left td_no_padding">김이름 (영업/대리)</td>
                         <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_primary margin_right">읽지 않음</span>
@@ -130,7 +137,7 @@
 
                     <!-- 예시) 문서를 읽었으나 아직 결재를 마치지 않았을 경우 -->
                     <tr>
-                        <td class="td_align_left">김이름 (영업/대리)</td>
+                        <td class="td_align_left td_no_padding">김이름 (영업/대리)</td>
                         <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_secondary margin_right">결재중</span>
@@ -145,7 +152,7 @@
 
                     <!-- 예시) 문서 결재 이후 윗선으로 상신한 문서가 아직 결재되지 않았을 경우 -->
                     <tr>
-                        <td class="td_align_left">김이름 (영업/대리)</td>
+                        <td class="td_align_left td_no_padding">김이름 (영업/대리)</td>
                         <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">승인</span>
@@ -160,7 +167,7 @@
 
                     <!-- 예시) 상급자가 결재를 최종 승인하여 시스템이 자동으로 알림을 발송했을 경우 -->
                     <tr>
-                        <td class="td_align_left">김이름 (경영지원/대리)</td>
+                        <td class="td_align_left td_no_padding">김이름 (경영지원/대리)</td>
                         <td>교육 참가 신청서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">승인</span>
@@ -175,7 +182,7 @@
 
                     <!-- 예시) 상급자가 결재를 최종 반려하여 시스템이 자동으로 알림을 발송했을 경우 -->
                     <tr>
-                        <td class="td_align_left">김이름 (경영지원/대리)</td>
+                        <td class="td_align_left td_no_padding">김이름 (경영지원/대리)</td>
                         <td>교육 참가 신청서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">승인</span>
@@ -190,7 +197,7 @@
 
                     <!-- 예시) 문서를 반려했을 경우 -->
                     <tr>
-                        <td class="td_align_left">김이름 (영업/대리)</td>
+                        <td class="td_align_left td_no_padding">김이름 (영업/대리)</td>
                         <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">반려</span>

@@ -10,7 +10,6 @@
 
 .tst_table tbody tr{
     border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
-    margin: 0 -10px;
 }
 
 .tst_table thead th{
@@ -35,10 +34,8 @@
 .tst_table.table_align_left tbody td,
 .tst_table .td_align_left{
     text-align: left;
-    padding: 8px 0;
 }
 
-.tst_table .td_align_center,
 .tst_table.table_align_left .td_align_center{
     text-align: center;
 }
@@ -52,11 +49,17 @@
     vertical-align: top;
 }
 
+.tst_table.table_no_padding th,
+.tst_table.table_no_padding td,
+.tst_table th.td_no_padding,
+.tst_table td.td_no_padding{
+    padding: 8px 0;
+}
+
 .tst_table .td_bg_medium{
     background-color: var(--tst-color-medium);
     color: var(--tst-color-white);
     font-weight: 700;
-    padding-left: 10px;
 }
 
 .tst_table .td_bg_subtle{

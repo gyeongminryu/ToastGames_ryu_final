@@ -1,3 +1,10 @@
+:root{
+    --tst-container-min-width: 1400px;
+    --tst-container-margin: 16px;
+    --tst-topnav-height: 50px;
+    --tst-leftnav-width: 230px;
+}
+
 .tst_topnav{
     width: 100vw;
     height: var(--tst-topnav-height);
@@ -29,7 +36,7 @@
     min-width: var(--tst-container-min-width);
     height: calc(100vh - var(--tst-topnav-height));
     margin: 0 auto;
-    padding: 16px 0px 16px 20px;
+    padding: var(--tst-container-margin) 0px var(--tst-container-margin) calc(var(--tst-container-margin) + 4px);
 }
 
 .tst_container .tst_container_left{
@@ -73,5 +80,5 @@
 }
 
 .tst_container .tst_contents .tst_contents_inner{
-    padding: 24px;
+    padding: 20px 24px;
 }

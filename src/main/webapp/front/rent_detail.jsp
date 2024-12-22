@@ -33,7 +33,7 @@
 
                     <!-- 물품 정보 상세보기 -->
                     <div class="tst_col9">
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 120px" />
                                 <col style="width: auto" />
@@ -64,7 +64,7 @@
                     <div class="tst_col3">
 
                         <!-- 첨부 파일 목록 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: auto" />
                                 <col style="width: 60px" />
@@ -88,7 +88,7 @@
                         <hr class="separator" />
 
                         <!-- 대여 정보 > 대여 가능한 경우 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 100px" />
                                 <col style="width: auto" />
@@ -121,7 +121,7 @@
                         <hr class="separator" />
 
                         <!-- 대여 정보 > 대여 불가한 경우 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 100px" />
                                 <col style="width: auto" />

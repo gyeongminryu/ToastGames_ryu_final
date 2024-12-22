@@ -7,6 +7,7 @@
     <title>TOAST Games Groupware</title>
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
@@ -29,7 +30,7 @@
                 <div class="tst_flex">
 
                     <div class="tst_col3">
-                        <table class="tst_table">
+                        <table class="tst_table table_no_padding">
                             <colgroup>
                                 <col style="width: auto;" />
                                 <col style="width: 60px;" />
@@ -44,8 +45,16 @@
                             <!-- 양식 이름 검색 -->
                             <tr>
                                 <td colspan="2">
+                                    <hr class="separator" />
                                     <form>
-                                        <input type="text" name="search_form" maxlength="50" placeholder="검색어를 입력하세요" />
+                                        <div class="tst_search_container">
+                                            <div class="tst_search_input">
+                                                <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                            </div>
+                                            <div class="tst_search_icon">
+                                                <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                            </div>
+                                        </div>
                                     </form>
                                 </td>
                             </tr>
@@ -68,7 +77,7 @@
 
                     <!-- 문서 양식 미리보기 -->
                     <div class="tst_col9">
-                        <table class="tst_table">
+                        <table class="tst_table table_no_padding">
                             <thead>
                             <tr>
                                 <th>미리보기</th>

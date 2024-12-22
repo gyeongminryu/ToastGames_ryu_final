@@ -97,7 +97,7 @@
                             <tbody>
 
                             <!-- 검색되는 공유 물품이 없을 경우 -->
-                            <tr class="rent_list_no_data disp_hide"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
+                            <tr class="rent_list_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
                                 <td colspan="6" class="td_no_data">
                                     <p><i class="bi bi-box-seam"></i></p>
                                     <h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>
@@ -156,7 +156,7 @@
                                     <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
                                 </td>
                                 <td>
-                                    <span onclick="location.href='/'" class="tst_badge_min btn_subtle">대여 가능</span>
+                                    <span onclick="location.href='/'" class="tst_badge_min btn_caution">연체</span>
                                 </td>
                                 <td><h3 class="font_caution">{반납 예정 일시}</h3></td>
                             </tr>
@@ -279,5 +279,4 @@
 <c:import url="approval_send_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
-<script src="resources/js/rent_list.js"></script>
 </html>

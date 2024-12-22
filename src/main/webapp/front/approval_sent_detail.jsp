@@ -38,7 +38,7 @@
 
                     <!-- 문서 상세보기 -->
                     <div class="tst_col9">
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 120px" />
                                 <col style="width: auto" />
@@ -108,7 +108,7 @@
                     <div class="tst_col3">
 
                         <!-- 작성 정보 확인 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 100px" />
                                 <col style="width: auto" />
@@ -156,7 +156,7 @@
 
                             <!-- 작성자 -->
                             <tr>
-                                <td class="td_align_top">
+                                <td class="td_align_top td_no_padding">
                                     <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                                 </td>
                                 <td class="approval_line_info">
@@ -169,7 +169,7 @@
 
                             <!-- 1차 결재자 / 결재 승인했을 경우 -->
                             <tr>
-                                <td class="td_align_top">
+                                <td class="td_align_top td_no_padding">
                                     <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                                 </td>
                                 <td class="approval_line_info">
@@ -183,7 +183,7 @@
 
                             <!-- 2차 결재자 / 반려했을 경우 -->
                             <tr>
-                                <td class="td_align_top">
+                                <td class="td_align_top td_no_padding">
                                     <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                                 </td>
                                 <td class="approval_line_info">
@@ -198,7 +198,7 @@
 
                             <!-- 3차 결재자 / 결재 대기중인 경우 -->
                             <tr>
-                                <td class="td_align_top">
+                                <td class="td_align_top td_no_padding">
                                     <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                                 </td>
                                 <td class="approval_line_info">
@@ -212,7 +212,7 @@
 
                             <!-- 3차 결재자 / 결재 불가한 경우 -->
                             <tr>
-                                <td class="td_align_top">
+                                <td class="td_align_top td_no_padding">
                                     <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                                 </td>
                                 <td class="approval_line_info">
@@ -231,7 +231,7 @@
                         <hr class="separator" />
 
                         <!-- 참조인 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 100px" />
                                 <col style="width: auto" />

@@ -36,7 +36,7 @@
                         <tr class="disp_hide">
                             <td></td>
                             <td>
-                                <table class="tst_table table_align_left">
+                                <table class="tst_table table_align_left table_no_padding">
                                     <tbody>
                                     <tr>
                                         <!-- 팀 내 직원을 출력하는 함수를 입력하세요 --><td onclick="{함수}">{팀명}</td>
@@ -61,7 +61,7 @@
                         <tr class="disp_hide">
                             <td></td>
                             <td>
-                                <table class="tst_table table_align_left">
+                                <table class="tst_table table_align_left table_no_padding">
                                     <tbody>
                                     <tr>
                                         <td onclick="{함수}">{팀명}</td>
@@ -112,7 +112,7 @@
                         <!-- 직원 정보 -->
                         <tr>
                             <!-- 직원을 결재선 혹은 참조에 추가하는 함수를 입력하세요 --><tr onclick="{함수}">
-                            <td class="td_align_top">
+                            <td class="td_align_top td_no_padding">
                                 <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                             </td>
                             <td>
@@ -125,7 +125,7 @@
                         <!-- 예시 -->
                         <tr>
                             <tr onclick="{함수}">
-                            <td class="td_align_top">
+                            <td class="td_align_top td_no_padding">
                                 <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                             </td>
                             <td>
@@ -135,7 +135,7 @@
                         </tr>
                         <tr>
                         <tr onclick="{함수}">
-                            <td class="td_align_top">
+                            <td class="td_align_top td_no_padding">
                                 <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                             </td>
                             <td>

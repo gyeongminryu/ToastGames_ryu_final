@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/approval_writing_list.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="resources/js/jquery.twbsPagination.js"></script>
@@ -48,12 +49,18 @@
                                 <h3>삭제한 문서</h3>
                             </li>
                             <li class="tst_tablist_item">
+                                <!-- 문서 검색 -->
                                 <form>
                                     <div class="tst_search_container">
-                                        <h3>검색</h3>
-                                        <input type="text" name="search" maxlength="50" class="input_min input_underline" />
+                                        <div class="tst_search_input">
+                                            <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                        </div>
+                                        <div class="tst_search_icon">
+                                            <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                        </div>
                                     </div>
                                 </form>
+                                <!-- //문서 검색 -->
                             </li>
                         </ul>
                         <!-- //게시물 분류 -->
@@ -61,12 +68,12 @@
                         <!-- 작성중인 문서 목록 -->
                         <table class="tst_table approval_received_list">
                             <colgroup>
-                                <col style="width: 180px" />
-                                <col style="width: 180px" />
+                                <col style="width: 150px" />
+                                <col style="width: 150px" />
                                 <col style="width: auto" />
-                                <col style="width: 150px" />
-                                <col style="width: 150px" />
-                                <col style="width: 100px" />
+                                <col style="width: 140px" />
+                                <col style="width: 140px" />
+                                <col style="width: 70px" />
                             </colgroup>
                             <thead>
                             <tr>
@@ -94,14 +101,14 @@
 
                             <!-- 기본 -->
                             <tr>
-                                <td class="td_align_left">{직원명 (부서명/직급명)}</td>
+                                <td class="td_align_left td_no_padding">{직원명 (부서명/직급명)}</td>
                                 <td>{문서 유형}</td>
                                 <td class="td_align_left">
                                     <a href="/" target="_blank">{제목}</a>
                                 </td>
                                 <td>{최초 작성 일시}</td>
                                 <td>{최종 수정 일시}</td>
-                                <td>
+                                <td class="td_align_right td_no_padding">
                                     <a href="/"><span class="tst_badge_min btn_subtle">삭제</span></a>
                                 </td>
                             </tr>
@@ -109,7 +116,7 @@
 
                             <!-- 예시 -->
                             <tr>
-                                <td class="td_align_left">
+                                <td class="td_align_left td_no_padding">
                                     김이름 (영업/대리)
                                 </td>
                                 <td>
@@ -120,7 +127,7 @@
                                 </td>
                                 <td>2024-12-18 09:30</td>
                                 <td>2024-12-18 10:00</td>
-                                <td>
+                                <td class="td_align_right td_no_padding">
                                     <a href="/"><span class="tst_badge_min btn_subtle">삭제</span></a>
                                 </td>
                             </tr>

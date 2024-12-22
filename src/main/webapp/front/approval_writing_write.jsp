@@ -31,7 +31,7 @@
 
                     <!-- 문서 작성하기 -->
                     <div class="tst_col9">
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 120px;" />
                                 <col style="width: auto;" />
@@ -88,7 +88,7 @@
                     <div class="tst_col3">
 
                         <!-- 결재선 편집 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 90px;" />
                                 <col style="width: auto;" />
@@ -127,7 +127,7 @@
                         <!-- //결재선 편집 -->
 
                         <!-- 참조 편집 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 90px;" />
                                 <col style="width: auto;" />
@@ -166,7 +166,7 @@
                         <!-- //참조 편집 -->
 
                         <!-- 첨부 파일 편집 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: auto;" />
                                 <col style="width: 60px;" />
@@ -193,7 +193,9 @@
                             <tfoot>
                             <tr>
                                 <td colspan="2">
-                                    <input type="file" />
+                                    <form>
+                                        <input type="file" name="attached_file" multiple />
+                                    </form>
                                 </td>
                             </tr>
                             </tfoot>
