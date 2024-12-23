@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public class ScheduleDTO {
 
+	
+	//일정관리
 	private int sche_idx;
 	private String sche_title;
 	private String sche_content;
@@ -17,6 +19,8 @@ public class ScheduleDTO {
 	
 	private int sche_parti_empl_idx;
 	
+	
+	//공용 물품 일정 관리
 	private int prod_rent_idx;
 	private int prod_idx;
 	private int prod_rent_empl_idx;
@@ -26,6 +30,50 @@ public class ScheduleDTO {
 	private LocalDateTime prod_return_date;
 	
 	
+	
+	
+	public int getProd_rent_idx() {
+		return prod_rent_idx;
+	}
+	public void setProd_rent_idx(int prod_rent_idx) {
+		this.prod_rent_idx = prod_rent_idx;
+	}
+	public int getProd_idx() {
+		return prod_idx;
+	}
+	public void setProd_idx(int prod_idx) {
+		this.prod_idx = prod_idx;
+	}
+	public int getProd_rent_empl_idx() {
+		return prod_rent_empl_idx;
+	}
+	public void setProd_rent_empl_idx(int prod_rent_empl_idx) {
+		this.prod_rent_empl_idx = prod_rent_empl_idx;
+	}
+	public String getProd_rent_reason() {
+		return prod_rent_reason;
+	}
+	public void setProd_rent_reason(String prod_rent_reason) {
+		this.prod_rent_reason = prod_rent_reason;
+	}
+	public LocalDateTime getProd_rent_date() {
+		return prod_rent_date;
+	}
+	public void setProd_rent_date(LocalDateTime prod_rent_date) {
+		this.prod_rent_date = prod_rent_date;
+	}
+	public LocalDateTime getProd_exp_date() {
+		return prod_exp_date;
+	}
+	public void setProd_exp_date(LocalDateTime prod_exp_date) {
+		this.prod_exp_date = prod_exp_date;
+	}
+	public LocalDateTime getProd_return_date() {
+		return prod_return_date;
+	}
+	public void setProd_return_date(LocalDateTime prod_return_date) {
+		this.prod_return_date = prod_return_date;
+	}
 	public int getSche_parti_empl_idx() {
 		return sche_parti_empl_idx;
 	}
