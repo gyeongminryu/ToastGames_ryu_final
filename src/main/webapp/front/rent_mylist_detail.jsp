@@ -116,7 +116,7 @@
                             </tr>
                             <tr>
                                 <th>대여 상태</th>
-                                <td>대여중|연체중</td>
+                                <td>대여 신청|대여중|연체</td>
                             </tr>
                             <tr>
                                 <th>반납 예정일</th>
@@ -153,5 +153,4 @@
 <c:import url="rent_mylist_detail_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
-<script src="resources/js/rent_list.js"></script>
 </html>
