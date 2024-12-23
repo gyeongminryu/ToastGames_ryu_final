@@ -1,3 +1,5 @@
+//부모창 결재선
+//결재선 선택 위해 결재도를 여는 js
 var content = '';
 function approval_line_window(step){
     console.log("결재 step",step);
@@ -6,7 +8,6 @@ function approval_line_window(step){
     //자식창에 결재 라인 step 전달
     //encodeURIComponent
     win = window.open('/approval_list.go?step='+ encodeURIComponent(step),'approval_list','height=300,left=100,top=100');
-
 
 }
 
@@ -29,11 +30,6 @@ function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i
     document.getElementById('dept_line'+step).value = dept_i;
     document.getElementById('duty_line'+step).value = duty_i;
     document.getElementById('duty_line'+step).value = duty_i;
-
-
-
-
-
 
 }
 

@@ -63,9 +63,8 @@ function approval_write_current_date(){
 function approval_save_data_send(){
     //문서 저장
     approval_save_doc();
-
-
 }
+
 function approval_save_doc(){
     var form = new FormData($('form')[0]);
     $.ajax({

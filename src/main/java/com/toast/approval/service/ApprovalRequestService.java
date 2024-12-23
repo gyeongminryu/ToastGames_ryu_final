@@ -312,15 +312,15 @@ public class ApprovalRequestService {
 
 			data.put("line_order", i);
 			data.put("doc_idx", doc_idx);
-			data.put("empl_line",param.get("empl_line"+i));
-			data.put("dept_line",param.get("dept_line"+i));
-			data.put("duty_line",param.get("duty_line"+i));
+			data.put("empl_idx",param.get("empl_line"+i));
+			data.put("dept_idx",param.get("dept_line"+i));
+			data.put("duty_idx",param.get("duty_line"+i));
 			logger.info("map값 :{}",data);
-			/*if(approvalRequestDAO.save_approval_line(data)>0){
+			if(approvalRequestDAO.save_approval_line(data)>0){
 				success = true;
 			}else{
 				success = false;
-			}*/
+			}
 		}
 
 		return success;

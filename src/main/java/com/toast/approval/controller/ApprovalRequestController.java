@@ -86,7 +86,6 @@ public class ApprovalRequestController {
 		logger.info("files:{}", (Object) files);
 		//update로 하기
 		if(approvalRequestService.doc_write(param,files) && approvalRequestService.save_approval_line(param)){
-
 			success = "결재 문서 저장 성공";
 		}
 
