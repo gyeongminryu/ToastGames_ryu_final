@@ -4,10 +4,11 @@
 <mapper namespace="com.toast.management.dao.DepartmentDAO">
 
 <insert id="organizationAdd" parameterType="Map">
-	 insert into department (dept_name, dept_duty, dept_addr, dept_high) values (
+	 insert into department (dept_name, dept_duty, dept_addr,dept_depth ,dept_high) values (
         #{dept_name},
         #{dept_duty},
         #{dept_addr},
+        #{dept_depth},
         <choose>
             <when test="dept_high !=1">
                 #{dept_high}

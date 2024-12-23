@@ -55,7 +55,18 @@ public class DepartmentService {
 
 	public List<DepartmentDTO> getdept() {
 		
-		return departmentDAO.getdept();
+		List<DepartmentDTO> dept_list = new ArrayList();
+		List<DepartmentDTO> dept_alllist = departmentDAO.getdept();
+		
+		for (DepartmentDTO departmentDTO : dept_alllist) {
+			String dept_depth = departmentDTO.getDept_depth();
+			logger.info( "부서 depth 는 "+dept_depth);
+			if(dept_depth != null &&!dept_depth.equals("3")) {
+			dept_list.add(departmentDTO);
+			}
+		}
+		
+		return dept_list;
 	}
 
 	public DepartmentDTO getdeptinfo(String dept_idx) {

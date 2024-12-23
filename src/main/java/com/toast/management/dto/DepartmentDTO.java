@@ -8,6 +8,14 @@ public class DepartmentDTO {
 	private String dept_addr;
 	private int dept_high;
 	private boolean dept_state;
+	private String dept_depth;
+	
+	public String getDept_depth() {
+		return dept_depth;
+	}
+	public void setDept_depth(String dept_depth) {
+		this.dept_depth = dept_depth;
+	}
 	public int getDept_idx() {
 		return dept_idx;
 	}
