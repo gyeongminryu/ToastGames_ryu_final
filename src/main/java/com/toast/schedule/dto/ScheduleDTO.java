@@ -17,6 +17,14 @@ public class ScheduleDTO {
 	
 	private int sche_parti_empl_idx;
 	
+	private int prod_rent_idx;
+	private int prod_idx;
+	private int prod_rent_empl_idx;
+	private String prod_rent_reason;
+	private LocalDateTime prod_rent_date;
+	private LocalDateTime prod_exp_date;
+	private LocalDateTime prod_return_date;
+	
 	
 	public int getSche_parti_empl_idx() {
 		return sche_parti_empl_idx;
