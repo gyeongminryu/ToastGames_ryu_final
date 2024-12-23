@@ -128,6 +128,8 @@ function approval_draw_empllist(data,dept_idx){
     for(var empl of data){
         console.log(empl);
         console.log(empl.empl_idx);
+        console.log(empl.dept_name);
+
         content += '<div class="empl_individual" onclick="approval_selected_line('+dept_idx+','+empl.empl_idx+','+empl.duty_idx+',\''+empl.empl_name+'\',\''+empl.duty_name+'\',\''+empl.position_name+'\')">' + empl.empl_name + ' (' + empl.duty_name + '/' + empl.position_name + ') </div>';
     }
     $('#empl_wrapper').html(content);
@@ -139,21 +141,32 @@ var position ='';
 var duty = '';
 var duty_i = 0;
 var dept_i = 0;
+var dept_n = '';
 
-function approval_selected_line(dept_idx,empl_idx,duty_idx,empl_name,duty_name,position_name){
-        console.log(empl_idx);
-        console.log(empl_name);
 
-        console.log(duty_name);
-        console.log(position_name);
+function approval_selected_line(dept_idx,dept_name,empl_idx,empl_name,duty_idx,duty_name,position_idx,position_name){
+    console.log(dept_idx);
+    console.log(dept_name);
+
+
+    console.log(empl_idx);
+    console.log(empl_name);
+
+    console.log(duty_idx);
+    console.log(duty_name);
+
+    console.log(position_idx);
+    console.log(position_name);
 
         $('#send_val').val(empl_idx);
         empl_i= empl_idx;
-        dept_i = dept_idx;
-        duty_i = duty_idx;
         empl_n = empl_name;
-        position = position_name;
-        duty = duty_name;
+        dept_i = dept_idx;
+        dept_n = dept_name;
+        duty_i = duty_idx;
+        duty_n = duty_name;
+        position_i = position_idx;
+        position_n = position_name;
 
 }
 
@@ -161,7 +174,7 @@ function approval_send_line(){
    var send_val = $('#send_val').val();
    console.log('send_val:',send_val);
 
-    opener.approval_get_lines(empl_i,dept_i,duty_i,empl_n,position,duty,step);
+    opener.approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i,position_n,step);
     window.close();
 
 }
