@@ -61,8 +61,13 @@ function approval_write_current_date(){
 
 //ajax로 formData 값 보내서 저장하는 것
 function approval_save_data_send(){
-    var form = new FormData($('form')[0]);
+    //문서 저장
+    approval_save_doc();
 
+
+}
+function approval_save_doc(){
+    var form = new FormData($('form')[0]);
     $.ajax({
         type : 'POST',
         url : 'approval_doc_write.ajax',
@@ -77,5 +82,4 @@ function approval_save_data_send(){
             console.log(e);
         }
     });
-
 }
