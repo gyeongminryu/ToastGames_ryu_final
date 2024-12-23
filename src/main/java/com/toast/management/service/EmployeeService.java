@@ -1,5 +1,7 @@
 package com.toast.management.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,6 +13,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,8 @@ import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.EmployeeDTO;
 import com.toast.management.dto.MainFileDTO;
 import com.toast.management.dto.PositionDTO;
+import com.toast.member.dao.MemberDAO;
+import com.toast.member.dto.FileDTO;
 
 @Service
 public class EmployeeService {
@@ -33,7 +38,11 @@ public class EmployeeService {
 	
 	@Autowired PasswordEncoder encoder;
 	@Autowired DepartmentDAO deptDAO;
-	
+	@Autowired MemberDAO memberDAO;
+	// spring.servlet.multipart.location=C:/files 이 경로로 주입. !!! 파일 저장위치 !!!
+    @Value("${spring.servlet.multipart.location}")
+    private String uploadAddr;
+    
 	private final EmployeeDAO employeeDAO;
 	
 	private final DataConfig dataconfig;
@@ -171,6 +180,70 @@ public class EmployeeService {
 		}
 	}
 	
+	// 업로드 처리 
+	public void emplfileUpload(String empl_idx, MultipartFile[] files) throws IOException {
+		EmployeeDTO empl_info = employeeDAO.employeeDetail(empl_idx);
+		String file_key =	empl_info.getFile_key();
+		for (MultipartFile file : files) {
+			if (!file.isEmpty()) {
+				String originalFileName = file.getOriginalFilename();
+				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
+				String newFileName = UUID.randomUUID().toString() + "." + fileType;
+				String fileAddr = uploadAddr + "/" + newFileName;
+				
+				// 경로 설정 부분. 파일을 서버에 저장함. 필요한가? 이거 어떻게 해야할지 정해야 함..
+				File dest = new File(fileAddr);
+				file.transferTo(dest);
+				int int_empl_idx = Integer.parseInt(empl_idx);
+				// 첨부 파일 정보를 DTO에 저장.
+				FileDTO fileDTO = new FileDTO();
+				fileDTO.setFile_key(file_key);
+				fileDTO.setOri_filename(originalFileName);
+				fileDTO.setNew_filename(newFileName);
+				fileDTO.setFile_type(fileType);
+				fileDTO.setFile_addr(fileAddr);
+				fileDTO.setUploader_idx(int_empl_idx);
+				
+				// file 테이블에 파일정보 저장.
+				memberDAO.fileUpload(fileDTO);
+			}
 
+		}
+	} // public void emplfileUpload(String empl_idx, MultipartFile[] files)
+
+	public List<FileDTO> getemplUploadedFiles(String empl_idx) {
+		
+		EmployeeDTO empl_info = employeeDAO.employeeDetail(empl_idx);
+		String file_key =	empl_info.getFile_key();
+		List<FileDTO> filelist = employeeDAO.getemplUploadedFiles(file_key);
+		return filelist;
+	}
+	
+	
+	// 사원 직인 등록
+	public void emplStampUpload(String empl_idx, MultipartFile singleFile) {
+		
+		String originalFileName = singleFile.getOriginalFilename();
+		String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
+		String newFileName = UUID.randomUUID().toString() + "." + fileType;
+		String fileAddr = uploadAddr + "/" + newFileName;
+		
+		File dest = new File(fileAddr);
+		if (!dest.exists()) {
+	        dest.mkdirs();  // 디렉토리가 없으면 생성
+	    }
+		  try {
+		        // 파일을 지정한 경로에 저장
+		        singleFile.transferTo(dest);
+
+		        // 업로드된 파일 이름을 DB에 저장
+		        employeeDAO.emplStampUpload(empl_idx, newFileName);
+
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        throw new RuntimeException("파일 업로드 실패: " + e.getMessage());
+		    }
+		
+	}
 	
 }

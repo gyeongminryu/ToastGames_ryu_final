@@ -80,14 +80,7 @@
   <label>주소</label>
   <input type="text" name="empl_addr" placeholder="예: 서울시 강남구 삼성동" /><br />
 
-<div>
-  <label for="fileInput">파일 선택:</label>
-  <input type="file" id="fileInput" multiple />
-</div>
-<div>
-  <h4>선택된 파일 목록:</h4>
-  <ul id="fileList"></ul>
-</div>
+
 
   <button type="submit">제출</button>
 </form>
@@ -95,20 +88,6 @@
 
 
 <script>
-document.getElementById('fileInput').addEventListener('change', function(event) {
-	  const fileList = event.target.files; // 선택된 파일 목록
-	  const displayList = document.getElementById('fileList'); // 파일 이름을 출력할 요소
-
-	  // 화면 초기화
-	  displayList.innerHTML = '';
-
-	  // 각 파일 이름을 리스트에 추가
-	  for (let i = 0; i < fileList.length; i++) {
-	    const listItem = document.createElement('li');
-	    listItem.textContent = fileList[i].name; // 파일 이름 설정
-	    displayList.appendChild(listItem);
-	  }
-	});
 
 </script>
 

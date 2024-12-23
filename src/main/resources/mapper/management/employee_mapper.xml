@@ -102,4 +102,15 @@ select count(dept_idx) from department where dept_head_idx = #{param1}
 update department set dept_head_idx = null where dept_head_idx = #{param1}
 </update>
 
+<select id="getemplUploadedFiles" resultType="com.toast.member.dto.FileDTO">
+SELECT file_key, ori_filename, new_filename, file_type, file_addr
+	    FROM file
+	    WHERE file_key = #{param1}
+</select>
+
+<update id="emplStampUpload">
+	update employee set empl_stamp = {param2} where empl_idx = {param1}
+</update>
+
+
 </mapper>
