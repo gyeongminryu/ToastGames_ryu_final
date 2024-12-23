@@ -8,10 +8,8 @@ import java.util.Map;
 
 @Mapper
 public interface ApprovalRequestDAO {
-    /*문서 조회 -> 옮기기*/
-    List<Map<String, Object>> form_list();
 
-    Map<String, Object> form(int idx);
+
 
     /*저장*/
     int doc_write_initial(ApprovalRequestDTO app_dto);
@@ -24,7 +22,9 @@ public interface ApprovalRequestDAO {
 
 
     //문서 작성, 문서 파일 작성,문서 파일키 작성
-    int doc_write(String doc_idx, String doc_end_date, String doc_subject, String doc_content_sub, String doc_content, String doc_write_date);
+   // int doc_write(String doc_idx, String doc_end_date, String doc_subject, String doc_content_sub, String doc_content, String doc_write_date);
+    int doc_write(Map<String, String> param);
+
 
     int approval_doc_file_write(String doc_idx, String ori_filename, String new_filename, String file_key, int empl_idx, String file_type, String file_addr);
 
@@ -41,6 +41,18 @@ public interface ApprovalRequestDAO {
     void delete_previous_files(String previous_filekey);
 
     void doc_filekey_delete(String doc_idx);
+
+    int save_approval_line(Map<String, Object> data);
+
+    void save_approval_line_initial(Map<String,Object> g_approval_line);
+
+    List<Map<String, Object>> get_g_approval_line(int formIdx);
+
+    //결재자 이름 가져오기
+    int get_approval_empl_name(int dept_idx,int form_idx, int step);
+
+    int get_head_dept_idx(int i);
+
 
 
 

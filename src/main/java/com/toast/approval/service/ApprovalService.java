@@ -26,6 +26,21 @@ public class ApprovalService {
 		this.approvalDAO = approvalDAO;
 	}
 
+	//이동
+	public List<Map<String,Object>> form_list() {
+		return approvalDAO.form_list();
+	}
+
+	//이동
+	public Map<String, Object> form(int idx) {
+		return approvalDAO.form(idx);
+	}
+
+
+
+
+
+
 
 	public List<Map<String,Object>> highdept() {
 		return approvalDAO.highdept();
@@ -40,5 +55,13 @@ public class ApprovalService {
 		logger.info("서비스 단 searchVal:{}", search_val);
 
 		return approvalDAO.form_list_searched(search_val);
+	}
+
+	public List<Map<String,Object>> show_team(int dept_idx) {
+		return approvalDAO.show_team(dept_idx);
+	}
+
+	public List<Map<String,Object>> team_allempl(int team_idx) {
+		return approvalDAO.team_allempl(team_idx);
 	}
 }

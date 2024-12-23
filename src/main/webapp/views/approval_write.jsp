@@ -30,7 +30,7 @@
 
     <tr>
       <td>보고 제목</td>
-      <td><input type="text" name="subject" placeholder="제목을 입력 하세요!"/></td>
+      <td><input type="text" name="doc_subject" placeholder="제목을 입력 하세요!"/></td>
     </tr>
 
     <tr>
@@ -70,6 +70,37 @@
       </tbody>
 
     </table>
+
+<div id = "approval_line">
+  <div id = "approval_first_wrapper">1차 결재 :
+    <div class="approval_line" id = "approval_line1"></div>
+    <input type="hidden" name = "empl_line1" id="empl_line1"/>
+    <input type="hidden" name = "dept_line1" id="dept_line1"/>
+    <input type="hidden" name = "duty_line1" id="duty_line1"/>
+    <div onclick="approval_line_window(1)">결재선 선택</div>
+  </div>
+
+  <div id = "approval_second">
+    <div id = "approval_second_wrapper">2차 결재 :
+      <div class="approval_line" id = "approval_line2"></div>
+      <input type="hidden" name = "empl_line2"  id = "empl_line2"/>
+      <input type="hidden" name = "dept_line2" id = "dept_line2"/>
+      <input type="hidden" name = "duty_line2" id = "duty_line2"/>
+      <div onclick="approval_line_window(2)">결재선 선택</div>
+    </div>
+  </div>
+
+  <div id = "approval_final">
+    <div id = "approval_final_wrapper">최종 결재 :
+      <div class="approval_line" id = "approval_line3"></div>
+      <input type="hidden" name = "empl_line3" id = "empl_line3"/>
+      <input type="hidden" name = "dept_line3" id = "dept_line3"/>
+      <input type="hidden" name = "duty_line3" id = "duty_line3"/>
+
+      <div onclick="approval_line_window(3)">결재선 선택</div>
+    </div>
+  </div>
+</div>
 </form>
 </body>
 
@@ -78,6 +109,7 @@
 <script src="/resources/js/approval_request_form_adjust.js"></script>
 <script src="/resources/js/approval_request_write.js"></script>
 <script src="/resources/js/approval_request_save.js"></script>
+<script src="/resources/js/approval_list_line.js"></script>
 
 <script>
   //모델앤뷰로 받은 파라메터
