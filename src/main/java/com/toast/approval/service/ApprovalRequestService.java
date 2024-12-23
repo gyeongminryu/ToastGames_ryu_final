@@ -31,7 +31,7 @@ public class ApprovalRequestService {
 
 	public int doc_write_initial(int form_idx, String form_content, int empl_idx) {
 		int doc_idx = 0;
-		int step = 0;
+
 				//방금 저장한 idx 가져오기
 		//BoardDTO에 값 저장하기
 		ApprovalRequestDTO app_dto = new ApprovalRequestDTO();
