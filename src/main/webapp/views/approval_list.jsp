@@ -31,6 +31,8 @@
 <div id = "empl_wrapper">
 
 </div>
+<input type = "hidden" id="send_val"/>
+<input type="button" id = "send" value="결재선 선택" onclick="approval_send_line()"/>
 </body>
 <%--기능 script--%>
 <script src="/resources/js/approval_list.js"></script>

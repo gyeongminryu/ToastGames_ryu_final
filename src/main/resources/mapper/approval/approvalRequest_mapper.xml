@@ -2,18 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.toast.approval.dao.ApprovalRequestDAO">
-    <select id="form_list" resultType="Map">
-        SELECT form_subject,form_idx FROM form
-    </select>
 
-    <select id="form" resultType="Map">
-        SELECT form_idx, form_subject,form_content,form_handler_idx FROM form WHERE form_idx = #{idx}
-    </select>
-
+    <!--미리보기로 양식 선택 후 최초 저장-->
     <insert id="doc_write_initial" useGeneratedKeys="true" keyColumn="doc_idx" keyProperty="doc_idx" parameterType="com.toast.approval.dto.ApprovalRequestDTO">
         INSERT INTO document(doc_empl_idx,doc_content,form_idx,doc_state)
         VALUES(#{doc_empl_idx},#{doc_content},#{form_idx},0)
     </insert>
+
+
+    <!--form_idx 기반으로 저장된 g_approval_line 가져오기-->
+    <select id="get_g_approval_line" resultType="Map">
+        SELECT * FROM g_approval_line;
+    </select>
+
+    <!--결재자의 이름 가져오기-->
+    <select id="get_approval_empl_name" resultType="int">
+        SELECT e.empl_idx from employee e join appointment a on e.appolast_idx = a.appo_idx
+        <if test="dept_idx != null">
+            where a.dept_idx = #{dept_idx} AND a.duty_idx = (SELECT duty_idx FROM g_approval_line WHERE form_idx = #{form_idx} AND gline_order = #{step})
+        </if>
+        <if test = "dept_idx == 0">
+            where a.duty_idx = (SELECT duty_idx FROM g_approval_line WHERE form_idx = #{form_idx} AND gline_order = #{step})
+        </if>
+    </select>
+
+    <!--사장 부서 idx 가져오기-->
+    <select id="" resultType="int">
+        SELECT a.dept_idx from employee e join appointment a on e.appolast_idx = a.appo_idx
+        WHERE a.duty_idx = 2;
+    </select>
+
+    <insert id="save_approval_line_initial" parameterType="Map">
+        INSERT INTO approval_line (doc_idx,line_order,dept_idx,duty_idx,empl_idx)
+            VALUES (#{doc_idx},#{gline_order},#{dept_idx},#{duty_idx},#{empl_idx})
+    </insert>
+
 
     <select id="doc_get" resultType="Map">
         SELECT doc_idx,doc_empl_idx,
@@ -32,12 +55,12 @@
 
 
     <select id="doc_dept_idx">
-        SELECT max(appo_idx ), dept_idx FROM appointment WHERE appo_empl_idx =  #{empl_idx} AND appo_idx =(SELECT max(appo_idx) FROM appointment WHERE appo_empl_idx = #{empl_idx});
+        SELECT max(appo_idx),dept_idx FROM appointment WHERE appo_empl_idx =  #{empl_idx} AND appo_idx =(SELECT max(appo_idx) FROM appointment WHERE appo_empl_idx = #{empl_idx});
     </select>
 
 
     <!--문서 작성 -->
-    <update id="doc_write">
+    <update id="doc_write" parameterType="Map">
         UPDATE document
         <set>
         <if test="doc_end_date != ''">doc_end_date = #{doc_end_date},</if>
@@ -48,6 +71,13 @@
         <if test="doc_write_date!= ''">doc_update_date = #{doc_write_date}</if>
         </set>
         WHERE doc_idx = #{doc_idx}
+    </update>
+
+    <!--결재선 저장-->
+    <update id="save_approval_line" parameterType="Map">
+        UPDATE approval_line SET
+            dept_idx = #{dept_idx},duty_idx = #{duty_idx}, empl_idx = #{empl_idx}
+        WHERE doc_idx = #{doc_idx} AND line_order = #{line_order}
     </update>
 
     <insert id="approval_doc_file_write">
