@@ -199,7 +199,7 @@
                             </tr>
                             <!-- //공유 물품 목록 > 대여중인 물품 -->
 
-                            <!-- 공유 물품 목록 > 예시 -->
+                            <!-- 공유 물품 목록 > 연체중인 물품 -->
                             <tr>
                                 <td>{번호}</td>
                                 <td>
@@ -212,11 +212,11 @@
                                     <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
                                 </td>
                                 <td>
-                                    <span onclick="location.href='/'" class="tst_badge_min btn_secondary">대여중</span>
+                                    <span onclick="location.href='/'" class="tst_badge_min btn_caution">연체</span>
                                 </td>
                                 <td>{반납 예정 일시}</td>
                             </tr>
-                            <!-- //공유 물품 목록 >  -->
+                            <!-- //공유 물품 목록 > 연체중인 물품 -->
 
                             <!-- 예시 -->
                             <tr>

@@ -149,18 +149,14 @@
                             <!-- 공유 물품 목록 > 대여중인 물품 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td>
-                                    <!-- 해당 분류로 필터링하는 주소 혹은 함수를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{분류}</span>
-                                </td>
+                                <td><span class="tst_pointer">{분류}</span></td>
                                 <td class="td_align_left">
                                     <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/'" class="tst_pointer">{제품명}</h3>
                                 </td>
                                 <td class="td_align_left">
                                     <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
                                 </td>
-                                <td>
-                                    <span onclick="location.href='/'" class="tst_badge_min btn_secondary">대여중</span>
-                                </td>
+                                <td><span class="tst_badge_min btn_secondary">대여중</span></td>
                                 <td>{반납 예정 일시}</td>
                             </tr>
                             <!-- //공유 물품 목록 > 대여중인 물품 -->
@@ -168,18 +164,14 @@
                             <!-- 공유 물품 목록 > 대여 가능한 물품 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td>
-                                    <!-- 해당 분류로 필터링하는 주소 혹은 함수를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{분류}</span>
-                                </td>
+                                <td><span class="tst_pointer">{분류}</span></td>
                                 <td class="td_align_left">
                                     <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/'" class="tst_pointer">{제품명}</h3>
                                 </td>
                                 <td class="td_align_left">
                                     <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
                                 </td>
-                                <td>
-                                    <span onclick="location.href='/'" class="tst_badge_min btn_subtle">대여 가능</span>
-                                </td>
+                                <td><span class="tst_badge_min btn_subtle">대여 가능</span></td>
                                 <td>없음</td>
                             </tr>
                             <!-- //공유 물품 목록 > 대여 가능한 물품 -->
@@ -187,18 +179,18 @@
                             <!-- 예시 -->
                             <tr>
                                 <td>1278</td>
-                                <td><span onclick="location.href='/'" class="tst_pointer">윈도 노트북</span></td>
+                                <td><span class="tst_pointer">윈도 노트북</span></td>
                                 <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">갤럭시북 Pro 16" (1)</h3></td>
                                 <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">갤럭시 북 5 Pro 360 (40.6cm) Core Ultra 7 / iTB NVMe SSD</span></td>
-                                <td><span onclick="location.href='/'" class="tst_badge_min btn_subtle">대여 가능</span></td>
+                                <td><span class="tst_badge_min btn_subtle">대여 가능</span></td>
                                 <td>없음</td>
                             </tr>
                             <tr>
                                 <td>1277</td>
-                                <td><span onclick="location.href='/'" class="tst_pointer">맥북</span></td>
+                                <td><span class="tst_pointer">맥북</span></td>
                                 <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
                                 <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
-                                <td><span onclick="location.href='/'" class="tst_badge_min btn_secondary">대여중</span></td>
+                                <td><span class="tst_badge_min btn_secondary">대여중</span></td>
                                 <td>2025-01-23 18:00</td>
                             </tr>
                             <!-- //예시 -->

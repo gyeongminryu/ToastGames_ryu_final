@@ -25,11 +25,18 @@
 
 .tst_search_container .tst_search_select select{
     width: 100%;
-    margin: 3px 0 0;
+    margin: -2px 0 0;
     padding: 0 0 4px;
     border: none;
     border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-color-dark);
+    border-radius: 0px;
     font-size: 12px;
+}
+
+.tst_search_container .tst_search_select select.btn_secondary{
+    padding: 3px 4px;
+    border: none;
+    border-radius: var(--tst-border-radius);
 }
 
 .tst_search_container .tst_search_input{
@@ -57,13 +64,6 @@
     padding: 5px 0 0;
     border: none;
     background: none;
-}
-
-.tst_search_container select.btn_secondary{
-    padding: 4px 4px 3px;
-    border-radius: var(--tst-border-radius);
-    position: relative;
-    top: -3px;
 }
 
 
