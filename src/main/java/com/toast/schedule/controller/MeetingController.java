@@ -118,7 +118,7 @@ public class MeetingController {
 	    return ResponseEntity.ok(response);
 	}
 
-	//회의실 정보 삭제
+	//회의실 정보 삭제 (사진 삭제 추가)
 	@PostMapping("/deleteMeetingRoom.do")
 	public ResponseEntity<?> deleteMeetingRoom(
 			@RequestBody Map<String, Integer> params) {  // room_idx 추가
