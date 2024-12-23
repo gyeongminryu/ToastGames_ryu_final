@@ -46,7 +46,16 @@ public class DepartmentController {
 	// 부서 추가하기
 	@PostMapping(value="/organization.do")
 	public String organizationAdd(@RequestParam Map<String,String> param) {
+		String dept_depth = "";
+		String dept_high =	param.get("dept_high");
+		DepartmentDTO deptinfo =departmentService.getdeptinfo(dept_high);
+		dept_depth = deptinfo.getDept_depth();
+		int int_dept_depth =	Integer.parseInt(dept_depth);
+		int_dept_depth += 1;
+		dept_depth = String.valueOf(int_dept_depth);
+		param.put("dept_depth", dept_depth);
 		departmentService.organizationAdd(param);
+		
 		return "";
 	}
 	
@@ -72,7 +81,7 @@ public class DepartmentController {
 	@GetMapping(value="/deptlist.ajax") // 부서 선택시 리스트 나열
 	@ResponseBody
 	public Map<String, Object> deptlist(){
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<DepartmentDTO> dept = new ArrayList<>();
 		dept = departmentService.getdept();
