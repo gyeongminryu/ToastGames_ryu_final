@@ -24,4 +24,25 @@
 			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr})
 	</insert>
 	
+	<select id="boardList" resultType="map">
+		SELECT b.board_idx, b.board_empl_idx, b.board_type_idx, b.dept_idx, b.board_title, b.board_content, b.board_view_cnt, b.board_write_date, b.board_update_date, e.empl_name, e.empl_id, d.dept_name, bt.board_type_name FROM board b JOIN employee e ON b.board_empl_idx = e.empl_idx JOIN department d ON b.dept_idx = d.dept_idx JOIN board_type bt ON b.board_type_idx = bt.board_type_idx WHERE 1 = 1
+		<if test="dept != null and dept != ''"> AND b.dept_idx = #{dept} </if>
+		<if test="type != null and type != ''"> AND bt.board_type_idx = #{type} </if>
+		<if test="searchType != null and searchType != '' and keyword != null and keyword != ''"> AND ${searchType} LIKE CONCAT('%', #{keyword}, '%') </if>
+		ORDER BY b.board_write_date DESC LIMIT #{limit} OFFSET #{offset}
+	</select>
+	<select id="countBoardList" resultType="map">
+		SELECT CEIL(COUNT(*) / COALESCE(#{cnt}, 15)) AS pages
+		<!--  cnt가 null일 경우 15로 처리  -->
+		FROM board b JOIN employee e ON b.board_empl_idx = e.empl_idx JOIN department d ON b.dept_idx = d.dept_idx JOIN board_type bt ON b.board_type_idx = bt.board_type_idx WHERE 1 = 1
+		<if test="dept != null and dept != ''"> AND b.dept_idx = #{dept} </if>
+		<if test="type != null and type != ''"> AND bt.board_type_idx = #{type} </if>
+		<if test="searchType != null and searchType != '' and keyword != null and keyword != ''"> AND ${searchType} LIKE CONCAT('%', #{keyword}, '%') </if>
+	</select>
+<!--  게시글 ID로 게시글을 조회하는 쿼리  -->
+	<select id="getBoardById" parameterType="int" resultType="map"> SELECT b.board_idx, b.board_empl_idx, b.board_type_idx, b.dept_idx, b.board_title, b.board_content, b.board_view_cnt, b.board_write_date, b.board_update_date, e.empl_name, e.empl_id, d.dept_name, bt.board_type_name FROM board b JOIN employee e ON b.board_empl_idx = e.empl_idx JOIN department d ON b.dept_idx = d.dept_idx JOIN board_type bt ON b.board_type_idx = bt.board_type_idx WHERE b.board_idx = #{boardIdx} </select>
+	<select id="getCommentsList" parameterType="int" resultType="map"> SELECT board_idx, reply_empl_idx, reply_content, reply_write_date, reply_update_date, e.empl_name FROM reply r JOIN employee e ON r.reply_empl_idx = e.empl_idx WHERE c.board_idx = #{boardIdx} ORDER BY reply_write_date DESC </select>
+	<insert id="writeComment" parameterType="map"> INSERT INTO reply (board_idx, reply_empl_idx, reply_content, reply_write_date, reply_update_date) VALUES (#{boardIdx}, #{appo_empl_idx}, #{reply_content}) </insert>
+	<insert id="writeReply" parameterType="map"> INSERT INTO reply (parent_comment_id, reply_content, reply_write_date) VALUES (#{parentCommentId}, #{replyContent}, NOW()) </insert>
+	
 </mapper>
