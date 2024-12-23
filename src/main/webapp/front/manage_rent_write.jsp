@@ -136,13 +136,13 @@
                                 <tr>
                                     <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
                                     <td>
-                                        <button type="button" onclick="location.href=''" class="btn_primary btn_min">삭제하기</button>
+                                        <button type="button" onclick="delete_attach(this, '{첨부파일_번호}')" class="btn_primary btn_min">삭제하기</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
                                     <td>
-                                        <button type="button" onclick="location.href=''" class="btn_primary btn_min">삭제하기</button>
+                                        <button type="button" onclick="delete_attach(this, '{첨부파일_번호}')" class="btn_primary btn_min">삭제하기</button>
                                     </td>
                                 </tr>
                                 </tbody>

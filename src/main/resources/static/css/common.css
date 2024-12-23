@@ -124,6 +124,10 @@ p.min{
     font-weight: 400;
 }
 
+.font_cancellation{
+    text-decoration-line: line-through;
+}
+
 .tst_badge_min{
     width: fit-content;
     min-width: 60px;
