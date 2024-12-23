@@ -12,32 +12,28 @@
 
     <!--form_idx 기반으로 저장된 g_approval_line 가져오기-->
     <select id="get_g_approval_line" resultType="Map">
-        SELECT * FROM g_approval_line;
+        SELECT * FROM g_approval_line WHERE form_idx = #{form_idx};
     </select>
 
     <!--결재자의 이름 가져오기-->
-    <select id="get_approval_empl_name" resultType="int">
-        SELECT e.empl_idx from employee e join appointment a on e.appolast_idx = a.appo_idx
-        <if test="dept_idx != null">
+    <select id="get_approval_empl_idx" resultType="Map">
+        SELECT e.empl_idx,a.position_idx from employee e join appointment a on e.appolast_idx = a.appo_idx
             where a.dept_idx = #{dept_idx} AND a.duty_idx = (SELECT duty_idx FROM g_approval_line WHERE form_idx = #{form_idx} AND gline_order = #{step})
-        </if>
-        <if test = "dept_idx == 0">
-            where a.duty_idx = (SELECT duty_idx FROM g_approval_line WHERE form_idx = #{form_idx} AND gline_order = #{step})
-        </if>
     </select>
 
     <!--사장 부서 idx 가져오기-->
-    <select id="" resultType="int">
-        SELECT a.dept_idx from employee e join appointment a on e.appolast_idx = a.appo_idx
+    <select id="get_head_dept_idx" resultType="int">
+        SELECT a.dept_idx,a.position_idx from employee e join appointment a on e.appolast_idx = a.appo_idx
         WHERE a.duty_idx = 2;
     </select>
 
+    <!--결재 라인 최초 저장-->
     <insert id="save_approval_line_initial" parameterType="Map">
-        INSERT INTO approval_line (doc_idx,line_order,dept_idx,duty_idx,empl_idx)
-            VALUES (#{doc_idx},#{gline_order},#{dept_idx},#{duty_idx},#{empl_idx})
+        INSERT INTO approval_line (doc_idx,line_order,dept_idx,duty_idx,empl_idx,position_idx)
+            VALUES (#{doc_idx},#{gline_order},#{dept_idx},#{duty_idx},#{empl_idx},#{position_idx})
     </insert>
 
-
+    <!--1차 저장한 문서 가져오기-->
     <select id="doc_get" resultType="Map">
         SELECT doc_idx,doc_empl_idx,
         <if test="doc_subject!=''">doc_subject,</if>
@@ -54,8 +50,21 @@
     </select>
 
 
-    <select id="doc_dept_idx">
-        SELECT max(appo_idx),dept_idx FROM appointment WHERE appo_empl_idx =  #{empl_idx} AND appo_idx =(SELECT max(appo_idx) FROM appointment WHERE appo_empl_idx = #{empl_idx});
+    <select id="doc_dept_idx" resultType="int">
+        SELECT a.dept_idx from employee e join appointment a on e.appolast_idx = a.appo_idx
+        WHERE a.appo_empl_idx = #{empl_idx};
+    </select>
+
+
+    <!--1차 저장한 결재라인 가져오기-->
+    <select id="doc_line_get" resultType="Map">
+      SELECT dp.dept_idx,dp.dept_name,al.line_order,e.empl_idx,e.empl_name,a.duty_idx,d.duty_name,a.position_idx,p.position_name FROM employee e
+            JOIN appointment a on e.appolast_idx = a.appo_idx
+            JOIN approval_line al on al.empl_idx = e.empl_idx
+           JOIN duty d on d.duty_idx = a.duty_idx
+           JOIN position_ p on p.position_idx  =  a.position_idx
+           JOIN department dp on a.dept_idx = dp.dept_idx
+        WHERE doc_idx = #{doc_idx}
     </select>
 
 

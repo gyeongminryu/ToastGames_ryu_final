@@ -77,6 +77,7 @@
     <input type="hidden" name = "empl_line1" id="empl_line1"/>
     <input type="hidden" name = "dept_line1" id="dept_line1"/>
     <input type="hidden" name = "duty_line1" id="duty_line1"/>
+    <input type="hidden" name = "position_line1" id="position_line1"/>
     <div onclick="approval_line_window(1)">결재선 선택</div>
   </div>
 
@@ -86,6 +87,7 @@
       <input type="hidden" name = "empl_line2"  id = "empl_line2"/>
       <input type="hidden" name = "dept_line2" id = "dept_line2"/>
       <input type="hidden" name = "duty_line2" id = "duty_line2"/>
+      <input type="hidden" name = "position_line2" id="position_line2"/>
       <div onclick="approval_line_window(2)">결재선 선택</div>
     </div>
   </div>
@@ -96,6 +98,7 @@
       <input type="hidden" name = "empl_line3" id = "empl_line3"/>
       <input type="hidden" name = "dept_line3" id = "dept_line3"/>
       <input type="hidden" name = "duty_line3" id = "duty_line3"/>
+      <input type="hidden" name = "position_line3" id="position_line3"/>
 
       <div onclick="approval_line_window(3)">결재선 선택</div>
     </div>

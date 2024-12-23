@@ -48,10 +48,12 @@ public interface ApprovalRequestDAO {
 
     List<Map<String, Object>> get_g_approval_line(int formIdx);
 
-    //결재자 이름 가져오기
-    int get_approval_empl_name(int dept_idx,int form_idx, int step);
+    //결재자 이름 및 직책 idx 가져오기
+    Map<String,Object> get_approval_empl_idx(int dept_idx,int form_idx, int step);
 
     int get_head_dept_idx(int i);
+
+    List<Map<String, Object>> doc_line_get(int doc_idx);
 
 
 

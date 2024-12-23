@@ -19,14 +19,16 @@
     </select>
 
     <select id="dept_allempl" resultType="Map">
-        SELECT e.empl_idx,e.empl_name, a.dept_idx,p.position_name,d.duty_name from employee e
-        join appointment a on e.appolast_idx = a.appo_idx
-        join position_ p on p.position_idx = a.position_idx
-        join duty d on d.duty_idx = a.duty_idx
-        where a.dept_idx = #{dept_idx} UNION SELECT e.empl_idx,e.empl_name, a.dept_idx,p.position_name,d.duty_name from employee e
-        join appointment a on e.appolast_idx = a.appo_idx
-        join position_ p on p.position_idx = a.position_idx
-        join duty d on d.duty_idx = a.duty_idx
+        SELECT a.dept_idx,dp.dept_name,e.empl_idx,e.empl_name,p.position_idx,p.position_name,d.duty_idx,d.duty_name from employee e
+           join appointment a on e.appolast_idx = a.appo_idx
+           join position_ p on p.position_idx = a.position_idx
+           join duty d on d.duty_idx = a.duty_idx
+           JOIN department dp on a.dept_idx = dp.dept_idx
+        where a.dept_idx = 103 UNION SELECT a.dept_idx,dp.dept_name,e.empl_idx,e.empl_name,p.position_idx,p.position_name,d.duty_idx,d.duty_name from employee e
+          join appointment a on e.appolast_idx = a.appo_idx
+          join position_ p on p.position_idx = a.position_idx
+          join duty d on d.duty_idx = a.duty_idx
+          join department dp on a.dept_idx = dp.dept_idx
         where a.dept_idx IN (SELECT dept_idx FROM department WHERE dept_high = #{dept_idx});
     </select>
     
@@ -39,10 +41,11 @@
     </select>
 
     <select id="team_allempl" resultType="Map">
-        SELECT e.empl_idx,e.empl_name,e.empl_idx,p.position_name,d.duty_name,d.duty_idx from employee e
-             join appointment a on e.appolast_idx = a.appo_idx
-             join position_ p on p.position_idx = a.position_idx
-              join duty d on d.duty_idx = a.duty_idx
+        SELECT dp.dept_name, e.empl_idx,e.empl_name,p.position_idx,p.position_name,d.duty_idx,d.duty_name from employee e
+           join appointment a on e.appolast_idx = a.appo_idx
+           join position_ p on p.position_idx = a.position_idx
+           join duty d on d.duty_idx = a.duty_idx
+           join department dp on dp.dept_idx =a.dept_idx
         where a.dept_idx = #{team_idx};
     </select>
 </mapper>
