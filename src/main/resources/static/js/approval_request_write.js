@@ -32,7 +32,7 @@ function approval_doc_get(){
             $('#doc_write_empl').html(data.empl_name);
 
             //임시저장 setInterval 함수
-            //setInterval(approval_write_temporal_save, 10000);
+            setInterval(approval_write_temporal_save, 10000);
             approval_content_edit();
 
         },
@@ -62,6 +62,7 @@ function approval_line_get(){
     });
 }
 
+//가져온 결재선을 jsp에 보여주는 함수 (작성 중)
 function approval_draw_doc_line(data){
     console.log(data);
     var approval_line_id = '';

@@ -1,4 +1,5 @@
 window.onload = function initialize() {
+    //저장된 모든 결재 양식 조회
     $.ajax({
         type: 'GET',
         url: 'approval_form_list.ajax',
@@ -15,7 +16,7 @@ window.onload = function initialize() {
     });
 };
 
-
+//조회된 결재 양식들 목록 jsp단에 보여주는 함수
 function approval_list_form(datas) {
     console.log(datas);
 
@@ -32,6 +33,7 @@ function approval_list_form(datas) {
     document.getElementById('content_box').innerHTML = content;
 }
 
+//클릭한 양식을 미리보기하기 위해 양식 정보를 가져오는 함수
 function approval_data_form_preview(idx) {
     console.log("form_idx", idx);
 
@@ -54,6 +56,7 @@ function approval_data_form_preview(idx) {
     }
 }
 
+//클릭한 양식을 미리보기로 띄우는 함수
 function approval_draw_form_preview(content, idx) {
 
 
@@ -74,6 +77,8 @@ function approval_draw_form_preview(content, idx) {
     // 이벤트 위임을 사용하여 클릭 이벤트 처리
 
 }
+
+//미리보기 및 양식 1차 수정(열 추가,삭제) 후 양식을 저장하는 버튼
 function approval_choose_form(){
     //final_form = $('#html_rendering').html();
 
