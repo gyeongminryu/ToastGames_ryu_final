@@ -109,7 +109,7 @@ public class MeetingService {
 		//5. 파일 저장
 		try {
 			byte[] arr = file.getBytes();
-			Path path = Paths.get("C:/upload/"+newFilename);
+			Path path = Paths.get("C:/files/"+newFilename);
 			Files.write(path, arr);
 			//6.저장 내용 files 테이블에 insert
 			MeetingPhotoDTO photo_dto = new MeetingPhotoDTO();
