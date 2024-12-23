@@ -51,37 +51,62 @@ public class ApprovalRequestService {
 				//3.결재선 + doc_idx 저장하기
 					// 여기서는 부서 idx는 0(없음)으로 잡기 //부서 idx는 작성하기 들어갈 때 결재선을 업데이트하고 시작함
 					//기본 결재선에서는 사원 idx가 없으므로 이것도 ''
-				int a = 1;
+				int step = 1;
 				for (int i = 0; i < g_approval_lines.size(); i++) {
-					//doc_idx와 step = a인 사람의 직책 가져오기 && dept_idx와 직책을 가진 사람 뽑아오기
-					//SELECT e.empl_name from employee e
-					//join appointment a on e.appolast_idx = a.appo_idx
 
 
 					Map<String, Object> g_approval_line = g_approval_lines.get(i);
 
 
 
-
+					//직책 받아오기
 					int duty_idx = (int) g_approval_line.get("duty_idx");
 					logger.info("직책 idx:{}",duty_idx);
 
 					int approval_empl_idx = 0;
-					if(duty_idx != 3){
-						//where a.dept_idx = #{dept_idx} AND a.duty_idx = (SELECT duty_idx FROM g_line_order WHERE doc_idx = #{doc_idx} AND step = #{a});
-						approval_empl_idx = approvalRequestDAO.get_approval_empl_name(dept_idx,form_idx,a);
+					int position_idx =0;
+					Map<String, Object> approval_empl_info = new HashMap<>();
+					if(duty_idx != 2){
 
-					}else if(i==3){
-						//대표면, 직책만 가지고 이름 가져오기
-						approval_empl_idx = approvalRequestDAO.get_approval_empl_name(dept_idx,form_idx,a);
+						logger.info("dept_idx:{}",dept_idx);
+						logger.info("form_idx:{}",form_idx);
+						logger.info("step:{}",step);
+
+
+						approval_empl_info = approvalRequestDAO.get_approval_empl_idx(dept_idx,form_idx,step);
+						logger.info("empl_idx와 position_idx 받아온 map:{}",approval_empl_info);
+
+
+
+						logger.info("step:{}",step);
+						step++;
+					}else if(i==2){
 						dept_idx = approvalRequestDAO.get_head_dept_idx(2);
+
+						//대표면, 직책만 가지고 이름 가져오기
+						approval_empl_info = approvalRequestDAO.get_approval_empl_idx(dept_idx,form_idx,step);
+						logger.info("empl_idx와 position_idx 받아온 map:{}",approval_empl_info);
+
+
+						logger.info("사장 부서 idx:{}",dept_idx);
+						logger.info("사장 step:{}",step);
+						step++;
 					}
+
+					approval_empl_idx = (int) approval_empl_info.get("empl_idx");
+					position_idx = (int) approval_empl_info.get("position_idx");
+
+					logger.info("approval_empl_idx:{}",approval_empl_idx);
+					logger.info("position_idx:{}",position_idx);
+
 					g_approval_line.put("doc_idx", doc_idx);
 					g_approval_line.put("dept_idx", dept_idx);
 					g_approval_line.put("empl_idx", approval_empl_idx);
+					g_approval_line.put("position_idx", position_idx);
+
 					approvalRequestDAO.save_approval_line_initial(g_approval_line);
 
-					a++;
+
 				}
 		}
 		return doc_idx;
@@ -273,6 +298,34 @@ public class ApprovalRequestService {
 		return success;
 	}
 
+
+
+	public boolean save_approval_line(Map<String, String> param) {
+		boolean success = false;
+		String doc_idx = param.get("doc_idx");
+
+
+		Map<String,Object> data = new HashMap<>();
+
+		for(int i = 1; i <=3; i++){
+			logger.info("empl_line1:{}",param.get("empl_line"+i));
+
+			data.put("line_order", i);
+			data.put("doc_idx", doc_idx);
+			data.put("empl_line",param.get("empl_line"+i));
+			data.put("dept_line",param.get("dept_line"+i));
+			data.put("duty_line",param.get("duty_line"+i));
+			logger.info("map값 :{}",data);
+			/*if(approvalRequestDAO.save_approval_line(data)>0){
+				success = true;
+			}else{
+				success = false;
+			}*/
+		}
+
+		return success;
+	}
+
 	//저장된 파일키가 있을 경우 = 이전 파일 및 파일 경로 안의 파일 삭제 메소드
 	public void approval_filekey_exist (String doc_idx){
 		int previous_filekey_count =  approvalRequestDAO.doc_saved_filekey_count(doc_idx);
@@ -304,25 +357,7 @@ public class ApprovalRequestService {
 	}
 
 
-	public boolean save_approval_line(Map<String, String> param) {
-		boolean success = false;
-		String doc_idx = param.get("doc_idx");
-		Map<String,Object> data = new HashMap<>();
-
-		for(int i = 1; i <=3; i++){
-			data.put("line_order", i);
-			data.put("doc_idx", doc_idx);
-			data.put("empl_line",param.get("empl_line"+i));
-			data.put("dept_line",param.get("dept_line"+i));
-			data.put("duty_line",param.get("duty_line"+i));
-			logger.info("map값 :{}",data);
-			if(approvalRequestDAO.save_approval_line(data)>0){
-				success = true;
-			}else{
-				success = false;
-			}
-		}
-
-		return success;
+	public List<Map<String,Object>> doc_line_get(int doc_idx) {
+		return approvalRequestDAO.doc_line_get(doc_idx);
 	}
 }
