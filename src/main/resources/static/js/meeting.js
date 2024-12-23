@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let event = obj.event;
 			console.log(obj.event.start);
             $.ajax({
-                url: '/meeting/meetingResize.do',
+                url: '/meeting/meetingDrop.do',
                 type: 'post',
                 data:{
                 	rent_idx:obj.event._def.extendedProps["meet_rent_idx"],
