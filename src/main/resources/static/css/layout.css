@@ -1,9 +1,15 @@
+/* setting */
+
 :root{
     --tst-container-min-width: 1400px;
     --tst-container-margin: 16px;
     --tst-topnav-height: 50px;
     --tst-leftnav-width: 230px;
 }
+
+
+
+/* top navigation */
 
 .tst_topnav{
     width: 100vw;
@@ -32,12 +38,20 @@
     margin: 0 10px;
 }
 
+
+
+/* container */
+
 .tst_container{
     min-width: var(--tst-container-min-width);
     height: calc(100vh - var(--tst-topnav-height));
     margin: 0 auto;
     padding: var(--tst-container-margin) 0px var(--tst-container-margin) calc(var(--tst-container-margin) + 4px);
 }
+
+
+
+/* left side var */
 
 .tst_container .tst_container_left{
     width: var(--tst-leftnav-width);
@@ -50,6 +64,25 @@
 .tst_container .tst_container_left .tst_leftnav,
 .tst_container .tst_container_left .tst_leftnav > *{
     display: block;
+}
+
+.tst_container .tst_container_left .tst_leftnav .tst_col4.leftnav_profile_left .leftnav_profile_image{
+    width: 48px;
+    height: 48px;
+    border-radius: var(--tst-border-radius);
+    object-fit: cover;
+}
+
+.tst_container .tst_container_left .tst_leftnav .tst_col8.leftnav_profile_right{
+    display: block;
+}
+
+.tst_container .tst_container_left .tst_leftnav .tst_col8.leftnav_profile_right h3{
+    margin: 5px 0;
+}
+
+.tst_container .tst_container_left .tst_leftnav .leftnav_attendance .btn_full{
+    padding: 6px 10px;
 }
 
 .tst_container .tst_container_left .tst_leftnav ul li{
@@ -67,6 +100,10 @@
     margin: 0 0 0 10px;
 }
 
+
+
+/* contents */
+
 .tst_container .tst_container_right{
     min-height: calc(100vh - var(--tst-container-margin));
     padding: var(--tst-topnav-height) var(--tst-container-margin) var(--tst-container-margin) var(--tst-leftnav-width);
@@ -80,5 +117,5 @@
 }
 
 .tst_container .tst_contents .tst_contents_inner{
-    padding: 20px 24px;
+    padding: 16px 20px;
 }

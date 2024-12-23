@@ -3,21 +3,33 @@
 <div class="tst_container_left">
     <div class="tst_contents tst_leftnav">
         <div class="tst_contents_inner">
-            <ul class="list_no_desc list_block">
-                <li>
-                    <p>근태 관리</p>
+            <div class="tst_flex">
+                <div class="tst_col4 leftnav_profile_left">
+                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="leftnav_profile_image" />
+                </div>
+                <div class="tst_col8 leftnav_profile_right">
+                    <h3>{직원명}</h3>
+                    <h4 class="font_subtle">({부서}/{직급})</h4>
+                </div>
+            </div>
+
+            <ul class="list_no_desc list_block leftnav_attendance">
+                <li class="tst_pointer">
+                    <button onclick="location.href='/'" class="btn_primary btn_full">출근하기</button>
                 </li>
             </ul>
             <hr class="separator" />
-            <ul class="list_no_desc list_block disp_hide">
-                <li class="tst_pointer">
-                    <i class="bi bi-search"></i><h3>빠른 검색</h3>
-                </li>
-                <li class="tst_pointer">
-                    <i class="bi bi-bell-fill"></i><h3>알림</h3>
-                </li>
-            </ul>
-            <hr class="separator" />
+
+<%--            <ul class="list_no_desc list_block disp_hide">--%>
+<%--                <li class="tst_pointer">--%>
+<%--                    <i class="bi bi-search"></i><h3>빠른 검색</h3>--%>
+<%--                </li>--%>
+<%--                <li class="tst_pointer">--%>
+<%--                    <i class="bi bi-bell-fill"></i><h3>알림</h3>--%>
+<%--                </li>--%>
+<%--            </ul>--%>
+<%--            <hr class="separator" />--%>
+
             <ul class="list_no_desc list_block">
 <%--                <li class="tst_pointer disp_hide">--%>
 <%--                    <i class="bi bi-menu-button-wide-fill"></i><h3>대시보드</h3>--%>
@@ -40,9 +52,9 @@
 <%--                <li class="tst_pointer disp_hide">--%>
 <%--                    <i class="bi bi-megaphone-fill"></i><h3>공지사항</h3>--%>
 <%--                </li>--%>
-                <li class="tst_pointer disp_hide">
-                    <i class="bi bi-send-fill"></i><h3>메시지</h3>
-                </li>
+<%--                <li class="tst_pointer disp_hide">--%>
+<%--                    <i class="bi bi-send-fill"></i><h3>메시지</h3>--%>
+<%--                </li>--%>
                 <li class="tst_pointer">
                     <i class="bi bi-building-fill"></i><h3>회사 정보 관리</h3>
                 </li>
@@ -61,9 +73,9 @@
                 <li class="tst_pointer">
                     <i class="bi bi-people-fill"></i><h3>구성원 관리</h3>
                 </li>
-<%--                <li class="tst_pointer disp_hide">--%>
-<%--                    <i class="bi bi-stopwatch-fill"></i><h3>근태 관리</h3>--%>
-<%--                </li>--%>
+                <li class="tst_pointer disp_hide">
+                    <i class="bi bi-stopwatch-fill"></i><h3>근태 관리</h3>
+                </li>
 <%--                <li class="tst_pointer disp_hide">--%>
 <%--                    <i class="bi bi-luggage-fill"></i><h3>연차 관리</h3>--%>
 <%--                </li>--%>

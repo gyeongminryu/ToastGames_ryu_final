@@ -15,9 +15,9 @@
             <li>
                 <i class="bi bi-archive-fill"></i>
             </li>
-            <li>
-                <i class="bi bi-send-fill"></i>
-            </li>
+<%--            <li>--%>
+<%--                <i class="bi bi-send-fill"></i>--%>
+<%--            </li>--%>
             <li>
                 <i class="bi bi-bell-fill"></i>
             </li>
