@@ -24,7 +24,7 @@ public class ApprovalRequestController {
 
 
 
-	//결재 작성하기 페이지로 이동
+	//결재 작성하기 페이지로 이동 + 최초 저장
 	@PostMapping(value = "/approval_write.go")
 	public String approval_write_go (Model model, String form_idx, String form_content) {
 		logger.info("approvalWrite_go 컨트롤러 도착");
@@ -47,7 +47,7 @@ public class ApprovalRequestController {
 
 
 
-	//미리보기에서 수정한 결재 문서 가져오기
+	//미리보기에서 수정해서 1차 저장한 결재 문서 가져오기
 	@GetMapping (value = "/approval_doc_get.ajax")
 	@ResponseBody
 	public Map<String,Object> doc_get (int doc_idx) {
@@ -60,35 +60,16 @@ public class ApprovalRequestController {
 		return data;
 	}
 
-
-/*	//결재 문서 저장
-	@PostMapping (value = "/approval_doc_write.ajax")
+	//저장된 결재선 가져오기
+	@GetMapping (value = "/approval_doc_line_get.ajax")
 	@ResponseBody
-	public Map<String,Object> doc_write_do (String doc_idx, String doc_write_date, String doc_end_date, String subject, String doc_content_sub, String doc_content,@RequestParam MultipartFile[]files,
-											String empl_line1,String ) {
-		//세션 처리
-		int empl_idx = 10002;
-		String success = "결재 문서 저장 실패";
-
+	public Map<String,Object> doc_line_get (int doc_idx) {
+		logger.info("컨트롤러에서 받은 doc_idx"+doc_idx);
 		Map<String,Object> data = new HashMap<>();
-
-		logger.info("write_date:{}", doc_write_date);
-		logger.info("doc_idx:{}",doc_idx);
-		logger.info("doc_end_date:{}",doc_end_date);
-		logger.info("subject:{}",subject);
-		logger.info("content:{}",doc_content_sub);
-
-		//logger.info("form_content:{}",doc_content);
-		logger.info("files:{}", (Object) files);
-		//update로 하기
-		if(approvalRequestService.doc_write(doc_idx,doc_end_date,subject,doc_content_sub,doc_content,doc_write_date,files,empl_idx)){
-			success = "결재 문서 저장 성공";
-		}
-
-		data.put("success", success);
+		data.put("doc_lines", approvalRequestService.doc_line_get(doc_idx));
 
 		return data;
-	}*/
+	};
 
 	//결재 문서 저장
 	@PostMapping (value = "/approval_doc_write.ajax")
@@ -113,4 +94,7 @@ public class ApprovalRequestController {
 
 		return data;
 	}
+
+
+
 }
