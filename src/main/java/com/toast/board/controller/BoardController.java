@@ -94,6 +94,7 @@ public class BoardController {
         try {
             // 댓글 목록 조회 서비스 호출
             response.put("comments", boardService.getReplyList(board_idx));
+            logger.info("response : ? " + response);
         } catch (Exception e) {
             response.put("comments", new ArrayList<>());
             e.printStackTrace();
