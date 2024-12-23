@@ -47,19 +47,19 @@ public class MemberService {
 		return memberDAO.changePwCheck(id);
 	}
 
-	public String findId(String name, String email) {
-		return memberDAO.findId(name, email);
-	}
-
 	public boolean isValidName(String name) {
 		return memberDAO.isValidName(name);
+	}
+
+	public String findId(String name, String email) {
+		return memberDAO.findId(name, email);
 	}
 
 	public Map<String, String> findPw(String id, String email) {
 		return memberDAO.findPw(id, email);
 	}
 
-	// 주의!!! 비밀번호 초기화(이메일) 시 자동으로 변경되는 pw!!! 사용자가 수동으로 변경하는 pw와는 다름.
+	// 주의!!! 비밀번호 초기화(이메일) 시 자동으로 변경되는 pw!!! 사용자가 수동으로 변경하는 pw와는 다름!!!
 	public int UpdatePw(String id, String tempPw) {
 		String encryptPw = encoder.encode(tempPw);
 		return memberDAO.UpdatePw(id, encryptPw);
@@ -69,45 +69,36 @@ public class MemberService {
 		return memberDAO.memberInfo(id);
 	}
 
-	public List<FileDTO> fileList(String id) {
-		return memberDAO.fileList(id);
-	}
-
-	public String originalFileName(String filename) {
-		return memberDAO.originalFileName(filename);
+	public List<FileDTO> getFileList(String id, String file_key) {
+		Map<String, Object> params = new HashMap<>(); // DB에 map형식으로 parameterType을 지정하기 위함.
+		params.put("id", id);
+		params.put("file_key", file_key);
+		return memberDAO.getFileList(params);
 	}
 
 	public Map<String, Object> employmentHistory(int page, int cnt, String id) {
 		logger.info("Service list called with page: {}, cnt: {}, memberId: {}", page, cnt, id);
 		int limit = cnt;
 		int offset = (page - 1) * cnt;
-
-		// 전체 페이지 수 계산
 		int totalPages = memberDAO.countHistory(id, cnt); // ID를 이용해 전체 페이지 수 계산
-		logger.info("Total pages: {}", totalPages);
 
-		// 결과 맵 생성
 		Map<String, Object> result = new HashMap<>();
 		result.put("totalpages", totalPages);
 		result.put("currPage", page);
 		result.put("list", memberDAO.employmentHistory(limit, offset, id)); // ID를 이용해 리스트 가져오기
-		logger.info("Result map: {}", result);
-
 		return result;
 	}
 
-	public String profileImage(MultipartFile file) throws IOException {
+	public String originalFileName(String filename) { // 다운로드에 필요한 로직
+		return memberDAO.originalFileName(filename);
+	}
 
-		String originalFileName = file.getOriginalFilename();
-		String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
-		String newFileName = UUID.randomUUID().toString();
-		String fileAddr = uploadAddr + "/" + newFileName + fileType; // 프로퍼티즈 값이 C:/files 라서 + "/" 한것!!!
+	public Map<String, Object> getUploaderIdx(String id) {
+		return memberDAO.getUploaderIdx(id);
+	}
 
-		// 파일을 서버에 저장..
-		File dest = new File(fileAddr);
-		file.transferTo(dest);
-
-		return newFileName + fileType; // DB에 저장될 파일 이름을 반환.
+	public List<FileDTO> getUploadedFiles(Map<String, Object> Uploaderidx) {
+		return memberDAO.getUploadedFiles(Uploaderidx);
 	}
 
 	// 입력한 비밀번호와 DB에 있는 비밀번호가 일치하는지 확인.
@@ -133,12 +124,21 @@ public class MemberService {
 		return changed;
 	}
 
-	public int getUploaderIdx(String id) {
-		return memberDAO.getUploaderIdx(id);
+	public String profileImage(MultipartFile file) throws IOException {
+		String originalFileName = file.getOriginalFilename(); // ori name.
+		String fileType = originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자 명
+		String newFileName = UUID.randomUUID().toString(); // new name.
+		String fileAddr = uploadAddr + "/" + newFileName + fileType; // 프로퍼티즈 값이 C:/files 라서 + "/" 한것!!!
+
+		// 파일을 서버에 저장..
+		File dest = new File(fileAddr);
+		file.transferTo(dest);
+
+		return newFileName + fileType; // DB에 저장될 파일 이름을 반환.
 	}
 
-	public void fileUpload(int empl_idx, MultipartFile[] files) throws IOException {
-		String file_key = UUID.randomUUID().toString();
+	public void fileUpload(int empl_idx, String file_key, MultipartFile[] files) throws IOException {
+		// String file_key = UUID.randomUUID().toString();
 		for (MultipartFile file : files) {
 			if (!file.isEmpty()) {
 				String originalFileName = file.getOriginalFilename();
@@ -162,11 +162,7 @@ public class MemberService {
 				// file 테이블에 파일정보 저장.
 				memberDAO.fileUpload(fileDTO);
 			}
-
 		}
 	}
 
-	public List<FileDTO> getUploadedFiles(int empl_idx) {
-		return memberDAO.getUploadedFiles(empl_idx);
-	}
 }

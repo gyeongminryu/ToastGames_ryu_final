@@ -2,8 +2,6 @@ package com.toast.member.dto;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class MemberDTO {
 
 	private int empl_idx;

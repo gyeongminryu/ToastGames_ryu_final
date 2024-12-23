@@ -18,12 +18,12 @@ public interface BoardDAO {
 
 	Map<String, Object> countBoardList(Map<String, Object> params);
 
-	Map<String, Object> getBoardById(int boardIdx);
+	Map<String, Object> getBoardByIdx(int board_idx);
 
-	int writeComment(int boardIdx, String commentContent);
+	int writeReply(int board_idx, String reply);
 
-	Map<String, Object> getCommentsList(int boardIdx);
+	Map<String, Object> getReplyList(int board_idx);
 
-	int writeReply(int parentCommentId, String replyContent);
+	int writeReReply(int parentReply, String re_reply);
 	
 }
