@@ -12,23 +12,25 @@ import com.toast.member.dto.MemberDTO;
 public interface MemberDAO {
 
 	boolean isValidId(String id);
-	
 	String login(String id);
-
-	String findId(String name, String email);
+	int changePwCheck(String id);
+	
 	boolean isValidName(String name);
+	String findId(String name, String email);
 
 	Map<String, String> findPw(String id, String email);
 
 	int UpdatePw(String id, String encryptPw);	
 
-	int changePwCheck(String id);
-
 	List<MemberDTO> memberInfo(String id);
 
-	List<FileDTO> fileList(String id);
+	List<FileDTO> getFileList(Map<String, Object> params);
 	
 	String originalFileName(String filename);
+	
+	List<FileDTO> getUploadedFiles(Map<String, Object> Uploaderidx);
+
+	Map<String, Object> getUploaderIdx(String id);
 
 	boolean checkCurrentPassword(String id, String encryptPw);
 	
@@ -43,11 +45,7 @@ public interface MemberDAO {
 
 	List<Map<String, Object>> employmentHistory(int limit, int offset, String id);
 
-	int getUploaderIdx(String id);
-
 	void fileUpload(FileDTO fileDTO);
-
-	List<FileDTO> getUploadedFiles(int empl_idx);
 
 }
 

@@ -34,7 +34,6 @@ public class BoardService {
 	}
 
 	public boolean boardWrite(Map<String, Object> params, MultipartFile[] files) throws Exception {
-		
 		String file_key = UUID.randomUUID().toString();
 		params.put("file_key", file_key);
 		int boardIdx = boardDAO.boardWrite(params);
@@ -66,9 +65,6 @@ public class BoardService {
 	}
 	
 	public Map<String, Object> boardList(int page, int cnt, String id, String dept, String type, String searchType, String keyword) {
-	    logger.info("Service list called with page: {}, cnt: {}, memberId: {}, dept: {}, type: {}, searchType: {}, keyword: {}", 
-	                page, cnt, id, dept, type, searchType, keyword);
-
 	    // 페이지와 항목 수 계산
 	    int limit = cnt;
 	    int offset = (page - 1) * cnt;
@@ -104,23 +100,23 @@ public class BoardService {
 	    return result;
 	}
 
-	public Map<String, Object> getBoardById(int boardIdx) {
-		return boardDAO.getBoardById(boardIdx);
+	public Map<String, Object> getBoardByIdx(int board_idx) {
+		return boardDAO.getBoardByIdx(board_idx);
 	}
 	
 	 // 댓글 작성
-    public boolean writeComment(int boardIdx, String commentContent) {
-        return boardDAO.writeComment(boardIdx, commentContent) > 0;
+    public boolean writeReply(int board_idx, String reply) {
+        return boardDAO.writeReply(board_idx, reply) > 0;
     }
     
     // 댓글 목록 조회
-    public Map<String, Object> getCommentsList(int boardIdx) {
-        return boardDAO.getCommentsList(boardIdx);
+    public Map<String, Object> getReplyList(int board_idx) {
+        return boardDAO.getReplyList(board_idx);
     }
 
     // 대댓글 작성
-    public boolean writeReply(int parentCommentId, String replyContent) {
-        return boardDAO.writeReply(parentCommentId, replyContent) > 0;
+    public boolean writeReReply(int parentReply, String re_reply) {
+        return boardDAO.writeReReply(parentReply, re_reply) > 0;
     }
 
 }

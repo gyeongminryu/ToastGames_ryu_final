@@ -22,18 +22,18 @@
 		WHERE empl_id = #{id}
 	</select>
 	
-	<!-- 아이디 찾기: 이름과 이메일로 조회 -->
-	<select id="findId" parameterType="map" resultType="String"> 
-		SELECT empl_id 
-		FROM employee 
-		WHERE empl_name = #{name} AND empl_per_email = #{email} 
-	</select>
-	
 	<select id="isValidName" parameterType="String" resultType="boolean">
 		SELECT COUNT(*) 
 		FROM employee 
 		WHERE empl_name = #{name}
 	</select>
+
+	<!-- 아이디 찾기: 이름과 이메일로 조회 -->
+	<select id="findId" parameterType="map" resultType="String"> 
+		SELECT empl_id 
+		FROM employee 
+		WHERE empl_name = #{name} AND empl_per_email = #{email} 
+	</select>	
 	
 	<!-- 비밀번호 찾기: 아이디와 이메일로 조회 + name도 프론트에 보여주기 위해 같이 가져온다!! -->
 	<select id="findPw" parameterType="map" resultType="map"> 
@@ -66,11 +66,11 @@
 		WHERE e.empl_id = #{id}
 	</select>
 	
-	<select id="fileList" parameterType="String" resultType="com.toast.member.dto.FileDTO">
+	<select id="getFileList" parameterType="map" resultType="com.toast.member.dto.FileDTO">
 		SELECT f.file_idx, f.file_key, f.uploader_idx, f.ori_filename, f.new_filename, f.file_type, f.file_addr
 		FROM file f
 		JOIN employee e ON f.uploader_idx = e.empl_idx
-		WHERE e.empl_id = #{id} 
+		WHERE e.empl_id = #{id} AND f.file_key = #{file_key}
 	</select>
 	
 	<select id="originalFileName" parameterType="String">
@@ -127,8 +127,8 @@
 		WHERE empl_id = #{empl_id}		
 	</update>
 	
-	<select id="getUploaderIdx" parameterType="String" resultType="int">
-		SELECT empl_idx
+	<select id="getUploaderIdx" parameterType="String" resultType="map">
+		SELECT empl_idx, file_key
 		FROM employee
 		WHERE empl_id = #{id}
 	</select>
@@ -138,10 +138,10 @@
 			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr})
 	</insert>
 	
-	<select id="getUploadedFiles" parameterType="int" resultType="com.toast.member.dto.FileDTO">
+	<select id="getUploadedFiles" parameterType="map" resultType="com.toast.member.dto.FileDTO">
 		SELECT file_key, ori_filename, new_filename, file_type, file_addr
 	    FROM file
-	    WHERE uploader_idx = #{empl_idx}
+	    WHERE uploader_idx = #{empl_idx} AND file_key = #{file_key}
 	</select>
 	
 </mapper>

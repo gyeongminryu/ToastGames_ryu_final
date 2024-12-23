@@ -78,9 +78,9 @@ public class BoardController {
 	}
 	
 	@GetMapping(value = "/board_detail.go")
-	public String boardDetail(@RequestParam("board_idx") int boardIdx, Model model) {
+	public String boardDetail(@RequestParam("board_idx") int board_idx, Model model) {
 		// boardIdx를 사용하여 DB에서 게시글을 조회
-	    Map<String, Object> board = boardService.getBoardById(boardIdx);
+	    Map<String, Object> board = boardService.getBoardByIdx(board_idx);
 	    // 조회한 게시글 정보를 모델에 추가
 	    model.addAttribute("board", board);
 		return "board_detail"; // 상세페이지 이동.
@@ -88,12 +88,12 @@ public class BoardController {
 	
 	 // 댓글 목록 조회
 	@ResponseBody
-    @GetMapping(value = "/comments_list.ajax")
-	public Map<String, Object> getCommentsList(@RequestParam("board_idx") int boardIdx) {
+    @GetMapping(value = "/reply_list.ajax")
+	public Map<String, Object> getReplyList(@RequestParam("board_idx") int board_idx) {
         Map<String, Object> response = new HashMap<>();
         try {
             // 댓글 목록 조회 서비스 호출
-            response.put("comments", boardService.getCommentsList(boardIdx));
+            response.put("comments", boardService.getReplyList(board_idx));
         } catch (Exception e) {
             response.put("comments", new ArrayList<>());
             e.printStackTrace();
@@ -103,15 +103,16 @@ public class BoardController {
 	
 	// 댓글 작성
     @ResponseBody
-    @PostMapping(value = "/comment_write.ajax")
-    public Map<String, Object> writeComment(@RequestParam("board_idx") int boardIdx, @RequestParam("comment_content") String commentContent, HttpSession session) {
+    @PostMapping(value = "/reply_write.ajax")
+    public Map<String, Object> writeReply(@RequestParam("board_idx") int board_idx, @RequestParam("reply") String reply, HttpSession session) {
     	String id = (String) session.getAttribute("loginId"); // 세션에서 로그인한 id를 가져온다.
 		Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
+		logger.info("memberInfo :? " + memberInfo);
         Map<String, Object> response = new HashMap<>();
 		response.putAll(memberInfo);
 		logger.info("response:", response);
         try {
-            boolean success = boardService.writeComment(boardIdx, commentContent);
+            boolean success = boardService.writeReply(board_idx, reply);
             response.put("success", success);
         } catch (Exception e) {
             response.put("success", false);
@@ -122,12 +123,11 @@ public class BoardController {
     
     // 대댓글 작성
     @ResponseBody
-    @PostMapping(value = "/reply_write.ajax")
-    public Map<String, Object> writeReply(@RequestParam("parent_comment_id") int parentCommentId, 
-                                          @RequestParam("reply_content") String replyContent) {
+    @PostMapping(value = "/re_reply_write.ajax")
+    public Map<String, Object> writeReply(@RequestParam("parent_comment_id") int parentReply, @RequestParam("re_reply") String re_reply) {
         Map<String, Object> response = new HashMap<>();
         try {
-            boolean success = boardService.writeReply(parentCommentId, replyContent);
+            boolean success = boardService.writeReReply(parentReply, re_reply);
             response.put("success", success);
         } catch (Exception e) {
             response.put("success", false);
@@ -135,7 +135,5 @@ public class BoardController {
         }
         return response;
     }
-	
-	
 	
 }
