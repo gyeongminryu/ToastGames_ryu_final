@@ -48,19 +48,19 @@
                                 <tr>
                                     <th class="td_align_top">물품명</th>
                                     <td>
-                                        <input type="text" name="subject" maxlength="100" placeholder="물품명을 입력하세요" />
+                                        <input type="text" name="subject" maxlength="100" value="{물품명}" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="td_align_top">물품 정보</th>
                                     <td>
-                                        <input type="text" name="information" maxlength="1000" placeholder="물품 정보를 입력하세요" />
+                                        <input type="text" name="information" maxlength="1000" value="{물품 정보}" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="td_align_top">물품 설명</th>
                                     <td>
-                                        <textarea name="content" rows="27" placeholder="물품 설명을 입력하세요"></textarea>
+                                        <textarea name="content" rows="27">{물품 설명}</textarea>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -70,7 +70,7 @@
                                     <td class="td_align_left">
                                         <ul class="list_no_desc list_inline">
                                             <li>
-                                                <button type="button" onclick="tst_modal_call('tst_modal_write')" class="btn_primary">물품 등록하기</button>
+                                                <button type="button" onclick="tst_modal_call('tst_modal_update')" class="btn_primary">물품 수정하기</button>
                                             </li>
                                             <li>
                                                 <button type="button" onclick="location.href='/'" class="btn_secondary">목록으로 돌아가기</button>
@@ -166,8 +166,8 @@
     </div>
 </div>
 </body>
-<c:import url="manage_rent_write_modal.jsp" />
+<c:import url="manage_rent_update_modal.jsp" />
 
 <script src="resources/js/common.js"></script>
-<script src="resources/js/manage_rent_write.js"></script>
+<script src="resources/js/manage_rent_update.js"></script>
 </html>
