@@ -1,7 +1,9 @@
 package com.toast.board.service;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -62,5 +64,63 @@ public class BoardService {
 		}
 		return boardIdx > 0;
 	}
+	
+	public Map<String, Object> boardList(int page, int cnt, String id, String dept, String type, String searchType, String keyword) {
+	    logger.info("Service list called with page: {}, cnt: {}, memberId: {}, dept: {}, type: {}, searchType: {}, keyword: {}", 
+	                page, cnt, id, dept, type, searchType, keyword);
+
+	    // 페이지와 항목 수 계산
+	    int limit = cnt;
+	    int offset = (page - 1) * cnt;
+
+	    // 쿼리 파라미터 Map 생성
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("limit", limit);
+	    params.put("offset", offset);
+	    params.put("id", id);
+	    params.put("dept", dept);
+	    params.put("type", type);
+	    params.put("searchType", searchType);
+	    params.put("keyword", keyword);
+
+	    // 게시글 목록 및 전체 페이지 수 조회
+	    Map<String, Object> totalPagesResult = boardDAO.countBoardList(params);
+	    // totalPagesResult.get("pages")는 BigDecimal 타입일 수 있음
+	    BigDecimal pages = (BigDecimal) totalPagesResult.get("pages");
+
+	    // BigDecimal을 int로 안전하게 변환
+	    int totalPages = (pages != null) ? pages.intValue() : 0; // null인 경우 기본값 0을 설정
+	    logger.info("Total pages: {}", totalPages);
+
+	    // 게시글 목록 조회
+	    List<Map<String, Object>> boardList = boardDAO.boardList(params);
+
+	    // 결과 Map 생성
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("totalpages", totalPages);
+	    result.put("currPage", page);
+	    result.put("list", boardList);
+
+	    return result;
+	}
+
+	public Map<String, Object> getBoardById(int boardIdx) {
+		return boardDAO.getBoardById(boardIdx);
+	}
+	
+	 // 댓글 작성
+    public boolean writeComment(int boardIdx, String commentContent) {
+        return boardDAO.writeComment(boardIdx, commentContent) > 0;
+    }
+    
+    // 댓글 목록 조회
+    public Map<String, Object> getCommentsList(int boardIdx) {
+        return boardDAO.getCommentsList(boardIdx);
+    }
+
+    // 대댓글 작성
+    public boolean writeReply(int parentCommentId, String replyContent) {
+        return boardDAO.writeReply(parentCommentId, replyContent) > 0;
+    }
 
 }
