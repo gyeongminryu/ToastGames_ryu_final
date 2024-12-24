@@ -71,7 +71,7 @@
 
     </table>
 
-<div id = "approval_line">
+<div id = "approval_line" 결재자 선택하기>
   <div id = "approval_first_wrapper">1차 결재 :
     <div class="approval_line" id = "approval_line1"></div>
     <input type="hidden" name = "empl_line1" id="empl_line1"/>
@@ -103,6 +103,16 @@
       <div onclick="approval_line_window(3)">결재선 선택</div>
     </div>
   </div>
+
+  <%--참조--%>
+  <div>참조자 선택하기</div>
+  <div id = "referrer_wrapper">
+    <div id = "referrer_list"></div>
+    <input type = "hidden" name = "refer_count" id="refer_count"/>
+    <div id="referrer_add" onclick="approval_line_window(0)">참조 추가하기</div>
+  </div>
+  </div>
+
 </div>
 </form>
 </body>
@@ -112,7 +122,7 @@
 <script src="/resources/js/approval_request_form_adjust.js"></script>
 <script src="/resources/js/approval_request_write.js"></script>
 <script src="/resources/js/approval_request_save.js"></script>
-<script src="/resources/js/approval_list_line.js"></script>
+<script src="/resources/js/approval_write_line_parent.js"></script>
 
 <script>
   //모델앤뷰로 받은 파라메터
@@ -124,7 +134,8 @@
   var form_idx = "${form_idx}";
 
 
-
+  //부모 창 = 참조 번호 추가 및 삭제 위한 변수
+  var refer_count =0;
 
 
   //quill editor
