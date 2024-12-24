@@ -109,7 +109,15 @@ SELECT file_key, ori_filename, new_filename, file_type, file_addr
 </select>
 
 <update id="emplStampUpload">
-	update employee set empl_stamp = {param2} where empl_idx = {param1}
+	update employee set empl_stamp = #{param1} where empl_idx = #{param2}
+</update>
+
+<delete id="emplFileDel">
+	delete from file where new_filename = #{param1}
+</delete>
+
+<update id="employeeDutyUpdate">
+	update employee set empl_job = #{param2} where empl_idx = #{param1}
 </update>
 
 

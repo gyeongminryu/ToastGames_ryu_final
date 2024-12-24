@@ -76,7 +76,7 @@
 
             // AJAX 요청
             $.ajax({
-                url: './searchTeamlist.ajax',  // 서버의 검색 엔드포인트
+                url: './search_team_list.ajax',  // 서버의 검색 엔드포인트
                 method: 'GET',
                 data: requestData,  // 선택된 기준에 맞는 데이터를 서버로 전송
                 success: function(response) {

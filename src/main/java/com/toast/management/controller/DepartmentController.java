@@ -59,7 +59,7 @@ public class DepartmentController {
 		return "";
 	}
 	
-	@GetMapping(value="/apponamelist.ajax") // 직급 직책 부서명 가져오기
+	@GetMapping(value="/appo_name_list.ajax") // 직급 직책 부서명 가져오기
 	@ResponseBody
 	public Map<String, Object> apponamelist(){
 		
@@ -78,7 +78,26 @@ public class DepartmentController {
 		return map;
 	}
 	
-	@GetMapping(value="/deptlist.ajax") // 부서 선택시 리스트 나열
+	@GetMapping(value="/appo_name_high_list.ajax") // 직급 직책 부서명 가져오기
+	@ResponseBody
+	public Map<String, Object> apponamehighlist(){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<DutyDTO> dudy = new ArrayList<>();
+		List<PositionDTO> posi = new ArrayList<>();
+		List<DepartmentDTO> dept = new ArrayList<>();
+		
+		dudy = departmentService.getdudy();
+		posi = departmentService.getposi();
+		dept = departmentService.getdepthigh();
+		map.put("dept", dept);
+		map.put("posi", posi);
+		map.put("dudy", dudy);
+				
+		return map;
+	}
+	
+	@GetMapping(value="/dept_list.ajax") // 부서 선택시 리스트 나열
 	@ResponseBody
 	public Map<String, Object> deptlist(){
 
@@ -90,7 +109,19 @@ public class DepartmentController {
 		return map;
 	}
 	
-	@GetMapping(value="/organizationUpdate.go")
+	@GetMapping(value="/dept_high_list.ajax") // 부서 선택시 리스트 나열
+	@ResponseBody
+	public Map<String, Object> depthighlist(){
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<DepartmentDTO> dept = new ArrayList<>();
+		dept = departmentService.getdepthigh();
+		map.put("dept", dept);	
+		
+		return map;
+	}
+	
+	@GetMapping(value="/organization_update.go")
 	public String organizationUpdateGo(@RequestParam String dept_idx,Model model) {
 		
 		DepartmentDTO dept = new DepartmentDTO();
@@ -102,7 +133,7 @@ public class DepartmentController {
 		return "organization_update";
 	}
 	
-	@PostMapping(value="/organizationUpdate.do")
+	@PostMapping(value="/organization_update.do")
 	public String organizationUpdateDo(@RequestParam Map<String,String> param) {
 	
 		departmentService.organizationUpdate(param);
@@ -111,7 +142,7 @@ public class DepartmentController {
 		return "organization_update";
 	}
 	
-	@GetMapping(value="/organizationTree.go")
+	@GetMapping(value="/organization_tree.go")
 	public String organizationTreeGo(Model model) {
 		
 	
@@ -122,7 +153,7 @@ public class DepartmentController {
 		return "organization_tree";
 	}
 	
-	@GetMapping(value="/deptTreelist.ajax") // 부서,부서장이름,부서장직책,부서원
+	@GetMapping(value="/dept_tree_list.ajax") // 부서,부서장이름,부서장직책,부서원
 	@ResponseBody
 	public Map<String, Object> deptTreelist(){
 		
@@ -134,7 +165,7 @@ public class DepartmentController {
 		return map;
 	}
 	
-	@GetMapping(value="/organizationDetail.go")
+	@GetMapping(value="/organization_detail.go")
 	public String organizationDetailGo(@RequestParam String dept_idx,Model model) {
 		
 		departmentService.organizationDetailGo(dept_idx,model);
@@ -164,7 +195,7 @@ public class DepartmentController {
 		return "organization_detail";
 	}
 	
-	@GetMapping(value="/searchDeptMember.ajax")
+	@GetMapping(value="/search_dept_member.ajax")
 	@ResponseBody
 	public Map<String, Object>searchDeptMember(@RequestParam(required = false) String emplName,
             @RequestParam(required = false) String cmpEmail, String dept_idx){

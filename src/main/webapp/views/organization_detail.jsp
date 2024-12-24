@@ -55,7 +55,7 @@
              <td>${deptinfo.dept_duty}</td>
              <td>${highdeptinfo.dept_name}</td>
              <td>${deptinfo.dept_addr}</td>
-             <td>조직원수</td>
+             <td>${deptcnt}</td>
              <td>${deptfirstdate.dept_change_date}</td>
              </tr>
              
@@ -148,7 +148,7 @@
 
             // AJAX 요청
             $.ajax({
-                url: './searchDeptMember.ajax',  // 서버의 검색 엔드포인트 경로
+                url: './search_dept_member.ajax',  // 서버의 검색 엔드포인트 경로
                 method: 'GET',
                 data: {
                     emplName: emplName,

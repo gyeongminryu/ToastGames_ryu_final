@@ -12,7 +12,7 @@
 	<h1>부서 정보 수정</h1>
    <form action="./organizationUpdate.do" method="POST">
     <table>
-    	 <input type="hidden" id="dept_idx " name="dept_idx" value="${dept.dept_idx}" />
+    	 <input type="hidden" id="dept_idx" name="dept_idx" value="${dept.dept_idx}" />
         <!-- 조직명 -->
         <tr>
             <td><label for="organizationName">조직명:</label></td>
@@ -75,7 +75,7 @@ $(document).ready(function () {
 
 function fetchAppoData() {
     $.ajax({
-        url: "./deptlist.ajax", // 경로설정
+        url: "./dept_high_list.ajax", // 경로설정
         type: "GET",
         success: function(response) {
             console.log('Response:', response);
@@ -89,11 +89,14 @@ function fetchAppoData() {
 
 function populateDropdowns(data) {
     const deptSelect = $("#dept_high");
-   
+    var deptIdx = document.getElementById('dept_idx').value;
     deptSelect.empty();
 
     data.dept.forEach(item => {
-    	   deptSelect.append('<option value="' + item.dept_idx + '">' + item.dept_name + '</option>');
+    	if(item.dept_idx.toString() !== deptIdx){  
+    		deptSelect.append('<option value="' + item.dept_idx + '">' + item.dept_name + '</option>');
+    	}
+    	 
     });
 
 }

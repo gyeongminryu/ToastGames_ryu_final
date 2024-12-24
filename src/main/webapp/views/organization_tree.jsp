@@ -92,7 +92,7 @@
     // 서버에서 데이터를 가져오고 차트를 렌더링
     function fetchDataAndRenderChart(option) {
         $.ajax({
-            url: './deptTreelist.ajax', // 경로설정
+            url: './dept_tree_list.ajax', // 경로설정
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -100,8 +100,9 @@
          
                 // 서버로부터 받은 데이터를 Google OrgChart 데이터 테이블에 반영
                 response.deptlist.forEach(function(dept) {
+ 
                 	data.addRow([
-                		  {v:dept.dept_name, f:dept.dept_name+'<div>'+dept.dept_name +'장-' +dept.dept_head_name+'</div>'+'<div>'+dept.total_dept_count+'</div>'}, // Name
+                		  {v:dept.dept_name, f:dept.dept_name+'<div>'+dept.dept_name +'장-' +(dept.dept_head_name ? dept.dept_head_name : '공석')+'</div>'+'<div>'+dept.total_dept_count+'</div>'}, // Name
                 	    dept.high_dept_name, // Manager를 완전한 비어있는 div로 대체
                 	    dept.dept_idx // ToolTip
                 	]);

@@ -122,14 +122,15 @@ public class EmployeeService {
 	// 인사발령 서비스
 	@Transactional
 	public void employeeAppoDo(String empl_idx, String dept_idx, String position_idx, String duty_idx,
-			String movein_date) {
+			String movein_date,String empl_duty) {
 		AppointmentDTO appolast = new AppointmentDTO();
 		appolast = employeeDAO.employeeAppolast(empl_idx);
 		EmployeeDTO employee = employeeDAO.employeeDetail(empl_idx);
 		int dutyidx = Integer.parseInt(duty_idx);
-		String empl_job = employee.getEmpl_job();
+	//	String empl_job = employee.getEmpl_job();
+		String empl_job = empl_duty;
 		// employeeappodo 에 직무 넣기 >> 직원의 직무 가져와서 넣기?
-		
+		employeeDAO.employeeDutyUpdate(empl_idx,empl_duty);
 		if(appolast==null) { // 이전 인사발령 이력이 없으면
 			employeeDAO.employeeAppoDo(empl_idx,dept_idx,position_idx,duty_idx,movein_date,empl_job);
 		}
@@ -139,6 +140,12 @@ public class EmployeeService {
 			// 전출날짜 넣기
 			employeeDAO.employeeTransfer(appo_idx,movein_date);
 		}
+		
+		// 내가 부서장인데 인사발령이 나면?
+		if(employeeDAO.deptheadcheck(empl_idx)>0) {
+				// 이전 부서의 head_idx를 null로 바꿈
+				employeeDAO.deptheadmoveout(empl_idx);
+			}
 		
 		if(dutyidx>1 && dutyidx <5) { // 부서장 직책이라면? 사장 ~ 팀장이라면 사장idx = 2 부장idx=3 팀장idx=4
 			// department의 head_idx가 비어있지 않으면 - 부서장이 있는 경우라면 
@@ -150,30 +157,20 @@ public class EmployeeService {
 				String headidx = String.valueOf(head_idx);
 				appolasthead = employeeDAO.employeeAppolast(headidx);
 				int head_appo_idx = appolasthead.getAppo_idx();
+				// 직위변경 넣기 
 				String headdudy = String.valueOf(20);
+				// 
 				employeeDAO.employeeAppoDo(headidx,dept_idx,position_idx,headdudy,movein_date,empl_job);
 				// 전출날짜 넣기
 				employeeDAO.employeeTransfer(head_appo_idx,movein_date);
 			}
-			
-			// 부서장인데 부서장으로 발령한다면? >> dept 테이블에서 empl_idx 조회 만약 있다면 부서장이다 
-			if(employeeDAO.deptheadcheck(empl_idx)>0) {
-				// 이전 부서의 head_idx를 null로 바꿈
-				employeeDAO.deptheadmoveout(empl_idx);
-			}
-			
+
 			// department 테이블에 부서장 업데이트
 			employeeDAO.deptHeadAdd(dept_idx,empl_idx);
 					
 		} 
-		else {
-
-			// 부서장인데 다른 부로 발령한다면? >> dept 테이블에서 empl_idx 조회 만약 있다면 부서장이다 
-			if(employeeDAO.deptheadcheck(empl_idx)>0) {
-				// 이전 부서의 head_idx를 null로 바꿈
-				employeeDAO.deptheadmoveout(empl_idx);
-			}
-		}
+		
+		
 		
 		
 	}// public void employeeAppoDo(String empl_idx, String dept_idx, String position_idx, String duty_idx,String movein_date)
@@ -188,7 +185,7 @@ public class EmployeeService {
 	}
 	
 	// 업로드 처리 
-	public void emplfileUpload(String empl_idx, MultipartFile[] files) throws IOException {
+	public void emplfileUpload(MultipartFile[] files,String empl_idx) throws IOException {
 		EmployeeDTO empl_info = employeeDAO.employeeDetail(empl_idx);
 		String file_key =	empl_info.getFile_key();
 		for (MultipartFile file : files) {
@@ -228,7 +225,7 @@ public class EmployeeService {
 	
 	
 	// 사원 직인 등록
-	public void emplStampUpload(String empl_idx, MultipartFile singleFile) {
+	public void emplStampUpload(MultipartFile singleFile,String empl_idx) {
 		
 		String originalFileName = singleFile.getOriginalFilename();
 		String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
@@ -242,15 +239,28 @@ public class EmployeeService {
 		  try {
 		        // 파일을 지정한 경로에 저장
 		        singleFile.transferTo(dest);
-
+		        logger.info("파일 이름은 : "+newFileName);
 		        // 업로드된 파일 이름을 DB에 저장
-		        employeeDAO.emplStampUpload(empl_idx, newFileName);
+		        
+		        employeeDAO.emplStampUpload(newFileName,empl_idx);
 
 		    } catch (IOException e) {
 		        e.printStackTrace();
 		        throw new RuntimeException("파일 업로드 실패: " + e.getMessage());
 		    }
 		
+	}
+
+	public boolean emplFileDel(String new_filename) {
+		// new_filename으로 file db 삭제 + 저장경로의 파일 삭제
+		boolean success = false;
+		employeeDAO.emplFileDel(new_filename);
+		File file = new File(uploadAddr + "/" + new_filename);
+		if(file.exists()) {
+			 success = file.delete();
+			
+		}
+		return success;
 	}
 	
 }

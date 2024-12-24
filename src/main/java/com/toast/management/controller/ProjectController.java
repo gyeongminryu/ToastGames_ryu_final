@@ -28,14 +28,14 @@ public class ProjectController {
 
 	
 	
-	@GetMapping(value="/projectTeam_list.go")
+	@GetMapping(value="/project_team_list.go")
 	public String projectTeamListGo() {
 		
 		return "projectTeam_list";
 	}
 	
 	
-	@GetMapping(value="/searchTeamlist.ajax")
+	@GetMapping(value="/search_team_list.ajax")
 	@ResponseBody
 	public Map<String, Object>searchDeptMember(@RequestParam(required = false) String teamName,
             @RequestParam(required = false) String teamHead){
