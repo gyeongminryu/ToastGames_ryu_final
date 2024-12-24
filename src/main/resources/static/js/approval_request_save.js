@@ -29,11 +29,11 @@ function approval_set_save_data(){
     console.log(doc_content);
     $('input[name="doc_content"]').val(doc_content);
 
+
     approval_save_data_send();
+
+
 }
-
-
-
 
 //작성 일자 및 최종 업데이트 일자 구하고 세팅해주기 위한 함수 -> 저장 혹은 임시 저장 클릭 시에만 작동
 function approval_write_current_date(){
@@ -82,3 +82,5 @@ function approval_save_doc(){
         }
     });
 }
+
+
