@@ -8,10 +8,8 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/manage_rent.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <body>
 <c:import url="layout_topnav.jsp" />
@@ -23,226 +21,131 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item" onclick="location.href='/'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
                         <h1>공용 물품 관리</h1>
                     </li>
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                    <li class="tst_title_item" onclick="location.href='/'">
                         <h1>폐기 물품 확인</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->
+                <form>
+                    <div class="tst_flex">
 
-                <div class="tst_flex">
-                    <div class="tst_col2">
-
-                        <!-- 분류 검색 -->
-                        <form>
-                            <div class="tst_search_container width_full">
-                                <div class="tst_search_input">
-                                    <input type="text" name="keyword_classf" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
-                                </div>
-                                <div class="tst_search_icon">
-                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- //분류 검색 -->
-
-                        <!-- 제품 등록 버튼 -->
-                        <div>
-                            <button onclick="location.href='/'" class="btn_full btn_primary">제품 등록하기</button>
+                        <!-- 폐기 정보 -->
+                        <div class="tst_col9">
+                            <table class="tst_table table_align_left table_no_padding table_no_underline">
+                                <colgroup>
+                                    <col style="width: 120px;" />
+                                    <col style="width: auto;" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="2">폐기 정보</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th class="td_align_top">폐기 사유</th>
+                                    <td>
+                                        <textarea name="disp_reason" rows="5" maxlength="1000" placeholder="폐기 사유를 입력하세요"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td_align_top">사진 첨부</th>
+                                    <td>
+                                        <input type="file" name="file" placeholder="첨부할 사진을 등록하세요. 장당 최대 5MB, 총 다섯 장까지 등록 가능합니다." />
+                                        <div class="image_preview">
+                                            <ul class="tst_list list_inline list_no_desc">
+                                                <li><img src="https://images3.theispot.com/1024x1024/a4140ir1003.jpg?v=210305104100" /></li>
+                                                <li><img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" /></li>
+                                                <li><img src="https://images3.theispot.com/1024x1024/a4140ir1071.jpg?v=210306093500" /></li>
+                                                <li><img src="https://images2.theispot.com/1024x1024/a4140ir1124.jpg?v=211029051300" /></li>
+                                                <li><img src="https://images3.theispot.com/1024x1024/a4140ir1062.jpg?v=210305062100" /></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td_align_top"><span class="font_subtle">주의사항</span></th>
+                                    <td>
+                                        <p class="font_subtle">1. 사용 연한이 지나지 않은 물품을 폐기할 때는 반드시 제품 상태 사진을 첨부해야 합니다.</p>
+                                        <p class="font_subtle">2. 사용 연한이 지나지 않은 물품은 직원에게 인수할 수 없습니다.</p>
+                                        <p class="font_subtle">3. 사용 연한이 지난 물품을 직원에게 인수하기 위해서는 반드시 직원의 사원증을 촬영한 사진을 첨부해야 합니다.</p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th class="td_align_top"></th>
+                                    <td class="td_align_left">
+                                        <ul class="list_no_desc list_inline">
+                                            <li>
+                                                <button type="button" onclick="tst_modal_call('tst_modal_dispose')" class="btn_primary">물품 등록하기</button>
+                                            </li>
+                                            <li>
+                                                <button type="button" onclick="location.href='/'" class="btn_secondary">목록으로 돌아가기</button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
                         </div>
-                        <!-- //제품 등록 버튼 -->
+                        <!-- //폐기 정보 -->
 
-                        <hr class="separator" />
+                        <div class="tst_col3">
 
-                        <table class="tst_table table_align_left">
-                            <tbody class="tst_pointer">
+                            <!-- 물품 정보 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: 90px;" />
+                                    <col style="width: auto;" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="2">물품 정보</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>물품명</th>
+                                    <td id="prod_name" class="prod_name">{물품명}</td>
+                                </tr>
+                                <tr>
+                                    <th>물품 정보</th>
+                                    <td id="prod_cate_idx" class="prod_cate_idx">{물품 정보}</td>
+                                </tr>
+                                <tr>
+                                    <th>카테고리</th>
+                                    <td id="prod_cate_name" class="prod_cate_name">{물품 카테고리}</td>
+                                </tr>
+                                <tr>
+                                    <th>내용연수</th>
+                                    <td id="prod_life" class="prod_life">{내용연수|0년}</td>
+                                </tr>
+                                <tr>
+                                    <th>등록일</th>
+                                    <td id="prod_purch_date" class="prod_purch_date">{등록일|yyyy-MM-dd}</td>
+                                </tr>
+                                <tr>
+                                    <th>사용연한</th>
+                                    <td id="prod_dispo_date" class="prod_dispo_date">{사용연한|yyyy-MM-dd}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- //믈픔 정보 -->
 
-                            <!-- 전체 제품 조회 (필터링 초기화) -->
-                            <tr><th><span onclick="location.href='/'">전체 보기</span></th></tr>
-                            <!-- //전체 제품 조회 (필터링 초기화) -->
-
-                            <!-- 분류 목록 (필터링) -->
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
-                            <!-- //분류 목록 (필터링) -->
-
-                            <!-- 분류 목록 > 선택한 항목 (필터링) -->
-                            <tr><td class="td_bg_medium"><span onclick="location.href='/'">{분류명}</span></td></tr>
-                            <!-- //분류 목록 > 선택한 항목 (필터링) -->
-
-                            <!-- 예시 -->
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
-                            <!-- //예시 -->
-
-                            </tbody>
-                        </table>
+                        </div>
                     </div>
-
-                    <div class="tst_col10">
-
-                        <!-- 물품 검색 -->
-                        <form>
-                            <div class="tst_search_container">
-                                <div class="tst_search_select">
-                                    <select id="tst_search_select_state" name="state" onchange="location.href='/'" class="btn_secondary">
-                                        <option value="{처리 시기}">처리 시기</option>
-                                        <option value="{처리 시기}">사용연한 전</option>
-                                        <option value="{처리 시기}">사용연한 후</option>
-                                    </select>
-                                </div>
-                                <div class="tst_search_select">
-                                    <select id="tst_search_select_category" name="category" onchange="location.href='/'">
-                                        <option value="{검색 분류}">검색 분류</option>
-                                    </select>
-                                </div>
-                                <div class="tst_search_input">
-                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
-                                </div>
-                                <div class="tst_search_icon">
-                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- //물품 검색 -->
-
-                        <table class="tst_table">
-                            <colgroup>
-                                <col style="width: 60px;" />
-                                <col style="width: 150px;" />
-                                <col style="width: 200px;" />
-                                <col style="width: auto;" />
-                                <col style="width: 110px;" />
-                                <col style="width: 110px;" />
-                                <col style="width: 60px;" />
-                                <col style="width: 60px;" />
-                                <col style="width: 80px;" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>분류</th>
-                                <th>제품명</th>
-                                <th>제품 정보</th>
-                                <th>등록일</th>
-                                <th>사용연한</th>
-                                <th>처리 시기</th>
-                                <th>처리 방식</th>
-                                <th>처리자</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <!-- 검색되는 공용 물품이 없을 경우 -->
-                            <tr class="rent_list_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="6" class="td_no_data">
-                                    <p><i class="bi bi-box-seam"></i></p>
-                                    <h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>
-                                </td>
-                            </tr>
-                            <!-- //검색되는 공용 물품이 없을 경우 -->
-
-                            <!-- 공유 물품 목록 > 대여 가능한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td>
-                                    <!-- 해당 분류로 필터링하는 주소 혹은 함수를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{분류}</span>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/'" class="tst_pointer">{제품명}</h3>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
-                                </td>
-                                <td>
-                                    <span onclick="location.href='/'" class="tst_badge_min btn_subtle">대여 가능</span>
-                                </td>
-                                <td>없음</td>
-                            </tr>
-                            <!-- //공유 물품 목록 > 대여 가능한 물품 -->
-
-                            <!-- 예시 -->
-                            <tr>
-                                <td>1278</td>
-                                <td><span onclick="location.href='/'" class="tst_pointer">윈도 노트북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">갤럭시북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">갤럭시 북 5 Pro 360 (40.6cm) Core Ultra 7 / iTB NVMe SSD</span></td>
-                                <td><span onclick="location.href='/'" class="tst_badge_min btn_subtle">대여 가능</span></td>
-                                <td>없음</td>
-                            </tr>
-                            <tr>
-                                <td>1277</td>
-                                <td><span onclick="location.href='/'" class="tst_pointer">맥북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
-                                <td><span onclick="location.href='/'" class="tst_badge_min btn_secondary">대여중</span></td>
-                                <td>2025-01-23 18:00</td>
-                            </tr>
-                            <!-- //예시 -->
-
-                            <!-- pagination -->
-                            <tfoot>
-                            <tr>
-                                <td colspan="7">
-                                    <ul id="pagination" class="pagination-sm pagination">
-                                        <li class="page-item first disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item prev disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">6</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">7</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">8</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">9</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">10</a>
-                                        </li>
-                                        <li class="page-item next">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
-                                        </li>
-                                        <li class="page-item last">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            </tfoot>
-                            <!-- //pagination -->
-                        </table>
-                    </div>
-
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 </body>
+<c:import url="manage_rent_dispose_modal.jsp" />
+
 <script src="resources/js/common.js"></script>
+<script src="resources/js/manage_rent_disuse.js"></script>
 </html>

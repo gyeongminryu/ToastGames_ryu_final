@@ -75,6 +75,15 @@
     background-color: var(--tst-color-subtle);
 }
 
+.tst_table.table_no_underline tbody tr{
+    border: none;
+}
+
+.tst_table.table_no_underline tbody tr th,
+.tst_table.table_no_underline tbody tr td{
+    padding-bottom: 0px;
+}
+
 .tst_table td.td_no_data{
     padding: 240px 0;
 }

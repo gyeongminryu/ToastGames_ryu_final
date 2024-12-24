@@ -1,0 +1,14 @@
+.rent_history_no_data td.td_no_data{
+    padding: 150px 0;
+}
+
+.image_preview{
+    --tst-imgpreview-height: 250px;
+    width: inherit;
+    margin: var(--tst-margin-vertical) 0 0;
+}
+
+.image_preview .tst_list img{
+    height: var(--tst-imgpreview-height);
+    margin-bottom: var(--tst-margin-vertical);
+}

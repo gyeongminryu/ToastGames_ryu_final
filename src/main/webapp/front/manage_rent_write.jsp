@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/manage_rent.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>

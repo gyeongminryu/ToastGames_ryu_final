@@ -7,9 +7,9 @@
     <title>TOAST Games Groupware</title>
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/manage_rent.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/manage_rent_detail.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
