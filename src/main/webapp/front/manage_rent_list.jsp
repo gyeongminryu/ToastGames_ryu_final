@@ -26,7 +26,7 @@
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_rent_list'">
                         <h1>공용 물품 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_rent_dispose_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_dispose_list'">
                         <h1>폐기 물품 확인</h1>
                     </li>
                 </ul>
@@ -39,7 +39,7 @@
                         <form>
                             <div class="tst_search_container width_full">
                                 <div class="tst_search_input">
-                                    <input type="text" name="keyword_classf" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                                    <input type="text" name="keyword_class" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
                                 </div>
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>

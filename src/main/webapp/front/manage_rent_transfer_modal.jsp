@@ -151,7 +151,7 @@
             </div>
         </div>
         <div class="tst_modal_footer">
-            <!-- 결재선 선택 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_primary">결재선 변경하기</button>
+            <!-- 결재선 선택 경로를 입력하세요 --><button onclick="location.href=''" class="btn_primary">인수인 설정하기</button>
             <button onclick="tst_modal_close('tst_modal_select')" class="btn_secondary">이전 화면으로 돌아가기</button>
         </div>
     </div>
@@ -163,7 +163,7 @@
 <div class="tst_modal tst_modal_alert tst_modal_transfer">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
-            <h1 class="tst_modal_title">공용 물품 폐기하기</h1>
+            <h1 class="tst_modal_title">공용 물품 인계하기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_transfer')"></i>
         </div>
         <div class="tst_modal_body">

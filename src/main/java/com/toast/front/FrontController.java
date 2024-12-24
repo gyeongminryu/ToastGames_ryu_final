@@ -54,9 +54,9 @@ public class FrontController {
         return new ModelAndView("approval_send_list");
     }
 
-    @RequestMapping(value = "/approval_send_detail")
+    @RequestMapping(value = "/approval_sent_detail")
     public ModelAndView front_approval_send_detail() {
-        return new ModelAndView("approval_send_detail");
+        return new ModelAndView("approval_sent_detail");
     }
 
     @RequestMapping(value = "/approval_writing_list")
@@ -130,8 +130,16 @@ public class FrontController {
         return new ModelAndView("manage_rent_transfer");
     }
 
-    @RequestMapping(value = "/manage_rent_dispose_list")
+
+
+    // manage > dispose
+    @RequestMapping(value = "/manage_dispose_list")
     public ModelAndView front_manage_rent_dispose_list() {
-        return new ModelAndView("manage_rent_dispose_list");
+        return new ModelAndView("manage_dispose_list");
+    }
+
+    @RequestMapping(value = "/manage_dispose_detail")
+    public ModelAndView front_manage_rent_dispose_detail() {
+        return new ModelAndView("manage_dispose_detail");
     }
 }

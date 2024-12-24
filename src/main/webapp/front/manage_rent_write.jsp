@@ -24,7 +24,7 @@
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_rent_list'">
                         <h1>공용 물품 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_rent_dispose_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_dispose_list'">
                         <h1>폐기 물품 확인</h1>
                     </li>
                 </ul>

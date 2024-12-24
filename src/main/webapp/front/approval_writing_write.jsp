@@ -104,21 +104,21 @@
                                     <th>1차 결재</th>
                                     <td class="td_align_left">{직원명 (부서/직급)}</td>
                                     <td>
-                                        <button onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                        <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>2차 결재</th>
                                     <td class="td_align_left">{직원명 (부서/직급)}</td>
                                     <td>
-                                        <button onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                        <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>최종 결재</th>
                                     <td class="td_align_left">{직원명 (부서/직급)}</td>
                                     <td>
-                                        <button onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                        <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
                                     </td>
                                 </tr>
                                 </tbody>

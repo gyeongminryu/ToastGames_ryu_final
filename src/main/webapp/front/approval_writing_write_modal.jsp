@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />
 
 <!-- 결재선 선택하기 -->
-<div class="tst_modal tst_modal_auto tst_modal_select">
+<div class="tst_modal tst_modal_wide tst_modal_select">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">결재선 선택하기</h1>
