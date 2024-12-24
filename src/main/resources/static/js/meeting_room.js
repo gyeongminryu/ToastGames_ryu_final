@@ -1,3 +1,23 @@
+    
+    //회의실 등록 부서 확인
+    /*const empl_depart_idx = "${my_dept_idx}";
+    const room_depart_idx = "108";
+    
+    document.addEventListener("DOMContentLoaded", function() {
+    	const editButton = document.getElementById("editButton");
+    	const confirmButton = document.getElementById("confirmButton");
+    	const deleteButton = document.getElementById("deleteButton");
+
+    	// 현재 사용자와 관리사원의 empl_idx가 다를 경우 버튼 숨김
+    	if (empl_depart_idx !== room_depart_idx) {
+        	editButton.style.display = "none";
+        	confirmButton.style.display = "none";
+        	deleteButton.style.display = "none";
+    	}
+	});*/
+    
+
+    
     var editButton = document.getElementById("editButton");
     var confirmButton = document.getElementById("confirmButton");
     var deleteButton = document.getElementById("deleteButton");

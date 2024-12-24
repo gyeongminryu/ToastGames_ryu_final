@@ -6,6 +6,25 @@
 <mapper namespace="com.toast.schedule.dao.MeetingDAO">
 	
 	
+	<!-- 내정보 -->
+	<select id="myInfo" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT empl_idx, empl_name FROM employee
+			WHERE empl_id=#{param1}
+	</select>
+	
+	<!-- 내 부서 정보 -->
+	<select id="myDept">
+		SELECT 
+			ap.dept_idx
+		FROM 
+			appointment AS ap
+		JOIN 
+			employee AS empl ON ap.appo_idx = empl.appolast_idx
+		WHERE 
+			empl.empl_id = #{param1}
+	</select>
+	
+	
 	<!-- 회의실 정보 일부(회의실 가기) -->
 	<select id="meetingGo" resultType="map">
 		SELECT room_idx, room_name FROM meeting_room
