@@ -18,7 +18,7 @@
             <h1>ID/비밀번호 찾기</h1>
         </div>
         <ul class="list_no_desc list_tab">
-            <li class="list_tab_item" onclick="location.href='/'">
+            <li class="list_tab_item" onclick="location.href='/login_find_pw.go'">
                 ID찾기
             </li>
             <li class="list_tab_item list_tab_item_active">
@@ -41,7 +41,11 @@
                     <hr class="separator" />
                 </li>
                 <li>
-                    <input type="submit" value="임시 비밀번호 받기" onclick="location.href='/'" class="btn_full btn_primary" />
+                    <!-- 실제 작업시에는 아래 코드에서 주석을 제외하고 입력하세요 -->
+                    <!-- <input type="submit" value="임시 비밀번호 받기" onclick="location.href='/'" class="btn_full btn_primary" /> -->
+
+                    <!-- 실제 작업시에는 아래 코드를 삭제하세요 -->
+                    <input type="button" value="임시 비밀번호 받기" onclick="location.href='/login_find_pw_result'" class="btn_full btn_primary" />
                 </li>
                 <li>
                     <input type="button" value="로그인 화면으로 돌아가기" onclick="location.href='/'" class="btn_full btn_text" />

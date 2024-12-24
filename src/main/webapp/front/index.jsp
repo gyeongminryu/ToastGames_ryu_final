@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/manage_rent.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -22,124 +22,185 @@
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
-                        <h1>공용 물품 관리</h1>
-                    </li>
-                    <li class="tst_title_item" onclick="location.href='/'">
-                        <h1>폐기 물품 확인</h1>
+                        <h1>문서 작성하기</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->
+
                 <form>
                     <div class="tst_flex">
 
-                        <!-- 폐기 정보 -->
+                        <!-- 문서 작성하기 -->
                         <div class="tst_col9">
-                            <table class="tst_table table_align_left table_no_padding table_no_underline">
+                            <table class="tst_table table_align_left table_no_padding">
                                 <colgroup>
                                     <col style="width: 120px;" />
                                     <col style="width: auto;" />
                                 </colgroup>
                                 <thead>
                                 <tr>
-                                    <th colspan="2">폐기 정보</th>
+                                    <th colspan="2">문서 작성</th>
                                 </tr>
                                 </thead>
+
+
                                 <tbody>
                                 <tr>
-                                    <th class="td_align_top">폐기 사유</th>
+                                    <th class="td_align_top">문서 제목</th>
                                     <td>
-                                        <textarea name="disp_reason" rows="5" maxlength="1000" placeholder="폐기 사유를 입력하세요"></textarea>
+                                        <input type="text" name="subject" maxlength="100" placeholder="문서 제목을 입력하세요" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">사진 첨부</th>
+                                    <th class="td_align_top">보고 내용</th>
                                     <td>
-                                        <input type="file" name="file" placeholder="첨부할 사진을 등록하세요. 장당 최대 5MB, 총 다섯 장까지 등록 가능합니다." />
-                                        <div class="image_preview">
-                                            <ul class="tst_list list_inline list_no_desc">
-                                                <li><img src="https://images3.theispot.com/1024x1024/a4140ir1003.jpg?v=210305104100" /></li>
-                                                <li><img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" /></li>
-                                                <li><img src="https://images3.theispot.com/1024x1024/a4140ir1071.jpg?v=210306093500" /></li>
-                                                <li><img src="https://images2.theispot.com/1024x1024/a4140ir1124.jpg?v=211029051300" /></li>
-                                                <li><img src="https://images3.theispot.com/1024x1024/a4140ir1062.jpg?v=210305062100" /></li>
-                                            </ul>
-                                        </div>
+                                        <textarea name="content" rows="5" maxlength="1000" placeholder="보고할 내용을 입력하세요"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top"><span class="font_subtle">주의사항</span></th>
-                                    <td>
-                                        <p class="font_subtle">1. 사용 연한이 지나지 않은 물품을 폐기할 때는 반드시 제품 상태 사진을 첨부해야 합니다.</p>
-                                        <p class="font_subtle">2. 사용 연한이 지나지 않은 물품은 직원에게 인수할 수 없습니다.</p>
-                                        <p class="font_subtle">3. 사용 연한이 지난 물품을 직원에게 인수하기 위해서는 반드시 직원의 사원증을 촬영한 사진을 첨부해야 합니다.</p>
-                                    </td>
+                                    <th class="td_align_top">문서</th>
+                                    <td>{문서 소스}</td>
                                 </tr>
                                 </tbody>
-                            </table>
-                        </div>
-                        <!-- //폐기 정보 -->
 
-                        <div class="tst_col3">
-
-                            <!-- 물품 정보 -->
-                            <table class="tst_table table_align_left table_no_padding">
-                                <colgroup>
-                                    <col style="width: 90px;" />
-                                    <col style="width: auto;" />
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th colspan="2">물품 정보</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th>물품명</th>
-                                    <td id="prod_name" class="prod_name">{물품명}</td>
-                                </tr>
-                                <tr>
-                                    <th>물품 정보</th>
-                                    <td id="prod_cate_idx" class="prod_cate_idx">{물품 정보}</td>
-                                </tr>
-                                <tr>
-                                    <th>카테고리</th>
-                                    <td id="prod_cate_name" class="prod_cate_name">{물품 카테고리}</td>
-                                </tr>
-                                <tr>
-                                    <th>내용연수</th>
-                                    <td id="prod_life" class="prod_life">{내용연수|0년}</td>
-                                </tr>
-                                <tr>
-                                    <th>등록일</th>
-                                    <td id="prod_purch_date" class="prod_purch_date">{등록일|yyyy-MM-dd}</td>
-                                </tr>
-                                <tr>
-                                    <th>사용연한</th>
-                                    <td id="prod_dispo_date" class="prod_dispo_date">{사용연한|yyyy-MM-dd}</td>
-                                </tr>
-
-                                <!-- 아직 사용 연한이 지나지 않았다면 아래 요소에 클래스 disp_hide를 추가해 주세요 -->
-                                <tr>
-                                    <th colspan="2" class="td_bg_subtle td_align_center">아직 사용 연한이 지나지 않은 물품입니다.</th>
-                                </tr>
-                                <!-- //아직 사용 연한이 지나지 않았다면 위 요소에 클래스 disp_hide를 추가해 주세요 -->
-
-                                </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="2">
-                                        <hr class="separator" />
-                                        <button type="button" onclick="tst_modal_call('tst_modal_dispose')" class="btn_primary btn_full">물품 등록하기</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <button type="button" onclick="location.href='/'" class="btn_secondary btn_full">목록으로 돌아가기</button>
+                                    <th class="td_align_top"></th>
+                                    <td class="td_align_left">
+                                        <ul class="list_no_desc list_inline">
+                                            <li>
+                                                <button type="button" onclick="tst_modal_call('tst_modal_send')" class="btn_primary">상신하기</button>
+                                            </li>
+                                            <li>
+                                                <button type="button" onclick="location.href='/'" class="btn_secondary">임시 저장하기</button>
+                                            </li>
+                                            <li>
+                                                <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_subtle">작성 취소하기</button>
+                                            </li>
+                                        </ul>
                                     </td>
                                 </tr>
                                 </tfoot>
                             </table>
-                            <!-- //믈픔 정보 -->
+                        </div>
+                        <!-- //문서 작성하기 -->
+
+                        <div class="tst_col3">
+
+                            <!-- 결재선 편집 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: 90px;" />
+                                    <col style="width: auto;" />
+                                    <col style="width: 60px;" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="3">결재선</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>1차 결재</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>2차 결재</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>최종 결재</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <hr class="separator" />
+                            <!-- //결재선 편집 -->
+
+                            <!-- 참조 편집 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: 90px;" />
+                                    <col style="width: auto;" />
+                                    <col style="width: 60px;" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="3">참조</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>참조 1</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <!-- 참조인에서 제외하는 경로를 입력하세요 --><button type="button" onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>참조 2</th>
+                                    <td class="td_align_left">{직원명 (부서/직급)}</td>
+                                    <td>
+                                        <button type="button" onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="3">
+                                        <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_subtle btn_full">참조 추가하기</button>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <hr class="separator" />
+                            <!-- //참조 편집 -->
+
+                            <!-- 첨부 파일 편집 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: auto;" />
+                                    <col style="width: 60px;" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="2">첨부 파일</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
+                                    <td>
+                                        <button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
+                                    <td>
+                                        <button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <form>
+                                            <input type="file" name="attached_file" multiple />
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <!-- //첨부 파일 편집 -->
 
                         </div>
                     </div>
@@ -148,9 +209,7 @@
         </div>
     </div>
 </div>
+<c:import url="approval_writing_write_modal.jsp" />
 </body>
-<c:import url="manage_rent_dispose_modal.jsp" />
-
 <script src="resources/js/common.js"></script>
-<script src="resources/js/manage_rent_disuse.js"></script>
 </html>

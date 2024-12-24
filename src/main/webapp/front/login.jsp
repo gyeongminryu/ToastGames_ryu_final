@@ -37,10 +37,14 @@
                     <hr class="separator" />
                 </li>
                 <li>
-                    <input type="submit" value="Login => {work}" class="btn_full btn_primary" />
+                    <!-- 실제 작업시에는 아래 코드에서 주석을 제외하고 입력하세요 -->
+                    <!-- <input type="submit" value="Login => {work}" class="btn_full btn_primary" /> -->
+
+                    <!-- 실제 작업시에는 아래 코드를 삭제하세요 -->
+                    <input type="button" value="Login => {work}" class="btn_full btn_primary" onclick="location.href='/approval_received_list'" />
                 </li>
                 <li>
-                    <input type="button" value="Exception => {ID|비밀번호 찾기}" class="btn_full btn_text" onclick="location.href='login_findid.html'"/>
+                    <input type="button" value="Exception => {ID|비밀번호 찾기}" class="btn_full btn_text" onclick="location.href='/login_find_id'"/>
                 </li>
             </ul>
         </form>
