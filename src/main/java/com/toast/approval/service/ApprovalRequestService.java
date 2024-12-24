@@ -3,6 +3,7 @@ package com.toast.approval.service;
 import com.toast.approval.dto.ApprovalRequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import com.toast.approval.dao.ApprovalRequestDAO;
@@ -26,9 +27,7 @@ public class ApprovalRequestService {
 	}
 
 
-
-
-
+	//미리보기에서 수정한 문서 1차로 저장하기
 	public int doc_write_initial(int form_idx, String form_content, int empl_idx) {
 		int doc_idx = 0;
 
@@ -42,15 +41,17 @@ public class ApprovalRequestService {
 			doc_idx = app_dto.getDoc_idx();
 			logger.info("방금 insert한 idx :{}",doc_idx);
 
-			//방금 작성한 doc_idx 기반으로 결재선에 값 저장하기
+			//방금 작성한 doc_idx 기반으로 결재선에 값 저장하기 =======================================================
 				//1.form_idx의 결재선 가져오기
 				List<Map<String,Object>> g_approval_lines = approvalRequestDAO.get_g_approval_line(form_idx);
 				//2. 사원의 부서 가져오기
 				int dept_idx = approvalRequestDAO.doc_dept_idx(empl_idx);
 				logger.info("본인 부서 idx:{}",dept_idx);
+
 				//3.결재선 + doc_idx 저장하기
-					// 여기서는 부서 idx는 0(없음)으로 잡기 //부서 idx는 작성하기 들어갈 때 결재선을 업데이트하고 시작함
-					//기본 결재선에서는 사원 idx가 없으므로 이것도 ''
+					// 여기서는 부서 idx는 사원 부서 기준으로 잡고, 해당 부서 idx 및 직책을 가진 결재자를 조회하여 가져오기
+					// 사장은 직책만 가지고 이름 idx 가져오기
+
 				int step = 1;
 				for (int i = 0; i < g_approval_lines.size(); i++) {
 
@@ -108,10 +109,13 @@ public class ApprovalRequestService {
 
 
 				}
+			//방금 작성한 doc_idx 기반으로 참조선에 값 저장하기 =======================================================
+					//approvalRequestDAO.save_refer_line_initial(doc_idx);
 		}
 		return doc_idx;
 	}
 
+	//1차 저장한 문서 가져오기
 	public Map<String, Object> doc_get(int docIdx, int empl_idx) {
 		Map<String, Object> map = approvalRequestDAO.doc_get(docIdx);
 		//문서양식에 이름이랑 부서 넣기 위함
@@ -120,95 +124,14 @@ public class ApprovalRequestService {
 		return map;
 	}
 
-//	public boolean doc_write(String doc_idx, String doc_end_date, String subject, String content_sub, String content, String doc_write_date, MultipartFile[] files, int empl_idx) {
-//		//doc write
-//		//이미 작성한 doc idx를 아니까 DTO 사용하지 않음
-//		boolean success = false;
-//		boolean file_empty = false;
-//
-//
-//		String file_key = UUID.randomUUID().toString();
-//		logger.info("첫 file_key 생성:{}",file_key);
-//
-//		//(글쓰기 - file_key 없이)
-//		//만약 글쓰기가 끝나면,
-//		if(approvalRequestDAO.doc_write(doc_idx,doc_end_date,subject,content_sub,content,doc_write_date)>0) {
-//
-//			//(파일이 있는지 확인하기)
-//			for (MultipartFile file : files) {
-//				file_empty = file.isEmpty();
-//				logger.info("파일 파라메터 값이 있는가?{}:", file_empty);
-//			}
-//
-//
-//				// 새로운 파일 있음
-//				if(!file_empty){
-//					//저장된 파일키가 있을 경우 = 이전 파일 및 파일 경로 안의 파일 삭제 메소드
-//					approval_filekey_exist(doc_idx);
-//
-//					//파일키 없거나 파일키 삭제되면
-//						// 파일 분리해서 새로운 파일 저장 및 document의 file_key update
-//
-//					for (MultipartFile file : files) {
-//						//ori_filename -> new_filename 설정
-//
-//						String ori_filename = file.getOriginalFilename();
-//						//.확장자가 있는지 확인
-//						int file_type_split = ori_filename.lastIndexOf(".");
-//						logger.info("파일 확장자 여부 :{}", file_type_split);
-//
-//						//만약 확장자가 있으면
-//						if (file_type_split > 0) {
-//							String file_type = ori_filename.substring(file_type_split);
-//							String new_filename = UUID.randomUUID().toString() + file_type;
-//
-//							String file_addr = "C:/files/" + new_filename;
-//							//파일에 먼저 저장하기
-//							//1.byte
-//							try {
-//								byte[] bytes = file.getBytes();
-//								//2.path
-//								Path path = Paths.get(file_addr);
-//
-//								//3. file write
-//								Files.write(path, bytes);
-//
-//
-//							} catch (Exception e) {
-//								throw new RuntimeException(e);
-//							}
-//							//DB에 새로운 파일 업로드
-//							if(approvalRequestDAO.approval_doc_file_write(doc_idx,ori_filename,new_filename,file_key,empl_idx,file_type,file_addr)>0){
-//								logger.info("DB에 저장한 file_key:{}",file_key);
-//
-//
-//								logger.info("파일 입력 성공");
-//
-//								//document에 file key update
-//								approvalRequestDAO.doc_write_file_key(doc_idx,file_key);
-//
-//							}
-//
-//
-//						}
-//
-//					}
-//
-//			// ===========================================================================================================
-//			//(파일이 있는지 확인하기)
-//			// 새로운 파일 없음
-//				}else{
-//					//저장된 파일키가 있을 경우 = 이전 파일 및 파일 경로 안의 파일 삭제 메소드
-//					approval_filekey_exist(doc_idx);
-//					//document의 file_key = ''로 업데이트하기
-//					approvalRequestDAO.doc_filekey_delete(doc_idx);
-//				}
-//
-//				success = true;
-//		}
-//		return success;
-//	}
+	//1차로 저장된 결재 라인 가져오기
+	public List<Map<String,Object>> doc_line_get(int doc_idx) {
+		return approvalRequestDAO.doc_line_get(doc_idx);
+	}
 
+
+
+	//작성한 문서 저장하기
 	public boolean doc_write(Map<String,String> param, MultipartFile[] files) {
 		//doc write
 		//이미 작성한 doc idx를 아니까 DTO 사용하지 않음
@@ -298,8 +221,7 @@ public class ApprovalRequestService {
 		return success;
 	}
 
-
-
+	//선택한 결재선 저장
 	public boolean save_approval_line(Map<String, String> param) {
 		boolean success = false;
 		String doc_idx = param.get("doc_idx");
@@ -307,26 +229,48 @@ public class ApprovalRequestService {
 
 		Map<String,Object> data = new HashMap<>();
 
+		//결재 임시 저장 로직
+		//먼저 이전 값에서 line_order이 있는지 확인
+		//만약 전달 받은 값이 있는데 이전에는 없었으면 insert 시키기
+		//만약 전달 받은 값이 없는데 이전에는 있었으면 delete 시키기
+		//만약 전달 받은 값이 있고 이전에도 있으면 update 시키기
+		//전달 받은 값이 없고, 이전에도 없는 경우면 x
+
+
 		for(int i = 1; i <=3; i++){
 			logger.info("empl_line1:{}",param.get("empl_line"+i));
+
+			//결재자 사원번호가 있는지 확인
+			var empl_line = param.get("empl_line"+i);
 
 			data.put("line_order", i);
 			data.put("doc_idx", doc_idx);
 			data.put("empl_idx",param.get("empl_line"+i));
 			data.put("dept_idx",param.get("dept_line"+i));
 			data.put("duty_idx",param.get("duty_line"+i));
+			data.put("position_idx",param.get("position_line"+i));
+
 			logger.info("map값 :{}",data);
-			if(approvalRequestDAO.save_approval_line(data)>0){
-				success = true;
-			}else{
-				success = false;
+			//doc_idx 문서의 이전 값에서 line_order 있었는지 확인
+			var prev_line_exists = approvalRequestDAO.show_prev_line_order(i,doc_idx);
+
+			//만약 전달 받은 값이 있는데 이전에는 없었으면 insert 시키기
+			if(prev_line_exists==0 && !empl_line.isEmpty()){
+				//만약 전달 받은 값이 있는데 이전에는 없었으면 insert 시키기
+                success = approvalRequestDAO.save_approval_line(data) > 0;
+				//만약 전달 받은 값이 없는데 이전에는 있었으면 delete 시키기
+			}else if(prev_line_exists>0 && empl_line.isEmpty()){
+                success = approvalRequestDAO.delete_approval_line(data) > 0;
+				//만약 전달 받은 값이 있고 이전에도 있으면 update 시키기
+			}else if(prev_line_exists>0 && !empl_line.isEmpty()){
+                success = approvalRequestDAO.update_approval_line(data) > 0;
 			}
 		}
 
 		return success;
 	}
 
-	//저장된 파일키가 있을 경우 = 이전 파일 및 파일 경로 안의 파일 삭제 메소드
+	//기존에 저장된 파일키가 있을 경우 = 이전 파일 및 파일 경로 안의 파일 삭제 메소드
 	public void approval_filekey_exist (String doc_idx){
 		int previous_filekey_count =  approvalRequestDAO.doc_saved_filekey_count(doc_idx);
 		logger.info("이전 파일키 갯수:{}",previous_filekey_count);
@@ -357,7 +301,33 @@ public class ApprovalRequestService {
 	}
 
 
-	public List<Map<String,Object>> doc_line_get(int doc_idx) {
-		return approvalRequestDAO.doc_line_get(doc_idx);
+	public boolean save_refer_line(Map<String, String> param) {
+		boolean success = false;
+		String doc_idx = param.get("doc_idx");
+		int exists = approvalRequestDAO.prev_refer_exists(doc_idx);
+		logger.info("exists:{}",exists);
+		//이전에 doc_idx가 참조 테이블에 존재하면 삭제하기
+		if(approvalRequestDAO.prev_refer_exists(doc_idx)>0){
+			if(approvalRequestDAO.delete_prev_refer(doc_idx)>0){
+				logger.info("이전 참조값 삭제되었음");
+			}
+		}
+
+
+		int refer_count = Integer.parseInt(param.get("refer_count"));
+		int referrer_idx = 0;
+		logger.info("refer_count:{}",refer_count);
+
+		for(int i = 1; i <= refer_count; i++){
+			referrer_idx = Integer.parseInt(param.get("r_empl_line"+i));
+			logger.info("refer_count:{}",i);
+			logger.info("referrer_idx:{}",referrer_idx);
+
+			if(approvalRequestDAO.save_refer_line(referrer_idx,doc_idx)>0){
+				success = true;
+			}
+		}
+
+		return success;
 	}
 }

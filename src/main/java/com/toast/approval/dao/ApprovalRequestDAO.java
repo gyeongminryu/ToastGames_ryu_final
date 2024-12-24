@@ -42,18 +42,39 @@ public interface ApprovalRequestDAO {
 
     void doc_filekey_delete(String doc_idx);
 
-    int save_approval_line(Map<String, Object> data);
+
+    int show_prev_line_order(int line_order, String doc_idx);
+
+    //결재선 임시 저장 로직
 
     void save_approval_line_initial(Map<String,Object> g_approval_line);
 
-    List<Map<String, Object>> get_g_approval_line(int formIdx);
+    int save_approval_line(Map<String, Object> data);
 
+    int delete_approval_line(Map<String, Object> data);
+
+    int update_approval_line(Map<String, Object> data);
+
+
+
+
+    List<Map<String, Object>> get_g_approval_line(int formIdx);
     //결재자 이름 및 직책 idx 가져오기
+
     Map<String,Object> get_approval_empl_idx(int dept_idx,int form_idx, int step);
 
     int get_head_dept_idx(int i);
 
     List<Map<String, Object>> doc_line_get(int doc_idx);
+
+    int prev_refer_exists(String doc_idx);
+
+    int delete_prev_refer(String doc_idx);
+
+    int save_refer_line(int referrer_idx,String doc_idx);
+
+   //int save_refer_line_initial(int docIdx);
+
 
 
 

@@ -74,7 +74,7 @@ public class ApprovalController {
 	//결재선
 	@RequestMapping (value = "/approval_list.go")
 	public String approval_tree() {
-		return "approval_list";
+		return "approval_write_line_child";
 	}
 
 

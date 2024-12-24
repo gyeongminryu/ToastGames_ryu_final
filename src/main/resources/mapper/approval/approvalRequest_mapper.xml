@@ -33,6 +33,12 @@
             VALUES (#{doc_idx},#{gline_order},#{dept_idx},#{duty_idx},#{empl_idx},#{position_idx})
     </insert>
 
+  <!--  &lt;!&ndash;참조 라인 최초 저장&ndash;&gt;
+    <insert id="save_refer_line_initial">
+        INSERT INTO reference
+    </insert>-->
+
+
     <!--1차 저장한 문서 가져오기-->
     <select id="doc_get" resultType="Map">
         SELECT doc_idx,doc_empl_idx,
@@ -82,13 +88,49 @@
         WHERE doc_idx = #{doc_idx}
     </update>
 
-    <!--결재선 저장-->
-    <update id="save_approval_line" parameterType="Map">
+
+    <!--결재선 있는지 확인-->
+    <select id="show_prev_line_order" resultType="int">
+        SELECT COUNT(*) FROM approval_line WHERE line_order = #{line_order} AND doc_idx = #{doc_idx}
+    </select>
+
+    <!--결재선 새로 저장-->
+    <insert id="save_approval_line" parameterType="map">
+        INSERT INTO approval_line (doc_idx,line_order,dept_idx,duty_idx,empl_idx,position_idx)
+        VALUES (#{doc_idx},#{line_order},#{dept_idx},#{duty_idx},#{empl_idx},#{position_idx})
+    </insert>
+
+    <!--결재선을 삭제-->
+    <delete id="delete_approval_line" parameterType="map">
+        DELETE FROM approval_line WHERE line_order =#{line_order}
+    </delete>
+
+    <!--결재선 업데이트-->
+    <update id="update_approval_line" parameterType="Map">
         UPDATE approval_line SET
-            dept_idx = #{dept_idx},duty_idx = #{duty_idx}, empl_idx = #{empl_idx}
+            dept_idx = #{dept_idx},duty_idx = #{duty_idx}, empl_idx = #{empl_idx},position_idx = #{position_idx}
         WHERE doc_idx = #{doc_idx} AND line_order = #{line_order}
     </update>
 
+
+    <!--이전 참조선 있는지 조회-->
+        <select id="prev_refer_exists" resultType="int">
+            SELECT COUNT(*) FROM reference WHERE ref_doc_idx = #{doc_idx}
+        </select>
+
+    <!--이전 참조선 삭제-->
+        <delete id="delete_prev_refer" parameterType="String">
+            DELETE FROM reference WHERE ref_doc_idx = #{doc_idx}
+        </delete>
+
+
+    <!--참조선 저장-->
+        <insert id="save_refer_line">
+            INSERT INTO reference(ref_doc_idx, ref_empl_idx)
+                VALUES(#{doc_idx},#{referrer_idx})
+        </insert>
+    
+    
     <insert id="approval_doc_file_write">
         INSERT INTO file (uploader_idx,file_key,ori_filename, new_filename,file_type,file_addr)
         VALUES(#{empl_idx},#{file_key},#{ori_filename},#{new_filename},#{file_type},#{file_addr})
