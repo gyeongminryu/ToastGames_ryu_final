@@ -12,6 +12,18 @@
 			WHERE empl_id=#{param1}
 	</select>
 	
+	<!-- 내 부서 정보 -->
+	<select id="myDept">
+		SELECT 
+			ap.dept_idx
+		FROM 
+			appointment AS ap
+		JOIN 
+			employee AS empl ON ap.appo_idx = empl.appolast_idx
+		WHERE 
+			empl.appolast_idx = #{param1}
+	</select>
+	
 	
 	<!-- 회의실 정보 일부(회의실 가기) -->
 	<select id="meetingGo" resultType="map">

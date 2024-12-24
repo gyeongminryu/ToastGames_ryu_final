@@ -1,4 +1,24 @@
 
+
+//회의실 등록링크 관리자 부서 확인
+document.addEventListener("DOMContentLoaded", function() {
+	const empl_depart_idx = "${my_dept_idx}";
+	const room_depart_idx = "108"; // 부서 번호가 108일 때만 보여줌
+	const meetingRoomLink = document.getElementById("meetingRoomLink");
+
+	// 부서 번호가 맞지 않으면 링크 숨기기
+	if (empl_depart_idx !== room_depart_idx) {
+		meetingRoomLink.style.display = "none"; // 링크를 숨김
+	}
+});
+
+
+
+
+
+
+
+
 let calendar;
 
 //회의실 정보 상세보기

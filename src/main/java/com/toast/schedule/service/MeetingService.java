@@ -261,6 +261,12 @@ public class MeetingService {
 	}
 
 
+	//내 부서 정보
+	public int myDept(String myId) {
+		return meetingDao.myDept(myId);
+	}
+
+
 
 
 

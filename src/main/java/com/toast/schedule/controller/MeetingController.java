@@ -62,6 +62,10 @@ public class MeetingController {
 		}
 	}
 	
+	
+//--------------------------------------------로그인 체크 및 부서 체크---------------------------------------------------------------------
+	
+	
 	//회의실 예약 가기(회의실 + 사원)
 	@RequestMapping(value="/meeting.go")
 	public ModelAndView meetingGo () {
@@ -82,10 +86,14 @@ public class MeetingController {
 		return mv;
 	}
 	
-	//회의실 정보 등록 가기
+	//회의실 정보 등록 가기(
 	@RequestMapping(value="/meetingRoomAdd.go")
 	public ModelAndView meetingAddGo () {
 		ModelAndView mv = new ModelAndView();
+		String myId= (String) session.getAttribute("loginId");
+		//부서번호 가져오기
+		int my_dept_idx = meetingService.myDept(myId);
+		mv.addObject("my_dept_idx", my_dept_idx);
 		mv.setViewName("meeting_room_add");
 		return mv;
 	}

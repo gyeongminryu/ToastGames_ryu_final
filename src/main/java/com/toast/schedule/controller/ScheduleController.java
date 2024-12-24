@@ -63,7 +63,7 @@ public class ScheduleController {
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
 		String myId= (String) session.getAttribute("loginId");
-		if(myId != null) { //null이 아니면 로그인 한 것
+		//if(myId != null) { //null이 아니면 로그인 한 것
 			//참여자 정보
 			List<Map<String, Object>> partiList = scheduleService.getScheduleParti();
 			mv.addObject("partiList", partiList);
@@ -73,7 +73,7 @@ public class ScheduleController {
 			session.setAttribute("my_idx", my_empl_idx);
 			mv.addObject("my_empl_idx", my_empl_idx);
 			mv.setViewName("calendar_month");
-		}
+		//}
 		return mv;
 	}
 	
@@ -83,7 +83,7 @@ public class ScheduleController {
 	@ResponseBody
 	public boolean scheduleAdd(@RequestBody Map<String, Object> params) {
 		boolean success = false;
-		if(session.getAttribute("loginId") != null) {
+		//if(session.getAttribute("loginId") != null) {
 			
 			ScheduleDTO dto = new ScheduleDTO();
 			
@@ -133,7 +133,7 @@ public class ScheduleController {
 			if(scheduleService.scheduleAdd(dto)) {
 				success=true;
 			}
-		}
+		//}
 		return success;
 	}
 	
@@ -146,7 +146,7 @@ public class ScheduleController {
 		ScheduleDTO dto = new ScheduleDTO();
 		int my_idx = (Integer)session.getAttribute("my_idx");
 		List<Map<String, Object>> schedules = new ArrayList<Map<String,Object>>();
-		if(session.getAttribute("loginId") != null) {
+		//if(session.getAttribute("loginId") != null) {
 			dto.setSche_empl_idx(my_idx);  //현재 로그인한 사원 번호
 			logger.info("param"+(String)param.get("schedule_type_name"));
 			dto.setSche_type(Integer.parseInt((String)param.get("schedule_type_name"))); //선택한 라디오박스의 값
@@ -157,7 +157,7 @@ public class ScheduleController {
 				schedules = scheduleService.getSchedules(dto);
 			}
 			logger.info("schedules"+schedules);
-		}
+		//}
 	    
 	    return schedules;
 	}
@@ -168,8 +168,8 @@ public class ScheduleController {
 	@ResponseBody
 	public boolean scheduleUpdate(@RequestBody Map<String, Object> params) {
 		boolean success = false;
-		if(session.getAttribute("loginId") != null) {
-			if(session.getAttribute("my_idx").equals((String)params.get("empl_idx"))) {
+		//if(session.getAttribute("loginId") != null) {
+			//if(session.getAttribute("my_idx").equals((String)params.get("empl_idx"))) {
 				
 				ScheduleDTO dto = new ScheduleDTO();
 				logger.info("allday:"+params.get("allday"));
@@ -222,10 +222,10 @@ public class ScheduleController {
 				if(scheduleService.scheduleUpdate(dto)) {
 					success=true;
 				}
-			}else {
-				success = false;
-			}
-		}
+			//}else {
+				//success = false;
+			//}
+		//}
 		return success;
 	}
 
@@ -235,8 +235,8 @@ public class ScheduleController {
 	public String dropSchedule(@RequestBody Map<String, Object> params) {
 		ScheduleDTO dto = new ScheduleDTO();
 		int result = 0;
-		if(session.getAttribute("loginId") != null) {
-			if(session.getAttribute("my_idx").equals((String)params.get("empl_idx"))) {
+		//if(session.getAttribute("loginId") != null) {
+			//if(session.getAttribute("my_idx").equals((String)params.get("empl_idx"))) {
 				
 				int sche_idx = (Integer) params.get("sche_idx");
 				dto.setSche_idx(sche_idx);
@@ -258,10 +258,10 @@ public class ScheduleController {
 				LocalDateTime now = LocalDateTime.now(); // 로컬 시스템 시간
 				dto.setSche_update_date(now);
 				result = scheduleService.updateTimeSchedule(dto);
-			} else {
-				result=0;
-			}
-		}
+			//} else {
+				//result=0;
+			//}
+		//}
 	    return result > 0 ? "success" : "fail";
 	}
 	
@@ -271,8 +271,8 @@ public class ScheduleController {
 	public String resizeSchedule(@RequestBody Map<String, Object> params) {
 		ScheduleDTO dto = new ScheduleDTO();
 		int result = 0;
-		if(session.getAttribute("loginId") != null) {
-			if(session.getAttribute("my_idx").equals((String)params.get("empl_idx"))) {
+		//if(session.getAttribute("loginId") != null) {
+			//if(session.getAttribute("my_idx").equals((String)params.get("empl_idx"))) {
 			    int sche_idx = (Integer) params.get("sche_idx");
 			    dto.setSche_idx(sche_idx);
 			    if((boolean)params.get("allday")) {
@@ -293,8 +293,8 @@ public class ScheduleController {
 		        LocalDateTime now = LocalDateTime.now(); // 로컬 시스템 시간
 				dto.setSche_update_date(now);
 			    result = scheduleService.updateTimeSchedule(dto);
-			}
-		}
+			//}
+		//}
 	    return result > 0 ? "success" : "fail";
 	}
 	
@@ -304,13 +304,13 @@ public class ScheduleController {
 	@ResponseBody
 	public String deleteSchedule(@RequestBody Map<String, Object> param) {	
 		int result = 0;
-		if(session.getAttribute("loginId") != null) {
+		//if(session.getAttribute("loginId") != null) {
 			int check_sche = scheduleService.checkSchedule((Integer)param.get("sche_idx"));
 
 			if(session.getAttribute("my_idx").equals(check_sche)) {
 				result = scheduleService.deleteSchedule((Integer)param.get("sche_idx"));
 			}
-		}
+		//}
 	    return result > 0 ? "success" : "fail";
 	}
 	

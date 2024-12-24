@@ -73,6 +73,9 @@ public interface MeetingDAO {
 	//회의 일정 시간변경
 	int dateUpdateMeeting(MeetingDTO dto);
 
+	//내 부서 정보
+	int myDept(String myId);
+
 
 
 
