@@ -21,7 +21,7 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_writing_select_form'">
                         <h1>문서 작성하기</h1>
                     </li>
                 </ul>

@@ -151,7 +151,7 @@
             </div>
         </div>
         <div class="tst_modal_footer">
-            <!-- 결재선 선택 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_primary">결재선 변경하기</button>
+            <!-- 결재선 선택 경로를 입력하세요 --><button onclick="location.href='/approval_writing_write'" class="btn_primary">결재선 변경하기</button>
             <button onclick="tst_modal_close('tst_modal_select')" class="btn_secondary">이전 화면으로 돌아가기</button>
         </div>
     </div>
@@ -198,7 +198,7 @@
             <div class="tst_modal_footer">
                 <div class="tst_flex">
                     <div class="tst_col6">
-                        <!-- 상신 경로를 입력하세요 --><button type="submit" onclick="location.href='/'" class="btn_primary btn_full">상신하기</button>
+                        <!-- 상신 경로를 입력하세요 --><button type="submit" onclick="location.href='/approval_sent_detail?appr_idx='" class="btn_primary btn_full">상신하기</button>
                     </div>
                     <div class="tst_col6">
                         <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_modal_select')">취소하기</button>
@@ -231,7 +231,7 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <!-- 삭제 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_primary btn_full">삭제하기</button>
+                    <!-- 삭제 경로를 입력하세요 --><button onclick="location.href='/approval_writing_list'" class="btn_primary btn_full">삭제하기</button>
                 </div>
                 <div class="tst_col6">
                     <button onclick="tst_modal_close('tst_modal_cancel')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>

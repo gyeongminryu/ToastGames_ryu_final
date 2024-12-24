@@ -64,6 +64,11 @@ public class FrontController {
         return new ModelAndView("approval_writing_list");
     }
 
+    @RequestMapping(value = "/approval_writing_select_form")
+    public ModelAndView front_approval_writing_select_form() {
+        return new ModelAndView("approval_writing_select_form");
+    }
+
     @RequestMapping(value = "/approval_writing_write")
     public ModelAndView front_approval_writing_write() {
         return new ModelAndView("approval_writing_write");

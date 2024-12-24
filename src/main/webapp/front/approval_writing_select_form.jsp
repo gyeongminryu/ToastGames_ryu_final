@@ -21,7 +21,7 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_writing_select_form'">
                         <h1>문서 양식 선택</h1>
                     </li>
                 </ul>
@@ -63,10 +63,10 @@
                             <!-- 양식 목록 -->
                             <tr>
                                 <td class="td_align_left">
-                                    <a href="/">{문서 양식명}</a>
+                                    <a href="/approval_writing_select_form?form_idx=">{문서 양식명}</a>
                                 </td>
                                 <td>
-                                    <button onclick="location.href=''" class="btn_subtle btn_min">선택하기</button>
+                                    <button onclick="location.href='/approval_writing_write?form_idx='" class="btn_subtle btn_min">선택하기</button>
                                 </td>
                             </tr>
                             <!-- //양식 목록 -->
@@ -107,7 +107,7 @@
                             <tfoot>
                             <tr>
                                 <td class="td_align_left">
-                                    <button onclick="location.href='/'" class="btn_primary">문서 양식 선택하기</button>
+                                    <button onclick="location.href='/approval_writing_write?form_idx='" class="btn_primary">문서 양식 선택하기</button>
                                 </td>
                             </tr>
                             </tfoot>

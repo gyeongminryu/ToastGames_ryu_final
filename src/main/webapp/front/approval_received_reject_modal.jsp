@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link rel="stylesheet" type="text/css" href="resources/css/module_modal.css" />
-<div class="tst_modal tst_modal_input tst_approval_reject_modal">
+<div class="tst_modal tst_modal_input tst_modal_reject">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">결재 반려 사유 입력하기</h1>
@@ -24,7 +24,11 @@
             <div class="tst_modal_footer">
                 <div class="tst_flex">
                     <div class="tst_col6">
-                        <input type="submit" value="반려하기" class="btn_primary btn_full" />
+                        <!-- 실제 작업시에는 아래 코드에서 주석을 제외하고 입력하세요 -->
+                        <!-- <input type="submit" value="반려하기" class="btn_primary btn_full" /> -->
+
+                        <!-- 실제 작업시에는 아래 코드를 삭제하세요 -->
+                        <input type="button" onclick="location.href='/approval_received_list'" value="반려하기" class="btn_primary btn_full" />
                     </div>
                     <div class="tst_col6">
                         <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_modal_reject')">취소하기</button>

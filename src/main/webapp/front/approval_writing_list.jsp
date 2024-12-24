@@ -25,13 +25,13 @@
                     <div class="tst_col9">
                         <!-- 제목 -->
                         <ul class="tst_title list_no_desc list_inline">
-                            <li class="tst_title_item" onclick="location.href='/'">
+                            <li class="tst_title_item" onclick="location.href='/approval_received_list'">
                                 <h1>내게 온 업무 요청</h1>
                             </li>
-                            <li class="tst_title_item" onclick="location.href='/'">
+                            <li class="tst_title_item" onclick="location.href='/approval_send_list'">
                                 <h1>내가 보낸 업무 요청</h1>
                             </li>
-                            <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                            <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_writing_list'">
                                 <h1>작성중인 문서</h1>
                             </li>
                         </ul>
@@ -101,15 +101,17 @@
 
                             <!-- 기본 -->
                             <tr>
-                                <td class="td_align_left td_no_padding">{직원명 (부서명/직급명)}</td>
+                                <td class="td_align_left td_no_padding">
+                                    <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
+                                </td>
                                 <td>{문서 유형}</td>
                                 <td class="td_align_left">
-                                    <a href="/" target="_blank">{제목}</a>
+                                    <span onclick="location.href='/approval_sent_detail?appr_idx='" class="tst_pointer">{제목}</span>
                                 </td>
                                 <td>{최초 작성 일시}</td>
                                 <td>{최종 수정 일시}</td>
                                 <td class="td_align_right td_no_padding">
-                                    <a href="/"><span class="tst_badge_min btn_subtle">삭제</span></a>
+                                    <a href=""><span class="tst_badge_min btn_subtle">삭제</span></a>
                                 </td>
                             </tr>
                             <!-- //기본 -->
@@ -117,18 +119,18 @@
                             <!-- 예시 -->
                             <tr>
                                 <td class="td_align_left td_no_padding">
-                                    김이름 (영업/대리)
+                                    <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
                                 </td>
                                 <td>
                                     출장 결과 보고서
                                 </td>
                                 <td class="td_align_left">
-                                    <a href="/" target="_blank">제목이 여기에 출력됩니다.</a>
+                                    <span onclick="location.href='/approval_sent_detail?appr_idx='" class="tst_pointer">제목이 여기에 출력됩니다.</span>
                                 </td>
                                 <td>2024-12-18 09:30</td>
                                 <td>2024-12-18 10:00</td>
                                 <td class="td_align_right td_no_padding">
-                                    <a href="/"><span class="tst_badge_min btn_subtle">삭제</span></a>
+                                    <a href=""><span class="tst_badge_min btn_subtle">삭제</span></a>
                                 </td>
                             </tr>
                             <!-- //예시 -->

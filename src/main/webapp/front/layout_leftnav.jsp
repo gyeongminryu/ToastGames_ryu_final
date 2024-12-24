@@ -8,8 +8,8 @@
                     <img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" alt="{직원명}의 프로필 사진" class="leftnav_profile_image" />
                 </div>
                 <div class="tst_col8 leftnav_profile_right">
-                    <h3 id="empl_name" class="empl_name">{직원명}</h3>
-                    <h4 class="font_subtle">(<span id="dept_name" class="dept_name">{부서}</span>/<span id="position_name" class="position_name">{직급}</span>)</h4>
+                    <h3>{직원명}</h3>
+                    <h4 class="font_subtle">({부서}/{직급})</h4>
                 </div>
             </div>
             <hr class="separator" />
@@ -35,7 +35,7 @@
 <%--                <li class="tst_pointer disp_hide">--%>
 <%--                    <i class="bi bi-menu-button-wide-fill"></i><h3>대시보드</h3>--%>
 <%--                </li>--%>
-                <li class="tst_pointer">
+                <li onclick="location.href='/approval_received_list'" class="tst_pointer">
                     <i class="bi bi-file-earmark-fill"></i><h3>전자결재 (워크플로우)</h3>
                 </li>
                 <li class="tst_pointer">

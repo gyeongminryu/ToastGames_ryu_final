@@ -23,13 +23,13 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_received_list'">
                         <h1>내게 온 업무 요청</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/'">
+                    <li class="tst_title_item" onclick="location.href='/approval_send_list'">
                         <h1>내가 보낸 업무 요청</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/'">
+                    <li class="tst_title_item" onclick="location.href='/approval_writing_list'">
                         <h1>작성중인 문서</h1>
                     </li>
                 </ul>
@@ -37,19 +37,19 @@
 
                 <!-- 게시물 분류 -->
                 <ul class="tst_tablist list_no_desc list_inline">
-                    <li class="tst_tablist_item tst_tablist_item_active" onclick="location.href='/'">
+                    <li class="tst_tablist_item tst_tablist_item_active" onclick="location.href=''">
                         <h3>전체 보기</h3>
                     </li>
-                    <li class="tst_tablist_item" onclick="location.href='/'">
+                    <li class="tst_tablist_item" onclick="location.href=''">
                         <h3>읽지 않음</h3>
                     </li>
-                    <li class="tst_tablist_item" onclick="location.href='/'">
+                    <li class="tst_tablist_item" onclick="location.href=''">
                         <h3>결재중</h3>
                     </li>
-                    <li class="tst_tablist_item" onclick="location.href='/'">
+                    <li class="tst_tablist_item" onclick="location.href=''">
                         <h3>결재 승인</h3>
                     </li>
-                    <li class="tst_tablist_item" onclick="location.href='/'">
+                    <li class="tst_tablist_item" onclick="location.href=''">
                         <h3>결재 반려</h3>
                     </li>
                     <li class="tst_tablist_item">
@@ -107,11 +107,13 @@
 
                     <!-- 기본 -->
                     <tr>
-                        <td class="td_align_left td_no_padding">{직원명 (부서명/직급명)}</td>
+                        <td class="td_align_left td_no_padding">
+                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
+                        </td>
                         <td>{문서 유형}</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_primary margin_right">{처리 현황}</span>
-                            <a href="/" target="_blank">{제목}</a>
+                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">{제목}</span>
                         </td>
                         <td><span class="tst_badge_min btn_primary">{결재 현황}</span></td>
                         <td>{수신 일시}</td>
@@ -122,11 +124,13 @@
 
                     <!-- 예시) 문서를 읽지 않았을 경우 -->
                     <tr>
-                        <td class="td_align_left td_no_padding">김이름 (영업/대리)</td>
+                        <td class="td_align_left td_no_padding">
+                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
+                        </td>
                         <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_primary margin_right">읽지 않음</span>
-                            <a href="/" target="_blank">제목이 여기에 출력됩니다.</a>
+                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">제목이 여기에 출력됩니다.</span>
                         </td>
                         <td><span class="tst_badge_min btn_secondary">결재 대기</span></td>
                         <td>2024-12-18 09:30</td>
@@ -137,11 +141,13 @@
 
                     <!-- 예시) 문서를 읽었으나 아직 결재를 마치지 않았을 경우 -->
                     <tr>
-                        <td class="td_align_left td_no_padding">김이름 (영업/대리)</td>
+                        <td class="td_align_left td_no_padding">
+                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
+                        </td>
                         <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_secondary margin_right">결재중</span>
-                            <a href="/" target="_blank">제목이 여기에 출력됩니다.</a>
+                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">제목이 여기에 출력됩니다.</span>
                         </td>
                         <td><span class="tst_badge_min btn_secondary">진행중</span></td>
                         <td>2024-12-18 09:30</td>
@@ -152,11 +158,13 @@
 
                     <!-- 예시) 문서 결재 이후 윗선으로 상신한 문서가 아직 결재되지 않았을 경우 -->
                     <tr>
-                        <td class="td_align_left td_no_padding">김이름 (영업/대리)</td>
+                        <td class="td_align_left td_no_padding">
+                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
+                        </td>
                         <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">승인</span>
-                            <a href="/" target="_blank">제목이 여기에 출력됩니다.</a>
+                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">제목이 여기에 출력됩니다.</span>
                         </td>
                         <td><span class="tst_badge_min btn_secondary">진행중</span></td>
                         <td>2024-12-18 09:30</td>
@@ -167,11 +175,13 @@
 
                     <!-- 예시) 상급자가 결재를 최종 승인하여 시스템이 자동으로 알림을 발송했을 경우 -->
                     <tr>
-                        <td class="td_align_left td_no_padding">김이름 (경영지원/대리)</td>
+                        <td class="td_align_left td_no_padding">
+                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
+                        </td>
                         <td>교육 참가 신청서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">승인</span>
-                            <a href="/" target="_blank"><span class="font_subtle">(시스템 자동 발송) 결재가 최종 승인되었습니다.</span></a>
+                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="font_subtle tst_pointer">(시스템 자동 발송) 결재가 최종 승인되었습니다.</span>
                         </td>
                         <td><span class="tst_badge_min btn_subtle">최종 승인</span></td>
                         <td>2024-12-18 09:30</td>
@@ -182,11 +192,13 @@
 
                     <!-- 예시) 상급자가 결재를 최종 반려하여 시스템이 자동으로 알림을 발송했을 경우 -->
                     <tr>
-                        <td class="td_align_left td_no_padding">김이름 (경영지원/대리)</td>
+                        <td class="td_align_left td_no_padding">
+                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
+                        </td>
                         <td>교육 참가 신청서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">승인</span>
-                            <a href="/" target="_blank"><span class="font_subtle">(시스템 자동 발송) 결재가 반려되었습니다.</span></a>
+                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="font_subtle tst_pointer">(시스템 자동 발송) 결재가 반려되었습니다.</span>
                         </td>
                         <td><span class="tst_badge_min btn_subtle">반려</span></td>
                         <td>2024-12-18 09:30</td>
@@ -197,11 +209,13 @@
 
                     <!-- 예시) 문서를 반려했을 경우 -->
                     <tr>
-                        <td class="td_align_left td_no_padding">김이름 (영업/대리)</td>
+                        <td class="td_align_left td_no_padding">
+                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
+                        </td>
                         <td>출장 결과 보고서</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_subtle margin_right">반려</span>
-                            <a href="/" target="_blank">제목이 여기에 출력됩니다.</a>
+                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">제목이 여기에 출력됩니다.</span>
                         </td>
                         <td><span class="tst_badge_min btn_subtle">반려</span></td>
                         <td>2024-12-18 09:30</td>

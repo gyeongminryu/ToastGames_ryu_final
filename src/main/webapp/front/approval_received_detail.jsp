@@ -21,13 +21,13 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_received_list'">
                         <h1>내게 온 업무 요청</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/'">
+                    <li class="tst_title_item" onclick="location.href='/approval_send_list'">
                         <h1>내가 보낸 업무 요청</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/'">
+                    <li class="tst_title_item" onclick="location.href='/approval_writing_list'">
                         <h1>작성중인 문서</h1>
                     </li>
                 </ul>
@@ -57,7 +57,7 @@
                             </tr>
                             <tr>
                                 <th>상신자</th>
-                                <td>{사원명 (부서/직급)}</td>
+                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
                             </tr>
                             <tr>
                                 <th>마감일</th>
@@ -74,21 +74,21 @@
                                         <li>
                                             <i class="bi bi-paperclip"></i>
                                             <span>{첨부파일_1 (용량)}</span>
-                                            <a href="/" target="_blank">
+                                            <a href="" target="_blank">
                                                 <span class="tst_badge_min btn_secondary margin_right">다운로드</span>
                                             </a>
                                         </li>
                                         <li>
                                             <i class="bi bi-paperclip"></i>
                                             <span>{첨부파일_2 (000.0kb)}</span>
-                                            <a href="/" target="_blank">
+                                            <a href="" target="_blank">
                                                 <span class="tst_badge_min btn_secondary margin_right">다운로드</span>
                                             </a>
                                         </li>
                                         <li>
                                             <i class="bi bi-paperclip"></i>
                                             <span>{첨부파일_3 (000.0kb)}</span>
-                                            <a href="/" target="_blank">
+                                            <a href="" target="_blank">
                                                 <span class="tst_badge_min btn_secondary margin_right">다운로드</span>
                                             </a>
                                         </li>
@@ -97,7 +97,7 @@
                             </tr>
                             <tr>
                                 <th>문서</th>
-                                <td>{문서}</td>
+                                <td id="doc_content" class="doc_content">{문서}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -131,7 +131,7 @@
                             </tr>
                             <tr>
                                 <th>작성자</th>
-                                <td>{사원명 (부서/직급)}</td>
+                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
                             </tr>
                             </tbody>
                         </table>
@@ -162,7 +162,7 @@
                                 <td class="approval_line_info">
                                     <h4 class="font_subtle approval_datetime_subtle">{상신일시}</h4>
                                     <h4>작성자</h4>
-                                    <p>{직원명 (부서/직급)}</p>
+                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
                                 </td>
                             </tr>
                             <!-- //작성자 -->
@@ -175,7 +175,7 @@
                                 <td class="approval_line_info">
                                     <h4 class="font_subtle approval_datetime_subtle">{결재/반려일시}</h4>
                                     <h4>1차 결재자</h4>
-                                    <p>{직원명 (부서/직급)}</p>
+                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
                                     <p><span class="tst_badge_min btn_subtle approval_result_badge">결재 승인</span></p>
                                 </td>
                             </tr>
@@ -189,7 +189,7 @@
                                 <td class="approval_line_info">
                                     <h4 class="font_subtle approval_datetime_subtle">{결재/반려일시}</h4>
                                     <h4>2차 결재자</h4>
-                                    <p>{직원명 (부서/직급)}</p>
+                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
                                     <p><span class="tst_badge_min btn_caution approval_result_badge">반려</span></p>
                                     <p class="font_caution approval_reject_reason">{반려 사유}</p>
                                 </td>
@@ -204,7 +204,7 @@
                                 <td class="approval_line_info">
                                     <h4 class="font_subtle approval_datetime_subtle">{결재/반려일시}</h4>
                                     <h4>최종 결재자</h4>
-                                    <p>{직원명 (부서/직급)}</p>
+                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
                                     <p><span class="tst_badge_min btn_secondary approval_result_badge">결재 대기중</span></p>
                                 </td>
                             </tr>
@@ -218,7 +218,7 @@
                                 <td class="approval_line_info">
                                     <h4 class="font_subtle approval_datetime_subtle">{결재/반려일시}</h4>
                                     <h4>최종 결재자</h4>
-                                    <p>{직원명 (부서/직급)}</p>
+                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
                                     <p><span class="tst_badge_min btn_disable approval_result_badge">결재 불가</span></p>
                                 </td>
                             </tr>
@@ -246,11 +246,11 @@
                             <tbody>
                             <tr>
                                 <th>참조인 1</th>
-                                <td>{직원명 (부서/직급)}</td>
+                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
                             </tr>
                             <tr>
                                 <th>참조인 2</th>
-                                <td>{직원명 (부서/직급)}</td>
+                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
                             </tr>
                             </tbody>
                         </table>
@@ -259,7 +259,7 @@
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
                             <li>
-                                <button class="btn_primary btn_full" onclick="location.href='/'">결재하기</button>
+                                <button class="btn_primary btn_full" onclick="location.href='/approval_received_list'">결재하기</button>
                             </li>
                             <li>
                                 <button class="btn_secondary btn_full" onclick="tst_modal_call('tst_modal_reject')">반려하기</button>
