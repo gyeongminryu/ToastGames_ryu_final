@@ -1,15 +1,15 @@
 package com.toast.schedule.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ScheduleDTO {
 
-	
-	//일정관리
+	//일정
 	private int sche_idx;
 	private String sche_title;
 	private String sche_content;
-	private int sche_type;
+	private int sche_type;  //1:개인 2:부서 3:팀
 	private LocalDateTime sche_start_date;
 	private LocalDateTime sche_end_date;
 	private int sche_allday;
@@ -17,62 +17,77 @@ public class ScheduleDTO {
 	private LocalDateTime sche_write_date;
 	private LocalDateTime sche_update_date;
 	
+	//참여자
 	private int sche_parti_empl_idx;
+	private List<Integer> sche_parti_empl_idxs;
 	
 	
-	//공용 물품 일정 관리
-	private int prod_rent_idx;
-	private int prod_idx;
-	private int prod_rent_empl_idx;
-	private String prod_rent_reason;
-	private LocalDateTime prod_rent_date;
-	private LocalDateTime prod_exp_date;
-	private LocalDateTime prod_return_date;
+	//공용 물품 일정
+	private int appo_empl_idx;
+	private int dept_idx;
+	private int position_idx;
+	private int duty_idx;
+	private String position_name;
+	private String duty_name;
+	private String dept_name;
+	private String empl_name;
 	
 	
 	
+	public List<Integer> getSche_parti_empl_idxs() {
+		return sche_parti_empl_idxs;
+	}
+	public void setSche_parti_empl_idxs(List<Integer> sche_parti_empl_idxs) {
+		this.sche_parti_empl_idxs = sche_parti_empl_idxs;
+	}
 	
-	public int getProd_rent_idx() {
-		return prod_rent_idx;
+	public String getEmpl_name() {
+		return empl_name;
 	}
-	public void setProd_rent_idx(int prod_rent_idx) {
-		this.prod_rent_idx = prod_rent_idx;
+	public void setEmpl_name(String empl_name) {
+		this.empl_name = empl_name;
 	}
-	public int getProd_idx() {
-		return prod_idx;
+	public int getAppo_empl_idx() {
+		return appo_empl_idx;
 	}
-	public void setProd_idx(int prod_idx) {
-		this.prod_idx = prod_idx;
+	public void setAppo_empl_idx(int appo_empl_idx) {
+		this.appo_empl_idx = appo_empl_idx;
 	}
-	public int getProd_rent_empl_idx() {
-		return prod_rent_empl_idx;
+	public int getDept_idx() {
+		return dept_idx;
 	}
-	public void setProd_rent_empl_idx(int prod_rent_empl_idx) {
-		this.prod_rent_empl_idx = prod_rent_empl_idx;
+	public void setDept_idx(int dept_idx) {
+		this.dept_idx = dept_idx;
 	}
-	public String getProd_rent_reason() {
-		return prod_rent_reason;
+	public int getPosition_idx() {
+		return position_idx;
 	}
-	public void setProd_rent_reason(String prod_rent_reason) {
-		this.prod_rent_reason = prod_rent_reason;
+	public void setPosition_idx(int position_idx) {
+		this.position_idx = position_idx;
 	}
-	public LocalDateTime getProd_rent_date() {
-		return prod_rent_date;
+	public int getDuty_idx() {
+		return duty_idx;
 	}
-	public void setProd_rent_date(LocalDateTime prod_rent_date) {
-		this.prod_rent_date = prod_rent_date;
+	public void setDuty_idx(int duty_idx) {
+		this.duty_idx = duty_idx;
 	}
-	public LocalDateTime getProd_exp_date() {
-		return prod_exp_date;
+	public String getPosition_name() {
+		return position_name;
 	}
-	public void setProd_exp_date(LocalDateTime prod_exp_date) {
-		this.prod_exp_date = prod_exp_date;
+	public void setPosition_name(String position_ame) {
+		this.position_name = position_ame;
 	}
-	public LocalDateTime getProd_return_date() {
-		return prod_return_date;
+	public String getDuty_name() {
+		return duty_name;
 	}
-	public void setProd_return_date(LocalDateTime prod_return_date) {
-		this.prod_return_date = prod_return_date;
+	public void setDuty_name(String duty_name) {
+		this.duty_name = duty_name;
+	}
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
 	public int getSche_parti_empl_idx() {
 		return sche_parti_empl_idx;

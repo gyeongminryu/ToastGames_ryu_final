@@ -1,4 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toast.schedule.dao.ScheduleDAO"></mapper>
+<mapper namespace="com.toast.schedule.dao.ScheduleDAO">
+
+	<!-- 참여자 가져오기직급 부서 직책 팀 가져와야함 -->
+	<select id="getScheduleParti" resultType="map">
+	    SELECT 
+	        pos.position_name,
+	        dt.duty_name,
+	        dp.dept_name,
+	        empl.empl_name,
+	        empl.empl_idx
+	    FROM 
+	        appointment AS ap
+	    JOIN 
+	        department AS dp ON ap.dept_idx = dp.dept_idx
+	    JOIN 
+	        position_ AS pos ON ap.position_idx = pos.position_idx
+	    JOIN 
+	        duty AS dt ON ap.duty_idx = dt.duty_idx
+	    JOIN 
+	        employee AS empl ON ap.appo_empl_idx = empl.empl_idx
+	    WHERE 
+	        ap.appo_idx = empl.appolast_idx	
+	    GROUP BY empl.empl_idx  
+	</select>
+
+
+	<!-- 내가 참여자인지 확인 -->
+	<select id="isParti">
+		SELECT COUNT(sche_idx) FROM schedule_participant WHERE sche_parti_empl_idx=#{param1}
+	</select>
+	
+	
+	<!-- 일정추가 -->
+    <insert id="scheduleAdd" 
+    	useGeneratedKeys="true"
+    	keyColumn="sche_idx"
+    	keyProperty="sche_idx"
+    	parameterType="com.toast.schedule.dto.ScheduleDTO">
+    	INSERT INTO schedule(sche_title, sche_content, sche_type, sche_start_date, sche_end_date, sche_empl_idx, sche_allday)
+    		VALUES(#{sche_title},#{sche_content}, #{sche_type}, #{sche_start_date},#{sche_end_date},#{sche_empl_idx},#{sche_allday})
+    </insert>
+    
+    <!-- 일정 참여자 추가 -->
+    <insert id="scheduleParti">
+    	INSERT INTO schedule_participant(sche_idx, sche_parti_empl_idx)
+    		VALUES(#{sche_idx},#{sche_parti_empl_idx})
+    </insert>
+    
+	<!-- 카테고리별 일정보기 --> 
+	<select id="getSchedules" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			sche_idx, 
+			sche_title, 
+			sche_content, 
+			sche_type, 
+			sche_start_date, 
+			sche_end_date,
+			sche_allday,
+			sche_empl_idx
+		FROM 
+			schedule
+		WHERE 
+			sche_empl_idx = #{sche_empl_idx} AND sche_type = #{sche_type}
+		GROUP BY 
+    		sche_idx, sche_type, sche_empl_idx;
+	</select>
+
+	<!-- 나와 관련된 모든 일정 가져오기 -->
+	<select id="getAllSchedule" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			sd.sche_idx, 
+			sd.sche_title, 
+			sd.sche_content, 
+			sd.sche_type, 
+			sd.sche_start_date, 
+			sd.sche_end_date, 
+			sd.sche_allday, 
+			sd.sche_empl_idx,
+			sp.sche_parti_empl_idx
+		FROM 
+			schedule sd
+		LEFT JOIN 
+		    schedule_participant sp
+		ON 
+		    sd.sche_idx = sp.sche_idx
+		WHERE 
+		    (
+		        (sd.sche_empl_idx = #{sche_empl_idx} AND sd.sche_type = #{sche_type})
+		    )
+		    OR 
+		    (
+		        (sp.sche_parti_empl_idx = #{sche_parti_empl_idx} AND sd.sche_type = #{sche_type})
+		    )
+		GROUP BY 
+    		sche_idx, sche_type, sche_empl_idx;
+
+	</select>
+	
+	<!-- 일정별 참여자 가져오기 -->
+	<select id="getAllParti">
+		SELECT sche_parti_empl_idx FROM schedule_participant 
+			WHERE sche_idx=#{sche_idx}
+	</select>
+	
+	
+	<!-- 일정 수정 -->
+	<update id="scheduleUpdate" parameterType="com.toast.schedule.dto.ScheduleDTO">
+	    UPDATE schedule
+	    SET 
+	        sche_title = #{sche_title}, 
+	        sche_content = #{sche_content}, 
+	        sche_start_date = #{sche_start_date}, 
+	        sche_end_date = #{sche_end_date},
+	        sche_update_date = #{sche_update_date},
+	        sche_type=#{sche_type},
+	        sche_allday=#{sche_allday}
+	    WHERE sche_idx=#{sche_idx}
+	</update>
+	
+	<!-- 일정 drop, resize수정 -->
+	<update id="updateTimeSchedule">
+		UPDATE schedule
+		SET
+			sche_start_date = #{sche_start_date}, 
+	        sche_end_date = #{sche_end_date},
+	        sche_update_date = #{sche_update_date},
+	        sche_allday=#{sche_allday}
+	    WHERE sche_idx=#{sche_idx}
+	</update>
+
+    <!-- 일정 삭제 -->
+	<delete id="deleteSchedule">
+		DELETE FROM schedule
+			WHERE sche_idx=#{param1}
+	</delete>
+	
+	<!-- 일정 참여자 삭제 -->
+	<delete id="schedulePartiDelete">
+		DELETE FROM schedule_participant
+			WHERE sche_idx=#{param1}
+	</delete>
+
+</mapper>
