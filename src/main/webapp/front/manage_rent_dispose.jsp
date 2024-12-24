@@ -75,21 +75,6 @@
                                     </td>
                                 </tr>
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th class="td_align_top"></th>
-                                    <td class="td_align_left">
-                                        <ul class="list_no_desc list_inline">
-                                            <li>
-                                                <button type="button" onclick="tst_modal_call('tst_modal_dispose')" class="btn_primary">물품 등록하기</button>
-                                            </li>
-                                            <li>
-                                                <button type="button" onclick="location.href='/'" class="btn_secondary">목록으로 돌아가기</button>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                         <!-- //폐기 정보 -->
@@ -132,7 +117,27 @@
                                     <th>사용연한</th>
                                     <td id="prod_dispo_date" class="prod_dispo_date">{사용연한|yyyy-MM-dd}</td>
                                 </tr>
+
+                                <!-- 아직 사용 연한이 지나지 않았다면 아래 요소에 클래스 disp_hide를 추가해 주세요 -->
+                                <tr>
+                                    <th colspan="2" class="td_bg_subtle td_align_center">아직 사용 연한이 지나지 않은 물품입니다.</th>
+                                </tr>
+                                <!-- //아직 사용 연한이 지나지 않았다면 위 요소에 클래스 disp_hide를 추가해 주세요 -->
+
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <hr class="separator" />
+                                        <button type="button" onclick="tst_modal_call('tst_modal_dispose')" class="btn_primary btn_full">물품 등록하기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <button type="button" onclick="location.href='/'" class="btn_secondary btn_full">목록으로 돌아가기</button>
+                                    </td>
+                                </tr>
+                                </tfoot>
                             </table>
                             <!-- //믈픔 정보 -->
 
@@ -147,4 +152,5 @@
 <c:import url="manage_rent_dispose_modal.jsp" />
 
 <script src="resources/js/common.js"></script>
+<script src="resources/js/manage_rent_disuse.js"></script>
 </html>
