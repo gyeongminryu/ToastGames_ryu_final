@@ -1,7 +1,7 @@
 
 
 //회의실 등록링크 관리자 부서 확인
-document.addEventListener("DOMContentLoaded", function() {
+/*document.addEventListener("DOMContentLoaded", function() {
 	const empl_depart_idx = "${my_dept_idx}";
 	const room_depart_idx = "108"; // 부서 번호가 108일 때만 보여줌
 	const meetingRoomLink = document.getElementById("meetingRoomLink");
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	if (empl_depart_idx !== room_depart_idx) {
 		meetingRoomLink.style.display = "none"; // 링크를 숨김
 	}
-});
+});*/
 
 
 
@@ -64,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	calendar = new FullCalendar.Calendar(calendarEl, {
 		timeZone: 'local',
 		initialView: 'timeGridFiveDay',
-        slotDuration: '00:15:00',   // 시간 슬롯을 15분 단위로 설정
-        slotLabelInterval: '00:15:00', // 라벨도 15분 간격으로 설정
+        slotDuration: '00:30:00',   // 시간 슬롯을 15분 단위로 설정
+        slotLabelInterval: '00:30:00', // 라벨도 15분 간격으로 설정
         slotMinTime: '09:00:00',    // 시작 시간
         slotMaxTime: '18:00:00',    // 끝 시간
         nowIndicator: true,

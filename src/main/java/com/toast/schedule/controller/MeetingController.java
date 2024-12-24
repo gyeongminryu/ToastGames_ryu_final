@@ -72,11 +72,12 @@ public class MeetingController {
 		List<Map<String, Object>> partiList = meetingService.meetingParti();
 		mv.addObject("partiList", partiList);
 		//내 정보
-		String myId= (String) session.getAttribute("loginId");
-		MeetingDTO my_info = meetingService.myInfo(myId);
-		int my_empl_idx = my_info.getEmpl_idx();
-		session.setAttribute("my_idx", my_empl_idx);
-		mv.addObject("my_empl_idx", my_empl_idx);
+		//String myId= "peterrabbit165";
+		//String myId= (String) session.getAttribute("loginId");
+		//MeetingDTO my_info = meetingService.myInfo(myId);
+		//int my_empl_idx = my_info.getEmpl_idx();
+		//session.setAttribute("my_idx", my_empl_idx);
+		//mv.addObject("my_empl_idx", my_empl_idx);
 		mv.setViewName("meeting");
 		return mv;
 	}
@@ -85,10 +86,13 @@ public class MeetingController {
 	@RequestMapping(value="/meetingRoomAdd.go")
 	public ModelAndView meetingAddGo () {
 		ModelAndView mv = new ModelAndView();
-		String myId= (String) session.getAttribute("loginId");
+		//String myId= "peterrabbit165";
+		//String myId= (String) session.getAttribute("loginId");
+		//logger.info(myId);
 		//부서번호 가져오기
-		int my_dept_idx = meetingService.myDept(myId);
-		mv.addObject("my_dept_idx", my_dept_idx);
+		//int my_dept_idx = meetingService.myDept(myId);
+		//logger.info("my_dept_idx"+my_dept_idx);
+		//mv.addObject("my_dept_idx", my_dept_idx);
 		mv.setViewName("meeting_room_add");
 		return mv;
 	}

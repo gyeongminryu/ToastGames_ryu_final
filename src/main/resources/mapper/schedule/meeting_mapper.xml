@@ -21,7 +21,7 @@
 		JOIN 
 			employee AS empl ON ap.appo_idx = empl.appolast_idx
 		WHERE 
-			empl.appolast_idx = #{param1}
+			empl.empl_id = #{param1}
 	</select>
 	
 	

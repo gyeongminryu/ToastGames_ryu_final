@@ -62,16 +62,16 @@ public class ScheduleController {
 	@RequestMapping(value="/schedule.go")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
-		String myId= (String) session.getAttribute("loginId");
+		//String myId= (String) session.getAttribute("loginId");
 		//if(myId != null) { //null이 아니면 로그인 한 것
 			//참여자 정보
 			List<Map<String, Object>> partiList = scheduleService.getScheduleParti();
 			mv.addObject("partiList", partiList);
 			//내 정보
-			ScheduleDTO my_info = scheduleService.myInfo(myId);
-			int my_empl_idx = my_info.getEmpl_idx();
-			session.setAttribute("my_idx", my_empl_idx);
-			mv.addObject("my_empl_idx", my_empl_idx);
+			//ScheduleDTO my_info = scheduleService.myInfo(myId);
+			//int my_empl_idx = my_info.getEmpl_idx();
+			//session.setAttribute("my_idx", my_empl_idx);
+			//mv.addObject("my_empl_idx", my_empl_idx);
 			mv.setViewName("calendar_month");
 		//}
 		return mv;
@@ -144,7 +144,9 @@ public class ScheduleController {
 	public List<Map<String, Object>> getSchedule(@RequestBody Map<String, Object> param){
 		
 		ScheduleDTO dto = new ScheduleDTO();
-		int my_idx = (Integer)session.getAttribute("my_idx");
+		
+		int my_idx = 10003;
+		//int my_idx = (Integer)session.getAttribute("my_idx");
 		List<Map<String, Object>> schedules = new ArrayList<Map<String,Object>>();
 		//if(session.getAttribute("loginId") != null) {
 			dto.setSche_empl_idx(my_idx);  //현재 로그인한 사원 번호

@@ -1,6 +1,6 @@
     
     //회의실 등록 부서 확인
-    const empl_depart_idx = "${my_dept_idx}";
+    /*const empl_depart_idx = "${my_dept_idx}";
     const room_depart_idx = "108";
     
     document.addEventListener("DOMContentLoaded", function() {
@@ -14,7 +14,7 @@
         	confirmButton.style.display = "none";
         	deleteButton.style.display = "none";
     	}
-	});
+	});*/
     
 
     
