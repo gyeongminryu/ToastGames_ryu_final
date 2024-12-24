@@ -165,11 +165,18 @@ public class EmployeeService {
 			// department 테이블에 부서장 업데이트
 			employeeDAO.deptHeadAdd(dept_idx,empl_idx);
 					
-		} // public void employeeAppoDo(String empl_idx, String dept_idx, String position_idx, String duty_idx,String movein_date)
+		} 
+		else {
+
+			// 부서장인데 다른 부로 발령한다면? >> dept 테이블에서 empl_idx 조회 만약 있다면 부서장이다 
+			if(employeeDAO.deptheadcheck(empl_idx)>0) {
+				// 이전 부서의 head_idx를 null로 바꿈
+				employeeDAO.deptheadmoveout(empl_idx);
+			}
+		}
 		
 		
-		
-	}
+	}// public void employeeAppoDo(String empl_idx, String dept_idx, String position_idx, String duty_idx,String movein_date)
 	
 	// 직원 퇴사, 근무, 휴직 처리
 	public void employeeChangeDo(String empl_idx, String statement_idx) {

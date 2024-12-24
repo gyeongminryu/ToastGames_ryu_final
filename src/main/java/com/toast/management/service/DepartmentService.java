@@ -176,7 +176,17 @@ public class DepartmentService {
 
 	public List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx) {
 		
-		return departmentDAO.searchDeptMember(emplName,cmpEmail,dept_idx);
+		List<DeptDetailMemberDTO> dept_search_list = new ArrayList();
+		
+		if(emplName != null && !emplName.isEmpty()) { 
+			dept_search_list = departmentDAO.deptmemsearchname(emplName,dept_idx);
+		}
+		
+		else if(cmpEmail != null&& !cmpEmail.isEmpty()) {
+			dept_search_list = departmentDAO.deptmemsearchemail(cmpEmail,dept_idx);
+		}
+		
+		return  dept_search_list;
 	}
 
 }
