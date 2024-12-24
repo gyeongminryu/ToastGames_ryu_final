@@ -147,5 +147,4 @@
 <c:import url="manage_rent_dispose_modal.jsp" />
 
 <script src="resources/js/common.js"></script>
-<script src="resources/js/manage_rent_disuse.js"></script>
 </html>
