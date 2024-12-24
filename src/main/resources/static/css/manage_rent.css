@@ -12,3 +12,7 @@
     height: var(--tst-imgpreview-height);
     margin-bottom: var(--tst-margin-vertical);
 }
+
+.tst_badge_min.wide{
+    width: 65px;
+}

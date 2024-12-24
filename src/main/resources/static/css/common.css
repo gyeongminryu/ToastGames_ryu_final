@@ -129,7 +129,6 @@ p.min{
 }
 
 .tst_badge_min{
-    width: fit-content;
     min-width: 60px;
     padding: 2px 4px 3px;
     display: inline-block;
