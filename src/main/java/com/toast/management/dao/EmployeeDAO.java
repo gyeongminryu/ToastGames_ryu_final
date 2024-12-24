@@ -39,7 +39,11 @@ public interface EmployeeDAO {
 
 	List<FileDTO> getemplUploadedFiles(String file_key);
 
-	int emplStampUpload(String empl_idx, String newFileName);
+	int emplStampUpload(String newFileName,String empl_idx);
+
+	int emplFileDel(String new_filename);
+
+	int employeeDutyUpdate(String empl_idx, String empl_duty);
 
 	
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,7 +55,7 @@ public class EmployeeController {
 	
 	}
 	
-	@GetMapping(value="/employeeAdd.go")
+	@GetMapping(value="/employee_add.go")
 	public String employeeAddGo(Model model) {
 		
 		//	employeeService.getbankname();
@@ -63,7 +65,7 @@ public class EmployeeController {
 		return "employee_add";
 	}
 	
-	@PostMapping(value="/employeeAdd.do")
+	@PostMapping(value="/employee_add.do")
 	public String employeeAddDo(@RequestParam Map<String,String> param) {
 		
 		employeeService.employeeAdd(param);
@@ -71,7 +73,7 @@ public class EmployeeController {
 		return "";
 	}
 	
-	@GetMapping(value="/employeeDetail.go")
+	@GetMapping(value="/employee_detail.go")
 	public String employeeDetailGo(@RequestParam String empl_idx,Model model) {
 		
 		//	employeeService.getbankname();
@@ -83,14 +85,16 @@ public class EmployeeController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "/emplfileUpload.do")
-	public ResponseEntity<List<FileDTO>> fileUpload(@RequestParam(value ="file", required = false) MultipartFile[] files,@RequestParam String empl_idx ,Model model) {
+	@PostMapping(value = "/empl_file_upload.do")
+	public ResponseEntity<List<FileDTO>> fileUpload(@RequestParam(value ="files", required = false) MultipartFile[] files,@RequestParam String empl_idx ,Model model,HttpServletResponse response) {
 	
 		try {
 			// 파일 업로드 실행
-			employeeService.emplfileUpload(empl_idx, files);
+			employeeService.emplfileUpload(files,empl_idx);
 	        List<FileDTO> fileList = employeeService.getemplUploadedFiles(empl_idx);  // 업로드된 파일 리스트
-			return ResponseEntity.ok(fileList);
+	        response.sendRedirect("./employeeDetail.go?empl_idx=" + empl_idx); // 상대경로 설정
+	      //  return ResponseEntity.ok(fileList);
+	        return null;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -99,39 +103,29 @@ public class EmployeeController {
 	}
 	
 	
-	@PostMapping(value = "/emplStampUpload.do")
+	@PostMapping(value = "/empl_stamp_upload.do")
 	public String emplStampUpload(@RequestParam(value ="singleFile", required = false) MultipartFile singleFile ,@RequestParam String empl_idx ,Model model) {
 		
+		logger.info("직인 업로드 직원 idx : "+empl_idx);
+		
+		// 안쓰는 쿼리
 		EmployeeDTO emplinfo = employeeDAO.employeeDetail(empl_idx);
 		String empl_stamp =	emplinfo.getEmpl_stamp();
 		
-		
 	    try {
-	        // 파일이 업로드되었는지 확인
-	        if (singleFile != null && !singleFile.isEmpty()) {
-	            String uploadedFilename = singleFile.getOriginalFilename(); // 업로드된 파일 이름
-
-	            // DB에 저장된 파일 이름과 비교
-	            if (empl_stamp == null || !empl_stamp.equals(uploadedFilename)) {
-	                
-	                // 파일 업로드 처리 (직인 파일 업로드)
-	                employeeService.emplStampUpload(empl_idx, singleFile);
-
-	                // 업로드가 완료되면 새로운 파일 이름을 반환
-	                
-	            } 
-	        } 
+	                employeeService.emplStampUpload(singleFile,empl_idx);
+	       
 	    } catch (Exception e) {
 	        // 다른 예외 발생 시
 	        e.printStackTrace();
 	        
 	    }
-	    return "redirect:/employeeDetail.go"+empl_idx;
+	    return "redirect:/employee_detail.go?empl_idx="+empl_idx;
 	}
 	
 	// 사원 인사발령
-	@PostMapping(value="/employeeAppo.do")
-	public String employeeAppoDo(@RequestParam String empl_idx,String dept_idx,String position_idx,String duty_idx,String movein_date) {
+	@PostMapping(value="/employee_appo.do")
+	public String employeeAppoDo(@RequestParam String empl_idx,String dept_idx,String position_idx,String duty_idx,String movein_date,String empl_duty) {
 		
 		logger.info(empl_idx);
 		logger.info(dept_idx);
@@ -140,13 +134,13 @@ public class EmployeeController {
 		logger.info(movein_date);
 		
 		// 처리한사원번호 >> 세션추가하고 세션아이디넣기 > 세션아이디로 사원번호 가져오기
-		employeeService.employeeAppoDo(empl_idx,dept_idx,position_idx,duty_idx,movein_date);
+		employeeService.employeeAppoDo(empl_idx,dept_idx,position_idx,duty_idx,movein_date,empl_duty);
 		
-		return "redirect:/employee_detail";
+		return "redirect:/employee_detail?empl_idx="+empl_idx;
 	}
 	
 	// 사원 근무상태 변경
-	@PostMapping(value="/employeeChange.do")
+	@PostMapping(value="/employee_change.do")
 	public String employeeChangeDo(@RequestParam String empl_idx,String statement_idx) {
 		
 		logger.info(empl_idx);
@@ -156,7 +150,19 @@ public class EmployeeController {
 		
 		employeeService.employeeChangeDo(empl_idx,statement_idx);
 		
-		return "redirect:/employee_detail";
+		return "redirect:/employee_detail?empl_idx="+empl_idx;
 	}
+	
+	// 파일 삭제
+	@GetMapping(value="/empl_file_del.do/{new_filename}/{empl_idx}")
+	public String emplFileDel(@PathVariable String new_filename,@PathVariable String empl_idx) {
+		String page = "";
+		if(employeeService.emplFileDel(new_filename)) { // 파일 삭제 성공하면
+			page = "redirect:/employee_detail.go?empl_idx="+empl_idx;
+		}
+		
+		return page;
+	}
+	
 	
 }

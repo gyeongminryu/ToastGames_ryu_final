@@ -40,7 +40,10 @@ public interface DepartmentDAO {
 
 	List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx);
 
-	
+	List<DeptDetailMemberDTO> deptmemsearchname(String emplName, String dept_idx);
+
+	List<DeptDetailMemberDTO> deptmemsearchemail(String cmpEmail, String dept_idx);
+
 
 	 
 

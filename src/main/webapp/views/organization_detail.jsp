@@ -55,7 +55,7 @@
              <td>${deptinfo.dept_duty}</td>
              <td>${highdeptinfo.dept_name}</td>
              <td>${deptinfo.dept_addr}</td>
-             <td>조직원수</td>
+             <td>${deptcnt}</td>
              <td>${deptfirstdate.dept_change_date}</td>
              </tr>
              
@@ -64,16 +64,29 @@
 		 </table>
 		
 		 <form id="searchForm">
-		 <input type="hidden" id="dept_idx" name="dept_idx" value="${dept.dept_idx}"/>
-	        <label for="emplName">사원명:</label>
-	        <input type="text" id="emplName" name="emplName" placeholder="사원명을 입력하세요">
-	        
-	        <label for="cmpEmail">회사 이메일:</label>
-	        <input type="text" id="cmpEmail" name="cmpEmail" placeholder="이메일을 입력하세요">
-	        
-	        <button type="submit">검색</button>
-	    </form>
+		    <input type="hidden" id="dept_idx" name="dept_idx" value="${deptinfo.dept_idx}"/>
 		
+		    <label>검색 옵션:</label>
+		    <label>
+		        <input type="radio" name="searchOption" value="emplName"> 사원명
+		    </label>
+		    <label>
+		        <input type="radio" name="searchOption" value="cmpEmail"> 회사 이메일
+		    </label>
+		
+		    <div id="emplNameContainer" style="display: none;">
+		        <label for="emplName">사원명:</label>
+		        <input type="text" id="emplName" name="emplName" placeholder="사원명을 입력하세요">
+		    </div>
+		
+		    <div id="cmpEmailContainer" style="display: none;">
+		        <label for="cmpEmail">회사 이메일:</label>
+		        <input type="text" id="cmpEmail" name="cmpEmail" placeholder="이메일을 입력하세요">
+		    </div>
+		
+		    <button type="submit">검색</button>
+		</form>
+				
 
 
         <h2>사원 목록</h2>
@@ -108,6 +121,23 @@
 
     <script>
     $(document).ready(function() {
+    	 const emplNameContainer = $('#emplNameContainer');
+         const cmpEmailContainer = $('#cmpEmailContainer');
+         const searchOptions = $('input[name="searchOption"]');
+
+         // 라디오 버튼 변경 시 입력 필드 토글
+         searchOptions.on('change', function() {
+             if ($(this).val() === 'emplName') {
+                 emplNameContainer.show();
+                 cmpEmailContainer.hide();
+                 $('#cmpEmail').val(''); // 다른 필드를 초기화
+             } else if ($(this).val() === 'cmpEmail') {
+                 emplNameContainer.hide();
+                 cmpEmailContainer.show();
+                 $('#emplName').val(''); // 다른 필드를 초기화
+             }
+         });
+         
         // 폼 제출 시 AJAX 요청
         $('#searchForm').on('submit', function(event) {
             event.preventDefault();  // 폼 기본 동작 방지
@@ -118,7 +148,7 @@
 
             // AJAX 요청
             $.ajax({
-                url: '/searchDeptMember.ajax',  // 서버의 검색 엔드포인트
+                url: './search_dept_member.ajax',  // 서버의 검색 엔드포인트 경로
                 method: 'GET',
                 data: {
                     emplName: emplName,
@@ -126,6 +156,7 @@
                     dept_idx: dept_idx
                 },
                 success: function(response) {
+                	 console.log(response);
                 	console.log(response.searchmember);
                     // 응답 받은 데이터를 테이블에 채우기
                     var tableBody = $('#employeeTable tbody');

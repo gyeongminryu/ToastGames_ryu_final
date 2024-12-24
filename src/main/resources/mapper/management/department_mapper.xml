@@ -159,5 +159,47 @@ SELECT
       );
 </select>
 
+<select id="deptmemsearchname" resultType="com.toast.management.dto.DeptDetailMemberDTO">
+ 	SELECT 
+        e.empl_name,
+        d.duty_name,
+        e.empl_job,
+        p.position_name,
+        e.empl_cmp_email,
+        a.movein_date,
+        s.statement_name
+    FROM employee e
+    JOIN appointment a ON e.appolast_idx = a.appo_idx
+    JOIN `statement` s ON e.statement_idx = s.statement_idx
+    JOIN duty d ON a.duty_idx = d.duty_idx
+    JOIN position_ p ON a.position_idx = p.position_idx
+    WHERE a.dept_idx = #{param2}  <!-- dept_idx는 param3으로 전달됨 -->
+      AND e.statement_idx = 1
+      AND (
+          (#{param1} IS NULL OR e.empl_name LIKE CONCAT('%', #{param1}, '%')) 
+      );
+ </select>
+ 
+ 
+ <select id="deptmemsearchemail" resultType="com.toast.management.dto.DeptDetailMemberDTO">
+ 	SELECT 
+        e.empl_name,
+        d.duty_name,
+        e.empl_job,
+        p.position_name,
+        e.empl_cmp_email,
+        a.movein_date,
+        s.statement_name
+    FROM employee e
+    JOIN appointment a ON e.appolast_idx = a.appo_idx
+    JOIN `statement` s ON e.statement_idx = s.statement_idx
+    JOIN duty d ON a.duty_idx = d.duty_idx
+    JOIN position_ p ON a.position_idx = p.position_idx
+    WHERE a.dept_idx = #{param2}  <!-- dept_idx는 param3으로 전달됨 -->
+      AND e.statement_idx = 1
+      AND (
+          (#{param1} IS NULL OR e.empl_cmp_email LIKE CONCAT('%', #{param1}, '%'))
+      );
+ </select>
 
 </mapper>

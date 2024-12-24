@@ -52,8 +52,12 @@ public class DepartmentService {
 		
 		return departmentDAO.getposi();
 	}
-
-	public List<DepartmentDTO> getdept() {
+	
+	public List<DepartmentDTO> getdept(){
+		return departmentDAO.getdept();
+	}
+	
+	public List<DepartmentDTO> getdepthigh() {
 		
 		List<DepartmentDTO> dept_list = new ArrayList();
 		List<DepartmentDTO> dept_alllist = departmentDAO.getdept();
@@ -164,6 +168,8 @@ public class DepartmentService {
 				// 사원 리스트 employee + appointment + duty + position
 				List<DeptDetailMemberDTO> dept_member = departmentDAO.getdeptmeberlist(dept_idx);
 				
+				int dept_member_cnt = dept_member.size();
+				
 			//	departmentService.organizationTree();	
 				model.addAttribute("deptinfo",dept);
 				model.addAttribute("deptmember",dept_member);
@@ -171,12 +177,23 @@ public class DepartmentService {
 				model.addAttribute("appoLast",appolast);
 				model.addAttribute("employee",employee);
 				model.addAttribute("deptfirstdate",dept_his);
+				model.addAttribute("deptcnt",dept_member_cnt);
 		
 	}
 
 	public List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx) {
 		
-		return departmentDAO.searchDeptMember(emplName,cmpEmail,dept_idx);
+		List<DeptDetailMemberDTO> dept_search_list = new ArrayList();
+		
+		if(emplName != null && !emplName.isEmpty()) { 
+			dept_search_list = departmentDAO.deptmemsearchname(emplName,dept_idx);
+		}
+		
+		else if(cmpEmail != null&& !cmpEmail.isEmpty()) {
+			dept_search_list = departmentDAO.deptmemsearchemail(cmpEmail,dept_idx);
+		}
+		
+		return  dept_search_list;
 	}
 
 }

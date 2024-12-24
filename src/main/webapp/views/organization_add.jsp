@@ -52,7 +52,7 @@ $(document).ready(function () {
 
 function fetchAppoData() {
     $.ajax({
-        url: "./deptlist.ajax", // 경로설정
+        url: "./dept_high_list.ajax", // 경로설정
         type: "GET",
         success: function(response) {
             console.log('Response:', response);
