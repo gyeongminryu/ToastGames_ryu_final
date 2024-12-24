@@ -30,9 +30,12 @@ import com.toast.schedule.service.ScheduleService;
 public class ScheduleController {
 
 	private ScheduleService scheduleService;
-	
-	public ScheduleController(ScheduleService scheduleService) {
+    private HttpSession session;
+    
+    
+	public ScheduleController(ScheduleService scheduleService,HttpSession session) {
 		this.scheduleService = scheduleService;
+		this.session = session;
 	}
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -49,12 +52,9 @@ public class ScheduleController {
 		}
 	}
 
-    private HttpSession session;
 
-    // 생성자 주입
-    public ScheduleController(HttpSession session) {
-        this.session = session;
-    }
+
+
 	
 //------------------------여기부터 로그인 아이디 신경써야함(일단 생략 진행+기능 완성 후 추가)---------------------
 	
@@ -315,11 +315,10 @@ public class ScheduleController {
 	}
 	
 	
-	//일정 추가 알림
+	//일정 추가 알림(내가 참여자일 경우)
 	
 	
-	
-	//일정 수정알림
+	//일정 수정알림(내가 참여자일 경우)
 	
 	
 	//일정 공용물품 반납일정추가

@@ -40,15 +40,10 @@ public class MeetingController {
 	
 	private MeetingService meetingService;
 	
-	public MeetingController(MeetingService meetingService) {
-		this.meetingService = meetingService;
-	}
-	
-	
     private HttpSession session;
 
-    // 생성자 주입
-    public MeetingController(HttpSession session) {
+    public MeetingController(MeetingService meetingService, HttpSession session) {
+        this.meetingService = meetingService;
         this.session = session;
     }
 	
