@@ -72,6 +72,9 @@ public class ScheduleController {
 			//int my_empl_idx = my_info.getEmpl_idx();
 			//session.setAttribute("my_idx", my_empl_idx);
 			//mv.addObject("my_empl_idx", my_empl_idx);
+			//logger.info("myId"+myId);
+			//logger.info("my_empl_idx"+my_empl_idx);
+			
 			mv.setViewName("calendar_month");
 		//}
 		return mv;
