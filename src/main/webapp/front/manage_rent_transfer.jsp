@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/manage_rent.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -32,7 +33,7 @@
                 <form>
                     <div class="tst_flex">
 
-                        <!-- 폐기 정보 -->
+                        <!-- 인계 정보 -->
                         <div class="tst_col9">
                             <table class="tst_table table_align_left table_no_padding table_no_underline">
                                 <colgroup>
@@ -41,14 +42,21 @@
                                 </colgroup>
                                 <thead>
                                 <tr>
-                                    <th colspan="2">폐기 정보</th>
+                                    <th colspan="2">인계 정보</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th class="td_align_top">폐기 사유</th>
+                                    <th class="td_align_top">인수자</th>
                                     <td>
-                                        <textarea name="disp_reason" rows="5" maxlength="1000" placeholder="폐기 사유를 입력하세요"></textarea>
+                                        <div class="tst_flex">
+                                            <div class="tst_col9">
+                                                <input type="text" id="take_empl_idx" class="take_empl_idx" onclick="tst_modal_call('tst_modal_select')" placeholder="인수할 직원을 선택하세요" readonly />
+                                            </div>
+                                            <div class="tst_col3">
+                                                <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_secondary btn_full">직원 선택하기</button>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -77,7 +85,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- //폐기 정보 -->
+                        <!-- //인계 정보 -->
 
                         <div class="tst_col3">
 
@@ -129,7 +137,7 @@
                                 <tr>
                                     <td colspan="2">
                                         <hr class="separator" />
-                                        <button type="button" onclick="tst_modal_call('tst_modal_dispose')" class="btn_primary btn_full">물품 등록하기</button>
+                                        <button type="button" onclick="tst_modal_call('tst_modal_transfer')" class="btn_primary btn_full">직원에게 인계하기</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -148,9 +156,9 @@
         </div>
     </div>
 </div>
+<c:import url="manage_rent_transfer_modal.jsp" />
 </body>
-<c:import url="manage_rent_dispose_modal.jsp" />
-
 <script src="resources/js/common.js"></script>
 <script src="resources/js/manage_rent_disuse.js"></script>
+<script src="resources/js/approval_send_modal.js"></script>
 </html>

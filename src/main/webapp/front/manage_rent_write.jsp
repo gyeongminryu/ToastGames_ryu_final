@@ -21,10 +21,10 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_rent_list'">
                         <h1>공용 물품 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/'">
+                    <li class="tst_title_item" onclick="location.href='/manage_rent_dispose_list'">
                         <h1>폐기 물품 확인</h1>
                     </li>
                 </ul>
@@ -73,7 +73,7 @@
                                                 <button type="button" onclick="tst_modal_call('tst_modal_write')" class="btn_primary">물품 등록하기</button>
                                             </li>
                                             <li>
-                                                <button type="button" onclick="location.href='/'" class="btn_secondary">목록으로 돌아가기</button>
+                                                <button type="button" onclick="location.href='/manage_rent_list'" class="btn_secondary">목록으로 돌아가기</button>
                                             </li>
                                         </ul>
                                     </td>

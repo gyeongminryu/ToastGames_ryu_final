@@ -23,11 +23,11 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item" onclick="location.href='/'">
-                        <h1>공용 물품 대여</h1>
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_rent_list'">
+                        <h1>공용 물품 관리</h1>
                     </li>
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
-                        <h1>내가 대여한 물품</h1>
+                    <li class="tst_title_item" onclick="location.href='/manage_rent_dispose_list'">
+                        <h1>폐기 물품 확인</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->
@@ -114,7 +114,7 @@
                             <!-- 대여 내역 > 대여중인 물품 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td><h3>{대여자 (직급/직책)}</h3></td>
+                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
                                 <td class="td_align_left">{대여 사유}</td>
                                 <td>{대여일|yyyy-MM-dd}</td>
                                 <td>{반납 기한|yyyy-MM-dd}</td>
@@ -126,7 +126,7 @@
                             <!-- 대여 내역 > 연체중인 물품 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td><h3>{대여자 (직급/직책)}</h3></td>
+                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
                                 <td class="td_align_left">{대여 사유}</td>
                                 <td>{대여일|yyyy-MM-dd}</td>
                                 <td>{반납 기한|yyyy-MM-dd}</td>
@@ -138,7 +138,7 @@
                             <!-- 대여 내역 > 기한 내에 반납한 물품 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td><h3>{대여자 (직급/직책)}</h3></td>
+                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
                                 <td class="td_align_left">{대여 사유}</td>
                                 <td>{대여일|yyyy-MM-dd}</td>
                                 <td>{반납 기한|yyyy-MM-dd}</td>
@@ -150,7 +150,7 @@
                             <!-- 대여 내역 > 연체 후 반납한 물품 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td><h3>{대여자 (직급/직책)}</h3></td>
+                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
                                 <td class="td_align_left">{대여 사유}</td>
                                 <td>{대여일|yyyy-MM-dd}</td>
                                 <td>{반납 기한|yyyy-MM-dd}</td>
@@ -162,7 +162,7 @@
                             <!-- 예시 -->
                             <tr>
                                 <td>16</td>
-                                <td><h3>김사원 (영업/대리)</h3></td>
+                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">김사원 (영업/대리)</span></h3></td>
                                 <td class="td_align_left">12일에 고객사 출장시 사용할 예정입니다.</td>
                                 <td>2025-01-11</td>
                                 <td>2025-01-11</td>
@@ -171,7 +171,7 @@
                             </tr>
                             <tr>
                                 <td>15</td>
-                                <td><h3>박대리 (개발/대리)</h3></td>
+                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">박대리 (개발/대리)</span></h3></td>
                                 <td class="td_align_left">1월 3일에 고객사 출장시 사용할 예정입니다.</td>
                                 <td>2024-12-31</td>
                                 <td>2025-01-04</td>
@@ -358,15 +358,15 @@
 
                             <!-- 사용 연한이 지났을 경우 아래와 같이 출력해 주세요 -->
                             <li>
-                                <button class="btn_primary btn_full" onclick="location.href='/'">직원에게 인계하기</button>
+                                <button class="btn_primary btn_full" onclick="location.href='/manage_rent_transfer'">직원에게 인계하기</button>
                             </li>
 
                             <!-- 이하 버튼은 사용 연한과 상관없이 동일하게 출력하세요 -->
                             <li>
-                                <button class="btn_secondary btn_full" onclick="location.href='/'">폐기하기</button>
+                                <button class="btn_secondary btn_full" onclick="location.href='/manage_rent_dispose'">폐기하기</button>
                             </li>
                             <li>
-                                <button class="btn_subtle btn_full" onclick="location.href='/'">목록으로 돌아가기</button>
+                                <button class="btn_subtle btn_full" onclick="location.href='/manage_rent_list'">목록으로 돌아가기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->

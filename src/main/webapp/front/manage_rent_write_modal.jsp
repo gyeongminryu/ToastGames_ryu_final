@@ -26,7 +26,7 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <!-- 등록 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_primary btn_full">물품 등록하기</button>
+                    <!-- 등록 경로를 입력하세요 --><button onclick="location.href='/manage_rent_detail.jsp?'" class="btn_primary btn_full">물품 등록하기</button>
                 </div>
                 <div class="tst_col6">
                     <button onclick="tst_modal_close('tst_modal_write')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>

@@ -3,7 +3,7 @@
 
 <link rel="stylesheet" type="text/css" href="resources/css/module_modal.css" />
 
-<!-- 작성하기 -->
+<!-- 폐기하기 -->
 <div class="tst_modal tst_modal_alert tst_modal_dispose">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
@@ -36,6 +36,6 @@
     </div>
     <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_dispose')"></div>
 </div>
-<!-- //작성하기 -->
+<!-- //폐기하기 -->
 
 <script src="resources/js/module_modal.js"></script>

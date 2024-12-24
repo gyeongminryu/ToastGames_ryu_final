@@ -96,4 +96,42 @@ public class FrontController {
     public ModelAndView front_rent_mylist_detail() {
         return new ModelAndView("rent_mylist_detail");
     }
+
+
+
+    // manage > rent
+    @RequestMapping(value = "/manage_rent_list")
+    public ModelAndView front_manage_rent_list() {
+        return new ModelAndView("manage_rent_list");
+    }
+
+    @RequestMapping(value = "/manage_rent_write")
+    public ModelAndView front_manage_rent_write() {
+        return new ModelAndView("manage_rent_write");
+    }
+
+    @RequestMapping(value = "/manage_rent_update")
+    public ModelAndView front_manage_rent_update() {
+        return new ModelAndView("manage_rent_update");
+    }
+
+    @RequestMapping(value = "/manage_rent_detail")
+    public ModelAndView front_manage_rent_detail() {
+        return new ModelAndView("manage_rent_detail");
+    }
+
+    @RequestMapping(value = "/manage_rent_dispose")
+    public ModelAndView front_manage_rent_dispose() {
+        return new ModelAndView("manage_rent_dispose");
+    }
+
+    @RequestMapping(value = "/manage_rent_transfer")
+    public ModelAndView front_manage_rent_transfer() {
+        return new ModelAndView("manage_rent_transfer");
+    }
+
+    @RequestMapping(value = "/manage_rent_dispose_list")
+    public ModelAndView front_manage_rent_dispose_list() {
+        return new ModelAndView("manage_rent_dispose_list");
+    }
 }
