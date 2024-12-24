@@ -159,8 +159,11 @@
             <th>새 파일명</th>
             <th>파일 타입</th>
             <th>파일 경로</th>
+            <th>다운로드</th>
+            <th>삭제</th>
         </tr>
-        <tr th:each="fileItem : ${fileList}" class="file-list">
+        <c:forEach var="fileItem" items="${file}">
+      	<tr>
             <td class="file_idx">${fileItem.file_idx}</td>
             <td class="file_key">${fileItem.file_key}</td>
             <td class="uploader_idx">${fileItem.uploader_idx}</td>
@@ -168,7 +171,16 @@
             <td class="new_filename">${fileItem.new_filename}</td>
             <td class="file_type">${fileItem.file_type}</td>
             <td class="file_addr">${fileItem.file_addr}</td>
+             <td>
+                    <!-- 다운로드 버튼 추가 -->
+                    <button onclick="downloadFile('${fileItem.new_filename}')">다운로드</button>
+                </td>
+                <td>
+                    <!-- 삭제 버튼 추가 -->
+                    <button onclick="delFile('${fileItem.new_filename}','${employee.empl_idx}')">삭제</button>
+                </td>
         </tr>
+        </c:forEach>
     </table>
 
 
@@ -180,7 +192,7 @@
     <h3>인사 발령</h3>
     
    <!-- 폼 영역 -->
-    <form id="appoForm" action="employeeAppo.do" method="POST">
+    <form id="appoForm" action="employee_appo.do" method="POST">
         <div>
             <label for="department">부서:</label>
             <select id="department" name="dept_idx">
@@ -198,6 +210,11 @@
             <select id="duty" name="duty_idx">
                 <option value="">선택</option>
             </select>
+        </div>
+        <div>
+         	<label>직무</label>
+            <input type="text" name="empl_duty" /> 직무
+           
         </div>
          <div>
             <label for="effectiveDate">선택 날짜:</label>
@@ -221,7 +238,7 @@
 <div id="changeModal" style="display: none; position: fixed; top: 20%; left: 30%; width: 40%; padding: 20px; background-color: #fff; border: 1px solid #000;">
     <h3>근무 변경</h3>
     
-    <form id="changeForm" action="employeeChange.do" method="POST">
+    <form id="changeForm" action="employee_change.do" method="POST">
         <div>
             <label for="statement">근무상태:</label>
             <select id="statement" name="statement_idx">
@@ -237,31 +254,37 @@
         </div>
     </form>
 </div>
+<form id="emplStampForm" action="empl_file_upload.do?empl_idx=${employee.empl_idx}" method="POST" enctype="multipart/form-data">
+
 
 <div>
     <label for="fileInput">첨부 파일 선택:</label>
     <input type="file" id="fileInput" name="files" multiple />
     <ul id="attachmentFileList"></ul> <!-- 첨부파일 목록 -->
 </div>
-
+<button type="submit">첨부파일 제출</button>
+</form>
 
  <div>
         <h4>기존 직인 파일:</h4>
-        <img id="existingSealPreview" src="/photo/${employee.empl_stamp}" alt="기존 직인 미리보기" 
+        <img id="existingSealPreview" src="/files/${employee.empl_stamp}" alt="기존 직인 미리보기" 
             style="display: ${employee.empl_stamp != null ? 'block' : 'none'}; max-width: 200px; max-height: 200px;" />
     </div>
 
-<form id="emplStampForm" action="./emplStampUpload.do" method="POST" enctype="multipart/form-data">
+<form id="emplStampForm" action="empl_stamp_upload.do?empl_idx=${employee.empl_idx}" method="POST" enctype="multipart/form-data">
 <!-- 새로 선택한 직인 파일 -->
     <div>
+    
         <label for="empl_stamp">새로운 직인 파일 선택:</label>
-        <input type="file" id="empl_stamp" name="empl_stamp" />
-        <!-- 새로 선택한 직인 파일 미리보기 -->
+        <input type="file" id="singleFile" name="singleFile" />
+        <!-- 새로 선택한 직인 파일 미리보기 -->  
+        <div>
         <h4>새로운 직인 파일 미리보기:</h4>
         <img id="newSealPreview" src="#" alt="새로운 직인 미리보기" style="display: none; max-width: 200px; max-height: 200px;" />
     </div>
+    </div>
 
-    <button type="submit">제출</button>
+    <button type="submit">직인 제출</button>
 </form>
 
     <script>
@@ -291,7 +314,7 @@
         // AJAX 호출: 직급, 직책, 부서 데이터를 불러옴
         function fetchAppoData() {
             $.ajax({
-                url: "./apponamelist.ajax", // 경로설정
+                url: "./appo_name_list.ajax", // 경로설정
                 type: "GET",
                 success: function(response) {
                     console.log('Response:', response);
@@ -357,39 +380,42 @@
     });
 
     //직인파일 미리보기
-    document.getElementById('singleFileInput').addEventListener('change', function (event) {
+    document.getElementById('singleFile').addEventListener('change', function (event) {
         const file = event.target.files[0]; // 단일 파일
-        const displayList = document.getElementById('sealFileList'); // 파일 이름 표시 영역
-        const previewImage = document.getElementById('sealPreview'); // 미리보기 이미지 태그
+      
+        const previewImage = document.getElementById('newSealPreview'); // 미리보기 이미지 태그
 
-        displayList.innerHTML = ''; // 이름 초기화
+      //  displayList.innerHTML = ''; // 이름 초기화
 
         if (file) {
-            // 파일 이름 추가
-            const listItem = document.createElement('li');
-            listItem.textContent = file.name;
-            displayList.appendChild(listItem);
+            // 파일이 있을 경우 미리보기 이미지 표시
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                previewImage.src = e.target.result; // Base64로 변환된 이미지 데이터 설정
+                previewImage.style.display = 'block'; // 미리보기 이미지 보이기
+            };
 
-            // 이미지 미리보기
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    previewImage.src = e.target.result; // Base64 이미지 데이터 설정
-                    previewImage.style.display = 'block'; // 이미지 표시
-                };
-                reader.readAsDataURL(file); // 파일 읽기
-            } else {
-                // 이미지가 아닌 경우 미리보기 숨기기
-                previewImage.src = '#';
-                previewImage.style.display = 'none';
-                alert('이미지 파일만 선택해주세요.');
-            }
+            // 이미지 파일 읽기
+            reader.readAsDataURL(file);
         } else {
-            // 파일이 없을 때 초기화
-            previewImage.src = '#';
+            // 파일이 선택되지 않으면 미리보기 이미지 숨기기
             previewImage.style.display = 'none';
         }
-    });    
+    });
+    
+ // 다운로드 버튼 클릭 시 해당 파일 다운로드
+    function downloadFile(filename) {
+        const url = './download/' + filename;  // 다운로드 URL
+        window.location.href = url;  // 해당 URL로 이동하여 다운로드
+    }
+ // 삭제버튼 클릭시 삭제 
+ 	function delFile(new_filename,empl_idx) {
+      	
+        const url = './empl_file_del.do/' + new_filename + '/' + empl_idx;
+        window.location.href = url;  // 해당 URL로 이동하여 다운로드
+    }
+ 
     </script>
 
 </body>

@@ -22,7 +22,7 @@
 </head>
 <body>
 
-<form action="./employeeAdd.do" method="POST">
+<form action="./employee_add.do" method="POST">
   <h2>사원 등록</h2>
   
   <!-- 기본 정보 -->
