@@ -50,6 +50,15 @@ public class MemberController {
 	@Value("${spring.servlet.multipart.location}")
 	private String uploadAddr;
 
+	// 테스트용 로그인!!! 나중에 삭제 할 예정!!!
+	@PostMapping(value = "/testLogin.do")
+	public String testLogin(@RequestParam("idx") int idx, HttpSession session) {
+		Map<String, Object> testUser = memberService.getUserByIdx(idx);
+		String id = (String)testUser.get("empl_id");
+		session.setAttribute("loginId", id);
+		return "redirect:/approval_writing_list.go";
+	}
+	
 	// 로그인 페이지 이동
 	@GetMapping(value = "/login.go")
 	public String loginView() {
@@ -68,7 +77,7 @@ public class MemberController {
 				int changePwCheck = memberService.changePwCheck(id); // 3-1. 비밀번호 변경했는지 여부를 가져옴.
 				session.setAttribute("loginId", id);
 				if (changePwCheck != 0) { // 3-2. 비밀번호 변경한 경우.
-					page = "index"; // !!!나중에 다른 jsp로 수정필요!!!
+					return "redirect:/approval_writing_list.go"; // !!!나중에 다른 jsp로 수정필요!!!
 				} else { // 3-3. 비밀번호 변경을 안한 경우.
 					model.addAttribute("msg", "보안을 위해 비밀번호를 변경해주세요.");
 					page = "myPageUpdate.go";
@@ -185,7 +194,7 @@ public class MemberController {
 	}
 
 	// 다운로드 요청이 들어오면 작동되는 메서드.
-	@GetMapping(value = "/download/{filename}") 
+	@GetMapping(value = "/memberDownload/{filename}") 
 	public ResponseEntity<Resource> downloadFile(@PathVariable String filename) throws Exception {
 		Resource resource = new FileSystemResource(uploadAddr + "/" + filename); // 경로 설정
 		if (resource.exists()) { // 파일이 존재 한다면.
@@ -200,7 +209,7 @@ public class MemberController {
 	}
 
 	// 직인 이미지 파일 요청이 들어오면 작동되는 메서드.
-	@GetMapping(value = "/files/{filename}")
+	@GetMapping(value = "/memberFiles/{filename}")
 	public ResponseEntity<Resource> Image(@PathVariable String filename) {
 		Path filePath = Paths.get(uploadAddr + "/" + filename);
 		if (Files.exists(filePath)) { // 파일이 존재하는지 확인

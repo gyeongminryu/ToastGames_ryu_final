@@ -2,6 +2,7 @@ package com.toast.board.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -93,7 +94,8 @@ public class BoardController {
         Map<String, Object> response = new HashMap<>();
         try {
             // 댓글 목록 조회 서비스 호출
-            response.put("comments", boardService.getReplyList(board_idx));
+        	List<Map<String, Object>> comments =boardService.getReplyList(board_idx);
+            response.put("comments",comments);
             logger.info("response : ? " + response);
         } catch (Exception e) {
             response.put("comments", new ArrayList<>());
@@ -111,9 +113,9 @@ public class BoardController {
 		logger.info("memberInfo :? " + memberInfo);
         Map<String, Object> response = new HashMap<>();
 		response.putAll(memberInfo);
-		logger.info("response:", response);
-        try {
-            boolean success = boardService.writeReply(board_idx, reply);
+	    int empl_idx = (Integer)response.get("appo_empl_idx");
+		try {
+            boolean success = boardService.writeReply(board_idx, reply, empl_idx);
             response.put("success", success);
         } catch (Exception e) {
             response.put("success", false);
@@ -125,10 +127,13 @@ public class BoardController {
     // 대댓글 작성
     @ResponseBody
     @PostMapping(value = "/re_reply_write.ajax")
-    public Map<String, Object> writeReply(@RequestParam("parent_comment_id") int parentReply, @RequestParam("re_reply") String re_reply) {
-        Map<String, Object> response = new HashMap<>();
+    public Map<String, Object> writeReReply(@RequestParam("reply_idx") int reply_idx, @RequestParam("re_reply") String re_reply, HttpSession session) {
+    	String id = (String) session.getAttribute("loginId"); // 세션에서 로그인한 id를 가져온다.
+		Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
+		int re_reply_empl_idx = (int) memberInfo.get("appo_empl_idx"); 
+    	Map<String, Object> response = new HashMap<>();
         try {
-            boolean success = boardService.writeReReply(parentReply, re_reply);
+            boolean success = boardService.writeReReply(reply_idx, re_reply, re_reply_empl_idx);
             response.put("success", success);
         } catch (Exception e) {
             response.put("success", false);

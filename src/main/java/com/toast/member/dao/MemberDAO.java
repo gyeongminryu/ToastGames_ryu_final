@@ -10,6 +10,9 @@ import com.toast.member.dto.MemberDTO;
 
 @Mapper
 public interface MemberDAO {
+	
+	// 테스트용 로그인!!! 나중에 삭제할 예정!!!
+	Map<String, Object> getUserByIdx(int idx);
 
 	boolean isValidId(String id);
 	String login(String id);
