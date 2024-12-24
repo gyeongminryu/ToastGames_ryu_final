@@ -34,7 +34,7 @@
 
                         <!-- 물품 정보 -->
                         <div class="tst_col9">
-                            <table class="tst_table table_align_left table_no_padding">
+                            <table class="tst_table table_align_left table_no_padding table_no_underline">
                                 <colgroup>
                                     <col style="width: 120px;" />
                                     <col style="width: auto;" />

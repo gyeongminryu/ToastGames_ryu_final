@@ -70,7 +70,7 @@
                             <tfoot>
                             <tr>
                                 <th></th>
-                                <td><button class="btn_primary">물품 정보 수정하기</button></td>
+                                <td><button onclick="location.href='/manage_rent_update'" class="btn_primary">물품 정보 수정하기</button></td>
                             </tr>
                             </tfoot>
                         </table>

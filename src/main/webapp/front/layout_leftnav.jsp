@@ -5,7 +5,7 @@
         <div class="tst_contents_inner">
             <div class="tst_flex">
                 <div class="tst_col4 leftnav_profile_left">
-                    <img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" alt="{직원명}의 프로필 사진" class="leftnav_profile_image" />
+                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="leftnav_profile_image" />
                 </div>
                 <div class="tst_col8 leftnav_profile_right">
                     <h3>{직원명}</h3>
@@ -38,7 +38,7 @@
                 <li onclick="location.href='/approval_received_list'" class="tst_pointer">
                     <i class="bi bi-file-earmark-fill"></i><h3>전자결재 (워크플로우)</h3>
                 </li>
-                <li onclick="location.href='/'" class="tst_pointer">
+                <li onclick="location.href='/meeting_room_calendar'" class="tst_pointer">
                     <i class="bi bi-person-video3"></i><h3>회의실 대여</h3>
                 </li>
                 <li onclick="location.href='/rent_list'" class="tst_pointer">
