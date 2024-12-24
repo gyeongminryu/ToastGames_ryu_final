@@ -5,19 +5,20 @@
         <div class="tst_contents_inner">
             <div class="tst_flex">
                 <div class="tst_col4 leftnav_profile_left">
-                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="leftnav_profile_image" />
+                    <img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" alt="{직원명}의 프로필 사진" class="leftnav_profile_image" />
                 </div>
                 <div class="tst_col8 leftnav_profile_right">
-                    <h3>{직원명}</h3>
-                    <h4 class="font_subtle">({부서}/{직급})</h4>
+                    <h3 id="empl_name" class="empl_name">{직원명}</h3>
+                    <h4 class="font_subtle">(<span id="dept_name" class="dept_name">{부서}</span>/<span id="position_name" class="position_name">{직급}</span>)</h4>
                 </div>
             </div>
+            <hr class="separator" />
 
-            <ul class="list_no_desc list_block leftnav_attendance">
-                <li class="tst_pointer">
+            <div class="tst_flex leftnav_attendance">
+                <div class="tst_col12">
                     <button onclick="location.href='/'" class="btn_primary btn_full">출근하기</button>
-                </li>
-            </ul>
+                </div>
+            </div>
             <hr class="separator" />
 
 <%--            <ul class="list_no_desc list_block disp_hide">--%>
