@@ -25,7 +25,7 @@
 
 	<!-- 내가 포함된 회의만 보기 필터 -->
 	<fieldset>                                                                                           <!-- 로그인 생성전 임시값 -->
-		<input type="checkbox" name="meeting_mine" id="meeting_only_mine" value="10003"/>내가 포함된 회의만 보기
+		<input type="checkbox" name="meeting_mine" id="meeting_only_mine" value="${my_empl_idx}"/>내가 포함된 회의만 보기
 	</fieldset>
 	
 	

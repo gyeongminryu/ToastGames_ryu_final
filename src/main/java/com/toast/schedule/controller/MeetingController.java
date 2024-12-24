@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,7 @@ import com.toast.schedule.dto.MeetingPhotoDTO;
 import com.toast.schedule.service.MeetingService;
 
 @RestController
-@RequestMapping("/meeting")
+@RequestMapping
 public class MeetingController {
  
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -38,9 +40,12 @@ public class MeetingController {
 	
 	private MeetingService meetingService;
 	
-	public MeetingController(MeetingService meetingService) {
-		this.meetingService = meetingService;
-	}
+    private HttpSession session;
+
+    public MeetingController(MeetingService meetingService, HttpSession session) {
+        this.meetingService = meetingService;
+        this.session = session;
+    }
 	
 	//날짜 변환
 	private LocalDateTime parseToLocalDateTime(String dateTimeStr) {
@@ -52,7 +57,11 @@ public class MeetingController {
 		}
 	}
 	
-	//회의실 예약 가기(회의실 + 사원)-> 사원 직급 직책 부서 추가해야함.......
+	
+//--------------------------------------------로그인 체크 및 부서 체크---------------------------------------------------------------------
+	
+	
+	//회의실 예약 가기(회의실 + 사원)
 	@RequestMapping(value="/meeting.go")
 	public ModelAndView meetingGo () {
 		ModelAndView mv = new ModelAndView();
@@ -62,14 +71,28 @@ public class MeetingController {
 		//사원
 		List<Map<String, Object>> partiList = meetingService.meetingParti();
 		mv.addObject("partiList", partiList);
+		//내 정보
+		//String myId= "peterrabbit165";
+		//String myId= (String) session.getAttribute("loginId");
+		//MeetingDTO my_info = meetingService.myInfo(myId);
+		//int my_empl_idx = my_info.getEmpl_idx();
+		//session.setAttribute("my_idx", my_empl_idx);
+		//mv.addObject("my_empl_idx", my_empl_idx);
 		mv.setViewName("meeting");
 		return mv;
 	}
 	
-	//회의실 정보 등록 가기
+	//회의실 정보 등록 가기(
 	@RequestMapping(value="/meetingRoomAdd.go")
 	public ModelAndView meetingAddGo () {
 		ModelAndView mv = new ModelAndView();
+		//String myId= "peterrabbit165";
+		//String myId= (String) session.getAttribute("loginId");
+		//logger.info(myId);
+		//부서번호 가져오기
+		//int my_dept_idx = meetingService.myDept(myId);
+		//logger.info("my_dept_idx"+my_dept_idx);
+		//mv.addObject("my_dept_idx", my_dept_idx);
 		mv.setViewName("meeting_room_add");
 		return mv;
 	}
