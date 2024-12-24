@@ -62,7 +62,7 @@ function approval_line_get(){
     });
 }
 
-//가져온 결재선을 jsp에 보여주는 함수 (작성 중)
+//가져온 결재선을 jsp에 보여주는 함수
 function approval_draw_doc_line(data){
     console.log(data);
     var approval_line_id = '';

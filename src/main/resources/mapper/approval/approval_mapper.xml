@@ -24,7 +24,7 @@
            join position_ p on p.position_idx = a.position_idx
            join duty d on d.duty_idx = a.duty_idx
            JOIN department dp on a.dept_idx = dp.dept_idx
-        where a.dept_idx = 103 UNION SELECT a.dept_idx,dp.dept_name,e.empl_idx,e.empl_name,p.position_idx,p.position_name,d.duty_idx,d.duty_name from employee e
+        where a.dept_idx = #{dept_idx} UNION SELECT a.dept_idx,dp.dept_name,e.empl_idx,e.empl_name,p.position_idx,p.position_name,d.duty_idx,d.duty_name from employee e
           join appointment a on e.appolast_idx = a.appo_idx
           join position_ p on p.position_idx = a.position_idx
           join duty d on d.duty_idx = a.duty_idx
@@ -41,7 +41,7 @@
     </select>
 
     <select id="team_allempl" resultType="Map">
-        SELECT dp.dept_name, e.empl_idx,e.empl_name,p.position_idx,p.position_name,d.duty_idx,d.duty_name from employee e
+        SELECT a.dept_idx,dp.dept_name, e.empl_idx,e.empl_name,p.position_idx,p.position_name,d.duty_idx,d.duty_name from employee e
            join appointment a on e.appolast_idx = a.appo_idx
            join position_ p on p.position_idx = a.position_idx
            join duty d on d.duty_idx = a.duty_idx

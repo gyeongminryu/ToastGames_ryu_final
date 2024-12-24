@@ -178,12 +178,31 @@ function approval_selected_line(dept_i1,empl_idx,dept_name,duty_idx,empl_name,du
         position_n = position_name;
 }
 
+//결재선 선택했는지 안 선택했는지 구별하는 플래그
+var selected = 0;
+
 //결재선 보내는 함수
 function approval_send_line(){
     //var send_val = $('#send_val').val(); //삭제해야함
    //console.log('send_val:',send_val);
-
-    opener.approval_get_lines(empl_i,empl_n,dept_i2,dept_n,duty_i,duty_n,position_i,position_n,step);
+    selected = 1; //선택
+    opener.approval_get_lines(empl_i,empl_n,dept_i2,dept_n,duty_i,duty_n,position_i,position_n,step,selected);
     window.close();
 
+}
+
+function approval_line_none(){
+
+    if(step != 1){
+        opener.approval_get_lines(0,'',0,'',0,'',0,'',step,selected);
+        window.close();
+    }else{
+        alert('1차 결재선은 반드시 지정해야합니다.');
+    }
+
+}
+
+function approval_step_change_alert(approval_step_change_alert){
+    console.log('approval_step_change_alert 실행');
+    alert(approval_step_change_alert);
 }
