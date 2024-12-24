@@ -29,7 +29,7 @@
             <div class="tst_modal_footer">
                 <div class="tst_flex">
                     <div class="tst_col6">
-                        <input type="submit" value="반려하기" class="btn_primary btn_full" />
+                        <input type="submit" value="신청하기" class="btn_primary btn_full" />
                     </div>
                     <div class="tst_col6">
                         <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_modal_detail')">취소하기</button>

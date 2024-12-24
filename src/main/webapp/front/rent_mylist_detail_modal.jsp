@@ -26,7 +26,7 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <!-- 취소 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_primary btn_full">신청 취소하기</button>
+                    <!-- 취소 경로를 입력하세요 --><button onclick="location.href='/rent_mylist'" class="btn_primary btn_full">신청 취소하기</button>
                 </div>
                 <div class="tst_col6">
                     <button onclick="tst_modal_close('tst_modal_cancel')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>

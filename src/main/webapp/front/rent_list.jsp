@@ -23,10 +23,10 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_list'">
                         <h1>공용 물품 대여</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/'">
+                    <li class="tst_title_item" onclick="location.href='/rent_mylist'">
                         <h1>내가 대여한 물품</h1>
                     </li>
                 </ul>
@@ -52,22 +52,22 @@
                             <tbody class="tst_pointer">
 
                             <!-- 전체 제품 조회 (필터링 초기화) -->
-                            <tr><th><span onclick="location.href='/'">전체 보기</span></th></tr>
+                            <tr><th><span onclick="location.href='/rent_list'">전체 보기</span></th></tr>
                             <!-- //전체 제품 조회 (필터링 초기화) -->
 
                             <!-- 분류 목록 (필터링) -->
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
+                            <tr><td><span onclick="location.href='/rent_list'">{분류명}</span></td></tr>
                             <!-- //분류 목록 (필터링) -->
 
                             <!-- 분류 목록 > 선택한 항목 (필터링) -->
-                            <tr><td class="td_bg_medium"><span onclick="location.href='/'">{분류명}</span></td></tr>
+                            <tr><td class="td_bg_medium"><span onclick="location.href='/rent_list'">{분류명}</span></td></tr>
                             <!-- //분류 목록 > 선택한 항목 (필터링) -->
 
                             <!-- 예시 -->
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
-                            <tr><td><span onclick="location.href='/'">{분류명}</span></td></tr>
+                            <tr><td><span onclick="location.href='/rent_list'">{분류명}</span></td></tr>
+                            <tr><td><span onclick="location.href='/rent_list'">{분류명}</span></td></tr>
+                            <tr><td><span onclick="location.href='/rent_list'">{분류명}</span></td></tr>
+                            <tr><td><span onclick="location.href='/rent_list'">{분류명}</span></td></tr>
                             <!-- //예시 -->
 
                             </tbody>
@@ -83,7 +83,7 @@
                                 <form>
                                     <div class="tst_search_container">
                                         <div class="tst_search_select">
-                                            <select id="tst_search_select_category" onchange="location.href='/'">
+                                            <select id="tst_search_select_category" onchange="<!-- 분류 선택시 실행할 함수를 입력하세요 -->">
                                                 <option value="{검색 분류}">검색 분류</option>
                                             </select>
                                         </div>
@@ -151,10 +151,10 @@
                                 <td>{번호}</td>
                                 <td><span class="tst_pointer">{분류}</span></td>
                                 <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/'" class="tst_pointer">{제품명}</h3>
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">{제품명}</h3>
                                 </td>
                                 <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_detail?'" class="tst_pointer">{제품_정보}</span>
                                 </td>
                                 <td><span class="tst_badge_min btn_secondary">대여중</span></td>
                                 <td>{반납 예정 일시}</td>
@@ -166,10 +166,10 @@
                                 <td>{번호}</td>
                                 <td><span class="tst_pointer">{분류}</span></td>
                                 <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/'" class="tst_pointer">{제품명}</h3>
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">{제품명}</h3>
                                 </td>
                                 <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/'" class="tst_pointer">{제품_정보}</span>
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_detail?'" class="tst_pointer">{제품_정보}</span>
                                 </td>
                                 <td><span class="tst_badge_min btn_subtle">대여 가능</span></td>
                                 <td>없음</td>
@@ -180,16 +180,16 @@
                             <tr>
                                 <td>1278</td>
                                 <td><span class="tst_pointer">윈도 노트북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">갤럭시북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">갤럭시 북 5 Pro 360 (40.6cm) Core Ultra 7 / iTB NVMe SSD</span></td>
+                                <td class="td_align_left"><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">갤럭시북 Pro 16" (1)</h3></td>
+                                <td class="td_align_left"><span onclick="location.href='/rent_detail?'" class="tst_pointer">갤럭시 북 5 Pro 360 (40.6cm) Core Ultra 7 / iTB NVMe SSD</span></td>
                                 <td><span class="tst_badge_min btn_subtle">대여 가능</span></td>
                                 <td>없음</td>
                             </tr>
                             <tr>
                                 <td>1277</td>
                                 <td><span class="tst_pointer">맥북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
+                                <td class="td_align_left"><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
+                                <td class="td_align_left"><span onclick="location.href='/rent_detail?'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
                                 <td><span class="tst_badge_min btn_secondary">대여중</span></td>
                                 <td>2025-01-23 18:00</td>
                             </tr>

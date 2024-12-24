@@ -72,7 +72,7 @@
                                                 <button type="button" onclick="tst_modal_call('tst_modal_send')" class="btn_primary">상신하기</button>
                                             </li>
                                             <li>
-                                                <button type="button" onclick="location.href='/'" class="btn_secondary">임시 저장하기</button>
+                                                <button type="button" onclick="location.href=''" class="btn_secondary">임시 저장하기</button>
                                             </li>
                                             <li>
                                                 <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_subtle">작성 취소하기</button>
@@ -143,14 +143,14 @@
                                     <th>참조 1</th>
                                     <td class="td_align_left">{직원명 (부서/직급)}</td>
                                     <td>
-                                        <!-- 참조인에서 제외하는 경로를 입력하세요 --><button type="button" onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
+                                        <!-- 참조인에서 제외하는 경로/함수를 입력하세요 --><button type="button" onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>참조 2</th>
                                     <td class="td_align_left">{직원명 (부서/직급)}</td>
                                     <td>
-                                        <button type="button" onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
+                                        <!-- 참조인에서 제외하는 경로/함수를 입력하세요 --><button type="button" onclick="location.href='/'" class="btn_primary btn_min">제외하기</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -180,13 +180,13 @@
                                 <tr>
                                     <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
                                     <td>
-                                        <button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
+                                        <!-- 삭제 경로/함수를 입력하세요 --><button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
                                     <td>
-                                        <button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
+                                        <!-- 삭제 경로/함수를 입력하세요 --><button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
                                     </td>
                                 </tr>
                                 </tbody>

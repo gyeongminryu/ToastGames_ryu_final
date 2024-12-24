@@ -73,4 +73,27 @@ public class FrontController {
     public ModelAndView front_approval_writing_write() {
         return new ModelAndView("approval_writing_write");
     }
+
+
+
+    // rent
+    @RequestMapping(value = "/rent_list")
+    public ModelAndView front_rent_list() {
+        return new ModelAndView("rent_list");
+    }
+
+    @RequestMapping(value = "/rent_detail")
+    public ModelAndView front_rent_detail() {
+        return new ModelAndView("rent_detail");
+    }
+
+    @RequestMapping(value = "/rent_mylist")
+    public ModelAndView front_rent_mylist() {
+        return new ModelAndView("rent_mylist");
+    }
+
+    @RequestMapping(value = "/rent_mylist_detail")
+    public ModelAndView front_rent_mylist_detail() {
+        return new ModelAndView("rent_mylist_detail");
+    }
 }

@@ -20,10 +20,10 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item" onclick="location.href='/'">
+                    <li class="tst_title_item" onclick="location.href='/rent_list'">
                         <h1>공용 물품 대여</h1>
                     </li>
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_mylist'">
                         <h1>내가 대여한 물품</h1>
                     </li>
                 </ul>
@@ -137,7 +137,7 @@
                                 <button class="btn_primary btn_full" onclick="tst_modal_call('cancel_modal')">대여 신청 취소하기</button>
                             </li>
                             <li>
-                                <button class="btn_secondary btn_full" onclick="location.href='/'">목록으로 돌아가기</button>
+                                <button class="btn_secondary btn_full" onclick="location.href='/rent_mylist'">목록으로 돌아가기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->

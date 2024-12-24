@@ -74,23 +74,17 @@
                                         <li>
                                             <i class="bi bi-paperclip"></i>
                                             <span>{첨부파일_1 (용량)}</span>
-                                            <a href="" target="_blank">
-                                                <span class="tst_badge_min btn_secondary margin_right">다운로드</span>
-                                            </a>
+                                            <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_secondary">다운로드</button>
                                         </li>
                                         <li>
                                             <i class="bi bi-paperclip"></i>
                                             <span>{첨부파일_2 (000.0kb)}</span>
-                                            <a href="" target="_blank">
-                                                <span class="tst_badge_min btn_secondary margin_right">다운로드</span>
-                                            </a>
+                                            <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_secondary">다운로드</button>
                                         </li>
                                         <li>
                                             <i class="bi bi-paperclip"></i>
                                             <span>{첨부파일_3 (000.0kb)}</span>
-                                            <a href="" target="_blank">
-                                                <span class="tst_badge_min btn_secondary margin_right">다운로드</span>
-                                            </a>
+                                            <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_secondary">다운로드</button>
                                         </li>
                                     </ul>
                                 </td>
