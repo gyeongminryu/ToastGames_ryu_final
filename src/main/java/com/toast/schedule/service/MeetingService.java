@@ -32,6 +32,12 @@ public class MeetingService {
 		this.meetingDao = meetingDao;
 	}
 	
+	
+	//내 정보 가져오기
+	public MeetingDTO myInfo(String myId) {	
+		return meetingDao.myInfo(myId);
+	}
+	
 	//회의실 가기(회의실 이름+idx)
 	public List<Map<String, Object>> meetingGo() {
 		return meetingDao.meetingGo();		
@@ -253,6 +259,8 @@ public class MeetingService {
 	public int dateUpdateMeeting(MeetingDTO dto) {
 		return meetingDao.dateUpdateMeeting(dto);
 	}
+
+
 
 
 

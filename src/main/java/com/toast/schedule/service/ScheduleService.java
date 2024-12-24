@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.toast.schedule.dao.ScheduleDAO;
+import com.toast.schedule.dto.MeetingDTO;
 import com.toast.schedule.dto.ScheduleDTO;
 
 
@@ -26,6 +27,11 @@ public class ScheduleService {
 	
 	public ScheduleService(ScheduleDAO scheduleDao) {
 		this.scheduleDao = scheduleDao;
+	}
+	
+	//내 정보 가져오기
+	public ScheduleDTO myInfo(String myId) {	
+		return scheduleDao.myInfo(myId);
 	}
 	
 	
@@ -108,6 +114,7 @@ public class ScheduleService {
 		return scheduleDao.getScheduleParti();
 	}
 
+	
 
 	//내가 파티원으로 포함된 일정 유무
 	public boolean isParti(int sche_parti_empl_idx) {
@@ -148,12 +155,18 @@ public class ScheduleService {
 	}
 
 
+	//일정 시간 변경
 	public int updateTimeSchedule(ScheduleDTO dto) {
 		int row = scheduleDao.updateTimeSchedule(dto);
 		return row;
 	}
 
-
+	
+	//일정 작성자 확인
+	public int checkSchedule(int sche_idx) {
+		int empl_idx = scheduleDao.checkSchedule(sche_idx);
+		return empl_idx;
+	}
 
 
 

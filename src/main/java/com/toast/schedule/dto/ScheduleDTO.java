@@ -5,6 +5,11 @@ import java.util.List;
 
 public class ScheduleDTO {
 
+	//내정보
+	private int empl_idx;
+
+	private String empl_name;	
+	
 	//일정
 	private int sche_idx;
 	private String sche_title;
@@ -30,9 +35,14 @@ public class ScheduleDTO {
 	private String position_name;
 	private String duty_name;
 	private String dept_name;
-	private String empl_name;
+	//private String empl_name;
 	
-	
+	public int getEmpl_idx() {
+		return empl_idx;
+	}
+	public void setEmpl_idx(int empl_idx) {
+		this.empl_idx = empl_idx;
+	}
 	
 	public List<Integer> getSche_parti_empl_idxs() {
 		return sche_parti_empl_idxs;

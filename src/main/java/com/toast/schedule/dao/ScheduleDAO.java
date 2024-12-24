@@ -10,6 +10,9 @@ import com.toast.schedule.dto.ScheduleDTO;
 @Mapper
 public interface ScheduleDAO {
 
+	//내 정보
+	ScheduleDTO myInfo(String myId);
+	
 	//달력가기 참여자 가져오기
 	List<Map<String, Object>> getScheduleParti();
 	
@@ -42,6 +45,11 @@ public interface ScheduleDAO {
 
 	//일정 drop, resize수정
 	int updateTimeSchedule(ScheduleDTO dto);
+
+	//일정 작성자 확인
+	int checkSchedule(int sche_idx);
+
+
 
 
 

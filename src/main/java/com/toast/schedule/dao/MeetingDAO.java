@@ -11,6 +11,11 @@ import com.toast.schedule.dto.MeetingPhotoDTO;
 @Mapper
 public interface MeetingDAO {
 	
+	
+	
+	//내 정보
+	MeetingDTO myInfo(String myId);
+	
 	//회의실 가기(회의실 이름+idx)
 	List<Map<String, Object>> meetingGo();
 
@@ -67,6 +72,8 @@ public interface MeetingDAO {
 
 	//회의 일정 시간변경
 	int dateUpdateMeeting(MeetingDTO dto);
+
+
 
 
 

@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +44,14 @@ public class MeetingController {
 		this.meetingService = meetingService;
 	}
 	
+	
+    private HttpSession session;
+
+    // 생성자 주입
+    public MeetingController(HttpSession session) {
+        this.session = session;
+    }
+	
 	//날짜 변환
 	private LocalDateTime parseToLocalDateTime(String dateTimeStr) {
 		try {
@@ -52,7 +62,7 @@ public class MeetingController {
 		}
 	}
 	
-	//회의실 예약 가기(회의실 + 사원)-> 사원 직급 직책 부서 추가해야함.......
+	//회의실 예약 가기(회의실 + 사원)
 	@RequestMapping(value="/meeting.go")
 	public ModelAndView meetingGo () {
 		ModelAndView mv = new ModelAndView();
@@ -62,6 +72,12 @@ public class MeetingController {
 		//사원
 		List<Map<String, Object>> partiList = meetingService.meetingParti();
 		mv.addObject("partiList", partiList);
+		//내 정보
+		String myId= (String) session.getAttribute("loginId");
+		MeetingDTO my_info = meetingService.myInfo(myId);
+		int my_empl_idx = my_info.getEmpl_idx();
+		session.setAttribute("my_idx", my_empl_idx);
+		mv.addObject("my_empl_idx", my_empl_idx);
 		mv.setViewName("meeting");
 		return mv;
 	}

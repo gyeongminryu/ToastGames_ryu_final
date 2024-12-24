@@ -316,7 +316,7 @@ document.getElementById('schedule_end_time').addEventListener('change', function
                     $('#schedule_modal_title').text('새 일정 추가');
                     $('#schedule_title').val('');
                     $('#schedule_content').val('');
-                    $('#schedule_empl_idx').val('');
+                    //$('#schedule_empl_idx').val('');
                     $('input[name="schedule_type"]').prop('checked', false); // 라디오 버튼 초기화
                     $('input[name="schedule_parti"]').prop('checked', false); // 체크박스 초기화
 

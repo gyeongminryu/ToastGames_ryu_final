@@ -32,7 +32,7 @@
             <h2 id="schedule_modal_title">일정 추가</h2>
             제목: <input type="text" id="schedule_title"><br>
             내용: <input type="text" id="schedule_content"><br>
-            사원번호: <input type="text" id="schedule_empl_idx"><br>
+            사원번호: <input type="text" id="schedule_empl_idx" value="${my_empl_idx}" readonly><br>
 			<label for="schedule_start_time">시작 시간:</label>
 			<input type="datetime-local" id="schedule_start_time"><br>
 			

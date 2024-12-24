@@ -131,6 +131,12 @@
 	    WHERE sche_idx=#{sche_idx}
 	</update>
 
+	<!-- 일정 작성자 확인 -->
+	<select id="checkSchedule">
+		SELECT sche_empl_idx FROM schedule
+			WHERE sche_idx=#{param1}
+	</select>
+
     <!-- 일정 삭제 -->
 	<delete id="deleteSchedule">
 		DELETE FROM schedule
