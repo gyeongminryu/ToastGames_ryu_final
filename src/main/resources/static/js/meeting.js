@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             console.log('my_meeting'+my_meeting);
             $.ajax({
-                url: '/meeting/getMeeting.do',  // 실제 경로에 맞게 수정
+                url: '/getMeeting.do',  // 실제 경로에 맞게 수정
                 type: 'POST',
                 contentType: 'application/json', // 서버가 JSON을 처리하도록 설정
                 data: JSON.stringify({ // JSON 형식으로 데이터를 보냄
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let event = obj.event;
 			console.log(obj.event.start);
             $.ajax({
-                url: '/meeting/meetingDrop.do',
+                url: '/meetingDrop.do',
                 type: 'post',
                 data:{
                 	rent_idx:obj.event._def.extendedProps["meet_rent_idx"],
@@ -327,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			console.log(event);
 			console.log('시간길이조절'+obj.event._instance.range["start"]);
             $.ajax({
-                url: '/meeting/resizeMeeting.do',
+                url: '/resizeMeeting.do',
                 type: 'post',
                 data:{
                 	rent_idx:obj.event._def.extendedProps["meet_rent_idx"],
@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function meeting_add(allData) {
     console.log('서버에 전송할 이벤트 데이터:', allData);
     $.ajax({
-        url: '/meeting/meetingAdd.do',
+        url: '/meetingAdd.do',
         type: 'POST',  // POST 요청으로 보내야 합니다.
         contentType: 'application/json',
         data: JSON.stringify(allData),
@@ -370,7 +370,7 @@ function meeting_add(allData) {
 //일정 DB 수정(회의일정 수정)
 function meeting_update(meeting_update_data) {
     $.ajax({
-        url: '/meeting/meetingUpdate.do',  // 수정된 일정 전송 URL
+        url: '/meetingUpdate.do',  // 수정된 일정 전송 URL
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(meeting_update_data), // 수정된 이벤트 데이터 전송
@@ -388,7 +388,7 @@ function meeting_update(meeting_update_data) {
 //일정 DB 삭제(회의일정 삭제)
 function meeting_delete(rent_idx) {
     $.ajax({
-        url: '/meeting/meetingDelete.do',  // 수정된 일정 전송 URL
+        url: '/meetingDelete.do',  // 수정된 일정 전송 URL
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(rent_idx), // 수정된 이벤트 데이터 전송

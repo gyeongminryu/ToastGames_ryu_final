@@ -60,7 +60,7 @@ document.getElementById('schedule_end_time').addEventListener('change', function
                 	console.log(schedule_type_name);
                     // AJAX 요청으로 일정 데이터 가져오기
                     $.ajax({
-                        url: '/schedule/getSchedules.do',
+                        url: '/getSchedules.do',
                         type: 'POST',
                         contentType: 'application/json', // JSON 형식으로 요청
                         data: JSON.stringify({ schedule_type_name: schedule_type_name }),
@@ -255,7 +255,7 @@ document.getElementById('schedule_end_time').addEventListener('change', function
                     // 선택한 이벤트 정보
         			console.log(obj);
                     $.ajax({
-                        url: '/schedule/scheduleDrop.do',
+                        url: '/scheduleDrop.do',
                         type: 'post',
                         contentType: 'application/json',  // JSON 형식으로 요청
                         data: JSON.stringify({
@@ -285,7 +285,7 @@ document.getElementById('schedule_end_time').addEventListener('change', function
         			console.log(event);
         			console.log(obj);
                     $.ajax({
-                        url: '/schedule/scheduleResize.do',
+                        url: '/scheduleResize.do',
                         type: 'post',
                         contentType: 'application/json',  // JSON 형식으로 요청
                         data: JSON.stringify({
@@ -398,7 +398,7 @@ function schedule_add(scheduleData) {
 	//document.getElementById("submenu").style.display = "block";
 
 	$.ajax({
-		url: "/schedule/scheduleAdd.do",
+		url: "/scheduleAdd.do",
 		type: "POST",
 		contentType: "application/json", // JSON 형식으로 Content-Type 지정
 		data: JSON.stringify(scheduleData),   //데이터 형식 주의 안넘어가면 바꿔볼것
@@ -419,7 +419,7 @@ function schedule_update(scheduleData) {
 	console.log(scheduleData);
 
 	$.ajax({
-		url: "/schedule/scheduleUpdate.do",
+		url: "/scheduleUpdate.do",
 		type: "POST",
 		contentType: "application/json", // JSON 형식으로 Content-Type 지정
 		data: JSON.stringify(scheduleData),   //데이터 형식 주의 안넘어가면 바꿔볼것
@@ -440,7 +440,7 @@ function schedule_delete(sche_idx) {
 	console.log(sche_idx);
 
 	$.ajax({
-		url: "/schedule/scheduleDelete.do",
+		url: "/scheduleDelete.do",
 		type: "POST",
 		contentType: "application/json", // JSON 형식으로 Content-Type 지정
 		data:JSON.stringify({ sche_idx: sche_idx }),   //데이터 형식 주의 안넘어가면 바꿔볼것

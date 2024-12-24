@@ -23,7 +23,7 @@ import com.toast.schedule.dto.ScheduleDTO;
 import com.toast.schedule.service.ScheduleService;
 
 @RestController
-@RequestMapping("/schedule")
+@RequestMapping
 public class ScheduleController {
 
 	private ScheduleService scheduleService;

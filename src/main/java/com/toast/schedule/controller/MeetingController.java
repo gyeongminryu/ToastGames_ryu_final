@@ -29,7 +29,7 @@ import com.toast.schedule.dto.MeetingPhotoDTO;
 import com.toast.schedule.service.MeetingService;
 
 @RestController
-@RequestMapping("/meeting")
+@RequestMapping
 public class MeetingController {
  
 	Logger logger = LoggerFactory.getLogger(getClass());
