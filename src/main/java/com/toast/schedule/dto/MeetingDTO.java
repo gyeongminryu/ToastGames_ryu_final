@@ -5,6 +5,21 @@ import java.util.List;
 
 public class MeetingDTO {
 
+	private int empl_idx;
+	private String empl_name;
+	
+	public int getEmpl_idx() {
+		return empl_idx;
+	}
+	public void setEmpl_idx(int empl_idx) {
+		this.empl_idx = empl_idx;
+	}
+	public String getEmpl_name() {
+		return empl_name;
+	}
+	public void setEmpl_name(String empl_name) {
+		this.empl_name = empl_name;
+	}
 	private int room_idx;
 	private String room_name;
 	private String room_addr;
