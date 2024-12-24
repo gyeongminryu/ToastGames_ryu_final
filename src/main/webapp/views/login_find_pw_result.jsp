@@ -33,7 +33,7 @@
         <!-- 결과 출력 -->
         <p><b>${findName}</b>님의 임시 비밀번호를 아래 이메일로 발송했습니다.</p>
         <div class="result_box tst_flex">
-            <h1 class="tst_flex align_middle">${findEmail}</h1>
+            <h1 class="tst_flex align_middle align_center">${findEmail}</h1>
         </div>
         <p>비밀번호를 받지 못하셨다면 인사과(본관 306호)에 방문하여 직접 임시 비밀번호를 발급받으시기 바랍니다.</p>
         <hr class="separator" />

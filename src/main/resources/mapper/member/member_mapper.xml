@@ -2,19 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.toast.member.dao.MemberDAO">
+
+	<!-- 테스트용 로그인!!! 나중에 삭제 예정!!! -->
+	<select id="getUserByIdx" parameterType="int" resultType="map">
+		SELECT *
+		FROM employee
+		WHERE empl_idx = #{idx}
+	</select>
 	
 	<select id="isValidId" parameterType="String" resultType="boolean">
 		SELECT COUNT(*) 
 		FROM employee 
 		WHERE empl_id = #{id}
 	</select>
-	
+
 	<select id="login" parameterType="String" resultType="String"> 
 		SELECT empl_pw 
 		FROM employee 
 		WHERE empl_id = #{id} 
 	</select>
-	
+
 	<!-- 로그인할 때, DB에서 changepw가 0인지 1인지 구분하기 위함. -->
 	<select id="changePwCheck" parameterType="String"> 
 		SELECT empl_changepw
@@ -53,7 +60,7 @@
 		SELECT e.empl_idx, e.empl_name, e.empl_id, e.empl_pw,
 		e.empl_gender, e.empl_birth, e.empl_ssn1, e.empl_ssn2, e.empl_account,
 		e.empl_cmp_email, e.empl_cmp_phone, e.empl_per_email, e.empl_per_phone,
-		e.empl_addr, e.empl_emp_state, e.empl_join_date, e.empl_resig_date,
+		e.empl_addr, e.empl_emp_state, DATE_FORMAT(e.empl_join_date, '%Y-%m-%d') AS empl_join_date, e.empl_resig_date,
 		e.empl_stamp, e.empl_profile, e.bank_idx, e.empl_changepw,
 		e.file_key,
 		a.dept_idx, a.position_idx, a.duty_idx, 
@@ -80,7 +87,12 @@
 	</select>
 	 	
 	<select id="employmentHistory" resultType="map">
-		SELECT a.dept_idx, a.position_idx, a.duty_idx, a.appo_idx, a.empl_job, a.movein_date, a.transfer_date,
+		SELECT 
+			ROW_NUMBER() OVER (ORDER BY a.appo_idx ASC) AS appo_idx,
+			a.dept_idx, a.position_idx, a.duty_idx, a.appo_idx,
+			IFNULL(a.empl_job,'아직 직무가 없습니다.') AS empl_job,
+			DATE_FORMAT(a.movein_date, '%Y-%m-%d %H:%i') AS movein_date, 
+           	IFNULL(DATE_FORMAT(a.transfer_date, '%Y-%m-%d %H:%i'), '진행중') AS transfer_date,
 			p.position_name, dt.duty_name, d.dept_name 
 		FROM appointment a
 		JOIN employee e ON a.appo_empl_idx = e.empl_idx

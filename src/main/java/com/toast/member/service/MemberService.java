@@ -34,6 +34,11 @@ public class MemberService {
 	@Value("${spring.servlet.multipart.location}")
 	private String uploadAddr;
 
+	// 테스트용 로그인!!! 나중에 삭제할 예정!!!
+	public Map<String, Object> getUserByIdx(int idx) {
+		return memberDAO.getUserByIdx(idx);
+	}
+	
 	public boolean isValidId(String id) {
 		return memberDAO.isValidId(id);
 	}

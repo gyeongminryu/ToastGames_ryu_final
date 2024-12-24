@@ -104,19 +104,18 @@ public class BoardService {
 		return boardDAO.getBoardByIdx(board_idx);
 	}
 	
-	 // 댓글 작성
-    public boolean writeReply(int board_idx, String reply) {
-        return boardDAO.writeReply(board_idx, reply) > 0;
-    }
-    
-    // 댓글 목록 조회
-    public Map<String, Object> getReplyList(int board_idx) {
+	// 댓글 목록 조회
+    public List<Map<String, Object>> getReplyList(int board_idx) {
         return boardDAO.getReplyList(board_idx);
     }
-
+	 // 댓글 작성
+    public boolean writeReply(int board_idx, String reply, int empl_idx) {
+        return boardDAO.writeReply(board_idx, reply, empl_idx) > 0;
+    }
+    
     // 대댓글 작성
-    public boolean writeReReply(int parentReply, String re_reply) {
-        return boardDAO.writeReReply(parentReply, re_reply) > 0;
+    public boolean writeReReply(int reply_idx, String re_reply, int re_reply_empl_idx) {
+        return boardDAO.writeReReply(reply_idx, re_reply, re_reply_empl_idx) > 0;
     }
 
 }

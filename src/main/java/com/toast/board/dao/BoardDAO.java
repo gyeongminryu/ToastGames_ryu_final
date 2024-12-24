@@ -20,10 +20,10 @@ public interface BoardDAO {
 
 	Map<String, Object> getBoardByIdx(int board_idx);
 
-	int writeReply(int board_idx, String reply);
+	List<Map<String, Object>> getReplyList(int board_idx);
 
-	Map<String, Object> getReplyList(int board_idx);
+	int writeReply(int board_idx, String reply, int empl_idx);
 
-	int writeReReply(int parentReply, String re_reply);
+	int writeReReply(int reply_idx, String re_reply, int re_reply_empl_idx);
 	
 }

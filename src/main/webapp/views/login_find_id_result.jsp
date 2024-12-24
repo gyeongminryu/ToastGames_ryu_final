@@ -33,7 +33,7 @@
         <!-- 결과 출력 -->
         <p><b>${findName}</b>님의 아이디는 다음과 같습니다.</p>
         <div class="result_box tst_flex">
-            <h1 class="tst_flex align_middle">${findId}</h1>
+            <h1 class="tst_flex align_middle align_center">${findId}</h1>
         </div>
 
         <!-- 버튼 -->

@@ -1,7 +1,5 @@
 package com.toast.member.dto;
 
-import java.util.Date;
-
 public class MemberDTO {
 
 	private int empl_idx;
@@ -18,8 +16,8 @@ public class MemberDTO {
 	private String empl_per_phone;
 	private String empl_addr;
 	private int empl_emp_state;
-	private Date empl_join_date;
-	private Date empl_resig_date;
+	private String empl_join_date;
+	private String empl_resig_date;
 	private String empl_job;
 	private String empl_stamp;
 	private String empl_profile; 
@@ -175,16 +173,16 @@ public class MemberDTO {
 	public void setEmpl_emp_state(int empl_emp_state) {
 		this.empl_emp_state = empl_emp_state;
 	}
-	public Date getEmpl_join_date() {
+	public String getEmpl_join_date() {
 		return empl_join_date;
 	}
-	public void setEmpl_join_date(Date empl_join_date) {
+	public void setEmpl_join_date(String empl_join_date) {
 		this.empl_join_date = empl_join_date;
 	}
-	public Date getEmpl_resig_date() {
+	public String getEmpl_resig_date() {
 		return empl_resig_date;
 	}
-	public void setEmpl_resig_date(Date empl_resig_date) {
+	public void setEmpl_resig_date(String empl_resig_date) {
 		this.empl_resig_date = empl_resig_date;
 	}
 	public String getEmpl_job() {
