@@ -64,7 +64,7 @@
         </div>
     </div>
 </div>
-<c:import url="approval_writing_write_modal.jsp" />
+<c:import url="meeting_room_calendar_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/meeting.js"></script>
