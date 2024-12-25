@@ -98,17 +98,17 @@ public class FrontController {
         return new ModelAndView("meeting_room_calendar");
     }
 
-
+    //
 
     // Rent ==========================================================
 
-    // 공용 물품 목록
+    // 공용 물품 목록 (일반 직원)
     @RequestMapping(value = "/rent_list")
     public ModelAndView front_rent_list() {
         return new ModelAndView("rent_list");
     }
 
-    // 공용 물품 상세보기
+    // 공용 물품 상세보기 (일반 직원)
     @RequestMapping(value = "/rent_detail")
     public ModelAndView front_rent_detail() {
         return new ModelAndView("rent_detail");
@@ -129,31 +129,38 @@ public class FrontController {
 
 
     // Manage > Rent =================================================
+
+    // 공용 물품 목록 (관리)
     @RequestMapping(value = "/manage_rent_list")
     public ModelAndView front_manage_rent_list() {
         return new ModelAndView("manage_rent_list");
     }
 
+    // 공용 물품 등록
     @RequestMapping(value = "/manage_rent_write")
     public ModelAndView front_manage_rent_write() {
         return new ModelAndView("manage_rent_write");
     }
 
+    // 공용 물품 수정
     @RequestMapping(value = "/manage_rent_update")
     public ModelAndView front_manage_rent_update() {
         return new ModelAndView("manage_rent_update");
     }
 
+    // 공용 물품 상세보기 (관리)
     @RequestMapping(value = "/manage_rent_detail")
     public ModelAndView front_manage_rent_detail() {
         return new ModelAndView("manage_rent_detail");
     }
 
+    // 공용 물품 폐기
     @RequestMapping(value = "/manage_rent_dispose")
     public ModelAndView front_manage_rent_dispose() {
         return new ModelAndView("manage_rent_dispose");
     }
 
+    // 공용 물품 인계
     @RequestMapping(value = "/manage_rent_transfer")
     public ModelAndView front_manage_rent_transfer() {
         return new ModelAndView("manage_rent_transfer");
@@ -162,11 +169,14 @@ public class FrontController {
 
 
     // Manage > Dispose ==============================================
+
+    // 폐기한 공용 물품 목록
     @RequestMapping(value = "/manage_dispose_list")
     public ModelAndView front_manage_rent_dispose_list() {
         return new ModelAndView("manage_dispose_list");
     }
 
+    // 폐기한 공용 물품 상세보기
     @RequestMapping(value = "/manage_dispose_detail")
     public ModelAndView front_manage_rent_dispose_detail() {
         return new ModelAndView("manage_dispose_detail");

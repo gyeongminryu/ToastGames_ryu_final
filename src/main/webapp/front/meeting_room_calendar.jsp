@@ -7,6 +7,7 @@
     <title>TOAST Games Groupware</title>
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_calendar.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 </head>
@@ -27,17 +28,37 @@
                 <!-- //제목 -->
 
                 <!-- 회의실 필터 -->
-                <select id="meeting_room_select">
+                <select id="meeting_room_select" class="meeting_room_select btn_primary">
                     <option value="5">회의실 1</option>
                     <option value="{회의실idx}">{회의실명}</option>
                 </select>
+                <!-- //회의실 필터 -->
+
+                <!-- 예약 방법 안내 -->
+                <p class="how_to_reserv font_subtle">빈 공간을 클릭하면 예약할 수 있습니다.</p>
+                <!-- //예약 방법 안내 -->
 
                 <!-- 내가 포함된 회의만 보기 필터 -->
-                <fieldset>                                                                                           <!-- 로그인 생성전 임시값 -->
-                    <input type="checkbox" name="meeting_mine" id="meeting_only_mine" value="10003"/>내가 포함된 회의만 보기
-                </fieldset>
+                <div class="filtering_only_me align_right">
+                    <div class="tst_filtering_container tst_pointer">
+                        <div class="tst_filtering_off" onclick="filtering_on()">
+                            <i class="bi bi-toggle-off"></i>
+                            <span>내가 포함된 회의만 보기</span>
+                        </div>
+                        <div class="tst_filtering_on disp_hide" onclick="filtering_off()">
+                            <i class="bi bi-toggle-on"></i>
+                            <span>내가 포함된 회의만 보기</span>
+                        </div>
+                    </div>
+                    <fieldset class="disp_hide">
+                        <input type="checkbox" name="meeting_mine" id="meeting_only_mine" value="10003" />
+                    </fieldset>
+                </div>
+                <!-- //내가 포함된 회의만 보기 필터 -->
 
+                <!-- 달력 -->
                 <div id="calendar"></div>
+                <!-- //달력 -->
 
             </div>
         </div>
@@ -47,4 +68,5 @@
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/meeting.js"></script>
+<script src="resources/js/meeting_room_calendar.js"></script>
 </html>

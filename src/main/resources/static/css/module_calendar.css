@@ -1,0 +1,153 @@
+.tst_contents_inner{
+    position: relative;
+}
+
+select.meeting_room_select{
+    width: 220px;
+    padding: 6px 10px;
+    position: absolute;
+    top: calc(77px + var(--tst-container-margin));
+    left: calc(6px + var(--tst-container-margin));
+    z-index: 100;
+}
+
+.how_to_reserv{
+    position: absolute;
+    top: calc(var(--tst-container-margin));
+    right: calc(6px + var(--tst-container-margin));
+    z-index: 100;
+}
+
+.filtering_only_me{
+    width: 220px;
+    position: absolute;
+    top: calc(100px + var(--tst-container-margin));
+    right: calc(6px + var(--tst-container-margin));
+    z-index: 100;
+}
+
+
+
+/* Full Calendar */
+
+.fc{
+    position: relative;
+}
+
+
+
+/* fc-header-toolbar */
+
+.fc .fc-toolbar.fc-header-toolbar{
+    margin: 0 auto var(--tst-margin-vertical);
+}
+
+.fc .fc-header-toolbar button{
+    width: fit-content;
+    background: none;
+    border: none;
+    color: var(--tst-body-color);
+}
+
+.fc .fc-header-toolbar .fc-today-button:not(:first-child){
+    background-color: var(--tst-color-subtle);
+    border-radius: var(--tst-border-radius);
+    position: absolute;
+    left: -70px;
+}
+
+.fc .fc-header-toolbar .fc-toolbar-title{
+    margin: 0 32px;
+    line-height: 1.2em;
+}
+
+.fc .fc-header-toolbar .fc-toolbar-title span{
+    display: block;
+    text-align: center;
+}
+
+.fc .fc-header-toolbar .fc-toolbar-title span.year-month{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.fc .fc-header-toolbar .fc-toolbar-title span.day-range{
+    font-size: var(--tst-body-font-size);
+    font-weight: 400;
+}
+
+
+
+/* fc-time table */
+
+.fc .fc-scrollgrid{
+    border: none;
+}
+
+
+
+/* fc-thead */
+
+.fc th.fc-timegrid-axis{
+    background: none;
+    border: none;
+}
+
+.fc th.fc-day{
+    background-color: var(--tst-color-medium);
+    border: var(--tst-border-width) var(--tst-border-style) var(--tst-color-medium);
+    color: var(--tst-color-white);
+    font-weight: var(--tst-body-font-weight);
+}
+
+.fc th.fc-day.fc-day-today{
+    background-color: var(--tst-color-dark);
+    font-weight: 700;
+}
+
+
+
+/* fc-tbody */
+
+.fc .fc-view-harness{
+    height: calc(100vh - 250px) !important;
+}
+
+.fc .fc-view .fc-timegrid-slots table{
+    height: calc(100vh - 278px);
+    border: none;
+}
+
+.fc .fc-view .fc-timegrid-slots .fc-timegrid-slot.fc-timegrid-slot-label{
+    border: none;
+    vertical-align: top;
+    position: relative;
+    top: -10px;
+    overflow: visible;
+}
+
+.fc .fc-view .fc-timegrid-slots tr:nth-child(odd) .fc-timegrid-slot.fc-timegrid-slot-lane{
+    border: none;
+    border-bottom: var(--tst-border-width) dashed var(--tst-color-medium);
+}
+
+.fc .fc-view .fc-timegrid-slots tr:nth-child(even) .fc-timegrid-slot.fc-timegrid-slot-lane{
+    border: none;
+    border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-color-medium);
+}
+
+.fc .fc-view .fc-timegrid-cols .fc-day-today{
+    background: none;
+}
+
+.fc .fc-view .fc-timegrid-cols .fc-event{
+    background-color: var(--tst-color-subtle);
+    border: var(--tst-border-width) var(--tst-border-style) var(--tst-color-subtle);
+    border-radius: var(--tst-border-radius);
+}
+
+.fc .fc-view .fc-timegrid-cols .fc-event .fc-event-main .fc-event-main-frame{
+    color: var(--tst-body-color);
+    font-size: var(--tst-body-font-size);
+    font-weight: var(--tst-body-font-weight);
+}
