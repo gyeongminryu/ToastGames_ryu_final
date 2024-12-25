@@ -59,7 +59,7 @@
                 <li onclick="location.href='/'" class="tst_pointer">
                     <i class="bi bi-building-fill"></i><h3>회사 정보 관리</h3>
                 </li>
-                <li onclick="location.href='/'" class="tst_pointer">
+                <li onclick="location.href='/organization_tree'" class="tst_pointer">
                     <i class="bi bi-diagram-3-fill"></i><h3>조직 관리</h3>
                 </li>
                 <li onclick="location.href='/'" class="tst_pointer">

@@ -1,0 +1,22 @@
+.chart_wrapper{
+    width: calc(100vw - 310px);
+    overflow: scroll;
+}
+
+.google-visualization-orgchart-table{
+    width: calc(160px * 10);
+}
+
+.tst_tree_node,
+.tst_tree_node_selected{
+    background-color: var(--tst-color-subtle);
+    border: none;
+    border-radius: var(--tst-border-radius);
+    color: var(--tst-body-color);
+}
+
+.google-visualization-orgchart-lineright,
+.google-visualization-orgchart-lineleft,
+.google-visualization-orgchart-linebottom{
+    border-color: var(--tst-border-color) !important;
+}

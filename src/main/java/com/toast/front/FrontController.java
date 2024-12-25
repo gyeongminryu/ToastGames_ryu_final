@@ -98,7 +98,20 @@ public class FrontController {
         return new ModelAndView("meeting_room_calendar");
     }
 
-    //
+
+
+    // Document ======================================================
+    // Company Info ==================================================
+    // Organization ==================================================
+
+    // 조직 관리
+    @RequestMapping(value = "/organization_tree")
+    public ModelAndView front_organization_tree() {
+        return new ModelAndView("organization_tree");
+    }
+
+
+
 
     // Rent ==========================================================
 
