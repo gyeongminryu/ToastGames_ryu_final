@@ -1,5 +1,5 @@
-.tst_modal.tst_approval_send_modal .sign_area,
-.tst_modal.tst_approval_send_modal .stamp_area{
+.tst_modal.tst_modal_send .sign_area,
+.tst_modal.tst_modal_send .stamp_area{
     width: 100%;
     height: 180px;
     margin: var(--tst-margin-vertical) 0 calc(var(--tst-margin-vertical) * 2);
@@ -8,7 +8,7 @@
     position: relative;
 }
 
-.tst_modal.tst_approval_send_modal .stamp_area .min.font_subtle{
+.tst_modal.tst_modal_send .stamp_area .min.font_subtle{
     position: absolute;
     top: -16px;
     right: 0;

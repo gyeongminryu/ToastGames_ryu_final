@@ -55,14 +55,18 @@
                                     <th class="td_align_top">사진 첨부</th>
                                     <td>
                                         <input type="file" name="file" placeholder="첨부할 사진을 등록하세요. 장당 최대 5MB, 총 다섯 장까지 등록 가능합니다." />
-                                        <div class="image_preview">
-                                            <ul class="tst_list list_inline list_no_desc">
-                                                <li><img src="https://images3.theispot.com/1024x1024/a4140ir1003.jpg?v=210305104100" /></li>
-                                                <li><img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" /></li>
-                                                <li><img src="https://images3.theispot.com/1024x1024/a4140ir1071.jpg?v=210306093500" /></li>
-                                                <li><img src="https://images2.theispot.com/1024x1024/a4140ir1124.jpg?v=211029051300" /></li>
-                                                <li><img src="https://images3.theispot.com/1024x1024/a4140ir1062.jpg?v=210305062100" /></li>
-                                            </ul>
+                                        <div class="image_preview_container">
+                                            <div class="image_preview">
+                                                <table class="tst_table table_no_underline">
+                                                    <tr>
+                                                        <td><img src="https://images3.theispot.com/1024x1024/a4140ir1003.jpg?v=210305104100" /></td>
+                                                        <td><img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" /></td>
+                                                        <td><img src="https://images3.theispot.com/1024x1024/a4140ir1071.jpg?v=210306093500" /></td>
+                                                        <td><img src="https://images2.theispot.com/1024x1024/a4140ir1124.jpg?v=211029051300" /></td>
+                                                        <td><img src="https://images3.theispot.com/1024x1024/a4140ir1062.jpg?v=210305062100" /></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
