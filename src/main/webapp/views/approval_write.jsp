@@ -19,7 +19,7 @@
 </head>
 <body>
 <form method="POST" enctype="multipart/form-data">
-  <input type = "hidden" name = "doc_idx" id="hidden_doc_idx"/>
+  <input type = "hidden" name = "doc_idx" class="hidden_doc_idx"/>
   <input type = "hidden" name = "doc_write_date" id="hidden_doc_date"/>
 
   <table>
@@ -51,7 +51,10 @@
       </td>
     </tr>
     <tr>
-      <th><input type="button" value="보고하기" onclick=""/><input type="button" value="저장하기" onclick="approval_write_save()"/><input type="button" value="취소하기" onclick="approval_write_delete()"/></th>
+      <th><input type="button" value="보고하기" onclick="approval_request()"/>
+          <input type="button" value="저장하기" onclick="approval_write_save()"/>
+          <input type="button" value="취소하기" onclick="approval_write_delete()"/>
+      </th>
     </tr>
   </table>
 
@@ -105,15 +108,21 @@
   </div>
 
   <%--참조--%>
-  <div>참조자 선택하기</div>
-  <div id = "referrer_wrapper">
-    <div id = "referrer_list"></div>
-    <input type = "hidden" name = "refer_count" id="refer_count"/>
-    <div id="referrer_add" onclick="approval_line_window(0)">참조 추가하기</div>
-  </div>
+
+
+    <input type = "hidden" name = "doc_idx" class="hidden_doc_idx"/>
+
+    <div>참조자 선택하기</div>
+    <div id = "referrer_wrapper">
+
+      <div id = "referrer_list"></div>
+
+      <div id="referrer_add" onclick="approval_line_window(0)">참조 추가하기</div>
+    </div>
+
   </div>
 
-</div>
+
 </form>
 </body>
 
@@ -123,6 +132,8 @@
 <script src="/resources/js/approval_request_write.js"></script>
 <script src="/resources/js/approval_request_save.js"></script>
 <script src="/resources/js/approval_write_line_parent.js"></script>
+<script src="/resources/js/approval_write_delete.js"></script>
+<script src="/resources/js/approval_request.js"></script>
 
 <script>
   //모델앤뷰로 받은 파라메터
@@ -135,7 +146,7 @@
 
 
   //부모 창 = 참조 번호 추가 및 삭제 위한 변수
-  var refer_count =0;
+ // var refer_count =1;
 
 
   //quill editor

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -31,7 +32,7 @@ public class ApprovalRequestController {
 		logger.info("idx:{}", form_idx);
 
 		//세션 처리
-		int empl_idx = 10016;
+		int empl_idx = 10023;
 
 		//작성하기부터는 update로 하기
 		int doc_idx = approvalRequestService.doc_write_initial(Integer.parseInt(form_idx),form_content,empl_idx);
@@ -52,7 +53,7 @@ public class ApprovalRequestController {
 	@ResponseBody
 	public Map<String,Object> doc_get (int doc_idx) {
 		//세션 처리
-		int empl_idx = 10016;
+		int empl_idx = 10023;
 
 		logger.info("doc_get.ajax 컨트롤러 도착");
 		logger.info("doc_idx: " + doc_idx);
@@ -76,7 +77,7 @@ public class ApprovalRequestController {
 	@ResponseBody
 	public Map<String,Object> doc_write_do (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]files) {
 		//세션 처리
-		int empl_idx = 10016;
+		int empl_idx = 10023;
 		String success = "결재 문서 저장 실패";
 		param.put("empl_idx", String.valueOf(empl_idx));
 		Map<String,Object> data = new HashMap<>();
@@ -85,7 +86,7 @@ public class ApprovalRequestController {
 		//logger.info("form_content:{}",doc_content);
 		logger.info("files:{}", (Object) files);
 		//update로 하기
-		if(approvalRequestService.doc_write(param,files) && approvalRequestService.save_approval_line(param)&&approvalRequestService.save_refer_line(param)){
+		if(approvalRequestService.doc_write(param,files) && approvalRequestService.save_approval_line(param)){
 
 			success = "결재 문서 저장 성공";
 		}
@@ -95,6 +96,29 @@ public class ApprovalRequestController {
 		return data;
 	}
 
+	@PostMapping (value="/refer_save_doc.ajax")
+	@ResponseBody
+	public Map<String,Object> refer_save(@RequestBody Map<String, Object> payload){
+		logger.info("참조 컨트롤러 도착 param:{}",payload.get("refer_line"));
+		logger.info("참조 컨트롤러 도착 doc_idx:{}",payload.get("doc_idx"));
+
+		List<String> refer_line = (List<String>) payload.get("refer_line");
+		String doc_idx = (String) payload.get("doc_idx");
+		Map<String,Object> data = new HashMap<>();
+		approvalRequestService.save_refer_line(refer_line,doc_idx);
+		data.put("success","참조 라인 저장 성공");
+		return data;
+	}
+
+	@GetMapping(value = "/approval_write_delete.ajax")
+	@ResponseBody
+	public Map<String,Object> approval_write_delete(String doc_idx){
+		logger.info(doc_idx);
+		Map<String,Object> data = new HashMap<>();
+		approvalRequestService.write_delete(doc_idx);
+		data.put("success","문서 삭제 성공!");
+		return data;
+	}
 
 
 }

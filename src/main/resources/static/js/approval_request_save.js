@@ -2,11 +2,13 @@
 function approval_write_temporal_save(){
     console.log("임시 저장 함수 실행");
     approval_set_save_data();
+    refer_save_doc();
 }
 //저장 함수
 function approval_write_save(){
     console.log("save 함수 실행");
     approval_set_save_data();
+    refer_save_doc();
     //ajax 처리 끝나면 이동
     location.href = "/approval_writing_list.go";
 }
@@ -83,4 +85,33 @@ function approval_save_doc(){
     });
 }
 
+//문서의 참조를 저장 요청하는 함수
+function refer_save_doc(){
+    console.log("문서 참조 저장 요청");
+    var r_empl_line = $('input[name = "r_empl_line"]').map(function(){
+        return $(this).val();
+    }).get(); //배열
+    console.log("r_empl_line",r_empl_line);
 
+    var doc_idx = $('.hidden_doc_idx').val();
+    console.log("doc_idx",doc_idx);
+    console.log("Object.keys(r_empl_line).length",Object.keys(r_empl_line).length);
+    if(Object.keys(r_empl_line).length>0){
+        $.ajax({
+            type :'POST',
+            url:'refer_save_doc.ajax',
+            data: JSON.stringify({
+                refer_line: r_empl_line,  // r_empl_line 값
+                doc_idx: doc_idx        // doc_idx 값 배열
+            }),
+            contentType: 'application/json',
+            dataType: 'JSON',
+            success : function (data){
+                console.log(data);
+            },error : function (e){
+                console.log(e);
+            }
+        });
+    }
+
+}
