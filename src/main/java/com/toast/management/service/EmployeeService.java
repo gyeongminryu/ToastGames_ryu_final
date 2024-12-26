@@ -178,6 +178,7 @@ public class EmployeeService {
 	// 직원 퇴사, 근무, 휴직 처리
 	public void employeeChangeDo(String empl_idx, String statement_idx) {
 		if(statement_idx.equals("3")) { // 퇴직처리이면
+			// 상태변화 + 퇴사일 입력
 		employeeDAO.employeeResigDo(empl_idx,statement_idx);
 		}else {
 		employeeDAO.employeeChangeDo(empl_idx,statement_idx);
