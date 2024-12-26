@@ -70,10 +70,6 @@
             VALUES (#{doc_idx},#{line_order},#{dept_idx},#{duty_idx},#{empl_idx},#{position_idx})
     </insert>
 
-  <!--  &lt;!&ndash;참조 라인 최초 저장&ndash;&gt;
-    <insert id="save_refer_line_initial">
-        INSERT INTO reference
-    </insert>-->
 
 
     <!--1차 저장한 문서 가져오기-->
@@ -99,7 +95,7 @@
     </select>
 
 
-    <!--1차 저장한 결재라인 가져오기-->
+    <!--저장한 결재라인 가져오기-->
     <select id="doc_line_get" resultType="Map">
       SELECT dp.dept_idx,dp.dept_name,al.line_order,e.empl_idx,e.empl_name,a.duty_idx,d.duty_name,a.position_idx,p.position_name FROM employee e
             JOIN appointment a on e.appolast_idx = a.appo_idx
@@ -216,4 +212,29 @@
     <delete id="delete_doc">
         DELETE FROM document WHERE doc_idx = #{doc_idx}
     </delete>
+
+    <!--상신하기-->
+
+    <!--문서 제목 및 문서 내용,보고 내용,양식 idx 가져오기-->
+    <select id="final_doc_get" resultType="Map">
+        SELECT doc_empl_idx,doc_idx,doc_subject, doc_content, doc_content_sub, form_idx FROM document WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <!--상신-->
+    <insert id="request" parameterType="Map">
+        INSERT INTO approval(appr_receiver_idx,appr_order,appr_sender_idx,doc_idx,form_idx,appr_state)
+        VALUES (${appr_receiver_idx},${appr_order},${appr_sender_idx},${doc_idx}, ${form_idx},0)
+    </insert>
+
+    <update id="update_approval_doc_state">
+        UPDATE document SET doc_state = 1 WHERE doc_idx = #{doc_idx}
+    </update>
+
+    <!--<select id="get_sent_list">
+    SELECT DISTINCT(a.doc_idx),d.doc_subject,d.doc_state,d.doc_update_date,d.doc_end_date,d.form_idx,f.form_subject FROM document d
+        join approval a on d.doc_idx = a.doc_idx
+        join form f on d.form_idx = f.form_idx
+       WHERE doc_empl_idx = #{empl_idx};
+    </select>-->
+
 </mapper>
