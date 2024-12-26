@@ -113,30 +113,30 @@ function product_search(page,currentCategory,option, keyword) {
 }
 
 //목록
-resource_list_print(list){
+function resource_list_print(list) {
 	var content = '';
 	if(list != null) {
 		for(var item of list) {
-			content='<tr>';
-	        content='<td>item.prod_idx</td>';
-	        content='<td><span class="tst_pointer">item.prod_cate_name</span></td>';
-	        content='<td class="td_align_left">';
-	        content='<h3 onclick="location.href='/rent_detail?'" class="tst_pointer">item.prod_name</h3>';
-	        content='</td>';
-	        content='<td class="td_align_left">';
-	        content='<span onclick="location.href='/rent_detail?'" class="tst_pointer">item.prod_info</span>';
-	        content='</td>';
-	        content='<td><span class="tst_badge_min btn_secondary">item.prod_rent_str</span></td>';
-	        content='<td>item.prod_exp_date</td>';
-	        content='</tr>';
+			content+='<tr>';
+	        content+='<td>item.prod_idx</td>';
+	        content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
+	        content+='<td class="td_align_left">';
+	        content += '<h3 onclick="location.href=\'/rent_detail?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
+	        content+='</td>';
+	        content+='<td class="td_align_left">';
+	        content+='<span onclick="location.href='/rent_detail?'" class="tst_pointer">item.prod_info</span>';
+	        content+='</td>';
+	        content+='<td><span class="tst_badge_min btn_secondary">item.prod_rent_str</span></td>';
+	        content+='<td>item.prod_exp_date</td>';
+	        content+='</tr>';
 		}
-	}else{
-	    content='<tr class="rent_list_no_data">'; // 데이터가 있을 경우 클래스 disp_hide를 추가하세요.
-        content='<td colspan="6" class="td_no_data">';
-        content='<p><i class="bi bi-box-seam"></i></p>';
-        content='<h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>';
-        content='</td>';
-        content='</tr>';
+	} else{
+	    content+='<tr class="rent_list_no_data">'; // 데이터가 있을 경우 클래스 disp_hide를 추가하세요.
+        content+='<td colspan="6" class="td_no_data">';
+        content+='<p><i class="bi bi-box-seam"></i></p>';
+        content+='<h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>';
+        content+='</td>';
+        content+='</tr>';
 	}
 	$('#resource_list').html(content);
 }

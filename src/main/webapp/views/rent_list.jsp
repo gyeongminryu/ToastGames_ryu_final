@@ -56,12 +56,10 @@
                             <!-- //전체 제품 조회 (필터링 초기화) -->
 
                             <!-- 분류 목록 (필터링) -->
-                            <tr><td>
-                            	<span onclick="pageCall(1, '${category.prod_cate_name}')">
-                            		<c:forEach items="${categoryList}" var="category">
-	                            		${category.prod_cate_name}
-                            		</c:forEach>
-                            	</span></td></tr>
+                            <c:forEach items="${categoryList}" var="category">
+                            	<tr><td><span onclick="pageCall(1, '${category.prod_cate_name}')">
+	                            	${category.prod_cate_name}</span></td></tr>
+                            </c:forEach>
                             <!-- //분류 목록 (필터링) -->
 
                             <!-- 예시 -->
