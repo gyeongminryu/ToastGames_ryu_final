@@ -76,8 +76,7 @@
                 <!-- 표 -->
                 <table class="tst_table">
                     <colgroup>
-                        <col style="width: auto" />
-                        <col style="width: auto" />
+                        <col style="width: 40px" />
                         <col style="width: auto" />
                         <col style="width: auto" />
                         <col style="width: auto" />
@@ -87,19 +86,24 @@
                     </colgroup>
                     <thead>
                     <tr>
-                        <th>번호</th>
-                        <th>조직명</th>
+                        <th colspan="2">조직명</th>
                         <th>조직장</th>
-                        <th>조직장 연락처</th>
-                        <th>조직장 이메일</th>
+                        <th>연락처</th>
+                        <th>이메일</th>
                         <th>소속 인원</th>
-                        <th>상급 조직</th>
                         <th>담당 직무</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>21</td>
+                        <td colspan="2">UI/UX부서</td>
+                        <td>부서장 (직급)</td>
+                        <td>00)0000-0000</td>
+                        <td>member@toastgames.com</td>
+                        <td>32명</td>
+                        <td></td>
+                    </tr>
+                    <tr>
                         <td></td>
                         <td></td>
                         <td></td>
