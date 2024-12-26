@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/manage_rent.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
@@ -77,120 +78,172 @@
                             </tr>
                             </tbody>
                         </table>
+                        <hr class="separator" />
                         <!-- //조직 정보 -->
 
-                        <hr class="separator" />
-
-                    </div>
-                    <div class="tst_col9">
-
-                        <!-- 대여 이력 -->
+                        <!-- 조직장 변경 이력 -->
                         <table class="tst_table">
                             <colgroup>
                                 <col style="width: 60px;" />
-                                <col style="width: 160px;" />
                                 <col style="width: auto;" />
-                                <col style="width: 110px;" />
-                                <col style="width: 110px;" />
-                                <col style="width: 110px;" />
                                 <col style="width: 110px;" />
                             </colgroup>
                             <thead>
                             <tr>
                                 <th>번호</th>
-                                <th>대여자</th>
-                                <th>대여 사유</th>
-                                <th>대여일</th>
-                                <th>반납 기한</th>
-                                <th>반납일</th>
-                                <th>반납 여부</th>
+                                <th>조직장</th>
+                                <th>발령일</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{번호}</td>
+                                <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급})</span></td>
+                                <td>{발령일|yyyy-MM-dd}</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td class="td_align_left"><span onclick="tst_view_profile('10052')" class="tst_pointer">서연진 (차장)</span></td>
+                                <td>2020-01-02</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- //조직장 변경 이력 -->
+
+                    </div>
+                    <div class="tst_col9">
+
+                        <!-- 조직원 검색 -->
+                        <form>
+                            <div class="tst_search_container">
+                                <div class="tst_search_select">
+                                    <select id="tst_search_select_category" name="category">
+                                        <option value="{검색 분류}">검색 분류</option>
+                                    </select>
+                                </div>
+                                <div class="tst_search_input">
+                                    <input type="text" name="keyword_class" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                                </div>
+                                <div class="tst_search_icon">
+                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- //조직원 검색 -->
+
+                        <!-- 조직원 목록 -->
+                        <table class="tst_table">
+                            <colgroup>
+                                <col style="width: 60px;" />
+                                <col style="width: 120px;" />
+                                <col style="width: 180px;" />
+                                <col style="width: auto;" />
+                                <col style="width: 130px;" />
+                                <col style="width: 100px;" />
+                                <col style="width: 100px;" />
+                                <col style="width: 100px;" />
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>직원</th>
+                                <th>팀</th>
+                                <th>직무</th>
+                                <th>발령일</th>
+                                <th>금주 근무시간</th>
+                                <th>잔여 연차</th>
+                                <th>근무 상태</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <!-- 대여 내역이 없을 경우 -->
-                            <tr class="rent_history_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="7" class="td_no_data">
+                            <!-- 조직원이 없을 경우 -->
+                            <tr class="rent_history_no_data disp_hide"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
+                                <td colspan="8" class="td_no_data">
                                     <p><i class="bi bi-box-seam"></i></p>
                                     <h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>
                                 </td>
                             </tr>
-                            <!-- //대여 내역이 없을 경우 -->
+                            <!-- //조직원이 없을 경우 -->
 
-                            <!-- 대여 내역 > 대여중인 물품 -->
+                            <!-- 부서원/팀원 목록 -->
+
+                            <!-- 부서원/팀원 목록 > 조직장 -->
+                            <tr class="td_bg_subtle"><!-- 조직장은 tr에 클래스 'td_bg_subtle'를 추가하세요 -->
+                                <td>{번호}</td>
+                                <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급})</span></td>
+                                <td class="td_align_left">{팀} (부서장|팀장)<!-- 부서장은 소속 팀을 표시하지 않습니다 --></td>
+                                <td class="td_align_left">{직무}</td>
+                                <td>{발령일|yyyy-MM-dd}</td>
+                                <td>주 {근무시간}시간</td>
+                                <td>{잔여 연차}/15</td>
+                                <td>재직중</td>
+                            </tr>
+                            <!-- //부서원/팀원 목록 > 조직장 -->
+
+                            <!-- 부서원/팀원 목록 > 조직원 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일|yyyy-MM-dd}</td>
-                                <td>{반납 기한|yyyy-MM-dd}</td>
-                                <td><h3>대여중</h3></td>
-                                <td><h3>대여중</h3></td>
+                                <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급})</span></td>
+                                <td class="td_align_left">{팀}<!-- 부서장은 소속 팀을 표시하지 않습니다 --></td>
+                                <td class="td_align_left">{직무}</td>
+                                <td>{발령일|yyyy-MM-dd}</td>
+                                <td>주 {근무시간}시간</td>
+                                <td>{잔여 연차}/15</td>
+                                <td>재직중</td>
                             </tr>
-                            <!-- //대여 내역 > 대여중인 물품 -->
+                            <!-- //부서원/팀원 목록 > 조직원 -->
 
-                            <!-- 대여 내역 > 연체중인 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일|yyyy-MM-dd}</td>
-                                <td>{반납 기한|yyyy-MM-dd}</td>
-                                <td>{반납일|yyyy-MM-dd}</td>
-                                <td><h3 class="font_caution">연체</h3></td>
-                            </tr>
-                            <!-- //대여 내역 > 연체중인 물품 -->
-
-                            <!-- 대여 내역 > 기한 내에 반납한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일|yyyy-MM-dd}</td>
-                                <td>{반납 기한|yyyy-MM-dd}</td>
-                                <td>{반납일|yyyy-MM-dd}</td>
-                                <td>정상 반납</td>
-                            </tr>
-                            <!-- //대여 내역 > 기한 내에 반납한 물품 -->
-
-                            <!-- 대여 내역 > 연체 후 반납한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일|yyyy-MM-dd}</td>
-                                <td>{반납 기한|yyyy-MM-dd}</td>
-                                <td>{반납일|yyyy-MM-dd}</td>
-                                <td><span class="font_caution">연체 후 반납</span></td>
-                            </tr>
-                            <!-- //대여 내역 > 연체 후 반납한 물품 -->
+                            <!-- //부서원/팀원 목록 -->
 
                             <!-- 예시 -->
-                            <tr>
-                                <td>16</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">김사원 (영업/대리)</span></h3></td>
-                                <td class="td_align_left">12일에 고객사 출장시 사용할 예정입니다.</td>
-                                <td>2025-01-11</td>
-                                <td>2025-01-11</td>
-                                <td><h3>대여중</h3></td>
-                                <td><h3>대여중</h3></td>
+                            <tr class="td_bg_subtle">
+                                <td>24</td>
+                                <td class="td_align_left"><span onclick="tst_view_profile('10052')" class="tst_pointer">서연진 (차장)</span></td>
+                                <td class="td_align_left">(부서장)</td>
+                                <td class="td_align_left">프로그래밍 부서 및 관련 업무 전반 관리</td>
+                                <td>2020-01-02</td>
+                                <td>주 40시간</td>
+                                <td>13/15</td>
+                                <td>재직중</td>
                             </tr>
                             <tr>
-                                <td>15</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">박대리 (개발/대리)</span></h3></td>
-                                <td class="td_align_left">1월 3일에 고객사 출장시 사용할 예정입니다.</td>
-                                <td>2024-12-31</td>
-                                <td>2025-01-04</td>
-                                <td>2025-01-04</td>
-                                <td>정상 반납</td>
+                                <td>23</td>
+                                <td class="td_align_left"><span onclick="tst_view_profile('10060')" class="tst_pointer">김인하 (과장)</span></td>
+                                <td class="td_align_left">게임엔진 개발 (팀장)</td>
+                                <td class="td_align_left">게임 엔진 개발 및 관련 업무 전반 관리</td>
+                                <td>2020-01-02</td>
+                                <td>주 32시간</td>
+                                <td>10/15</td>
+                                <td>재직중</td>
+                            </tr>
+                            <tr>
+                                <td>22</td>
+                                <td class="td_align_left"><span onclick="tst_view_profile('')" class="tst_pointer">김이름 (대리)</span></td>
+                                <td class="td_align_left">게임엔진 개발</td>
+                                <td class="td_align_left">게임 엔진 개발</td>
+                                <td>2020-01-02</td>
+                                <td>주 32시간</td>
+                                <td>10/15</td>
+                                <td>재직중</td>
+                            </tr>
+                            <tr>
+                                <td>21</td>
+                                <td class="td_align_left"><span onclick="tst_view_profile('')" class="tst_pointer">김이름 (대리)</span></td>
+                                <td class="td_align_left">게임엔진 개발</td>
+                                <td class="td_align_left">게임 엔진 개발</td>
+                                <td>2020-01-02</td>
+                                <td>주 32시간</td>
+                                <td>10/15</td>
+                                <td>재직중</td>
                             </tr>
                             <!-- //예시 -->
+
                         </table>
+                        <!-- //대여 이력 -->
+
                     </div>
-                    <!-- //대여 이력 -->
-
                 </div>
-
             </div>
         </div>
     </div>

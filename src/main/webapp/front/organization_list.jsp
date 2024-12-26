@@ -64,7 +64,7 @@
                             <form>
                                 <div class="tst_search_container">
                                     <div class="tst_search_select">
-                                        <select id="tst_search_select_category" name="category" onchange="location.href='/manage_rent_list'">
+                                        <select id="tst_search_select_category" name="category">
                                             <option value="{검색 분류}">검색 분류</option>
                                         </select>
                                     </div>
@@ -80,6 +80,7 @@
 
                         </td>
                         <td class="td_align_right posit_relative">
+
                             <!-- 조직 추가 -->
                             <button onclick="tst_modal_call('tst_modal_write')" class="btn_primary">조직 추가하기</button>
                             <!-- //조직 추가 -->

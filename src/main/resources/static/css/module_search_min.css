@@ -26,7 +26,7 @@
 .tst_search_container .tst_search_select select{
     width: 100%;
     margin: 0;
-    padding: 1px 0 4px;
+    padding: 0 0 4px;
     border: none;
     border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-color-dark);
     border-radius: 0px;
