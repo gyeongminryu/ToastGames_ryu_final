@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_calendar.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 </head>
@@ -28,7 +30,7 @@
                 <!-- //제목 -->
 
                 <!-- 회의실 필터 -->
-                <select id="meeting_room_select" class="meeting_room_select btn_primary">
+                <select id="meeting_room_select" name="room_idx" class="meeting_room_select btn_primary">
                     <option value="5">회의실 1</option>
                     <option value="{회의실idx}">{회의실명}</option>
                 </select>
@@ -59,6 +61,14 @@
                 <!-- 달력 -->
                 <div id="calendar"></div>
                 <!-- //달력 -->
+
+                <!-- 기능 완성시 삭제해 주세요 -->
+                <ul class="list_no_desc list_no_desc list_inline">
+                    <li><button class="btn_subtle" onclick="tst_modal_call('tst_modal_write')">예약하기</button></li>
+                    <li><button class="btn_subtle" onclick="tst_modal_call('tst_modal_detail')">예약 확인하기</button></li>
+                    <li><button class="btn_subtle" onclick="tst_modal_call('tst_modal_update')">예약 수정하기</button></li>
+                </ul>
+                <!-- //기능 완성시 삭제해 주세요 -->
 
             </div>
         </div>

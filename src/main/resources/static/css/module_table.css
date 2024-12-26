@@ -49,7 +49,7 @@
     vertical-align: top;
 }
 
-.tst_table.table_no_padding th,
+.tst_table.table_no_padding tbody th,
 .tst_table.table_no_padding td,
 .tst_table th.td_no_padding,
 .tst_table td.td_no_padding{
