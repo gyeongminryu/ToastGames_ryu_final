@@ -208,6 +208,15 @@ public class DepartmentController {
 		return map;
 	}
 
-
+	@GetMapping(value="/companyinfo.go")
+	public String cmpSet(Model model) {
+		
+	
+		
+	//	departmentService.organizationTree();	
+	//	model.addAttribute("treeinfo",deptlist);
+		
+		return "companyinfo";
+	}
 
 }
