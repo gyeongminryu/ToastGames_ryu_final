@@ -146,6 +146,21 @@
                             </tr>
                             <!-- //검색되는 공유 물품이 없을 경우 -->
 
+                            <!-- 공유 물품 목록 > 대여 신청중인 물품 -->
+                            <tr>
+                                <td>{번호}</td>
+                                <td><span class="tst_pointer">{분류}</span></td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">{제품명}</h3>
+                                </td>
+                                <td class="td_align_left">
+                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_detail?'" class="tst_pointer">{제품_정보}</span>
+                                </td>
+                                <td><span class="tst_badge_min btn_primary">대여 신청</span></td>
+                                <td>{반납 예정 일시}</td>
+                            </tr>
+                            <!-- //공유 물품 목록 > 대여 신청중인 물품 -->
+
                             <!-- 공유 물품 목록 > 대여중인 물품 -->
                             <tr>
                                 <td>{번호}</td>
