@@ -76,42 +76,139 @@
                 <!-- 표 -->
                 <table class="tst_table">
                     <colgroup>
-                        <col style="width: 40px" />
+                        <col style="width: 16px" />
+                        <col style="width: 120px" />
+                        <col style="width: 150px" />
+                        <col style="width: 180px" />
+                        <col style="width: 220px" />
+                        <col style="width: 120px" />
                         <col style="width: auto" />
-                        <col style="width: auto" />
-                        <col style="width: auto" />
-                        <col style="width: auto" />
-                        <col style="width: auto" />
-                        <col style="width: auto" />
+                        <col style="width: 180px" />
                     </colgroup>
                     <thead>
                     <tr>
                         <th colspan="2">조직명</th>
                         <th>조직장</th>
-                        <th>연락처</th>
+                        <th>조직장 연락처</th>
+                        <th>조직장 이메일</th>
                         <th>소속 인원</th>
                         <th>담당 직무</th>
                         <th>위치</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td colspan="2">{부서명}</td>
-                        <td>{부서장 (직급)}</td>
-                        <td>{00)0000-0000}</td>
-                        <td>{00}명</td>
-                        <td>{부서 담당 직무}</td>
+
+                    <!-- 부서 출력 -->
+                    <tr class="td_bg_subtle">
+                        <th><i class="bi bi-folder"></i></th>
+                        <th class="td_align_left tst_pointer" onclick="location.href=''">{부서명}</th>
+                        <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{부서장} ({직급})</span></td>
+                        <td>{부서장 연락처}</td>
+                        <td>{부서장 이메일}</td>
+                        <td>{소속 인원}명</td>
+                        <td class="td_align_left">{부서 담당 직무}</td>
                         <td>{부서 위치}</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td>{팀명}</td>
-                        <td>{팀장 (직급)}</td>
-                        <td>{00)0000-0000}</td>
-                        <td>{0}명</td>
-                        <td>{팀 담당 직무}</td>
-                        <td>{팀 위치}</td>
+                        <td colspan="8" class="td_no_padding">
+
+                            <!-- 소속 팀 출력 -->
+                            <table class="tst_table tst_table_in_table">
+                                <colgroup>
+                                    <col style="width: 16px" />
+                                    <col style="width: 120px" />
+                                    <col style="width: 150px" />
+                                    <col style="width: 180px" />
+                                    <col style="width: 220px" />
+                                    <col style="width: 120px" />
+                                    <col style="width: auto" />
+                                    <col style="width: 180px" />
+                                </colgroup>
+                                <tr>
+                                    <th>├</th>
+                                    <th class="td_align_left tst_pointer" onclick="location.href=''">{팀명}</th>
+                                    <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{팀장} ({직급})</span></td>
+                                    <td>{팀장 연락처}</td>
+                                    <td>{팀장 이메일}</td>
+                                    <td>{소속 인원}명</td>
+                                    <td class="td_align_left">{팀 담당 직무}</td>
+                                    <td>{팀 위치}</td>
+                                </tr>
+                                <tr>
+                                    <th>└</th>
+                                    <th class="td_align_left tst_pointer" onclick="location.href=''">{팀명}</th>
+                                    <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{팀장} ({직급})</span></td>
+                                    <td>{팀장 연락처}</td>
+                                    <td>{팀장 이메일}</td>
+                                    <td>{소속 인원}명</td>
+                                    <td class="td_align_left">{팀 담당 직무}</td>
+                                    <td>{팀 위치}</td>
+                                </tr>
+                            </table>
+                            <!-- //소속 팀 출력 -->
+                        </td>
                     </tr>
+                    <!-- //부서 출력 -->
+
+                    <!-- 예시 -->
+                    <tr class="td_bg_subtle">
+                        <th><i class="bi bi-folder"></i></th>
+                        <th class="td_align_left tst_pointer" onclick="location.href=''">프로그래밍</th>
+                        <td class="td_align_left"><span onclick="tst_view_profile('10052')" class="tst_pointer">서연진 (차장)</span></td>
+                        <td>02-2345-6789</td>
+                        <td>member@toastgames.com</td>
+                        <td>8명</td>
+                        <td class="td_align_left">엔진 개발, 게임 콘텐츠 개발, 유지 보수시 이슈 처리, 프로그래밍</td>
+                        <td>5층 503-5호</td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" class="td_no_padding">
+                            <table class="tst_table tst_table_in_table">
+                                <colgroup>
+                                    <col style="width: 16px" />
+                                    <col style="width: 120px" />
+                                    <col style="width: 150px" />
+                                    <col style="width: 180px" />
+                                    <col style="width: 220px" />
+                                    <col style="width: 120px" />
+                                    <col style="width: auto" />
+                                    <col style="width: 180px" />
+                                </colgroup>
+                                <tr>
+                                    <th>├</th>
+                                    <th class="td_align_left tst_pointer" onclick="location.href=''">게임엔진</th>
+                                    <td class="td_align_left"><span onclick="tst_view_profile('10060')" class="tst_pointer">김인하 (과장)</span></td>
+                                    <td>02-2345-6789</td>
+                                    <td>member@toastgames.com</td>
+                                    <td>3명</td>
+                                    <td class="td_align_left">게임엔진 개발</td>
+                                    <td>5층 503호</td>
+                                </tr>
+                                <tr>
+                                    <th>├</th>
+                                    <th class="td_align_left tst_pointer" onclick="location.href=''">게임플레이</th>
+                                    <td class="td_align_left"><span onclick="tst_view_profile('10059')" class="tst_pointer">박사금 (과장)</span></td>
+                                    <td>02-2345-6789</td>
+                                    <td>member@toastgames.com</td>
+                                    <td>3명</td>
+                                    <td class="td_align_left">QA 및 테스트</td>
+                                    <td>5층 503호</td>
+                                </tr>
+                                <tr>
+                                    <th>└</th>
+                                    <th class="td_align_left tst_pointer" onclick="location.href=''">DBA</th>
+                                    <td class="td_align_left"><span onclick="tst_view_profile('10064')" class="tst_pointer">주차장 (과장)</span></td>
+                                    <td>02-2345-6789</td>
+                                    <td>member@toastgames.com</td>
+                                    <td>2명</td>
+                                    <td class="td_align_left">데이터베이스 관리</td>
+                                    <td>5층 504호</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- //예시 -->
+
                     </tbody>
                 </table>
                 <!-- //표 -->
@@ -122,5 +219,5 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
-<script src="resources/js/organization_tree.js"></script>
+<script src="resources/js/organization_list.js"></script>
 </html>

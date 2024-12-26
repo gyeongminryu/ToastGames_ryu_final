@@ -24,10 +24,6 @@
     overflow-y: scroll;
 }
 
-.tst_modal.tst_modal_select .tst_modal_body .tst_table .tst_table{
-    margin: -9px 0;
-}
-
 .tst_modal.tst_modal_select .tst_modal_body .td_no_data{
     padding-top: 200px;
 }

@@ -36,7 +36,7 @@
                         <tr class="disp_hide">
                             <td></td>
                             <td>
-                                <table class="tst_table table_align_left table_no_padding">
+                                <table class="tst_table tst_table_in_table table_align_left table_no_padding">
                                     <tbody>
                                     <tr>
                                         <!-- 팀 내 직원을 출력하는 함수를 입력하세요 --><td onclick="{함수}">{팀명}</td>
@@ -61,7 +61,7 @@
                         <tr class="disp_hide">
                             <td></td>
                             <td>
-                                <table class="tst_table table_align_left table_no_padding">
+                                <table class="tst_table tst_table_in_table table_align_left table_no_padding">
                                     <tbody>
                                     <tr>
                                         <td onclick="{함수}">{팀명}</td>

@@ -102,3 +102,7 @@
 .tst_table .list_no_desc{
     margin: 0;
 }
+
+.tst_table .tst_table.tst_table_in_table{
+    margin: -9px 0;
+}
