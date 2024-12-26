@@ -89,28 +89,28 @@
                         <th colspan="2">조직명</th>
                         <th>조직장</th>
                         <th>연락처</th>
-                        <th>이메일</th>
                         <th>소속 인원</th>
                         <th>담당 직무</th>
+                        <th>위치</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td colspan="2">UI/UX부서</td>
-                        <td>부서장 (직급)</td>
-                        <td>00)0000-0000</td>
-                        <td>member@toastgames.com</td>
-                        <td>32명</td>
-                        <td></td>
+                        <td colspan="2">{부서명}</td>
+                        <td>{부서장 (직급)}</td>
+                        <td>{00)0000-0000}</td>
+                        <td>{00}명</td>
+                        <td>{부서 담당 직무}</td>
+                        <td>{부서 위치}</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{팀명}</td>
+                        <td>{팀장 (직급)}</td>
+                        <td>{00)0000-0000}</td>
+                        <td>{0}명</td>
+                        <td>{팀 담당 직무}</td>
+                        <td>{팀 위치}</td>
                     </tr>
                     </tbody>
                 </table>
