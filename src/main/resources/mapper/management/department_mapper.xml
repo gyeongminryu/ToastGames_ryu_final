@@ -47,7 +47,8 @@
 <select id="getdeptTree" resultType="com.toast.management.dto.DeptInfoTreeDTO" >
 SELECT 
     d1.dept_idx AS dept_idx,              
-    d1.dept_name AS dept_name,           
+    d1.dept_name AS dept_name,
+    d1.dept_high as dept_high,           
     e1.empl_name AS dept_head_name,       
     du1.duty_name AS dept_duty,          
     d2.dept_name AS high_dept_name,      
@@ -201,5 +202,60 @@ SELECT
           (#{param1} IS NULL OR e.empl_cmp_email LIKE CONCAT('%', #{param1}, '%'))
       );
  </select>
+
+<select id="getcompinfo">
+	select * from company_info
+</select>
+
+<select id="getemplinfo" resultType="com.toast.management.dto.DeptDetailMemberDTO">
+	select 
+		e.empl_name,
+		d.duty_name,
+		p.position_name
+		from employee e
+		join appointment a on e.appolast_idx = a.appo_idx
+		join duty d on d.duty_idx = a.duty_idx
+		join position_ p on p.position_idx = a.position_idx
+		where empl_idx = #{param1}
+
+</select>
+
+<insert id="companyinfoUpdateDo" parameterType="map">
+	 INSERT INTO company_info (
+        ceo_idx,
+        comp_name,
+        file_key,
+        comp_est_date,
+        comp_biz_no,
+        comp_corp_no,
+        comp_addr,
+        comp_phone,
+        comp_stamp
+    )
+    VALUES (
+        #{ceo_idx},
+        #{comp_name},
+        #{file_key},
+        #{comp_est_date},
+        #{comp_biz_no},
+        #{comp_corp_no},
+        #{comp_addr},
+        #{comp_phone},
+        #{comp_stamp}
+    )
+    ON DUPLICATE KEY UPDATE
+        comp_info = #{comp_info},
+        file_key = file_key,
+        comp_est_date = #{comp_est_date},
+        comp_biz_no = #{comp_biz_no},
+        comp_corp_no = #{comp_corp_no},
+        comp_addr = #{comp_addr},
+        comp_phone = #{comp_phone},
+        comp_stamp = #{comp_stamp};
+</insert>
+
+<update id="compStampUpload">
+	update company_info	set comp_stamp = #{param1} where id = 1;
+</update>
 
 </mapper>

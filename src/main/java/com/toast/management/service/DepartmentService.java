@@ -1,18 +1,24 @@
 package com.toast.management.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.management.dao.DepartmentDAO;
 import com.toast.management.dao.EmployeeDAO;
 import com.toast.management.dto.AppointmentDTO;
+import com.toast.management.dto.CompInfo;
 import com.toast.management.dto.DepartmentDTO;
 import com.toast.management.dto.DeptDetailMemberDTO;
 import com.toast.management.dto.DeptHistoryDTO;
@@ -28,6 +34,8 @@ public class DepartmentService {
 	private final DepartmentDAO departmentDAO;
 	
 	@Autowired EmployeeDAO employeeDAO;
+	@Value("${spring.servlet.multipart.location}")
+    private String uploadAddr;
 	
 	public DepartmentService(DepartmentDAO departmentDAO) {
 		this.departmentDAO = departmentDAO;
@@ -195,5 +203,54 @@ public class DepartmentService {
 		
 		return  dept_search_list;
 	}
+
+	public CompInfo getcompinfo() {
+		
+		return departmentDAO.getcompinfo();
+	}
+
+	public DeptDetailMemberDTO getemplinfo(int ceo_idx) {
+		
+		return departmentDAO.getemplinfo(ceo_idx);
+	}
+
+	public void companyinfoUpdateDo(Map<String, String> param) {
+		
+		String file_key = UUID.randomUUID().toString();
+		param.put("file_key", file_key);
+		
+		departmentDAO.companyinfoUpdateDo(param);
+		
+		
+	}
+	
+	// 회사 직인 등록
+		public void compStampUpload(MultipartFile singleFile) {
+			
+			String originalFileName = singleFile.getOriginalFilename();
+			String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
+			String newFileName = UUID.randomUUID().toString() + "." + fileType;
+			String fileAddr = uploadAddr + "/" + newFileName;
+			
+			File dest = new File(fileAddr);
+			if (!dest.exists()) {
+		        dest.mkdirs();  // 디렉토리가 없으면 생성
+		    }
+			  try {
+			        // 파일을 지정한 경로에 저장
+			        singleFile.transferTo(dest);
+			        logger.info("파일 이름은 : "+newFileName);
+			        // 업로드된 파일 이름을 DB에 저장
+			        
+			        departmentDAO.compStampUpload(newFileName);
+
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			        throw new RuntimeException("파일 업로드 실패: " + e.getMessage());
+			    }
+			
+		}
+
+		
 
 }
