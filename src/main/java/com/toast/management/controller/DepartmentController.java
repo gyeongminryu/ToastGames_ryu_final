@@ -208,7 +208,7 @@ public class DepartmentController {
 		return map;
 	}
 
-	@GetMapping(value="/cmp_set.go")
+	@GetMapping(value="/companyinfo.go")
 	public String cmpSet(Model model) {
 		
 	
@@ -216,7 +216,7 @@ public class DepartmentController {
 	//	departmentService.organizationTree();	
 	//	model.addAttribute("treeinfo",deptlist);
 		
-		return "com_set";
+		return "companyinfo";
 	}
 
 }
