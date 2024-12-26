@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_tree.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/organization.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
@@ -55,23 +56,37 @@
                 <hr class="separator" />
                 <!-- //차트 -->
 
-                <!-- 검색 -->
-                <form>
-                    <div class="tst_search_container">
-                        <div class="tst_search_select">
-                            <select id="tst_search_select_category" name="category" onchange="location.href='/manage_rent_list'">
-                                <option value="{검색 분류}">검색 분류</option>
-                            </select>
-                        </div>
-                        <div class="tst_search_input">
-                            <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
-                        </div>
-                        <div class="tst_search_icon">
-                            <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-                <!-- //검색 -->
+                <table class="tst_table table_no_padding table_no_underline">
+                    <tr>
+                        <td class="td_align_bottom">
+
+                            <!-- 검색 -->
+                            <form>
+                                <div class="tst_search_container">
+                                    <div class="tst_search_select">
+                                        <select id="tst_search_select_category" name="category" onchange="location.href='/manage_rent_list'">
+                                            <option value="{검색 분류}">검색 분류</option>
+                                        </select>
+                                    </div>
+                                    <div class="tst_search_input">
+                                        <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                    </div>
+                                    <div class="tst_search_icon">
+                                        <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- //검색 -->
+
+                        </td>
+                        <td class="td_align_right posit_relative">
+                            <!-- 조직 추가 -->
+                            <button onclick="tst_modal_call('tst_modal_write')" class="btn_primary">조직 추가하기</button>
+                            <!-- //조직 추가 -->
+
+                        </td>
+                    </tr>
+                </table>
 
                 <!-- 표 -->
                 <table class="tst_table">
@@ -101,7 +116,7 @@
                     <!-- 부서 출력 -->
                     <tr class="td_bg_subtle">
                         <th><i class="bi bi-folder"></i></th>
-                        <th class="td_align_left tst_pointer" onclick="location.href=''">{부서명}</th>
+                        <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">{부서명}</th>
                         <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{부서장} ({직급})</span></td>
                         <td>{부서장 연락처}</td>
                         <td>{부서장 이메일}</td>
@@ -126,7 +141,7 @@
                                 </colgroup>
                                 <tr>
                                     <th>├</th>
-                                    <th class="td_align_left tst_pointer" onclick="location.href=''">{팀명}</th>
+                                    <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">{팀명}</th>
                                     <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{팀장} ({직급})</span></td>
                                     <td>{팀장 연락처}</td>
                                     <td>{팀장 이메일}</td>
@@ -135,8 +150,8 @@
                                     <td>{팀 위치}</td>
                                 </tr>
                                 <tr>
-                                    <th>└</th>
-                                    <th class="td_align_left tst_pointer" onclick="location.href=''">{팀명}</th>
+                                    <th>└</th><!-- '.tst_table_in_table tr:last-child'의 innerHTML을 '└'으로 바꾸시면 됩니다 -->
+                                    <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">{팀명}</th>
                                     <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{팀장} ({직급})</span></td>
                                     <td>{팀장 연락처}</td>
                                     <td>{팀장 이메일}</td>
@@ -153,7 +168,7 @@
                     <!-- 예시 -->
                     <tr class="td_bg_subtle">
                         <th><i class="bi bi-folder"></i></th>
-                        <th class="td_align_left tst_pointer" onclick="location.href=''">프로그래밍</th>
+                        <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">프로그래밍</th>
                         <td class="td_align_left"><span onclick="tst_view_profile('10052')" class="tst_pointer">서연진 (차장)</span></td>
                         <td>02-2345-6789</td>
                         <td>member@toastgames.com</td>
@@ -176,7 +191,7 @@
                                 </colgroup>
                                 <tr>
                                     <th>├</th>
-                                    <th class="td_align_left tst_pointer" onclick="location.href=''">게임엔진</th>
+                                    <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">게임엔진</th>
                                     <td class="td_align_left"><span onclick="tst_view_profile('10060')" class="tst_pointer">김인하 (과장)</span></td>
                                     <td>02-2345-6789</td>
                                     <td>member@toastgames.com</td>
@@ -186,7 +201,7 @@
                                 </tr>
                                 <tr>
                                     <th>├</th>
-                                    <th class="td_align_left tst_pointer" onclick="location.href=''">게임플레이</th>
+                                    <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">게임플레이</th>
                                     <td class="td_align_left"><span onclick="tst_view_profile('10059')" class="tst_pointer">박사금 (과장)</span></td>
                                     <td>02-2345-6789</td>
                                     <td>member@toastgames.com</td>
@@ -196,7 +211,7 @@
                                 </tr>
                                 <tr>
                                     <th>└</th>
-                                    <th class="td_align_left tst_pointer" onclick="location.href=''">DBA</th>
+                                    <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">DBA</th>
                                     <td class="td_align_left"><span onclick="tst_view_profile('10064')" class="tst_pointer">주차장 (과장)</span></td>
                                     <td>02-2345-6789</td>
                                     <td>member@toastgames.com</td>
@@ -217,6 +232,7 @@
         </div>
     </div>
 </div>
+<c:import url="organization_list_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/organization_list.js"></script>

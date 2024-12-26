@@ -270,6 +270,14 @@ a, a:hover, a:visited {
     align-items: center;
 }
 
+.float_right{
+    float: right;
+}
+
+.posit_relative{
+    position: relative;
+}
+
 
 
 /* list */

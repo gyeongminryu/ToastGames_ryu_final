@@ -49,6 +49,10 @@
     vertical-align: top;
 }
 
+.tst_table .td_align_bottom{
+    vertical-align: bottom;
+}
+
 .tst_table.table_no_padding tbody th,
 .tst_table.table_no_padding td,
 .tst_table th.td_no_padding,

@@ -125,6 +125,12 @@ public class FrontController {
         return new ModelAndView("organization_list");
     }
 
+    // 조직 상세보기
+    @RequestMapping(value = "/organization_detail")
+    public ModelAndView front_organization_detail() {
+        return new ModelAndView("organization_detail");
+    }
+
 
 
 
