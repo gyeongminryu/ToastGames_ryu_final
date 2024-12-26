@@ -96,6 +96,17 @@
     display: inline;
 }
 
+.tst_container .tst_container_left .tst_leftnav ul li .list_leftnav_sub{
+    margin: -4px 0 0;
+    padding: 0 0 0 60px;
+    display: block;
+}
+
+.tst_container .tst_container_left .tst_leftnav ul li .list_leftnav_sub li{
+    font-size: 12px;
+    display: block;
+}
+
 .tst_container .tst_container_left .tst_leftnav ul li h3{
     margin: 0 0 0 10px;
 }

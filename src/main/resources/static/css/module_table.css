@@ -75,7 +75,8 @@
     background-color: var(--tst-color-subtle);
 }
 
-.tst_table.table_no_underline tbody tr{
+.tst_table.table_no_underline tbody tr,
+.tst_table tr.td_no_underline{
     border: none;
 }
 

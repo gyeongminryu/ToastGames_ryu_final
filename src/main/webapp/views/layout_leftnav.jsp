@@ -23,7 +23,23 @@
 
             <ul class="list_no_desc list_block">
                 <li class="tst_pointer" onclick="location.href='/approval_writing_list.go'">
-                    <i class="bi bi-file-earmark-fill"></i><h3>전자결재 (워크플로우)</h3>
+                    <i class="bi bi-file-earmark-fill"></i><h3>전자결재</h3>
+                </li>
+                <li>
+                    <ul class="list_block list_leftnav_sub">
+                        <li onclick="location.href='/approval_received_list'" class="tst_pointer">
+                            <h3 class="font_subtle">내가 받은 업무</h3>
+                        </li>
+                        <li onclick="location.href='/approval_sent_list'" class="tst_pointer">
+                            <h3 class="font_subtle">내가 보낸 업무</h3>
+                        </li>
+                        <li onclick="location.href='/approval_writing_list'" class="tst_pointer">
+                            <h3 class="font_subtle">작성중인 문서</h3>
+                        </li>
+                        <li onclick="location.href='/approval_writing_select_form'" class="tst_pointer">
+                            <h3 class="font_subtle">문서 작성하기</h3>
+                        </li>
+                    </ul>
                 </li>
                 <li class="tst_pointer" onclick="location.href='/meeting.go'">
                     <i class="bi bi-person-video3"></i><h3>회의실 대여</h3>

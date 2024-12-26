@@ -32,7 +32,7 @@
 
                         <!-- 문서 작성하기 -->
                         <div class="tst_col9">
-                            <table class="tst_table table_align_left table_no_padding">
+                            <table class="tst_table table_align_left table_no_underline table_no_padding">
                                 <colgroup>
                                     <col style="width: 120px;" />
                                     <col style="width: auto;" />

@@ -36,7 +36,23 @@
 <%--                    <i class="bi bi-menu-button-wide-fill"></i><h3>대시보드</h3>--%>
 <%--                </li>--%>
                 <li onclick="location.href='/approval_received_list'" class="tst_pointer">
-                    <i class="bi bi-file-earmark-fill"></i><h3>전자결재 (워크플로우)</h3>
+                    <i class="bi bi-file-earmark-fill"></i><h3>전자결재</h3>
+                </li>
+                <li>
+                    <ul class="list_block list_leftnav_sub">
+                        <li onclick="location.href='/approval_received_list'" class="tst_pointer">
+                            <h3 class="font_subtle">내가 받은 업무</h3>
+                        </li>
+                        <li onclick="location.href='/approval_sent_list'" class="tst_pointer">
+                            <h3 class="font_subtle">내가 보낸 업무</h3>
+                        </li>
+                        <li onclick="location.href='/approval_writing_list'" class="tst_pointer">
+                            <h3 class="font_subtle">작성중인 문서</h3>
+                        </li>
+                        <li onclick="location.href='/approval_writing_select_form'" class="tst_pointer">
+                            <h3 class="font_subtle">문서 작성하기</h3>
+                        </li>
+                    </ul>
                 </li>
                 <li onclick="location.href='/meeting_room_calendar'" class="tst_pointer">
                     <i class="bi bi-person-video3"></i><h3>회의실 대여</h3>
@@ -56,10 +72,10 @@
 <%--                <li onclick="location.href='/'" class="tst_pointer disp_hide">--%>
 <%--                    <i class="bi bi-send-fill"></i><h3>메시지</h3>--%>
 <%--                </li>--%>
-                <li onclick="location.href='/'" class="tst_pointer">
+                <li onclick="location.href='/companyinfo_detail'" class="tst_pointer">
                     <i class="bi bi-building-fill"></i><h3>회사 정보 관리</h3>
                 </li>
-                <li onclick="location.href='/organization_tree'" class="tst_pointer">
+                <li onclick="location.href='/organization_list'" class="tst_pointer">
                     <i class="bi bi-diagram-3-fill"></i><h3>조직 관리</h3>
                 </li>
                 <li onclick="location.href='/'" class="tst_pointer">

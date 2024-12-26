@@ -1,0 +1,6 @@
+.companyinfo_stamp{
+    width: 80px;
+    height: 80px;
+    margin: 10px auto 30px;
+    object-fit: cover;
+}

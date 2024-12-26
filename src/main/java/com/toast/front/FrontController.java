@@ -59,9 +59,9 @@ public class FrontController {
     }
 
     // 상신한 전자결재 목록
-    @RequestMapping(value = "/approval_send_list")
-    public ModelAndView front_approval_send_list() {
-        return new ModelAndView("approval_send_list");
+    @RequestMapping(value = "/approval_sent_list")
+    public ModelAndView front_approval_sent_list() {
+        return new ModelAndView("approval_sent_list");
     }
 
     // 상신한 전자결재 상세보기
@@ -102,12 +102,27 @@ public class FrontController {
 
     // Document ======================================================
     // Company Info ==================================================
+
+    // 회사 정보
+    @RequestMapping(value = "/companyinfo_detail")
+    public ModelAndView front_companyinfo_detail() {
+        return new ModelAndView("companyinfo_detail");
+    }
+
+    // 회사 정보 수정
+    @RequestMapping(value = "/companyinfo_update")
+    public ModelAndView front_companyinfo_update() {
+        return new ModelAndView("companyinfo_update");
+    }
+
+
+
     // Organization ==================================================
 
     // 조직 관리
-    @RequestMapping(value = "/organization_tree")
-    public ModelAndView front_organization_tree() {
-        return new ModelAndView("organization_tree");
+    @RequestMapping(value = "/organization_list")
+    public ModelAndView front_organization_list() {
+        return new ModelAndView("organization_list");
     }
 
 

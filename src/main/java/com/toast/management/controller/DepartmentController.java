@@ -150,7 +150,7 @@ public class DepartmentController {
 	//	departmentService.organizationTree();	
 	//	model.addAttribute("treeinfo",deptlist);
 		
-		return "organization_tree";
+		return "organization_list";
 	}
 	
 	@GetMapping(value="/dept_tree_list.ajax") // 부서,부서장이름,부서장직책,부서원
