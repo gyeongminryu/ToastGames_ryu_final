@@ -37,6 +37,7 @@ public class ApprovalRequestService {
 		app_dto.setForm_idx(form_idx);
 		app_dto.setDoc_content(form_content);
 		app_dto.setDoc_empl_idx(empl_idx);
+
 		if(approvalRequestDAO.doc_write_initial(app_dto)>0){
 			doc_idx = app_dto.getDoc_idx();
 			logger.info("방금 insert한 idx :{}",doc_idx);
@@ -52,67 +53,146 @@ public class ApprovalRequestService {
 					// 여기서는 부서 idx는 사원 부서 기준으로 잡고, 해당 부서 idx 및 직책을 가진 결재자를 조회하여 가져오기
 					// 사장은 직책만 가지고 이름 idx 가져오기
 
-				int step = 1;
+
+				//전달할 파라메터 만드는 map
+				Map<String, Object> approval_initial_write_param = new HashMap<>();
+
+			//param에 넣을 값 -> 변수 선언
+				int approval_empl_idx = 0;
+				int approval_dept_idx =0;
+				int position_idx = 0;
+
+				int line_order = 1;
 				for (int i = 0; i < g_approval_lines.size(); i++) {
-
-
 					Map<String, Object> g_approval_line = g_approval_lines.get(i);
-
-
 
 					//직책 받아오기
 					int duty_idx = (int) g_approval_line.get("duty_idx");
 					logger.info("직책 idx:{}",duty_idx);
 
-					int approval_empl_idx = 0;
-					int position_idx =0;
-					Map<String, Object> approval_empl_info = new HashMap<>();
-					if(duty_idx != 2){
+					//1_만약 상위 부서값이 있으면(select count(*))
+					if(approvalRequestDAO.get_high_dept_count(dept_idx)>0){
+						logger.info("팀에 소속된 팀원임");
 
-						logger.info("dept_idx:{}",dept_idx);
-						logger.info("form_idx:{}",form_idx);
-						logger.info("step:{}",step);
+						//if duty_idx == 3 부서장인 경우
+						if(duty_idx ==3){
+							logger.info("부서장");
+							
+							//상위 부서의 idx의 값 가져오기
+							int high_dept_idx = approvalRequestDAO.get_high_dept(dept_idx);
+
+							//부서장이 있는지 확인
+							if(approvalRequestDAO.get_high_dept_head_count(high_dept_idx, duty_idx)>0) {
+								//자기 부서의 상위 부서의 부서장 가져옴 (get_high_dept_head())
+								//	- dept_idx = 상위부서
+								Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(high_dept_idx, duty_idx);
+								approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
+								approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
+								position_idx = (int) get_high_dept_head.get("position_idx");
+
+								logger.info("파라메터 만드는 메소드 실행 전");
+								//파라메터 만드는 메소드 실행
+								set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
+
+								line_order++;
+							}else{
+								logger.info("부서장 없음");
+							}
+						}else if(duty_idx==4){//if duty_idx == 4 팀장인 경우
+							//팀장이 있는지 확인
+							logger.info("팀장");
+							
+							if(approvalRequestDAO.get_team_head_count(dept_idx, duty_idx)>0){
+								//자기 부서의 팀장 정보 가져옴
+								//자기 부서의 팀장 가져옴
+								//- dept_idx = 자기부서
+								Map<String, Object> get_team_head = approvalRequestDAO.get_team_head(dept_idx, duty_idx);
+								approval_empl_idx = (int) get_team_head.get("empl_idx");
+								approval_dept_idx = (int) get_team_head.get("dept_idx");
+								position_idx = (int) get_team_head.get("position_idx");
+
+								//파라메터 만드는 메소드 실행
+								logger.info("파라메터 만드는 메소드 실행");
+
+								set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
+								line_order++;
+
+							}else{
+								logger.info("팀장 없음");
+							}
+						}
 
 
-						approval_empl_info = approvalRequestDAO.get_approval_empl_idx(dept_idx,form_idx,step);
-						logger.info("empl_idx와 position_idx 받아온 map:{}",approval_empl_info);
 
 
+					}else{
+						logger.info("부서에 소속된 부서원임");
+						
+						//=============================================
+						//2_만약 상위 부서값이 없으면
+						//본인 idx
+						//duty_idx == 3 부서장인 경우
+						if(duty_idx ==3){
+							//부서장이 있는지 확인
+							if(approvalRequestDAO.get_high_dept_head_count(dept_idx, duty_idx)>0) {
+								//자기 부서 부서장 가져옴
+								// dept_idx = 자기부서
+								Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(dept_idx, duty_idx);
+								approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
+								approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
+								position_idx = (int) get_high_dept_head.get("position_idx");
 
-						logger.info("step:{}",step);
-						step++;
-					}else if(i==2){
-						dept_idx = approvalRequestDAO.get_head_dept_idx(2);
+								//파라메터 만드는 메소드 실행
+								set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
 
-						//대표면, 직책만 가지고 이름 가져오기
-						approval_empl_info = approvalRequestDAO.get_approval_empl_idx(dept_idx,form_idx,step);
-						logger.info("empl_idx와 position_idx 받아온 map:{}",approval_empl_info);
-
-
-						logger.info("사장 부서 idx:{}",dept_idx);
-						logger.info("사장 step:{}",step);
-						step++;
+								line_order++;
+							}else{
+								logger.info("부서장 없음");
+							}
+						}
 					}
 
-					approval_empl_idx = (int) approval_empl_info.get("empl_idx");
-					position_idx = (int) approval_empl_info.get("position_idx");
+					if(duty_idx ==2){
+						logger.info("사장 가져오기");
 
-					logger.info("approval_empl_idx:{}",approval_empl_idx);
-					logger.info("position_idx:{}",position_idx);
+						//사장 작업 중
+						Map<String,Object> head_info = approvalRequestDAO.get_head_info();
+						approval_empl_idx = (int) head_info.get("empl_idx");
+						approval_dept_idx = (int) head_info.get("dept_idx");
+						position_idx = (int) head_info.get("position_idx");
 
-					g_approval_line.put("doc_idx", doc_idx);
-					g_approval_line.put("dept_idx", dept_idx);
-					g_approval_line.put("empl_idx", approval_empl_idx);
-					g_approval_line.put("position_idx", position_idx);
+						set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
+						line_order++;
 
-					approvalRequestDAO.save_approval_line_initial(g_approval_line);
-
-
+					}
 				}
 			//방금 작성한 doc_idx 기반으로 참조선에 값 저장하기 =======================================================
 					//approvalRequestDAO.save_refer_line_initial(doc_idx);
 		}
 		return doc_idx;
+	}
+
+
+	//파라메터 만들어서 최초의 저장을 하게 도와주는 메서드
+	public void set_approval_init_param(Map<String,Object> approval_initial_write_param,int doc_idx, int line_order, int approval_dept_idx, int duty_idx, int approval_empl_idx, int position_idx) {
+
+		approval_initial_write_param.put("doc_idx", doc_idx);
+		approval_initial_write_param.put("line_order", line_order);
+		approval_initial_write_param.put("dept_idx", approval_dept_idx);
+		approval_initial_write_param.put("duty_idx", duty_idx);
+		approval_initial_write_param.put("empl_idx", approval_empl_idx);
+		approval_initial_write_param.put("position_idx", position_idx);
+
+
+
+		logger.info("파라메터 만드는 메소드 실행:{}",approval_initial_write_param);
+
+		save_approval_line_initial(approval_initial_write_param);
+	}
+	//결재선 최초 저장해주는 메서드
+	public void save_approval_line_initial(Map<String,Object> approval_initial_write_param){
+		logger.info("결재선 최초 저장");
+		approvalRequestDAO.save_approval_line_initial(approval_initial_write_param);
 	}
 
 	//1차 저장한 문서 가져오기
@@ -140,7 +220,7 @@ public class ApprovalRequestService {
 		String empl_idx = param.get("empl_idx");
 
 		String file_key = UUID.randomUUID().toString();
-		logger.info("첫 file_key 생성:{}",file_key);
+		//logger.info("첫 file_key 생성:{}",file_key);
 
 		//(글쓰기 - file_key 없이)
 		//만약 글쓰기가 끝나면,
@@ -149,7 +229,7 @@ public class ApprovalRequestService {
 			//(파일이 있는지 확인하기)
 			for (MultipartFile file : files) {
 				file_empty = file.isEmpty();
-				logger.info("파일 파라메터 값이 있는가?{}:", file_empty);
+				//logger.info("파일 파라메터 값이 있는가?{}:", file_empty);
 			}
 
 			String doc_idx = param.get("doc_idx");
@@ -167,7 +247,7 @@ public class ApprovalRequestService {
 					String ori_filename = file.getOriginalFilename();
 					//.확장자가 있는지 확인
 					int file_type_split = ori_filename.lastIndexOf(".");
-					logger.info("파일 확장자 여부 :{}", file_type_split);
+					//logger.info("파일 확장자 여부 :{}", file_type_split);
 
 					//만약 확장자가 있으면
 					if (file_type_split > 0) {
@@ -191,10 +271,10 @@ public class ApprovalRequestService {
 						}
 						//DB에 새로운 파일 업로드
 						if(approvalRequestDAO.approval_doc_file_write(doc_idx,ori_filename,new_filename,file_key, Integer.parseInt(empl_idx),file_type,file_addr)>0){
-							logger.info("DB에 저장한 file_key:{}",file_key);
+							//logger.info("DB에 저장한 file_key:{}",file_key);
 
 
-							logger.info("파일 입력 성공");
+							//logger.info("파일 입력 성공");
 
 							//document에 file key update
 							approvalRequestDAO.doc_write_file_key(doc_idx,file_key);
@@ -301,33 +381,44 @@ public class ApprovalRequestService {
 	}
 
 
-	public boolean save_refer_line(Map<String, String> param) {
+
+	public boolean save_refer_line(List<String> refer_lines, String doc_idx) {
 		boolean success = false;
-		String doc_idx = param.get("doc_idx");
 		int exists = approvalRequestDAO.prev_refer_exists(doc_idx);
+
 		logger.info("exists:{}",exists);
 		//이전에 doc_idx가 참조 테이블에 존재하면 삭제하기
-		if(approvalRequestDAO.prev_refer_exists(doc_idx)>0){
+		if(exists>0){
 			if(approvalRequestDAO.delete_prev_refer(doc_idx)>0){
 				logger.info("이전 참조값 삭제되었음");
 			}
 		}
 
 
-		int refer_count = Integer.parseInt(param.get("refer_count"));
-		int referrer_idx = 0;
-		logger.info("refer_count:{}",refer_count);
 
-		for(int i = 1; i <= refer_count; i++){
-			referrer_idx = Integer.parseInt(param.get("r_empl_line"+i));
-			logger.info("refer_count:{}",i);
-			logger.info("referrer_idx:{}",referrer_idx);
-
-			if(approvalRequestDAO.save_refer_line(referrer_idx,doc_idx)>0){
+		for(String referrer_idx : refer_lines){
+			if(approvalRequestDAO.save_refer_line(Integer.parseInt(referrer_idx),doc_idx)>0){
 				success = true;
 			}
 		}
 
+
+
 		return success;
+	}
+
+
+	public void write_delete(String doc_idx) {
+		//file Path 삭제 + file 삭제
+		approval_filekey_exist(doc_idx);
+
+		//문서 삭제
+		approvalRequestDAO.delete_doc(doc_idx);
+
+		//결재 라인 삭제
+		approvalRequestDAO.delete_all_approval_line(doc_idx);
+		//참조 라인 삭제
+		approvalRequestDAO.delete_prev_refer(doc_idx);
+
 	}
 }
