@@ -27,6 +27,7 @@ import com.toast.management.dto.AppointmentDTO;
 import com.toast.management.dto.DepartmentDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.EmployeeDTO;
+import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.MainFileDTO;
 import com.toast.management.dto.PositionDTO;
 import com.toast.member.dao.MemberDAO;
@@ -262,6 +263,11 @@ public class EmployeeService {
 			
 		}
 		return success;
+	}
+
+	public List<EmployeeDetailDTO> getEmployeeList() {
+		
+		return employeeDAO.getEmployeeList();
 	}
 	
 }

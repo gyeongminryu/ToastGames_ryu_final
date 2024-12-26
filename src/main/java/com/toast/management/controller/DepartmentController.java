@@ -211,7 +211,7 @@ public class DepartmentController {
 		return map;
 	}
 
-	@GetMapping(value="/companyinfo.go")
+	@GetMapping(value="/companyinfo_detail.go")
 	public String companyinfoGo(Model model) {
 
 		CompInfo comp_info = departmentService.getcompinfo();
@@ -224,7 +224,7 @@ public class DepartmentController {
 		model.addAttribute("comp_info",comp_info);
 		model.addAttribute("ceo_info",ceo_info);
 		
-		return "companyinfo";
+		return "companyinfo_detail";
 	}
 	
 	@GetMapping(value="/companyinfo.do")
@@ -249,10 +249,7 @@ public class DepartmentController {
 				}
 				// 직원 전체 리스트 가져오기
 		}
-		
 
-		
-		
 		return "companyinfo_update";
 	}
 	
@@ -260,8 +257,9 @@ public class DepartmentController {
 	public String companyinfoUpdateDo(@RequestParam Map<String,String> param) {
 	
 		departmentService.companyinfoUpdateDo(param);
+		logger.info("ceo_idx : "+ param.get("ceo_idx"));
 		
-		return "companyinfo";
+		return "redirect:/companyinfo.go";
 	}
 	
 	@PostMapping(value="company_stamp.do")
@@ -270,7 +268,7 @@ public class DepartmentController {
 		departmentService.compStampUpload(singleFile);
 		
 		
-		return "companyinfo_update.go";
+		return "redirect:/companyinfo_update.go";
 	}
 	
 }

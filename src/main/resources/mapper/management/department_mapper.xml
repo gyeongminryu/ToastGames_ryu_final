@@ -244,7 +244,8 @@ SELECT
         
     )
     ON DUPLICATE KEY UPDATE
-        comp_info = #{comp_info},
+        ceo_idx = #{ceo_idx},
+        comp_name = #{comp_name},
         file_key = file_key,
         comp_est_date = #{comp_est_date},
         comp_biz_no = #{comp_biz_no},
