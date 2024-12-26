@@ -15,12 +15,20 @@ public interface BoardDAO {
 	void saveFile(Map<String, Object> fileParams);
 
 	List<Map<String, Object>> boardList(Map<String, Object> params);
-
+	
 	Map<String, Object> countBoardList(Map<String, Object> params);
+
+	int commentCount(int board_idx);
+	
+	String getUserDept(String id);
 
 	Map<String, Object> getBoardByIdx(int board_idx);
 
+	void incrementView(int board_idx);
+	
 	List<Map<String, Object>> getReplyList(int board_idx);
+	
+	List<Map<String, Object>> getReReplyList(int reply_idx);
 
 	int writeReply(int board_idx, String reply, int empl_idx);
 
