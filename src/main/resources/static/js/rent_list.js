@@ -15,15 +15,17 @@ var defaultCategory = 'all';
 let currentCategory = '';
 
 // 초기 호출
-pageCall(showPage, defaultCategory);
+pageCall(1, defaultCategory);
 
 //카테고리별 목록
 function pageCall(page,category) {
 	currentCategory = category;  
 	console.log('pageCall');
+	console.log(currentCategory);
+	console.log(category);
     $.ajax({
         type: 'GET',
-        url: 'resourceList.ajax', 
+        url: '/resourceList.ajax', 
         data:{
         	'page' : page,  //몇페이지 보여줘?
         	'cnt': 18,    //페이지당 몇개의 게시물 보여줘?
@@ -116,19 +118,20 @@ function product_search(page,currentCategory,option, keyword) {
 function resource_list_print(list) {
 	var content = '';
 	if(list != null) {
-	for (var item of list) {
-    	content += '<tr>';
-    	content += '<td>' + item.prod_idx + '</td>';
-    	content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
-    	content += '<td class="td_align_left">';
-    	content += '<h3 onclick="location.href=\'/rent_detail?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
-    	content += '</td>';
-    	content += '<td class="td_align_left">';
-    	content += '<span onclick="location.href=\'/rent_detail?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
-    	content += '</td>';
-    	content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
-    	content += '<td>' + item.prod_exp_date + '</td>';
-    	content += '</tr>';
+		for (var item of list) {
+    		content += '<tr>';
+    		content += '<td>' + item.prod_idx + '</td>';
+    		content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
+    		content += '<td class="td_align_left">';
+    		content += '<h3 onclick="location.href=\'/rent_detail?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
+    		content += '</td>';
+    		content += '<td class="td_align_left">';
+    		content += '<span onclick="location.href=\'/rent_detail?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
+    		content += '</td>';
+    		content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
+    		content += '<td>' + item.prod_exp_date + '</td>';
+    		content += '</tr>';
+    	}
 	} else{
 	    content+='<tr class="rent_list_no_data">'; // 데이터가 있을 경우 클래스 disp_hide를 추가하세요.
         content+='<td colspan="6" class="td_no_data">';

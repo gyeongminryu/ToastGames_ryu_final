@@ -43,7 +43,7 @@ public class ResourceController {
 	}
 	
 	//내가 대여한 물품 페이지 이동
-	@RequestMapping(value="/rent_mylist.do")
+	//@RequestMapping(value="/rent_mylist.do")
 	
 	
 	//물품 목록 보기(대여 가능 여부 및 반납일시 포함)

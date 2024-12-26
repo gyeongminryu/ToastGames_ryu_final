@@ -35,7 +35,7 @@
 			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
 		JOIN 
 			product_rent pr ON pr.prod_idx=pd.prod_idx
-		ORDER BY idx DESC 
+		ORDER BY prod_idx DESC 
 			LIMIT #{param1} OFFSET #{param2}		
 	</select>
 
@@ -69,7 +69,7 @@
 			product_rent pr ON pr.prod_idx=pd.prod_idx
 		WHERE 
 			prod_cate_idx=#{param1}
-		ORDER BY idx DESC 
+		ORDER BY prod_idx DESC 
 			LIMIT #{param2} OFFSET #{param3}		
 	</select>
 
@@ -108,7 +108,7 @@
 			product_rent pr ON pr.prod_idx=pd.prod_idx
 		WHERE 
 			#{param1} LIKE CONCAT('%', #{param2}, '%')
-		ORDER BY idx DESC 
+		ORDER BY prod_idx DESC 
 			LIMIT #{param3} OFFSET #{param4}		
 	</select>
 
