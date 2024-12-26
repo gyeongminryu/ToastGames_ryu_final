@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.toast.management.dto.CompInfo;
 import com.toast.management.dto.DepartmentDTO;
 import com.toast.management.dto.DeptDetailMemberDTO;
 import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
+import com.toast.management.dto.EmployeeDTO;
 import com.toast.management.dto.PositionDTO;
 
 
@@ -43,6 +45,18 @@ public interface DepartmentDAO {
 	List<DeptDetailMemberDTO> deptmemsearchname(String emplName, String dept_idx);
 
 	List<DeptDetailMemberDTO> deptmemsearchemail(String cmpEmail, String dept_idx);
+
+	CompInfo getcompinfo();
+
+	DeptDetailMemberDTO getemplinfo(int ceo_idx);
+
+	int companyinfoUpdateDo(Map<String, String> param);
+
+	int compStampUpload(String newFileName);
+
+	
+
+	
 
 
 	 

@@ -102,8 +102,8 @@
                 response.deptlist.forEach(function(dept) {
  
                 	data.addRow([
-                		  {v:dept.dept_name, f:dept.dept_name+'<div>'+dept.dept_name +'장-' +(dept.dept_head_name ? dept.dept_head_name : '공석')+'</div>'+'<div>'+dept.total_dept_count+'</div>'}, // Name
-                	    dept.high_dept_name, // Manager를 완전한 비어있는 div로 대체
+                		  {v:dept.dept_idx, f:dept.dept_name+'<div>'+dept.dept_name +'장-' +(dept.dept_head_name ? dept.dept_head_name : '공석')+'</div>'+'<div>'+dept.total_dept_count+'</div>'}, // Name
+                	    dept.dept_high, // Manager를 완전한 비어있는 div로 대체
                 	    dept.dept_idx // ToolTip
                 	]);
                 });

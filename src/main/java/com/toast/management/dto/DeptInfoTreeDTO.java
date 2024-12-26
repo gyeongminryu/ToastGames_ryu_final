@@ -5,6 +5,7 @@ public class DeptInfoTreeDTO {
 	private String dept_idx;
 	private String dept_name;
 	private String dept_duty;
+	private String dept_high;
 	private String dept_head_name;
 	private String high_dept_name;
 	private String high_dept_head_name;
@@ -12,6 +13,12 @@ public class DeptInfoTreeDTO {
 	private String total_dept_count;
 	private String total_high_dept_count;
 	
+	public String getDept_high() {
+		return dept_high;
+	}
+	public void setDept_high(String dept_high) {
+		this.dept_high = dept_high;
+	}
 	public String getTotal_high_dept_count() {
 		return total_high_dept_count;
 	}

@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.toast.management.dto.CompInfo;
 import com.toast.management.dto.DepartmentDTO;
 import com.toast.management.dto.DeptDetailMemberDTO;
 import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
+import com.toast.management.dto.EmployeeDTO;
 import com.toast.management.dto.PositionDTO;
 import com.toast.management.service.DepartmentService;
 import com.toast.management.service.EmployeeService;
@@ -209,14 +212,65 @@ public class DepartmentController {
 	}
 
 	@GetMapping(value="/companyinfo.go")
-	public String cmpSet(Model model) {
+	public String companyinfoGo(Model model) {
+
+		CompInfo comp_info = departmentService.getcompinfo();
+		int	ceo_idx =	comp_info.getCeo_idx();
 		
-	
+		// 회사정보 테이블에서 사장 이름 가져오기
+		DeptDetailMemberDTO ceo_info = departmentService.getemplinfo(ceo_idx);
+		 
 		
-	//	departmentService.organizationTree();	
-	//	model.addAttribute("treeinfo",deptlist);
+		model.addAttribute("comp_info",comp_info);
+		model.addAttribute("ceo_info",ceo_info);
 		
 		return "companyinfo";
 	}
+	
+	@GetMapping(value="/companyinfo.do")
+	public String companyinfoDo(@RequestParam Map<String,String> param) {
 
+		
+		return "companyinfo";
+	}
+	
+	@GetMapping(value="/companyinfo_update.go")
+	public String companyinfoUpdateGo(Model model) {
+	
+		CompInfo comp_info = departmentService.getcompinfo();
+		
+		if(comp_info != null) {
+			model.addAttribute("comp_info",comp_info);
+			int	ceo_idx =	comp_info.getCeo_idx();
+			if(ceo_idx != 0) {
+				// 회사정보 테이블에서 사장 정보 가져오기
+				DeptDetailMemberDTO ceo_info = departmentService.getemplinfo(ceo_idx);
+				model.addAttribute("ceo_info",ceo_info);
+				}
+				// 직원 전체 리스트 가져오기
+		}
+		
+
+		
+		
+		return "companyinfo_update";
+	}
+	
+	@PostMapping(value="/companyinfo_update.do")
+	public String companyinfoUpdateDo(@RequestParam Map<String,String> param) {
+	
+		departmentService.companyinfoUpdateDo(param);
+		
+		return "companyinfo";
+	}
+	
+	@PostMapping(value="company_stamp.do")
+	public String compStampUpload(@RequestParam(value ="singleFile", required = false) MultipartFile singleFile) {
+		
+		departmentService.compStampUpload(singleFile);
+		
+		
+		return "companyinfo_update.go";
+	}
+	
 }
