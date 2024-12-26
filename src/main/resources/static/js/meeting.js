@@ -425,7 +425,7 @@ function meeting_delete(rent_idx) {
 
 // 모달 열기
 function meeting_open_modal() {
-    document.getElementById('meeting_event_modal').style.display = 'block';
+    document.getElementById('meeting_event_modal').style.display = 'flex';
 }
 
 // 모달 닫기

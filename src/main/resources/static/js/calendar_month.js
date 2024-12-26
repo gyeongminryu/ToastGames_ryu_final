@@ -457,7 +457,7 @@ function schedule_delete(sche_idx) {
 //모달 열기: 중앙에 띄움
 function schedule_open_modal() {
 	const modal = document.getElementById('schedule_event_modal');
-	modal.style.display = 'block';
+	modal.style.display = 'flex';
 }
 
 
