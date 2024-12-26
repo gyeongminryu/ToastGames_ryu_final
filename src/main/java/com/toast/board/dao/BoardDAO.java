@@ -26,4 +26,7 @@ public interface BoardDAO {
 
 	int writeReReply(int reply_idx, String re_reply, int re_reply_empl_idx);
 	
+    // 대댓글 수정 및 삭제
+
+	
 }
