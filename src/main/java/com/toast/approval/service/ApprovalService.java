@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -63,5 +64,32 @@ public class ApprovalService {
 
 	public List<Map<String,Object>> team_allempl(int team_idx) {
 		return approvalDAO.team_allempl(team_idx);
+	}
+
+	public List<Map<String,Object>> approval_sent_list_initialize(int empl_idx) {
+		//전달할 파라메터
+		List<Map<String,Object>> sent_list_param = new ArrayList<>();
+
+		//문서의 작성자에 count(사원 번호)가 있는지 확인
+			if(approvalDAO.request_empl_count(empl_idx)>0){
+				//문서의 작성자에 count(사원 번호)가 있으면 List<Map>형태로 작성한 값 가져오기
+				List<Map<String,Object>> sent_list = approvalDAO.get_sent_list(empl_idx);
+				/*int doc_empl_idx = sent_list.get();
+				String doc_subject = sent_list.get();
+				String doc_update_date = sent_list.get();
+				int doc_empl_idx = sent_list.get();
+*/
+
+
+
+
+
+			}
+
+
+
+
+
+		return sent_list_param;
 	}
 }

@@ -3,6 +3,7 @@ function approval_write_temporal_save(){
     console.log("임시 저장 함수 실행");
     approval_set_save_data();
     refer_save_doc();
+    return true;
 }
 //저장 함수
 function approval_write_save(){
@@ -11,6 +12,7 @@ function approval_write_save(){
     refer_save_doc();
     //ajax 처리 끝나면 이동
     location.href = "/approval_writing_list.go";
+
 }
 
 //form안에 필요한 값들을 저장 전 세팅해주는 함수

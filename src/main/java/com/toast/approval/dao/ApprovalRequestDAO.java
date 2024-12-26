@@ -91,7 +91,12 @@ public interface ApprovalRequestDAO {
 
     int delete_doc(String doc_idx);
 
-    //int save_refer_line_initial(int docIdx);
+    Map<String, Object> final_doc_get(String doc_idx);
+
+    int request(Map<String, String> param);
+
+    boolean update_approval_doc_state(String doc_idx);
+
 
 
 
