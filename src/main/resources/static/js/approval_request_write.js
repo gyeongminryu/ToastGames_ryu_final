@@ -28,7 +28,7 @@ function approval_doc_get(){
 
             //문서 정보란에 1차 정보 기입 (문서번호, 작성자, 부서명* -> 추가예정)
             $('#doc_idx').html(data.doc_idx);
-            $('#hidden_doc_idx').val(data.doc_idx);
+            $('.hidden_doc_idx').val(data.doc_idx);
             $('#doc_write_empl').html(data.empl_name);
 
             //임시저장 setInterval 함수
