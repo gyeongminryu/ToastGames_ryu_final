@@ -351,6 +351,11 @@
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
 
+                            <!-- 대여 신청중인 경우 아래와 같이 출력해 주세요 -->
+                            <li>
+                                <button class="btn_primary btn_full" onclick="tst_modal_call('tst_modal_rent')">대여하기</button>
+                            </li>
+
                             <!-- 사용 연한이 지나지 않았을 경우 아래와 같이 출력해 주세요 -->
                             <li>
                                 <button class="btn_primary btn_full" onclick="tst_modal_call('tst_modal_return')">반납 처리하기</button>
