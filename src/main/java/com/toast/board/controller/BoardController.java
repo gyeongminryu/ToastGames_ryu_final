@@ -62,18 +62,18 @@ public class BoardController {
 	public String boardList() {
 		return "board_list";
 	}
-
+	
+	// 게시글 리스트를 불러올 때, 필터기능에서 부서공지는 해당 부서에 속한 사람만 볼 수 있게 설정해야 한다.
 	@ResponseBody
 	@GetMapping(value = "/board_list.ajax")
-	public Map<String, Object> boardList(String page, String cnt, String dept, String type, String searchType, String keyword, HttpSession session) {
-	    logger.info("list called with page: {}, cnt: {}, dept: {}, type: {}, searchType: {}, keyword: {}", page, cnt, dept, type, searchType, keyword);
-	    
+	public Map<String, Object> boardList(String page, String cnt, String dept, String type, String searchType, String keyword, HttpSession session) {	    
 	    String id = (String) session.getAttribute("loginId");
+	    String userDept = boardService.getUserDept(id);
 	    int page_ = Integer.parseInt(page);
 	    int cnt_ = (cnt != null && !cnt.isEmpty()) ? Integer.parseInt(cnt) : 15;  // 기본값을 15로 설정
 
 	    // 서비스 호출 시 필터 파라미터 전달
-	    Map<String, Object> result = boardService.boardList(page_, cnt_, id, dept, type, searchType, keyword);
+	    Map<String, Object> result = boardService.boardList(page_, cnt_, id, dept, type, searchType, keyword, userDept);
 	    logger.info("Result from service: {}", result);
 	    return result;
 	}
@@ -82,6 +82,7 @@ public class BoardController {
 	public String boardDetail(@RequestParam("board_idx") int board_idx, Model model) {
 		// boardIdx를 사용하여 DB에서 게시글을 조회
 	    Map<String, Object> board = boardService.getBoardByIdx(board_idx);
+	    boardService.incrementView(board_idx); // 조회수 증가 로직
 	    // 조회한 게시글 정보를 모델에 추가
 	    model.addAttribute("board", board);
 		return "board_detail"; // 상세페이지 이동.
@@ -94,7 +95,7 @@ public class BoardController {
         Map<String, Object> response = new HashMap<>();
         try {
             // 댓글 목록 조회 서비스 호출
-        	List<Map<String, Object>> comments =boardService.getReplyList(board_idx);
+        	List<Map<String, Object>> comments = boardService.getReplyList(board_idx);
             response.put("comments",comments);
             logger.info("response : ? " + response);
         } catch (Exception e) {
@@ -103,6 +104,19 @@ public class BoardController {
         }
         return response;
     }
+	
+	// 대댓글 목록 조회
+	@ResponseBody
+	@GetMapping(value = "/re_reply_list.ajax")
+	public Map<String, Object> getReReplyList(@RequestParam("reply_idx") int reply_idx) {
+		logger.info("Received reply_idx: " + reply_idx);		
+		Map<String, Object> response = new HashMap<>();
+		List<Map<String, Object>> comments = boardService.getReReplyList(reply_idx);
+		response.put("reReplies", comments);
+		logger.info("reReplies:?" + comments);
+		//response.put("reReplies", new ArrayList<>());
+		return response;
+	}
 	
 	// 댓글 작성
     @ResponseBody

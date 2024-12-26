@@ -64,7 +64,7 @@ public class BoardService {
 		return boardIdx > 0;
 	}
 	
-	public Map<String, Object> boardList(int page, int cnt, String id, String dept, String type, String searchType, String keyword) {
+	public Map<String, Object> boardList(int page, int cnt, String id, String dept, String type, String searchType, String keyword, String userDept) {
 	    // 페이지와 항목 수 계산
 	    int limit = cnt;
 	    int offset = (page - 1) * cnt;
@@ -77,7 +77,8 @@ public class BoardService {
 	    params.put("dept", dept);
 	    params.put("type", type);
 	    params.put("searchType", searchType);
-	    params.put("keyword", keyword);
+	    params.put("keyword", keyword);	    
+	    params.put("userDept", userDept);	    
 
 	    // 게시글 목록 및 전체 페이지 수 조회
 	    Map<String, Object> totalPagesResult = boardDAO.countBoardList(params);
@@ -90,7 +91,13 @@ public class BoardService {
 
 	    // 게시글 목록 조회
 	    List<Map<String, Object>> boardList = boardDAO.boardList(params);
-
+	    for (Map<String, Object> board : boardList) {
+	    	int board_idx = (int) board.get("board_idx");
+	    	int commentCount = boardDAO.commentCount(board_idx);
+	    	board.put("commentCount", commentCount);
+	    	logger.info("commentCount?" + commentCount);
+		}
+	    
 	    // 결과 Map 생성
 	    Map<String, Object> result = new HashMap<>();
 	    result.put("totalpages", totalPages);
@@ -99,15 +106,29 @@ public class BoardService {
 
 	    return result;
 	}
+	
+	public String getUserDept(String id) {
+		return boardDAO.getUserDept(id);
+	}	
 
 	public Map<String, Object> getBoardByIdx(int board_idx) {
 		return boardDAO.getBoardByIdx(board_idx);
+	}
+	
+	public void incrementView(int board_idx) {
+		boardDAO.incrementView(board_idx);	
 	}
 	
 	// 댓글 목록 조회
     public List<Map<String, Object>> getReplyList(int board_idx) {
         return boardDAO.getReplyList(board_idx);
     }
+    
+    // 대댓글 목록 조회
+    public List<Map<String, Object>> getReReplyList(int reply_idx) {
+		return boardDAO.getReReplyList(reply_idx);
+	}
+    
 	 // 댓글 작성
     public boolean writeReply(int board_idx, String reply, int empl_idx) {
         return boardDAO.writeReply(board_idx, reply, empl_idx) > 0;
@@ -117,7 +138,7 @@ public class BoardService {
     public boolean writeReReply(int reply_idx, String re_reply, int re_reply_empl_idx) {
         return boardDAO.writeReReply(reply_idx, re_reply, re_reply_empl_idx) > 0;
     }
-    
+
     // 대댓글 수정 및 삭제
 
 
