@@ -3,13 +3,11 @@ package com.toast.approval.service;
 import com.toast.approval.dto.ApprovalRequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import com.toast.approval.dao.ApprovalRequestDAO;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.Console;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -71,83 +69,93 @@ public class ApprovalRequestService {
 					logger.info("직책 idx:{}",duty_idx);
 
 					//1_만약 상위 부서값이 있으면(select count(*))
+					//상위 부서 값은 필수로 있음
+					//다만 상위 부서가 2인지, 아닌지에 따라 부서인지, 팀인지 나뉨
 					if(approvalRequestDAO.get_high_dept_count(dept_idx)>0){
-						logger.info("팀에 소속된 팀원임");
+						//상위 부서의 idx의 값 가져오기
+						int high_dept_idx = approvalRequestDAO.get_high_dept(dept_idx);
+						//그리고 그 상위 부서 값이 2가 아니면
+						if(high_dept_idx !=2){
+							logger.info("팀에 소속된 팀원임");
 
-						//if duty_idx == 3 부서장인 경우
-						if(duty_idx ==3){
-							logger.info("부서장");
-							
-							//상위 부서의 idx의 값 가져오기
-							int high_dept_idx = approvalRequestDAO.get_high_dept(dept_idx);
+							//if duty_idx == 3 부서장인 경우
+							if(duty_idx ==3){
+								logger.info("부서장");
 
-							//부서장이 있는지 확인
-							if(approvalRequestDAO.get_high_dept_head_count(high_dept_idx, duty_idx)>0) {
-								//자기 부서의 상위 부서의 부서장 가져옴 (get_high_dept_head())
-								//	- dept_idx = 상위부서
-								Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(high_dept_idx, duty_idx);
-								approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
-								approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
-								position_idx = (int) get_high_dept_head.get("position_idx");
 
-								logger.info("파라메터 만드는 메소드 실행 전");
-								//파라메터 만드는 메소드 실행
-								set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
 
-								line_order++;
-							}else{
-								logger.info("부서장 없음");
+								//부서장이 있는지 확인
+								if(approvalRequestDAO.get_high_dept_head_count(high_dept_idx, duty_idx)>0) {
+									logger.info("부서장 있음");
+									
+									//자기 부서의 상위 부서의 부서장 가져옴 (get_high_dept_head())
+									//	- dept_idx = 상위부서
+									Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(high_dept_idx, duty_idx);
+									approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
+									approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
+									position_idx = (int) get_high_dept_head.get("position_idx");
+
+									logger.info("파라메터 만드는 메소드 실행 전");
+									//파라메터 만드는 메소드 실행
+									set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
+
+									line_order++;
+								}else{
+									logger.info("부서장 없음");
+								}
+
+							}else if(duty_idx==4){//if duty_idx == 4 팀장인 경우
+								//팀장이 있는지 확인
+								logger.info("팀장");
+
+								if(approvalRequestDAO.get_team_head_count(dept_idx, duty_idx)>0){
+									logger.info("팀장 있음");
+
+									//자기 부서의 팀장 정보 가져옴
+									//자기 부서의 팀장 가져옴
+									//- dept_idx = 자기부서
+									Map<String, Object> get_team_head = approvalRequestDAO.get_team_head(dept_idx, duty_idx);
+									approval_empl_idx = (int) get_team_head.get("empl_idx");
+									approval_dept_idx = (int) get_team_head.get("dept_idx");
+									position_idx = (int) get_team_head.get("position_idx");
+
+									//파라메터 만드는 메소드 실행
+									logger.info("파라메터 만드는 메소드 실행");
+
+									set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
+									line_order++;
+
+								}else{
+									logger.info("팀장 없음");
+								}
 							}
-						}else if(duty_idx==4){//if duty_idx == 4 팀장인 경우
-							//팀장이 있는지 확인
-							logger.info("팀장");
-							
-							if(approvalRequestDAO.get_team_head_count(dept_idx, duty_idx)>0){
-								//자기 부서의 팀장 정보 가져옴
-								//자기 부서의 팀장 가져옴
-								//- dept_idx = 자기부서
-								Map<String, Object> get_team_head = approvalRequestDAO.get_team_head(dept_idx, duty_idx);
-								approval_empl_idx = (int) get_team_head.get("empl_idx");
-								approval_dept_idx = (int) get_team_head.get("dept_idx");
-								position_idx = (int) get_team_head.get("position_idx");
-
-								//파라메터 만드는 메소드 실행
-								logger.info("파라메터 만드는 메소드 실행");
-
-								set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
-								line_order++;
-
-							}else{
-								logger.info("팀장 없음");
+						}else{
+							logger.info("부서에 소속된 부서원임");
+							if(duty_idx ==4){
+								logger.info("부서에 소속된 부서원이라 팀장이 존재하지 않음");
 							}
-						}
+							//=============================================
+							//2_만약 상위 부서값이 없으면
+							//본인 idx
+							//duty_idx == 3 부서장인 경우
+							if(duty_idx ==3){
+								//부서장이 있는지 확인
+								if(approvalRequestDAO.get_high_dept_head_count(dept_idx, duty_idx)>0) {
+									//자기 부서 부서장 가져옴
+									// dept_idx = 자기부서
+									logger.info("부서장 있음");
+									Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(dept_idx, duty_idx);
+									approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
+									approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
+									position_idx = (int) get_high_dept_head.get("position_idx");
 
+									//파라메터 만드는 메소드 실행
+									set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
 
-
-
-					}else{
-						logger.info("부서에 소속된 부서원임");
-						
-						//=============================================
-						//2_만약 상위 부서값이 없으면
-						//본인 idx
-						//duty_idx == 3 부서장인 경우
-						if(duty_idx ==3){
-							//부서장이 있는지 확인
-							if(approvalRequestDAO.get_high_dept_head_count(dept_idx, duty_idx)>0) {
-								//자기 부서 부서장 가져옴
-								// dept_idx = 자기부서
-								Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(dept_idx, duty_idx);
-								approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
-								approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
-								position_idx = (int) get_high_dept_head.get("position_idx");
-
-								//파라메터 만드는 메소드 실행
-								set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,position_idx);
-
-								line_order++;
-							}else{
-								logger.info("부서장 없음");
+									line_order++;
+								}else{
+									logger.info("부서장 없음");
+								}
 							}
 						}
 					}
@@ -419,6 +427,70 @@ public class ApprovalRequestService {
 		approvalRequestDAO.delete_all_approval_line(doc_idx);
 		//참조 라인 삭제
 		approvalRequestDAO.delete_prev_refer(doc_idx);
+
+	}
+
+	public boolean approval_request(String doc_idx, int empl_idx) {
+		logger.info("approval_request 컨트롤러");
+		logger.info("doc_idx:{}",doc_idx);
+		boolean success = false;
+
+
+
+		//1. 문서 제목 및 내용 가져오기
+		Map<String,Object> final_doc = approvalRequestDAO.final_doc_get(doc_idx);
+		int appr_sender_idx = (int) final_doc.get("doc_empl_idx");
+		String appr_subject = (String) final_doc.get("doc_subject");
+		//String appr_content = (String) final_doc.get("doc_content");
+		int form_idx = (int) final_doc.get("form_idx");
+
+		String appr_content_sub = (String) final_doc.get("doc_content_sub");
+		logger.info("appr_sender_idx:{}",appr_sender_idx);
+		logger.info("appr_subject:{}",appr_subject);
+		//logger.info("appr_content:{}",appr_content);
+		logger.info("appr_content_sub:{}",appr_content_sub);
+
+
+		logger.info("상신 전 final_doc 가져오기:{}",final_doc);
+
+
+
+
+
+			//2. 결재 라인들 가져오기
+			List<Map<String,Object>> approval_lines = approvalRequestDAO.doc_line_get(Integer.parseInt(doc_idx));
+			//3. 결재 라인에 먼저 결재자 내용 인서트 시키기 위해 분리할 때
+			int appr_receiver_idx = 0;
+			int appr_order = 0;
+
+
+			for(Map<String,Object> approval_line : approval_lines){
+
+				//보낼 Map param 만들기
+				Map<String,String> param = new HashMap<>();
+
+				logger.info("approval_line:{}",approval_line);
+				appr_receiver_idx = (int) approval_line.get("empl_idx");
+				appr_order = (int) approval_line.get("line_order");
+
+				//3. Map에 넣어주기
+				param.put("appr_sender_idx", String.valueOf(appr_sender_idx));
+				param.put("appr_subject",appr_subject);
+				//param.put("appr_content",appr_content);
+				param.put("appr_content_sub",appr_content_sub);
+				param.put("appr_receiver_idx", String.valueOf(appr_receiver_idx));
+				param.put("appr_order", String.valueOf(appr_order));
+				param.put("doc_idx",doc_idx);
+				param.put("form_idx", String.valueOf(form_idx));
+
+				logger.info("상신할 param 값 :{}",param);
+
+                success = approvalRequestDAO.request(param) > 0 && approvalRequestDAO.update_approval_doc_state(doc_idx);
+
+
+			}
+
+		return success;
 
 	}
 }

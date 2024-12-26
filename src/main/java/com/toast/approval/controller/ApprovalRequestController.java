@@ -32,8 +32,10 @@ public class ApprovalRequestController {
 		logger.info("idx:{}", form_idx);
 
 		//세션 처리
-		int empl_idx = 10023;
+		int empl_idx = 10024;
 
+
+		logger.info("empl_idx:{}",empl_idx);
 		//작성하기부터는 update로 하기
 		int doc_idx = approvalRequestService.doc_write_initial(Integer.parseInt(form_idx),form_content,empl_idx);
 
@@ -53,7 +55,7 @@ public class ApprovalRequestController {
 	@ResponseBody
 	public Map<String,Object> doc_get (int doc_idx) {
 		//세션 처리
-		int empl_idx = 10023;
+		int empl_idx = 10024;
 
 		logger.info("doc_get.ajax 컨트롤러 도착");
 		logger.info("doc_idx: " + doc_idx);
@@ -77,7 +79,7 @@ public class ApprovalRequestController {
 	@ResponseBody
 	public Map<String,Object> doc_write_do (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]files) {
 		//세션 처리
-		int empl_idx = 10023;
+		int empl_idx = 10024;
 		String success = "결재 문서 저장 실패";
 		param.put("empl_idx", String.valueOf(empl_idx));
 		Map<String,Object> data = new HashMap<>();
@@ -110,6 +112,8 @@ public class ApprovalRequestController {
 		return data;
 	}
 
+
+	//문서 작성 취소
 	@GetMapping(value = "/approval_write_delete.ajax")
 	@ResponseBody
 	public Map<String,Object> approval_write_delete(String doc_idx){
@@ -117,6 +121,23 @@ public class ApprovalRequestController {
 		Map<String,Object> data = new HashMap<>();
 		approvalRequestService.write_delete(doc_idx);
 		data.put("success","문서 삭제 성공!");
+		return data;
+	}
+
+
+	//문서 상신
+	@GetMapping (value = "/approval_request.ajax")
+	@ResponseBody
+	public Map<String,Object> approval_request(String doc_idx){
+		//세션 처리
+		int empl_idx = 10024;
+
+		Map<String,Object> data = new HashMap<>();
+		boolean success = false;
+		if(approvalRequestService.approval_request(doc_idx,empl_idx)){
+			success = true;
+		}
+		data.put("success",success);
 		return data;
 	}
 
