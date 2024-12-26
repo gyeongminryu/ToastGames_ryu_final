@@ -3,7 +3,7 @@
 var content = '';
 var win;
 
-console.log("참조 count 준비? :",refer_count);
+//console.log("참조 count 준비? :",refer_count);
 
 
 function approval_line_window(step){
@@ -83,40 +83,24 @@ function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i
             }
         }
     }else{
+        //refer_count 없애기
         content ='';
-        refer_count++;
         //step이 0일 때는 참조에 추가
-        content += '<div id ="referrer_element'+refer_count+'">참조'+refer_count+'<div id="referrer'+refer_count+'">'+empl_n+'('+dept_n+'/'+position_n+')'+'</div>';
-        content += ' <input type="hidden" name = "r_empl_line'+refer_count+'" id = "r_empl_line'+refer_count+'" value ='+empl_i+' />'
+        content += '<div class ="referrer_element">참조<div class="referrer">'+empl_n+'('+dept_n+'/'+position_n+')'+'</div>';
+        content += ' <input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="'+empl_i+'"/>'
         //삭제 버튼
-        content+='<div class="delete_refer" onclick="delete_refer('+refer_count+')">제외하기</div></div>';
+        content+='<div class="delete_refer" onclick="delete_refer(this)">제외하기</div></div>';
         console.log(content);
 
         $('#referrer_list').append(content);
-        //refer_count값 넣어주기 -> 참조 parameter 구분하기 위함
-        $('#refer_count').val(refer_count);
 
+        //refer_count++;
 
     }
 }
 
-function delete_refer(count){
-    var referrer_element = '#referrer_element'+ count;
-    $(referrer_element).remove();
-    //refer_count값 넣어주기 -> 참조 parameter 구분하기 위함
-    refer_count--; //위에서 ++ 해줬을 것이기 때문에 -2해줘야함
-    //제외는 -- 하고 나서 데이터 세팅해줘야 함
-    $('#refer_count').val(refer_count);
-
-    //refer_count+1의 값이 참조 값일 것임 해당 for(i)만큼 html 및 val을 1씩 차감
-    for(var i = count+1 ;i<=refer_count+1;i++){
-        document.getElementById('referrer_element'+i).id ='referrer_element'+(i+1);
-        document.getElementById('referrer'+i).id ='referrer'+(i+1);
-        document.getElementById('r_empl_line'+i).id ='r_empl_line'+(i+1);
-        document.getElementById('r_empl_line'+i).id ='r_empl_line'+(i+1);
-
-
-    }
-
+function delete_refer(evt){
+    //var referrer_element = '#referrer_element'+ count;
+    $(evt).closest('.referrer_element').remove();
 }
 
