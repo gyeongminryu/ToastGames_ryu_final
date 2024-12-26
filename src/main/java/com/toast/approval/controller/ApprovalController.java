@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
 import com.toast.approval.service.ApprovalService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -15,10 +16,17 @@ public class ApprovalController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private final ApprovalService approvalService;
-	
+
+
+	//세션 처리
+	int empl_idx = 10024;
+
+
 	public ApprovalController(ApprovalService approvalService) {
 		this.approvalService = approvalService;
 	}
+
+	/*결재 작성 관련*/
 
 	//결재 목록 조회 - 옮기기
 	@RequestMapping(value = "/approval_writing_list.go")
@@ -48,15 +56,6 @@ public class ApprovalController {
 		Map<String, Object> data = approvalService.form(form_idx);
 		return data;
 	}
-
-
-
-
-
-
-
-
-
 
 	//결재 양식 검색 기능
 	@GetMapping(value = "/approval_form_search.ajax")
@@ -115,4 +114,14 @@ public class ApprovalController {
 		return data;
 	}
 
+	/*결재 목록 조회 관련*/
+	@GetMapping (value="/approval_sent_list.go")
+	public String approval_sent_list(Model model){
+		//세션 처리
+
+		//empl_idx 전달 → 보낸 문서가 있는지 확인
+		approvalService.approval_sent_list_initialize(empl_idx);
+
+		return "approval_sent_list";
+	}
 }
