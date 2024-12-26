@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	const calendarEl = document.getElementById('calendar');
 	calendar = new FullCalendar.Calendar(calendarEl, {
 		timeZone: 'local',
-		initialView: 'timeGridFiveDay',
+		initialView: 'timeGridWeek',
         slotDuration: '00:30:00',   // 시간 슬롯을 15분 단위로 설정
         slotLabelInterval: '00:30:00', // 라벨도 15분 간격으로 설정
         slotMinTime: '09:00:00',    // 시작 시간
@@ -96,14 +96,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	            dayRange +
 	            '</span>';
 	    },
-	    views: {
+	    /*views: {
 	        timeGridFiveDay: {
 	          type: 'timeGrid',
 	          duration: { days: 5 },
 	          buttonText: '5 day',
 	          allDaySlot: false
 	        }
-	    },
+	    },*/
 	    headerToolbar: {
 	        left: 'prev,today',
 	        center: 'title',
