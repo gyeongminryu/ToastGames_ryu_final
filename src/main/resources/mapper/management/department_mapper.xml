@@ -229,8 +229,8 @@ SELECT
         comp_biz_no,
         comp_corp_no,
         comp_addr,
-        comp_phone,
-        comp_stamp
+        comp_phone
+       
     )
     VALUES (
         #{ceo_idx},
@@ -240,8 +240,8 @@ SELECT
         #{comp_biz_no},
         #{comp_corp_no},
         #{comp_addr},
-        #{comp_phone},
-        #{comp_stamp}
+        #{comp_phone}
+        
     )
     ON DUPLICATE KEY UPDATE
         comp_info = #{comp_info},
@@ -250,8 +250,8 @@ SELECT
         comp_biz_no = #{comp_biz_no},
         comp_corp_no = #{comp_corp_no},
         comp_addr = #{comp_addr},
-        comp_phone = #{comp_phone},
-        comp_stamp = #{comp_stamp};
+        comp_phone = #{comp_phone}
+       
 </insert>
 
 <update id="compStampUpload">

@@ -41,10 +41,7 @@
                 <td><label for="establishmentDate">설립일:</label></td>
                                 <td><input type="date" id="comp_est_date" name="comp_est_date" value="${comp_info.comp_est_date }" required /></td>
             </tr>
-             <tr>
-                <td><label for="compstamp">스탬프:</label></td>
-                <td><input type="text" id="comp_stamp" name="comp_stamp" value="" required /></td>
-            </tr>
+           
             
         </table>
         <br />
