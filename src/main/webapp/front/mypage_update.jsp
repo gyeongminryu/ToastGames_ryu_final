@@ -52,7 +52,7 @@
                                                 </li>
                                                 <li>
                                                     <label class="form_label">비밀번호</label>
-                                                    <button onclick="tst_modal_call('')" type="button" class="btn_subtle btn_full">비밀번호 변경하기</button>
+                                                    <button onclick="tst_modal_call('tst_modal_password')" type="button" class="btn_subtle btn_full">비밀번호 변경하기</button>
                                                 </li>
                                                 <li>
                                                     <label class="form_label">성별</label>

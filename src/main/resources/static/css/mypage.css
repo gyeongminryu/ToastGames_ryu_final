@@ -6,3 +6,11 @@
 .tst_flex .tst_flex .tst_flex > .tst_col8.padding_left{
     padding-left: 24px;
 }
+
+.tst_modal_password .separator.separator_min{
+    margin: 6px 0 0;
+}
+
+.tst_modal.tst_modal_password .tst_modal_container .tst_modal_body .list_no_desc.list_block li{
+    margin-bottom: 0;
+}
