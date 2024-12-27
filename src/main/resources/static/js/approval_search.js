@@ -1,7 +1,10 @@
 var search = document.getElementById('search');
+
+//console.log(search);
+
 search.addEventListener('keyup',function(e){
 
-    // if(e.key == 'Enter'){ //keyCode 대신 대체
+    if(e.key == 'Enter'){ //keyCode 대신 대체
         var search_val = $('#search').val();
         console.log(search_val);
 
@@ -14,13 +17,14 @@ search.addEventListener('keyup',function(e){
             case '/approval_form_list.go':
                 approval_form_search(search_val);
                 break;
-
-            default :
-                console.log('검색완료');
+            case '/approval_sent_list.go':
+                approval_sent_list(search_val);
                 break;
         }
-    // }
+    }
 });
+
+//폼 양식 검색 함수
 function approval_form_search(search_val){
     console.log("폼 양식 검색 함수 실행!");
     $.ajax({
@@ -35,5 +39,14 @@ function approval_form_search(search_val){
             console.log(e);
         }
     });
+
+}
+
+
+//내가 보낸 결재 검색 함수
+function approval_sent_list(search_val){
+    console.log("내가 보낸 결재 검색 함수 실행!",search_val);
+
+    approval_sent_list_filter(search_val,"검색");
 
 }
