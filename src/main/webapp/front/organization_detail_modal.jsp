@@ -18,10 +18,6 @@
                         <input type="text" name="" value="{조직명}" maxlength="100" placeholder="조직명을 입력하세요" />
                     </li>
                     <li>
-                        <label class="form_label">조직장</label>
-                        <input type="text" name="" value="{조직장}" class="input_caution" placeholder="조직장은 인사 관리 페이지에서 임명할 수 있습니다" readonly />
-                    </li>
-                    <li>
                         <label class="form_label">직무</label>
                         <textarea rows="5" name="" value="{직무}" maxlength="1000" placeholder="담당 직무를 입력하세요"></textarea>
                     </li>

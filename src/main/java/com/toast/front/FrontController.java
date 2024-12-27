@@ -131,6 +131,18 @@ public class FrontController {
         return new ModelAndView("organization_detail");
     }
 
+    // 프로젝트 팀 관리
+    @RequestMapping(value = "/project_team_list")
+    public ModelAndView front_project_team_list() {
+        return new ModelAndView("project_team_list");
+    }
+
+    // 프로젝트 팀 상세보기
+    @RequestMapping(value = "/project_team_detail")
+    public ModelAndView front_project_team_detail() {
+        return new ModelAndView("project_team_detail");
+    }
+
 
 
 

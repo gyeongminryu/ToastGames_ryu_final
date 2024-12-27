@@ -23,10 +23,10 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/organization_tree'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/organization_list'">
                         <h1>부서 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href=''">
+                    <li class="tst_title_item" onclick="location.href='/project_team_list'">
                         <h1>프로젝트 팀 관리</h1>
                     </li>
                 </ul>
