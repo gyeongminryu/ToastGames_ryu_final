@@ -168,6 +168,10 @@ a, a:hover, a:visited {
     display: flex;
 }
 
+.tst_flex.tst_flex_block{
+    flex-flow: column;
+}
+
 .tst_flex .tst_col1,
 .tst_flex .tst_col2,
 .tst_flex .tst_col3,
@@ -390,6 +394,10 @@ select{
 
 .input_caution{
     border-color: var(--tst-form-invalid-border-color);
+}
+
+.input_disable{
+    color: var(--tst-color-disabled);
 }
 
 input[type="submit"],

@@ -137,7 +137,8 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td colspan="4" class="td_align_left">
+                                <td colspan="4" class="td_align_left td_no_padding">
+                                    <hr class="separator" />
                                     <button onclick="location.href='/mypage_update'" class="btn_primary">정보 수정하기</button>
                                 </td>
                             </tr>
@@ -149,11 +150,8 @@
                         <!-- // 내 정보 상세보기 -->
 
                         <!-- 제목 -->
-                        <ul class="tst_title list_no_desc list_inline">
-                            <li class="tst_title_item tst_title_item_active" onclick="location.href='/mypage'">
-                                <h1>인사 변경 이력</h1>
-                            </li>
-                        </ul>
+                        <h1>인사 변경 이력</h1>
+                        <hr class="separator" />
                         <!-- //제목 -->
 
                         <!-- 인사 이력 -->
