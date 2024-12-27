@@ -16,7 +16,7 @@
                 <ul class="list_no_desc list_block">
                     <li>
                         <label class="form_label">프로젝트 팀명</label>
-                        <input type="text" name="" maxlength="100" placeholder="조직명을 입력하세요" />
+                        <input type="text" name="" maxlength="100" placeholder="프로젝트 팀명을 입력하세요" />
                     </li>
                     <li>
                         <label class="form_label">팀장</label>

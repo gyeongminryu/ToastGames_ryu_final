@@ -8,12 +8,12 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/module_tree.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/organization.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <body>
 <c:import url="layout_topnav.jsp" />
@@ -67,7 +67,7 @@
                     </tr>
                 </table>
 
-                <!-- 표 -->
+                <!-- 프로젝트 팀 목록 -->
                 <table class="tst_table">
                     <colgroup>
                         <col style="width: 80px" />
@@ -164,8 +164,62 @@
                     <!-- //예시 -->
 
                     </tbody>
+
+                    <!-- pagination -->
+                    <tfoot>
+                    <tr>
+                        <td colspan="7">
+                            <ul id="pagination" class="pagination-sm pagination">
+                                <li class="page-item first disabled">
+                                    <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+                                </li>
+                                <li class="page-item prev disabled">
+                                    <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
+                                </li>
+                                <li class="page-item active">
+                                    <a href="#" class="page-link">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">4</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">5</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">6</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">7</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">8</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">9</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">10</a>
+                                </li>
+                                <li class="page-item next">
+                                    <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
+                                </li>
+                                <li class="page-item last">
+                                    <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tfoot>
+                    <!-- //pagination -->
+
                 </table>
-                <!-- //표 -->
+                <!-- //프로젝트 팀 목록 -->
 
             </div>
         </div>

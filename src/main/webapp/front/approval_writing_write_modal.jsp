@@ -218,7 +218,7 @@
 <!-- //상신하기 > 서명하기/직인찍기 -->
 
 <!-- 취소하기 -->
-<div class="tst_modal tst_modal_alert tst_approval_cancel_modal">
+<div class="tst_modal tst_modal_alert tst_modal_cancel">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">작성 취소하기</h1>

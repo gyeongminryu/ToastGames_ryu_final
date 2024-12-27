@@ -42,6 +42,12 @@
     width: 800px;
 }
 
+.tst_modal.tst_modal_wide .tst_modal_container .tst_modal_body,
+.tst_modal.tst_modal_double .tst_modal_container .tst_modal_body{
+    height: 600px;
+    overflow-y: scroll;
+}
+
 .tst_modal .tst_modal_container .tst_modal_header,
 .tst_modal .tst_modal_container .tst_modal_body,
 .tst_modal .tst_modal_container .tst_modal_footer{
