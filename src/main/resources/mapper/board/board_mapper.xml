@@ -6,7 +6,7 @@
 	<!-- 게시글 작성할 때, 필요한 개인 정보들을 가져온다. (사원번호, 부서번호) -->
 	<!-- 발령정보에서 가져와야 하는데, 인사 이동이 있을 시 여러개의 값이 있을 수 있다. 가장 최신걸 가져오는 쿼리 필요. -->
 	<select id="memberInfo" parameterType="String" resultType="map">
-		SELECT a.appo_empl_idx, a.dept_idx
+		SELECT a.appo_empl_idx, a.dept_idx, e.file_key
 		FROM employee e
 		JOIN appointment a ON
 		e.empl_idx = a.appo_empl_idx
@@ -14,6 +14,25 @@
 		ORDER BY appo_idx
 		DESC
 		LIMIT 1
+	</select>
+	
+	<select id="boardInfo" parameterType="int">
+		SELECT file_key
+		FROM board
+		WHERE board_idx = #{board_idx}
+	</select>
+	
+	<select id="getFileList" parameterType="map" resultType="com.toast.member.dto.FileDTO">
+		SELECT f.file_idx, f.file_key, f.uploader_idx, f.ori_filename, f.new_filename, f.file_type, f.file_addr
+		FROM file f
+		JOIN employee e ON f.uploader_idx = e.empl_idx
+		WHERE f.file_key = #{file_key}
+	</select>
+	
+	<select id="originalFileName" parameterType="String">
+		SELECT ori_filename
+		FROM file
+		WHERE new_filename = #{filename}
 	</select>
 
 	<insert id="boardWrite" parameterType="map">
@@ -31,6 +50,10 @@
 		VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename},
 		#{file_type}, #{file_addr})
 	</insert>
+	
+	<select id="getDepartmentList" parameterType="map" resultType="map">
+		SELECT dept_idx, dept_name FROM department
+	</select>
 
 	<select id="boardList" resultType="map">
 		SELECT b.board_idx, b.board_empl_idx, b.board_type_idx, b.dept_idx,
@@ -56,7 +79,8 @@
 
 		<!-- 2. 부서만 선택했을 때 -->
 		<if test="dept != '' and type == ''">
-        	AND b.dept_idx = #{dept} <!-- 부서에서만 가져옴: 선택된 부서의 게시글만 가져옴 -->
+        	AND (b.board_type_idx != 2 AND b.dept_idx = #{dept} <!-- 부서에서만 가져옴: 선택된 부서의 게시글만 가져옴 -->
+        	OR (b.board_type_idx = 2 AND b.dept_idx = #{userDept})) <!-- 부서공지 (type == 2) - 내 부서의 게시글만 가져옴 -->
 		</if>
 
 		<!-- 3. 유형만 선택했을 때 -->
@@ -73,6 +97,10 @@
 		<if test="dept != '' and type != ''">
 			AND b.dept_idx = #{dept}
 			AND bt.board_type_idx = #{type}
+			<if test="type == 2">
+		        AND b.board_type_idx = 2
+		        AND b.dept_idx = #{userDept} <!-- 부서공지일 경우, 내 부서의 게시글만 필터링 -->
+		    </if>
 		</if>
 		<if test="searchType != null and searchType != '' and keyword != null and keyword != ''"> 
 			AND ${searchType} LIKE CONCAT('%', #{keyword}, '%') </if>
@@ -205,6 +233,12 @@
 		VALUES (#{board_idx},
 		#{empl_idx}, #{reply})
 	</insert>
+	
+	<update id="updateReply">
+		UPDATE reply 
+		SET reply = #{reply}
+		WHERE reply_idx = #{reply_idx}
+	</update>
 
 	<insert id="writeReReply" parameterType="map">
 		INSERT INTO reply_reply
