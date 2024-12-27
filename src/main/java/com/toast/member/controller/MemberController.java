@@ -170,7 +170,7 @@ public class MemberController {
 	}
 
 	// 마이페이지(상세보기)
-	@GetMapping(value = "/myPage.go")
+	@GetMapping(value = "/mypage.go")
 	public String myPageView(Model model, HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
 		List<MemberDTO> memberInfo = memberService.memberInfo(id); // 리스트 형태로 가져옴. 해당 id에 맞는 사용자 정보를 가져옴.
@@ -223,7 +223,7 @@ public class MemberController {
 	}
 
 	// 마이페이지(수정) 이동
-	@GetMapping(value = "/myPageUpdate.go")
+	@GetMapping(value = "/mypageUpdate.go")
 	public String myPageUpdateForm(Model model, HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
 		List<MemberDTO> memberInfo = memberService.memberInfo(id);
@@ -289,7 +289,7 @@ public class MemberController {
 	}
 
 	// 회원 정보 수정
-	@PostMapping(value = "/myPageUpdate.do")
+	@PostMapping(value = "/mypageUpdate.do")
 	public String mypageUpdate(@RequestParam("imageFile") MultipartFile file, MemberDTO memberDTO, HttpSession session, Model model) {
 		String id = (String)session.getAttribute("loginId");
 		memberDTO.setEmpl_id(id);

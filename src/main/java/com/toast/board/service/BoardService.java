@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.board.dao.BoardDAO;
+import com.toast.member.dto.FileDTO;
 
 @Service
 public class BoardService {
@@ -31,6 +32,10 @@ public class BoardService {
 
 	public Map<String, Object> memberInfo(String id) {
 		return boardDAO.memberInfo(id);
+	}
+	
+	public Map<String, Object> boardInfo(int board_idx) {
+		return boardDAO.boardInfo(board_idx);
 	}
 
 	public boolean boardWrite(Map<String, Object> params, MultipartFile[] files) throws Exception {
@@ -62,6 +67,10 @@ public class BoardService {
 			}
 		}
 		return boardIdx > 0;
+	}
+	
+	public List<Map<String, Object>> getDepartmentList() {
+		return boardDAO.getDepartmentList();
 	}
 	
 	public Map<String, Object> boardList(int page, int cnt, String id, String dept, String type, String searchType, String keyword, String userDept) {
@@ -138,6 +147,19 @@ public class BoardService {
     public boolean writeReReply(int reply_idx, String re_reply, int re_reply_empl_idx) {
         return boardDAO.writeReReply(reply_idx, re_reply, re_reply_empl_idx) > 0;
     }
+
+	public List<FileDTO> getFileList(int board_idx, String file_key) {
+		return boardDAO.getFileList(board_idx, file_key);
+	}
+
+	public String originalFileName(String filename) {
+		return boardDAO.originalFileName(filename);
+	}
+
+	public boolean updateReply(String reply_idx, String reply, int empl_idx) {
+		return boardDAO.updateReply(reply_idx, reply, empl_idx);
+	}
+
 
     // 대댓글 수정 및 삭제
 
