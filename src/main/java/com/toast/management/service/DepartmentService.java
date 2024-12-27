@@ -26,6 +26,7 @@ import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.EmployeeDTO;
 import com.toast.management.dto.PositionDTO;
+import com.toast.member.dto.FileDTO;
 
 @Service
 public class DepartmentService {
@@ -250,6 +251,67 @@ public class DepartmentService {
 			    }
 			
 		}
+		
+		// 회사 첨부 파일 목록 가져오기
+		public List<FileDTO> getcompfile(String file_key) {
+			
+			return departmentDAO.getcompfile(file_key);
+		}
+
+		public void compFileUpload(MultipartFile[] files, String file_key) {
+			
+			// 세션 아이디로 idx 가져오기
+			int uploader_idx = 0;
+			
+			for (MultipartFile multipartFile : files) {
+				String originalFileName = multipartFile.getOriginalFilename();
+				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
+				String newFileName = UUID.randomUUID().toString() + "." + fileType;
+				String fileAddr = uploadAddr + "/" + newFileName;
+				
+				FileDTO filedto = new FileDTO();
+				File dest = new File(fileAddr);
+				
+				if (!dest.exists()) {
+			        dest.mkdirs();  // 디렉토리가 없으면 생성
+			    }
+				  try {
+					 
+				        // 파일을 지정한 경로에 저장
+					  	multipartFile.transferTo(dest);
+					  	 long file_size = dest.length();
+				        logger.info("파일 이름은 : "+newFileName);
+				        // 업로드된 파일 이름을 DB에 저장
+				        filedto.setFile_addr(fileAddr);
+				        filedto.setFile_key(file_key);
+				        filedto.setFile_size(file_size);
+				        filedto.setFile_type(fileType);
+				        filedto.setNew_filename(newFileName);
+				        filedto.setOri_filename(originalFileName);
+				        filedto.setUploader_idx(uploader_idx);
+				        departmentDAO.compFileUpload(filedto);
+
+				    } catch (IOException e) {
+				        e.printStackTrace();
+				        throw new RuntimeException("파일 업로드 실패: " + e.getMessage());
+				    }
+			}
+			
+		} // public void compFileUpload(MultipartFile[] files, String file_key)
+
+		public boolean compStampDel(String new_filename) {
+			boolean success = false;
+			departmentDAO.compStampDel();
+			File file = new File(uploadAddr + "/" + new_filename);
+			if(file.exists()) {
+				 success = file.delete();
+				
+			}
+			return success;
+		}
+		
+
+		
 
 		
 
