@@ -1,6 +1,6 @@
 
 //대여 가능
-<tbody>
+
 	<tr>
 		<th>대여 가능 여부</th>
 		<td>대여 가능</td>
@@ -16,7 +16,24 @@
 	<tr>
 		<th colspan="2" class="td_align_center td_bg_subtle">대여 장소는 본관 3층 312호 경영 지원실입니다.</th>
 	</tr>
-	</tbody>
+	
+if (item.prod_rent_str === "대여 가능") { // 문자열 비교 수정 및 괄호 추가
+    content += '<tr>';
+    content += '<th>대여 가능 여부</th>';
+    content += '<td>' + item.prod_rent_str + '</td>';
+    content += '</tr>';
+    content += '<tr>';
+    content += '<th>대여 상태</th>';
+    content += '<td>' + (item.prod_rent_str === "대여 가능" ? "대여 가능" : "대여 불가") + '</td>';
+    content += '</tr>';
+    content += '<tr>';
+    content += '<th>반납 예정일</th>';
+    content += '<td>' + (item.prod_exp_date == null ? '없음' : item.prod_exp_date) + '</td>';
+    content += '</tr>';
+    content += '<tr>';
+    content += '<th colspan="2" class="td_align_center td_bg_subtle">대여 장소는 ' + item.prod_place + ' 입니다.</th>';
+    content += '</tr>';
+}
 	
 	
 //대여 불가(신청중/대여중)
