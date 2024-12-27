@@ -39,10 +39,10 @@
             <div class="tst_modal_footer">
                 <div class="tst_flex">
                     <div class="tst_col6">
-                        <input type="submit" value="등록하기" class="btn_primary" />
+                        <input type="submit" value="등록하기" class="btn_primary btn_full" />
                     </div>
                     <div class="tst_col6">
-                        <button type="button" class="btn_secondary" onclick="tst_modal_close('tst_modal_write')">취소하기</button>
+                        <button type="button" onclick="tst_modal_close('tst_modal_write')" class="btn_secondary btn_full">취소하기</button>
                     </div>
                 </div>
             </div>

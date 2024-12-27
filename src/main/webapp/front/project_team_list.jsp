@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/module_tree.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/organization.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>

@@ -332,6 +332,25 @@
                     </table>
                 </div>
                 <div class="tst_col7">
+
+                    <!-- 검색 -->
+                    <form>
+                        <div class="tst_search_container">
+                            <div class="tst_search_select">
+                                <select id="tst_search_select_category" name="category">
+                                    <option value="{검색 분류}">검색 분류</option>
+                                </select>
+                            </div>
+                            <div class="tst_search_input">
+                                <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                            </div>
+                            <div class="tst_search_icon">
+                                <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- //검색 -->
+
                     <table class="tst_table table_align_left">
                         <colgroup>
                             <col style="width: 33px;" />
@@ -343,18 +362,6 @@
                             <th colspan="3">직원 선택</th>
                         </tr>
                         </thead>
-
-                        <!-- 선택한 부서 혹은 팀이 없을 경우 -->
-                        <tfoot>
-                        <tr class="approval_select_no_data"><!-- 양식을 선택했을 경우 클래스 disp_hide를 추가하세요. -->
-                            <td colspan="3" class="td_no_data">
-                                <p><i class="bi bi-person-standing"></i></p>
-                                <h3>부서명/팀명을 클릭하면</h3>
-                                <h3>직원 목록을 확인할 수 있습니다.</h3>
-                            </td>
-                        </tr>
-                        </tfoot>
-                        <!-- //선택한 부서 혹은 팀이 없을 경우 -->
 
                         <tbody class="tst_pointer">
 
