@@ -42,7 +42,6 @@ public class ResourceDTO {
 	
 	
 	
-	
 	public int getProd_idx() {
 		return prod_idx;
 	}

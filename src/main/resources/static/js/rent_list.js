@@ -54,6 +54,66 @@ function pageCall(page,category) {
     });
 }
 
+
+//카테고리 검색
+function category_search(event){
+    // 폼 기본 제출 동작 방지
+    event.preventDefault();
+    
+    // 입력된 검색어 가져오기
+    const category_keyword = document.getElementById('keyword_category').value.trim();
+
+    if (!category_keyword) {
+        alert("검색어를 입력하세요.");
+        return false;
+    }
+    // 검색 함수 호출
+    category_product_search(category_keyword);
+    return false; // 폼 제출 방지
+    
+}
+
+//카테고리검색함수
+function category_product_search(category_keyword) {
+    console.log("검색 실행:",category_keyword);
+    // 예: AJAX 요청을 통한 검색 처리
+    $.ajax({
+        type: 'GET',
+        url: '/categroySearch.ajax',
+        data:{
+        	'keyword':category_keyword
+        },
+        dataType: 'json',
+        success: function(data) {
+            console.log("검색 결과:", data);  // 반환된 데이터 확인
+
+            // 반환된 데이터가 단일 객체일 경우
+            if (data && typeof data === 'object') {
+                var tableBody = $('#category_table_tbody'); // 테이블 tbody의 ID
+
+                // 기존 항목 제거
+                tableBody.empty();
+
+                // 단일 객체일 경우 직접 테이블에 추가
+                var row = '<tr>' +
+                          '<td>' +
+                          '<span onclick="pageCall(1, \'' + data.prod_cate_idx + '\')">' +
+                          data.prod_cate_name +
+                          '</span>' +
+                          '</td>' +
+                          '</tr>';
+                tableBody.append(row);
+            } else {
+                console.log("검색 결과가 없습니다.");
+            }
+        },
+        error: function(e) {
+            console.log("오류 발생", e);
+        } 
+    });
+}
+
+
 //물품 검색
 function resource_search(event) {
     // 폼 기본 제출 동작 방지
@@ -123,13 +183,13 @@ function resource_list_print(list) {
     		content += '<td>' + item.prod_idx + '</td>';
     		content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
     		content += '<td class="td_align_left">';
-    		content += '<h3 onclick="location.href=\'/rent_detail?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
+    		content += '<h3 onclick="location.href=\'/rentDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
     		content += '</td>';
     		content += '<td class="td_align_left">';
-    		content += '<span onclick="location.href=\'/rent_detail?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
+    		content += '<span onclick="location.href=\'/rentDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
     		content += '</td>';
     		content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
-    		content += '<td>' + item.prod_exp_date + '</td>';
+    		content += '<td>' + (item.prod_exp_date==null ? '없음' : item.prod_exp_date) + '</td>';
     		content += '</tr>';
     	}
 	} else{

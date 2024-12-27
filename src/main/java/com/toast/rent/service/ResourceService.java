@@ -98,7 +98,8 @@ public class ResourceService {
 		result.put("list", list);
 		return result;
 	}
-
+ 
+	//물품 목록 보기(전체)
 	public Map<String, Object> resourceSearch(int page, int cnt, String option, String keyword) {
 		logger.info("현재 페이지:"+page);	
 		logger.info("한 페이지에 보여줄 갯수: "+cnt);
@@ -121,7 +122,7 @@ public class ResourceService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청 중");
+				dto.setProd_rent_str("대여 신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -130,14 +131,27 @@ public class ResourceService {
 				break;
 			}
 		}
+		
 		result.put("list", list);
 		return result;
 	}
-
+	//물품 목록 보기(특정 카테고리)
 	public Map<String, Object> resourceFilterSearch(String category, int page_, int cnt_, String option,
 			String keyword) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	//검색한 카테고리 가져오기
+	public Map<String, Object> categroySearch(String keyword) {
+		return resourceDAO.categroySearch(keyword);
+	}
+
+	//물품 상세보기
+	public ResourceDTO prodDetail(int prod_idx) {
+		return resourceDAO.prodDetail(prod_idx);
+		
 	}
 
 }
