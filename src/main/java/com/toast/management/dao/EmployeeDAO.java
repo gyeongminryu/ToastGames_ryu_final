@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.toast.management.dto.AppointmentDTO;
 import com.toast.management.dto.EmployeeDTO;
+import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.MainFileDTO;
 import com.toast.member.dto.FileDTO;
 
@@ -44,6 +45,10 @@ public interface EmployeeDAO {
 	int emplFileDel(String new_filename);
 
 	int employeeDutyUpdate(String empl_idx, String empl_duty);
+
+	List<EmployeeDetailDTO> getEmployeeList();
+
+	void emplfileUpload(FileDTO fileDTO);
 
 	
 

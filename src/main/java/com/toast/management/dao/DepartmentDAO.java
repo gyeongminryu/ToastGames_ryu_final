@@ -13,6 +13,7 @@ import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.EmployeeDTO;
 import com.toast.management.dto.PositionDTO;
+import com.toast.member.dto.FileDTO;
 
 
 @Mapper
@@ -53,6 +54,12 @@ public interface DepartmentDAO {
 	int companyinfoUpdateDo(Map<String, String> param);
 
 	int compStampUpload(String newFileName);
+
+	List<FileDTO> getcompfile(String file_key);
+
+	int compFileUpload(FileDTO filedto);
+
+	int compStampDel();
 
 	
 

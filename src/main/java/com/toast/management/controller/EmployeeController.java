@@ -30,6 +30,7 @@ import com.toast.management.dao.EmployeeDAO;
 import com.toast.management.dto.DepartmentDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.EmployeeDTO;
+import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.PositionDTO;
 import com.toast.management.service.EmployeeService;
 import com.toast.member.dto.FileDTO;
@@ -92,7 +93,7 @@ public class EmployeeController {
 			// 파일 업로드 실행
 			employeeService.emplfileUpload(files,empl_idx);
 	        List<FileDTO> fileList = employeeService.getemplUploadedFiles(empl_idx);  // 업로드된 파일 리스트
-	        response.sendRedirect("./employeeDetail.go?empl_idx=" + empl_idx); // 상대경로 설정
+	        response.sendRedirect("./employee_detail.go?empl_idx=" + empl_idx); // 상대경로 설정
 	      //  return ResponseEntity.ok(fileList);
 	        return null;
 		} catch (IOException e) {
@@ -164,5 +165,15 @@ public class EmployeeController {
 		return page;
 	}
 	
+	@GetMapping(value = "/employee_list.ajax")
+    @ResponseBody // 데이터를 JSON 형식으로 반환
+    public List<EmployeeDetailDTO> getEmployeeList() {
+        // 예제 데이터 생성
+        List<EmployeeDetailDTO> employees = new ArrayList<>();
+        employees = employeeService.getEmployeeList();
+        
+        
+        return employees;
+    }
 	
 }
