@@ -77,6 +77,13 @@
                                 <td>{위치}</td>
                             </tr>
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="2">
+                                    <button onclick="tst_modal_call('tst_modal_update')" class="btn_primary btn_full">조직 정보 수정하기</button>
+                                </td>
+                            </tr>
+                            </tfoot>
                         </table>
                         <hr class="separator" />
                         <!-- //조직 정보 -->
@@ -248,7 +255,7 @@
         </div>
     </div>
 </div>
+<c:import url="organization_detail_modal.jsp" />
 </body>
-
 <script src="resources/js/common.js"></script>
 </html>
