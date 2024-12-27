@@ -27,16 +27,16 @@
                 </li>
                 <li>
                     <ul class="list_block list_leftnav_sub">
-                        <li onclick="location.href='/approval_received_list'" class="tst_pointer">
+                        <li onclick="location.href=''" class="tst_pointer">
                             <h3 class="font_subtle">내가 받은 업무</h3>
                         </li>
-                        <li onclick="location.href='/approval_sent_list'" class="tst_pointer">
+                        <li onclick="location.href='/approval_sent_list.go'" class="tst_pointer">
                             <h3 class="font_subtle">내가 보낸 업무</h3>
                         </li>
-                        <li onclick="location.href='/approval_writing_list'" class="tst_pointer">
+                        <li onclick="location.href='/approval_writing_list.go'" class="tst_pointer">
                             <h3 class="font_subtle">작성중인 문서</h3>
                         </li>
-                        <li onclick="location.href='/approval_writing_select_form'" class="tst_pointer">
+                        <li onclick="location.href=''" class="tst_pointer">
                             <h3 class="font_subtle">문서 작성하기</h3>
                         </li>
                     </ul>
@@ -56,7 +56,7 @@
                 <li class="tst_pointer" onclick="location.href='/board_list.go'">
                     <i class="bi bi-layout-text-window-reverse"></i><h3>전자 게시판</h3>
                 </li>
-                <li class="tst_pointer">
+                <li class="tst_pointer" onclick="location.href='/companyinfo_detail.go'">
                     <i class="bi bi-building-fill"></i><h3>회사 정보 관리</h3>
                 </li>
                 <li class="tst_pointer" onclick="location.href='/organization_tree.go'">
@@ -64,9 +64,6 @@
                 </li>
                 <li class="tst_pointer">
                     <i class="bi bi-person-lines-fill"></i><h3>인사 관리</h3>
-                </li>
-                <li class="tst_pointer">
-                    <i class="bi bi-clipboard2"></i><h3>회의실 관리</h3>
                 </li>
                 <li class="tst_pointer">
                     <i class="bi bi-pencil-square"></i><h3>공용 물품 관리</h3>
@@ -80,7 +77,7 @@
                 <li class="tst_pointer">
                     <i class="bi bi-stickies-fill"></i><h3>증명서 신청</h3>
                 </li>
-                <li class="tst_pointer">
+                <li class="tst_pointer" onclick="location.href='/mypage.go'">
                     <i class="bi bi-person-fill-gear"></i><h3>내 정보 관리</h3>
                 </li>
                 <li class="tst_pointer">

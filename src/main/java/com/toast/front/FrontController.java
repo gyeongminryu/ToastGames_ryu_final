@@ -227,4 +227,20 @@ public class FrontController {
     public ModelAndView front_manage_rent_dispose_detail() {
         return new ModelAndView("manage_dispose_detail");
     }
+
+
+
+    // My Page =======================================================
+
+    // 내 정보 열람
+    @RequestMapping(value = "/mypage")
+    public ModelAndView front_mypage() {
+        return new ModelAndView("mypage");
+    }
+
+    // 내 정보 수정
+    @RequestMapping(value = "/mypage_update")
+    public ModelAndView front_mypage_update() {
+        return new ModelAndView("mypage_update");
+    }
 }

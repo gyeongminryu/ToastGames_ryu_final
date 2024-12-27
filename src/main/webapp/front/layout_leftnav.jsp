@@ -81,9 +81,6 @@
                 <li onclick="location.href='/'" class="tst_pointer">
                     <i class="bi bi-person-lines-fill"></i><h3>인사 관리</h3>
                 </li>
-                <li onclick="location.href='/'" class="tst_pointer">
-                    <i class="bi bi-clipboard2"></i><h3>회의실 관리</h3>
-                </li>
                 <li onclick="location.href='/manage_rent_list'" class="tst_pointer">
                     <i class="bi bi-pencil-square"></i><h3>공용 물품 관리</h3>
                 </li>
@@ -99,7 +96,7 @@
                 <li onclick="location.href='/'" class="tst_pointer">
                     <i class="bi bi-stickies-fill"></i><h3>증명서 신청</h3>
                 </li>
-                <li onclick="location.href='/'" class="tst_pointer">
+                <li onclick="location.href='/mypage'" class="tst_pointer">
                     <i class="bi bi-person-fill-gear"></i><h3>내 정보 관리</h3>
                 </li>
                 <li onclick="location.href='/'" class="tst_pointer">
