@@ -56,10 +56,54 @@
         SELECT COUNT(*) FROM document WHERE doc_empl_idx = #{empl_idx}
     </select>
 
-    <!--보낸 목록 내용 전부 가져오기-->
-    <select id="get_sent_list" resultType="Map">
-        SELECT * FROM document WHERE doc_empl_idx = #{empl_idx}
+    <!--받은 목록 있는지 조회-->
+
+    <select id="receiver_empl_count" resultType="int">
+        SELECT COUNT(*) FROM approval WHERE appr_receiver_idx = #{empl_idx}
     </select>
 
+    <!--empl_idx의 사원의 정보 알아내기-->
+    <select id="get_empl_info" resultType="Map">
+        SELECT e.empl_idx,e.empl_name, a.dept_idx,a.position_idx, d.dept_name ,p.position_name from employee e
+            join appointment a on e.appolast_idx = a.appo_idx
+            join position_ p on a.position_idx = p.position_idx
+            join department d on a.dept_idx = d.dept_idx
+        WHERE e.empl_idx = #{empl_idx}
+    </select>
+
+    <!--보낸 리스트에 대한 정보 가져오기-->
+    <select id="get_sent_list" resultType="Map">
+        SELECT DISTINCT(a.doc_idx),d.doc_subject,d.doc_state,DATE_FORMAT(d.doc_update_date, '%Y-%m-%d %H:%i:%s') AS update_date,DATE_FORMAT(d.doc_end_date, '%Y-%m-%d %H:%i:%s') AS end_date,d.form_idx,f.form_subject FROM document d
+          join approval a on d.doc_idx = a.doc_idx
+          join form f on d.form_idx = f.form_idx
+             WHERE doc_empl_idx = #{param};
+    </select>
+
+    <!--받은 리스트에 대한 정보 가져오기-->
+
+
+    <!--승인/반려 상태 확인-->
+    <select id="count_state" resultType="int">
+        SELECT COUNT(*) FROM approval a WHERE doc_idx = #{doc_idx} AND appr_state = #{approval_state};
+    </select>
+
+    <select id="get_approval_state_time" resultType="String">
+        SELECT DATE_FORMAT(appr_date, '%Y-%m-%d %H:%i:%s') AS appr_date FROM approval a WHERE doc_idx = #{sent_doc_idx} AND appr_state = #{approval_state} ORDER BY a.appr_order DESC LIMIT 1;
+    </select>
+
+    <select id="whether_final_approve" resultType="int">
+        SELECT appr_state FROM approval WHERE appr_order = (SELECT max(appr_order) FROM approval WHERE doc_idx = #{sent_doc_idx}) AND doc_idx = #{sent_doc_idx};
+    </select>
+
+    <!-- 승인이 아닌 것 중 가장 마지막 결재의 읽음 날짜가 있는지 확인  -->
+    <select id="get_read_date" resultType="int">
+        SELECT count(appr_read_date) FROM approval WHERE appr_state = 0 AND doc_idx = #{sent_doc_idx} ORDER BY appr_order DESC LIMIT 1;
+    </select>
+
+
+    <!--받은 결재-->
+    <!--전달 받은 결재 doc_idx 가져오기-->
+    <select id="get_received_doc_idxs" resultType="String">
+    </select>
 
 </mapper>

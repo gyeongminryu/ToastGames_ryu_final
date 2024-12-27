@@ -1,6 +1,5 @@
 package com.toast.approval.dao;
 
-import com.toast.approval.dto.ApprovalDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.Map;
 
 @Mapper
 public interface ApprovalDAO {
+
     /*문서 조회 -> 옮기기*/
     List<Map<String, Object>> form_list();
 
@@ -26,6 +26,22 @@ public interface ApprovalDAO {
     List<Map<String, Object>> team_allempl(int team_idx);
 
     int request_empl_count(int empl_idx);
+    int receiver_empl_count(int empl_idx);
 
-    List<Map<String, Object>> get_sent_list(int empl_idx);
+
+
+    List<Map<String, Object>> get_sent_list(int param);
+
+    Map<String, Object> get_empl_info(int empl_idx);
+
+    int count_state(int doc_idx, int approval_state);
+
+    String get_approval_state_time(int sent_doc_idx, int approval_state);
+
+    int whether_final_approve(int sent_doc_idx);
+
+    int get_read_date(int sent_doc_idx);
+
+
+    List<String> get_received_doc_idxs(int r_empl_idx);
 }
