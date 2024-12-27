@@ -41,7 +41,7 @@ public class ResourceManageController {
 	
 	//물품 목록보기
 	
-	//물품 대여 신청 승인
+	//물품 대여 신청 승인(대여 여부 업뎃)
 	
 	//
 	

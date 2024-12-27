@@ -17,7 +17,11 @@
 
 	<!-- 총 페이지 -->
 	<select id="allCount" resultType="int">
-		SELECT CEIL(COUNT(prod_idx)/#{param1}) AS pages FROM product
+		SELECT CEIL(COUNT(prod_idx)/#{param1}) AS pages 
+		FROM 
+			product
+		WHERE  
+    		prod_state=1
 	</select>
 
 	<!-- 물품 목록 가져오기 --><!-- 페이징 포함 -->
@@ -53,6 +57,8 @@
                 		WHERE prod_idx = pr.prod_idx
             		)
     		) pr ON pr.prod_idx = pd.prod_idx
+    	WHERE
+    		pd.prod_state=1
 		ORDER BY prod_idx DESC 
 			LIMIT #{param1} OFFSET #{param2}		
 	</select>
@@ -60,7 +66,13 @@
 
 	<!-- 카테고리별 총 페이지 -->
 	<select id="filterListCount" resultType="int">
-		SELECT CEIL(COUNT(prod_idx)/#{param1}) AS pages FROM product WHERE prod_cate_idx=#{param2}
+		SELECT CEIL(COUNT(prod_idx)/#{param1}) AS pages 
+		FROM 
+			product 
+		WHERE 
+			prod_cate_idx=#{param2}
+		AND 
+    		prod_state=1
 	</select>
 
 	<!--카테고리별 물품 목록 가져오기 --><!-- 페이징 포함 -->
@@ -98,6 +110,8 @@
     		) pr ON pr.prod_idx = pd.prod_idx
 		WHERE 
 			pd.prod_cate_idx=#{param1}
+		AND 
+    		pd.prod_state=1
 		ORDER BY prod_idx DESC 
 			LIMIT #{param2} OFFSET #{param3}		
 	</select>
@@ -111,6 +125,8 @@
 			product 
 		WHERE 
 			#{param2} LIKE CONCAT('%', #{param3}, '%')
+		AND 
+    		prod_state=1
 	</select>
 
 	<!--카테고리 & 검색어 물품 목록 가져오기 --><!-- 페이징 포함 -->
@@ -158,20 +174,109 @@
             	1 = 1 <!-- 조건이 없으면 모든 데이터를 반환 -->
         	</otherwise>
     	</choose>
+    	AND 
+    		pd.prod_state=1
 		ORDER BY prod_idx DESC 
 			LIMIT #{param3} OFFSET #{param4}		
 	</select>
 
 
-	<!-- 물품 상세보기 --> <!-- 첨부파일, 이미지, 대여정보도 봐야함 -->
-	<!-- <select id="prodDetail">
-		SELECT 
-			prod_name, 
-			prod_model, 
-			prod_info 
+	<!-- 카테고리선택 & 검색어 총 페이지 -->
+	<select id="filterSearchCount" resultType="int">
+		SELECT CEIL(COUNT(prod_idx)/#{param1}) AS pages 
 		FROM 
-	</select> -->
+			product 
+		WHERE 
+			#{param2} LIKE CONCAT('%', #{param3}, '%')
+		AND 
+			prod_cate_idx=#{param4}
+		AND 
+    		prod_state=1
+	</select>
 
+	<!--카테고리선택 & 검색어 물품 목록 가져오기 --><!-- 페이징 포함 -->
+	<select id="filterSearchList" resultType="com.toast.rent.dto.ResourceDTO">
+		SELECT 
+			pd.prod_idx,
+			pd.prod_name, 
+			pd.prod_cate_idx, 
+			pd.prod_model,
+			pd.prod_info,
+			pd.prod_rent, 
+			pd.prod_empl_idx, 
+			pd.prod_dispo_date, 
+			pd.prod_state,
+			pc.prod_cate_name,
+			pr.prod_exp_date
+		FROM 
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		LEFT JOIN 
+						(
+        		SELECT 
+            		pr.prod_idx,
+            		pr.prod_exp_date,
+            		pr.prod_rent_idx
+        		FROM 
+            		product_rent pr
+        		WHERE 
+            		pr.prod_rent_idx = (
+                		SELECT MAX(prod_rent_idx) 
+                		FROM product_rent 
+                		WHERE prod_idx = pr.prod_idx
+            		)
+    		) pr ON pr.prod_idx = pd.prod_idx
+		WHERE 
+		<choose>
+        	<when test="param1 == 'prod_name'">
+            	pd.prod_name LIKE CONCAT('%', #{param2}, '%')
+        	</when>
+        	<when test="param1 == 'prod_info'">
+            	pd.prod_info LIKE CONCAT('%', #{param2}, '%')
+        	</when>
+        	<otherwise>
+            	1 = 1 <!-- 조건이 없으면 모든 데이터를 반환 -->
+        	</otherwise>
+    	</choose>
+    	AND 
+    		pd.prod_cate_idx=#{param3}
+    	AND 
+    		pd.prod_state=1
+		ORDER BY prod_idx DESC 
+			LIMIT #{param4} OFFSET #{param5}		
+	</select>
+
+	<!-- 물품 상세보기 --> <!-- 대여정보도 봐야함 -->
+	<select id="prodDetail" resultType="com.toast.rent.dto.ResourceDTO">
+		SELECT 
+		    pd.prod_idx,
+		    pd.prod_name,
+		    pd.prod_model,
+		    pd.prod_info,
+		    pd.prod_rent,
+		    pd.prod_place,
+		    pr.prod_exp_date,
+		    pr.prod_rent_date
+		FROM 
+		    product pd
+		LEFT JOIN 
+		    product_rent pr ON pr.prod_idx = pd.prod_idx
+		LEFT JOIN 
+		    (
+		        SELECT 
+		            prod_idx, MAX(prod_rent_idx) max_rent_idx
+		        FROM 
+		            product_rent
+		        GROUP BY 
+		            prod_idx
+		    ) latest_rent 
+		    ON pr.prod_idx = latest_rent.prod_idx 
+		    AND pr.prod_rent_idx = latest_rent.max_rent_idx
+		WHERE pd.prod_idx = #{prod_idx}
+	</select>
+
+	<!-- 물품 상세보기 첨부파일, 이미지 -->
 
 
 

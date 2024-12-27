@@ -1,11 +1,24 @@
+let list = '';
+
+let rent_state = 'off';
+
+
 function rent_available_filtering_on(elem) {
     elem.classList.add("disp_hide");
     elem.nextElementSibling.classList.remove("disp_hide");
+    // 상태 기록
+    rent_state = 'on'; // ON 상태로 변경
+    resource_list_print(list);
+    console.log("ON 상태로 변경됨. rent_state:", rent_state);
 }
 
 function rent_available_filtering_off(elem) {
     elem.classList.add("disp_hide");
     elem.previousElementSibling.classList.remove("disp_hide");
+    // 상태 기록
+    rent_state = 'off'; // OFF 상태로 변경
+    resource_list_print(list);
+    console.log("OFF 상태로 변경됨. rent_state:", rent_state);
 }
 
 // 기본 카테고리 (전체 보기)
@@ -34,6 +47,7 @@ function pageCall(page,category) {
         dataType: 'json', 
         success: function(data) {
 					console.log(data);
+					list=data.list;
 					resource_list_print(data.list);			
 			
 			//페이징 플러그인 처리
@@ -153,6 +167,7 @@ function product_search(page,currentCategory,option, keyword) {
         dataType: 'json',
         success: function(data) {
 					console.log(data);
+					list=data.list;
 					resource_list_print(data.list);
 			
 			
@@ -176,31 +191,61 @@ function product_search(page,currentCategory,option, keyword) {
 
 //목록
 function resource_list_print(list) {
-	var content = '';
-	if(list != null) {
-		for (var item of list) {
-    		content += '<tr>';
-    		content += '<td>' + item.prod_idx + '</td>';
-    		content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
-    		content += '<td class="td_align_left">';
-    		content += '<h3 onclick="location.href=\'/rentDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
-    		content += '</td>';
-    		content += '<td class="td_align_left">';
-    		content += '<span onclick="location.href=\'/rentDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
-    		content += '</td>';
-    		content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
-    		content += '<td>' + (item.prod_exp_date==null ? '없음' : item.prod_exp_date) + '</td>';
-    		content += '</tr>';
-    	}
-	} else{
-	    content+='<tr class="rent_list_no_data">'; // 데이터가 있을 경우 클래스 disp_hide를 추가하세요.
-        content+='<td colspan="6" class="td_no_data">';
-        content+='<p><i class="bi bi-box-seam"></i></p>';
-        content+='<h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>';
-        content+='</td>';
-        content+='</tr>';
-	}
-	$('#resource_list').html(content);
+    console.log("Received list:", list);
+    var content = '';
+    
+    if (rent_state === "off") { // 문자열 비교 수정
+        if (Array.isArray(list) && list.length > 0) {
+            for (var item of list) {
+                content += '<tr>';
+                content += '<td>' + item.prod_idx + '</td>';
+                content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
+                content += '<td class="td_align_left">';
+                content += '<h3 onclick="location.href=\'/rentDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
+                content += '</td>';
+                content += '<td class="td_align_left">';
+                content += '<span onclick="location.href=\'/rentDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
+                content += '</td>';
+                content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
+                content += '<td>' + (item.prod_exp_date == null ? '없음' : item.prod_exp_date) + '</td>';
+                content += '</tr>';
+            }
+        } else {
+            content += '<tr class="rent_list_no_data">'; // 데이터가 있을 경우 클래스 disp_hide를 추가하세요.
+            content += '<td colspan="6" class="td_no_data">';
+            content += '<p><i class="bi bi-box-seam"></i></p>';
+            content += '<h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>';
+            content += '</td>';
+            content += '</tr>';
+        }
+    } else {
+        if (Array.isArray(list) && list.length > 0) {
+            for (var item of list) {
+                if (item.prod_rent_str === "대여 가능") { // 문자열 비교 수정 및 괄호 추가
+                    content += '<tr>';
+                    content += '<td>' + item.prod_idx + '</td>';
+                    content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
+                    content += '<td class="td_align_left">';
+                    content += '<h3 onclick="location.href=\'/rentDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
+                    content += '</td>';
+                    content += '<td class="td_align_left">';
+                    content += '<span onclick="location.href=\'/rentDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
+                    content += '</td>';
+                    content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
+                    content += '<td>' + (item.prod_exp_date == null ? '없음' : item.prod_exp_date) + '</td>';
+                    content += '</tr>';
+                }
+            }
+        } else {
+            content += '<tr class="rent_list_no_data">'; // 데이터가 있을 경우 클래스 disp_hide를 추가하세요.
+            content += '<td colspan="6" class="td_no_data">';
+            content += '<p><i class="bi bi-box-seam"></i></p>';
+            content += '<h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>';
+            content += '</td>';
+            content += '</tr>';
+        }
+    }
+    $('#resource_list').html(content);
 }
 
 

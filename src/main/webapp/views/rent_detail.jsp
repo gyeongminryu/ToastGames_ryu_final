@@ -20,10 +20,10 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_list'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_list.go'">
                         <h1>공용 물품 대여</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/rent_mylist'">
+                    <li class="tst_title_item" onclick="location.href='/rent_mylist.go'">
                         <h1>내가 대여한 물품</h1>
                     </li>
                 </ul>
@@ -46,15 +46,18 @@
                             <tbody>
                             <tr>
                                 <th>제품명</th>
-                                <th>{제품명}</th>
+                                <th>${detail.prod_name}</th>
                             </tr>
                             <tr>
                                 <th>제품 정보</th>
-                                <td>{제품 정보}</td>
+                                <td>${detail.prod_model}</td>
                             </tr>
                             <tr>
                                 <th>제품 설명</th>
-                                <td>{제품 설명}</td>
+                                <td>
+                                	${detail.prod_info}
+									<img alt="${file.ori_filename}" src="/photo/${file.new_filename}">
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -87,7 +90,7 @@
 
                         <hr class="separator" />
 
-                        <!-- 대여 정보 > 대여 가능한 경우 -->
+						<!-- 대여 정보 -->
                         <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 100px" />
@@ -98,69 +101,11 @@
                                 <th colspan="2">대여 정보</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th>대여 가능 여부</th>
-                                <td>대여 가능</td>
-                            </tr>
-                            <tr>
-                                <th>대여 상태</th>
-                                <td>대여 가능</td>
-                            </tr>
-                            <tr>
-                                <th>반납 예정일</th>
-                                <td>없음</td>
-                            </tr>
-                            <tr>
-                                <th colspan="2" class="td_align_center td_bg_subtle">대여 장소는 본관 3층 312호 경영 지원실입니다.</th>
-                            </tr>
+                            <tbody id="product_state">
+
                             </tbody>
                         </table>
-                        <!-- //대여 정보 > 대여 가능한 경우 -->
-
-                        <hr class="separator" />
-
-                        <!-- 대여 정보 > 대여 불가한 경우 -->
-                        <table class="tst_table table_align_left table_no_padding">
-                            <colgroup>
-                                <col style="width: 100px" />
-                                <col style="width: auto" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th colspan="2">대여 정보</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>대여 가능 여부</th>
-                                <td>대여 불가</td>
-                            </tr>
-
-                            <!-- 대여 신청중인 경우 아래와 같이 출력하세요 -->
-                            <tr>
-                                <th>대여 상태</th>
-                                <td>대여 신청중</td>
-                            </tr>
-                            <!-- //대여 신청중인 경우 아래와 같이 출력하세요 -->
-
-                            <!-- 대여중인 경우 아래와 같이 출력하세요 -->
-                            <tr>
-                                <th>대여 상태</th>
-                                <td>대여중 ({대여 시작일|yyyy-MM-dd}부터)</td>
-                            </tr>
-                            <!-- //대여중인 경우 아래와 같이 출력하세요 -->
-
-                            <tr>
-                                <th>반납 예정일</th>
-                                <td>{반납 예정일|yyyy-MM-dd}</td>
-                            </tr>
-                            <tr>
-                                <th colspan="2" class="td_align_center td_bg_subtle disp_hide">대여 장소는 본관 3층 312호 경영 지원실입니다.</th>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <!-- //대여 정보 > 대여 불가한 경우 -->
+                        <!-- //대여 정보-->
 
                         <hr class="separator" />
 
@@ -170,7 +115,7 @@
                                 <button class="btn_primary btn_full" onclick="tst_modal_call('tst_modal_detail')">물품 대여 신청하기</button>
                             </li>
                             <li>
-                                <button class="btn_secondary btn_full" onclick="location.href='/rent_list'">목록으로 돌아가기</button>
+                                <button class="btn_secondary btn_full" onclick="location.href='/rent_list.go'">목록으로 돌아가기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->
@@ -186,5 +131,5 @@
 <c:import url="rent_detail_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
-<script src="resources/js/rent_list.js"></script>
+<script src="resources/js/rent_detail.js"></script>
 </html>

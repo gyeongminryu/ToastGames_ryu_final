@@ -135,11 +135,44 @@ public class ResourceService {
 		result.put("list", list);
 		return result;
 	}
+	
+	
 	//물품 목록 보기(특정 카테고리)
-	public Map<String, Object> resourceFilterSearch(String category, int page_, int cnt_, String option,
+	public Map<String, Object> resourceFilterSearch(String category, int page, int cnt, String option,
 			String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("현재 페이지:"+page);	
+		logger.info("한 페이지에 보여줄 갯수: "+cnt);
+		
+		int limit = cnt;
+		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+		
+		int totalPages = resourceDAO.filterSearchCount(cnt,option,keyword,category);
+		
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("totalPages", totalPages);
+		result.put("currPage", page);
+		List<ResourceDTO> list = resourceDAO.filterSearchList(option,keyword,category,limit,offset);
+		for (ResourceDTO dto : list) {
+			switch (dto.getProd_rent()) {
+			case 0:
+				dto.setProd_rent_str("대여 불가"); //물품 상태가 0(사용 불가)일때 
+				break;
+			case 1:
+				dto.setProd_rent_str("대여 가능");
+				break;
+			case 2:
+				dto.setProd_rent_str("대여 신청중");
+				break;
+			case 3:
+				dto.setProd_rent_str("대여 중");
+			default:
+				dto.setProd_rent_str("알 수 없음");
+				break;
+			}
+		}
+		
+		result.put("list", list);
+		return result;
 	}
 
 

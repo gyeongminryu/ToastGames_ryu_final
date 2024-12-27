@@ -94,22 +94,7 @@ public class ResourceController {
 
 	}
 	
-	//대여 가능 필터~~~~
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	//물품 상세보기
 	@RequestMapping(value="/rentDetail.go")
@@ -117,6 +102,7 @@ public class ResourceController {
 		logger.info("prod_idx:"+prod_idx);
 		ResourceDTO detail = resourceService.prodDetail(prod_idx);
 		model.addAttribute("detail", detail);
+		model.addAttribute("file", file);
 		return "rent_detail";
 	}
 	
