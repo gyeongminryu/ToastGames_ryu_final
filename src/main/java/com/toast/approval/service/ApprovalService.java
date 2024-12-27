@@ -128,7 +128,7 @@ public class ApprovalService {
 		}else if(list_type.equals("받은 결재")){
 			//Map으로 받아온 doc 정보
 			Map<String, Object> doc_infos_part = new HashMap<>();
-			doc_infos_part = approvalDAO.get_received_list(received_doc_idx);
+			//doc_infos_part = approvalDAO.get_received_list(received_doc_idx);
 			doc_infos.add(doc_infos_part);
 		}
 
