@@ -11,8 +11,27 @@ function tst_file_name(elem) {
 
 
 
+// 증명 서류 제출하기
+function mypage_summit_file(key) {
+    // key: 파일 키
+}
+
 // 증명 서류 제출하기 > 파일 첨부시 시행되는 함수
-// 개당 5kb 미만, 최대 5개의 파일만 첨부할 수 있습니다. pdf, jpg, png 파일만 첨부할 수 있습니다.
+// 개당 2mb 미만, 최대 5개의 파일만 첨부할 수 있습니다. pdf, jpg, png 파일만 첨부할 수 있습니다.
+// 위 규칙을 벗어나면 alert을 띄우세요.
+function tst_file_summit(elem) {
+    // elem: 파일 입력창
+}
+
+
+
+// 직인 파일 첨부하기
+function mypage_summit_stamp(no) {
+    // no: 사원번호
+}
+
+// 직인 파일 첨부하기 > 파일 첨부시 시행되는 함수
+// 2mb 미만의 gif, png 파일만 첨부할 수 있습니다.
 // 위 규칙을 벗어나면 alert을 띄우세요.
 function tst_file_summit(elem) {
     // elem: 파일 입력창
