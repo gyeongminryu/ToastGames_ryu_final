@@ -102,7 +102,7 @@ public class ResourceController {
 		logger.info("prod_idx:"+prod_idx);
 		ResourceDTO detail = resourceService.prodDetail(prod_idx);
 		model.addAttribute("detail", detail);
-		model.addAttribute("file", file);
+		//model.addAttribute("file", file);
 		return "rent_detail";
 	}
 	
