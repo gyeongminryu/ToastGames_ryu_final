@@ -19,7 +19,7 @@
                     </li>
                     <li>
                         <label class="form_label">주민등록 등본</label>
-                        <input type="file" name="" onchange="tst_file_change(this)" />
+                        <input type="file" name="" onchange="tst_file_name(this)" />
                     </li>
                 </ul>
             </div>
@@ -85,5 +85,38 @@
     <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_password')"></div>
 </div>
 <!-- //비밀번호 변경하기 -->
+
+<!-- 증명 서류 제출하기 -->
+<div class="tst_modal tst_modal_input tst_modal_file">
+    <div class="tst_modal_container">
+        <form>
+            <div class="tst_modal_header">
+                <h1 class="tst_modal_title">증명 서류 제출하기</h1>
+                <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_file')"></i>
+            </div>
+            <div class="tst_modal_body">
+                <ul class="tst_list list_no_desc list_block">
+                    <li>
+                        <label class="form_label">서류</label>
+                        <input type="file" name="" onchange="tst_file_summit(this)" />
+                        <p class="min font_caution">개당 5kb 미만, 최대 5개의 파일만 첨부할 수 있습니다. pdf, jpg, png 파일만 첨부할 수 있습니다.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="tst_modal_footer">
+                <div class="tst_flex">
+                    <div class="tst_col6">
+                        <button onclick="mypage_summit_file('{파일 키}')" class="btn_primary btn_full">증명 서류 제출하기</button>
+                    </div>
+                    <div class="tst_col6">
+                        <button onclick="tst_modal_close('tst_modal_file')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_file')"></div>
+</div>
+<!-- //증명 서류 제출하기 -->
 
 <script src="resources/js/module_modal.js"></script>

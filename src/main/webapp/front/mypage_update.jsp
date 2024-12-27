@@ -158,7 +158,7 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <button type="button" onclick="tst_modal_call('')" class="btn_subtle btn_full">파일 제출</button>
+                                        <button type="button" onclick="tst_modal_call('tst_modal_file')" class="btn_subtle btn_full">증명 서류 제출하기</button>
                                     </td>
                                 </tr>
                                 </tfoot>
