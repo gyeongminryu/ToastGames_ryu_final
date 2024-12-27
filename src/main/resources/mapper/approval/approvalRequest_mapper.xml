@@ -220,21 +220,19 @@
         SELECT doc_empl_idx,doc_idx,doc_subject, doc_content, doc_content_sub, form_idx FROM document WHERE doc_idx = #{doc_idx}
     </select>
 
+
+
+
     <!--상신-->
     <insert id="request" parameterType="Map">
         INSERT INTO approval(appr_receiver_idx,appr_order,appr_sender_idx,doc_idx,form_idx,appr_state)
         VALUES (${appr_receiver_idx},${appr_order},${appr_sender_idx},${doc_idx}, ${form_idx},0)
     </insert>
 
+    <!--상신 후 저장-> 상신으로 상태값 변경-->
     <update id="update_approval_doc_state">
         UPDATE document SET doc_state = 1 WHERE doc_idx = #{doc_idx}
     </update>
 
-    <!--<select id="get_sent_list">
-    SELECT DISTINCT(a.doc_idx),d.doc_subject,d.doc_state,d.doc_update_date,d.doc_end_date,d.form_idx,f.form_subject FROM document d
-        join approval a on d.doc_idx = a.doc_idx
-        join form f on d.form_idx = f.form_idx
-       WHERE doc_empl_idx = #{empl_idx};
-    </select>-->
 
 </mapper>

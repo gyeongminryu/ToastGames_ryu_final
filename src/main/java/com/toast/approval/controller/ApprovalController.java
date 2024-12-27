@@ -8,7 +8,9 @@ import com.toast.approval.service.ApprovalService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -109,19 +111,58 @@ public class ApprovalController {
 	@ResponseBody
 	public Map<String,Object> approval_team_allempl (int team_idx){
 		Map<String,Object> data = new HashMap<>();
+
 		data.put("empl",approvalService.team_allempl(team_idx));
 
 		return data;
 	}
 
-	/*결재 목록 조회 관련*/
-	@GetMapping (value="/approval_sent_list.go")
-	public String approval_sent_list(Model model){
+	/*내가 보낸 결재 목록 조회*/
+	@GetMapping (value="/approval_send_list.go")
+	public String approval_sent_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
+									 @RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model){
 		//세션 처리
+		List<Map<String,Object>> sent_list = new ArrayList<>();
+		logger.info(filter);
+		logger.info(type);
 
+		//logger.info("type:{}",type);
+
+		if(filter.equals("전체") && type.equals("전체")){
+			logger.info("전체 보낸 목록 조회");
+		}else{
+			logger.info("보낸 목록 조건 조회");
+		}
+
+		sent_list =approvalService.approval_sent_list(empl_idx,filter,type);
 		//empl_idx 전달 → 보낸 문서가 있는지 확인
-		approvalService.approval_sent_list_initialize(empl_idx);
-
+		model.addAttribute("sent_list",sent_list);
 		return "approval_sent_list";
 	}
+
+	/*내가 받은 결재 목록 조회*/
+	@GetMapping (value= "/approval_received_list.go")
+	public String approval_received_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
+									 	@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model){
+		//세션 처리
+		List<Map<String,Object>> received_list = new ArrayList<>();
+		logger.info(filter);
+		logger.info(type);
+
+		//logger.info("type:{}",type);
+
+		if(filter.equals("전체") && type.equals("전체")){
+			logger.info("전체 받은 목록 조회");
+		}else{
+			logger.info("받은 목록 조건 조회");
+		}
+
+		received_list=approvalService.approval_received_list(empl_idx,filter,type);
+		//empl_idx 전달 → 보낸 문서가 있는지 확인
+		model.addAttribute("received_list",received_list);
+		return "approval_received_list";
+	}
+
+
+
 }

@@ -14,6 +14,7 @@
   <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <body>
+
 <c:import url="layout_topnav.jsp" />
 <div class="tst_container">
   <c:import url="layout_leftnav.jsp" />
@@ -23,10 +24,10 @@
 
         <!-- 제목 -->
         <ul class="tst_title list_no_desc list_inline">
-          <li class="tst_title_item" onclick="location.href='/approval_received_list'">
+          <li class="tst_title_item" onclick="location.href='/approval_received_list.go'">
             <h1>내게 온 업무 요청</h1>
           </li>
-          <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_send_list'">
+          <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_send_list.go'">
             <h1>내가 보낸 업무 요청</h1>
           </li>
           <li class="tst_title_item" onclick="location.href='/approval_writing_list'">
@@ -37,19 +38,19 @@
 
         <!-- 게시물 분류 -->
         <ul class="tst_tablist list_no_desc list_inline">
-          <li class="tst_tablist_item tst_tablist_item_active" onclick="location.href=''">
+          <li class="tst_tablist_item tst_tablist_item_active" onclick="location.href='/approval_send_list.go'">
             <h3>전체 보기</h3>
           </li>
-          <li class="tst_tablist_item" onclick="location.href=''">
+          <li class="tst_tablist_item" onclick="approval_list_filter('결재 대기','탭','sent',this)">
             <h3>읽지 않음</h3>
           </li>
-          <li class="tst_tablist_item" onclick="location.href=''">
+          <li class="tst_tablist_item" onclick="approval_list_filter('결재 진행','탭','sent',this)">
             <h3>결재중</h3>
           </li>
-          <li class="tst_tablist_item" onclick="location.href=''">
+          <li class="tst_tablist_item" onclick="approval_list_filter('최종 승인','탭','sent',this)">
             <h3>결재 승인</h3>
           </li>
-          <li class="tst_tablist_item" onclick="location.href=''">
+          <li class="tst_tablist_item" onclick="approval_list_filter('반려','탭','sent',this)">
             <h3>결재 반려</h3>
           </li>
           <li class="tst_tablist_item">
@@ -57,7 +58,7 @@
             <form>
               <div class="tst_search_container">
                 <div class="tst_search_input">
-                  <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                  <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" id = "search"/>
                 </div>
                 <div class="tst_search_icon">
                   <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
@@ -72,12 +73,12 @@
         <!-- 상신한 문서 목록 -->
         <table class="tst_table approval_received_list">
           <colgroup>
-            <col style="width: 150px" />
+            <col style="width: 180px" />
             <col style="width: 140px" />
             <col style="width: auto" />
-            <col style="width: 130px" />
-            <col style="width: 130px" />
-            <col style="width: 130px" />
+            <col style="width: 150px" />
+            <col style="width: 150px" />
+            <col style="width: 150px" />
           </colgroup>
           <thead>
           <tr>
@@ -93,17 +94,64 @@
 
 
 
+            <c:if test="${sent_list.size()<=0}">
+              <!-- 상신한 전자 문서가 없을 경우 -->
+              <tr class="approval_received_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. jq -> .hide처리하기 -->
+                <td colspan="7" class="td_no_data">
+                  <p>
+                    <i class="bi bi-file-earmark-break"></i>
+                  </p>
+                  <h3>결재 요청한 문서가 없습니다.</h3>
+                </td>
+              </tr>
+              <!-- //상신한 전자 문서가 없을 경우 -->
+            </c:if>
+            <c:if test="${sent_list.size()>0}">
+                <c:forEach items="${sent_list}" var="list">
+                <tr>
+                  <td class="td_align_left td_no_padding">
+                    <span onclick="tst_view_profile('${list.empl_idx}')" class="tst_pointer">${list.empl_name} (${list.dept_name}/${list.position_name})</span>
+                  </td>
+                  <td>${list.form_subject}</td>
+                  <td class="td_align_left">
+                    <c:choose>
+                      <c:when test="${list.approval_state == '결재 대기' || list.approval_state == '결재 진행'}">
+                        <span class="tst_badge_min btn_secondary margin_right">${list.approval_state}</span>
+                      </c:when>
+                      <c:when test="${list.approval_state == '최종 승인'}">
+                        <span class="tst_badge_min btn_subtle margin_right">${list.approval_state}</span>
+                      </c:when>
 
-          <!-- 상신한 전자 문서가 없을 경우 -->
-          <tr class="approval_received_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. jq -> .hide처리하기 -->
-            <td colspan="7" class="td_no_data">
-              <p>
-                <i class="bi bi-file-earmark-break"></i>
-              </p>
-              <h3>결재 요청한 문서가 없습니다.</h3>
-            </td>
-          </tr>
-          <!-- //상신한 전자 문서가 없을 경우 -->
+                      <c:otherwise>
+                        <span class="tst_badge_min btn_primary margin_right">${list.approval_state}</span>
+                      </c:otherwise>
+
+                    </c:choose>
+
+
+                    <c:choose>
+                      <c:when test="${list.doc_subject == null}">
+                      <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}'" class="tst_pointer">제목 없음</span>
+                      </c:when>
+
+                      <c:when test="${list.doc_subject != null}">
+                        <c:choose>
+                          <c:when test="${list.doc_subject == '결재가 최종 승인되었습니다.' || list.doc_subject =='결재가 반려되었습니다.'}">
+                          <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}'" class="tst_pointer font_subtle">${list.doc_subject}</span>
+                          </c:when>
+                          <c:otherwise>
+                            <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}'" class="tst_pointer">${list.doc_subject}</span>
+                          </c:otherwise>
+                        </c:choose>
+                      </c:when>
+                    </c:choose>
+                  </td>
+                  <td>${list.update_date}</td>
+                  <td>${list.approval_response_date}</td>
+                  <td>${list.end_date}</td>
+                </tr>
+                </c:forEach>
+            </c:if>
 
 
           <!-- pagination -->
@@ -168,4 +216,10 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
+<script src="/resources/js/approval_list_filter.js"></script>
+<script src="/resources/js/approval_search.js"></script>
+
+<script>
+  var sent_list = "${sent_list}";
+</script>
 </html>
