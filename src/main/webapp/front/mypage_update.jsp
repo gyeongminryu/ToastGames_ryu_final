@@ -42,7 +42,7 @@
                                                             <input type="text" name="" maxlength="100" value="{이름}" class="input_disable" readonly />
                                                         </div>
                                                         <div class="tst_col4">
-                                                            <button onclick="tst_modal_call('')" type="button" class="btn_subtle btn_full">정정 신청</button>
+                                                            <button onclick="tst_modal_call('tst_modal_name')" type="button" class="btn_subtle btn_full">정정 신청</button>
                                                         </div>
                                                     </div>
                                                 </li>
