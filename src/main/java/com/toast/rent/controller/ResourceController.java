@@ -42,8 +42,17 @@ public class ResourceController {
 		return "rent_list";
 	}
 	
+	//카테고리 검색 목록 가져오기
+	@GetMapping(value="/categroySearch.ajax")
+	@ResponseBody
+	public Map<String, Object> categroySearch(
+	        @RequestParam("keyword") String keyword) {
+		
+	    return resourceService.categroySearch(keyword); // 특정 카테고리
+	}
+	
 	//내가 대여한 물품 페이지 이동
-	@RequestMapping(value="/rent_mylist.do")
+	//@RequestMapping(value="/rent_mylist.do")
 	
 	
 	//물품 목록 보기(대여 가능 여부 및 반납일시 포함)
@@ -84,9 +93,25 @@ public class ResourceController {
 	    }
 
 	}
+	
 
 	
 	//물품 상세보기
+	@RequestMapping(value="/rentDetail.go")
+	public String rentDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
+		logger.info("prod_idx:"+prod_idx);
+		ResourceDTO detail = resourceService.prodDetail(prod_idx);
+		model.addAttribute("detail", detail);
+		model.addAttribute("file", file);
+		return "rent_detail";
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	//물품 첨부파일 확인하기 및 다운받기
 	
@@ -103,27 +128,6 @@ public class ResourceController {
 	
 	
 	
-	/*공용 물품 관리*/ //-- -관리자 확인--------
-	
-	//물품 등록(카테고리, 사용 기한, 첨부파일 포함)
-	
-	//물품 상세보기
-	
-	//물품 상세보기(대여 중)
-	
-	//물품 상세보기(대여 신청중)
-	
-	//물품 상세보기(연체)
-	
-	//물품 정보 수정(카테고리, 사용 기한, 첨부파일 포함)
-	
-	//물품 종류별 보기
-	
-	//물품 목록보기
-	
-	//물품 대여 신청 승인
-	
-	//
 	
 	
 	
