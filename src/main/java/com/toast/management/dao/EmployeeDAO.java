@@ -48,6 +48,8 @@ public interface EmployeeDAO {
 
 	List<EmployeeDetailDTO> getEmployeeList();
 
+	void emplfileUpload(FileDTO fileDTO);
+
 	
 
 	

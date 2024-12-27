@@ -160,5 +160,11 @@ LEFT join position_ p on p.position_idx = a.position_idx
 	  
 </select>
 
+<insert id="emplfileUpload" parameterType="com.toast.member.dto.FileDTO">
+	INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr, file_size)
+			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr}, #{file_size})
+</insert>
+
+
 
 </mapper>

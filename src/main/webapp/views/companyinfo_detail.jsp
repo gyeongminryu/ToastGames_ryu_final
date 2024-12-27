@@ -73,6 +73,13 @@
                                 <td><input type="text" id="comp_addr" name="comp_addr" value="${comp_info.comp_addr}" readonly /></td>
                             </tr>
                             </tbody>
+                              <tfoot>
+                            <tr>
+                                <td colspan="2">
+                                    <button class="btn_primary" onclick="location.href='./companyinfo_update.go'">정보 수정하기</button>
+                                </td>
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <!-- // 회사 정보 상세보기 -->
@@ -91,18 +98,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>{파일명 (파일 용량kb)}</td>
+                            <c:forEach var="fileItem" items="${file}">
+						      	  <tr>
+                                <td>${fileItem.new_filename}(${fileItem.file_size/1024}kb)</td>
                                 <td>
-                                    <button onclick="location.href='/'" class="btn_min btn_primary">다운로드</button>
+                                    <button onclick="downloadFile('${fileItem.new_filename}')" class="btn_min btn_primary">다운로드</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>{파일명 (파일 용량kb)}</td>
-                                <td>
-                                    <button onclick="location.href='/'" class="btn_min btn_primary">다운로드</button>
-                                </td>
-                            </tr>
+						        </c:forEach> 
+        
                             </tbody>
                         </table>
                         <!-- //첨부 파일 목록 -->
@@ -117,15 +121,33 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <c:choose>
+								           
+								            <c:when test="${not empty comp_info.comp_stamp}">
+                            <tr class="td_no_underline">
+                            <td>${comp_info.comp_stamp}<p id="stampFileSize"></p> </td>
+                            </tr>
                             <tr>
                                 <td>
                                     <div class="tst_flex">
                                         <div class="tst_col12 align_center align_middle">
-                                            <img src="/files/${comp_info.comp_stamp}" class="companyinfo_stamp" />
+                                        	<!-- 파일 크기 표시용 -->
+                                            <img src="/files/${comp_info.comp_stamp}" id="stampFile" class="companyinfo_stamp" />
+                                       		
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+                            </c:when>
+								            
+								  <c:otherwise>
+								    <tr>
+								       <td>
+								          <p class="font_subtle align_center">직인이 없습니다.</p>
+								            </td>
+								     </tr>
+								     </c:otherwise>
+								</c:choose>
                             </tbody>
                         </table>
                         <!-- //직인 > 파일이 있을 경우 -->
@@ -140,4 +162,34 @@
 </body>
 
  <script src="resources/js/common.js"></script> 
+ <script>
+//파일 크기 가져오기 함수
+ function getFileSize(filePath, elementId) {
+    fetch(filePath, { method: 'HEAD' })
+        .then(function(response) {
+            var fileSize = response.headers.get('content-length'); // 파일 크기(바이트) 가져오기
+            if (fileSize) {
+                var sizeInKB = (fileSize / 1024).toFixed(2); // KB 단위로 변환
+                var element = document.getElementById(elementId);
+                element.innerText = '파일 크기: ' + sizeInKB + ' KB';
+            } else {
+                document.getElementById(elementId).innerText = '크기 알 수 없음';
+            }
+        })
+        .catch(function(error) {
+            console.error('파일 크기 가져오기 실패:', error);
+            document.getElementById(elementId).innerText = '크기 가져오기 실패';
+        });
+}
+
+ document.addEventListener('DOMContentLoaded', function() {
+	    var filePath = document.getElementById('stampFile').getAttribute('src'); // 이미지의 경로 가져오기
+	    getFileSize(filePath, 'stampFileSize'); // 크기 표시용 요소에 업데이트
+	});
+//다운로드 버튼 클릭 시 해당 파일 다운로드
+ function downloadFile(filename) {
+     const url = './memberDownload/' + filename;  // 다운로드 URL
+     window.location.href = url;  // 해당 URL로 이동하여 다운로드
+ }
+</script>
 </html>

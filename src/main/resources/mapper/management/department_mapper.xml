@@ -259,4 +259,17 @@ SELECT
 	update company_info	set comp_stamp = #{param1} where id = 1;
 </update>
 
+<select id="getcompfile" parameterType="com.toast.member.dto.FileDTO">
+	select * from file where file_key = #{param1}
+</select>
+
+<insert id="compFileUpload" parameterType="com.toast.member.dto.FileDTO">
+	INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr, file_size)
+			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr}, #{file_size})
+</insert>
+
+<update id="compStampDel">
+	update company_info	set comp_stamp = null where id = 1;
+</update>
+
 </mapper>

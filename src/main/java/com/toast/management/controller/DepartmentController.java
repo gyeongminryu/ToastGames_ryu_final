@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,7 @@ import com.toast.management.dto.EmployeeDTO;
 import com.toast.management.dto.PositionDTO;
 import com.toast.management.service.DepartmentService;
 import com.toast.management.service.EmployeeService;
+import com.toast.member.dto.FileDTO;
 
 @Controller
 public class DepartmentController {
@@ -145,7 +147,7 @@ public class DepartmentController {
 		return "organization_update";
 	}
 	
-	@GetMapping(value="/organization_tree.go")
+	@GetMapping(value="/organization_list.go")
 	public String organizationTreeGo(Model model) {
 		
 	
@@ -216,14 +218,14 @@ public class DepartmentController {
 
 		CompInfo comp_info = departmentService.getcompinfo();
 		int	ceo_idx =	comp_info.getCeo_idx();
-		
+		String file_key = comp_info.getFile_key();
 		// 회사정보 테이블에서 사장 이름 가져오기
 		DeptDetailMemberDTO ceo_info = departmentService.getemplinfo(ceo_idx);
-		 
+		List<FileDTO> file_list = departmentService.getcompfile(file_key);
 		
 		model.addAttribute("comp_info",comp_info);
 		model.addAttribute("ceo_info",ceo_info);
-		
+		 model.addAttribute("file", file_list);
 		return "companyinfo_detail";
 	}
 	
@@ -238,7 +240,8 @@ public class DepartmentController {
 	public String companyinfoUpdateGo(Model model) {
 	
 		CompInfo comp_info = departmentService.getcompinfo();
-		
+		String file_key = comp_info.getFile_key();
+		List<FileDTO> file_list = departmentService.getcompfile(file_key);
 		if(comp_info != null) {
 			model.addAttribute("comp_info",comp_info);
 			int	ceo_idx =	comp_info.getCeo_idx();
@@ -249,7 +252,7 @@ public class DepartmentController {
 				}
 				// 직원 전체 리스트 가져오기
 		}
-
+		model.addAttribute("file", file_list);
 		return "companyinfo_update";
 	}
 	
@@ -259,10 +262,10 @@ public class DepartmentController {
 		departmentService.companyinfoUpdateDo(param);
 		logger.info("ceo_idx : "+ param.get("ceo_idx"));
 		
-		return "redirect:/companyinfo.go";
+		return "redirect:/companyinfo_detail.go";
 	}
 	
-	@PostMapping(value="company_stamp.do")
+	@PostMapping(value="/company_stamp.do")
 	public String compStampUpload(@RequestParam(value ="singleFile", required = false) MultipartFile singleFile) {
 		
 		departmentService.compStampUpload(singleFile);
@@ -271,4 +274,34 @@ public class DepartmentController {
 		return "redirect:/companyinfo_update.go";
 	}
 	
+		@PostMapping(value="/comp_file_upload.do")
+		public String compFileUpload(@RequestParam(value ="files", required = false) MultipartFile[] files) {
+			
+			CompInfo comp_info = departmentService.getcompinfo();
+			String file_key =	comp_info.getFile_key();
+			
+			departmentService.compFileUpload(files,file_key);
+			return "redirect:/companyinfo_detail.go";
+		}
+		
+		// 파일 삭제
+		@GetMapping(value="/comp_file_del.do/{new_filename}")
+		public String compFileDel(@PathVariable String new_filename) {
+			String page = "";
+			boolean isDeleted = employeeService.emplFileDel(new_filename);
+			logger.info("comp_filenew_filename : "+new_filename);
+			
+			return "redirect:/companyinfo_update.go";
+		}
+		
+		// 회사 직인파일 삭제 comp_stamp_del.do
+		@GetMapping(value="/comp_stamp_del.do/{new_filename}")
+		public String compStampDel(@PathVariable String new_filename) {
+			String page = "";
+			boolean isDeleted = departmentService.compStampDel(new_filename);
+			
+			
+			return "redirect:/companyinfo_update.go";
+		}
+		
 }

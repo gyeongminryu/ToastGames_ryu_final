@@ -200,6 +200,8 @@ public class EmployeeService {
 				// 경로 설정 부분. 파일을 서버에 저장함. 필요한가? 이거 어떻게 해야할지 정해야 함..
 				File dest = new File(fileAddr);
 				file.transferTo(dest);
+				long file_size = dest.length();
+				
 				int int_empl_idx = Integer.parseInt(empl_idx);
 				// 첨부 파일 정보를 DTO에 저장.
 				FileDTO fileDTO = new FileDTO();
@@ -209,9 +211,9 @@ public class EmployeeService {
 				fileDTO.setFile_type(fileType);
 				fileDTO.setFile_addr(fileAddr);
 				fileDTO.setUploader_idx(int_empl_idx);
-				
+				fileDTO.setFile_size(file_size);
 				// file 테이블에 파일정보 저장.
-				memberDAO.fileUpload(fileDTO);
+				employeeDAO.emplfileUpload(fileDTO);
 			}
 
 		}

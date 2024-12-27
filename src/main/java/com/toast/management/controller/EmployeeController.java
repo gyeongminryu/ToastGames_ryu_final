@@ -93,7 +93,7 @@ public class EmployeeController {
 			// 파일 업로드 실행
 			employeeService.emplfileUpload(files,empl_idx);
 	        List<FileDTO> fileList = employeeService.getemplUploadedFiles(empl_idx);  // 업로드된 파일 리스트
-	        response.sendRedirect("./employeeDetail.go?empl_idx=" + empl_idx); // 상대경로 설정
+	        response.sendRedirect("./employee_detail.go?empl_idx=" + empl_idx); // 상대경로 설정
 	      //  return ResponseEntity.ok(fileList);
 	        return null;
 		} catch (IOException e) {
