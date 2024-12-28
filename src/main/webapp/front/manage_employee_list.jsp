@@ -9,7 +9,9 @@
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" /
+    <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
@@ -25,6 +27,9 @@
                 <ul class="tst_title list_no_desc list_inline">
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_list'">
                         <h1>인사 관리</h1>
+                    </li>
+                    <li class="tst_title_item" onclick="location.href='/'">
+                        <h1>퇴사자 관리</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/'">
                         <h1>사원 등록</h1>
@@ -60,22 +65,34 @@
 
                             <!-- 전 직원 조회 (필터링 초기화) -->
                             <tr>
-                                <th colspan="2" class="td_bg_subtle"><span onclick="location.href='/manage_employee_list'">전체 보기</span></th>
+                                <td></td>
+                                <th class="td_no_padding">
+                                    <span onclick="location.href='/manage_employee_list'">전체 보기</span>
+                                </th>
                             </tr>
                             <!-- //전 직원 조회 (필터링 초기화) -->
 
+                            <!-- 가발령 상태인 직원 조회 -->
+                            <tr>
+                                <td></td>
+                                <td class="td_no_padding">
+                                    <span onclick="location.href='/manage_employee_list?'">가발령</span>
+                                </td>
+                            </tr>
+                            <!-- 가발령 상태인 직원 조회 -->
+
                             <!-- 부서 (필터링) -->
                             <tr>
-                                <td onclick="menu_show(this)"><i class="bi bi-caret-right-fill" show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
-                                <th>
+                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
+                                <th class="td_no_padding">
                                     <span onclick="location.href='/manage_employee_list?'">{부서명}</span>
                                 </th>
                             </tr>
-                            <tr>
+                            <tr class="disp_hide">
                                 <td colspan="2" class="td_no_padding">
                                     <table class="tst_table tst_table_in_table table_align_left">
                                         <colgroup>
-                                            <col style="width: 20px;" />
+                                            <col style="width: 23px;" />
                                             <col style="width: auto;" />
                                         </colgroup>
 
@@ -96,18 +113,18 @@
                             <!-- //부서 (필터링) -->
 
                             <!-- 부서 > 선택한 항목 (필터링) -->
-                            <tr>
-                                <td onclick="menu_show(this)"><i class="bi bi-caret-right-fill" show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
-                                <th class="td_bg_medium">
+                            <tr class="td_bg_medium">
+                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
+                                <th class="td_no_padding">
                                     <span onclick="location.href='/manage_employee_list?'">{분류명}</span>
                                 </th>
                             </tr>
 
-                            <tr>
+                            <tr class="disp_hide">
                                 <td colspan="2" class="td_no_padding">
                                     <table class="tst_table tst_table_in_table table_align_left">
                                         <colgroup>
-                                            <col style="width: 20px;" />
+                                            <col style="width: 23px;" />
                                             <col style="width: auto;" />
                                         </colgroup>
 
@@ -132,16 +149,16 @@
 
                             <!-- 예시 -->
                             <tr>
-                                <td onclick="menu_show(this)"><i class="bi bi-caret-right-fill"></i></td>
-                                <th>
+                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
+                                <th class="td_no_padding">
                                     <span onclick="location.href='/manage_employee_list?'">프로그래밍</span>
                                 </th>
                             </tr>
                             <tr class="disp_hide">
-                                <td class="td_no_padding">
+                                <td colspan="2" class="td_no_padding">
                                     <table class="tst_table tst_table_in_table table_align_left">
                                         <colgroup>
-                                            <col style="width: 20px;" />
+                                            <col style="width: 23px;" />
                                             <col style="width: auto;" />
                                         </colgroup>
                                         <tr class="font_subtle">
@@ -168,16 +185,16 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td onclick="menu_hide(this)"><i class="bi bi-caret-right-fill"></i></td>
-                                <th>
+                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
+                                <th class="td_no_padding">
                                     <span onclick="location.href='/manage_employee_list?'">아트</span>
                                 </th>
                             </tr>
-                            <tr>
-                                <td class="td_no_padding">
+                            <tr class="disp_hide">
+                                <td colspan="2" class="td_no_padding">
                                     <table class="tst_table tst_table_in_table table_align_left">
                                         <colgroup>
-                                            <col style="width: 20px;" />
+                                            <col style="width: 23px;" />
                                             <col style="width: auto;" />
                                         </colgroup>
                                         <tr class="font_subtle">
@@ -219,7 +236,7 @@
 
                     <div class="tst_col10">
 
-                        <!-- 물품 검색 -->
+                        <!-- 직원 검색 -->
                         <form>
                             <div class="tst_search_container">
                                 <div class="tst_search_select">
@@ -235,99 +252,77 @@
                                 </div>
                             </div>
                         </form>
-                        <!-- //물품 검색 -->
+                        <!-- //직원 검색 -->
 
                         <table class="tst_table">
                             <colgroup>
                                 <col style="width: 60px;" />
-                                <col style="width: 150px;" />
                                 <col style="width: 200px;" />
+                                <col style="width: 200px;" />
+                                <col style="width: 120px;" />
                                 <col style="width: auto;" />
-                                <col style="width: 60px;" />
                                 <col style="width: 150px;" />
                             </colgroup>
                             <thead>
                             <tr>
                                 <th>번호</th>
-                                <th>분류</th>
-                                <th>제품명</th>
-                                <th>제품 정보</th>
-                                <th>상태</th>
-                                <th>반납 예정 일시</th>
+                                <th>부서/팀</th>
+                                <th>직원명 (ID)</th>
+                                <th>직급/직책</th>
+                                <th>직무</th>
+                                <th>입사일</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <!-- 검색되는 공유 물품이 없을 경우 -->
-                            <tr class="rent_list_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
+                            <!-- 검색되는 직원이 없을 경우 -->
+                            <tr class="rent_list_no_data disp_hide"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
                                 <td colspan="6" class="td_no_data">
                                     <p><i class="bi bi-person-exclamation"></i></p>
                                     <h3>검색 조건에 해당하는 직원이 없습니다.</h3>
                                 </td>
                             </tr>
-                            <!-- //검색되는 공유 물품이 없을 경우 -->
+                            <!-- //검색되는 직원이 없을 경우 -->
 
-                            <!-- 공유 물품 목록 > 대여 신청중인 물품 -->
+                            <!-- 직원 목록 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td><span class="tst_pointer">{분류}</span></td>
                                 <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">{제품명}</h3>
+                                    <span onclick="location.href='/organization_detail?'" class="tst_pointer">{부서}</span>
                                 </td>
                                 <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_detail?'" class="tst_pointer">{제품_정보}</span>
+                                    <h3 onclick="location.href='/manage_employee_detail?'" class="tst_pointer">{직원명} ({ID})</h3>
                                 </td>
-                                <td><span class="tst_badge_min btn_primary">대여 신청</span></td>
-                                <td>{반납 예정 일시}</td>
+                                <td class="td_align_left">{직급}/{직책}</td>
+                                <td class="td_align_left">{직무}</td>
+                                <td>{입사일|yyyy-MM-dd}</td>
                             </tr>
-                            <!-- //공유 물품 목록 > 대여 신청중인 물품 -->
-
-                            <!-- 공유 물품 목록 > 대여중인 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><span class="tst_pointer">{분류}</span></td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">{제품명}</h3>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_detail?'" class="tst_pointer">{제품_정보}</span>
-                                </td>
-                                <td><span class="tst_badge_min btn_secondary">대여중</span></td>
-                                <td>{반납 예정 일시}</td>
-                            </tr>
-                            <!-- //공유 물품 목록 > 대여중인 물품 -->
-
-                            <!-- 공유 물품 목록 > 대여 가능한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><span class="tst_pointer">{분류}</span></td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">{제품명}</h3>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_detail?'" class="tst_pointer">{제품_정보}</span>
-                                </td>
-                                <td><span class="tst_badge_min btn_subtle">대여 가능</span></td>
-                                <td>없음</td>
-                            </tr>
-                            <!-- //공유 물품 목록 > 대여 가능한 물품 -->
+                            <!-- //직원 목록 -->
 
                             <!-- 예시 -->
                             <tr>
-                                <td>1278</td>
-                                <td><span class="tst_pointer">윈도 노트북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">갤럭시북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/rent_detail?'" class="tst_pointer">갤럭시 북 5 Pro 360 (40.6cm) Core Ultra 7 / iTB NVMe SSD</span></td>
-                                <td><span class="tst_badge_min btn_subtle">대여 가능</span></td>
-                                <td>없음</td>
+                                <td>126</td>
+                                <td class="td_align_left">
+                                    <span onclick="location.href='/organization_detail?'" class="tst_pointer">아트/UI/UX디자인</span>
+                                </td>
+                                <td class="td_align_left">
+                                    <h3 onclick="location.href='/manage_employee_detail?'" class="tst_pointer">김이름 (kimname_art)</h3>
+                                </td>
+                                <td class="td_align_left">대리/사원</td>
+                                <td class="td_align_left">게임 내 UI/UX 요소 디자인</td>
+                                <td>2023-03-05</td>
                             </tr>
                             <tr>
-                                <td>1277</td>
-                                <td><span class="tst_pointer">맥북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/rent_detail?'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/rent_detail?'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
-                                <td><span class="tst_badge_min btn_secondary">대여중</span></td>
-                                <td>2025-01-23 18:00</td>
+                                <td>126</td>
+                                <td class="td_align_left">
+                                    <span onclick="location.href='/organization_detail?'" class="tst_pointer">오디오/오디오임플리먼테이션</span>
+                                </td>
+                                <td class="td_align_left">
+                                    <h3 onclick="location.href='/manage_employee_detail?'" class="tst_pointer">김이름 (kimname_audio)</h3>
+                                </td>
+                                <td class="td_align_left">대리/사원</td>
+                                <td class="td_align_left">오디오 미들웨어 설계, 오디오 데이터 관리</td>
+                                <td>2023-03-05</td>
                             </tr>
                             <!-- //예시 -->
 
@@ -393,6 +388,5 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
-<script src="resources/js/manage_list.js"></script>
-<script src="resources/js/meeting_room_calendar.js"></script>
+<script src="resources/js/approval_send_modal.js"></script>
 </html>

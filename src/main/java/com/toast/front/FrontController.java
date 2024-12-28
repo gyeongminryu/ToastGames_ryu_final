@@ -175,10 +175,22 @@ public class FrontController {
 
     // Manage > Employee =============================================
 
-    // 인사 관리
+    // 인사 관리, 직원 목록
     @RequestMapping(value = "/manage_employee_list")
     public ModelAndView front_manage_employee_list() {
         return new ModelAndView("manage_employee_list");
+    }
+
+    // 인사 관리, 직원 상세보기
+    @RequestMapping(value = "/manage_employee_detail")
+    public ModelAndView front_manage_employee_detail() {
+        return new ModelAndView("manage_employee_detail");
+    }
+
+    // 인사 관리, 직원 정보 수정
+    @RequestMapping(value = "/manage_employee_update")
+    public ModelAndView front_manage_employee_update() {
+        return new ModelAndView("manage_employee_update");
     }
 
 
