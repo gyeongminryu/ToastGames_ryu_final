@@ -293,7 +293,6 @@
             </div>
         </div>
     </div>
-    <c:import url="manage_rent_detail_modal.jsp" />
 </body>
 
 <script src="resources/js/common.js"></script>

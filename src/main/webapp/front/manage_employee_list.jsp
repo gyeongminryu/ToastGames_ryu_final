@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" /
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -32,10 +32,10 @@
                         <h1>퇴사자 관리</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/'">
-                        <h1>사원 등록</h1>
+                        <h1>직원 등록</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/'">
-                        <h1>사원 일괄 등록</h1>
+                        <h1>직원 일괄 등록</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->

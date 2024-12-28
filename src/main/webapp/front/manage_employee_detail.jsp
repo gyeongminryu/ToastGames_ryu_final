@@ -21,8 +21,17 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/mypage'">
-                        <h1>내 정보</h1>
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_list'">
+                        <h1>인사 관리</h1>
+                    </li>
+                    <li class="tst_title_item" onclick="location.href='/'">
+                        <h1>퇴사자 관리</h1>
+                    </li>
+                    <li class="tst_title_item" onclick="location.href='/'">
+                        <h1>직원 등록</h1>
+                    </li>
+                    <li class="tst_title_item" onclick="location.href='/'">
+                        <h1>직원 일괄 등록</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->
@@ -30,7 +39,7 @@
                 <div class="tst_flex">
                     <div class="tst_col9">
 
-                        <!-- 내 정보 상세보기 -->
+                        <!-- 직원 정보 상세보기 -->
                         <table class="tst_table table_align_left">
                             <colgroup>
                                 <col style="width: 15%" />
@@ -60,7 +69,7 @@
                                 <th class="td_bg_subtle">생년월일</th>
                                 <td>{생년월일|yyyy-MM-dd}</td>
                                 <th class="td_bg_subtle">부서</th>
-                                <td>{부서명} / {팀명} (조직장)</td><!-- 부서장인 경우에는 팀을 기재하지 않습니다 -->
+                                <td>{부서명}/{팀명} (조직장)</td><!-- 부서장인 경우에는 팀을 기재하지 않습니다 -->
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">주민등록번호</th>
@@ -139,7 +148,7 @@
                             <tr>
                                 <td colspan="4" class="td_align_left td_no_padding">
                                     <hr class="separator" />
-                                    <button onclick="location.href='/mypage_update'" class="btn_primary">정보 수정하기</button>
+                                    <button onclick="location.href='/manage_employee_update'" class="btn_primary">정보 수정하기</button>
                                 </td>
                             </tr>
                             </tfoot>
@@ -147,7 +156,7 @@
                         <hr class="separator" />
                         <hr class="separator" />
                         <hr class="separator" />
-                        <!-- // 내 정보 상세보기 -->
+                        <!-- // 직원 정보 상세보기 -->
 
                         <!-- 제목 -->
                         <h1>인사 변경 이력</h1>
@@ -293,7 +302,6 @@
             </div>
         </div>
     </div>
-    <c:import url="manage_rent_detail_modal.jsp" />
 </body>
 
 <script src="resources/js/common.js"></script>
