@@ -134,6 +134,11 @@
                         <input type="file" name="" onchange="tst_file_stamp(this)" />
                         <p class="min font_caution">2mb 미만의 gif, png 파일만 첨부할 수 있습니다.</p>
                     </li>
+                    <li>
+                        <div class="tst_flex">
+                            <div id="img_preview" class="tst_col12 align_center align_middle"></div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="tst_modal_footer">

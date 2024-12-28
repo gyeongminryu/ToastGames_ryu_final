@@ -191,7 +191,7 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <button type="button" onclick="tst_modal_call('')" class="btn_subtle btn_full">직인 제출</button>
+                                        <button type="button" onclick="tst_modal_call('tst_modal_stamp')" class="btn_subtle btn_full">직인 제출</button>
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -213,7 +213,7 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <button type="button" onclick="tst_modal_call('')" class="btn_subtle btn_full">직인 제출</button>
+                                        <button type="button" onclick="tst_modal_call('tst_modal_stamp')" class="btn_subtle btn_full">직인 제출</button>
                                     </td>
                                 </tr>
                                 </tfoot>

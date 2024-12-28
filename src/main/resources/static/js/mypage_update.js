@@ -35,4 +35,15 @@ function mypage_summit_stamp(no) {
 // 위 규칙을 벗어나면 alert을 띄우세요.
 function tst_file_summit(elem) {
     // elem: 파일 입력창
+
+    // 파일 미리보기는 '#image_preview'에 아래와 같이 입력하시면 됩니다.
+    //
+    // <div id="img_preview" className="tst_col12 align_center align_middle"></div>
+    //
+    //  ▼ 위의 div에 아래와 같이 이미지를 삽입하세요.
+    //
+    // <div id="img_preview" className="tst_col12 align_center align_middle">
+    //     <img src="{이미지 바이너리 코드}" className="companyinfo_stamp"/>
+    // </div>
+
 }
