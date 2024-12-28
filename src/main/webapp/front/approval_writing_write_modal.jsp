@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link rel="stylesheet" type="text/css" href="resources/css/module_modal.css" />
-<link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />
 
 <!-- 결재선 선택하기 -->
 <div class="tst_modal tst_modal_wide tst_modal_select">
@@ -250,4 +249,3 @@
 <!-- //취소하기 -->
 
 <script src="resources/js/module_modal.js"></script>
-<script src="resources/js/approval_send_modal.js"></script>

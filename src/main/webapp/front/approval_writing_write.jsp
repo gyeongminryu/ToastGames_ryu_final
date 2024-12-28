@@ -8,7 +8,9 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -212,4 +214,5 @@
 <c:import url="approval_writing_write_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
+<script src="resources/js/approval_send_modal.js"></script>
 </html>

@@ -44,7 +44,8 @@
 
 .tst_modal.tst_modal_wide .tst_modal_container .tst_modal_body,
 .tst_modal.tst_modal_double .tst_modal_container .tst_modal_body{
-    height: 600px;
+    max-height: 600px;
+    overflow-x: hidden;
     overflow-y: scroll;
 }
 

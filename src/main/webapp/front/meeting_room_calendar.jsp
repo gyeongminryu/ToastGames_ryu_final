@@ -9,7 +9,9 @@
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_calendar.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 </head>
@@ -79,4 +81,5 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/meeting.js"></script>
 <script src="resources/js/meeting_room_calendar.js"></script>
+<script src="resources/js/approval_send_modal.js"></script>
 </html>
