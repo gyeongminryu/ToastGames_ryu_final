@@ -78,7 +78,7 @@
                 <li onclick="location.href='/organization_list'" class="tst_pointer">
                     <i class="bi bi-diagram-3-fill"></i><h3>조직 관리</h3>
                 </li>
-                <li onclick="location.href='/'" class="tst_pointer">
+                <li onclick="location.href='/manage_employee_list'" class="tst_pointer">
                     <i class="bi bi-person-lines-fill"></i><h3>인사 관리</h3>
                 </li>
                 <li onclick="location.href='/manage_rent_list'" class="tst_pointer">

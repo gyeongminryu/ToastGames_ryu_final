@@ -168,7 +168,7 @@
                             <tr class="rent_history_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
                                 <td colspan="8" class="td_no_data">
                                     <p><i class="bi bi-person-exclamation"></i></p>
-                                    <h3>검색 조건에 해당하는 조직원이 없습니다.</h3>
+                                    <h3>검색 조건에 해당하는 직원이 없습니다.</h3>
                                 </td>
                             </tr>
                             <!-- //조직원이 없을 경우 -->

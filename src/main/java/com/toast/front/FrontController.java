@@ -100,6 +100,34 @@ public class FrontController {
 
 
 
+    // Rent ==========================================================
+
+    // 공용 물품 목록 (일반 직원)
+    @RequestMapping(value = "/rent_list")
+    public ModelAndView front_rent_list() {
+        return new ModelAndView("rent_list");
+    }
+
+    // 공용 물품 상세보기 (일반 직원)
+    @RequestMapping(value = "/rent_detail")
+    public ModelAndView front_rent_detail() {
+        return new ModelAndView("rent_detail");
+    }
+
+    // 내가 대여한/신청한 공용 물품 목록
+    @RequestMapping(value = "/rent_mylist")
+    public ModelAndView front_rent_mylist() {
+        return new ModelAndView("rent_mylist");
+    }
+
+    // 내가 대여한/신청한 공용 물품 상세보기
+    @RequestMapping(value = "/rent_mylist_detail")
+    public ModelAndView front_rent_mylist_detail() {
+        return new ModelAndView("rent_mylist_detail");
+    }
+
+
+
     // Document ======================================================
     // Company Info ==================================================
 
@@ -145,31 +173,12 @@ public class FrontController {
 
 
 
+    // Manage > Employee =============================================
 
-    // Rent ==========================================================
-
-    // 공용 물품 목록 (일반 직원)
-    @RequestMapping(value = "/rent_list")
-    public ModelAndView front_rent_list() {
-        return new ModelAndView("rent_list");
-    }
-
-    // 공용 물품 상세보기 (일반 직원)
-    @RequestMapping(value = "/rent_detail")
-    public ModelAndView front_rent_detail() {
-        return new ModelAndView("rent_detail");
-    }
-
-    // 내가 대여한/신청한 공용 물품 목록
-    @RequestMapping(value = "/rent_mylist")
-    public ModelAndView front_rent_mylist() {
-        return new ModelAndView("rent_mylist");
-    }
-
-    // 내가 대여한/신청한 공용 물품 상세보기
-    @RequestMapping(value = "/rent_mylist_detail")
-    public ModelAndView front_rent_mylist_detail() {
-        return new ModelAndView("rent_mylist_detail");
+    // 인사 관리
+    @RequestMapping(value = "/manage_employee_list")
+    public ModelAndView front_manage_employee_list() {
+        return new ModelAndView("manage_employee_list");
     }
 
 
