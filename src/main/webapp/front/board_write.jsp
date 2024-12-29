@@ -124,6 +124,15 @@
                                         <button type="button" onclick="delete_attach(this, '{첨부파일_번호}')" class="btn_primary btn_min">삭제하기</button>
                                     </td>
                                 </tr>
+
+                                <!-- 첨부 파일이 없는 경우 아래와 같이 입력하세요 -->
+                                <tr>
+                                    <td colspan="2" class="td_align_center">
+                                        <span class="font_subtle">첨부 파일이 없습니다.</span>
+                                    </td>
+                                </tr>
+                                <!-- //첨부 파일이 없는 경우 아래와 같이 입력하세요 -->
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
