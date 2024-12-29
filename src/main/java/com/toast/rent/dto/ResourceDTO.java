@@ -40,6 +40,7 @@ public class ResourceDTO {
 	private LocalDateTime prod_exp_date;
 	private LocalDateTime prod_return_date;
 	
+	//물품 파일가져오기
 	
 	
 	public int getProd_idx() {
