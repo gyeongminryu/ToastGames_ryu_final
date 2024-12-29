@@ -278,6 +278,22 @@ public class FrontController {
 
 
 
+    // Manage > Member ===============================================
+
+    // 구성원 관리 목록
+    @RequestMapping(value = "/manage_staff_list")
+    public ModelAndView front_manage_staff_list() {
+        return new ModelAndView("manage_staff_list");
+    }
+
+    // 구성원 정보 상세보기
+    @RequestMapping(value = "/manage_staff_detail")
+    public ModelAndView front_manage_staff_detail() {
+        return new ModelAndView("manage_staff_detail");
+    }
+
+
+
     // My Page =======================================================
 
     // 내 정보 열람

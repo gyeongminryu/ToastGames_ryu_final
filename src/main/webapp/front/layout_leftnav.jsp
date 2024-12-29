@@ -84,7 +84,7 @@
                 <li onclick="location.href='/manage_rent_list'" class="tst_pointer">
                     <i class="bi bi-pencil-square"></i><h3>공용 물품 관리</h3>
                 </li>
-                <li onclick="location.href='/'" class="tst_pointer">
+                <li onclick="location.href='/manage_staff_list'" class="tst_pointer">
                     <i class="bi bi-people-fill"></i><h3>구성원 관리</h3>
                 </li>
                 <li onclick="location.href='/'" class="tst_pointer disp_hide">
