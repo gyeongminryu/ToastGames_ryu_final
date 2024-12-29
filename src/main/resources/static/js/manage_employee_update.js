@@ -3,7 +3,6 @@ scan_gender();
 
 function scan_gender() {
     let gender = document.getElementsByName('gender')[0].value;
-    console.log(gender);
     switch (gender) {
         case '0':
             document.getElementsByClassName('gender_0')[0].classList.remove('btn_empty');

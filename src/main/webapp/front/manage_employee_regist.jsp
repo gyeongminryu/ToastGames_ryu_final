@@ -8,12 +8,9 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />>
+    <link rel="stylesheet" type="text/css" href="resources/css/companyinfo.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/mypage.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <body>
 <c:import url="layout_topnav.jsp" />
@@ -25,13 +22,13 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_employee_list'">
                         <h1>인사 관리</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/manage_employee_resign_list'">
                         <h1>퇴사자 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_employee_regist'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_regist'">
                         <h1>직원 등록</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/manage_employee_regist_multiple'">
@@ -39,354 +36,235 @@
                     </li>
                 </ul>
                 <!-- //제목 -->
-
-                <div class="tst_flex">
-                    <div class="tst_col2">
-
-                        <!-- 부서/팀 검색 -->
-                        <form>
-                            <div class="tst_search_container width_full">
-                                <div class="tst_search_input">
-                                    <input type="text" name="keyword_category" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                <form>
+                    <div class="tst_flex">
+                        <div class="tst_col9">
+                            <div class="tst_flex tst_flex_block">
+                                <div class="tst_col12">
+                                    <div class="tst_flex">
+                                        <div class="tst_col4">
+                                            <ul class="list_no_desc list_block">
+                                                <li>
+                                                    <label class="form_label">이름</label>
+                                                    <input type="text" name="" maxlength="100" placeholder="이름을 입력하세요" />
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">ID</label>
+                                                    <input type="text" name="" maxlength="100" placeholder="ID를 입력하세요" />
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">비밀번호</label>
+                                                    <button type="button" class="btn_subtle btn_full">초기 비밀번호가 자동으로 발급됩니다</button>
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">성별</label>
+                                                    <div class="tst_flex">
+                                                        <input type="hidden" name="gender" value="" />
+                                                        <div class="tst_col6">
+                                                            <button type="button" onclick="select_gender('0')" class="btn_full btn_empty gender_0">남</button>
+                                                        </div>
+                                                        <div class="tst_col6">
+                                                            <button type="button" onclick="select_gender('1')" class="btn_full btn_empty gender_1">여</button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">생년월일</label>
+                                                    <input type="date" name="" placeholder="생년월일을 입력하세요" />
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">주민등록번호</label>
+                                                    <input type="text" name="" maxlength="100" placeholder="주민등록번호를 입력하세요" />
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="tst_col8 padding_left">
+                                            <ul class="list_no_desc list_block">
+                                                <li>
+                                                    <label class="form_label">사내 유선번호</label>
+                                                    <input type="text" name="" maxlength="100" placeholder="사내 유선번호를 입력하세요" />
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">사내 이메일</label>
+                                                    <input type="text" name="" maxlength="100" placeholder="사내 이메일을 입력하세요" />
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">
+                                                        비상 연락처
+                                                        <span class="font_caution">* 비상시 연락할 수 있는 전화번호를 입력하세요.</span>
+                                                    </label>
+                                                    <input type="text" name="" maxlength="100" placeholder="비상 연락처를 입력하세요" />
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">
+                                                        개인 이메일
+                                                        <span class="font_caution">* 비밀번호 분실시 새 비밀번호를 수령할 수 있는 메일 주소를 입력하세요.</span>
+                                                    </label>
+                                                    <input type="text" name="" maxlength="100" placeholder="개인 이메일을 입력하세요" />
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">입사일</label>
+                                                    <input type="date" name="" maxlength="100" />
+                                                </li>
+                                                <li>
+                                                    <label class="form_label">
+                                                        급여 지급 계좌번호
+                                                        <span class="font_caution">* 본인 명의 계좌인지 확인 후 입력하세요.</span>
+                                                    </label>
+                                                    <div class="tst_flex">
+                                                        <div class="tst_col4">
+                                                            <select name="">
+                                                                <option value="{은행 번호}">{은행명}</option>
+                                                                <option value="{은행 번호}">{은행명}</option>
+                                                                <option value="{은행 번호}">{은행명}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="tst_col8">
+                                                            <input type="text" name="" maxlength="100" placeholder="계좌번호를 입력하세요" />
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="tst_search_icon">
-                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                <div class="tst_col12">
+                                    <label class="form_label">주소</label>
+                                    <input type="text" name="" maxlength="100" placeholder="주소를 입력하세요" />
+                                    <hr class="separator" />
                                 </div>
-                            </div>
-                        </form>
-                        <!-- //부서/팀 검색 -->
-
-                        <table class="tst_table table_align_left">
-                            <colgroup>
-                                <col style="width: 20px;" />
-                                <col style="width: auto;" />
-                            </colgroup>
-                            <tbody class="tst_pointer">
-
-                            <!-- 전 직원 조회 (필터링 초기화) -->
-                            <tr>
-                                <td></td>
-                                <th class="td_no_padding">
-                                    <span onclick="location.href='/manage_employee_list'">전체 보기</span>
-                                </th>
-                            </tr>
-                            <!-- //전 직원 조회 (필터링 초기화) -->
-
-                            <!-- 가발령 상태인 직원 조회 -->
-                            <tr>
-                                <td></td>
-                                <td class="td_no_padding">
-                                    <span onclick="location.href='/manage_employee_list?'">가발령</span>
-                                </td>
-                            </tr>
-                            <!-- 가발령 상태인 직원 조회 -->
-
-                            <!-- 부서 (필터링) -->
-                            <tr>
-                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
-                                <th class="td_no_padding">
-                                    <span onclick="location.href='/manage_employee_list?'">{부서명}</span>
-                                </th>
-                            </tr>
-                            <tr class="disp_hide">
-                                <td colspan="2" class="td_no_padding">
-                                    <table class="tst_table tst_table_in_table table_align_left">
-                                        <colgroup>
-                                            <col style="width: 23px;" />
-                                            <col style="width: auto;" />
-                                        </colgroup>
-
-                                        <!-- 팀 목록 (필터링) -->
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">{팀명}</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">{팀명}</span></td>
-                                        </tr>
-                                        <!-- //팀 목록 (필터링) -->
-
-                                    </table>
-                                </td>
-                            </tr>
-                            <!-- //부서 (필터링) -->
-
-                            <!-- 부서 > 선택한 항목 (필터링) -->
-                            <tr class="td_bg_medium">
-                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
-                                <th class="td_no_padding">
-                                    <span onclick="location.href='/manage_employee_list?'">{분류명}</span>
-                                </th>
-                            </tr>
-
-                            <tr class="disp_hide">
-                                <td colspan="2" class="td_no_padding">
-                                    <table class="tst_table tst_table_in_table table_align_left">
-                                        <colgroup>
-                                            <col style="width: 23px;" />
-                                            <col style="width: auto;" />
-                                        </colgroup>
-
-                                        <!-- 팀 목록 (필터링) -->
-                                        <!-- 팀 > 선택한 항목 (필터링) -->
-                                        <tr class="td_bg_medium">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">{팀명}</span></td>
-                                        </tr>
-                                        <!-- //팀 > 선택한 항목 (필터링) -->
-
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">{팀명}</span></td>
-                                        </tr>
-                                        <!-- //팀 목록 (필터링) -->
-
-                                    </table>
-                                </td>
-                            </tr>
-                            <!-- //부서 > 선택한 항목 (필터링) -->
-
-                            <!-- 예시 -->
-                            <tr>
-                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
-                                <th class="td_no_padding">
-                                    <span onclick="location.href='/manage_employee_list?'">프로그래밍</span>
-                                </th>
-                            </tr>
-                            <tr class="disp_hide">
-                                <td colspan="2" class="td_no_padding">
-                                    <table class="tst_table tst_table_in_table table_align_left">
-                                        <colgroup>
-                                            <col style="width: 23px;" />
-                                            <col style="width: auto;" />
-                                        </colgroup>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">게임엔진</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">게임플레이</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">플랫폼</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">DBA</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">웹개발</span></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
-                                <th class="td_no_padding">
-                                    <span onclick="location.href='/manage_employee_list?'">아트</span>
-                                </th>
-                            </tr>
-                            <tr class="disp_hide">
-                                <td colspan="2" class="td_no_padding">
-                                    <table class="tst_table tst_table_in_table table_align_left">
-                                        <colgroup>
-                                            <col style="width: 23px;" />
-                                            <col style="width: auto;" />
-                                        </colgroup>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">이펙트</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">캐릭터모델링</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">애니메이션</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">BX</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">배경모델링</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">웹디자인</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/manage_employee_list?'">UI/UX그래픽</span></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <!-- //예시 -->
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="tst_col10">
-
-                        <!-- 직원 검색 -->
-                        <form>
-                            <div class="tst_search_container">
-                                <div class="tst_search_select">
-                                    <select id="tst_search_select_category" onchange="<!-- 분류 선택시 실행할 함수를 입력하세요 -->">
-                                        <option value="{검색 분류}">검색 분류</option>
-                                    </select>
-                                </div>
-                                <div class="tst_search_input">
-                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
-                                </div>
-                                <div class="tst_search_icon">
-                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- //직원 검색 -->
-
-                        <table class="tst_table">
-                            <colgroup>
-                                <col style="width: 60px;" />
-                                <col style="width: 200px;" />
-                                <col style="width: 200px;" />
-                                <col style="width: 120px;" />
-                                <col style="width: auto;" />
-                                <col style="width: 150px;" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>부서/팀</th>
-                                <th>직원명 (ID)</th>
-                                <th>직급/직책</th>
-                                <th>직무</th>
-                                <th>입사일</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <!-- 검색되는 직원이 없을 경우 -->
-                            <tr class="rent_list_no_data disp_hide"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="6" class="td_no_data">
-                                    <p><i class="bi bi-person-exclamation"></i></p>
-                                    <h3>검색 조건에 해당하는 직원이 없습니다.</h3>
-                                </td>
-                            </tr>
-                            <!-- //검색되는 직원이 없을 경우 -->
-
-                            <!-- 직원 목록 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td class="td_align_left">
-                                    <span onclick="location.href='/organization_detail?'" class="tst_pointer">{부서}</span>
-                                </td>
-                                <td class="td_align_left">
-                                    <h3 onclick="location.href='/manage_employee_detail?'" class="tst_pointer">{직원명} ({ID})</h3>
-                                </td>
-                                <td class="td_align_left">{직급}/{직책}</td>
-                                <td class="td_align_left">{직무}</td>
-                                <td>{입사일|yyyy-MM-dd}</td>
-                            </tr>
-                            <!-- //직원 목록 -->
-
-                            <!-- 예시 -->
-                            <tr>
-                                <td>126</td>
-                                <td class="td_align_left">
-                                    <span onclick="location.href='/organization_detail?'" class="tst_pointer">아트/UI/UX디자인</span>
-                                </td>
-                                <td class="td_align_left">
-                                    <h3 onclick="location.href='/manage_employee_detail?'" class="tst_pointer">김이름 (kimname_art)</h3>
-                                </td>
-                                <td class="td_align_left">대리/사원</td>
-                                <td class="td_align_left">게임 내 UI/UX 요소 디자인</td>
-                                <td>2023-03-05</td>
-                            </tr>
-                            <tr>
-                                <td>126</td>
-                                <td class="td_align_left">
-                                    <span onclick="location.href='/organization_detail?'" class="tst_pointer">오디오/오디오임플리먼테이션</span>
-                                </td>
-                                <td class="td_align_left">
-                                    <h3 onclick="location.href='/manage_employee_detail?'" class="tst_pointer">김이름 (kimname_audio)</h3>
-                                </td>
-                                <td class="td_align_left">대리/사원</td>
-                                <td class="td_align_left">오디오 미들웨어 설계, 오디오 데이터 관리</td>
-                                <td>2023-03-05</td>
-                            </tr>
-                            <!-- //예시 -->
-
-                            <!-- pagination -->
-                            <tfoot>
-                            <tr>
-                                <td colspan="7">
-                                    <ul id="pagination" class="pagination-sm pagination">
-                                        <li class="page-item first disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+                                <div class="tst_col12">
+                                    <ul class="tst_list list_no_desc list_inline">
+                                        <li>
+                                            <input type="submit" class="btn_primary" value="직원 등록하기" />
                                         </li>
-                                        <li class="page-item prev disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">6</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">7</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">8</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">9</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">10</a>
-                                        </li>
-                                        <li class="page-item next">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
-                                        </li>
-                                        <li class="page-item last">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+                                        <li>
+                                            <input type="button" onclick="location.href='/manage_employee_list'" class="btn_secondary" value="목록으로 돌아가기" />
                                         </li>
                                     </ul>
-                                </td>
-                            </tr>
-                            </tfoot>
-                            <!-- //pagination -->
-                        </table>
-                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tst_col3">
 
-                </div>
+                            <!-- 첨부 파일 목록 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: auto" />
+                                    <col style="width: 60px" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="2">첨부 파일</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{파일명 (파일 용량kb)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{파일명 (파일 용량kb)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
+                                    </td>
+                                </tr>
+
+                                <!-- 첨부 파일이 없는 경우 아래와 같이 입력하세요 -->
+                                <tr>
+                                    <td colspan="2" class="td_align_center">
+                                        <span class="font_subtle">첨부 파일이 없습니다.</span>
+                                    </td>
+                                </tr>
+                                <!-- //첨부 파일이 없는 경우 아래와 같이 입력하세요 -->
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <input type="file" name="" multiple />
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <!-- //첨부 파일 목록 -->
+
+                            <hr class="separator" />
+
+                            <!-- 직인 > 파일이 있을 경우 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: auto" />
+                                    <col style="width: 60px" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="2">직인</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="td_no_underline">
+                                    <td>{파일명 (파일 용량kb)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">직인 삭제</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="tst_flex">
+                                            <div class="tst_col12 align_center align_middle">
+                                                <img id="employee_stamp" src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" class="companyinfo_stamp" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <input type="file" name="" multiple />
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <!-- //직인 > 파일이 있을 경우 -->
+
+                            <!-- 직인 > 파일이 없을 경우 -->
+                            <table class="tst_table table_align_left table_no_padding">
+                                <thead>
+                                <tr>
+                                    <th>직인</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="td_no_underline disp_hide">
+                                    <td colspan="2"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><p class="font_subtle align_center">직인이 없습니다.</p></td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <input type="file" name="" onchange="img_preview(this)" multiple />
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <!-- //직인 > 파일이 없을 경우 -->
+
+                        </div>
+
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
+    <c:import url="manage_employee_update_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
-<script src="resources/js/approval_send_modal.js"></script>
+<script src="resources/js/manage_employee_update.js"></script>
 </html>
