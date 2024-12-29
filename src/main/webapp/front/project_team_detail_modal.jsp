@@ -213,12 +213,12 @@
 <!-- 팀원 방출하기 -->
 <div class="tst_modal tst_modal_alert tst_modal_delete">
 
-    <!-- 방출할 팀원의 사원번호가 아래 입력창 값으로 저장됩니다. -->
-    <input type="hidden" name="tst_modal_data" id="tst_modal_data" value="" />
+    <!-- 내보낼 팀원의 사원번호가 아래 입력창 값으로 저장됩니다. -->
+    <input type="hidden" name="tst_modal_param" id="tst_modal_param" value="" />
 
     <div class="tst_modal_container">
         <div class="tst_modal_header">
-            <h1 class="tst_modal_title">팀원 방출하기</h1>
+            <h1 class="tst_modal_title">팀원 내보내기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_delete')"></i>
         </div>
         <div class="tst_modal_body">
@@ -227,7 +227,7 @@
                     <h3 id="prod_name" class="prod_name">{직원명 (부서/직급)}</h3>
                 </li>
                 <li>
-                    <p>위 팀원을 방출하시겠습니까?</p>
+                    <p>위 팀원을 내보내시겠습니까?</p>
                 </li>
                 <li>
                     <hr class="separator" />
@@ -237,7 +237,7 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <button onclick="<!-- 팀원을 방출하는 함수를 입력하세요 -->" class="btn_primary btn_full">방출하기</button>
+                    <button onclick="<!-- 팀원을 내보내는 함수를 입력하세요 -->" class="btn_primary btn_full">팀원 내보내기</button>
                 </div>
                 <div class="tst_col6">
                     <button onclick="tst_modal_close('tst_modal_delete')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>

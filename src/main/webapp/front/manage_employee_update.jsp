@@ -46,14 +46,7 @@
                                             <ul class="list_no_desc list_block">
                                                 <li>
                                                     <label class="form_label">이름</label>
-                                                    <div class="tst_flex">
-                                                        <div class="tst_col8">
-                                                            <input type="text" name="" maxlength="100" value="{이름}" class="input_disable" readonly />
-                                                        </div>
-                                                        <div class="tst_col4">
-                                                            <button onclick="tst_modal_call('tst_modal_name')" type="button" class="btn_subtle btn_full">정정 신청</button>
-                                                        </div>
-                                                    </div>
+                                                    <input type="text" name="" maxlength="100" value="{이름}" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">ID</label>
@@ -61,19 +54,27 @@
                                                 </li>
                                                 <li>
                                                     <label class="form_label">비밀번호</label>
-                                                    <button onclick="tst_modal_call('tst_modal_password')" type="button" class="btn_subtle btn_full">비밀번호 변경하기</button>
+                                                    <button onclick="tst_modal_call('tst_modal_password')" type="button" class="btn_subtle btn_full">임시 비밀번호 발급하기</button>
                                                 </li>
                                                 <li>
                                                     <label class="form_label">성별</label>
-                                                    <input type="text" name="" maxlength="100" value="{성별}" class="input_disable" readonly />
+                                                    <div class="tst_flex">
+                                                        <input type="hidden" name="gender" value="{성별}" />
+                                                        <div class="tst_col6">
+                                                            <button type="button" onclick="select_gender('0')" class="btn_full btn_empty gender_0">남</button>
+                                                        </div>
+                                                        <div class="tst_col6">
+                                                            <button type="button" onclick="select_gender('1')" class="btn_full btn_empty gender_1">여</button>
+                                                        </div>
+                                                    </div>
                                                 </li>
                                                 <li>
                                                     <label class="form_label">생년월일</label>
-                                                    <input type="date" name="" value="{생년월일}" class="input_disable" readonly />
+                                                    <input type="date" name="" value="{생년월일}" placeholder="생년월일을 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">주민등록번호</label>
-                                                    <input type="text" name="" maxlength="100" value="{주민등록번호}" class="input_disable" readonly />
+                                                    <input type="text" name="" maxlength="100" value="{주민등록번호}" placeholder="주민등록번호를 입력하세요" />
                                                 </li>
                                             </ul>
                                         </div>
@@ -85,7 +86,7 @@
                                                 </li>
                                                 <li>
                                                     <label class="form_label">사내 이메일</label>
-                                                    <input type="text" name="" maxlength="100" value="{사내 이메일}" class="input_disable" readonly />
+                                                    <input type="text" name="" maxlength="100" value="{사내 이메일}" placeholder="사내 이메일을 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">
@@ -106,13 +107,20 @@
                                                     <input type="date" name="" maxlength="100" value="{입사일}" class="input_disable" readonly />
                                                 </li>
                                                 <li>
-                                                    <label class="form_label">급여 지급 계좌번호</label>
+                                                    <label class="form_label">
+                                                        급여 지급 계좌번호
+                                                        <span class="font_caution">* 본인 명의 계좌인지 확인 후 입력하세요.</span>
+                                                    </label>
                                                     <div class="tst_flex">
                                                         <div class="tst_col4">
-                                                            <input type="text" name="" maxlength="100" value="{은행명}" class="input_disable" readonly />
+                                                            <select name="">
+                                                                <option value="{은행 번호}">{은행명}</option>
+                                                                <option value="{은행 번호}">{은행명}</option>
+                                                                <option value="{은행 번호}">{은행명}</option>
+                                                            </select>
                                                         </div>
                                                         <div class="tst_col8">
-                                                            <input type="text" name="" maxlength="100" value="{계좌번호}" class="input_disable" readonly />
+                                                            <input type="text" name="" maxlength="100" value="{계좌번호}" placeholder="계좌번호를 입력하세요" />
                                                         </div>
                                                     </div>
                                                 </li>
@@ -131,7 +139,7 @@
                                             <input type="submit" class="btn_primary" value="정보 수정하기" />
                                         </li>
                                         <li>
-                                            <input type="button" onclick="location.href='/mypage'" class="btn_secondary" value="이전으로 돌아가기" />
+                                            <input type="button" onclick="location.href='/manage_employee_detail'" class="btn_secondary" value="이전으로 돌아가기" />
                                         </li>
                                     </ul>
                                 </div>
@@ -154,20 +162,20 @@
                                 <tr>
                                     <td>{파일명 (파일 용량kb)}</td>
                                     <td>
-                                        <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href='/'" type="button" class="btn_min btn_primary">다운로드</button>
+                                        <button onclick="tst_modal_call('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>{파일명 (파일 용량kb)}</td>
                                     <td>
-                                        <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href='/'" type="button" class="btn_min btn_primary">다운로드</button>
+                                        <button onclick="tst_modal_call('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
                                     </td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <button type="button" onclick="tst_modal_call('tst_modal_file')" class="btn_subtle btn_full">증명 서류 제출하기</button>
+                                        <input type="file" name="" multiple />
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -178,20 +186,27 @@
 
                             <!-- 직인 > 파일이 있을 경우 -->
                             <table class="tst_table table_align_left table_no_padding">
+                                <colgroup>
+                                    <col style="width: auto" />
+                                    <col style="width: 60px" />
+                                </colgroup>
                                 <thead>
                                 <tr>
-                                    <th>직인</th>
+                                    <th colspan="2">직인</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="td_no_underline">
-                                    <td>{파일 이름 (용량kb)}</td>
+                                    <td>{파일명 (파일 용량kb)}</td>
+                                    <td>
+                                        <button onclick="tst_modal_call('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">직인 삭제</button>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td colspan="2">
                                         <div class="tst_flex">
                                             <div class="tst_col12 align_center align_middle">
-                                                <img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" class="companyinfo_stamp" />
+                                                <img id="employee_stamp" src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" class="companyinfo_stamp" />
                                             </div>
                                         </div>
                                     </td>
@@ -200,7 +215,7 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <button type="button" onclick="tst_modal_call('tst_modal_stamp')" class="btn_subtle btn_full">직인 제출</button>
+                                        <input type="file" name="" multiple />
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -215,14 +230,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <tr class="td_no_underline disp_hide">
+                                    <td colspan="2"></td>
+                                </tr>
                                 <tr>
-                                    <td><p class="font_subtle align_center">직인이 없습니다.</p></td>
+                                    <td colspan="2"><p class="font_subtle align_center">직인이 없습니다.</p></td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <button type="button" onclick="tst_modal_call('tst_modal_stamp')" class="btn_subtle btn_full">직인 제출</button>
+                                        <input type="file" name="" onchange="img_preview(this)" multiple />
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -236,8 +254,8 @@
             </div>
         </div>
     </div>
-    <c:import url="mypage_update_modal.jsp" />
+    <c:import url="manage_employee_update_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
-<script src="resources/js/mypage_update.js"></script>
+<script src="resources/js/manage_employee_update.js"></script>
 </html>

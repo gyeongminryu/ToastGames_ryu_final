@@ -26,7 +26,7 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <button onclick="<!-- 반납 처리 함수를 입력하세요 -->" class="btn_primary btn_full">물품 폐기하기</button>
+                    <button onclick="<!-- 폐기 처리 함수를 입력하세요 -->" class="btn_primary btn_full">물품 폐기하기</button>
                 </div>
                 <div class="tst_col6">
                     <button onclick="tst_modal_close('tst_modal_dispose')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>

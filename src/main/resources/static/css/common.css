@@ -41,6 +41,7 @@
     --tst-border-radius: 5px;
     --tst-label-font-size: 10px;
     --tst-form-padding: 10px 12px;
+    --tst-form-select-padding: 9px 12px;
     --tst-form-font-size: 13px;
     --tst-form-btn-width: 210px;
     --tst-form-btn-weight: 600;
@@ -364,13 +365,22 @@ textarea,
 select,
 button{
     margin: 0;
-    padding: var(--tst-form-padding);
     border-width: var(--tst-border-width);
     border-style: var(--tst-border-style);
     border-radius: var(--tst-border-radius);
     display: block;
     font-size: var(--tst-form-font-size);
     font-family: var(--tst-font-sans-serif), serif;
+}
+
+input,
+textarea,
+button{
+    padding: var(--tst-form-padding);
+}
+
+select{
+    padding: var(--tst-form-select-padding);
 }
 
 textarea{
@@ -439,6 +449,12 @@ button.btn_full{
 .btn_subtle{
     border-color: var(--tst-color-subtle);
     background-color: var(--tst-color-subtle);
+    color: var(--tst-color-dark);
+}
+
+.btn_empty{
+    border-color: var(--tst-border-color);
+    background-color: var(--tst-color-white);
     color: var(--tst-color-dark);
 }
 
