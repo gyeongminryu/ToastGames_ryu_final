@@ -220,6 +220,24 @@ public class FrontController {
         return new ModelAndView("manage_employee_update");
     }
 
+    // 인사 관리, 퇴사한 직원 목록 (퇴사자 관리)
+    @RequestMapping(value = "/manage_employee_resign_list")
+    public ModelAndView front_manage_employee_resign_list() {
+        return new ModelAndView("manage_employee_resign_list");
+    }
+
+    // 인사 관리, 직원 등록
+    @RequestMapping(value = "/manage_employee_regist")
+    public ModelAndView front_manage_employee_regist() {
+        return new ModelAndView("manage_employee_regist");
+    }
+
+    // 인사 관리, 직원 일괄 등록
+    @RequestMapping(value = "/manage_employee_regist_multiple")
+    public ModelAndView front_manage_employee_regist_multiple() {
+        return new ModelAndView("manage_employee_regist_multiple");
+    }
+
 
 
     // Manage > Rent =================================================
