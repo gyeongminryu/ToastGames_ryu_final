@@ -36,12 +36,12 @@
     </div>
     <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_password')"></div>
 </div>
-<!-- //파일 삭제하기 -->
+<!-- //임시 비밀번호 발급하기 -->
 
 <!-- 파일 삭제하기 -->
 <div class="tst_modal tst_modal_alert tst_modal_delete">
 
-    <!-- 내보낼 팀원의 사원번호가 아래 입력창 값으로 저장됩니다. -->
+    <!-- 삭제할 파일의 idx가 아래 입력창 값으로 저장됩니다. -->
     <input type="hidden" name="tst_modal_param" id="tst_modal_param" value="" />
 
     <div class="tst_modal_container">
