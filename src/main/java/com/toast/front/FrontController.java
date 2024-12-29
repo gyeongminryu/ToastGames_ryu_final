@@ -129,6 +129,34 @@ public class FrontController {
 
 
     // Document ======================================================
+    // Board =========================================================
+
+    // 게시글 목록
+    @RequestMapping(value = "/board_list")
+    public ModelAndView front_board_list() {
+        return new ModelAndView("board_list");
+    }
+
+    // 게시글 상세보기
+    @RequestMapping(value = "/board_detail")
+    public ModelAndView front_board_detail() {
+        return new ModelAndView("board_detail");
+    }
+
+    // 게시글 작성
+    @RequestMapping(value = "/board_write")
+    public ModelAndView front_board_write() {
+        return new ModelAndView("board_write");
+    }
+
+    // 게시글 수정
+    @RequestMapping(value = "/board_update")
+    public ModelAndView front_board_update() {
+        return new ModelAndView("board_update");
+    }
+
+
+
     // Company Info ==================================================
 
     // 회사 정보

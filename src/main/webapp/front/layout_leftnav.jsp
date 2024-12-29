@@ -63,7 +63,7 @@
                 <li onclick="location.href='/'" class="tst_pointer">
                     <i class="bi bi-archive-fill"></i><h3>문서함</h3>
                 </li>
-                <li onclick="location.href='/'" class="tst_pointer">
+                <li onclick="location.href='/board_list'" class="tst_pointer">
                     <i class="bi bi-layout-text-window-reverse"></i><h3>전자 게시판</h3>
                 </li>
 <%--                <li onclick="location.href='/'" class="tst_pointer disp_hide">--%>
