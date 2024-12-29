@@ -25,10 +25,10 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_employee_list'">
                         <h1>인사 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_employee_resign_list'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_resign_list'">
                         <h1>퇴사자 관리</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/manage_employee_regist'">
@@ -71,15 +71,6 @@
                                 </th>
                             </tr>
                             <!-- //전 직원 조회 (필터링 초기화) -->
-
-                            <!-- 가발령 상태인 직원 조회 -->
-                            <tr>
-                                <td></td>
-                                <td class="td_no_padding">
-                                    <span onclick="location.href='/manage_employee_list?'">가발령</span>
-                                </td>
-                            </tr>
-                            <!-- 가발령 상태인 직원 조회 -->
 
                             <!-- 부서 (필터링) -->
                             <tr>
@@ -258,10 +249,11 @@
                             <colgroup>
                                 <col style="width: 60px;" />
                                 <col style="width: 200px;" />
-                                <col style="width: 200px;" />
-                                <col style="width: 120px;" />
+                                <col style="width: 180px;" />
+                                <col style="width: 100px;" />
                                 <col style="width: auto;" />
-                                <col style="width: 150px;" />
+                                <col style="width: 110px;" />
+                                <col style="width: 110px;" />
                             </colgroup>
                             <thead>
                             <tr>
@@ -271,6 +263,7 @@
                                 <th>직급/직책</th>
                                 <th>직무</th>
                                 <th>입사일</th>
+                                <th>퇴사일</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -290,12 +283,11 @@
                                 <td class="td_align_left">
                                     <span onclick="location.href='/organization_detail?'" class="tst_pointer">{부서}</span>
                                 </td>
-                                <td class="td_align_left">
-                                    <h3 onclick="location.href='/manage_employee_detail?'" class="tst_pointer">{직원명} ({ID})</h3>
-                                </td>
+                                <td class="td_align_left">{직원명} ({ID})</td>
                                 <td class="td_align_left">{직급}/{직책}</td>
                                 <td class="td_align_left">{직무}</td>
                                 <td>{입사일|yyyy-MM-dd}</td>
+                                <td>{퇴사일|yyyy-MM-dd}</td>
                             </tr>
                             <!-- //직원 목록 -->
 
@@ -305,24 +297,22 @@
                                 <td class="td_align_left">
                                     <span onclick="location.href='/organization_detail?'" class="tst_pointer">아트/UI/UX디자인</span>
                                 </td>
-                                <td class="td_align_left">
-                                    <h3 onclick="location.href='/manage_employee_detail?'" class="tst_pointer">김이름 (kimname_art)</h3>
-                                </td>
+                                <td class="td_align_left">김이름 (kimname_art)</td>
                                 <td class="td_align_left">대리/사원</td>
                                 <td class="td_align_left">게임 내 UI/UX 요소 디자인</td>
                                 <td>2023-03-05</td>
+                                <td>2025-03-05</td>
                             </tr>
                             <tr>
                                 <td>126</td>
                                 <td class="td_align_left">
                                     <span onclick="location.href='/organization_detail?'" class="tst_pointer">오디오/오디오임플리먼테이션</span>
                                 </td>
-                                <td class="td_align_left">
-                                    <h3 onclick="location.href='/manage_employee_detail?'" class="tst_pointer">김이름 (kimname_audio)</h3>
-                                </td>
+                                <td class="td_align_left">김이름 (kimname_audio)</td>
                                 <td class="td_align_left">대리/사원</td>
                                 <td class="td_align_left">오디오 미들웨어 설계, 오디오 데이터 관리</td>
                                 <td>2023-03-05</td>
+                                <td>2025-03-05</td>
                             </tr>
                             <!-- //예시 -->
 
