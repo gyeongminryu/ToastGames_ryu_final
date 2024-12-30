@@ -65,5 +65,3 @@
     <div class="tst_modal_backdrop" onclick="tst_close_profile()"></div>
 </div>
 <!-- //프로필 조회 -->
-
-<script src="resources/js/module_modal.js"></script>

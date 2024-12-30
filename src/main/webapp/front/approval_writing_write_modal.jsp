@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" type="text/css" href="resources/css/module_modal.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />
 
 <!-- 결재선 선택하기 -->
 <div class="tst_modal tst_modal_wide tst_modal_select">
@@ -157,7 +157,8 @@
         </div>
         <div class="tst_modal_footer">
             <button onclick="<!-- 직원을 결재선에 등록하는 함수를 입력하세요 -->" class="btn_primary">결재선 등록하기</button>
-            <button onclick="tst_modal_close('tst_modal_select')" class="btn_secondary">이전 화면으로 돌아가기</button>
+            <button onclick="<!-- 직원을 결재선에 등록하지 않는 함수를 입력하세요 -->" class="btn_secondary">결재선 비워두기</button>
+            <button onclick="tst_modal_close('tst_modal_select')" class="btn_subtle">이전 화면으로 돌아가기</button>
         </div>
     </div>
     <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_select')"></div>

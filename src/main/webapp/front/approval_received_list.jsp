@@ -26,7 +26,7 @@
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_received_list'">
                         <h1>내게 온 업무 요청</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/approval_send_list'">
+                    <li class="tst_title_item" onclick="location.href='/approval_sent_list'">
                         <h1>내가 보낸 업무 요청</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/approval_writing_list'">

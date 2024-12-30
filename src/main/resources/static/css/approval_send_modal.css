@@ -29,6 +29,7 @@
 }
 
 .tst_modal.tst_modal_select .tst_modal_footer > *{
+    width: 180px;
     margin-right: calc(var(--tst-margin-horizontal));
     display: inline-block;
 }

@@ -18,11 +18,12 @@
 <%--            <li>--%>
 <%--                <i class="bi bi-send-fill"></i>--%>
 <%--            </li>--%>
-            <li>
+            <li onclick="tst_view_alertlist()" class="tst_pointer">
                 <i class="bi bi-bell-fill"></i>
             </li>
         </ul>
         <div class="tst_col2"></div>
     </div>
 </div>
-<c:import url="layout_topnav_modal.jsp" />
+<c:import url="layout_topnav_modal.jsp" /><!-- 간이 프로필 열람 -->
+<c:import url="layout_topnav_offcanvas.jsp" /><!-- 알림 목록 -->

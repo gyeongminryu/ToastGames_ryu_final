@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" type="text/css" href="resources/css/module_modal.css" />
 <div class="tst_modal tst_modal_input tst_modal_detail">
     <div class="tst_modal_container">
         <div class="tst_modal_header">

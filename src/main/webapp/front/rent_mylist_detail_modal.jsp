@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" type="text/css" href="resources/css/module_modal.css" />
-
 <!-- 취소하기 -->
 <div class="tst_modal tst_modal_alert tst_modal_cancel">
     <div class="tst_modal_container">

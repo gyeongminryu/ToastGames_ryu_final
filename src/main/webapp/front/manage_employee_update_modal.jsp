@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" type="text/css" href="resources/css/module_modal.css" />
-
 <!-- 임시 비밀번호 발급하기 -->
 <div class="tst_modal tst_modal_alert tst_modal_password">
     <div class="tst_modal_container">
