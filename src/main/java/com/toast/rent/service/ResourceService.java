@@ -24,7 +24,7 @@ public class ResourceService {
 	
 	//사원번호 가져오기
 	public int getEmpl(String loginId) {
-		logger.info("getEmpl");
+		logger.info("loginId");
 		return resourceDAO.getEmpl(loginId);
 	}
 
@@ -61,6 +61,10 @@ public class ResourceService {
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
+				break;
+			case 4:
+				dto.setProd_rent_str("연체");
+				break;
 			default:
 				dto.setProd_rent_str("알 수 없음");
 				break;
@@ -97,6 +101,10 @@ public class ResourceService {
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
+				break;
+			case 4:
+				dto.setProd_rent_str("연체");
+				break;
 			default:
 				dto.setProd_rent_str("알 수 없음");
 				break;
@@ -133,6 +141,10 @@ public class ResourceService {
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
+				break;
+			case 4:
+				dto.setProd_rent_str("연체");
+				break;
 			default:
 				dto.setProd_rent_str("알 수 없음");
 				break;
@@ -172,6 +184,10 @@ public class ResourceService {
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
+				break;
+			case 4:
+				dto.setProd_rent_str("연체");
+				break;
 			default:
 				dto.setProd_rent_str("알 수 없음");
 				break;
@@ -209,6 +225,10 @@ public class ResourceService {
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
+				break;
+			case 4:
+				dto.setProd_rent_str("연체");
+				break;
 			default:
 				dto.setProd_rent_str("알 수 없음");
 				break;
