@@ -4,11 +4,17 @@
 
 select.meeting_room_select{
     width: 220px;
-    padding: 6px 10px;
     position: absolute;
-    top: calc(77px + var(--tst-container-margin));
     left: calc(6px + var(--tst-container-margin));
     z-index: 100;
+}
+
+select.meeting_room_select.fc_month{
+    top: calc(57px + var(--tst-container-margin));
+}
+
+select.meeting_room_select.fc_day{
+    top: calc(77px + var(--tst-container-margin));
 }
 
 .how_to_reserv{
@@ -21,9 +27,16 @@ select.meeting_room_select{
 .filtering_only_me{
     width: 220px;
     position: absolute;
-    top: calc(100px + var(--tst-container-margin));
     right: calc(6px + var(--tst-container-margin));
     z-index: 100;
+}
+
+.filtering_only_me.fc_month{
+    top: calc(100px + var(--tst-container-margin));
+}
+
+.filtering_only_me.fc_day{
+    top: calc(100px + var(--tst-container-margin));
 }
 
 
@@ -49,11 +62,9 @@ select.meeting_room_select{
     color: var(--tst-body-color);
 }
 
-.fc .fc-header-toolbar .fc-today-button:not(:first-child){
-    background-color: var(--tst-color-subtle);
-    border-radius: var(--tst-border-radius);
-    position: absolute;
-    left: -70px;
+.fc .fc-header-toolbar .fc-toolbar-chunk > div > * {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .fc .fc-header-toolbar .fc-toolbar-title{
@@ -74,6 +85,11 @@ select.meeting_room_select{
 .fc .fc-header-toolbar .fc-toolbar-title span.day-range{
     font-size: var(--tst-body-font-size);
     font-weight: 400;
+}
+
+.fc .fc-header-toolbar .fc-today-button{
+    background-color: var(--tst-color-dark);
+    color: var(--tst-color-white);
 }
 
 

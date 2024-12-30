@@ -32,7 +32,7 @@
                 <!-- //제목 -->
 
                 <!-- 회의실 필터 -->
-                <select id="meeting_room_select" name="room_idx" class="meeting_room_select btn_primary">
+                <select id="meeting_room_select" name="room_idx" class="meeting_room_select fc_day btn_primary">
                     <option value="5">회의실 1</option>
                     <option value="{회의실idx}">{회의실명}</option>
                 </select>
@@ -43,7 +43,7 @@
                 <!-- //예약 방법 안내 -->
 
                 <!-- 내가 포함된 회의만 보기 필터 -->
-                <div class="filtering_only_me align_right">
+                <div class="filtering_only_me fc_day align_right">
                     <div class="tst_filtering_container tst_pointer">
                         <div class="tst_filtering_off" onclick="filtering_on()">
                             <i class="bi bi-toggle-off"></i>

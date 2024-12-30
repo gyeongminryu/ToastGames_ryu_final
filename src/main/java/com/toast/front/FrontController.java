@@ -131,9 +131,9 @@ public class FrontController {
     // Schedule ======================================================
 
     // 일정 관리
-    @RequestMapping(value = "/calendar_month")
+    @RequestMapping(value = "/calendar")
     public ModelAndView front_calendar_month() {
-        return new ModelAndView("calendar_month");
+        return new ModelAndView("calendar");
     }
 
 

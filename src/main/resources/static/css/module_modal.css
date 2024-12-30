@@ -15,6 +15,13 @@
     justify-content: center;
     overflow: hidden;
     z-index: var(--tst-modal-z-index);
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+}
+
+.tst_modal::-webkit-scrollbar,
+.tst_modal * ::-webkit-scrollbar {
+    display: none;
 }
 
 .tst_modal .tst_modal_container{

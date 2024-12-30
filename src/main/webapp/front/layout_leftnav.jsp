@@ -60,7 +60,7 @@
                 <li onclick="location.href='/rent_list'" class="tst_pointer">
                     <i class="bi bi-pc-display"></i><h3>공용 물품 대여</h3>
                 </li>
-                <li onclick="location.href='/calendar_month'" class="tst_pointer">
+                <li onclick="location.href='/calendar'" class="tst_pointer">
                     <i class="bi bi-calendar-event"></i><h3>일정 관리</h3>
                 </li>
                 <li onclick="location.href='/'" class="tst_pointer">

@@ -32,8 +32,8 @@ document.getElementById('schedule_end_time').addEventListener('change', function
              calendar = new FullCalendar.Calendar(calendarEl, { 
             	timeZone: 'local',
                 expandRows: true, // 화면에 맞게 높이 재설정
-                //slotMinTime: '00:01', // Day 캘린더에서 시작 시간
-                //slotMaxTime: '23:59', // Day 캘린더에서 종료 시간
+                slotMinTime: '09:00:00',    // Day 캘린더에서 시작 시간
+                slotMaxTime: '18:00:00',    // Day 캘린더에서 종료 시간
                 editable: true,
                 eventResizableFromStart: true,
                 selectable: true, // 달력 일자 드래그 설정가능
@@ -43,7 +43,7 @@ document.getElementById('schedule_end_time').addEventListener('change', function
                 headerToolbar: {
                     left: '',
                     center: 'prev,title,next',
-                    right: 'today,dayGridMonth,timeGridWeek'
+                    right: 'today,,dayGridMonth,timeGridWeek'
                 },
                 initialView: 'dayGridMonth',
                 slotDuration: '00:30:00',   // 시간 슬롯을 15분 단위로 설정
