@@ -218,6 +218,47 @@
 
                     <div class="tst_col3">
 
+                        <!-- 프로필 > 파일이 있을 경우 -->
+                        <table class="tst_table table_align_left table_no_padding">
+                            <thead>
+                            <tr>
+                                <th>프로필</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="td_no_underline">
+                                <td>{파일 이름 (용량kb)}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tst_flex">
+                                        <div class="tst_col12 align_center align_middle">
+                                            <img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" class="companyinfo_stamp" />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- //프로필 > 파일이 있을 경우 -->
+
+                        <!-- 프로필 > 파일이 없을 경우 -->
+                        <table class="tst_table table_align_left table_no_padding">
+                            <thead>
+                            <tr>
+                                <th>직인</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><p class="font_subtle align_center">직인이 없습니다.</p></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- //프로필 > 파일이 없을 경우 -->
+
+                        <hr class="separator" />
+
                         <!-- 첨부 파일 목록 -->
                         <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
