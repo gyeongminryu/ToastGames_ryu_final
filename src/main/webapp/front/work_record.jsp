@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/work_record.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -33,8 +34,19 @@
                         <table class="tst_table table_align_left">
                             <colgroup>
                                 <col style="width: auto;" />
-                                <col style="width: auto;" />
                             </colgroup>
+                            <thead>
+                            <tr>
+                                <th>이번 주 근무 시간</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div class=""></div>
+                                </td>
+                            </tr>
+                            </tbody>
                         </table>
                         <!-- //이번 주 근무 시간 -->
 
@@ -42,11 +54,30 @@
                     <div class="tst_col3">
 
                         <!-- 근무 시간 상세보기 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
-                                <col style="width: auto;" />
+                                <col style="width: 130px;" />
                                 <col style="width: auto;" />
                             </colgroup>
+                            <thead>
+                            <tr>
+                                <th colspan="2">근무 시간 상세보기</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>총 근무 시간</th>
+                                <th>38/52시간</th>
+                            </tr>
+                            <tr>
+                                <th>필수 근무 시간</th>
+                                <td>38/40시간</td>
+                            </tr>
+                            <tr>
+                                <th>초과 근무 시간</th>
+                                <td>0/12시간</td>
+                            </tr>
+                            </tbody>
                         </table>
                         <!-- //근무 시간 상세보기 -->
 
