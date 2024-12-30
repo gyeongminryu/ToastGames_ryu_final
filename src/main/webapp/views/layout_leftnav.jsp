@@ -48,7 +48,7 @@
                     <i class="bi bi-pc-display"></i><h3>공용 물품 대여</h3>
                 </li>
                 <li class="tst_pointer" onclick="location.href='/schedule.go'">
-                    <i class="bi bi-person-video3"></i><h3>일정 관리</h3>
+                    <i class="bi bi-calendar-event"></i><h3>일정 관리</h3>
                 </li>
                 <li class="tst_pointer">
                     <i class="bi bi-archive-fill"></i><h3>문서함</h3>
