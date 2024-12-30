@@ -1,25 +1,5 @@
 let list = '';
 
-let rent_state = 'off';
-
-
-function rent_available_filtering_on(elem) {
-    elem.classList.add("disp_hide");
-    elem.nextElementSibling.classList.remove("disp_hide");
-    // 상태 기록
-    rent_state = 'on'; // ON 상태로 변경
-    resource_list_print(list);
-    console.log("ON 상태로 변경됨. rent_state:", rent_state);
-}
-
-function rent_available_filtering_off(elem) {
-    elem.classList.add("disp_hide");
-    elem.previousElementSibling.classList.remove("disp_hide");
-    // 상태 기록
-    rent_state = 'off'; // OFF 상태로 변경
-    resource_list_print(list);
-    console.log("OFF 상태로 변경됨. rent_state:", rent_state);
-}
 
 // 기본 카테고리 (전체 보기)
 var defaultCategory = 'all';
@@ -38,7 +18,7 @@ function pageCall(page,category) {
 	console.log(category);
     $.ajax({
         type: 'GET',
-        url: '/resourceList.ajax', 
+        url: '/manageProdList.ajax', 
         data:{
         	'page' : page,  //몇페이지 보여줘?
         	'cnt': 18,    //페이지당 몇개의 게시물 보여줘?
@@ -93,7 +73,7 @@ function category_product_search(category_keyword) {
     // 예: AJAX 요청을 통한 검색 처리
     $.ajax({
         type: 'GET',
-        url: '/categroySearch.ajax',
+        url: '/manageCategroySearch.ajax',
         data:{
         	'keyword':category_keyword
         },
@@ -133,6 +113,9 @@ function resource_search(event) {
     // 폼 기본 제출 동작 방지
     event.preventDefault();
 
+	// 선택된 물품 상태 가져오기
+	const state = document.getElementById('tst_search_select_state').value;
+
     // 선택된 옵션 값 가져오기
     const option = document.getElementById('tst_search_select_category').value;
 
@@ -145,24 +128,25 @@ function resource_search(event) {
     }
 
     // 검색 함수 호출
-    product_search(1,currentCategory,option, keyword);
+    product_search(1,currentCategory,option, keyword,state);
     return false; // 폼 제출 방지
 }
 
 
 //검색함수
-function product_search(page,currentCategory,option, keyword) {
+function product_search(page,currentCategory,option, keyword,state) {
     console.log("검색 실행:", option, keyword, currentCategory);
     // 예: AJAX 요청을 통한 검색 처리
     $.ajax({
         type: 'POST',
-        url: '/resourceSearch.ajax',
+        url: '/manageProdSearch.ajax',
         data:{
         	'page' : page,  //몇페이지 보여줘?
         	'cnt': 18,    //페이지당 몇개의 게시물 보여줘?
         	'category':currentCategory,
         	'option' : option,
-        	'keyword': keyword
+        	'keyword': keyword,
+        	'prod_state':state
         },
         dataType: 'json',
         success: function(data) {
@@ -245,7 +229,7 @@ function resource_list_print(list) {
             content += '</tr>';
         }
     }
-    $('#resource_list').html(content);
+    $('#resource_manage_list').html(content);
 }
 
 

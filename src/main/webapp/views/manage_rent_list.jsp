@@ -75,20 +75,20 @@
                     </div>
 
                     <div class="tst_col10">
-                        <!-- 물품 검색 -->
-                       <div class="tst_search_select">
-                       		<select id="tst_search_select_state" name="rent_state" onchange="<!-- 물품 상태가 바뀌었을 경우 작동할 함수를 입력하세요 -->" class="btn_secondary">
-                            	<option value="all">대여 상태</option>
-                                <option value="1">대여 가능</option>
-                                <option value="2">대여 신청중</option>
-                                <option value="3">대여중</option>
-                                <option value="4">연체</option>
-                                <option value="0">대여 불가</option>
-                             </select>
-                        </div>
                         
                         <form>
                             <div class="tst_search_container">
+		                        <!-- 물품 검색 -->
+		                       <div class="tst_search_select">
+		                       		<select id="tst_search_select_state" name="rent_state" onchange="<!-- 물품 상태가 바뀌었을 경우 작동할 함수를 입력하세요 -->" class="btn_secondary">
+		                            	<option value="all">대여 상태</option>
+		                                <option value="1">대여 가능</option>
+		                                <option value="2">대여 신청중</option>
+		                                <option value="3">대여중</option>
+		                                <option value="4">연체</option>
+		                                <option value="0">대여 불가</option>
+		                             </select>
+		                        </div>
                                 <div class="tst_search_select">
                                     <select id="tst_search_select_category" name="category">
                                     	<option value="prod_name">제품명</option>
@@ -133,18 +133,7 @@
                             <tr>
                                 <td colspan="7">
                                     <ul id="pagination" class="pagination-sm pagination">
-                                        <!-- <li class="page-item first disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item prev disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item next">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
-                                        </li>
-                                        <li class="page-item last">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-                                        </li>-->
+                                    
                                     </ul> 
                                 </td>
                             </tr>
@@ -160,4 +149,5 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
+<script src="resources/js/manage_rent_list.js"></script>
 </html>
