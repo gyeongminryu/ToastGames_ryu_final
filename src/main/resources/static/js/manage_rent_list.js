@@ -1,25 +1,5 @@
 let list = '';
 
-let rent_state = 'off';
-
-
-function rent_available_filtering_on(elem) {
-    elem.classList.add("disp_hide");
-    elem.nextElementSibling.classList.remove("disp_hide");
-    // 상태 기록
-    rent_state = 'on'; // ON 상태로 변경
-    resource_list_print(list);
-    console.log("ON 상태로 변경됨. rent_state:", rent_state);
-}
-
-function rent_available_filtering_off(elem) {
-    elem.classList.add("disp_hide");
-    elem.previousElementSibling.classList.remove("disp_hide");
-    // 상태 기록
-    rent_state = 'off'; // OFF 상태로 변경
-    resource_list_print(list);
-    console.log("OFF 상태로 변경됨. rent_state:", rent_state);
-}
 
 // 기본 카테고리 (전체 보기)
 var defaultCategory = 'all';
@@ -38,7 +18,7 @@ function pageCall(page,category) {
 	console.log(category);
     $.ajax({
         type: 'GET',
-        url: '/resourceList.ajax', 
+        url: '/manageProdList.ajax', 
         data:{
         	'page' : page,  //몇페이지 보여줘?
         	'cnt': 18,    //페이지당 몇개의 게시물 보여줘?
@@ -93,7 +73,7 @@ function category_product_search(category_keyword) {
     // 예: AJAX 요청을 통한 검색 처리
     $.ajax({
         type: 'GET',
-        url: '/categroySearch.ajax',
+        url: '/manageCategroySearch.ajax',
         data:{
         	'keyword':category_keyword
         },
@@ -133,6 +113,9 @@ function resource_search(event) {
     // 폼 기본 제출 동작 방지
     event.preventDefault();
 
+	// 선택된 물품 상태 가져오기
+	const state = document.getElementById('tst_search_select_state').value;
+
     // 선택된 옵션 값 가져오기
     const option = document.getElementById('tst_search_select_category').value;
 
@@ -145,24 +128,25 @@ function resource_search(event) {
     }
 
     // 검색 함수 호출
-    product_search(1,currentCategory,option, keyword);
+    product_search(1,currentCategory,option, keyword,state);
     return false; // 폼 제출 방지
 }
 
 
 //검색함수
-function product_search(page,currentCategory,option, keyword) {
+function product_search(page,currentCategory,option, keyword,state) {
     console.log("검색 실행:", option, keyword, currentCategory);
     // 예: AJAX 요청을 통한 검색 처리
     $.ajax({
         type: 'POST',
-        url: '/resourceSearch.ajax',
+        url: '/manageProdSearch.ajax',
         data:{
         	'page' : page,  //몇페이지 보여줘?
         	'cnt': 18,    //페이지당 몇개의 게시물 보여줘?
         	'category':currentCategory,
         	'option' : option,
-        	'keyword': keyword
+        	'keyword': keyword,
+        	'prod_state':state
         },
         dataType: 'json',
         success: function(data) {
@@ -194,58 +178,32 @@ function resource_list_print(list) {
     console.log("Received list:", list);
     var content = '';
     
-    if (rent_state === "off") { // 문자열 비교 수정
-        if (Array.isArray(list) && list.length > 0) {
-            for (var item of list) {
-                content += '<tr>';
-                content += '<td>' + item.prod_idx + '</td>';
-                content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
-                content += '<td class="td_align_left">';
-                content += '<h3 onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
-                content += '</td>';
-                content += '<td class="td_align_left">';
-                content += '<span onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
-                content += '</td>';
-                content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
-                content += '<td>' + (item.prod_exp_date == null ? '없음' : item.prod_exp_date) + '</td>';
-                content += '</tr>';
-            }
-        } else {
-            content += '<tr class="rent_list_no_data">'; // 데이터가 있을 경우 클래스 disp_hide를 추가하세요.
-            content += '<td colspan="6" class="td_no_data">';
-            content += '<p><i class="bi bi-box-seam"></i></p>';
-            content += '<h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>';
-            content += '</td>';
-            content += '</tr>';
-        }
-    } else {
-        if (Array.isArray(list) && list.length > 0) {
-            for (var item of list) {
-                if (item.prod_rent_str === "대여 가능") { // 문자열 비교 수정 및 괄호 추가
-                    content += '<tr>';
-                    content += '<td>' + item.prod_idx + '</td>';
-                    content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
-                    content += '<td class="td_align_left">';
-                    content += '<h3 onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
-                    content += '</td>';
-                    content += '<td class="td_align_left">';
-                    content += '<span onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
-                    content += '</td>';
-                    content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
-                    content += '<td>' + (item.prod_exp_date == null ? '없음' : item.prod_exp_date) + '</td>';
-                    content += '</tr>';
-                }
-            }
-        } else {
-            content += '<tr class="rent_list_no_data">'; // 데이터가 있을 경우 클래스 disp_hide를 추가하세요.
-            content += '<td colspan="6" class="td_no_data">';
-            content += '<p><i class="bi bi-box-seam"></i></p>';
-            content += '<h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>';
-            content += '</td>';
-            content += '</tr>';
-        }
+    if (Array.isArray(list) && list.length > 0) {
+        for (var item of list) {
+			if (item.prod_rent_str === "대여 가능") { // 문자열 비교 수정 및 괄호 추가
+				content += '<tr>';
+				content += '<td>' + item.prod_idx + '</td>';
+				content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
+				content += '<td class="td_align_left">';
+				content += '<h3 onclick="location.href=\'/prodMgDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
+				content += '</td>';
+				content += '<td class="td_align_left">';
+				content += '<span onclick="location.href=\'/prodMgDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
+				content += '</td>';
+				content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
+				content += '<td>' + (item.prod_exp_date == null ? '없음' : item.prod_exp_date) + '</td>';
+				content += '</tr>';
+			}
+		}
+	} else {
+		content += '<tr class="rent_list_no_data">'; // 데이터가 있을 경우 클래스 disp_hide를 추가하세요.
+		content += '<td colspan="6" class="td_no_data">';
+		content += '<p><i class="bi bi-box-seam"></i></p>';
+		content += '<h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>';
+		content += '</td>';
+		content += '</tr>';
     }
-    $('#resource_list').html(content);
+    $('#resource_manage_list').html(content);
 }
 
 

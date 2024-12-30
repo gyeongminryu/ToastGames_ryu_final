@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.toast.rent.dao.ResourceManageDAO">
+
+	<!-- 사원정보 가져오기 -->
+	<select id="getEmplMg" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			ap.dept_idx,
+			empl.empl_idx
+		FROM 
+			appointment AS ap
+		JOIN 
+			employee AS empl ON ap.appo_idx = empl.appolast_idx
+		WHERE 
+			empl.empl_id = #{param1}
+	</select>
+
+	<!-- 카테고리 목록 가져오기 -->
+	<select id="resourceCateMg" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT prod_cate_idx, prod_cate_name, prod_life FROM product_category
+	</select>
+
+	<!-- 카테고리 검색 -->
+	<select id="categroySearch" resultType="map">
+		SELECT prod_cate_idx,prod_cate_name FROM product_category 
+			WHERE prod_cate_name LIKE CONCAT('%', #{param1}, '%')
+		 
+	</select>
+
+	<!-- 총 페이지 -->
+	<select id="allCount" resultType="int">
+		SELECT CEIL(COUNT(prod_idx)/#{param1}) AS pages 
+		FROM 
+			product
+		WHERE  
+    		prod_state=1
+	</select>
+
+	<!-- 물품 목록 가져오기 --><!-- 페이징 포함 -->
+	<select id="resourceList" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			pd.prod_idx,
+			pd.prod_name, 
+			pd.prod_cate_idx, 
+			pd.prod_model,
+			pd.prod_info,
+			pd.prod_rent, 
+			pd.prod_empl_idx, 
+			pd.prod_dispo_date, 
+			pd.prod_state,
+			pc.prod_cate_name,
+			pr.prod_exp_date
+		FROM 
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		LEFT JOIN 
+			(
+        		SELECT 
+            		pr.prod_idx,
+            		pr.prod_exp_date,
+            		pr.prod_rent_idx
+        		FROM 
+            		product_rent pr
+        		WHERE 
+            		pr.prod_rent_idx = (
+                		SELECT MAX(prod_rent_idx) 
+                		FROM product_rent 
+                		WHERE prod_idx = pr.prod_idx
+            		)
+    		) pr ON pr.prod_idx = pd.prod_idx
+    	WHERE
+    		pd.prod_state=1
+		ORDER BY prod_idx DESC 
+			LIMIT #{param1} OFFSET #{param2}		
+	</select>
+
+
+	<!-- 카테고리별 총 페이지 -->
+	<select id="filterListCount" resultType="int">
+		SELECT CEIL(COUNT(prod_idx)/#{param1}) AS pages 
+		FROM 
+			product 
+		WHERE 
+			prod_cate_idx=#{param2}
+		AND 
+    		prod_state=1
+	</select>
+
+	<!--카테고리별 물품 목록 가져오기 --><!-- 페이징 포함 -->
+	<select id="resourceFilterList" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			pd.prod_idx,
+			pd.prod_name, 
+			pd.prod_cate_idx, 
+			pd.prod_model,
+			pd.prod_info,
+			pd.prod_rent, 
+			pd.prod_empl_idx, 
+			pd.prod_dispo_date, 
+			pd.prod_state,
+			pc.prod_cate_name,
+			pr.prod_exp_date
+		FROM 
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		LEFT JOIN 
+			(
+        		SELECT 
+            		pr.prod_idx,
+            		pr.prod_exp_date,
+            		pr.prod_rent_idx
+        		FROM 
+            		product_rent pr
+        		WHERE 
+            		pr.prod_rent_idx = (
+                		SELECT MAX(prod_rent_idx) 
+                		FROM product_rent 
+                		WHERE prod_idx = pr.prod_idx
+            		)
+    		) pr ON pr.prod_idx = pd.prod_idx
+		WHERE 
+			pd.prod_cate_idx=#{param1}
+		AND 
+    		pd.prod_state=1
+		ORDER BY prod_idx DESC 
+			LIMIT #{param2} OFFSET #{param3}		
+	</select>
+
+
+
+	<!-- 카테고리 & 검색어 총 페이지 -->
+	<select id="allSearchCount" 
+		parameterType="map" 
+		resultType="int">
+		SELECT CEIL(COUNT(prod_idx)/#{cnt}) AS pages 
+		FROM 
+			product 
+		WHERE 
+			#{option} LIKE CONCAT('%', #{keyword}, '%')
+		AND 
+    		prod_state=#{prod_state}
+	</select>
+
+	<!--카테고리 & 검색어 물품 목록 가져오기 --><!-- 페이징 포함 -->
+	<select id="resourceSearchList" 
+		parameterType="map" 
+		resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			pd.prod_idx,
+			pd.prod_name, 
+			pd.prod_cate_idx, 
+			pd.prod_model,
+			pd.prod_info,
+			pd.prod_rent, 
+			pd.prod_empl_idx, 
+			pd.prod_dispo_date, 
+			pd.prod_state,
+			pc.prod_cate_name,
+			pr.prod_exp_date
+		FROM 
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		LEFT JOIN 
+						(
+        		SELECT 
+            		pr.prod_idx,
+            		pr.prod_exp_date,
+            		pr.prod_rent_idx
+        		FROM 
+            		product_rent pr
+        		WHERE 
+            		pr.prod_rent_idx = (
+                		SELECT MAX(prod_rent_idx) 
+                		FROM product_rent 
+                		WHERE prod_idx = pr.prod_idx
+            		)
+    		) pr ON pr.prod_idx = pd.prod_idx
+		WHERE 
+		<choose>
+        	<when test="option == 'prod_name'">
+            	pd.prod_name LIKE CONCAT('%', #{keyword}, '%')
+        	</when>
+        	<when test="option == 'prod_info'">
+            	pd.prod_info LIKE CONCAT('%', #{keyword}, '%')
+        	</when>
+        	<otherwise>
+            	1 = 1 <!-- 조건이 없으면 모든 데이터를 반환 -->
+        	</otherwise>
+    	</choose>
+    	AND 
+    		pd.prod_state=#{prod_state}
+		ORDER BY prod_idx DESC 
+			LIMIT #{limit} OFFSET #{offset}		
+	</select>
+
+
+	<!-- 카테고리선택 & 검색어 총 페이지 -->
+	<select id="filterSearchCount" 
+		parameterType="map" 
+		resultType="int">
+		SELECT CEIL(COUNT(prod_idx)/#{cnt}) AS pages 
+		FROM 
+			product 
+		WHERE 
+			#{option} LIKE CONCAT('%', #{keyword}, '%')
+		AND 
+			prod_cate_idx=#{category}
+		AND 
+    		prod_state=#{prod_state}
+	</select>
+
+	<!--카테고리선택 & 검색어 물품 목록 가져오기 --><!-- 페이징 포함 -->
+	<select id="filterSearchList" 
+		parameterType="map" 
+		resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			pd.prod_idx,
+			pd.prod_name, 
+			pd.prod_cate_idx, 
+			pd.prod_model,
+			pd.prod_info,
+			pd.prod_rent, 
+			pd.prod_empl_idx, 
+			pd.prod_dispo_date, 
+			pd.prod_state,
+			pc.prod_cate_name,
+			pr.prod_exp_date
+		FROM 
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		LEFT JOIN 
+						(
+        		SELECT 
+            		pr.prod_idx,
+            		pr.prod_exp_date,
+            		pr.prod_rent_idx
+        		FROM 
+            		product_rent pr
+        		WHERE 
+            		pr.prod_rent_idx = (
+                		SELECT MAX(prod_rent_idx) 
+                		FROM product_rent 
+                		WHERE prod_idx = pr.prod_idx
+            		)
+    		) pr ON pr.prod_idx = pd.prod_idx
+		WHERE 
+		<choose>
+        	<when test="option == 'prod_name'">
+            	pd.prod_name LIKE CONCAT('%', #{keyword}, '%')
+        	</when>
+        	<when test="option == 'prod_info'">
+            	pd.prod_info LIKE CONCAT('%', #{keyword}, '%')
+        	</when>
+        	<otherwise>
+            	1 = 1 <!-- 조건이 없으면 모든 데이터를 반환 -->
+        	</otherwise>
+    	</choose>
+    	AND 
+    		pd.prod_cate_idx=#{category}
+    	AND 
+    		pd.prod_state=#{prod_state}
+		ORDER BY prod_idx DESC 
+			LIMIT #{limit} OFFSET #{offset}		
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
