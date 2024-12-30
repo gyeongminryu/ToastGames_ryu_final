@@ -61,6 +61,8 @@ function approval_write_current_date(){
 
     // 작성 일자 - <form>에 넣기
     $('#hidden_doc_date').val(doc_date);
+
+
 }
 
 //ajax로 formData 값 보내서 저장하는 것

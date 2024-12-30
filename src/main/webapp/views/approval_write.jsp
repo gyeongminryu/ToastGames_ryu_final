@@ -25,7 +25,7 @@
   <table>
     <tr>
       <td>결재 마감일</td>
-      <td><input type="datetime-local" name="doc_end_date"/></td>
+      <td><input type="datetime-local" name="doc_end_date" id="doc_end_date"/></td>
     </tr>
 
     <tr>

@@ -79,7 +79,8 @@
         <if test="doc_content!=''">doc_content,</if>
         <if test="doc_content_sub!=''">doc_content_sub,</if>
         <if test="form_idx!=''">form_idx,</if>
-        <if test="doc_subject!=''">doc_subject</if>
+        <if test="doc_subject!=''">doc_subject,</if>
+        <if test="doc_end_date!=''">doc_end_date</if>
         FROM document WHERE doc_idx = #{doc_idx}
     </select>
 
@@ -89,14 +90,16 @@
     </select>
 
 
-    <select id="doc_dept_idx" resultType="int">
-        SELECT a.dept_idx from employee e join appointment a on e.appolast_idx = a.appo_idx
-        WHERE a.appo_empl_idx = #{empl_idx};
+    <select id="doc_dept_info" resultType="Map">
+        SELECT a.dept_idx,d.dept_name from employee e
+             join appointment a on e.appolast_idx = a.appo_idx
+             join department d on d.dept_idx = a.dept_idx
+        WHERE a.appo_empl_idx = ${empl_idx};
     </select>
 
 
     <!--저장한 결재라인 가져오기-->
-    <select id="doc_line_get" resultType="Map">
+    <select id="doc_appr_line_get" resultType="Map">
       SELECT dp.dept_idx,dp.dept_name,al.line_order,e.empl_idx,e.empl_name,a.duty_idx,d.duty_name,a.position_idx,p.position_name FROM employee e
             JOIN appointment a on e.appolast_idx = a.appo_idx
             JOIN approval_line al on al.empl_idx = e.empl_idx
@@ -104,6 +107,16 @@
            JOIN position_ p on p.position_idx  =  a.position_idx
            JOIN department dp on a.dept_idx = dp.dept_idx
         WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <select id="doc_refer_line_get" resultType="Map">
+        SELECT DISTINCT (a.appo_idx), e.empl_name,e.empl_idx, dp.dept_name,d.duty_name,p.position_name FROM reference r
+           join employee e on e.empl_idx = r.ref_empl_idx
+           join appointment a on a.appo_idx  = e.appolast_idx
+           join department dp on a.dept_idx = dp.dept_idx
+           join duty d on d.duty_idx = a.duty_idx
+           join position_ p on p.position_idx = a.position_idx
+        WHERE ref_doc_idx = ${doc_idx};
     </select>
 
 
@@ -233,6 +246,16 @@
     <update id="update_approval_doc_state">
         UPDATE document SET doc_state = 1 WHERE doc_idx = #{doc_idx}
     </update>
+
+
+    <!--인사 발령되었는지 확인-->
+    <!--empl_idx의 사원의 정보 알아내기-->
+    <select id="get_empl_info" resultType="Map">
+        SELECT e.empl_idx,a.dept_idx,a.position_idx,a.dept_idx,a.duty_idx from employee e
+        join appointment a on e.appolast_idx = a.appo_idx
+        WHERE e.empl_idx = #{empl_idx}
+    </select>
+
 
 
 </mapper>

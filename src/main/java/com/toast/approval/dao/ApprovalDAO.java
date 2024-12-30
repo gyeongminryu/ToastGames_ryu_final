@@ -25,7 +25,7 @@ public interface ApprovalDAO {
 
     List<Map<String, Object>> team_allempl(int team_idx);
 
-    int request_empl_count(int empl_idx);
+    int empl_count(int empl_idx, int doc_state);
     int receiver_empl_count(int empl_idx);
 
 
@@ -42,6 +42,8 @@ public interface ApprovalDAO {
 
     int get_read_date(int sent_doc_idx);
 
+    List<Map<String, Object>> get_writing_list(int r_empl_idx);
 
-    List<String> get_received_doc_idxs(int r_empl_idx);
+    List<Map<String, Object>> get_received_list(int r_empl_idx);
+
 }
