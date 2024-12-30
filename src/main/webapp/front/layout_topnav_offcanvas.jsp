@@ -9,7 +9,7 @@
             <i class="bi bi-dash-circle-dotted" onclick="tst_close_alertlist()"></i>
         </div>
         <div class="tst_modal_body">
-            <p onclick="<!-- 모든 알림을 삭제하는 함수를 입력하세요 -->" class="font_caution tst_pointer">모든 알림 삭제하기</p>
+            <p onclick="tst_modal_call('tst_modal_delete_all')" class="font_caution tst_pointer">모든 알림 삭제하기</p>
             <ul class="tst_list list_no_desc list_block">
 
                 <!-- 회의 일정 안내 -->
@@ -147,3 +147,35 @@
     <div class="tst_modal_backdrop" onclick="tst_close_alertlist()"></div>
 </div>
 <!-- //알림 목록 -->
+
+<!-- 알림 전체 삭제 -->
+<div class="tst_modal tst_modal_alert tst_modal_delete_all">
+    <div class="tst_modal_container">
+        <div class="tst_modal_header">
+            <h1 class="tst_modal_title">알림 삭제하기</h1>
+            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_delete_all')"></i>
+        </div>
+        <div class="tst_modal_body">
+            <ul class="tst_list list_no_desc list_block">
+                <li>
+                    <p>모든 알림을 삭제하시겠습니까?</p>
+                </li>
+                <li>
+                    <hr class="separator" />
+                </li>
+            </ul>
+        </div>
+        <div class="tst_modal_footer">
+            <div class="tst_flex">
+                <div class="tst_col6">
+                    <button onclick="<!-- 모든 알림을 삭제하는 함수를 입력하세요 -->" class="btn_primary btn_full">모든 알림 삭제하기</button>
+                </div>
+                <div class="tst_col6">
+                    <button onclick="tst_modal_close('tst_modal_delete_all')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_delete_all')"></div>
+</div>
+<!-- //인계하기 -->
