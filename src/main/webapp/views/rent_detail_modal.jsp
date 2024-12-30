@@ -8,21 +8,21 @@
             <h1 class="tst_modal_title">물품 대여 신청하기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_detail')"></i>
         </div>
-        <form>
+        <form action="/rentRequest.do" method="post">
             <div class="tst_modal_body">
                 <ul class="list_no_desc list_block">
                     <li>
                         <p class="min font_subtle">신청할 물품</p>
-                        <h3>{물품명}</h3>
-                        <input type="hidden" name="name" value="{물품명}" />
+                        <h3>${detail.prod_name}</h3>
+                        <input type="hidden" name="prod_idx" value="${detail.prod_idx}" />
                     </li>
                     <li>
                         <label class="form_label">반납 예정일</label>
-                        <input type="date" name="return" />
+                        <input type="date" name="prod_exp_date" />
                     </li>
                     <li>
                         <label class="form_label">대여 사유</label>
-                        <textarea rows="5" maxlength="1000"></textarea>
+                        <textarea rows="5" maxlength="1000" name="prod_rent_reason"></textarea>
                     </li>
                 </ul>
             </div>
@@ -40,4 +40,4 @@
     </div>
     <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_detail')"></div>
 </div>
-<script src="resources/js/module_modal.js"></script>
+<script src="resources/js/rent_detail_module_modal.js"></script>

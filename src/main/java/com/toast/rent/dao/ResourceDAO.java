@@ -13,6 +13,8 @@ public interface ResourceDAO {
 	
 	//List<ResourceDTO> resourceList();
 
+	//사원정보 가져오기
+	int getEmpl(String loginId);
 	
 	//카테고리 목록 가져오기
 	List<ResourceDTO> resourceCate();
@@ -46,6 +48,18 @@ public interface ResourceDAO {
 	
 	//물품 상세보기
 	ResourceDTO prodDetail(int prod_idx);
+
+	//물품 대여상태 보기
+	ResourceDTO prodRentDetail(int prod_idx);
+
+	//물품 대여 신청
+	int rentRequest(ResourceDTO dto);
+
+	//물품 대여 상태 업뎃
+	int updateRentState(ResourceDTO dto);
+
+	
+
 	
 
 

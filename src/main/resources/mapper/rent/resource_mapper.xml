@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.toast.rent.dao.ResourceDAO">
+
+
+
+	<!-- 사원정보 가져오기 -->
+	<select id="getEmpl">
+		SELECT empl_idx FROM employee WHERE empl_id=#{param1}
+	</select>
 	
 	<!-- 카테고리 목록 가져오기 -->
 	<select id="resourceCate" resultType="com.toast.rent.dto.ResourceDTO">
@@ -250,10 +257,18 @@
 	<!-- 물품 상세보기 --> <!-- 대여정보도 봐야함 -->
 	<select id="prodDetail" resultType="com.toast.rent.dto.ResourceDTO">
 		SELECT 
+		    prod_idx,
+		    prod_name,
+		    prod_model,
+		    prod_info
+		FROM 
+		    product
+		WHERE prod_idx = #{prod_idx} AND prod_state = 1
+	</select>
+
+	<select id="prodRentDetail" resultType="com.toast.rent.dto.ResourceDTO">
+		SELECT 
 		    pd.prod_idx,
-		    pd.prod_name,
-		    pd.prod_model,
-		    pd.prod_info,
 		    pd.prod_rent,
 		    pd.prod_place,
 		    pr.prod_exp_date,
@@ -273,7 +288,7 @@
 		    ) latest_rent 
 		    ON pr.prod_idx = latest_rent.prod_idx 
 		    AND pr.prod_rent_idx = latest_rent.max_rent_idx
-		WHERE pd.prod_idx = #{prod_idx}
+		WHERE pd.prod_idx = #{prod_idx} AND pd.prod_state=1
 	</select>
 
 	<!-- 물품 상세보기 첨부파일, 이미지 -->
@@ -281,10 +296,17 @@
 
 
 
+	<!-- 물품 대여신청 -->
+	<insert id="rentRequest" parameterType="com.toast.rent.dto.ResourceDTO">
+		INSERT INTO product_rent(prod_idx,prod_rent_empl_idx, prod_rent_reason, prod_rent_date, prod_exp_date)
+			VALUES(#{prod_idx}, #{prod_rent_empl_idx}, #{prod_rent_reason}, #{prod_rent_date}, #{prod_exp_date})
+	</insert>
 
 
-
-
+	<!-- 물품 대여 상태 업뎃 -->
+	<update id="updateRentState" parameterType="com.toast.rent.dto.ResourceDTO">
+		UPDATE product SET prod_rent=#{prod_rent} WHERE prod_idx=#{prod_idx}
+	</update>
 
 
 
