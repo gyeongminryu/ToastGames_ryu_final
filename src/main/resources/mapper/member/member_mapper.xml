@@ -5,155 +5,180 @@
 
 	<!-- 테스트용 로그인!!! 나중에 삭제 예정!!! -->
 	<select id="getUserByIdx" parameterType="int" resultType="map">
-		SELECT *
+		SELECT
+		*
 		FROM employee
 		WHERE empl_idx = #{idx}
 	</select>
-	
-	<select id="isValidId" parameterType="String" resultType="boolean">
-		SELECT COUNT(*) 
-		FROM employee 
+
+	<select id="isValidId" parameterType="String"
+		resultType="boolean">
+		SELECT COUNT(*)
+		FROM employee
 		WHERE empl_id = #{id}
 	</select>
 
-	<select id="login" parameterType="String" resultType="String"> 
-		SELECT empl_pw 
-		FROM employee 
-		WHERE empl_id = #{id} 
+	<select id="login" parameterType="String" resultType="String">
+		SELECT empl_pw
+		FROM employee
+		WHERE empl_id = #{id}
 	</select>
 
 	<!-- 로그인할 때, DB에서 changepw가 0인지 1인지 구분하기 위함. -->
-	<select id="changePwCheck" parameterType="String"> 
+	<select id="changePwCheck" parameterType="String">
 		SELECT empl_changepw
-		FROM employee 
+		FROM employee
 		WHERE empl_id = #{id}
 	</select>
-	
-	<select id="isValidName" parameterType="String" resultType="boolean">
-		SELECT COUNT(*) 
-		FROM employee 
+
+	<select id="isValidName" parameterType="String"
+		resultType="boolean">
+		SELECT COUNT(*)
+		FROM employee
 		WHERE empl_name = #{name}
 	</select>
 
 	<!-- 아이디 찾기: 이름과 이메일로 조회 -->
-	<select id="findId" parameterType="map" resultType="String"> 
-		SELECT empl_id 
-		FROM employee 
-		WHERE empl_name = #{name} AND empl_per_email = #{email} 
-	</select>	
-	
+	<select id="findId" parameterType="map" resultType="String">
+		SELECT empl_id
+		FROM employee
+		WHERE empl_name = #{name} AND empl_per_email = #{email}
+	</select>
+
 	<!-- 비밀번호 찾기: 아이디와 이메일로 조회 + name도 프론트에 보여주기 위해 같이 가져온다!! -->
-	<select id="findPw" parameterType="map" resultType="map"> 
+	<select id="findPw" parameterType="map" resultType="map">
 		SELECT empl_name, empl_per_email
-		FROM employee WHERE empl_id = #{id} AND empl_per_email = #{email} 
+		FROM employee WHERE empl_id = #{id} AND
+		empl_per_email = #{email}
 	</select>
-	
+
 	<!-- 비밀번호 업데이트: 사용자(이메일)의 비밀번호를 자동 업데이트 -->
-	<update id="UpdatePw" parameterType="map"> 
-		UPDATE employee 
-		SET empl_pw = #{encryptPw} 
-		WHERE empl_id = #{id} 
+	<update id="UpdatePw" parameterType="map">
+		UPDATE employee
+		SET empl_pw = #{encryptPw}
+		WHERE empl_id = #{id}
 	</update>
-	
+
 	<!-- myPage 멤버정보 가져오기 -->
-	<select id="memberInfo" parameterType="String" resultType="com.toast.member.dto.MemberDTO">
-		SELECT e.empl_idx, e.empl_name, e.empl_id, e.empl_pw,
-		e.empl_gender, e.empl_birth, e.empl_ssn1, e.empl_ssn2, e.empl_account,
-		e.empl_cmp_email, e.empl_cmp_phone, e.empl_per_email, e.empl_per_phone,
-		e.empl_addr, e.empl_emp_state, DATE_FORMAT(e.empl_join_date, '%Y-%m-%d') AS empl_join_date, e.empl_resig_date,
-		e.empl_stamp, e.empl_profile, e.bank_idx, e.empl_changepw,
-		e.file_key,
-		a.dept_idx, a.position_idx, a.duty_idx, 
-		p.position_name, dt.duty_name, d.dept_name 
+	<select id="memberInfo" parameterType="String" resultType="com.toast.member.dto.MemberDTO"> 
+		SELECT e.empl_idx, e.empl_name, e.empl_id, e.empl_pw, 
+		CASE
+			WHEN e.empl_gender = 0 THEN '남자' 
+			WHEN e.empl_gender = 1 THEN '여자' 
+			ELSE '알 수 없음' END AS empl_gender, 
+		CASE WHEN e.bank_idx = 1 THEN '농협' 
+			WHEN e.bank_idx = 2 THEN '수협' 
+			WHEN e.bank_idx = 3 THEN '국민' 
+			WHEN e.bank_idx = 4 THEN '우리' 
+			WHEN e.bank_idx = 5 THEN '신한' 
+			WHEN e.bank_idx = 6 THEN 'KEB하나' 
+			WHEN e.bank_idx = 7 THEN '기업' 
+			ELSE '알 수 없음' END AS bank_name,
+		e.empl_birth, e.empl_ssn1, e.empl_ssn2, e.empl_account, e.empl_cmp_email, e.empl_cmp_phone, e.empl_per_email, e.empl_per_phone, e.empl_addr, e.empl_emp_state,
+		DATE_FORMAT(e.empl_join_date, '%Y-%m-%d') AS empl_join_date,
+		e.empl_resig_date, e.empl_stamp, e.empl_profile, e.empl_changepw,
+		e.file_key, a.dept_idx, a.position_idx, a.duty_idx, p.position_name, dt.duty_name, d.dept_name 
 		FROM employee e 
-		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
-		JOIN department d ON a.dept_idx = d.dept_idx
-		JOIN position_ p ON a.position_idx = p.position_idx
-		JOIN duty dt ON a.duty_idx = dt.duty_idx
-		WHERE e.empl_id = #{id}
+		JOIN appointment a ON e.empl_idx = a.appo_empl_idx 
+		JOIN department d ON a.dept_idx = d.dept_idx 
+		JOIN position_ p ON a.position_idx = p.position_idx 
+		JOIN duty dt ON a.duty_idx = dt.duty_idx 
+		WHERE e.empl_id = #{id} 
 	</select>
-	
-	<select id="getFileList" parameterType="map" resultType="com.toast.member.dto.FileDTO">
-		SELECT f.file_idx, f.file_key, f.uploader_idx, f.ori_filename, f.new_filename, f.file_type, f.file_addr
+
+	<select id="getFileList" parameterType="map"
+		resultType="com.toast.member.dto.FileDTO">
+		SELECT f.file_idx, f.file_key, f.uploader_idx,
+		f.ori_filename, f.new_filename, f.file_type, f.file_addr
 		FROM file f
 		JOIN employee e ON f.uploader_idx = e.empl_idx
-		WHERE e.empl_id = #{id} AND f.file_key = #{file_key}
+		WHERE e.empl_id = #{id}
+		AND f.file_key = #{file_key}
 	</select>
-	
+
 	<select id="originalFileName" parameterType="String">
 		SELECT ori_filename
 		FROM file
 		WHERE new_filename = #{filename}
 	</select>
-	 	
+
 	<select id="employmentHistory" resultType="map">
-		SELECT 
-			ROW_NUMBER() OVER (ORDER BY a.appo_idx ASC) AS appo_idx,
-			a.dept_idx, a.position_idx, a.duty_idx, a.appo_idx,
-			IFNULL(a.empl_job,'아직 직무가 없습니다.') AS empl_job,
-			DATE_FORMAT(a.movein_date, '%Y-%m-%d %H:%i') AS movein_date, 
-           	IFNULL(DATE_FORMAT(a.transfer_date, '%Y-%m-%d %H:%i'), '진행중') AS transfer_date,
-			p.position_name, dt.duty_name, d.dept_name 
+		SELECT
+		ROW_NUMBER() OVER (ORDER BY a.appo_idx ASC) AS appo_idx,
+		a.dept_idx, a.position_idx, a.duty_idx, a.appo_idx,
+		IFNULL(a.empl_job,'아직 직무가 없습니다.') AS empl_job,
+		DATE_FORMAT(a.movein_date, '%Y-%m-%d %H:%i') AS movein_date,
+		IFNULL(DATE_FORMAT(a.transfer_date, '%Y-%m-%d %H:%i'), '진행중') AS transfer_date,
+		p.position_name, dt.duty_name, d.dept_name
 		FROM appointment a
 		JOIN employee e ON a.appo_empl_idx = e.empl_idx
-		JOIN department d ON a.dept_idx = d.dept_idx
-		JOIN position_ p ON a.position_idx = p.position_idx
-		JOIN duty dt ON a.duty_idx = dt.duty_idx  
-	    WHERE e.empl_id = #{id} 
-	    ORDER BY a.appo_idx DESC 
-	    LIMIT #{limit} OFFSET #{offset}  
+		JOIN
+		department d ON a.dept_idx = d.dept_idx
+		JOIN position_ p ON
+		a.position_idx = p.position_idx
+		JOIN duty dt ON a.duty_idx =
+		dt.duty_idx
+		WHERE e.empl_id = #{id}
+		ORDER BY a.appo_idx DESC
+		LIMIT #{limit} OFFSET #{offset}
 	</select>
 
 	<select id="countHistory" resultType="int">
-	    SELECT CEIL(COUNT(*) / #{cnt}) AS pages
-	    FROM appointment a
-	    JOIN employee e ON a.appo_empl_idx = e.empl_idx  
-	    WHERE e.empl_id = #{id}
-</select>
-	
+		SELECT CEIL(COUNT(*) / #{cnt}) AS pages
+		FROM appointment a
+		JOIN employee e ON a.appo_empl_idx = e.empl_idx
+		WHERE e.empl_id = #{id}
+	</select>
+
 	<!-- 비밀번호 업데이트 -->
 	<update id="changePw" parameterType="String">
-		UPDATE employee SET empl_pw = #{encryptPw}
-		WHERE empl_id = #{id} 
+		UPDATE employee SET empl_pw
+		= #{encryptPw}
+		WHERE empl_id = #{id}
 	</update>
-	
+
 	<!-- pw를 수정하고 난 뒤, changepw를 1로 바꾼다. -->
-	<update id="changedPw" parameterType="String"> 
-		UPDATE employee 
-		SET empl_changepw = 1 
-		WHERE empl_id = #{id} 
+	<update id="changedPw" parameterType="String">
+		UPDATE employee
+		SET empl_changepw = 1
+		WHERE empl_id = #{id}
 	</update>
-	
+
 	<!-- 이메일, 연락처, 이름, 주소를 수정할 수 있어야 한다. + 은행 idx, 계좌 -->
-	<update id="mypageUpdate" parameterType="com.toast.member.dto.MemberDTO">
+	<update id="mypageUpdate"
+		parameterType="com.toast.member.dto.MemberDTO">
 		UPDATE employee
 		<set>
-			<if test="empl_name != null">empl_name = #{empl_name},</if>
-			<if test="bank_idx != null">bank_idx = #{bank_idx},</if>
-			<if test="empl_account != null">empl_account = #{empl_account},</if>
-			<if test="empl_per_email != null">empl_per_email = #{empl_per_email},</if>
+			<if test="empl_per_phone != null">empl_cmp_phone = #{empl_cmp_phone},</if>
 			<if test="empl_per_phone != null">empl_per_phone = #{empl_per_phone},</if>
+			<if test="empl_per_email != null">empl_per_email = #{empl_per_email},</if>
 			<if test="empl_addr != null">empl_addr = #{empl_addr},</if>
 			<if test="empl_profile != null">empl_profile = #{empl_profile},</if>
 		</set>
-		WHERE empl_id = #{empl_id}		
+		WHERE empl_id = #{empl_id}
 	</update>
-	
-	<select id="getUploaderIdx" parameterType="String" resultType="map">
+
+	<select id="getUploaderIdx" parameterType="String"
+		resultType="map">
 		SELECT empl_idx, file_key
 		FROM employee
 		WHERE empl_id = #{id}
 	</select>
-	
-	<insert id="fileUpload" parameterType="com.toast.member.dto.FileDTO">
-		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
-			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr})
+
+	<insert id="fileUpload"
+		parameterType="com.toast.member.dto.FileDTO">
+		INSERT INTO file(file_key, uploader_idx, ori_filename,
+		new_filename, file_type, file_addr)
+		VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type},
+		#{file_addr})
 	</insert>
-	
-	<select id="getUploadedFiles" parameterType="map" resultType="com.toast.member.dto.FileDTO">
-		SELECT file_key, ori_filename, new_filename, file_type, file_addr
-	    FROM file
-	    WHERE uploader_idx = #{empl_idx} AND file_key = #{file_key}
+
+	<select id="getUploadedFiles" parameterType="map"
+		resultType="com.toast.member.dto.FileDTO">
+		SELECT file_key, ori_filename, new_filename, file_type,
+		file_addr
+		FROM file
+		WHERE uploader_idx = #{empl_idx} AND file_key = #{file_key}
 	</select>
-	
+
 </mapper>

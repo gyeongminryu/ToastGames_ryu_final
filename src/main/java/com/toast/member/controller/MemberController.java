@@ -223,7 +223,7 @@ public class MemberController {
 	}
 
 	// 마이페이지(수정) 이동
-	@GetMapping(value = "/mypageUpdate.go")
+	@GetMapping(value = "/mypage_update.go")
 	public String myPageUpdateForm(Model model, HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
 		List<MemberDTO> memberInfo = memberService.memberInfo(id);

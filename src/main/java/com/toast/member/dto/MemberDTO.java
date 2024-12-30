@@ -5,7 +5,7 @@ public class MemberDTO {
 	private int empl_idx;
 	private String empl_name; 
 	private String empl_id;
-	private int empl_gender;
+	private String empl_gender;
 	private String empl_birth;
 	private String empl_ssn1;
 	private String empl_ssn2;
@@ -21,7 +21,7 @@ public class MemberDTO {
 	private String empl_job;
 	private String empl_stamp;
 	private String empl_profile; 
-	private int bank_idx;
+	private String bank_idx;
 	private int empl_changepw;
 	private String file_key;
 	private int dept_idx;
@@ -107,10 +107,10 @@ public class MemberDTO {
 	public void setEmpl_id(String empl_id) {
 		this.empl_id = empl_id;
 	}
-	public int getEmpl_gender() {
+	public String getEmpl_gender() {
 		return empl_gender;
 	}
-	public void setEmpl_gender(int empl_gender) {
+	public void setEmpl_gender(String empl_gender) {
 		this.empl_gender = empl_gender;
 	}
 	public String getEmpl_birth() {
@@ -203,10 +203,10 @@ public class MemberDTO {
 	public void setEmpl_profile(String empl_profile) {
 		this.empl_profile = empl_profile;
 	}
-	public int getBank_idx() {
+	public String getBank_idx() {
 		return bank_idx;
 	}
-	public void setBank_idx(int bank_idx) {
+	public void setBank_idx(String bank_idx) {
 		this.bank_idx = bank_idx;
 	}
 	public int getEmpl_changepw() {
