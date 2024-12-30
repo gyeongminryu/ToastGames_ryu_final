@@ -23,11 +23,11 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_list.go'">
-                        <h1>공용 물품 대여</h1>
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_rent_list.go'">
+                        <h1>공용 물품 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/rent_mylist'">
-                        <h1>내가 대여한 물품</h1>
+                    <li class="tst_title_item" onclick="location.href='/manage_dispose_list.go'">
+                        <h1>폐기 물품 확인</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->
@@ -48,8 +48,16 @@
                         </form>
                         <!-- //분류 검색 -->
 
+                        <!-- 제품 등록 버튼 -->
+                        <div>
+                            <button onclick="location.href='/manage_rent_write.go'" class="btn_full btn_primary">제품 등록하기</button>
+                        </div>
+                        <!-- //제품 등록 버튼 -->
+
+                        <hr class="separator" />
+
                         <table class="tst_table table_align_left">
-                            <tbody class="tst_pointer" id="category_table_tbody">
+                            <tbody class="tst_pointer">
 
                             <!-- 전체 제품 조회 (필터링 초기화) -->
                             <tr><th><span onclick="pageCall(1, 'all')">전체 보기</span></th></tr>
@@ -67,48 +75,36 @@
                     </div>
 
                     <div class="tst_col10">
-
-                        <div class="tst_flex">
-                            <div class="tst_col8">
-
-                                <!-- 물품 검색 -->
-                                <form onsubmit="return resource_search(event);">
-                                    <div class="tst_search_container">
-                                        <div class="tst_search_select">
-                                            <select id="tst_search_select_category">
-                                                <option value="prod_name">제품명</option>
-                                                <option value="prod_info">제품정보</option>
-                                            </select>
-                                        </div>
-                                        <div class="tst_search_input">
-                                            <input type="text" id="search_keyword" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
-                                        </div>
-                                        <div class="tst_search_icon">
-                                            <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <!-- //물품 검색 -->
-
-                            </div>
-                            <div class="tst_col4">
-
-                                <!-- 대여 가능한 제품 필터링 -->
-                                <!-- 필터링할 때 사용하는 JS 코드는 [rent_list.js]에 작성하세요 -->
-                                <div class="tst_filtering_container tst_pointer">
-                                    <div class="tst_filtering_off" onclick="rent_available_filtering_on(this)">
-                                        <i class="bi bi-toggle-off"></i>
-                                        <span>대여 가능한 제품만 보기</span>
-                                    </div>
-                                    <div class="tst_filtering_on disp_hide" onclick="rent_available_filtering_off(this)">
-                                        <i class="bi bi-toggle-on"></i>
-                                        <span>대여 가능한 제품만 보기</span>
-                                    </div>
-                                </div>
-                                <!-- //대여 가능한 제품 필터링 -->
-
-                            </div>
+                        <!-- 물품 검색 -->
+                       <div class="tst_search_select">
+                       		<select id="tst_search_select_state" name="rent_state" onchange="<!-- 물품 상태가 바뀌었을 경우 작동할 함수를 입력하세요 -->" class="btn_secondary">
+                            	<option value="all">대여 상태</option>
+                                <option value="1">대여 가능</option>
+                                <option value="2">대여 신청중</option>
+                                <option value="3">대여중</option>
+                                <option value="4">연체</option>
+                                <option value="0">대여 불가</option>
+                             </select>
                         </div>
+                        
+                        <form>
+                            <div class="tst_search_container">
+                                <div class="tst_search_select">
+                                    <select id="tst_search_select_category" name="category">
+                                    	<option value="prod_name">제품명</option>
+                                        <option value="prod_info">제품정보</option>
+                                    </select>
+                                </div>
+                                <div class="tst_search_input">
+                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                </div>
+                                <div class="tst_search_icon">
+                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- //물품 검색 -->
+
                         <table class="tst_table">
                             <colgroup>
                                 <col style="width: 60px;" />
@@ -128,8 +124,8 @@
                                 <th>반납 예정 일시</th>
                             </tr>
                             </thead>
-                            <tbody id="resource_list">
-								<!-- 물품 목록 표시구역 -->
+                            <tbody id="resource_manage_list">
+							<!-- 물품 목록 표시구역 -->
 							</tbody>
 
                             <!-- pagination -->
@@ -143,14 +139,13 @@
                                         <li class="page-item prev disabled">
                                             <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
                                         </li>
-
                                         <li class="page-item next">
                                             <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
                                         </li>
                                         <li class="page-item last">
                                             <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-                                        </li> -->
-                                    </ul>
+                                        </li>-->
+                                    </ul> 
                                 </td>
                             </tr>
                             </tfoot>
@@ -165,5 +160,4 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
-<script src="resources/js/rent_list.js"></script>
 </html>
