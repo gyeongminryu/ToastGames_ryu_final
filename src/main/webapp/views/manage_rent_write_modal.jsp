@@ -38,4 +38,4 @@
 </div>
 <!-- //작성하기 -->
 
-<script src="resources/js/module_modal.js"></script>
+<script src="resources/js/manage_rent_write_modal.js"></script>
