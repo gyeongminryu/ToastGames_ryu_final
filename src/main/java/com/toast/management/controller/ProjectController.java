@@ -31,7 +31,7 @@ public class ProjectController {
 	@GetMapping(value="/project_team_list.go")
 	public String projectTeamListGo() {
 		
-		return "projectTeam_list";
+		return "project_team_list";
 	}
 	
 	
@@ -49,6 +49,10 @@ public class ProjectController {
 	}
 	
 	
+	@GetMapping(value="/project_team_add.go")
+	public String projectTeamAddGO() {
+		return "project_team_add";
+	}
 	
 	
 	

@@ -270,5 +270,20 @@ public class EmployeeService {
 		
 		return employeeDAO.getEmployeeList();
 	}
+
+	public List<EmployeeDetailDTO> getStaffList(String dept_idx) {
+		
+		return employeeDAO.getStaffList(dept_idx);
+	}
+
+	public List<EmployeeDetailDTO> getFilteredStaffList(String dept_idx, String searchKey, String searchValue) {
+		
+		return employeeDAO.getFilteredStaffList(dept_idx, searchKey, searchValue);
+	}
+
+	public EmployeeDetailDTO getStaffDetail(String empl_idx) {
+		
+		return employeeDAO.getStaffDetail(empl_idx);
+	}
 	
 }
