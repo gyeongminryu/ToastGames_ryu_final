@@ -223,7 +223,7 @@
                                 <td>{발령일|yyyy-MM-dd}</td>
                                 <td>없음</td>
                                 <td><span class="tst_badge_min btn_secondary">팀 소속</span></td>
-                                <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call('tst_modal_delete', '{직원 번호}')"></i></td>
+                                <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call_param('tst_modal_delete', '{직원 번호}')"></i></td>
                             </tr>
                             <!-- //프로젝트 팀원 목록 > 팀원 > 팀 소속 -->
 
@@ -259,7 +259,7 @@
                                 <td>2020-01-02</td>
                                 <td>없음</td>
                                 <td><span class="tst_badge_min btn_secondary">팀 소속</span></td>
-                                <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call('tst_modal_delete', '124')"></i></td>
+                                <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call_param('tst_modal_delete', '124')"></i></td>
                             </tr>
                             <tr>
                                 <td>22</td>
@@ -269,7 +269,7 @@
                                 <td>2020-01-02</td>
                                 <td>없음</td>
                                 <td><span class="tst_badge_min btn_secondary">팀 소속</span></td>
-                                <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call('tst_modal_delete', '123')"></i></td>
+                                <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call_param('tst_modal_delete', '123')"></i></td>
                             </tr>
                             <tr class="font_subtle">
                                 <td>21</td>

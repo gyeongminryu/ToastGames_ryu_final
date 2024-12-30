@@ -31,19 +31,29 @@
                 </ul>
                 <!-- //제목 -->
 
-                <!-- 일정 종류 라디오-->
-                <fieldset id="schedule_category">
+                <!-- 일정 종류 필터링 -->
+                <select onchange="calendar_select_to_radiobtn(this)" class="meeting_room_select btn_primary">
+                    <option value="1" selected>개인 일정</option>
+                    <option value="2">부서 일정</option>
+                    <option value="3">프로젝트 일정</option>
+                    <option value="4">기타 일정</option>
+                </select>
+
+                <fieldset id="schedule_category" class="disp_hide">
                     <label id="schedule_category_name">
-                        <input type="radio" name="schedule_type_name" value="1" checked> 개인<br>
-                        <input type="radio" name="schedule_type_name" value="2"> 부서<br>
-                        <input type="radio" name="schedule_type_name" value="3"> 프로젝트<br>
-                        <input type="radio" name="schedule_type_name" value="4"> 기타<br>
+                        <input type="radio" name="schedule_type_name" value="1" checked><!-- 개인 -->
+                        <input type="radio" name="schedule_type_name" value="2"><!-- 부서 -->
+                        <input type="radio" name="schedule_type_name" value="3"><!-- 프로젝트 -->
+                        <input type="radio" name="schedule_type_name" value="4"><!-- 기타 -->
                     </label>
                 </fieldset>
+                <!-- //일정 종류 필터링 -->
 
-                <div id='calendar-container'>
-                    <div id='calendar'></div>
+                <!-- 달력 -->
+                <div id="calendar-container">
+                    <div id="calendar"></div>
                 </div>
+                <!-- //달력 -->
 
                 <!-- 기능 완성시 삭제해 주세요 -->
                 <ul class="list_no_desc list_no_desc list_inline">
@@ -53,6 +63,56 @@
                 </ul>
                 <!-- //기능 완성시 삭제해 주세요 -->
 
+
+
+
+                <!-- 입력/확인 모달 -->
+                <div id="schedule_event_modal" class="schedule_modal">
+                    <div class="schedule_modal_content">
+                        <span class="close" onclick="schedule_close_modal()">닫기</span>
+                        <form id="schedule_event_form">
+                            <h2 id="schedule_modal_title">일정 추가</h2>
+                            제목: <input type="text" id="schedule_title"><br>
+                            내용: <input type="text" id="schedule_content"><br>
+                            사원번호: <input type="text" id="schedule_empl_idx" value="${my_empl_idx}" readonly><br>
+                            <label for="schedule_start_time">시작 시간:</label>
+                            <input type="datetime-local" id="schedule_start_time"><br>
+
+                            <label for="schedule_end_time">종료 시간:</label>
+                            <input type="datetime-local" id="schedule_end_time"><br>
+                            <!-- 일정 종류 라디오 버튼 -->
+                            <label>일정 종류:</label><br>
+                            <input type="radio" name="schedule_type" value="1"> 개인<br>
+                            <input type="radio" name="schedule_type" value="2"> 부서<br>
+                            <input type="radio" name="schedule_type" value="3"> 프로젝트<br>
+                            <input type="radio" name="schedule_type" value="4"> 기타<br>
+                            <!-- 참여자 선택 -->
+                            <div>
+                                <select id="search_option">
+                                    <option value="name">이름</option>
+                                    <option value="dept">부서</option>
+                                </select>
+                                <input type="text" id="search_input" placeholder="이름 또는 부서를 검색하세요" onkeyup="search_parti()">
+                            </div>
+                            <fieldset id="participant_list">
+                                <c:forEach items="${partiList}" var="parti">
+                                    <div class="participant" data-name="${parti.empl_name}" data-dept="${parti.dept_name}">
+                                        <input type="checkbox" name="schedule_parti" value="${parti.empl_idx}" />
+                                        <span>
+                                                ${parti.empl_idx} ${parti.empl_name} ${parti.dept_name} ${parti.position_name} ${parti.duty_name}
+                                        </span>
+                                    </div>
+                                </c:forEach>
+                            </fieldset>
+                            <div id="schedule_modal_buttons"></div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+
+
             </div>
         </div>
     </div>
@@ -61,5 +121,6 @@
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/calendar_month.js"></script>
+<script src="resources/js/calendar_select_to_radiobtn.js"></script>
 <script src="resources/js/approval_send_modal.js"></script>
 </html>
