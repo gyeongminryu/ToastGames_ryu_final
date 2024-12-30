@@ -311,6 +311,4 @@ public class MemberController {
 		return "redirect:/myPage.go";
 	}
 	
-	// 상세보기 정보수정할 때, 몇몇은 아작스로 중복확인 처리..
-
 }
