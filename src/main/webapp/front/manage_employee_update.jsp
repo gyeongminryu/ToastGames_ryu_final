@@ -162,13 +162,13 @@
                                 <tr>
                                     <td>{파일명 (파일 용량kb)}</td>
                                     <td>
-                                        <button onclick="tst_modal_call('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
+                                        <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>{파일명 (파일 용량kb)}</td>
                                     <td>
-                                        <button onclick="tst_modal_call('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
+                                        <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -199,7 +199,7 @@
                                 <tr class="td_no_underline">
                                     <td>{파일명 (파일 용량kb)}</td>
                                     <td>
-                                        <button onclick="tst_modal_call('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">직인 삭제</button>
+                                        <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">직인 삭제</button>
                                     </td>
                                 </tr>
                                 <tr>
