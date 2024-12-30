@@ -25,6 +25,9 @@ public interface ApprovalDAO {
 
     List<Map<String, Object>> team_allempl(int team_idx);
 
+    List<Map<String, Object>> approval_company_get_allempl();
+
+
     int empl_count(int empl_idx, int doc_state);
     int receiver_empl_count(int empl_idx);
 

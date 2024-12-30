@@ -22,10 +22,11 @@ function approval_set_save_data(){
     approval_write_current_date();
 
     //doc_content_sub ( //보고 내용 (*quill 에디터에 작성한 내용)) -> form에 넣어주기
-    const quill_content = quill.getContents();
+    //퀼 넣으면 다시 넣기
+    /*const quill_content = quill.getContents();
     console.log(quill_content.ops[0].insert);
 
-    $('input[name="doc_content_sub"]').val(quill_content.ops[0].insert);
+    $('input[name="doc_content_sub"]').val(quill_content.ops[0].insert);*/
 
 
     //doc : form 내용 - form에 저장
@@ -45,7 +46,7 @@ function approval_write_current_date(){
     let today = new Date(); //오늘 날짜에 대한 전체 정보
 
     let year = today.getFullYear();//년도 구하기
-    let month = today.getMonth(); //달 구하기
+    let month = today.getMonth()+1; //달 구하기 -> 1월 = 0,12월 = 11
     let date = today.getDate(); // 일 구하기
 
     let hours = today.getHours();
@@ -71,7 +72,9 @@ function approval_save_data_send(){
     approval_save_doc();
 }
 
+//문서만 저장
 function approval_save_doc(){
+    console.log("문서 저장 함수 실행");
     var form = new FormData($('form')[0]);
     $.ajax({
         type : 'POST',
@@ -83,11 +86,17 @@ function approval_save_doc(){
         dataType : 'JSON',
         success : function(data){
             console.log(data);
+            console.log("문서 저장 성공");
+
         },error : function (e){
             console.log(e);
         }
     });
 }
+
+//문서 기반으로 file 저장
+
+
 
 //문서의 참조를 저장 요청하는 함수
 function refer_save_doc(){

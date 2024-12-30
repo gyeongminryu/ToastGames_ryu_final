@@ -28,7 +28,8 @@ public class ApprovalRequestController {
 	public String approval_update_go (int doc_idx,Model model) {
 		model.addAttribute("doc_idx", doc_idx);
 		//날짜 어떻게 처리하는지 확인
-		return "approval_write";
+		//return "approval_write";
+		return "approval_writing_write";
 	}
 
 
@@ -52,7 +53,7 @@ public class ApprovalRequestController {
 		model.addAttribute("doc_idx", doc_idx);
 		model.addAttribute("form_idx", form_idx);
 
-		return "approval_write";
+		return "approval_writing_write";
 	}
 
 
@@ -89,7 +90,8 @@ public class ApprovalRequestController {
 	//결재 문서 저장
 	@PostMapping (value = "/approval_doc_write.ajax")
 	@ResponseBody
-	public Map<String,Object> doc_write_do (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]files) {
+	public Map<String,Object> doc_write_do (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]attached_file) {
+		logger.info("결재 문서 저장 ajax 실행");
 		//세션 처리
 		int empl_idx = 10024;
 		String success = "결재 문서 저장 실패";
@@ -98,9 +100,9 @@ public class ApprovalRequestController {
 		logger.info("저장해야할 param 값:{}", param);
 
 		//logger.info("form_content:{}",doc_content);
-		logger.info("files:{}", (Object) files);
+		//logger.info("files:{}", (Object) files);
 		//update로 하기
-		if(approvalRequestService.doc_write(param,files) && approvalRequestService.save_approval_line(param)){
+		if(approvalRequestService.doc_write(param,attached_file) && approvalRequestService.save_approval_line(param)){
 
 			success = "결재 문서 저장 성공";
 		}
