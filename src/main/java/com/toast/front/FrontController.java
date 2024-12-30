@@ -335,4 +335,14 @@ public class FrontController {
     public ModelAndView front_mypage_update() {
         return new ModelAndView("mypage_update");
     }
+
+
+
+    // Work Record ===================================================
+
+    // 근태
+    @RequestMapping(value = "/work_record")
+    public ModelAndView front_work_record() {
+        return new ModelAndView("work_record");
+    }
 }

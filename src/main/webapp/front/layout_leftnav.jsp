@@ -90,7 +90,7 @@
                 <li onclick="location.href='/manage_staff_list'" class="tst_pointer">
                     <i class="bi bi-people-fill"></i><h3>구성원 관리</h3>
                 </li>
-                <li onclick="location.href='/'" class="tst_pointer disp_hide">
+                <li onclick="location.href='/work_record'" class="tst_pointer disp_hide">
                     <i class="bi bi-stopwatch-fill"></i><h3>근태 관리</h3>
                 </li>
 <%--                <li onclick="location.href='/'" class="tst_pointer disp_hide">--%>

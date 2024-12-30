@@ -150,6 +150,11 @@
 
 .tst_modal.tst_offcanvas_alert_list .tst_modal_container .alert_item .alert_item_body h3{
     margin: 0 0 3px;
+    font-weight: 800;
+}
+
+.tst_modal.tst_offcanvas_alert_list .tst_modal_container .alert_item .alert_item_body p{
+    font-weight: 400;
 }
 
 .tst_modal.tst_offcanvas_alert_list .tst_modal_container .alert_item .alert_item_body p.single_line_paragraph{
