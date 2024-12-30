@@ -37,19 +37,19 @@
 
                 <!-- 게시물 분류 -->
                 <ul class="tst_tablist list_no_desc list_inline">
-                    <li class="tst_tablist_item tst_tablist_item_active" onclick="location.href=''">
+                    <li class="tst_tablist_item tst_tablist_item_active" onclick="location.href='/approval_received_list.go'">
                         <h3>전체 보기</h3>
                     </li>
-                    <li class="tst_tablist_item" onclick="location.href=''">
+                    <li class="tst_tablist_item" onclick="approval_list_filter('읽지 않음','탭','received',this)">
                         <h3>읽지 않음</h3>
                     </li>
-                    <li class="tst_tablist_item" onclick="location.href=''">
+                    <li class="tst_tablist_item" onclick="approval_list_filter('결재중','탭','received',this)">
                         <h3>결재중</h3>
                     </li>
-                    <li class="tst_tablist_item" onclick="location.href=''">
+                    <li class="tst_tablist_item" onclick="approval_list_filter('승인','탭','received',this)">
                         <h3>결재 승인</h3>
                     </li>
-                    <li class="tst_tablist_item" onclick="location.href=''">
+                    <li class="tst_tablist_item" onclick="approval_list_filter('반려','탭','received',this)">
                         <h3>결재 반려</h3>
                     </li>
                     <li class="tst_tablist_item">
@@ -57,7 +57,7 @@
                         <form>
                             <div class="tst_search_container">
                                 <div class="tst_search_input">
-                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" id="search"/>
                                 </div>
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
@@ -73,12 +73,12 @@
                 <table class="tst_table approval_received_list">
                     <colgroup>
                         <col style="width: 150px" />
-                        <col style="width: 150px" />
+                        <col style="width: 130px" />
                         <col style="width: auto" />
                         <col style="width: 100px" />
-                        <col style="width: 140px" />
-                        <col style="width: 140px" />
-                        <col style="width: 140px" />
+                        <col style="width: 180px" />
+                        <col style="width: 180px" />
+                        <col style="width: 180px" />
                     </colgroup>
                     <thead>
                     <tr>
@@ -94,136 +94,40 @@
                     <tbody>
                     <!-- //결재할 문서 목록 -->
 
-                    <!-- 결재할 전자 문서가 없을 경우 -->
-                    <tr class="approval_received_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                        <td colspan="7" class="td_no_data">
-                            <p>
-                                <i class="bi bi-file-earmark-break"></i>
-                            </p>
-                            <h3>결재할 문서가 없습니다.</h3>
-                        </td>
-                    </tr>
-                    <!-- //결재할 전자 문서가 없을 경우 -->
 
+                    <c:if test="${received_lists.size()<=0}">
+                        <!-- 결재할 전자 문서가 없을 경우 -->
+                        <tr class="approval_received_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
+                            <td colspan="7" class="td_no_data">
+                                <p>
+                                    <i class="bi bi-file-earmark-break"></i>
+                                </p>
+                                <h3>결재할 문서가 없습니다.</h3>
+                            </td>
+                        </tr>
+                        <!-- //결재할 전자 문서가 없을 경우 -->
+                    </c:if>
+
+
+                    <c:forEach items="${received_lists}" var="received_list">
                     <!-- 기본 -->
                     <tr>
                         <td class="td_align_left td_no_padding">
-                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
+                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">${received_list.empl_name} (${received_list.dept_name}/${received_list.position_name})</span>
                         </td>
-                        <td>{문서 유형}</td>
+                        <td>${received_list.form_subject}</td>
                         <td class="td_align_left">
-                            <span class="tst_badge_min btn_primary margin_right">{처리 현황}</span>
-                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">{제목}</span>
+                            <span class="tst_badge_min btn_primary margin_right">${received_list.i_approval_state}</span>
+                            <span onclick="location.href='/approval_received_detail?doc_idx= ${received_list.doc_idx}'" class="tst_pointer">${received_list.doc_subject}</span>
                         </td>
-                        <td><span class="tst_badge_min btn_primary">{결재 현황}</span></td>
-                        <td>{수신 일시}</td>
-                        <td>{처리 일시}</td>
-                        <td>{마감 일시}</td>
+                        <td><span class="tst_badge_min btn_primary">${received_list.approval_state}</span></td>
+                        <td>${received_list.update_date}</td>
+                        <td>${received_list.appr_date}</td>
+                        <td>${received_list.end_date}</td>
                     </tr>
                     <!-- //기본 -->
+                    </c:forEach>
 
-                    <!-- 예시) 문서를 읽지 않았을 경우 -->
-                    <tr>
-                        <td class="td_align_left td_no_padding">
-                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
-                        </td>
-                        <td>출장 결과 보고서</td>
-                        <td class="td_align_left">
-                            <span class="tst_badge_min btn_primary margin_right">읽지 않음</span>
-                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">제목이 여기에 출력됩니다.</span>
-                        </td>
-                        <td><span class="tst_badge_min btn_secondary">결재 대기</span></td>
-                        <td>2024-12-18 09:30</td>
-                        <td>2024-12-18 10:00</td>
-                        <td>2024-12-20 18:00</td>
-                    </tr>
-                    <!-- //예시) 문서를 읽지 않았을 경우 -->
-
-                    <!-- 예시) 문서를 읽었으나 아직 결재를 마치지 않았을 경우 -->
-                    <tr>
-                        <td class="td_align_left td_no_padding">
-                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
-                        </td>
-                        <td>출장 결과 보고서</td>
-                        <td class="td_align_left">
-                            <span class="tst_badge_min btn_secondary margin_right">결재중</span>
-                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">제목이 여기에 출력됩니다.</span>
-                        </td>
-                        <td><span class="tst_badge_min btn_secondary">진행중</span></td>
-                        <td>2024-12-18 09:30</td>
-                        <td>2024-12-18 10:00</td>
-                        <td>2024-12-20 18:00</td>
-                    </tr>
-                    <!-- //예시) 문서를 읽었으나 아직 결재를 마치지 않았을 경우 -->
-
-                    <!-- 예시) 문서 결재 이후 윗선으로 상신한 문서가 아직 결재되지 않았을 경우 -->
-                    <tr>
-                        <td class="td_align_left td_no_padding">
-                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
-                        </td>
-                        <td>출장 결과 보고서</td>
-                        <td class="td_align_left">
-                            <span class="tst_badge_min btn_subtle margin_right">승인</span>
-                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">제목이 여기에 출력됩니다.</span>
-                        </td>
-                        <td><span class="tst_badge_min btn_secondary">진행중</span></td>
-                        <td>2024-12-18 09:30</td>
-                        <td>2024-12-18 10:00</td>
-                        <td>2024-12-20 18:00</td>
-                    </tr>
-                    <!-- //예시) 문서 결재 이후 윗선으로 상신한 문서가 아직 결재되지 않았을 경우 -->
-
-                    <!-- 예시) 상급자가 결재를 최종 승인하여 시스템이 자동으로 알림을 발송했을 경우 -->
-                    <tr>
-                        <td class="td_align_left td_no_padding">
-                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
-                        </td>
-                        <td>교육 참가 신청서</td>
-                        <td class="td_align_left">
-                            <span class="tst_badge_min btn_subtle margin_right">승인</span>
-                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="font_subtle tst_pointer">(시스템 자동 발송) 결재가 최종 승인되었습니다.</span>
-                        </td>
-                        <td><span class="tst_badge_min btn_subtle">최종 승인</span></td>
-                        <td>2024-12-18 09:30</td>
-                        <td>2024-12-18 10:00</td>
-                        <td>2024-12-20 18:00</td>
-                    </tr>
-                    <!-- //예시) 상급자가 결재를 최종 승인하여 시스템이 자동으로 알림을 발송했을 경우 -->
-
-                    <!-- 예시) 상급자가 결재를 최종 반려하여 시스템이 자동으로 알림을 발송했을 경우 -->
-                    <tr>
-                        <td class="td_align_left td_no_padding">
-                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
-                        </td>
-                        <td>교육 참가 신청서</td>
-                        <td class="td_align_left">
-                            <span class="tst_badge_min btn_subtle margin_right">승인</span>
-                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="font_subtle tst_pointer">(시스템 자동 발송) 결재가 반려되었습니다.</span>
-                        </td>
-                        <td><span class="tst_badge_min btn_subtle">반려</span></td>
-                        <td>2024-12-18 09:30</td>
-                        <td>2024-12-18 10:00</td>
-                        <td>2024-12-20 18:00</td>
-                    </tr>
-                    <!-- //예시) 상급자가 결재를 최종 반려하여 시스템이 자동으로 알림을 발송했을 경우 -->
-
-                    <!-- 예시) 문서를 반려했을 경우 -->
-                    <tr>
-                        <td class="td_align_left td_no_padding">
-                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span>
-                        </td>
-                        <td>출장 결과 보고서</td>
-                        <td class="td_align_left">
-                            <span class="tst_badge_min btn_subtle margin_right">반려</span>
-                            <span onclick="location.href='/approval_received_detail?appr_idx='" class="tst_pointer">제목이 여기에 출력됩니다.</span>
-                        </td>
-                        <td><span class="tst_badge_min btn_subtle">반려</span></td>
-                        <td>2024-12-18 09:30</td>
-                        <td>2024-12-18 10:00</td>
-                        <td>2024-12-20 18:00</td>
-                    </tr>
-                    </tbody>
-                    <!-- //예시) 문서를 반려했을 경우 -->
 
                     <!-- pagination -->
                     <tfoot>

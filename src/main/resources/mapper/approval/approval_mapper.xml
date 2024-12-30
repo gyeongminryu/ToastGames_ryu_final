@@ -52,8 +52,8 @@
 
     <!--내가 보낸 목록 조회 시 데이터 전달-->
     <!--보낸 목록 있는지 조회-->
-    <select id="request_empl_count" resultType="int">
-        SELECT COUNT(*) FROM document WHERE doc_empl_idx = #{empl_idx}
+    <select id="empl_count" resultType="int">
+        SELECT COUNT(*) FROM document WHERE doc_empl_idx = #{empl_idx} AND doc_state = #{doc_state}
     </select>
 
     <!--받은 목록 있는지 조회-->
@@ -73,13 +73,21 @@
 
     <!--보낸 리스트에 대한 정보 가져오기-->
     <select id="get_sent_list" resultType="Map">
-        SELECT DISTINCT(a.doc_idx),d.doc_subject,d.doc_state,DATE_FORMAT(d.doc_update_date, '%Y-%m-%d %H:%i:%s') AS update_date,DATE_FORMAT(d.doc_end_date, '%Y-%m-%d %H:%i:%s') AS end_date,d.form_idx,f.form_subject FROM document d
+        SELECT DISTINCT(a.doc_idx),d.doc_subject,d.doc_state,DATE_FORMAT(d.doc_write_date, '%Y-%m-%d %H:%i:%s') AS write_date,DATE_FORMAT(d.doc_update_date, '%Y-%m-%d %H:%i:%s') AS update_date,DATE_FORMAT(d.doc_end_date, '%Y-%m-%d %H:%i:%s') AS end_date,d.form_idx,f.form_subject FROM document d
           join approval a on d.doc_idx = a.doc_idx
           join form f on d.form_idx = f.form_idx
-             WHERE doc_empl_idx = #{param};
+          WHERE doc_empl_idx = #{r_empl_idx} ORDER BY d.doc_write_date DESC
     </select>
 
     <!--받은 리스트에 대한 정보 가져오기-->
+
+
+    <!--적은 리스트에 대한 정보 가져오기-->
+    <select id="get_writing_list" resultType="Map">
+        SELECT doc_idx,doc_subject,doc_state,DATE_FORMAT(doc_write_date, '%Y-%m-%d %H:%i:%s') AS write_date,DATE_FORMAT(d.doc_update_date, '%Y-%m-%d %H:%i:%s') AS update_date,DATE_FORMAT(doc_end_date, '%Y-%m-%d %H:%i:%s') AS end_date,f.form_idx,f.form_subject
+        FROM document d  join form f on d.form_idx = f.form_idx
+        WHERE doc_empl_idx = #{r_empl_idx} AND doc_state in(0,2) ORDER BY d.doc_write_date DESC
+    </select>
 
 
     <!--승인/반려 상태 확인-->
@@ -103,7 +111,11 @@
 
     <!--받은 결재-->
     <!--전달 받은 결재 doc_idx 가져오기-->
-    <select id="get_received_doc_idxs" resultType="String">
+    <select id="get_received_list" resultType="Map">
+        SELECT a.appr_state,a.doc_idx,d.doc_subject,d.doc_state,DATE_FORMAT(a.appr_date, '%Y-%m-%d %H:%i:%s') AS appr_date,DATE_FORMAT(a.appr_read_date, '%Y-%m-%d %H:%i:%s') AS read_date,DATE_FORMAT(d.doc_write_date, '%Y-%m-%d %H:%i:%s') AS write_date,DATE_FORMAT(d.doc_update_date, '%Y-%m-%d %H:%i:%s') AS update_date,DATE_FORMAT(d.doc_end_date, '%Y-%m-%d %H:%i:%s') AS end_date,d.form_idx,f.form_subject FROM document d
+            join approval a on d.doc_idx = a.doc_idx
+            join form f on d.form_idx = f.form_idx
+        WHERE a.appr_receiver_idx = #{r_empl_idx} AND a.appr_show = 1 ORDER BY d.doc_write_date DESC
     </select>
 
 </mapper>

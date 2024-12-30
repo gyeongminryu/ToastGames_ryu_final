@@ -23,6 +23,13 @@ public class ApprovalRequestController {
 		this.approvalRequestService = approvalRequestService;
 	}
 
+	@GetMapping(value = "/approval_update.go")
+
+	public String approval_update_go (int doc_idx,Model model) {
+		model.addAttribute("doc_idx", doc_idx);
+		//날짜 어떻게 처리하는지 확인
+		return "approval_write";
+	}
 
 
 	//결재 작성하기 페이지로 이동 + 최초 저장
@@ -67,12 +74,17 @@ public class ApprovalRequestController {
 	@GetMapping (value = "/approval_doc_line_get.ajax")
 	@ResponseBody
 	public Map<String,Object> doc_line_get (int doc_idx) {
-		logger.info("컨트롤러에서 받은 doc_idx"+doc_idx);
-		Map<String,Object> data = new HashMap<>();
-		data.put("doc_lines", approvalRequestService.doc_line_get(doc_idx));
-
-		return data;
+		logger.info("doc_line_get 컨트롤러에서 받은 doc_idx"+doc_idx);
+        return approvalRequestService.doc_appr_line_get(doc_idx);
 	};
+
+
+	@GetMapping (value="/refer_doc_line_get.ajax")
+	@ResponseBody
+	public Map<String,Object> refer_doc_line_get(int doc_idx){
+		logger.info("refer_doc_line_get 컨트롤러에서 받은 doc_idx"+doc_idx);
+		return approvalRequestService.doc_refer_line_get(doc_idx);
+	}
 
 	//결재 문서 저장
 	@PostMapping (value = "/approval_doc_write.ajax")
@@ -140,6 +152,15 @@ public class ApprovalRequestController {
 		data.put("success",success);
 		return data;
 	}
+
+
+	/*작성 중인 문서 삭제*/
+	@RequestMapping (value="/approval_doc_del.do")
+	public String approval_doc_del(String doc_idx){
+		approvalRequestService.write_delete(doc_idx);
+		return "redirect:/approval_writing_list.go";
+	}
+
 
 
 }

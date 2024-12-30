@@ -18,7 +18,7 @@ public interface ApprovalRequestDAO {
 
     //폼 양식에 저장할 값 가져오기
     String doc_empl_name(int empl_idx);
-    int doc_dept_idx(int empl_idx);
+    Map doc_dept_info(int empl_idx);
 
 
     //문서 작성, 문서 파일 작성,문서 파일키 작성
@@ -65,7 +65,10 @@ public interface ApprovalRequestDAO {
 
     Map<String,Object> get_head_info();
 
-    List<Map<String, Object>> doc_line_get(int doc_idx);
+    List<Map<String, Object>> doc_appr_line_get(int doc_idx);
+
+    List<Map<String,Object>> doc_refer_line_get(int doc_idx);
+
 
     int prev_refer_exists(String doc_idx);
 
@@ -96,6 +99,11 @@ public interface ApprovalRequestDAO {
     int request(Map<String, String> param);
 
     boolean update_approval_doc_state(String doc_idx);
+
+    Map<String, Object> get_empl_info(int empl_idx);
+
+    int doc_line_changed_update(Map<String, Object> lineEmplInfo);
+
 
 
 
