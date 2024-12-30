@@ -105,9 +105,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	        }
 	    },*/
 	    headerToolbar: {
-	        left: 'prev,today',
-	        center: 'title',
-	        right: 'next'
+	        left: '',
+	        center: 'prev,title,next',
+	        right: 'today'
 	    },
 	      // 일정 가져오기(회의실별) + 내가 포함된 회의 일정 보기
         events: function (fetchInfo, successCallback, failureCallback) {
