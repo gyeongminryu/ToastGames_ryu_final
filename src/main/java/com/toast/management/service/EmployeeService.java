@@ -277,7 +277,7 @@ public class EmployeeService {
 	}
 
 	public List<EmployeeDetailDTO> getFilteredStaffList(String dept_idx, String searchKey, String searchValue) {
-		// TODO Auto-generated method stub
+		
 		return employeeDAO.getFilteredStaffList(dept_idx, searchKey, searchValue);
 	}
 	
