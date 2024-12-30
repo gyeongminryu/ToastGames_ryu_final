@@ -35,6 +35,22 @@ public class EmployeeDetailDTO {
 	private int position_idx;
 	private String position_name;
 	
+	private String statement_name;
+	
+	private String bank_name;
+	
+	public String getBank_name() {
+		return bank_name;
+	}
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
+	}
+	public String getStatement_name() {
+		return statement_name;
+	}
+	public void setStatement_name(String statement_name) {
+		this.statement_name = statement_name;
+	}
 	public String getAppolast_idx() {
 		return appolast_idx;
 	}

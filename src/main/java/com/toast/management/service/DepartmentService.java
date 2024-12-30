@@ -247,7 +247,7 @@ public class DepartmentService {
 		String beforeceo_appo = beforeceo_info.getAppolast_idx();
         
 		
-		if(!ceo_idx.equals(before_ceo_idx)) {
+		if(!ceo_idx.equals(before_ceo_idx)) { // 사장이 바뀐다면
         
 		if(appo_idx==null) { // 이전 인사발령 이력이 없으면 
 			employeeDAO.employeeAppoDo(ceo_idx,dept_idx,position_idx,duty_idx,formattedTime,empl_job);
@@ -275,6 +275,8 @@ public class DepartmentService {
 			// 전출날짜 넣기
 			employeeDAO.employeeTransfer(beforeceoappo,formattedTime);
 		}
+		String ceo_dept_idx = "2"; // 대표 부서 테이블에 데이터 쌓기
+		employeeDAO.deptHeadAdd(ceo_dept_idx,ceo_idx);
 	} // if(!ceo_idx.equals(before_ceo_idx)) 
 		
 			// 회사정보 업데이트 처리
