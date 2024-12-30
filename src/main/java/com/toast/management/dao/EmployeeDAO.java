@@ -50,6 +50,10 @@ public interface EmployeeDAO {
 
 	void emplfileUpload(FileDTO fileDTO);
 
+	List<EmployeeDetailDTO> getStaffList(String dept_idx);
+
+	List<EmployeeDetailDTO> getFilteredStaffList(String dept_idx, String searchKey, String searchValue);
+
 	
 
 	

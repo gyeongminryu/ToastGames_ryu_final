@@ -176,4 +176,30 @@ public class EmployeeController {
         return employees;
     }
 	
+	@GetMapping(value="/staff_list.go")
+	public String staffListGo(@RequestParam(value ="dept_idx", required = false) String dept_idx,Model model) {
+		
+		// dept_idx 로 부서원목록들 가져오기 >> 리스트에 담기?
+		
+	//	List<EmployeeDetailDTO> stafflist = new ArrayList<>();
+		
+	//	stafflist = employeeService.getStaffList(dept_idx);
+	//	model.addAttribute("stafflist",stafflist);
+		
+		
+		return "staff_list";
+	}
+	
+	@GetMapping(value="/staff_list.ajax")
+	@ResponseBody
+	public List<EmployeeDetailDTO> staffListAjax(@RequestParam(value ="dept_idx", required = false) String dept_idx,
+ 											     @RequestParam(value = "searchKey", required = false) String searchKey,
+										         @RequestParam(value = "searchValue", required = false) String searchValue) {
+        // 예제 데이터 생성
+        List<EmployeeDetailDTO> employees = new ArrayList<>();
+        employees = employeeService.getFilteredStaffList(dept_idx, searchKey, searchValue);
+        
+        
+        return employees;
+    }
 }

@@ -270,5 +270,15 @@ public class EmployeeService {
 		
 		return employeeDAO.getEmployeeList();
 	}
+
+	public List<EmployeeDetailDTO> getStaffList(String dept_idx) {
+		
+		return employeeDAO.getStaffList(dept_idx);
+	}
+
+	public List<EmployeeDetailDTO> getFilteredStaffList(String dept_idx, String searchKey, String searchValue) {
+		// TODO Auto-generated method stub
+		return employeeDAO.getFilteredStaffList(dept_idx, searchKey, searchValue);
+	}
 	
 }
