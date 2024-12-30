@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.toast.rent.dao.ResourceDAO;
 import com.toast.rent.dto.ResourceDTO;
@@ -19,6 +20,12 @@ public class ResourceService {
 	
 	public ResourceService(ResourceDAO resourceDAO) {
 		this.resourceDAO = resourceDAO;
+	}
+	
+	//사원번호 가져오기
+	public int getEmpl(String loginId) {
+		logger.info("getEmpl");
+		return resourceDAO.getEmpl(loginId);
 	}
 
 	//공용물품 리스트 가져오기
@@ -186,5 +193,40 @@ public class ResourceService {
 		return resourceDAO.prodDetail(prod_idx);
 		
 	}
+
+	//물품 대여 상태 보기
+	public ResourceDTO prodRentDetail(int prod_idx) {
+		ResourceDTO dto = resourceDAO.prodRentDetail(prod_idx);
+		switch (dto.getProd_rent()) {
+			case 0:
+				dto.setProd_rent_str("대여 불가"); //물품 상태가 0(사용 불가)일때 
+				break;
+			case 1:
+				dto.setProd_rent_str("대여 가능");
+				break;
+			case 2:
+				dto.setProd_rent_str("대여 신청중");
+				break;
+			case 3:
+				dto.setProd_rent_str("대여 중");
+			default:
+				dto.setProd_rent_str("알 수 없음");
+				break;
+		}
+		return dto;
+		
+	}
+
+	//물품 대여 신청(대여 상태 업뎃)
+	@Transactional
+	public int rentRequest(ResourceDTO dto) {
+		resourceDAO.rentRequest(dto);
+		dto.setProd_rent(2);
+		int row = resourceDAO.updateRentState(dto);
+		return row;
+		
+	}
+
+
 
 }

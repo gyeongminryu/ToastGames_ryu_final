@@ -45,16 +45,20 @@
                             </thead>
                             <tbody>
                             <tr>
+                                <th>제품번호</th>
+                                <th id="prod_idx">${detail.prod_idx}</th>
+                            </tr>
+                            <tr>
                                 <th>제품명</th>
-                                <th>${detail.prod_name}</th>
+                                <th id="prod_name">${detail.prod_name}</th>
                             </tr>
                             <tr>
                                 <th>제품 정보</th>
-                                <td>${detail.prod_model}</td>
+                                <td id="prod_model">${detail.prod_model}</td>
                             </tr>
                             <tr>
-                                <th>제품 설명</th>
-                                <td>
+                                <th >제품 설명</th>
+                                <td id="prod_info">
                                 	${detail.prod_info}
 									<img alt="${file.ori_filename}" src="/photo/${file.new_filename}">
                                 </td>
