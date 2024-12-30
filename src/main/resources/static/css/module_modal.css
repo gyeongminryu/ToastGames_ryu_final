@@ -33,6 +33,11 @@
     z-index: calc(var(--tst-modal-z-index) + 50);
 }
 
+.tst_modal.tst_modal_profile_min .tst_modal_container{
+    width: 340px;
+    padding: var(--tst-modal-container-padding) var(--tst-modal-container-padding) calc(var(--tst-modal-container-padding) - 20px);
+}
+
 .tst_modal.tst_modal_alert .tst_modal_container{
     width: 440px;
 }
@@ -87,6 +92,13 @@
 
 .tst_modal .tst_modal_container .tst_modal_body .list_no_desc.list_block li p.min{
     margin-bottom: 4px;
+}
+
+.tst_modal .tst_modal_container .tst_modal_body .topnav_modal_profile_image{
+    width: 140px;
+    height: 140px;
+    border-radius: var(--tst-border-radius);
+    object-fit: cover;
 }
 
 .tst_modal .tst_modal_backdrop{
