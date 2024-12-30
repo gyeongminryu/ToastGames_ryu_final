@@ -105,7 +105,7 @@ public class ResourceController {
 	
 
 	
-	//물품 상세보기
+	//물품 상세보기(사진, 첨부파일 필요함)
 	@RequestMapping(value="/prodDetail.go")
 	public String prodDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
 		logger.info("prod_idx:"+prod_idx);

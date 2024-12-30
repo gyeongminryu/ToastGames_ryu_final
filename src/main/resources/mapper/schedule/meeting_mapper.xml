@@ -115,6 +115,7 @@
 			room_max=#{room_max} 
 		WHERE room_idx=#{room_idx}
 	</update>
+
 	
 	<!-- 회의실 일정 존재 확인 -->
 	<select id="checkMeetingRoom" resultType="int">
@@ -125,6 +126,12 @@
 	<delete id="deleteMeetingRoom">
 		DELETE FROM meeting_room WHERE room_idx=#{param1}
 	</delete>
+	
+	<!-- 회의실 사진 삭제 -->
+	<delete id="deleteMeetingRoomPhoto">
+		DELETE FROM file WHERE uploader_idx=#{param1} AND new_filename=#{param2}
+	</delete>
+	
 	
 	<!-- 회의실별 회의 일정보기 --> 
 	<select id="getMeeting" resultType="com.toast.schedule.dto.MeetingDTO">

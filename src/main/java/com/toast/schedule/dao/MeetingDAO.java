@@ -43,6 +43,9 @@ public interface MeetingDAO {
 	//회의실 삭제
 	int deleteMeetingRoom(int roomIdx);
 	
+	//회의실 사진 삭제
+	int deleteMeetingRoomPhoto(int uploader_idx, String new_filename);
+	
 	//회의실 사진보기
 	MeetingPhotoDTO meetingPhoto(String file_key);
 	
@@ -75,6 +78,8 @@ public interface MeetingDAO {
 
 	//내 부서 정보
 	int myDept(String myId);
+
+
 
 
 
