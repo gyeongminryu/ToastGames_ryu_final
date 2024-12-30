@@ -76,7 +76,7 @@
 
                     <div class="tst_col10">
                         
-                        <form>
+                        <form onsubmit="return resource_search(event);">
                             <div class="tst_search_container">
 		                        <!-- 물품 검색 -->
 		                       <div class="tst_search_select">
@@ -96,7 +96,7 @@
                                     </select>
                                 </div>
                                 <div class="tst_search_input">
-                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                    <input type="text" id="search_keyword" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
                                 </div>
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>

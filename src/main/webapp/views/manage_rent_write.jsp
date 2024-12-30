@@ -93,27 +93,31 @@
                                 </colgroup>
                                 <thead>
                                 <tr>
-                                    <th colspan="2">대여 정보</th>
+                                    <th colspan="2">물품 카테고리</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <th>카테고리</th>
                                     <td>
-                                        <select name="category" onchange="change_category(this)"><!-- 함수는 파일 'resources/js/manage_rent_write.js'에 작성해 주세요 -->
-                                            <option value="{카테고리}">{카테고리}</option>
-                                            <option value="{카테고리}">{카테고리}</option>
-                                            <option value="{카테고리}">{카테고리}</option>
+                                        <select name="category" onchange="change_category_life(this)"><!-- 함수는 파일 'resources/js/manage_rent_write.js'에 작성해 주세요 -->
+                                            <option value="0">카테고리</option>
+                                            <c:forEach items="${categoryList}" var="category">
+                                            	<option value="${category.prod_cate_idx}" data-prod-life="${category.prod_life}">
+                                            		${category.prod_cate_name}</option>
+                                            </c:forEach>                          
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>내용연수</th>
-                                    <td id="useful_life" class="useful_life">내용연수|${prod_life}년</td>
+                                    <td id="useful_life" class="useful_life">내용연수|${category.prod_life}년</td>
                                 </tr>
                                 <tr>
                                     <th>사용연한</th>
-                                    <td id="due_date" class="due_date">사용연한|${prod_end_date}</td>
+                                    <td id="due_date" class="due_date">사용연한|
+                                    	<input type="hidden" name="due_date" id="due_date_input" value="">
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -132,8 +136,8 @@
                                     <th colspan="2">첨부 파일</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
+                                <tbody id="fileList">
+<!--                                 <tr>
                                     <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
                                     <td>
                                         <button type="button" onclick="delete_attach(this, '{첨부파일_번호}')" class="btn_primary btn_min">삭제하기</button>
@@ -144,14 +148,13 @@
                                     <td>
                                         <button type="button" onclick="delete_attach(this, '{첨부파일_번호}')" class="btn_primary btn_min">삭제하기</button>
                                     </td>
-                                </tr>
+                                </tr> -->
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <form>
-                                            <input type="file" name="attached_file" multiple />
-                                        </form>
+                                    	<input type="file" name="attached_file" id="attached_file" multiple onchange="handleFileUpload(event)" />
+                                        <!-- <input type="file" name="attached_file" multiple /> -->
                                     </td>
                                 </tr>
                                 </tfoot>

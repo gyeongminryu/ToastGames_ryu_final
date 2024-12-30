@@ -92,8 +92,13 @@ public class MeetingService {
 	}
 	
 	//회의실 삭제
-	public int deleteMeetingRoom(Integer room_idx) {
-		return meetingDao.deleteMeetingRoom(room_idx);
+	@Transactional
+	public int deleteMeetingRoom(Map<String, String> params) {
+		meetingDao.deleteMeetingRoom(Integer.parseInt(params.get("room_idx")));
+		int uploader_idx = Integer.parseInt(params.get("room_idx"));
+		String new_filename = params.get("new_filename");
+		int row = meetingDao.deleteMeetingRoomPhoto(uploader_idx, new_filename);
+		return row;
 		
 	}
 	

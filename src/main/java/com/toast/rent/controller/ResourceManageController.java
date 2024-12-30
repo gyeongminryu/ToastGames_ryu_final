@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.toast.rent.dto.ResourceDTO;
 import com.toast.rent.dto.ResourceManageDTO;
 import com.toast.rent.service.ResourceManageService;
 import com.toast.rent.service.ResourceService;
@@ -60,7 +61,7 @@ public class ResourceManageController {
 	}
 	
 	//카테고리 검색 목록 가져오기//get
-	@GetMapping(value=" /manageCategroySearch.ajax") 
+	@GetMapping(value="/manageCategroySearch.ajax") 
 	@ResponseBody
 	public Map<String, Object> categroySearch(
 	        @RequestParam("keyword") String keyword) {
@@ -110,17 +111,60 @@ public class ResourceManageController {
 	    }
 
 	}
-	
+
 	
 	//물품 상세보기(사진, 첨부파일 필요함)
-	
-	
-	
+	/*@RequestMapping(value="/prodMgDetail.go")
+	public String prodDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
+		logger.info("prod_idx:"+prod_idx);
+		ResourceDTO detail = resourceMgService.prodMgDetail(prod_idx);
+		model.addAttribute("detail", detail);
+		//model.addAttribute("file", file);
+		return "rent_detail";
+	}
 	
 	//물품 상태 상세보기
+	@GetMapping(value = "/prodStateDetail.ajax")
+	@ResponseBody
+	public ResourceDTO prodRentDetail(@RequestParam("prod_idx") int prod_idx) {
+	    return resourceMgService.prodStateDetail(prod_idx);
+	}*/
+	
+	
+	//물품 등록 가기
+	@RequestMapping(value="/manage_rent_write.go")
+	public String rentManageWrite(Model model) {
+		String loginId = (String) session.getAttribute("loginId");
+		ResourceManageDTO dto =  resourceMgService.getEmplMg(loginId);
+		session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
+		session.setAttribute("dept_idx",dto.getDept_idx());//사원 부서 가져와
+		empl_idx = (int) session.getAttribute("empl_idx");  //세션에 저장한 사원idx 가져와
+		//dept_idx = (int) session.getAttribute("empl_idx"); //세션에 저장한 사원 부서idx 가져와
+		dept_idx=122;
+		String page = "rent_list";
+		if(dept_idx == 122) {	
+			List<ResourceManageDTO> categoryList =resourceMgService.resourceCateMg(); //카테고리 가져와
+			model.addAttribute("categoryList", categoryList);
+			page = "manage_rent_write";
+		}
+		return page;
+	}
 	
 	
 	//물품 등록(카테고리, 사용 기한, 첨부파일 포함)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//물품 상세보기
 	

@@ -89,7 +89,11 @@
         if (confirm("정말로 이 회의실 정보를 삭제하시겠습니까?")) {
             // 삭제 요청
             var room_idx = document.getElementById("room_idx").value; // room_idx를 가져옵니다.
+            var image_src = document.getElementById("meeting-room-photo").src;  // 이미지의 src를 가져옵니다.
+        	var new_filename = image_src.split("/").pop();  // src에서 파일명만 추출
+        	
             console.log("삭제할 ID:", room_idx);
+            console.log("삭제할 파일명:", new_filename);
 
             fetch("/meeting/deleteMeetingRoom.do", {
                 method: "POST",
@@ -98,6 +102,7 @@
                 },
                 body: JSON.stringify({
                     room_idx: room_idx  // 삭제할 room_idx를 JSON 형식으로 전송
+                    image_filename: image_filename  // 삭제할 이미지 파일명
                 })
             })
             .then(function(response) {

@@ -144,19 +144,21 @@ public class MeetingController {
 	//회의실 정보 삭제 (사진 삭제 추가)
 	@PostMapping("/deleteMeetingRoom.do")
 	public ResponseEntity<?> deleteMeetingRoom(
-			@RequestBody Map<String, Integer> params) {  // room_idx 추가
+			@RequestBody Map<String, String> params) {  // room_idx 추가
 	        
 	    logger.info("회의실 ID (room_idx): {}", params.get("room_idx"));
-	    int row = meetingService.checkMeetingRoom(params.get("room_idx"));
+	    logger.info("새 파일 이름 (new_filename): {}", params.get("image_filename"));
 	    
+	    int row = meetingService.checkMeetingRoom(Integer.parseInt(params.get("room_idx")));
+
 	    // 응답에 담을 데이터 준비
 	    Map<String, String> response = new HashMap<>();
 
 	    if(row >0) {
-	    	response.put("message", "수정 실패");
+	    	response.put("message", "삭제 실패");
 	    }else {
-	    	meetingService.deleteMeetingRoom(params.get("room_idx"));
-	    	response.put("message", "수정 성공");
+	    	meetingService.deleteMeetingRoom(params);
+	    	response.put("message", "삭제 성공");
 	    }
 	    
 	    // 수정 처리 후 응답
