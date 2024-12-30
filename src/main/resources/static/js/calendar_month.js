@@ -41,8 +41,8 @@ document.getElementById('schedule_end_time').addEventListener('change', function
                 dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
                 locale: 'ko', // 한국어 설정
                 headerToolbar: {
-                    left: 'prev',
-                    center: 'title,next',
+                    left: '',
+                    center: 'prev,title,next',
                     right: 'today,dayGridMonth,timeGridWeek'
                 },
                 initialView: 'dayGridMonth',
