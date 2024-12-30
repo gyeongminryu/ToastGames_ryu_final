@@ -49,8 +49,6 @@ public interface MemberDAO {
 	List<Map<String, Object>> employmentHistory(int limit, int offset, String id);
 
 	void fileUpload(FileDTO fileDTO);
-
-	// 상세보기 아작스 추가부분...
 	
 }
 

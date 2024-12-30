@@ -169,7 +169,5 @@ public class MemberService {
 			}
 		}
 	}
-
-	// 상세보기 아작스 추가부분...
 	
 }
