@@ -280,5 +280,10 @@ public class EmployeeService {
 		
 		return employeeDAO.getFilteredStaffList(dept_idx, searchKey, searchValue);
 	}
+
+	public EmployeeDetailDTO getStaffDetail(String empl_idx) {
+		
+		return employeeDAO.getStaffDetail(empl_idx);
+	}
 	
 }

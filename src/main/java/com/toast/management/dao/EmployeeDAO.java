@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.toast.management.dto.AppointmentDTO;
 import com.toast.management.dto.EmployeeDTO;
@@ -53,6 +54,8 @@ public interface EmployeeDAO {
 	List<EmployeeDetailDTO> getStaffList(String dept_idx);
 
 	List<EmployeeDetailDTO> getFilteredStaffList(String dept_idx, String searchKey, String searchValue);
+
+	EmployeeDetailDTO getStaffDetail(String empl_idx);
 
 	
 

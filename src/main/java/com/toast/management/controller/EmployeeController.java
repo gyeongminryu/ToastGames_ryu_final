@@ -47,13 +47,13 @@ public class EmployeeController {
 	// spring.servlet.multipart.location=C:/files 이 경로로 주입. !!! 파일 저장위치 !!!
     @Value("${spring.servlet.multipart.location}")
     private String uploadAddr;
-	
+    private final DataConfig dataconfig;
 
 	private final EmployeeService employeeService;
 	
-	public EmployeeController(EmployeeService employeeService) {
+	public EmployeeController(EmployeeService employeeService,DataConfig dataconfig) {
 		this.employeeService = employeeService;
-	
+		this.dataconfig = dataconfig;
 	}
 	
 	@GetMapping(value="/employee_add.go")
@@ -197,9 +197,31 @@ public class EmployeeController {
 										         @RequestParam(value = "searchValue", required = false) String searchValue) {
         // 예제 데이터 생성
         List<EmployeeDetailDTO> employees = new ArrayList<>();
-        employees = employeeService.getFilteredStaffList(dept_idx, searchKey, searchValue);
+        employees = employeeService.getFilteredStaffList(dept_idx,searchKey,searchValue);
         
         
         return employees;
     }
+
+	@GetMapping(value="/staff_detail.go")
+	public String staffDetailGo(@RequestParam(value ="empl_idx", required = false) String empl_idx,Model model) {
+		
+		EmployeeDetailDTO employee = new EmployeeDetailDTO();
+		employee = employeeService.getStaffDetail(empl_idx);
+		String enssn2 = employee.getEmpl_ssn2();
+		employee.setEmpl_ssn2(empl_idx);
+		
+		try {
+			String dnssn2 = dataconfig.aesCBCDecode(enssn2);
+			logger.info("복호화 주민번호 : "+dnssn2);
+			employee.setEmpl_ssn2(dnssn2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("empl_info",employee);
+		return "staff_detail";
+	}
+
 }
