@@ -41,9 +41,9 @@ document.getElementById('schedule_end_time').addEventListener('change', function
                 dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
                 locale: 'ko', // 한국어 설정
                 headerToolbar: {
-                    left: '',
+                    left: 'dayGridMonth,timeGridWeek',
                     center: 'prev,title,next',
-                    right: 'today,,dayGridMonth,timeGridWeek'
+                    right: 'today'
                 },
                 initialView: 'dayGridMonth',
                 slotDuration: '00:30:00',   // 시간 슬롯을 15분 단위로 설정

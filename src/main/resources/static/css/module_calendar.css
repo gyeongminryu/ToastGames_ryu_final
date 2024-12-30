@@ -92,6 +92,12 @@ select.meeting_room_select.fc_day{
     color: var(--tst-color-white);
 }
 
+.fc .fc-header-toolbar .fc-dayGridMonth-button,
+.fc .fc-header-toolbar .fc-timeGridWeek-button{
+    background-color: var(--tst-color-medium);
+    color: var(--tst-color-white);
+}
+
 
 
 /* fc-time table */
