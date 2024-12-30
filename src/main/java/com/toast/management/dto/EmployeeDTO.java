@@ -24,7 +24,13 @@ public class EmployeeDTO {
 	private String empl_profile;
 	private String empl_changepw;
 	private String file_key;
-	
+	private String appolast_idx;
+	public String getAppolast_idx() {
+		return appolast_idx;
+	}
+	public void setAppolast_idx(String appolast_idx) {
+		this.appolast_idx = appolast_idx;
+	}
 	public int getEmpl_idx() {
 		return empl_idx;
 	}
