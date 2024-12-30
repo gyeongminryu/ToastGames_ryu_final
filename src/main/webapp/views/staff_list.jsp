@@ -57,24 +57,7 @@
                 </tr>
             </thead>
             <tbody>
-                <%
-                    // 예제 데이터 출력 (DB 연동 부분은 나중에 추가 가능)
-                    for (int i = 1; i <= 20; i++) {
-                %>
-                <tr>
-                    <td><%= i %></td>
-                    <td>소속 부서 <%= (i % 3) + 1 %></td>
-                    <td>직원<%= i %></td>
-                    <td>직급/직책</td>
-                    <td>Identification</td>
-                    <td>02-1234-5678</td>
-                    <td>member<%= i %>@toastgames.com</td>
-                    <td>2024-11-29 09:00</td>
-                    <td>2024-11-29 18:00</td>
-                </tr>
-                <%
-                    }
-                %>
+               
             </tbody>
         </table>
     </main>
