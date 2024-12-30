@@ -1,5 +1,6 @@
 package com.toast.rent.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,11 +28,15 @@ public class ResourceController {
 	
 	private ResourceService resourceService;
 	private HttpSession session;
+	public int empl_idx = 0;
 	
 	public ResourceController(ResourceService resourceService, HttpSession session) {
 		this.resourceService = resourceService;
 		this.session = session;
 	}
+
+	
+	
 	
 	/*공용 물품 대여*/
 	
@@ -38,6 +44,9 @@ public class ResourceController {
 	@RequestMapping(value="/rent_list.go")
 	public String rentList(Model model) {
 		List<ResourceDTO> categoryList =resourceService.resourceCate();
+		String loginId = (String) session.getAttribute("loginId");
+		session.setAttribute("empl_idx", resourceService.getEmpl(loginId));
+		empl_idx = (int) session.getAttribute("empl_idx");
 		model.addAttribute("categoryList", categoryList);
 		return "rent_list";
 	}
@@ -97,8 +106,8 @@ public class ResourceController {
 
 	
 	//물품 상세보기
-	@RequestMapping(value="/rentDetail.go")
-	public String rentDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
+	@RequestMapping(value="/prodDetail.go")
+	public String prodDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
 		logger.info("prod_idx:"+prod_idx);
 		ResourceDTO detail = resourceService.prodDetail(prod_idx);
 		model.addAttribute("detail", detail);
@@ -106,16 +115,53 @@ public class ResourceController {
 		return "rent_detail";
 	}
 	
+	//물품 상태 상세보기
+	@GetMapping(value = "/prodRentDetail.ajax")
+	@ResponseBody
+	public ResourceDTO prodRentDetail(@RequestParam("prod_idx") int prod_idx) {
+	    return resourceService.prodRentDetail(prod_idx);
+	}
 	
-	
-	
-	
+	//물품 대여 신청하기
+	@PostMapping(value="/rentRequest.do")
+	public  String rentRequest(@RequestParam Map<String, String> requestData) {
+	    String prod_idx = requestData.get("prod_idx");
+	    String prod_exp_date = requestData.get("prod_exp_date");
+	    String prod_rent_reason = requestData.get("prod_rent_reason");
+	    
+	    LocalDateTime prodExpDate = null;
+
+	    // prod_return_date를 LocalDateTime으로 변환
+	    if (prod_exp_date != null && !prod_exp_date.isEmpty()) {
+	        prodExpDate = LocalDateTime.parse(prod_exp_date + "T18:00:00"); // 시간 추가
+	    }
+
+	    logger.info("prodExpDate: " + prodExpDate);
+	    logger.info("empl_idx: " + empl_idx);
+
+	    // 현재 시간 설정
+	    LocalDateTime currentDateTime = LocalDateTime.now();
+	    
+	    // DTO 생성 및 값 설정
+	    ResourceDTO dto = new ResourceDTO();
+	    dto.setProd_idx(Integer.parseInt(prod_idx));
+	    dto.setProd_exp_date(prodExpDate); // LocalDateTime 설정
+	    dto.setProd_rent_reason(prod_rent_reason);
+	    dto.setProd_rent_empl_idx(empl_idx);
+	    dto.setProd_rent_date(currentDateTime);
+	    
+	    // 서비스 호출
+	    resourceService.rentRequest(dto);
+
+	 // 성공 메시지 반환
+	    return "redirect:/prodDetail.go?prod_idx=" + requestData.get("prod_idx");
+	}
 	
 	
 	
 	//물품 첨부파일 확인하기 및 다운받기
 	
-	//물품 대여 신청하기
+
 	
 	//내가 대여한 물품(목록 보기 물품 상태 포함)
 	
