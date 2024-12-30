@@ -205,7 +205,7 @@ function approval_draw_refer_line(datas){
         console.log(data);
 
 
-        '<tr><th class="referrer_element">참조</th><td className="td_align_left referrer">'+ data.empl_name + '(' + data.dept_name + '/' + data.position_name + ')' +'</td><input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="' + data.empl_idx + '"/><td><button type="button" onClick="delete_refer(this)" className="btn_primary btn_min">제외하기</button></td></tr>'
+        content = '<tr><th class="referrer_element">참조</th><td className="td_align_left referrer">'+ data.empl_name + '(' + data.dept_name + '/' + data.position_name + ')' +'</td><input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="' + data.empl_idx + '"/><td><button type="button" onClick="delete_refer(this)" class="btn_primary btn_min">제외하기</button></td></tr>'
        /* //step이 0일 때는 참조에 추가
         content += '<div class ="referrer_element">참조<div class="referrer">' + data.empl_name + '(' + data.dept_name + '/' + data.position_name + ')' + '</div>';
         content += ' <input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="' + data.empl_idx + '"/>'

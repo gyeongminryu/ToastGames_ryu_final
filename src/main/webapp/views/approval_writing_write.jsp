@@ -33,7 +33,10 @@
                 </ul>
                 <!-- //제목 -->
 
-                <form>
+                <form  method="POST" enctype="multipart/form-data">
+                    <input type = "hidden" name = "doc_idx" class="hidden_doc_idx"/>
+                    <input type = "hidden" name = "doc_write_date" id="hidden_doc_date"/>
+
                     <div class="tst_flex">
 
                         <!-- 문서 작성하기 -->
@@ -68,11 +71,14 @@
                                     <th class="td_align_top">보고 내용</th>
                                     <td>
                                         <textarea name="content" rows="5" maxlength="1000" placeholder="보고할 내용을 입력하세요"></textarea>
+                                        <input type="hidden" name="doc_content_sub" class ="content"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="td_align_top">문서</th>
                                     <td id="form_content">{문서 소스}</td>
+                                    <input type = "hidden" name = "doc_content"/>
+
                                 </tr>
                                 </tbody>
 
@@ -82,10 +88,10 @@
                                     <td class="td_align_left">
                                         <ul class="list_no_desc list_inline">
                                             <li>
-                                                <button type="button" onclick="tst_modal_call('tst_modal_send')" class="btn_primary">상신하기</button>
+                                                <button type="button" onclick="approval_request()" class="btn_primary">상신하기</button>
                                             </li>
                                             <li>
-                                                <button type="button" onclick="location.href=''" class="btn_secondary">임시 저장하기</button>
+                                                <button type="button" onclick="approval_write_save()" class="btn_secondary">임시 저장하기</button>
                                             </li>
                                             <li>
                                                 <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_subtle">작성 취소하기</button>
@@ -116,26 +122,38 @@
                                 <tr>
                                     <th>1차 결재</th>
                                     <td class="td_align_left" id="approval_line1">{직원명 (부서/직급)}</td>
+                                    <input type="hidden" name = "empl_line1" id="empl_line1"/>
+                                    <input type="hidden" name = "dept_line1" id="dept_line1"/>
+                                    <input type="hidden" name = "duty_line1" id="duty_line1"/>
+                                    <input type="hidden" name = "position_line1" id="position_line1"/>
                                     <td>
-                                        <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
-                                    </td>
+                                        <button type="button" onclick="appr_show_modal(1)" class="btn_primary btn_min">변경하기</button>                                    </td>
                                 </tr>
                                 <tr>
                                     <th>2차 결재</th>
                                     <td class="td_align_left" id="approval_line2">{직원명 (부서/직급)}</td>
+                                    <input type="hidden" name = "empl_line2"  id = "empl_line2"/>
+                                    <input type="hidden" name = "dept_line2" id = "dept_line2"/>
+                                    <input type="hidden" name = "duty_line2" id = "duty_line2"/>
+                                    <input type="hidden" name = "position_line2" id="position_line2"/>
                                     <td>
-                                        <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                        <button type="button" onclick="appr_show_modal(2)" class="btn_primary btn_min">변경하기</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>최종 결재</th>
                                     <td class="td_align_left" id="approval_line3">{직원명 (부서/직급)}</td>
+                                    <input type="hidden" name = "empl_line3" id = "empl_line3"/>
+                                    <input type="hidden" name = "dept_line3" id = "dept_line3"/>
+                                    <input type="hidden" name = "duty_line3" id = "duty_line3"/>
+                                    <input type="hidden" name = "position_line3" id="position_line3"/>
                                     <td>
-                                        <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_primary btn_min">변경하기</button>
+                                        <button type="button" onclick="appr_show_modal(3)" class="btn_primary btn_min">변경하기</button>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+
                             <hr class="separator" />
                             <!-- //결재선 편집 -->
 
@@ -157,7 +175,7 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="3">
-                                        <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_subtle btn_full">참조 추가하기</button>
+                                        <button type="button" onclick="appr_show_modal(0)" class="btn_subtle btn_full">참조 추가하기</button>
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -191,13 +209,12 @@
                                 </tr>
                                 </tbody>
                                 <tfoot>
-                                <tr>
-                                    <td colspan="2">
-                                        <form>
-                                            <input type="file" name="attached_file" multiple />
-                                        </form>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="file" name="attached_file" multiple="multiple" />
+                                        </td>
+                                    </tr>
+
                                 </tfoot>
                             </table>
                             <!-- //첨부 파일 편집 -->
@@ -218,10 +235,13 @@
 <script src="/resources/js/approval_request_form_adjust.js"></script>
 <script src="/resources/js/approval_request_save.js"></script>
 <script src="/resources/js/approval_write_line_parent.js"></script>
+<script src="/resources/js/approval_write_line_child.js"></script>
+
 <script src="/resources/js/approval_write_delete.js"></script>
 <script src="/resources/js/approval_request.js"></script>
 
 <script src="/resources/js/approval_request_write.js"></script>
+
 <script>
     //모델앤뷰로 받은 파라메터
     console.log("${form_idx}");

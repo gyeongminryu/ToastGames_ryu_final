@@ -56,7 +56,10 @@ public class ApprovalService {
 	public List<Map<String,Object>> team_allempl(int team_idx) {
 		return approvalDAO.team_allempl(team_idx);
 	}
+	public List<Map<String,Object>> approval_company_get_allempl() {
 
+		return approvalDAO.approval_company_get_allempl();
+	}
 
 
 	//내가 보낸 업무 목록 조회

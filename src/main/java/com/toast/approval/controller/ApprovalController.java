@@ -119,6 +119,18 @@ public class ApprovalController {
 		return data;
 	}
 
+
+	//회사내 모든 사원 가져오기
+	@RequestMapping (value="/approval_company_get_allempl.ajax")
+	@ResponseBody
+	public Map<String,Object> approval_company_get_allempl(){
+		Map<String,Object> data = new HashMap<>();
+		data.put("company_empl",approvalService.approval_company_get_allempl());
+		return data;
+	}
+
+
+
 	/*내가 보낸 결재 목록 조회*/
 	@GetMapping (value="/approval_send_list.go")
 	public String approval_sent_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,

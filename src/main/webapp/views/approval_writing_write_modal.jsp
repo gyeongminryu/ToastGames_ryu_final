@@ -5,6 +5,9 @@
 
 <!-- 결재선 선택하기 -->
 <div class="tst_modal tst_modal_wide tst_modal_select">
+    <%--결재선 step 받아오는 것--%>
+    <input type="hidden" name="tst_modal_param" id="tst_modal_param" value="" />
+
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">결재선 선택하기</h1>
@@ -25,57 +28,7 @@
                         </thead>
 
                         <!-- 부서 목록 출력 -->
-                        <tbody class="tst_pointer">
-                        <tr>
-                            <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
-                            <!-- 부서 내 직원을 출력하는 함수를 입력하세요 --><td onclick="{함수}" class="tst_pointer">{부서명}</td>
-                        </tr>
-
-                        <!-- 팀 목록 출력 -->
-                        <tr class="disp_hide">
-                            <td></td>
-                            <td>
-                                <table class="tst_table tst_table_in_table table_align_left table_no_padding">
-                                    <tbody>
-                                    <tr>
-                                        <!-- 팀 내 직원을 출력하는 함수를 입력하세요 --><td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    <tr>
-                                        <td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    <tr>
-                                        <td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <!-- //팀 목록 출력 -->
-
-                        <!-- 예시 -->
-                        <tr>
-                            <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
-                            <td onclick="{함수}">{부서명}</td>
-                        </tr>
-                        <tr class="disp_hide">
-                            <td></td>
-                            <td>
-                                <table class="tst_table tst_table_in_table table_align_left table_no_padding">
-                                    <tbody>
-                                    <tr>
-                                        <td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    <tr>
-                                        <td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    <tr>
-                                        <td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <!-- //예시 -->
+                        <tbody class="tst_pointer" id = "all_dept_wrapper">
 
                         </tbody>
                         <!-- //부서 목록 출력 -->
@@ -112,11 +65,10 @@
                             <th colspan="2">직원 선택</th>
                         </tr>
                         </thead>
-                        <tbody class="tst_pointer">
+                        <tbody class="tst_pointer" id = "empl_wrapper">
 
                         <!-- 직원 정보 -->
-                        <tr>
-                            <!-- 직원을 결재선 혹은 참조에 추가하는 함수를 입력하세요 --><tr onclick="{함수}">
+                        <tr onclick="{함수}">
                             <td class="td_align_top td_no_padding">
                                 <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                             </td>
@@ -127,28 +79,6 @@
                         </tr>
                         <!-- //직원 정보 -->
 
-                        <!-- 예시 -->
-                        <tr>
-                            <tr onclick="{함수}">
-                            <td class="td_align_top td_no_padding">
-                                <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                            </td>
-                            <td>
-                                <p>{직원명 (부서/직급)}</p>
-                                <p class="min font_subtle">{직책}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                        <tr onclick="{함수}">
-                            <td class="td_align_top td_no_padding">
-                                <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                            </td>
-                            <td>
-                                <p>{직원명 (부서/직급)}</p>
-                                <p class="min font_subtle">{직책}</p>
-                            </td>
-                        </tr>
-                        <!-- //예시 -->
 
                         </tbody>
                     </table>
@@ -156,7 +86,7 @@
             </div>
         </div>
         <div class="tst_modal_footer">
-            <button onclick="<!-- 직원을 결재선에 등록하는 함수를 입력하세요 -->" class="btn_primary">결재선 등록하기</button>
+            <button onclick="approval_send_line()" class="btn_primary">결재선 등록하기</button>
             <button onclick="tst_modal_close('tst_modal_select')" class="btn_secondary">이전 화면으로 돌아가기</button>
         </div>
     </div>
@@ -203,7 +133,7 @@
             <div class="tst_modal_footer">
                 <div class="tst_flex">
                     <div class="tst_col6">
-                        <!-- 상신 경로를 입력하세요 --><button type="submit" onclick="location.href='/approval_sent_detail?appr_idx='" class="btn_primary btn_full">상신하기</button>
+                        <!-- 상신 경로를 입력하세요 --><button type="submit" onclick="approval_request()" class="btn_primary btn_full">상신하기</button>
                     </div>
                     <div class="tst_col6">
                         <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_modal_select')">취소하기</button>
@@ -236,7 +166,7 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <!-- 삭제 경로를 입력하세요 --><button onclick="location.href='/approval_writing_list'" class="btn_primary btn_full">삭제하기</button>
+                    <button onclick="approval_write_delete()" class="btn_primary btn_full">삭제하기</button>
                 </div>
                 <div class="tst_col6">
                     <button onclick="tst_modal_close('tst_modal_cancel')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
@@ -249,4 +179,5 @@
 <!-- //취소하기 -->
 
 <script src="resources/js/module_modal.js"></script>
-<script src="resources/js/approval_request_write.js"></script>
+<script src="/resources/js/approval_write_line_child.js"></script>
+<script src="/resources/js/approval_write_line_parent.js"></script>
