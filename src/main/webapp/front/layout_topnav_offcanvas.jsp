@@ -179,3 +179,5 @@
     <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_delete_all')"></div>
 </div>
 <!-- //인계하기 -->
+
+<script src="resources/js/module_modal.js"></script>
