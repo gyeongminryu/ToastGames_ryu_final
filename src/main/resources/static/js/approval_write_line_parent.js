@@ -6,7 +6,7 @@ var win;
 //console.log("참조 count 준비? :",refer_count);
 
 
-function approval_line_window(step){
+/*function approval_line_window(step){
     console.log("결재 step",step);
 
 
@@ -14,7 +14,9 @@ function approval_line_window(step){
     //encodeURIComponent
     win = window.open('/approval_list.go?step='+ encodeURIComponent(step),'approval_list','height=300,left=100,top=100');
 
-}
+}*/
+
+
 
 //자식창에서 받은 값을 토대로 이름 및 직급/직책 가져와서 보여주기
 function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i,position_n,step,selected){
@@ -35,7 +37,7 @@ function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i
     console.log(selected);
     
     //step이 0이 아닐 때는 approval에 추가
-    if(step !=0){
+    if(step !==0){
         if(selected === 1){
             content = empl_n +'('+dept_n +'/'+position_n+')';
 
@@ -55,7 +57,8 @@ function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i
                 if(document.getElementById('approval_line'+step_num).innerHTML!==''){
                     console.log(document.getElementById('approval_line'+step_num).innerHTML);
                     var approval_step_change_alert = step+'차 결재선을 지정하지 않아,'+ step_num+'차 결재선에 있던 결재자로 대체됩니다.';
-                    win.approval_step_change_alert(approval_step_change_alert);
+                    //win.approval_step_change_alert(approval_step_change_alert);
+                    alert(approval_step_change_alert);
                     //만약 다음에 있는 값의 html이 비지 않았다면 옮기기
                     document.getElementById('approval_line'+step).innerHTML = document.getElementById('approval_line'+step_num).innerHTML;
                     document.getElementById('empl_line'+step).value =document.getElementById('empl_line'+step_num).value;
@@ -82,24 +85,26 @@ function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i
 
             }
         }
-    }else{
-        //refer_count 없애기
-        content ='';
+    }else {
+        /*//refer_count 없애기
+        content = '';
         //step이 0일 때는 참조에 추가
-        content += '<div class ="referrer_element">참조<div class="referrer">'+empl_n+'('+dept_n+'/'+position_n+')'+'</div>';
-        content += ' <input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="'+empl_i+'"/>'
+        content += '<div class ="referrer_element">참조<div class="referrer">' + empl_n + '(' + dept_n + '/' + position_n + ')' + '</div>';
+        content += ' <input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="' + empl_i + '"/>'
         //삭제 버튼
-        content+='<div class="delete_refer" onclick="delete_refer(this)">제외하기</div></div>';
+        content += '<div class="delete_refer" onclick="delete_refer(this)">제외하기</div></div>';*/
+
+        content = '<tr class="referrer_element"><th>참조</th><td className="td_align_left">'+ empl_n + '(' + dept_n + '/' + position_n + ')' + '</td><input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="' + empl_i + '"/><td><button type="button" onclick="delete_refer(this)" class="btn_primary btn_min">제외하기</button></td></tr>';
+
         console.log(content);
 
-        $('#referrer_list').append(content);
 
-        //refer_count++;
+        $('#referrer_list').append(content);
 
     }
 }
 
-function delete_refer(evt){
+function delete_refer(evt) {
     //var referrer_element = '#referrer_element'+ count;
     $(evt).closest('.referrer_element').remove();
 }

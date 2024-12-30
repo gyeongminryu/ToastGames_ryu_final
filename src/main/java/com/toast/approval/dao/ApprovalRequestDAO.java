@@ -117,10 +117,4 @@ public interface ApprovalRequestDAO {
 
 
 
- /*   //임시저장 혹은 수정할 때 이전 파일 삭제
-    int find_previous_file(String docIdx);
-    void delete_previous_file(String file_key);*/
-
-    /*상신*/
-
 }

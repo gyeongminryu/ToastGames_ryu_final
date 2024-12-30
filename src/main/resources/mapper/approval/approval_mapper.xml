@@ -49,6 +49,14 @@
         where a.dept_idx = #{team_idx};
     </select>
 
+    <!--모든 회사 사원 가져오기-->
+    <select id="approval_company_get_allempl" resultType="Map">
+        SELECT a.dept_idx,dp.dept_name, e.empl_idx,e.empl_name,p.position_idx,p.position_name,d.duty_idx,d.duty_name from employee e
+       join appointment a on e.appolast_idx = a.appo_idx
+       join position_ p on p.position_idx = a.position_idx
+       join duty d on d.duty_idx = a.duty_idx
+       join department dp on dp.dept_idx =a.dept_idx
+    </select>
 
     <!--내가 보낸 목록 조회 시 데이터 전달-->
     <!--보낸 목록 있는지 조회-->
