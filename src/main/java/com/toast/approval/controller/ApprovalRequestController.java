@@ -52,7 +52,7 @@ public class ApprovalRequestController {
 		model.addAttribute("doc_idx", doc_idx);
 		model.addAttribute("form_idx", form_idx);
 
-		return "approval_write";
+		return "approval_writing_write";
 	}
 
 
