@@ -127,7 +127,7 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="4">근태 및 연차</th>
+                                <th colspan="4">근태<!-- 및 연차 --></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -137,12 +137,12 @@
                                 <th class="td_bg_subtle">초과 근무 여부</th>
                                 <td>대상 아님|초과 근무중</td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <th class="td_bg_subtle">잔여 연차</th>
                                 <td>{잔여 연차}/15개</td>
                                 <th class="td_bg_subtle">연차 초기화 일시</th>
                                 <td>{내년}-01-01 00:00</td>
-                            </tr>
+                            </tr> -->
                             </tbody>
                             <tfoot>
                             <tr>
