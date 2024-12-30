@@ -30,7 +30,7 @@
           <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_send_list.go'">
             <h1>내가 보낸 업무 요청</h1>
           </li>
-          <li class="tst_title_item" onclick="location.href='/approval_writing_list'">
+          <li class="tst_title_item" onclick="location.href='/approval_writing_list.go'">
             <h1>작성중인 문서</h1>
           </li>
         </ul>
@@ -143,6 +143,8 @@
                             <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}'" class="tst_pointer">${list.doc_subject}</span>
                           </c:otherwise>
                         </c:choose>
+
+
                       </c:when>
                     </c:choose>
                   </td>

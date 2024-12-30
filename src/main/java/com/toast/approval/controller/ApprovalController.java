@@ -21,8 +21,10 @@ public class ApprovalController {
 
 
 	//세션 처리
-	int empl_idx = 10024;
+	//보낸 + 작성한
+	//int empl_idx = 10024;
 
+	int empl_idx = 10024;
 
 	public ApprovalController(ApprovalService approvalService) {
 		this.approvalService = approvalService;
@@ -146,10 +148,8 @@ public class ApprovalController {
 									 	@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model){
 		//세션 처리
 		List<Map<String,Object>> received_list = new ArrayList<>();
-		logger.info(filter);
-		logger.info(type);
-
-		//logger.info("type:{}",type);
+		logger.info("filter:{}",filter);
+		logger.info("type:{}",type);
 
 		if(filter.equals("전체") && type.equals("전체")){
 			logger.info("전체 받은 목록 조회");
@@ -159,9 +159,21 @@ public class ApprovalController {
 
 		received_list=approvalService.approval_received_list(empl_idx,filter,type);
 		//empl_idx 전달 → 보낸 문서가 있는지 확인
-		model.addAttribute("received_list",received_list);
+		model.addAttribute("received_lists",received_list);
 		return "approval_received_list";
 	}
+
+
+	/*작성 중인 목록 조회*/
+	@GetMapping (value = "/approval_writing_list.go")
+	public String approval_writing_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
+										@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model){
+		List<Map<String,Object>> writing_list = approvalService.get_approval_writing_list(empl_idx,filter,type);
+		model.addAttribute("writing_lists",writing_list);
+		return "approval_writing_list";
+	}
+
+
 
 
 

@@ -7,6 +7,8 @@ function approval_list_filter(filter,type,list_type,evt){
         location.href = '/approval_send_list.go?filter=' + filter + '&type=' + type;
     }else if(list_type==='received'){
         location.href = '/approval_received_list.go?filter=' + filter + '&type=' + type;
+    }else if(list_type==='writing'){
+        location.href = '/approval_writing_list.go?filter=' + filter + '&type=' + type;
     }
 }
 

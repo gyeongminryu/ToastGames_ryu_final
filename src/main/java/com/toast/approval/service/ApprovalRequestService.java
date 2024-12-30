@@ -1,5 +1,6 @@
 package com.toast.approval.service;
 
+import com.toast.approval.dao.ApprovalDAO;
 import com.toast.approval.dto.ApprovalRequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,7 @@ public class ApprovalRequestService {
 				//1.form_idx의 결재선 가져오기
 				List<Map<String,Object>> g_approval_lines = approvalRequestDAO.get_g_approval_line(form_idx);
 				//2. 사원의 부서 가져오기
-				int dept_idx = approvalRequestDAO.doc_dept_idx(empl_idx);
+				int dept_idx = (int) approvalRequestDAO.doc_dept_info(empl_idx).get("dept_idx");
 				logger.info("본인 부서 idx:{}",dept_idx);
 
 				//3.결재선 + doc_idx 저장하기
@@ -197,6 +198,7 @@ public class ApprovalRequestService {
 
 		save_approval_line_initial(approval_initial_write_param);
 	}
+
 	//결재선 최초 저장해주는 메서드
 	public void save_approval_line_initial(Map<String,Object> approval_initial_write_param){
 		logger.info("결재선 최초 저장");
@@ -204,19 +206,60 @@ public class ApprovalRequestService {
 	}
 
 	//1차 저장한 문서 가져오기
-	public Map<String, Object> doc_get(int docIdx, int empl_idx) {
-		Map<String, Object> map = approvalRequestDAO.doc_get(docIdx);
+	public Map<String, Object> doc_get(int doc_idx, int empl_idx) {
+		Map<String, Object> map = approvalRequestDAO.doc_get(doc_idx);
 		//문서양식에 이름이랑 부서 넣기 위함
 		map.put("empl_name", approvalRequestDAO.doc_empl_name(empl_idx));
-		map.put("dept_idx",approvalRequestDAO.doc_dept_idx(empl_idx));
+		map.put("dept_idx",approvalRequestDAO.doc_dept_info(empl_idx).get("dept_idx"));
+		map.put("dept_name",approvalRequestDAO.doc_dept_info(empl_idx).get("dept_name"));
+
 		return map;
 	}
 
 	//1차로 저장된 결재 라인 가져오기
-	public List<Map<String,Object>> doc_line_get(int doc_idx) {
-		return approvalRequestDAO.doc_line_get(doc_idx);
+	public Map<String,Object> doc_appr_line_get(int doc_idx) {
+		Map<String,Object> data = new HashMap<>();
+
+		int changed=0;
+		//결재 라인 가져오기 -  결재 라인의 empl_idx 기반으로 부서 및 직급, 직책 정보가 같지 않으면 update
+		List<Map<String,Object>> doc_line_changed = approvalRequestDAO.doc_appr_line_get(doc_idx);
+		for(Map<String,Object> doc_line : doc_line_changed){
+			Map<String,Object> line_empl_info = approvalRequestDAO.get_empl_info((int) doc_line.get("empl_idx"));
+			//해당 empl_idx의 부서 / 직급 / 직책이 같지 않으면
+			int line_order = (int) doc_line.get("line_order");
+			logger.info("doc_line:{}",doc_line);
+			logger.info("line_empl_info:{}",line_empl_info);
+
+			boolean dept_same = line_empl_info.get("dept_idx").equals(doc_line.get("dept_idx"));
+			boolean position_same = line_empl_info.get("position_idx").equals(doc_line.get("position_idx"));
+			boolean duty_same = line_empl_info.get("duty_idx").equals(doc_line.get("duty_idx"));
+
+			if(!dept_same||!position_same||!duty_same){
+				line_empl_info.put("line_order",line_order);
+				line_empl_info.put("doc_idx",doc_idx);
+
+				if(approvalRequestDAO.doc_line_changed_update(line_empl_info)>0){
+					logger.info("인사 변동 있었음");
+					changed++;
+				}
+			}
+
+
+		}
+
+		data.put("doc_lines",approvalRequestDAO.doc_appr_line_get(doc_idx));
+		if(changed>0){
+			data.put("doc_alert","인사변동 이력이 있는 결재자가 있습니다. 결재선을 확인해주세요.");
+		}
+
+		return data;
 	}
 
+	public Map<String, Object> doc_refer_line_get(int doc_idx) {
+		Map<String,Object> data = new HashMap<>();
+		data.put("refer_line",approvalRequestDAO.doc_refer_line_get(doc_idx));
+		return data;
+	}
 
 
 	//작성한 문서 저장하기
@@ -458,7 +501,7 @@ public class ApprovalRequestService {
 
 
 			//2. 결재 라인들 가져오기
-			List<Map<String,Object>> approval_lines = approvalRequestDAO.doc_line_get(Integer.parseInt(doc_idx));
+			List<Map<String,Object>> approval_lines = approvalRequestDAO.doc_appr_line_get(Integer.parseInt(doc_idx));
 			//3. 결재 라인에 먼저 결재자 내용 인서트 시키기 위해 분리할 때
 			int appr_receiver_idx = 0;
 			int appr_order = 0;
@@ -493,4 +536,6 @@ public class ApprovalRequestService {
 		return success;
 
 	}
+
+
 }

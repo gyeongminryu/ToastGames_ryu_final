@@ -4,7 +4,7 @@ var search = document.getElementById('search');
 
 search.addEventListener('keyup',function(e){
 
-    if(e.key == 'Enter'){ //keyCode 대신 대체
+    if(e.key === 'Enter'){ //keyCode 대신 대체
         var search_val = $('#search').val();
         console.log(search_val);
 
@@ -18,7 +18,13 @@ search.addEventListener('keyup',function(e){
                 approval_form_search(search_val);
                 break;
             case '/approval_sent_list.go':
-                approval_sent_list(search_val);
+                approval_list(search_val,'sent');
+                break;
+            case '/approval_received_list.go':
+                approval_list(search_val,'received');
+                break;
+            case '/approval_writing_list.go':
+                approval_list(search_val,'writing');
                 break;
         }
     }
@@ -44,9 +50,9 @@ function approval_form_search(search_val){
 
 
 //내가 보낸 결재 검색 함수
-function approval_sent_list(search_val){
+function approval_list(search_val,list_type){
     console.log("내가 보낸 결재 검색 함수 실행!",search_val);
 
-    approval_sent_list_filter(search_val,"검색");
+    approval_list_filter(search_val,"검색",);
 
 }
