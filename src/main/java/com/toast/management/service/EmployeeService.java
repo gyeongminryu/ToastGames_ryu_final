@@ -152,28 +152,27 @@ public class EmployeeService {
 			// department의 head_idx가 비어있지 않으면 - 부서장이 있는 경우라면 
 			DepartmentDTO dept =deptDAO.getdeptinfo(dept_idx);			
 			int head_idx = dept.getDept_head_idx();
-			
-			if(head_idx != 0) { // 이전 부서장이 존재한다면
+			String headidx = String.valueOf(head_idx);
+			if(head_idx != 0 && headidx != empl_idx) { // 이전 부서장이 존재한다면
 				AppointmentDTO appolasthead = new AppointmentDTO();
-				String headidx = String.valueOf(head_idx);
+				
 				appolasthead = employeeDAO.employeeAppolast(headidx);
 				int head_appo_idx = appolasthead.getAppo_idx();
 				// 직위변경 넣기 
 				String headdudy = String.valueOf(20);
+				// 가발령 상태로 변환 ?
+				dept_idx = "1";
 				// 
 				employeeDAO.employeeAppoDo(headidx,dept_idx,position_idx,headdudy,movein_date,empl_job);
 				// 전출날짜 넣기
 				employeeDAO.employeeTransfer(head_appo_idx,movein_date);
+				// 부서장 부서테이블에서 퇴출
+				employeeDAO.deptheadmoveout(headidx);
 			}
-
 			// department 테이블에 부서장 업데이트
-			employeeDAO.deptHeadAdd(dept_idx,empl_idx);
-					
+			employeeDAO.deptHeadAdd(dept_idx,empl_idx);					
 		} 
-		
-		
-		
-		
+	
 	}// public void employeeAppoDo(String empl_idx, String dept_idx, String position_idx, String duty_idx,String movein_date)
 	
 	// 직원 퇴사, 근무, 휴직 처리
@@ -265,7 +264,7 @@ public class EmployeeService {
 			
 		}
 		return success;
-	}
+	} // public boolean emplFileDel(String new_filename)
 
 	public List<EmployeeDetailDTO> getEmployeeList() {
 		

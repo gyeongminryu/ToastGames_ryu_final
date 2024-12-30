@@ -2,7 +2,11 @@ package com.toast.management.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -50,7 +54,7 @@ public class DepartmentService {
 		departmentDAO.organizationAdd(param);
 	//	departmentDAO.organizationDudyAdd(duty_name);
 	
-	}
+	} // public void organizationAdd(Map<String, String> param)
 
 	public List<DutyDTO> getdudy() {
 		
@@ -80,7 +84,7 @@ public class DepartmentService {
 		}
 		
 		return dept_list;
-	}
+	} // public List<DepartmentDTO> getdepthigh()
 
 	public DepartmentDTO getdeptinfo(String dept_idx) {
 		
@@ -127,7 +131,8 @@ public class DepartmentService {
 	
 		return dept;
 	} // public List<DeptInfoTreeDTO> getdeptTree()
-
+	
+	// 부서장 변경이력 서비스
 	public List<DeptHistoryDTO> getdeptheadhistory(String dept_idx) {
 		
 		
@@ -151,7 +156,7 @@ public class DepartmentService {
 		
 		
 		return dept_his;
-	}
+	} // public List<DeptHistoryDTO> getdeptheadhistory(String dept_idx)
 
 	public void organizationDetailGo(String dept_idx, Model model) {
 		// 부서 히스토리 정보
@@ -188,7 +193,7 @@ public class DepartmentService {
 				model.addAttribute("deptfirstdate",dept_his);
 				model.addAttribute("deptcnt",dept_member_cnt);
 		
-	}
+	} // public void organizationDetailGo(String dept_idx, Model model)
 
 	public List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx) {
 		
@@ -203,7 +208,7 @@ public class DepartmentService {
 		}
 		
 		return  dept_search_list;
-	}
+	} // public List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx)
 
 	public CompInfo getcompinfo() {
 		
@@ -219,11 +224,62 @@ public class DepartmentService {
 		
 		String file_key = UUID.randomUUID().toString();
 		param.put("file_key", file_key);
+
+		// 사장 인사 발령하기
+		String ceo_idx = param.get("ceo_idx");
+		String dept_idx = "2"; // 대표 부서 idx 
+		String position_idx = "7"; // 임원 idx
+		String duty_idx = "2";
+		EmployeeDTO employee = employeeDAO.employeeDetail(ceo_idx);
+		String appo_idx = employee.getAppolast_idx();
+		String empl_job = "사장이올시다";
+		 // 포맷 정의
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");       
+        // 현재 시간 가져오기
+        Date now = new Date();
+        // 문자열로 포맷팅
+        String formattedTime = formatter.format(now);
+        // 다시 Date 객체로 변환
+      //  Date movein_date = formatter.parse(formattedTime);
+        int before_ceo = departmentDAO.getcompinfo().getCeo_idx();
+        String before_ceo_idx = String.valueOf(before_ceo);
+        EmployeeDTO beforeceo_info = employeeDAO.employeeDetail(before_ceo_idx);
+		String beforeceo_appo = beforeceo_info.getAppolast_idx();
+        
 		
-		departmentDAO.companyinfoUpdateDo(param);
+		if(!ceo_idx.equals(before_ceo_idx)) {
+        
+		if(appo_idx==null) { // 이전 인사발령 이력이 없으면 
+			employeeDAO.employeeAppoDo(ceo_idx,dept_idx,position_idx,duty_idx,formattedTime,empl_job);
+		}
+		else { // 인사발령이력이 있으면
+			int appoidx = Integer.parseInt(appo_idx);
+			employeeDAO.employeeAppoDo(ceo_idx,dept_idx,position_idx,duty_idx,formattedTime,empl_job);
+			// 전출날짜 넣기
+			employeeDAO.employeeTransfer(appoidx,formattedTime);
+		}
 		
+		if(employeeDAO.deptheadcheck(ceo_idx)>0) { // 새 사장이 이전부서의 부서장이면
+			// 이전 부서의 head_idx를 null로 바꿈
+			employeeDAO.deptheadmoveout(ceo_idx);
+		}
+	
+		if(before_ceo!= 0) { // 사장이 이미 존재한다면
+			employeeDAO.deptheadmoveout(before_ceo_idx); // 대표부서에서 이전 부서장 null 처리
+			dept_idx = "1"; // 부서 없음 처리
+			duty_idx = "1"; // 직책 없음 처리
+			empl_job = "사장직위 변경"; // 
+			
+			int beforeceoappo = Integer.parseInt(beforeceo_appo);
+			employeeDAO.employeeAppoDo(before_ceo_idx,dept_idx,position_idx,duty_idx,formattedTime,empl_job);
+			// 전출날짜 넣기
+			employeeDAO.employeeTransfer(beforeceoappo,formattedTime);
+		}
+	} // if(!ceo_idx.equals(before_ceo_idx)) 
 		
-	}
+			// 회사정보 업데이트 처리
+			departmentDAO.companyinfoUpdateDo(param);
+	} // public void companyinfoUpdateDo(Map<String, String> param)
 	
 	// 회사 직인 등록
 		public void compStampUpload(MultipartFile singleFile) {
@@ -250,7 +306,7 @@ public class DepartmentService {
 			        throw new RuntimeException("파일 업로드 실패: " + e.getMessage());
 			    }
 			
-		}
+		} // public void compStampUpload(MultipartFile singleFile)
 		
 		// 회사 첨부 파일 목록 가져오기
 		public List<FileDTO> getcompfile(String file_key) {
@@ -308,7 +364,7 @@ public class DepartmentService {
 				
 			}
 			return success;
-		}
+		} // public boolean compStampDel(String new_filename)
 		
 
 		
@@ -316,3 +372,4 @@ public class DepartmentService {
 		
 
 }
+
