@@ -3,14 +3,7 @@
 
 window.onload = function initialize(){
     //문서 가져오기
-
         approval_doc_get();
-
-        //저장된 결재선 가져오기
-        approval_line_get();
-        //저장된 참조선 가져오기
-        refer_line_get();
-
 }
 
 //저장된 문서 가져오는 함수
@@ -47,17 +40,19 @@ function approval_doc_get(){
            // $('input[name="doc_content_sub"]').val(data.doc_content_sub);
 
             //퀼 에디터에 context 넣는 법
-            quill.setContents([
+            /*quill.setContents([
                 { insert: data.doc_content_sub },
-            ]);
-
-            //참조선도 있다면 가져오기
-
+            ]);*/
 
             //임시저장 setInterval 함수
             setInterval(approval_write_temporal_save, 10000);
             approval_content_edit();
 
+            //저장된 결재선 가져오기
+            approval_line_get();
+
+            //저장된 참조선 가져오기
+            refer_line_get();
         },
         error : function(e){
             console.log(e);
@@ -206,20 +201,21 @@ function refer_line_get(){
 function approval_draw_refer_line(datas){
     console.log(datas);
     content ='';
-    for(var data of datas){
+    for(var data of datas) {
         console.log(data);
 
-        //step이 0일 때는 참조에 추가
-        content += '<div class ="referrer_element">참조<div class="referrer">'+data.empl_name+'('+data.dept_name+'/'+data.position_name+')'+'</div>';
-        content += ' <input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="'+data.empl_idx+'"/>'
+
+        content = '<tr><th class="referrer_element">참조</th><td className="td_align_left referrer">'+ data.empl_name + '(' + data.dept_name + '/' + data.position_name + ')' +'</td><input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="' + data.empl_idx + '"/><td><button type="button" onClick="delete_refer(this)" class="btn_primary btn_min">제외하기</button></td></tr>'
+       /* //step이 0일 때는 참조에 추가
+        content += '<div class ="referrer_element">참조<div class="referrer">' + data.empl_name + '(' + data.dept_name + '/' + data.position_name + ')' + '</div>';
+        content += ' <input type="hidden" name = "r_empl_line" id = "r_empl_line" value ="' + data.empl_idx + '"/>'
         //삭제 버튼
-        content+='<div class="delete_refer" onclick="delete_refer(this)">제외하기</div></div>';
+        content += '<div class="delete_refer" onclick="delete_refer(this)">제외하기</div></div>'*/;
         console.log(content);
 
         $('#referrer_list').append(content);
 
     }
-
 
 
 }
