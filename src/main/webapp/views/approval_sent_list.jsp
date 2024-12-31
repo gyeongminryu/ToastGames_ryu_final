@@ -131,16 +131,16 @@
 
                     <c:choose>
                       <c:when test="${list.doc_subject == null}">
-                      <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}'" class="tst_pointer">제목 없음</span>
+                      <span onclick="location.href='/approval_sent_detail.go?doc_idx= ${list.doc_idx} &type=\'sent\''" class="tst_pointer">제목 없음</span>
                       </c:when>
 
                       <c:when test="${list.doc_subject != null}">
                         <c:choose>
                           <c:when test="${list.doc_subject == '결재가 최종 승인되었습니다.' || list.doc_subject =='결재가 반려되었습니다.'}">
-                          <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}'" class="tst_pointer font_subtle">${list.doc_subject}</span>
+                          <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}&type=sent'" class="tst_pointer font_subtle">${list.doc_subject}</span>
                           </c:when>
                           <c:otherwise>
-                            <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}'" class="tst_pointer">${list.doc_subject}</span>
+                            <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}&type=sent'" class="tst_pointer">${list.doc_subject}</span>
                           </c:otherwise>
                         </c:choose>
 

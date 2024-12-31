@@ -24,7 +24,7 @@ public class ApprovalController {
 	//보낸 + 작성한
 	//int empl_idx = 10024;
 
-	int empl_idx = 10024;
+	int empl_idx = 10022;
 
 	public ApprovalController(ApprovalService approvalService) {
 		this.approvalService = approvalService;
@@ -185,6 +185,18 @@ public class ApprovalController {
 		return "approval_writing_list";
 	}
 
+
+	/*detail 상세보기*/
+	@GetMapping (value={"/approval_sent_detail.go","/approval_received_detail.go"})
+	public String approval_received_detail(int doc_idx,String type, Model model){
+		logger.info("doc_idx:{}", doc_idx);
+		logger.info("type:{}", type);
+		logger.info("approval_"+type+"_detail");
+		approvalService.get_all_detail(doc_idx,empl_idx,model);
+
+		//보낸 type에 따라 detail 경로 동적으로 생성
+		return "approval_"+type+"_detail";
+	}
 
 
 
