@@ -121,7 +121,7 @@
                                 <tbody>
                                 <tr>
                                     <th>1차 결재</th>
-                                    <td class="td_align_left" id="approval_line1">{직원명 (부서/직급)}</td>
+                                    <td class="td_align_left" id="approval_line1"></td>
                                     <input type="hidden" name = "empl_line1" id="empl_line1"/>
                                     <input type="hidden" name = "dept_line1" id="dept_line1"/>
                                     <input type="hidden" name = "duty_line1" id="duty_line1"/>
@@ -131,7 +131,7 @@
                                 </tr>
                                 <tr>
                                     <th>2차 결재</th>
-                                    <td class="td_align_left" id="approval_line2">{직원명 (부서/직급)}</td>
+                                    <td class="td_align_left" id="approval_line2"></td>
                                     <input type="hidden" name = "empl_line2"  id = "empl_line2"/>
                                     <input type="hidden" name = "dept_line2" id = "dept_line2"/>
                                     <input type="hidden" name = "duty_line2" id = "duty_line2"/>
@@ -142,7 +142,7 @@
                                 </tr>
                                 <tr>
                                     <th>최종 결재</th>
-                                    <td class="td_align_left" id="approval_line3">{직원명 (부서/직급)}</td>
+                                    <td class="td_align_left" id="approval_line3"></td>
                                     <input type="hidden" name = "empl_line3" id = "empl_line3"/>
                                     <input type="hidden" name = "dept_line3" id = "dept_line3"/>
                                     <input type="hidden" name = "duty_line3" id = "duty_line3"/>
