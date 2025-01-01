@@ -80,7 +80,7 @@
         <if test="doc_content_sub!=''">doc_content_sub,</if>
         <if test="form_idx!=''">form_idx,</if>
         <if test="doc_subject!=''">doc_subject,</if>
-        <if test="doc_end_date!=''">doc_end_date</if>
+        <if test="doc_end_date!=''"> DATE_FORMAT(doc_end_date, '%Y-%m-%d %H:%i:%s') AS doc_end_date</if>
         FROM document WHERE doc_idx = #{doc_idx}
     </select>
 

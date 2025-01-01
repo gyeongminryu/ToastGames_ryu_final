@@ -9,6 +9,9 @@
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
+    <%--폼 양식 css--%>
+    <link rel="stylesheet" href="/resources/css/approval_form.css" />
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -273,4 +276,6 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
+<script src="resources/js/approval_detail.js"></script>
+
 </html>

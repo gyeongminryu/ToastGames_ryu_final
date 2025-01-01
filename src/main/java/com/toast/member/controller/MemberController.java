@@ -262,32 +262,39 @@ public class MemberController {
 	}
 
 	@ResponseBody
+	@PostMapping(value = "/checkCurrentPw.ajax")
+	public Map<String, String> checkCurrentPw(@RequestParam("currentPassword") String currentPw, HttpSession session) {
+	    String id = (String) session.getAttribute("loginId");
+	    boolean isValid = memberService.checkCurrentPassword(id, currentPw);
+
+	    Map<String, String> response = new HashMap<>();
+	    if (isValid) {
+	        response.put("status", "success");
+	    } else {
+	        response.put("status", "error");
+	    }
+	    return response;
+	}
+
+	@ResponseBody
 	@PostMapping(value = "/changePw.ajax") // 비밀번호 변경 처리 로직
 	public Map<String, String> changePw(HttpSession session, @RequestParam("currentPassword") String currentPw, @RequestParam("newPassword") String newPw, @RequestParam("confirmPassword") String confirmPw) {
 		Map<String, String> response = new HashMap<>();
 		String id = (String) session.getAttribute("loginId");
-		boolean isValidCurrentPassword = memberService.checkCurrentPassword(id, currentPw); // 사용자가 입력한 현재 비밀번호와 DB에 저장된 값 비교
-		if (!isValidCurrentPassword) {
-			response.put("status", "error"); // 상태가 error이다.
-			response.put("message", "기존 비밀번호를 확인하세요.");
-			return response;
-		}
+		
 		if (newPw == null || newPw.trim().isEmpty()) { // 사용자가 입력하지 않았을 경우.
 			response.put("status", "error");
-			response.put("message", "새 비밀번호를 입력하세요.");
 			return response;
 		}
 		if (!newPw.equals(confirmPw)) { // 새 비밀번호와 확인 비밀번호가 일치하는지 확인.
 			response.put("status", "error");
-			response.put("message", "새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
 			return response;
 		}
 		memberService.changePw(id, newPw); // 새 비밀번호로 변경.
 		response.put("status", "success"); 
-		response.put("message", "비밀번호가 성공적으로 변경되었습니다."); // 성공 메시지
 		return response;
 	}
-
+	
 	// 회원 정보 수정
 	@PostMapping(value = "/mypageUpdate.do")
 	public String mypageUpdate(@RequestParam("imageFile") MultipartFile file, MemberDTO memberDTO, HttpSession session, Model model) {
@@ -308,7 +315,7 @@ public class MemberController {
 		} else {
 			model.addAttribute("msg", "회원정보 수정이 실패했습니다.");
 		}
-		return "redirect:/myPage.go";
+		return "redirect:/mypage.go";
 	}
 	
 }

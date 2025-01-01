@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/work_record.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -21,7 +22,7 @@
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/board_list'">
-                        <h1>근태</h1>
+                        <h1>근태 관리</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->
@@ -33,8 +34,19 @@
                         <table class="tst_table table_align_left">
                             <colgroup>
                                 <col style="width: auto;" />
-                                <col style="width: auto;" />
                             </colgroup>
+                            <thead>
+                            <tr>
+                                <th>이번 주 근무 시간</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div class="work_record_week"></div>
+                                </td>
+                            </tr>
+                            </tbody>
                         </table>
                         <!-- //이번 주 근무 시간 -->
 
@@ -42,19 +54,448 @@
                     <div class="tst_col3">
 
                         <!-- 근무 시간 상세보기 -->
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
-                                <col style="width: auto;" />
+                                <col style="width: 130px;" />
                                 <col style="width: auto;" />
                             </colgroup>
+                            <thead>
+                            <tr>
+                                <th colspan="2">근무 시간 상세보기</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>총 근무 시간</th>
+                                <th>43/52시간</th>
+                            </tr>
+                            <tr>
+                                <th>필수 근무 시간</th>
+                                <td>40/40시간</td>
+                            </tr>
+                            <tr>
+                                <th>초과 근무 시간</th>
+                                <td>3/12시간</td>
+                            </tr>
+                            </tbody>
                         </table>
                         <!-- //근무 시간 상세보기 -->
 
                     </div>
                 </div>
 
+                <hr class="separator" />
+                <hr class="separator" />
+
                 <!-- 일일 근무 시간 -->
-                <img src="https://oopy.lazyrockets.com/api/v2/notion/image?src=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8e6609db-9ef5-437d-babf-1ccea19463fc%2FUntitled.png&blockId=798b2c27-4492-467c-acc7-371338597826" />
+                <table class="tst_table work_record_month table_align_left table_no_padding">
+                    <colgroup>
+                        <col style="width: 12%;" /><!-- 날짜 -->
+                        <col style="width: 10%;" /><!-- 출퇴근 시각 -->
+                        <col style="width: 6%;" /><!-- 업무 시간 -->
+                        <col style="width: 2%;" /><!-- 06:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 07:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 08:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 09:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 10:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 11:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 12:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 13:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 14:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 15:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 16:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 17:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 18:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 19:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 20:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 21:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 22:00 -->
+                        <col style="width: 2%;" />
+                        <col style="width: 2%;" /><!-- 23:00 -->
+                        <col style="width: 2%;" /><!-- 23:30 -->
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th colspan="39">일일 근무 시간</th>
+                    </tr>
+                    <tr class="tr_border_bottom">
+                        <td><h3>근무일</h3></td>
+                        <td><h3>출퇴근 시각</h3></td>
+                        <td class="td_border_right"><h3>근무 시간</h3></td>
+                        <td colspan="2">6</td>
+                        <td colspan="2">7</td>
+                        <td colspan="2">8</td>
+                        <td colspan="2">9</td>
+                        <td colspan="2">10</td>
+                        <td colspan="2">11</td>
+                        <td colspan="2">12</td>
+                        <td colspan="2">1</td>
+                        <td colspan="2">2</td>
+                        <td colspan="2">3</td>
+                        <td colspan="2">4</td>
+                        <td colspan="2">5</td>
+                        <td colspan="2">6</td>
+                        <td colspan="2">7</td>
+                        <td colspan="2">8</td>
+                        <td colspan="2">9</td>
+                        <td colspan="2">10</td>
+                        <td colspan="2">11</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <!-- 하루 기록 -->
+                    <tr>
+                        <td>{날짜}</td>
+                        <td>{출근 시각}~{퇴근 시각}</td>
+                        <td class="td_border_right">{근무 시간}</td>
+                        <td><div class="bg_work_over"></div></td><!-- 06:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 07:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 08:00 --><!-- 초과 근무 시간대는 클래스 'bg_work_over'로 표시합니다 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 09:00 --><!-- 근무한 시간대에는 td에 'td_bg_work' 클래스를 추가하세요 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 10:00 --><!-- 정상 근무 시간대는 클래스 'bg_work_ordinary'로 표시합니다 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 11:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td><!-- 12:00 --><!-- 점심 시간대는 클래스 'bg_work_lunch'로 표시합니다 -->
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 13:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 14:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 15:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 16:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 17:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td><!-- 18:00 -->
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 19:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 20:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 21:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 22:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 23:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                    </tr>
+                    <!-- // 하루 기록 -->
+
+                    <!-- 예시 -->
+                    <tr>
+                        <td>2024-11-29 (월)</td>
+                        <td>09:00~18:00</td>
+                        <td class="td_border_right">8시간</td>
+                        <td><div class="bg_work_over"></div></td><!-- 06:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 07:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 08:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 09:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 10:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 11:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td><!-- 12:00 -->
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 13:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 14:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 15:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 16:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 17:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 18:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 19:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 20:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 21:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 22:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 23:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                    </tr>
+                    <tr>
+                        <td>2024-11-30 (화)</td>
+                        <td>09:00~18:00</td>
+                        <td class="td_border_right">8시간</td>
+                        <td><div class="bg_work_over"></div></td><!-- 06:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 07:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 08:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 09:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 10:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 11:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td><!-- 12:00 -->
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 13:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 14:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 15:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 16:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 17:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 18:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 19:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 20:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 21:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 22:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 23:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                    </tr>
+                    <tr>
+                        <td>2024-12-01 (수)</td>
+                        <td>09:00~18:00</td>
+                        <td class="td_border_right">8시간</td>
+                        <td><div class="bg_work_over"></div></td><!-- 06:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 07:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 08:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 09:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 10:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 11:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td><!-- 12:00 -->
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 13:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 14:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 15:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 16:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 17:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 18:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 19:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 20:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 21:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 22:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 23:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                    </tr>
+                    <tr>
+                        <td>2024-12-02 (목)</td>
+                        <td>08:45~15:48</td>
+                        <td class="td_border_right">8시간 3분</td>
+                        <td><div class="bg_work_over"></div></td><!-- 06:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 07:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 08:00 -->
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 09:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 10:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 11:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td><!-- 12:00 -->
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 13:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 14:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 15:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 16:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 17:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td><!-- 18:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 19:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 20:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 21:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 22:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 23:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                    </tr>
+                    <tr>
+                        <td>2024-12-03 (금)</td>
+                        <td>10:00~19:24</td>
+                        <td class="td_border_right">8시간 24분</td>
+                        <td><div class="bg_work_over"></div></td><!-- 06:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 07:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 08:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_ordinary"></div></td><!-- 09:00 -->
+                        <td><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 10:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 11:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td><!-- 12:00 -->
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 13:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 14:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 15:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 16:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td><!-- 17:00 -->
+                        <td class="td_bg_work"><div class="bg_work_ordinary"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td><!-- 18:00 -->
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td><!-- 19:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 20:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 21:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 22:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 23:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="font_caution">2024-12-04 (토)</td><!-- 주말에는 클래스 'font_caution'을 추가하세요 -->
+                        <td>09:00~13:00</td>
+                        <td class="td_border_right">3시간</td>
+                        <td><div class="bg_work_over"></div></td><!-- 06:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 07:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 08:00 -->
+                        <td><div class="bg_work_over"></div></td><!-- 주말의 모든 시간은 초과근무 시간입니다 -->
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td><!-- 09:00 -->
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td><!-- 10:00 -->
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td><!-- 11:00 -->
+                        <td class="td_bg_work"><div class="bg_work_over"></div></td>
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td><!-- 12:00 -->
+                        <td class="td_bg_work"><div class="bg_work_lunch"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 13:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 14:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 15:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 16:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 17:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 18:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 19:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 20:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 21:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 22:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 23:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="font_caution">2024-12-05 (일)</td><!-- 주말에는 클래스 'font_caution'을 추가하세요 -->
+                        <td>없음</td>
+                        <td class="td_border_right">없음</td>
+                        <td><div class="bg_work_over"></div></td><!-- 06:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 07:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 08:00 -->
+                        <td><div class="bg_work_over"></div></td><!-- 주말의 모든 시간은 초과근무 시간입니다 -->
+                        <td><div class="bg_work_over"></div></td><!-- 09:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 10:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 11:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_lunch"></div></td><!-- 12:00 -->
+                        <td><div class="bg_work_lunch"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 13:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 14:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 15:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 16:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 17:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 18:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 19:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 20:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 21:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 22:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                        <td><div class="bg_work_over"></div></td><!-- 23:00 -->
+                        <td><div class="bg_work_over"></div></td>
+                    </tr>
+                    <!-- //예시 -->
+
+                    </tbody>
+                </table>
                 <!-- //일일 근무 시간 -->
 
             </div>
