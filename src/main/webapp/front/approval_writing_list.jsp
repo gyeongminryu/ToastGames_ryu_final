@@ -66,7 +66,7 @@
                         <!-- //게시물 분류 -->
 
                         <!-- 작성중인 문서 목록 -->
-                        <table class="tst_table approval_received_list">
+                        <table class="tst_table tr_hover_subtle approval_received_list">
                             <colgroup>
                                 <col style="width: 150px" />
                                 <col style="width: 150px" />

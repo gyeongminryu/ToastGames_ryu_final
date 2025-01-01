@@ -63,7 +63,7 @@
 
                             <!-- 부서 목록 (필터링) -->
                             <tr>
-                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
+                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
                                 <th class="td_no_padding">
                                     <span onclick="location.href='/board_list?'">{부서명}</span>
                                 </th>
@@ -94,7 +94,7 @@
 
                             <!-- 부서 목록 > 선택한 항목 (필터링) -->
                             <tr class="td_bg_medium">
-                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
+                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
                                 <th class="td_no_padding">
                                     <span onclick="location.href='/board_list?'">{분류명}</span>
                                 </th>
@@ -172,36 +172,32 @@
 
                             </div>
                         </div>
-                        <table class="tst_table table_no_padding">
+                        <table class="tst_table tr_hover_subtle table_no_padding">
                             <colgroup>
-                                <col style="width: 50px;" />
-                                <col style="width: 130px;" />
+                                <col style="width: 80px;" />
                                 <col style="width: 120px;" />
                                 <col style="width: auto;" />
                                 <col style="width: 120px;" />
                                 <col style="width: 100px;" />
                                 <col style="width: 120px;" />
                                 <col style="width: 100px;" />
-                                <col style="width: 74px;" />
                             </colgroup>
                             <thead>
                             <tr>
                                 <th>번호</th>
-                                <th>유관 부서</th>
                                 <th>문서 형식</th>
                                 <th>문서명</th>
                                 <th>작성자</th>
                                 <th>작성일</th>
                                 <th>최종 승인자</th>
                                 <th>최종 승인일</th>
-                                <th>열람 권한</th>
                             </tr>
                             </thead>
                             <tbody>
 
                             <!-- 검색되는 문서가 없을 경우 -->
                             <tr class="document_list_no_data disp_hide"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="6" class="td_no_data">
+                                <td colspan="7" class="td_no_data">
                                     <p><i class="bi bi-file-earmark-break"></i></p>
                                     <h3>검색 조건에 해당하는 문서가 없습니다.</h3>
                                 </td>
@@ -211,39 +207,37 @@
                             <!-- 문서 목록 > 열람 가능한 문서 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td>경영지원, 프로그래밍</td>
-                                <td>출장 결과 보고서</td>
+                                <td class="td_align_left">출장 결과 보고서</td>
                                 <td class="td_align_left">
+                                    <span class="tst_badge_min btn_secondary">열람 가능</span>
                                     <span onclick="location.href='/document_detail?'" class="tst_pointer">출장 결과 보고서입니다 {첨부파일여부}</span>
                                 </td>
                                 <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">직원명 (부서/직급)</span></td>
                                 <td>yyyy-MM-dd</td>
                                 <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">직원명 (부서/직급)</span></td>
                                 <td>yyyy-MM-dd</td>
-                                <td class="td_align_right"><span class="tst_badge_min btn_secondary">열람 가능</span></td>
                             </tr>
                             <!-- //문서 목록 > 열람 가능한 문서 -->
 
                             <!-- 문서 목록 > 열람 불가한 문서 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td>아트</td>
-                                <td>지출 품의서</td>
+                                <td class="td_align_left">지출 품의서</td>
                                 <td class="td_align_left">
-                                    <span onclick="location.href='/document_detail?'" class="tst_pointer">구매 요청드립니다</span>
+                                    <span class="tst_badge_min btn_disable">열람 불가</span>
+                                    <span class="font_cancellation font_subtle">구매 요청드립니다</span>
                                 </td>
                                 <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">직원명 (부서/직급)</span></td>
                                 <td>yyyy-MM-dd</td>
                                 <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">직원명 (부서/직급)</span></td>
                                 <td>yyyy-MM-dd</td>
-                                <td class="td_align_right"><span class="tst_badge_min btn_disable">열람 불가</span></td>
                             </tr>
                             <!-- //문서 목록 > 열람 불가한 문서 -->
 
                             <!-- pagination -->
                             <tfoot>
                             <tr>
-                                <td colspan="9">
+                                <td colspan="7">
                                     <ul id="pagination" class="pagination-sm pagination"></ul>
                                 </td>
                             </tr>

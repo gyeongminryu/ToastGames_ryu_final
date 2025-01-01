@@ -68,7 +68,7 @@
                 </table>
 
                 <!-- 프로젝트 팀 목록 -->
-                <table class="tst_table">
+                <table class="tst_table tr_hover_subtle">
                     <colgroup>
                         <col style="width: 80px" />
                         <col style="width: 180px" />
