@@ -56,7 +56,7 @@
                                 <tr>
                                     <th class="td_align_top">보고 내용</th>
                                     <td>
-                                        <textarea name="content" rows="5" maxlength="1000" placeholder="보고할 내용을 입력하세요"></textarea>
+                                        <c:import url="module_quill_editor_toolbar.jsp" />
                                     </td>
                                 </tr>
                                 <tr>

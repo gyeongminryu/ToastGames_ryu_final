@@ -1,0 +1,47 @@
+#module_quill_toolbar,
+#module_quill_editor{
+    border: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+}
+
+
+
+#module_quill_toolbar{
+    padding: 6px 10px 4px;
+    border-radius: var(--tst-border-radius) var(--tst-border-radius) 0 0;
+}
+
+#module_quill_toolbar > * {
+    display: inline-block;
+}
+
+#module_quill_toolbar button{
+    width: fit-content;
+    padding: 6px 5px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+#module_quill_toolbar span.toolbar_seperator{
+    margin: 0 4px;
+    color: var(--tst-color-subtle);
+}
+
+
+
+#module_quill_editor{
+    height: 130px;
+    padding: 2px;
+    border-radius: var(--tst-border-radius);
+}
+
+#module_quill_toolbar + #module_quill_editor{
+    height: 260px;
+    margin-top: -1px;
+    border-radius: 0 0 var(--tst-border-radius) var(--tst-border-radius);
+}
+
+#module_quill_editor strong{
+    font-weight: 900;
+}
