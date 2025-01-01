@@ -32,9 +32,8 @@
 
 
 #module_quill_editor{
-    height: 130px;
-    padding: 2px;
-    border-radius: var(--tst-border-radius);
+    height: 150px;
+    border-radius: var(--tst-border-radius) var(--tst-border-radius) 0 0;
     overflow-x: hidden;
 }
 
