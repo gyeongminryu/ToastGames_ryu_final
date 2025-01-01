@@ -151,7 +151,15 @@ const quill = new Quill('#module_quill_editor', {
     placeholder: '보고할 내용을 입력하세요',
     modules: {
         history: { delay: 100, maxStack: 500, userOnly: false },
-        counter: { container: '#module_quill_counter', maxLength: 1000, useMaxLength: true },
+        counter: { container: '#module_quill_counter', maxLength: 1000, useMaxLength: false },
         copier: { container: '#module_quill_copier'}
     }
 });
+
+// fix width
+fixEditorWidth();
+
+function fixEditorWidth() {
+    let editorWidth = document.getElementById('module_quill_editor').offsetWidth;
+    document.getElementById('module_quill_editor').firstElementChild.style.width = editorWidth + 'px';
+}
