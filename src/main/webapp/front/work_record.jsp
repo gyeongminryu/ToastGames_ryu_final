@@ -27,28 +27,52 @@
                 </ul>
                 <!-- //제목 -->
 
+                <div class="btn_select_week align_left">
+                    <ul class="tst_list list_no_desc list_inline">
+                        <li onclick="<!-- 전 주로 이동하는 함수를 입력하세요 -->" class="tst_pointer"><i class="bi bi-caret-left-fill"></i></li>
+                        <li>2024-12-30 (월) - 2025-1-5 (일)</li>
+                        <li onclick="<!-- 차주로 이동하는 함수를 입력하세요 -->" class="tst_pointer"><i class="bi bi-caret-right-fill"></i></li>
+                    </ul>
+                </div>
+
                 <div class="tst_flex">
                     <div class="tst_col9">
 
-                        <!-- 이번 주 근무 시간 -->
+                        <!-- 주간 근무 시간 -->
                         <table class="tst_table table_align_left">
                             <colgroup>
                                 <col style="width: auto;" />
                             </colgroup>
                             <thead>
                             <tr>
-                                <th>이번 주 근무 시간</th>
+                                <th>주간 근무 시간</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td>
-                                    <div class="work_record_week"></div>
+                                    <div class="work_record_week">
+                                        <h1>43시간 27분<span> / 52시간</span></h1>
+                                        <div class="work_record_progress_bar">
+                                            <div class="progress_required">
+                                                <div class="progress_bar_frame">
+                                                    <div class="progress_bar_fill progress_required_fill"></div>
+                                                </div>
+                                                <p>40시간</P>
+                                            </div>
+                                            <div class="progress_over">
+                                                <div class="progress_bar_frame">
+                                                    <div class="progress_bar_fill progress_over_fill"></div>
+                                                </div>
+                                                <p>52시간</P>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-                        <!-- //이번 주 근무 시간 -->
+                        <!-- //주간 근무 시간 -->
 
                     </div>
                     <div class="tst_col3">
@@ -67,15 +91,15 @@
                             <tbody>
                             <tr>
                                 <th>총 근무 시간</th>
-                                <th>43/52시간</th>
+                                <th>43시간 27분 / 52시간</th>
                             </tr>
                             <tr>
                                 <th>필수 근무 시간</th>
-                                <td>40/40시간</td>
+                                <td><b>40시간</b> / 40시간</td>
                             </tr>
                             <tr>
                                 <th>초과 근무 시간</th>
-                                <td>3/12시간</td>
+                                <td><b>3시간 27분</b> / 12시간</td>
                             </tr>
                             </tbody>
                         </table>
