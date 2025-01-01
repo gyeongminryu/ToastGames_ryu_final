@@ -23,7 +23,7 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_list'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/document_list'">
                         <h1>문서함</h1>
                     </li>
                 </ul>
