@@ -1,5 +1,6 @@
 #module_quill_toolbar,
-#module_quill_editor{
+#module_quill_editor,
+#module_quill_counter{
     border: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
 }
 
@@ -39,9 +40,21 @@
 #module_quill_toolbar + #module_quill_editor{
     height: 260px;
     margin-top: -1px;
-    border-radius: 0 0 var(--tst-border-radius) var(--tst-border-radius);
+    border-radius: 0;
 }
 
 #module_quill_editor strong{
     font-weight: 900;
+}
+
+
+
+#module_quill_counter{
+    margin: 0 0 10px;
+    padding: 0 5px 2px;
+    background-color: var(--tst-color-subtle);
+    border-radius: 0 0 var(--tst-border-radius) var(--tst-border-radius);
+    font-size: 11px;
+    font-weight: 800;
+    text-align: right;
 }
