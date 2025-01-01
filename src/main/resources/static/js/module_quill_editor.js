@@ -100,8 +100,22 @@ class Counter {
 
     update() {
         const length = this.calculate();
-        let label = this.options.unit;
-        this.container.innerText = `${length} ${label}`;
+        let separator = '/';
+        let max = this.options.maxLength;
+        let label = '자';
+        let useMax = this.options.useMaxLength;
+        if (useMax) {
+            this.container.innerText = `${length} ${separator} ${max}${label}`;
+            if (length > max) {
+                this.quill.history.undo();
+                this.container.classList.add('font_caution');
+            } else {
+                this.container.classList.remove('font_caution');
+            }
+        } else {
+            this.container.innerText = `${length} ${label}`;
+        }
+
     }
 }
 
@@ -136,8 +150,8 @@ Quill.register('modules/copier', Copier);
 const quill = new Quill('#module_quill_editor', {
     placeholder: '보고할 내용을 입력하세요',
     modules: {
-        history: { delay: 2000, maxStack: 500, userOnly: true },
-        counter: { container: '#module_quill_counter', unit: '자'},
+        history: { delay: 100, maxStack: 500, userOnly: false },
+        counter: { container: '#module_quill_counter', maxLength: 1000, useMaxLength: true },
         copier: { container: '#module_quill_copier'}
-    },
+    }
 });

@@ -37,7 +37,9 @@
 </div>
 <input type="hidden" name="content" id="module_quill_copier" value="" />
 
-<div id="module_quill_counter"></div>
+<div id="module_quill_counter">
+    <p><span></span><span></span></p>
+</div>
 
 <script src="resources/js/module_quill_editor.js"></script>
 
