@@ -63,7 +63,7 @@
                 <li onclick="location.href='/calendar'" class="tst_pointer">
                     <i class="bi bi-calendar-event"></i><h3>일정 관리</h3>
                 </li>
-                <li onclick="location.href='/'" class="tst_pointer">
+                <li onclick="location.href='/document_list'" class="tst_pointer">
                     <i class="bi bi-archive-fill"></i><h3>문서함</h3>
                 </li>
                 <li onclick="location.href='/board_list'" class="tst_pointer">
@@ -90,14 +90,14 @@
                 <li onclick="location.href='/manage_staff_list'" class="tst_pointer">
                     <i class="bi bi-people-fill"></i><h3>구성원 관리</h3>
                 </li>
-                <li onclick="location.href='/work_record'" class="tst_pointer disp_hide">
-                    <i class="bi bi-stopwatch-fill"></i><h3>근태 관리</h3>
-                </li>
 <%--                <li onclick="location.href='/'" class="tst_pointer disp_hide">--%>
 <%--                    <i class="bi bi-luggage-fill"></i><h3>연차 관리</h3>--%>
 <%--                </li>--%>
                 <li onclick="location.href='/'" class="tst_pointer">
                     <i class="bi bi-stickies-fill"></i><h3>증명서 신청</h3>
+                </li>
+                <li onclick="location.href='/work_record'" class="tst_pointer disp_hide">
+                    <i class="bi bi-stopwatch-fill"></i><h3>근태 관리</h3>
                 </li>
                 <li onclick="location.href='/mypage'" class="tst_pointer">
                     <i class="bi bi-person-fill-gear"></i><h3>내 정보 관리</h3>
