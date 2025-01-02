@@ -97,7 +97,7 @@ GROUP BY
 </insert>
 
 <select id="projectTeamInfo" resultType="com.toast.management.dto.ProjectInfoDTO">
-
+	
 </select>
 
 

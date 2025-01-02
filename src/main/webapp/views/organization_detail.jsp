@@ -126,7 +126,7 @@
                     <div class="tst_col9">
 
                       <!-- 조직원 검색 -->
-                        <form>
+                        <form id="searchForm">
                             <div class="tst_search_container">
                                 <div class="tst_search_select">
                                     <select id="tst_search_select_category" name="searchKey">
