@@ -13,10 +13,10 @@
         <div class="tst_modal_body align_center">
             <ul class="tst_list list_no_desc list_block">
                 <li>
-                    <img src="https://images3.theispot.com/1024x1024/a4140ir1003.jpg?v=210305104100" class="topnav_modal_profile_image" />
+                    <img src="memberFiles/${memberInfo[0].empl_profile}" class="topnav_modal_profile_image" />
                 </li>
                 <li>
-                    <h3>{직원명}</h3>
+                    <h3>${memberInfo[0].empl_name}</h3>
                 </li>
                 <li>
                     <table class="tst_table table_align_left">
@@ -32,7 +32,7 @@
                         <tbody>
                         <tr>
                             <th class="td_bg_subtle">부서</th>
-                            <td>{부서}</td>
+                            <td>${memberInfo[0].dept_name}</td>
                         </tr>
                         <tr>
                             <th class="td_bg_subtle">팀</th>
@@ -40,11 +40,11 @@
                         </tr>
                         <tr>
                             <th class="td_bg_subtle">유선전화</th>
-                            <td>{유선전화번호}</td>
+                            <td>${memberInfo[0].empl_cmp_phone}</td>
                         </tr>
                         <tr>
                             <th class="td_bg_subtle">이메일</th>
-                            <td>{사내 이메일}</td>
+                            <td>${memberInfo[0].empl_cmp_email}</td>
                         </tr>
                         </tbody>
                     </table>

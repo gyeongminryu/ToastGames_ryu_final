@@ -1,8 +1,6 @@
 package com.toast.board.controller;
 
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +40,9 @@ public class BoardController {
 
     // 전자 게시판 이동
 	@GetMapping(value = "/board_write.go")
-	public String boardWriteForm() {
+	public String boardWriteForm(Model model) {
+		List<Map<String, Object>> department = boardService.getDepartmentList();
+		model.addAttribute("department", department);
 		return "board_write";
 	}
 	
@@ -53,16 +53,18 @@ public class BoardController {
 		Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
 		params.putAll(memberInfo);
 		try {
-			boolean boardWrite = boardService.boardWrite(params, files);
-			if (boardWrite) {
+			int boardIdx = boardService.boardWrite(params, files);
+			logger.info("boardIdx?" + boardIdx);
+			if (boardIdx > 0) {
 				model.addAttribute("msg", "게시글 작성 완료");
+	            return "redirect:/board_detail.go?board_idx=" + boardIdx; // 게시글 작성 후 해당 게시글 페이지로 리다이렉트
 			} else {
 				model.addAttribute("msg", "게시글 작성 실패");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "board_list"; // 상세보기로 이동하면 좋을 듯.
+        return "board_detail"; // 댓글 작성 후 해당 게시글 페이지로 리다이렉트
 	}
 
 	// 전자 게시판 리스트 이동
@@ -90,16 +92,66 @@ public class BoardController {
 	// 게시판 상세보기
 	@GetMapping(value = "/board_detail.go")
 	public String boardDetail(@RequestParam("board_idx") int board_idx, Model model, HttpSession session) {
+	    String id = (String) session.getAttribute("loginId");
+	    session.setAttribute("board_idx", board_idx); // board_idx를 세션에 저장
 		Map<String, Object> boardInfo = boardService.boardInfo(board_idx); // 필요한 개인 정보들을 담아온다.
 		String file_key = (String) boardInfo.get("file_key");
 		List<FileDTO> fileList = boardService.getFileList(board_idx, file_key);
+		
 		// boardIdx를 사용하여 DB에서 게시글을 조회
 	    Map<String, Object> board = boardService.getBoardByIdx(board_idx);
 	    boardService.incrementView(board_idx); // 조회수 증가 로직
+	    
+	    // 개인이 소속된 dept를 가져오는 메서드
+	    String deptName = boardService.getDeptName(id);
+	    model.addAttribute("deptName", deptName);
+	    
+	    // 댓글 목록 조회
+	    List<Map<String, Object>> comments = boardService.getReplyList(board_idx);
+        model.addAttribute("comments", comments);
+        
+        // 대댓글 목록은 댓글의 ID를 기준으로 조회할 수 있습니다.
+        for (Map<String, Object> comment : comments) {
+            int replyIdx = (int) comment.get("reply_idx");  // 댓글의 ID (idx)
+            List<Map<String, Object>> reReplies = boardService.getReReplyList(replyIdx);  // 대댓글 목록 가져오기
+            comment.put("reReplies", reReplies);  // 대댓글 목록을 댓글에 포함
+        }
+        
 	    // 조회한 게시글 정보를 모델에 추가
 	    model.addAttribute("board", board);
 	    model.addAttribute("fileList", fileList);
 		return "board_detail"; // 상세페이지 이동.
+	}
+	
+	@GetMapping(value = "/board_update.go")
+	public String board_update(@RequestParam("board_idx") int board_idx, Model model, HttpSession session) {
+	    session.setAttribute("board_idx", board_idx); // board_idx를 세션에 저장
+	    Map<String, Object> boardInfo = boardService.boardInfo(board_idx); // 필요한 개인 정보들을 담아온다.
+		String file_key = (String) boardInfo.get("file_key");
+		List<FileDTO> fileList = boardService.getFileList(board_idx, file_key);
+	    Map<String, Object> board = boardService.getBoardByIdx(board_idx);
+		List<Map<String, Object>> department = boardService.getDepartmentList();
+	
+		model.addAttribute("department", department);	 
+	    model.addAttribute("board", board);
+	    model.addAttribute("fileList", fileList);
+		return "board_update";
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/updateFileList.ajax")
+    public ResponseEntity<List<FileDTO>> getFileList(HttpSession session) {
+	    int board_idx = (int) session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
+	    Map<String, Object> boardInfo = boardService.boardInfo(board_idx); // 필요한 개인 정보들을 담아온다.
+		String file_key = (String) boardInfo.get("file_key");
+        // fileList를 가져오는 서비스 호출
+        List<FileDTO> fileList = boardService.getFileList(board_idx, file_key);
+        return ResponseEntity.ok(fileList); // 파일 목록을 JSON으로 반환
+    }
+	
+	@PostMapping(value = "/board_update.do")
+	public String board_update() {
+		return "";
 	}
 	
 	// 다운로드 요청이 들어오면 작동되는 메서드.
@@ -117,96 +169,114 @@ public class BoardController {
 		}
 	}
 	
-	 // 댓글 목록 조회
-	@ResponseBody
-    @GetMapping(value = "/reply_list.ajax")
-	public Map<String, Object> getReplyList(@RequestParam("board_idx") int board_idx) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            // 댓글 목록 조회 서비스 호출
-        	List<Map<String, Object>> comments = boardService.getReplyList(board_idx);
-            response.put("comments",comments);
-            logger.info("response : ? " + response);
-        } catch (Exception e) {
-            response.put("comments", new ArrayList<>());
-            e.printStackTrace();
-        }
-        return response;
-    }
-	
-	// 대댓글 목록 조회
-	@ResponseBody
-	@GetMapping(value = "/re_reply_list.ajax")
-	public Map<String, Object> getReReplyList(@RequestParam("reply_idx") int reply_idx) {
-		logger.info("Received reply_idx: " + reply_idx);		
-		Map<String, Object> response = new HashMap<>();
-		List<Map<String, Object>> comments = boardService.getReReplyList(reply_idx);
-		response.put("reReplies", comments);
-		logger.info("reReplies:?" + comments);
-		//response.put("reReplies", new ArrayList<>());
-		return response;
-	}
-	
 	// 댓글 작성
-    @ResponseBody
-    @PostMapping(value = "/reply_write.ajax")
-    public Map<String, Object> writeReply(@RequestParam("board_idx") int board_idx, @RequestParam("reply") String reply, HttpSession session) {
-    	String id = (String) session.getAttribute("loginId"); // 세션에서 로그인한 id를 가져온다.
-		Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
-		logger.info("memberInfo :? " + memberInfo);
-        Map<String, Object> response = new HashMap<>();
-		response.putAll(memberInfo);
-	    int empl_idx = (Integer)response.get("appo_empl_idx");
-		try {
-            boolean success = boardService.writeReply(board_idx, reply, empl_idx);
-            response.put("success", success);
-        } catch (Exception e) {
-            response.put("success", false);
-            e.printStackTrace();
-        }
-        return response;
-    }
+	@PostMapping(value = "/reply_write.do")
+	public String writeReply(@RequestParam("board_idx") int board_idx, @RequestParam("reply") String reply, HttpSession session) {
+	    String id = (String) session.getAttribute("loginId"); // 세션에서 로그인한 id를 가져온다.
+	    Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
+	    int empl_idx = (Integer) memberInfo.get("appo_empl_idx");
+	    try {
+	        boolean success = boardService.writeReply(board_idx, reply, empl_idx);
+	        if (success) {
+	            return "redirect:/board_detail.go?board_idx=" + board_idx; // 댓글 작성 후 해당 게시글 페이지로 리다이렉트
+	        } else {
+	            return "errorPage"; // 댓글 작성 실패 시 에러 페이지
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "errorPage"; // 예외 처리
+	    }
+	}
     
-    @ResponseBody
-    @PostMapping(value = "/reply_update.ajax")
-    public Map<String, Object> updateReply(@RequestParam("reply_idx") String reply_idx, @RequestParam("reply") String reply, HttpSession session) {
-    	String id = (String) session.getAttribute("loginId"); // 세션에서 로그인한 id를 가져온다.
-    	Map<String, Object> response = new HashMap<>();
-    	Map<String, Object> memberInfo = boardService.memberInfo(id);
-    	int empl_idx = (int) memberInfo.get("appo_empl_idx");
-    	boolean success = boardService.updateReply(reply_idx, reply, empl_idx);
-    	if (success) {
-			response.put("success", true);
-			response.put("message", "댓글이 수정되었습니다.");
-		} else {
-			response.put("success", false);
-			response.put("message", "댓글 수정에 실패했습니다.");
-		}
-    	return response;
-    }
+	// 댓글 수정
+	@PostMapping(value = "/reply_update.do")
+	public String updateReply(@RequestParam("reply_idx") String reply_idx, @RequestParam("reply") String reply, HttpSession session) {
+	    int board_idx = (int) session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
+		String id = (String) session.getAttribute("loginId"); // 세션에서 로그인한 id를 가져온다.
+	    Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
+	    int empl_idx = (Integer) memberInfo.get("appo_empl_idx");
+	    boolean success = boardService.updateReply(reply_idx, reply, empl_idx);
+	    if (success) {
+            return "redirect:/board_detail.go?board_idx=" + board_idx; // 댓글 작성 후 해당 게시글 페이지로 리다이렉트
+	    } else {
+	        return "errorPage"; // 댓글 수정 실패 시 에러 페이지
+	    }
+	}
     
-    @ResponseBody
-    @PostMapping(value = "/reply_delete.ajax")
-    public String deleteReply() {
-    	return "";
-    }
+	// 댓글 삭제
+	@PostMapping(value = "/reply_delete.do")
+	public String deleteReply(@RequestParam("reply_idx") int reply_idx, HttpSession session) {
+	    int board_idx = (int) session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
+	    try {
+	        // 댓글 삭제 서비스 호출
+	        boolean success = boardService.deleteReply(reply_idx);
+	        if (success) {
+	            return "redirect:/board_detail.go?board_idx=" + board_idx; // 댓글 작성 후 해당 게시글 페이지로 리다이렉트
+	        } else {
+	            return "errorPage"; // 댓글 삭제 실패 시 에러 페이지로 이동
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "errorPage"; // 예외 처리
+	    }
+	}
     
     // 대댓글 작성
-    @ResponseBody
-    @PostMapping(value = "/re_reply_write.ajax")
-    public Map<String, Object> writeReReply(@RequestParam("reply_idx") int reply_idx, @RequestParam("re_reply") String re_reply, HttpSession session) {
+    @PostMapping(value = "/re_reply_write.do")
+    public String writeReReply(@RequestParam("reply_idx") int reply_idx, @RequestParam("re_reply") String re_reply, HttpSession session) {
+        int board_idx = (int) session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
     	String id = (String) session.getAttribute("loginId"); // 세션에서 로그인한 id를 가져온다.
-		Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
-		int re_reply_empl_idx = (int) memberInfo.get("appo_empl_idx"); 
-    	Map<String, Object> response = new HashMap<>();
+        Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
+        int re_reply_empl_idx = (int) memberInfo.get("appo_empl_idx");
         try {
             boolean success = boardService.writeReReply(reply_idx, re_reply, re_reply_empl_idx);
-            response.put("success", success);
+            if (success) {
+	            return "redirect:/board_detail.go?board_idx=" + board_idx; // 댓글 작성 후 해당 게시글 페이지로 리다이렉트
+            } else {
+                return "errorPage"; // 대댓글 작성 실패 시 에러 페이지
+            }
         } catch (Exception e) {
-            response.put("success", false);
             e.printStackTrace();
+            return "errorPage"; // 예외 처리
         }
-        return response;
     }
-	    
+	
+    // 대댓글 수정
+    @PostMapping(value = "/re_reply_update.do")
+    public String updateReReply(@RequestParam("re_reply_idx") int re_reply_idx, @RequestParam("re_reply") String re_reply, HttpSession session) {
+        int board_idx = (int) session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
+    	// 세션에서 로그인한 ID를 가져온다.
+        String id = (String) session.getAttribute("loginId");
+        
+        // 사용자의 정보를 가져온다.
+        Map<String, Object> memberInfo = boardService.memberInfo(id);
+        int re_reply_empl_idx = (int) memberInfo.get("appo_empl_idx"); // 대댓글을 수정하는 사람의 임직원 ID
+
+        boolean success = boardService.updateReReply(re_reply_idx, re_reply, re_reply_empl_idx);
+
+        if (success) {
+        	return "redirect:/board_detail.go?board_idx=" + board_idx; // 댓글 작성 후 해당 게시글 페이지로 리다이렉트
+        } else {
+            return "errorPage"; // 대댓글 수정 실패 시 에러 페이지로 이동
+        }
+    }
+    
+    // 대댓글 삭제
+    @PostMapping(value = "/re_reply_delete.do")
+    public String deleteReReply(@RequestParam("re_reply_idx") int re_reply_idx, HttpSession session) {
+        int board_idx = (int) session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
+    	try {
+            // 대댓글 삭제 서비스 호출
+            boolean success = boardService.deleteReReply(re_reply_idx);
+
+            if (success) {
+	            return "redirect:/board_detail.go?board_idx=" + board_idx; // 댓글 작성 후 해당 게시글 페이지로 리다이렉트
+            } else {
+                return "errorPage"; // 대댓글 삭제 실패 시 에러 페이지로 이동
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "errorPage"; // 예외 처리
+        }
+    }
 }
