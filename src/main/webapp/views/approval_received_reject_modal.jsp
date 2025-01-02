@@ -75,8 +75,14 @@
                     <p class="min font_subtle">직인 변경은 인사과에 문의하세요.</p>
 
                     <!-- 직인 이미지 -->
-                    <i class="bi bi-c-circle" style="color: var(--tst-color-warning); font-size: 48px;"></i>
+                    <p id="stamp">
+                       <%-- <i class="bi bi-c-circle" style="color: var(--tst-color-warning); font-size: 48px;"></i>--%>
+                        <img id="sign_preview" width="70" src = "/files/f652e837-4cd6-45db-800b-5d8f771100af.png"/>'
+
+                    </p>
                     <!-- //직인 이미지 -->
+
+
                 </div>
                 <!-- //직인란 -->
 

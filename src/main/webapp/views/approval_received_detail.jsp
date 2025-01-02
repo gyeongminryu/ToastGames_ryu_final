@@ -185,6 +185,7 @@
                             </thead>
                             <tbody>
 
+
                             <!-- 작성자 -->
                             <tr>
                                 <td class="td_align_top td_no_padding">
@@ -238,6 +239,7 @@
                                 <col style="width: 100px" />
                                 <col style="width: auto" />
                             </colgroup>
+                            <c:if test="${refer_lines.size()>0}">
                             <thead>
                             <tr>
                                 <th colspan="2">
@@ -246,16 +248,19 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             <c:forEach items="${refer_lines}" var="refer_line">
                                 <tr>
                                     <th>참조인</th>
                                     <td><span onclick="tst_view_profile('${refer_line.ref_empl_idx}')" class="tst_pointer">${refer_line.empl_name} (${refer_line.dept_name}/${refer_line.position_name})</span></td>
                                 </tr>
                             </c:forEach>
+                            </c:if>
                             </tbody>
                         </table>
                         <!-- //참조인 -->
 
+                        <c:if test="${my_appr_state == 0}">
 
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
@@ -267,6 +272,7 @@
                             </li>
                         </ul>
                         <!-- //버튼 -->
+                        </c:if>
 
                     </div>
                     <!-- //결재할 문서 정보 확인 -->

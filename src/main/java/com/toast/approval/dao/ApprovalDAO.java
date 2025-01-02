@@ -60,4 +60,5 @@ public interface ApprovalDAO {
     int get_my_appr_state(int doc_idx, int empl_idx);
 
 
+    int update_read_time(String read_time, int doc_idx, int empl_idx);
 }

@@ -43,28 +43,55 @@ function approval_sign_save(){
     var line_url = "signatureImage"+my_appr_order;
     console.log(line_url);
     const signatureImage = document.getElementById(line_url);
-    signatureImage.src = canvas.toDataURL();
+    //만약 사인된 게 있으면,
+
+    //사인된 게 있는지 확인하는 법
+    var isValid = context.getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0);
+
+    console.log(isValid);
+
+
+    if(isValid){
+        signatureImage.src = canvas.toDataURL();
+    }else{
+        //만약 사인된게 없으면,
+        const sign_preview = document.getElementById('sign_preview');
+
+        console.log("sign_preview.src:",sign_preview.getAttribute("src"));
+    }
+
+    //아예 사인 안된 경우
+
+
+    //사인된거 혹은 도장이 있을 경우에는
     signatureImage.style.display = "block";
-    signatureImage.width = 70; // 원하는 너비로 설정
-    signatureImage.height = 70; // 원하는 높이로 설정
+    signatureImage.width = 60; // 원하는 너비로 설정
+    signatureImage.height = 60; // 원하는 높이로 설정
 
     //html을 업데이트 해주기
     var doc_content = $('.doc_content').html();
     //console.log("doc_content",doc_content);
-    save_approved_doc_content(doc_content);
-    //다음 결재자에게 알림 및 show = 1
+
+    // 켜기
+   save_approved_doc_content(doc_content);
 
 }
 
 function save_approved_doc_content(doc_content){
-    var line_order = my_appr_order+1;
+    var line_order = Number(my_appr_order)+1;
+
     $.ajax({
         type : 'POST',
         url : 'save_approved_doc_content.ajax',
-        data : {"doc_content":doc_content,"doc_idx":doc_content,"line_order": line_order},
+        data : {"doc_content":doc_content,"doc_idx":doc_idx,"line_order": line_order},
         dataType : 'JSON',
         success : function (data){
             console.log(data);
+            console.log(location.pathname); //hostname(도메인)을 제외한 나머지 주소
+
+                    location.href = "/approval_received_list.go";
+
+
         },error : function(e){
             console.log(e);
         }
