@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toast.approval.dao.ApprovalResponseDTO"></mapper>
+<mapper namespace="com.toast.approval.dao.ApprovalResponseDAO">
+    <!--폼 양식 내용 업데이트 - 직인 추가-->
+    <update id="update_appr_content">
+        UPDATE document SET doc_content = #{doc_content} WHERE doc_idx = #{doc_idx}
+    </update>
+
+    <select id="count_update_next_appr" resultType="int">
+        SELECT COUNT (*) FROM approval WHERE doc_idx = #{doc_idx} AND appr_order = #{line_order}
+    </select>
+
+    <update id="update_next_appr">
+        UPDATE approval SET appr_show = 1 WHERE doc_idx = #{doc_idx} AND appr_order = #{line_order}
+    </update>
+
+    <update id="update_my_approval_state">
+        UPDATE approval
+        SET appr_state = 1, appr_date = #{formatted_date} WHERE doc_idx = #{doc_idx} AND appr_receiver_idx = #{empl_idx}
+    </update>
+
+
+</mapper>
