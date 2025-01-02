@@ -8,7 +8,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -55,9 +57,22 @@ public class ProjectController {
 	}
 	
 	
+	@PostMapping(value="/project_team_add.do")
+	public String projectTeamAddDo(@RequestParam Map<String,String> param) {
+		
+		// logger.info("param : "+param);
+		projectService.projectTeamAddDo(param);
+		
+		return "redirect:/project_team_list";
+	}
 	
-	
-	
+	@GetMapping(value="/project_team_detail.go")
+	public String projectTeamDetail(@RequestParam(required = false) String team_idx, Model model) {
+		
+		projectService.projectTeamDetail(team_idx,model);
+		
+		return "project_team_detail";
+	}
 	
 	
 }

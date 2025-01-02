@@ -2,12 +2,15 @@ package com.toast.management.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.toast.management.dao.ProjectDAO;
+import com.toast.management.dto.ProjectInfoDTO;
 import com.toast.management.dto.TeamListDTO;
 
 @Service
@@ -31,6 +34,24 @@ public class ProjectService {
 		    	tema_list = projectDAO.getAllTeams();
 		    }
 		return tema_list;
+	}
+
+	public void projectTeamAddDo(Map<String, String> param) {
+		
+		projectDAO.projectTeamAddDo(param);
+	}
+
+	public void projectTeamDetail(String team_idx,Model model) {
+		// project history
+		
+		
+		// project info 
+		ProjectInfoDTO team_info =projectDAO.projectTeamInfo(team_idx);
+		model.addAttribute("team_info",team_info);
+		
+		// project member
+		
+		
 	}
 
 }
