@@ -519,7 +519,7 @@ public class ApprovalRequestService {
 				//3. Map에 넣어주기
 				param.put("appr_sender_idx", String.valueOf(appr_sender_idx));
 				param.put("appr_subject",appr_subject);
-				//param.put("appr_content",appr_content);
+				//
 				param.put("appr_content_sub",appr_content_sub);
 				param.put("appr_receiver_idx", String.valueOf(appr_receiver_idx));
 				param.put("appr_order", String.valueOf(appr_order));
@@ -528,7 +528,7 @@ public class ApprovalRequestService {
 
 				logger.info("상신할 param 값 :{}",param);
 
-                success = approvalRequestDAO.request(param) > 0 && approvalRequestDAO.update_approval_doc_state(doc_idx);
+                success = approvalRequestDAO.request(param) > 0 && approvalRequestDAO.update_approval_doc_state(doc_idx)>0&&approvalRequestDAO.update_first_approval_line(doc_idx)>0;
 
 
 			}
