@@ -60,7 +60,6 @@
                                 <th >제품 설명</th>
                                 <td id="prod_info">
                                 	${detail.prod_info}
-									<img alt="${file.ori_filename}" src="/photo/${file.new_filename}">
                                 </td>
                             </tr>
                             </tbody>
@@ -82,12 +81,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>{파일명 (파일 용량kb)}</td>
-                                <td>
-                                    <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_primary">다운로드</button>
-                                </td>
-                            </tr>
+						        <c:forEach var="file" items="${files}">
+						            <tr>
+						                <td>
+						                    ${file.ori_filename} (${file.file_size / 1024} KB)
+						                </td>
+						                <td>
+						                    <button onclick="location.href='download.do?new_filename=${file.new_filename}&ori_filename=${file.ori_filename}'" 
+						                            class="btn_min btn_primary">다운로드</button>
+						                </td>
+						            </tr>
+						        </c:forEach>
                             </tbody>
                         </table>
                         <!-- //첨부 파일 목록 -->
