@@ -5,6 +5,22 @@
 <head>
     <title>프로젝트 팀 형성하기</title>
     <script>
+ 	// 직원 정보를 클릭하여 선택
+    function selectTeamLeader(row) {
+        var emplIdx = row.getAttribute('data-empl-idx'); // 직원 ID
+        var emplName = row.getAttribute('data-empl-name'); // 직원 이름
+        var dutyName = row.getAttribute('data-duty-name'); // 직급
+        var positionName = row.getAttribute('data-position-name'); // 직책
+        var deptName = row.getAttribute('data-dept-name'); // 부서
+
+        // 선택한 정보를 input 필드에 반영
+        document.getElementById("team_head_name").value =
+            emplName + " (" + dutyName + "/" + positionName + ") - " + deptName;
+        document.getElementById("team_head_idx").value =
+        	emplIdx;
+        closeModal();
+    }
+    
         // 모달창 열기
         function openTeamLeaderModal() {
             var modal = document.getElementById("teamLeaderModal");
@@ -17,12 +33,7 @@
             modal.style.display = "none";
         }
 
-        // 테이블 행 클릭 시 조직장 선택
-        function selectTeamLeader(row) {
-            var leaderName = row.querySelector('.leader-name').innerText;
-            document.getElementById("leaderName").value = leaderName;
-            closeModal();
-        }
+        
         
         // 직원 목록 가져오기
         function fetchStaffList() {
@@ -45,14 +56,19 @@
 
                     for (var i = 0; i < data.length; i++) {
                         var employee = data[i];
-                        var row = "<tr>";
-                        row += "<td>" + (i + 1) + "</td>";
-                        row += "<td>" + (employee.empl_name || "없음") + "</td>";  
-                        row += "<td>" + (employee.duty_name || "없음")+"/"+(employee.position_name || "없음") + "</td>";
-                        row += "<td>" + (employee.dept_name || "없음") + "</td>";
-                        row += "<td>" + (employee.empl_job || "없음") + "</td>";
-                        row += "</tr>";
-                      
+                        var row = '<tr class="staff-row" ' +
+                                  'data-empl-idx="' + employee.empl_idx + '" ' +
+                                  'data-empl-name="' + (employee.empl_name || "없음") + '" ' +
+                                  'data-duty-name="' + (employee.duty_name || "없음") + '" ' +
+                                  'data-position-name="' + (employee.position_name || "없음") + '" ' +
+                                  'data-dept-name="' + (employee.dept_name || "없음") + '" ' +
+                                  'onclick="selectTeamLeader(this)">' +
+                                  '<td>' + (i + 1) + '</td>' +
+                                  '<td>' + (employee.empl_name || "없음") + '</td>' +
+                                  '<td>' + (employee.duty_name || "없음") + '/' + (employee.position_name || "없음") + '</td>' +
+                                  '<td>' + (employee.dept_name || "없음") + '</td>' +
+                                  '<td>' + (employee.empl_job || "없음") + '</td>' +
+                                  '</tr>';
                         tbody.innerHTML += row;
                     }
                 },
@@ -71,7 +87,7 @@
 </head>
 <body>
     <h1>프로젝트 팀 형성하기</h1>
-    <form action="/createProjectTeam" method="post">
+    <form action="project_team_add.do" method="post"> 
         <!-- 프로젝트 팀명 -->
         <div>
             <label for="team_name">프로젝트 팀명</label><br>
@@ -82,7 +98,8 @@
         <!-- 조직장 -->
         <div>
             <label for="team_head_idx">조직장</label><br>
-            <input type="text" id="team_head_idx" name="team_head_idx" readonly>
+            <input type="hidden" id="team_head_idx" name="team_head_idx" >
+            <input type="text" id="team_head_name" name="team_head_name" >
             <button type="button" onclick="openTeamLeaderModal()">조직장 선택</button>
         </div>
         <br>
@@ -90,9 +107,9 @@
         <!-- 운영 기간 -->
         <div>
             <label for="startDate">운영 기간</label><br>
-            <input type="datetime-local" id="callup_date" name="callup_date" value="2025-01-02T09:00" required>
+            <input type="date" id="callup_date" name="calup_date" value="2025-01-02T09:00" required>
             ~
-            <input type="datetime-local" id="deletion_date" name="deletion_date" value="2025-10-17T18:00" required>
+            <input type="date" id="deletion_date" name="deletion_date" value="2025-10-17T18:00" required>
         </div>
         <br>
 
@@ -147,20 +164,7 @@
                 </tr>
             </thead>
             <tbody id="staffList">
-                <tr onclick="selectTeamLeader(this)">
-                    <td>1</td>
-                    <td class="leader-name">조팀장</td>
-                    <td>차장/부서장</td>
-                    <td>기획/운영</td>
-                    <td>기획 총괄</td>
-                </tr>
-                <tr onclick="selectTeamLeader(this)">
-                    <td>2</td>
-                    <td class="leader-name">김대리</td>
-                    <td>대리/팀장</td>
-                    <td>소속 부서</td>
-                    <td>팀 관리</td>
-                </tr>
+               
                 <!-- 추가 데이터 -->
             </tbody>
         </table>
