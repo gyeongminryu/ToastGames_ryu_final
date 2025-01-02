@@ -129,12 +129,14 @@
                         <form>
                             <div class="tst_search_container">
                                 <div class="tst_search_select">
-                                    <select id="tst_search_select_category" name="category">
-                                        <option value="{검색 분류}">검색 분류</option>
+                                    <select id="tst_search_select_category" name="searchKey">
+                                        <option value="">검색 분류</option>
+                                         <option value="empl_name">이름</option>
+                							<option value="empl_cmp_email">이메일</option>
                                     </select>
                                 </div>
                                 <div class="tst_search_input">
-                                    <input type="text" name="keyword_class" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                                    <input type="text" id="searchValue" name="searchValue" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
                                 </div>
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>

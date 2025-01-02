@@ -126,4 +126,55 @@
         WHERE a.appr_receiver_idx = #{r_empl_idx} AND a.appr_show = 1 ORDER BY d.doc_write_date DESC
     </select>
 
+
+    <!--detail-->
+    <!--doc_info-->
+    <select id="get_doc_info" resultType="Map">
+        SELECT d.doc_idx,d.doc_empl_idx,e.empl_name,dp.dept_name,p.position_name, d.doc_update_date, d.doc_subject,d.doc_content,d.doc_content_sub,DATE_FORMAT(doc_end_date, '%Y-%m-%d %H:%i:%s') AS doc_end_date
+        FROM document d
+                 join employee e on d.doc_empl_idx  = e.empl_idx
+                 join appointment a on a.appo_idx = e.appolast_idx
+                 join department dp on dp.dept_idx = a.dept_idx
+                 join position_ p on p.position_idx= a.position_idx
+        WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <!--form_info-->
+    <select id="get_form_info" resultType="Map">
+        SELECT e.empl_name, dp.dept_name, p.position_name,d.form_idx,f.form_subject, f.form_handler_idx
+        FROM document d
+                 join form f on f.form_idx = d.form_idx
+                 join employee e on e.empl_idx = f.form_handler_idx
+                 join appointment a on a.appo_idx = e.appolast_idx
+                 join department dp on dp.dept_idx = a.dept_idx
+                 join position_ p on p.position_idx= a.position_idx
+        WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <!--appr_line-->
+    <select id="get_all_appr_line" resultType="Map">
+        SELECT al.appr_order,al.appr_receiver_idx,e.empl_name,dp.dept_name,p.position_name,d.duty_name, al.appr_state,al.appr_reason,al.appr_date FROM approval al
+          join employee e on al.appr_receiver_idx = e.empl_idx
+          join appointment a on a.appo_idx = e.appolast_idx
+          join department dp on dp.dept_idx = a.dept_idx
+          join position_ p on p.position_idx= a.position_idx
+          join duty d on d.duty_idx = a.duty_idx
+        WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <!--refer_line-->
+    <select id="get_all_refer_line" resultType="Map">
+        SELECT e.empl_name, dp.dept_name,p.position_name FROM reference r
+           join employee e on e.empl_idx = r.ref_empl_idx
+           join appointment a on a.appo_idx = e.appolast_idx
+           join department dp on dp.dept_idx = a.dept_idx
+           join position_ p on p.position_idx= a.position_idx
+        WHERE ref_doc_idx = #{doc_idx}
+    </select>
+    <!--my_appr_state-->
+    <select id="get_my_appr_state" resultType="int">
+        SELECT appr_state FROM approval
+        WHERE doc_idx = #{doc_idx} AND appr_receiver_idx = #{empl_idx};
+    </select>
+
 </mapper>

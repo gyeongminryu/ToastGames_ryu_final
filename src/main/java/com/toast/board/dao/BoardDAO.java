@@ -45,8 +45,5 @@ public interface BoardDAO {
 	List<FileDTO> getFileList(int board_idx, String file_key);
 
 	String originalFileName(String filename);
-	
-    // 대댓글 수정 및 삭제
-
-	
+		
 }

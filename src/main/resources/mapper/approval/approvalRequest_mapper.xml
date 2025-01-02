@@ -80,7 +80,7 @@
         <if test="doc_content_sub!=''">doc_content_sub,</if>
         <if test="form_idx!=''">form_idx,</if>
         <if test="doc_subject!=''">doc_subject,</if>
-        <if test="doc_end_date!=''">doc_end_date</if>
+        <if test="doc_end_date!=''"> DATE_FORMAT(doc_end_date, '%Y-%m-%d %H:%i:%s') AS doc_end_date</if>
         FROM document WHERE doc_idx = #{doc_idx}
     </select>
 
@@ -245,6 +245,11 @@
     <!--상신 후 저장-> 상신으로 상태값 변경-->
     <update id="update_approval_doc_state">
         UPDATE document SET doc_state = 1 WHERE doc_idx = #{doc_idx}
+    </update>
+
+    <!--상신 후 첫번째 결재 라인 보이게 하기-->
+    <update id="update_first_approval_line">
+        UPDATE approval SET appr_show = 1 WHERE doc_idx = #{doc_idx} AND appr_order = 1
     </update>
 
 

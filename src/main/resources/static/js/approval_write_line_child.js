@@ -256,8 +256,9 @@ function approval_send_line(){
 
 //결재선 선택하지 않음
 function approval_line_none(){
-
+    tst_modal_close('tst_modal_select');
     if(step !== 1){
+        selected = 0;
         approval_get_lines(0,'',0,'',0,'',0,'',step,selected);
         window.close();
     }else{

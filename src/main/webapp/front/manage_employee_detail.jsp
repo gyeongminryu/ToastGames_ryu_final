@@ -133,7 +133,7 @@
                             <tbody>
                             <tr>
                                 <th class="td_bg_subtle">이번 주 근무 시간</th>
-                                <td>{이번 주 근무 시간}/52시간</td>
+                                <td>{이번 주 근무 시간}/52시간 <button onclick="location.href='/work_record?'" class="btn_min btn_primary">상세보기</button></td>
                                 <th class="td_bg_subtle">초과 근무 여부</th>
                                 <td>대상 아님|초과 근무중</td>
                             </tr>

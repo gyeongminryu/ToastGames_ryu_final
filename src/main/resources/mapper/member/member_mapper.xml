@@ -145,11 +145,10 @@
 	</update>
 
 	<!-- 이메일, 연락처, 이름, 주소를 수정할 수 있어야 한다. + 은행 idx, 계좌 -->
-	<update id="mypageUpdate"
-		parameterType="com.toast.member.dto.MemberDTO">
+	<update id="mypageUpdate" parameterType="com.toast.member.dto.MemberDTO">
 		UPDATE employee
 		<set>
-			<if test="empl_per_phone != null">empl_cmp_phone = #{empl_cmp_phone},</if>
+			<if test="empl_cmp_phone != null">empl_cmp_phone = #{empl_cmp_phone},</if>
 			<if test="empl_per_phone != null">empl_per_phone = #{empl_per_phone},</if>
 			<if test="empl_per_email != null">empl_per_email = #{empl_per_email},</if>
 			<if test="empl_addr != null">empl_addr = #{empl_addr},</if>

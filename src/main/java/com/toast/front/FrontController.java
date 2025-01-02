@@ -138,6 +138,22 @@ public class FrontController {
 
 
 
+    // Document ======================================================
+
+    // 문서 목록
+    @RequestMapping(value = "/document_list")
+    public ModelAndView front_document_list() {
+        return new ModelAndView("document_list");
+    }
+
+    // 문서 상세보기
+    @RequestMapping(value = "/document_detail")
+    public ModelAndView front_document_detail() {
+        return new ModelAndView("document_detail");
+    }
+
+
+
     // Board =========================================================
 
     // 게시글 목록

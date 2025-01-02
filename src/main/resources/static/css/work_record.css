@@ -1,0 +1,119 @@
+.btn_select_week .tst_list li{
+    margin: 0 calc(var(--tst-list-desc-width) - 2px) 0 var(--tst-list-desc-remove);
+    padding: 8px 12px;
+    background-color: var(--tst-color-subtle);
+    border-radius: var(--tst-border-radius);
+}
+
+.btn_select_week .tst_list li:first-child,
+.btn_select_week .tst_list li:last-child{
+    padding: 12px 10px;
+    background-color: var(--tst-color-white);
+}
+
+
+
+.work_record_week{
+    width: 100%;
+    height: 96px;
+    padding: 8px 0 0 12px;
+    overflow: hidden;
+}
+
+.work_record_week h1 span{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.work_record_week .work_record_progress_bar{
+    width: 100%;
+    margin: 22px -2px 0;
+    display: flex;
+}
+
+.work_record_week .work_record_progress_bar .progress_required,
+.work_record_week .work_record_progress_bar .progress_over{
+    padding: 0 2px;
+    text-align: right;
+    display: flex;
+    flex: 0 0 auto;
+}
+
+.work_record_week .work_record_progress_bar .progress_required{
+    width: 76.923077%;
+    display: block;
+}
+
+.work_record_week .work_record_progress_bar .progress_over{
+    width: 23.076923%;
+    display: block;
+}
+
+.work_record_week .work_record_progress_bar .progress_bar_frame{
+    width: 100%;
+    height: 10px;
+    padding: 0;
+    background-color: var(--tst-color-subtle);
+    border: 2px var(--tst-border-style) var(--tst-border-color);
+    position: relative;
+}
+
+.work_record_week .work_record_progress_bar .progress_required .progress_bar_frame{
+    border-radius: var(--tst-border-radius) 0 0 var(--tst-border-radius);
+}
+
+.work_record_week .work_record_progress_bar .progress_over .progress_bar_frame{
+    background: none;
+    border-radius: 0 var(--tst-border-radius) var(--tst-border-radius) 0;
+}
+
+.work_record_week .work_record_progress_bar .progress_bar_frame .progress_bar_fill{
+    height: 10px;
+    position: relative;
+    top: -2px;
+}
+
+.work_record_week .work_record_progress_bar .progress_required .progress_bar_frame .progress_bar_fill{
+    width: 100%; /* 백엔드 작업시 css 파일 내 width 항목은 지우고 자바스크립트로 제어하세요 */
+    background: var(--tst-color-medium);
+    border-radius: var(--tst-border-radius) 0 0 var(--tst-border-radius);
+}
+
+.work_record_week .work_record_progress_bar .progress_over .progress_bar_frame .progress_bar_fill{
+    width: 27%; /* 백엔드 작업시 css 파일 내 width 항목은 지우고 자바스크립트로 제어하세요 */
+    background: var(--tst-color-dark);
+    border-radius: 0 var(--tst-border-radius) var(--tst-border-radius) 0;
+}
+
+
+
+.tst_table.work_record_month tr.tr_border_bottom{
+    border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+}
+
+.tst_table.work_record_month tbody th.td_border_right,
+.tst_table.work_record_month tbody td.td_border_right{
+    border-right: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+}
+
+.tst_table.work_record_month tbody td div{
+    width: 100%;
+    height: 24px;
+}
+
+.tst_table.work_record_month tbody td.td_bg_work div.bg_work_ordinary{
+    background-color: var(--tst-color-subtle);
+}
+
+.tst_table.work_record_month tbody td.td_bg_work div.bg_work_lunch{
+    background-color: var(--tst-color-subtle);
+    opacity: 0.7;
+}
+
+.tst_table.work_record_month tbody td.td_bg_work div.bg_work_over{
+    background-color: var(--tst-color-medium);
+}
+
+.tst_table.work_record_month tbody td.td_bg_work:first-child{
+    border-radius: var(--tst-border-radius) 0 0 var(--tst-border-radius);
+}

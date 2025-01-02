@@ -98,23 +98,12 @@ public interface ApprovalRequestDAO {
 
     int request(Map<String, String> param);
 
-    boolean update_approval_doc_state(String doc_idx);
+    int update_approval_doc_state(String doc_idx);
+
+    int update_first_approval_line(String doc_idx);
 
     Map<String, Object> get_empl_info(int empl_idx);
 
     int doc_line_changed_update(Map<String, Object> lineEmplInfo);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

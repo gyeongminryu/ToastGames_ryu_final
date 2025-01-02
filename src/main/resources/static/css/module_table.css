@@ -12,6 +12,10 @@
     border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
 }
 
+.tst_table.tr_hover_subtle tbody tr:hover{
+    background-color: var(--tst-color-subtle);
+}
+
 .tst_table thead th{
     padding: 4px 10px;
     background-color: var(--tst-color-medium);

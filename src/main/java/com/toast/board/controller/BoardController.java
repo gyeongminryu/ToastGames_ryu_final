@@ -208,7 +208,5 @@ public class BoardController {
         }
         return response;
     }
-	
-    // 대댓글 수정 및 삭제
-    
+	    
 }

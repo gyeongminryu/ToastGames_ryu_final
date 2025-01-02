@@ -49,4 +49,15 @@ public interface ApprovalDAO {
 
     List<Map<String, Object>> get_received_list(int r_empl_idx);
 
+    Map<String, Object> get_doc_info(int doc_idx);
+
+    Map<String, Object> get_form_info(int doc_idx);
+
+    List<Map<String,Object>> get_all_appr_line(int doc_idx);
+
+    List<Map<String, Object>> get_all_refer_line(int doc_idx);
+
+    int get_my_appr_state(int doc_idx, int empl_idx);
+
+
 }

@@ -75,7 +75,7 @@
                         </form>
                         <!-- //물품 검색 -->
 
-                        <table class="tst_table">
+                        <table class="tst_table tr_hover_subtle">
                             <colgroup>
                                 <col style="width: 60px;" />
                                 <col style="width: 150px;" />

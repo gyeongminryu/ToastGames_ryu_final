@@ -90,7 +90,7 @@
                 </table>
 
                 <!-- 표 -->
-                <table class="tst_table">
+                <table class="tst_table tr_hover_subtle">
                     <colgroup>
                         <col style="width: 16px" />
                         <col style="width: 120px" />

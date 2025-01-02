@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.toast.approval.dao.ApprovalDAO;
+import org.springframework.ui.Model;
 
 import java.util.*;
 
@@ -92,10 +93,6 @@ public class ApprovalService {
 			logger.info("문서 받은 사원임");
 			Map<String, Object> receiver_empl_info = approvalDAO.get_empl_info(empl_idx);
 			received_list_params = get_list_info(receiver_empl_info,filter,type,received_list_params,"받은 결재");
-
-
-
-
 
 		}
 
@@ -340,5 +337,42 @@ public class ApprovalService {
 		}
 	}
 
-	
+
+	public void get_all_detail(int doc_idx, int empl_idx, Model model) {
+		//문서 정보 (doc_info)
+		Map<String,Object> doc_info = approvalDAO.get_doc_info(doc_idx);
+		model.addAttribute("doc_info",doc_info);
+
+
+		//폼 정보
+		Map<String,Object> form_info = approvalDAO.get_form_info(doc_idx);
+		model.addAttribute("form_info",form_info);
+
+		//파일 정보
+
+		//결재자 정보 (appr_line) - 만약 sent면 모두, received면
+		List<Map<String,Object>> appr_lines =approvalDAO.get_all_appr_line(doc_idx);
+		model.addAttribute("appr_lines",appr_lines);
+		for(Map<String,Object> appr_line : appr_lines){
+			if((int)appr_line.get("appr_receiver_idx") == empl_idx){
+				model.addAttribute("my_appr_order",(int)appr_line.get("appr_order"));
+			}
+		}
+
+
+		//참조 정보 (refer_line)
+		List<Map<String,Object>> refer_lines =approvalDAO.get_all_refer_line(doc_idx);
+		model.addAttribute("refer_lines",refer_lines);
+
+		//내 결재 상태 가져오기 - 이에 따라 버튼이 보일지 안 보일지
+		model.addAttribute("my_appr_state",approvalDAO.get_my_appr_state(doc_idx,empl_idx));
+
+		//내 empl_idx 가져오기
+		model.addAttribute("empl_idx", empl_idx);
+
+
+	}
+
+
+
 }
