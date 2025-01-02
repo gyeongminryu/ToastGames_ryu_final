@@ -19,10 +19,11 @@ public class ApprovalResponseService {
 		logger.info("doc_content:{}",doc_content);
 		logger.info("doc_idx:{}",doc_idx);
 		boolean success = false;
-		if(approvalResponseDAO.update_appr_content(doc_content,doc_idx)>0 && approvalResponseDAO.update_next_appr(line_order,doc_idx)>0){
+		if(approvalResponseDAO.update_appr_content(doc_content,doc_idx)>0){
 			success = true;
 		};
 
+		//&& approvalResponseDAO.update_next_appr(line_order,doc_idx)>0
 		return success;
 	}
 
