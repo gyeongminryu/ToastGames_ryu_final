@@ -74,7 +74,7 @@ function approval_sign_save(){
     //console.log("doc_content",doc_content);
 
     // 켜기
-   //save_approved_doc_content(doc_content);
+    save_approved_doc_content(doc_content);
 
 }
 
