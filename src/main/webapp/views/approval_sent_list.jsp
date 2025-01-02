@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
   <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
   <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
+
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
@@ -137,10 +138,10 @@
                       <c:when test="${list.doc_subject != null}">
                         <c:choose>
                           <c:when test="${list.doc_subject == '결재가 최종 승인되었습니다.' || list.doc_subject =='결재가 반려되었습니다.'}">
-                          <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}&type=sent'" class="tst_pointer font_subtle">${list.doc_subject}</span>
+                          <span onclick="location.href='/approval_sent_detail.go?doc_idx= ${list.doc_idx}&type=sent'" class="tst_pointer font_subtle">${list.doc_subject}</span>
                           </c:when>
                           <c:otherwise>
-                            <span onclick="location.href='/approval_sent_detail?doc_idx= ${list.doc_idx}&type=sent'" class="tst_pointer">${list.doc_subject}</span>
+                            <span onclick="location.href='/approval_sent_detail.go?doc_idx= ${list.doc_idx}&type=sent'" class="tst_pointer">${list.doc_subject}</span>
                           </c:otherwise>
                         </c:choose>
 

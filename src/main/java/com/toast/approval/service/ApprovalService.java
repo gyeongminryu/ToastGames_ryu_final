@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import com.toast.approval.dao.ApprovalDAO;
 import org.springframework.ui.Model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -338,7 +341,31 @@ public class ApprovalService {
 	}
 
 
-	public void get_all_detail(int doc_idx, int empl_idx, Model model) {
+	public void get_all_detail(int doc_idx, int empl_idx, Model model, String type) {
+		//내 empl_idx, doc_idx의 읽음 시간 기록하기
+		LocalDate date = LocalDate.now();
+		LocalTime time = LocalTime.now();
+
+
+		//time format
+		String formatted_time = time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+		logger.info("formatted_datetime:{}",date+ " "+formatted_time);
+		String formatted_date = date+ " "+formatted_time;
+
+		if(type.equals("received")){
+			//읽은 시간 업데이트
+			if(approvalDAO.update_read_time(formatted_date,doc_idx,empl_idx)>0){
+				logger.info("읽은 시간 업데이트 되었음");
+			}
+
+			//내 결재 상태 가져오기 - 이에 따라 버튼이 보일지 안 보일지
+			model.addAttribute("my_appr_state",approvalDAO.get_my_appr_state(doc_idx,empl_idx));
+
+		}
+
+
+
 		//문서 정보 (doc_info)
 		Map<String,Object> doc_info = approvalDAO.get_doc_info(doc_idx);
 		model.addAttribute("doc_info",doc_info);
@@ -364,8 +391,7 @@ public class ApprovalService {
 		List<Map<String,Object>> refer_lines =approvalDAO.get_all_refer_line(doc_idx);
 		model.addAttribute("refer_lines",refer_lines);
 
-		//내 결재 상태 가져오기 - 이에 따라 버튼이 보일지 안 보일지
-		model.addAttribute("my_appr_state",approvalDAO.get_my_appr_state(doc_idx,empl_idx));
+
 
 		//내 empl_idx 가져오기
 		model.addAttribute("empl_idx", empl_idx);

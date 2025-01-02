@@ -192,7 +192,8 @@ public class ApprovalController {
 		logger.info("doc_idx:{}", doc_idx);
 		logger.info("type:{}", type);
 		logger.info("approval_"+type+"_detail");
-		approvalService.get_all_detail(doc_idx,empl_idx,model);
+
+		approvalService.get_all_detail(doc_idx,empl_idx,model,type);
 
 		//보낸 type에 따라 detail 경로 동적으로 생성
 		return "approval_"+type+"_detail";
