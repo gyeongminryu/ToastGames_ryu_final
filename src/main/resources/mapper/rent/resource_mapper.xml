@@ -292,7 +292,13 @@
 	</select>
 
 	<!-- 물품 상세보기 첨부파일, 이미지 -->
-
+	<select id="prodFile" resultType="com.toast.rent.dto.ResourcePhotoDTO">
+		SELECT 		
+			file_idx, file_key, ori_filename, new_filename, file_type, file_addr, uploader_idx
+		FROM 
+			file
+		WHERE uploader_idx=#{param1}
+	</select>
 
 
 

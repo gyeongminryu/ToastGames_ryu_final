@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.toast.rent.dto.ResourceDTO;
+import com.toast.rent.dto.ResourcePhotoDTO;
 import com.toast.rent.service.ResourceService;
 
 @Controller
@@ -110,8 +113,9 @@ public class ResourceController {
 	public String prodDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
 		logger.info("prod_idx:"+prod_idx);
 		ResourceDTO detail = resourceService.prodDetail(prod_idx);
+		List<ResourcePhotoDTO> files = resourceService.prodFile(prod_idx);
 		model.addAttribute("detail", detail);
-		//model.addAttribute("file", file);
+		model.addAttribute("files", files);
 		return "rent_detail";
 	}
 	
@@ -160,7 +164,10 @@ public class ResourceController {
 	
 	
 	//물품 첨부파일 확인하기 및 다운받기
-	
+	@RequestMapping(value="/download.do")
+	public ResponseEntity<Resource> fileDownloads(String new_filename, String ori_filename) {
+		return resourceService.fileDownload(new_filename,ori_filename);
+	}
 
 	
 	//내가 대여한 물품(목록 보기 물품 상태 포함)

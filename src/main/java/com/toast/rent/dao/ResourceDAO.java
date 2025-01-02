@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.toast.rent.dto.ResourceDTO;
+import com.toast.rent.dto.ResourcePhotoDTO;
 
 @Mapper
 public interface ResourceDAO {
@@ -49,6 +50,9 @@ public interface ResourceDAO {
 	//물품 상세보기
 	ResourceDTO prodDetail(int prod_idx);
 
+	//물품 첨부파일 가져오기
+	List<ResourcePhotoDTO> prodFile(int prod_idx);
+	
 	//물품 대여상태 보기
 	ResourceDTO prodRentDetail(int prod_idx);
 
@@ -57,6 +61,8 @@ public interface ResourceDAO {
 
 	//물품 대여 상태 업뎃
 	int updateRentState(ResourceDTO dto);
+
+	
 
 	
 
