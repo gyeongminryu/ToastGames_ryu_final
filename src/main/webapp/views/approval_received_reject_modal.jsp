@@ -48,7 +48,7 @@
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">서명/직인</h1>
-            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_send')"></i>
+            <i class="bi bi-dash-circle-dotted" onclick="approval_sign_close()"></i>
         </div>
         <form>
             <div class="tst_modal_body">
@@ -65,7 +65,9 @@
                 <!-- //서명/직인 선택 -->
 
                 <!-- 서명란 -->
-                <div class="sign_area"></div>
+                <div class="sign_area">
+                    <canvas id="canvas" width="400" height="200"></canvas>
+                </div>
                 <!-- //서명란 -->
 
                 <!-- 직인란 -->
@@ -82,10 +84,10 @@
             <div class="tst_modal_footer">
                 <div class="tst_flex">
                     <div class="tst_col6">
-                        <!-- 상신 경로를 입력하세요 --><button type="submit" onclick="" class="btn_primary btn_full">결재하기</button>
+                        <!-- 상신 경로를 입력하세요 --><button type="button" onclick="approval_sign_save()" class="btn_primary btn_full">결재하기</button>
                     </div>
                     <div class="tst_col6">
-                        <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_modal_send')">취소하기</button>
+                        <button type="button" class="btn_secondary btn_full" onclick="approval_sign_close()">취소하기</button>
                     </div>
                 </div>
             </div>
@@ -95,3 +97,5 @@
 </div>
 <!-- //결재하기 > 서명하기/직인찍기 -->
 <script src="resources/js/module_modal.js"></script>
+<script src="resources/js/approval_send_modal.js"></script>
+<script src="resources/js/approval_sign.js"></script>
