@@ -24,4 +24,10 @@ public class DocumentController {
 		return new ModelAndView("document_list");
 	}
 
+	// 문서 열람
+	@RequestMapping(value = "/document_detail.go")
+	public ModelAndView document_detail() {
+		return new ModelAndView("document_detail");
+	}
+
 }

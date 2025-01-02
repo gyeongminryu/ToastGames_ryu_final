@@ -361,4 +361,14 @@ public class FrontController {
     public ModelAndView front_work_record() {
         return new ModelAndView("work_record");
     }
+
+
+
+    // Editor ========================================================
+
+    // rich text editor test
+    @RequestMapping(value = "/rte_test")
+    public ModelAndView front_richtexteditor_test() {
+        return new ModelAndView("module_richtexteditor_test");
+    }
 }
