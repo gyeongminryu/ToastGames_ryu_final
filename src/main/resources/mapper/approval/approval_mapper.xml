@@ -128,6 +128,13 @@
 
 
     <!--detail-->
+    <!--읽은 시간 업데이트-->
+    <update id="update_read_time">
+        UPDATE approval SET appr_read_date=#{read_time} WHERE doc_idx = #{doc_idx} AND appr_receiver_idx = #{empl_idx}
+    </update>
+
+
+
     <!--doc_info-->
     <select id="get_doc_info" resultType="Map">
         SELECT d.doc_idx,d.doc_empl_idx,e.empl_name,dp.dept_name,p.position_name, d.doc_update_date, d.doc_subject,d.doc_content,d.doc_content_sub,DATE_FORMAT(doc_end_date, '%Y-%m-%d %H:%i:%s') AS doc_end_date
@@ -171,6 +178,7 @@
            join position_ p on p.position_idx= a.position_idx
         WHERE ref_doc_idx = #{doc_idx}
     </select>
+
     <!--my_appr_state-->
     <select id="get_my_appr_state" resultType="int">
         SELECT appr_state FROM approval
