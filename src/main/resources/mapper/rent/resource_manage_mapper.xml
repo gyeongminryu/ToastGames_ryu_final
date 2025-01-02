@@ -269,10 +269,21 @@
 	</select>
 
 
+	<!-- 물품 등록 -->
+	<insert id="prodWrite"
+		useGeneratedKeys="true"
+		keyColumn="prod_idx"
+		keyProperty="prod_idx"
+		parameterType="com.toast.rent.dto.ResourceManageDTO">
+		INSERT INTO product(prod_name, prod_model, prod_cate_idx, prod_info,prod_dispo_date, prod_rent, prod_state,prod_place,prod_purch_date)
+			VALUES(#{prod_name},#{prod_model}, #{prod_cate_idx}, #{prod_info},#{prod_dispo_date}, #{prod_rent}, #{prod_state},#{prod_place},#{prod_purch_date})
+	</insert>
 
-
-
-
+    <!-- 물품 사진 등록 -->
+	<insert id="prodFileAdd">
+		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr,file_size)
+			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr},#{file_size})
+	</insert>
 
 
 
