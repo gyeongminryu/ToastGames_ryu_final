@@ -29,6 +29,17 @@
     color: var(--tst-color-subtle);
 }
 
+#module_quill_toolbar input.ql-image{
+    display: none;
+}
+
+.ql-snow .ql-tooltip.ql-editing{
+    top: -10px !important;
+    left: initial !important;
+    right: 0 !important;
+}
+
+
 
 
 #module_quill_editor{
@@ -51,9 +62,15 @@
     font-weight: 900;
 }
 
+#module_quill_editor .ql-editor hr{
+    border: none;
+    border-top: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+}
+
 
 
 #module_quill_counter{
+    height: 20px;
     margin: -1px 0 10px;
     padding: 0 5px 2px;
     border-radius: 0 0 var(--tst-border-radius) var(--tst-border-radius);

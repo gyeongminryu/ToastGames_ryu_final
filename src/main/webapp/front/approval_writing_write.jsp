@@ -59,20 +59,37 @@
 
 
                                         <!-- quill editor -->
-                                        <c:import url="module_quill_editor_toolbar.jsp" />
-                                        <!-- 툴바 없이 사용하실 경우 "module_quill_editor_toolbar.jsp" 파일을 import하세요 -->
+
+                                        <!-- 에디터 작동에 필요한 요소를 추가하는 파일입니다 -->
+                                        <c:import url="module_quill_editor.jsp" />
+
+                                        <!-- 툴바 --><!-- 사용하지 않을 시 툴바를 삭제하세요 -->
+                                        <div id="module_quill_toolbar"></div>
+
+                                        <!-- 에디터 -->
+                                        <div id="module_quill_editor"></div>
+
+                                        <!-- 에디터에 작성한 값이 하단 입력창에 저장됩니다. -->
+                                        <input type="hidden" name="content" id="module_quill_copier" value="" />
+
+                                        <!-- 글자수 세기 -->
+                                        <div id="module_quill_counter"></div>
+
+                                        <!-- 아래 스크립트는 JS 파일에 작성하세요 -->
                                         <script>
                                             // draw editor
                                             const quill = new Quill('#module_quill_editor', {
                                                 placeholder: '보고할 내용을 입력하세요',
                                                 modules: {
                                                     history: { delay: 500, maxStack: 500, userOnly: false },
+                                                    toolbar: { container: '#module_quill_toolbar' },<!-- 툴바를 사용하지 않을 경우 이 모듈을 삭제하세요 -->
                                                     counter: { container: '#module_quill_counter', maxLength: 1000, useMaxLength: false },
                                                     copier: { container: '#module_quill_copier'},
                                                     setHeight: { height: 260 }
                                                 }
                                             });
                                         </script>
+
                                         <!-- //quill editor -->
 
 

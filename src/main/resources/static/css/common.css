@@ -153,10 +153,18 @@ p.min{
 /* anker */
 
 a, a:hover, a:visited {
-    color: inherit;
+    color: var(--tst-color-success);
     font-weight: calc(var(--tst-body-font-weight) + 100);
+    cursor: pointer;
+}
+
+a, a:visited {
     text-decoration: none;
 }
+
+a:hover {
+     text-decoration: underline;
+ }
 
 
 
