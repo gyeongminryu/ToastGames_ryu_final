@@ -45,5 +45,12 @@ public interface BoardDAO {
 	List<FileDTO> getFileList(int board_idx, String file_key);
 
 	String originalFileName(String filename);
-		
+
+	boolean updateReReply(int re_reply_idx, String re_reply, int re_reply_empl_idx);
+
+	String getDeptName(String id);
+	
+    // 댓글 삭제, 대댓글 삭제
+
+	
 }

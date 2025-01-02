@@ -2,6 +2,7 @@ package com.toast.board.service;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,14 +35,24 @@ public class BoardService {
 		return boardDAO.memberInfo(id);
 	}
 	
+	public String getDeptName(String id) {
+		return boardDAO.getDeptName(id);
+	}
+	
 	public Map<String, Object> boardInfo(int board_idx) {
 		return boardDAO.boardInfo(board_idx);
 	}
 
-	public boolean boardWrite(Map<String, Object> params, MultipartFile[] files) throws Exception {
+	public int boardWrite(Map<String, Object> params, MultipartFile[] files) throws Exception {
 		String file_key = UUID.randomUUID().toString();
 		params.put("file_key", file_key);
-		int boardIdx = boardDAO.boardWrite(params);
+	    // 게시글 작성 후, 자동 생성된 board_idx를 params에 저장
+	    boardDAO.boardWrite(params);
+	    
+	    // board_idx는 BigInteger로 반환될 수 있으므로, 이를 int로 변환
+	    BigInteger boardIdxBigInteger = (BigInteger) params.get("board_idx");
+	    int boardIdx = boardIdxBigInteger.intValue();  // BigInteger -> int 변환
+	    
 	    int uploader_idx = (Integer) params.get("appo_empl_idx"); // params에서 uploader_idx 가져오기
 		if (files != null && files.length > 0) { // 파일이 업로드 된다면.
 			for (MultipartFile file : files) {
@@ -66,7 +77,7 @@ public class BoardService {
 				}
 			}
 		}
-		return boardIdx > 0;
+		return boardIdx;
 	}
 	
 	public List<Map<String, Object>> getDepartmentList() {
@@ -96,7 +107,6 @@ public class BoardService {
 
 	    // BigDecimal을 int로 안전하게 변환
 	    int totalPages = (pages != null) ? pages.intValue() : 0; // null인 경우 기본값 0을 설정
-	    logger.info("Total pages: {}", totalPages);
 
 	    // 게시글 목록 조회
 	    List<Map<String, Object>> boardList = boardDAO.boardList(params);
@@ -104,7 +114,6 @@ public class BoardService {
 	    	int board_idx = (int) board.get("board_idx");
 	    	int commentCount = boardDAO.commentCount(board_idx);
 	    	board.put("commentCount", commentCount);
-	    	logger.info("commentCount?" + commentCount);
 		}
 	    
 	    // 결과 Map 생성
@@ -159,5 +168,23 @@ public class BoardService {
 	public boolean updateReply(String reply_idx, String reply, int empl_idx) {
 		return boardDAO.updateReply(reply_idx, reply, empl_idx);
 	}
+
+	public boolean deleteReply(int reply_idx) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean updateReReply(int re_reply_idx, String re_reply, int re_reply_empl_idx) {
+		return boardDAO.updateReReply(re_reply_idx, re_reply, re_reply_empl_idx);
+	}
+
+	public boolean deleteReReply(int re_reply_idx) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+    // 대댓글 수정 및 삭제
+
 
 }
