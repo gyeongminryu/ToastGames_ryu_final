@@ -314,6 +314,7 @@ public class ResourceManageService {
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
 				photo_dto.setUploader_idx(prod_idx);
+				photo_dto.setFile_size(file.getSize());
 				row = resourceMgDAO.prodFileAdd(photo_dto);
 				
 			} catch (Exception e) {

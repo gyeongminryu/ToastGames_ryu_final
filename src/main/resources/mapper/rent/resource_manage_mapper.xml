@@ -281,8 +281,8 @@
 
     <!-- 물품 사진 등록 -->
 	<insert id="prodFileAdd">
-		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
-			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr})
+		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr,file_size)
+			VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr},#{file_size})
 	</insert>
 
 

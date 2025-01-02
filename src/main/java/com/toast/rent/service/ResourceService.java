@@ -1,11 +1,18 @@
 package com.toast.rent.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -254,6 +261,29 @@ public class ResourceService {
 		
 	}
 
+	
+	//파일 다운로드
+	public ResponseEntity<Resource> fileDownload(String new_filename, String ori_filename) {
+		
+		//body
+		Resource res = new FileSystemResource("C:/files/"+new_filename);
+		
+		//header
+		HttpHeaders header = new HttpHeaders();
+		//한글처리
+		header.add("content-type", "application/octet-stream");
+		
+		try {
+			String filename = URLEncoder.encode(ori_filename, "UTF-8");
+			header.add("content-Disposition", "attechment;filename=\""+filename+"\"");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+
+		//body,header,status
+		return new ResponseEntity<Resource>(res, header, HttpStatus.OK);
+	}
 	
 
 
