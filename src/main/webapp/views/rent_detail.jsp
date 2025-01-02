@@ -60,7 +60,6 @@
                                 <th >제품 설명</th>
                                 <td id="prod_info">
                                 	${detail.prod_info}
-									<img alt="${file.ori_filename}" src="/photo/${file.new_filename}">
                                 </td>
                             </tr>
                             </tbody>

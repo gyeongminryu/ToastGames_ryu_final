@@ -280,7 +280,6 @@ public class ResourceService {
 			e.printStackTrace();
 		}
 		
-
 		//body,header,status
 		return new ResponseEntity<Resource>(res, header, HttpStatus.OK);
 	}
