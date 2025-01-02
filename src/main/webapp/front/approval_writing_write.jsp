@@ -50,7 +50,7 @@
                                 <tr>
                                     <th class="td_align_top">문서 제목</th>
                                     <td>
-                                        <input type="hidden" name="subject" maxlength="100" placeholder="문서 제목을 입력하세요" />
+                                        <input type="text" name="subject" maxlength="100" placeholder="문서 제목을 입력하세요" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -68,7 +68,8 @@
                                                 modules: {
                                                     history: { delay: 500, maxStack: 500, userOnly: false },
                                                     counter: { container: '#module_quill_counter', maxLength: 1000, useMaxLength: false },
-                                                    copier: { container: '#module_quill_copier'}
+                                                    copier: { container: '#module_quill_copier'},
+                                                    setHeight: { height: 260 }
                                                 }
                                             });
                                         </script>

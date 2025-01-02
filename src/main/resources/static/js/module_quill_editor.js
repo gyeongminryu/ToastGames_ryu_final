@@ -51,7 +51,7 @@ class Copier {
     }
 
     update() {
-        const content = this.quill.container.firstChild.innerHTML;
+        const content = this.quill.getSemanticHTML();
         this.container.value = content;
     }
 }
@@ -62,10 +62,18 @@ Quill.register('modules/copier', Copier);
 
 // Editor ==============================================================
 
-// fix width
-fixEditorWidth();
+class SetHeight {
+    constructor(quill, options) {
+        this.quill = quill;
+        this.options = options;
+        this.container = document.querySelector(options.container);
+        quill.once('editor-change', this.update.bind(this));
+    }
 
-function fixEditorWidth() {
-    let editorWidth = document.getElementById('module_quill_editor').offsetWidth;
-    document.getElementById('module_quill_editor').firstElementChild.style.width = editorWidth + 'px';
+    update() {
+        const height = this.options.height;
+        this.quill.container.style.height = `${height}`;
+    }
 }
+
+Quill.register('modules/setHeight', SetHeight);

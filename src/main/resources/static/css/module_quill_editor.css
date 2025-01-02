@@ -43,7 +43,11 @@
     border-radius: 0;
 }
 
-#module_quill_editor strong{
+#module_quill_editor .ql-editor{
+    overflow-x: auto;
+}
+
+#module_quill_editor .ql-editor strong{
     font-weight: 900;
 }
 
