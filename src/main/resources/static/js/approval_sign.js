@@ -50,16 +50,17 @@ function approval_sign_save(){
 
     console.log(isValid);
 
-
+    var src = '';
     if(isValid){
-        signatureImage.src = canvas.toDataURL();
+         src = canvas.toDataURL();
     }else{
         //만약 사인된게 없으면,
         const sign_preview = document.getElementById('sign_preview');
-
         console.log("sign_preview.src:",sign_preview.getAttribute("src"));
-    }
+        src = sign_preview.getAttribute("src");
 
+    }
+    signatureImage.src = src;
     //아예 사인 안된 경우
 
 
@@ -73,7 +74,7 @@ function approval_sign_save(){
     //console.log("doc_content",doc_content);
 
     // 켜기
-   save_approved_doc_content(doc_content);
+   //save_approved_doc_content(doc_content);
 
 }
 
