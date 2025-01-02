@@ -20,8 +20,6 @@
     <div class="tst_container_right">
         <div class="tst_contents">
             <div class="tst_contents_inner">
-                ${received_lists}
-
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_received_list.go'">

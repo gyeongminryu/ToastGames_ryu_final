@@ -58,4 +58,6 @@ public interface ApprovalDAO {
     List<Map<String, Object>> get_all_refer_line(int doc_idx);
 
     int get_my_appr_state(int doc_idx, int empl_idx);
+
+
 }

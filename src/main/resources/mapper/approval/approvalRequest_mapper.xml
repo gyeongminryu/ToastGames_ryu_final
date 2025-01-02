@@ -247,6 +247,11 @@
         UPDATE document SET doc_state = 1 WHERE doc_idx = #{doc_idx}
     </update>
 
+    <!--상신 후 첫번째 결재 라인 보이게 하기-->
+    <update id="update_first_approval_line">
+        UPDATE approval SET appr_show = 1 WHERE doc_idx = #{doc_idx} AND appr_order = 1
+    </update>
+
 
     <!--인사 발령되었는지 확인-->
     <!--empl_idx의 사원의 정보 알아내기-->
