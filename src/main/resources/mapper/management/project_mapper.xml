@@ -11,6 +11,8 @@ SELECT
     t.calup_date,
     t.deletion_date,
     e.empl_name AS team_head_name,
+    e.empl_cmp_phone AS head_cmp_phone,
+    e.empl_cmp_email AS head_cmp_email,
     p.position_name,
     d.duty_name,
     COUNT(tm.teammem_empl_idx) AS team_member_count
@@ -20,7 +22,7 @@ JOIN appointment a ON a.appo_idx = e.appolast_idx
 JOIN duty d ON d.duty_idx = a.duty_idx
 JOIN position_ p ON p.position_idx = a.position_idx
 LEFT JOIN team_members tm ON tm.team_idx = t.team_idx
-WHERE t.team_name = #{param1}  
+WHERE t.team_name LIKE CONCAT('%', #{param1}, '%')  
 GROUP BY 
     t.team_name,
     t.team_duty,
@@ -39,6 +41,8 @@ SELECT
     t.calup_date,
     t.deletion_date,
     e.empl_name AS team_head_name,
+    e.empl_cmp_phone AS head_cmp_phone,
+    e.empl_cmp_email AS head_cmp_email,
     p.position_name,
     d.duty_name,
     COUNT(tm.teammem_empl_idx) AS team_member_count
@@ -48,7 +52,7 @@ JOIN appointment a ON a.appo_idx = e.appolast_idx
 JOIN duty d ON d.duty_idx = a.duty_idx
 JOIN position_ p ON p.position_idx = a.position_idx
 LEFT JOIN team_members tm ON tm.team_idx = t.team_idx
-WHERE e.empl_name = #{param1}  
+WHERE e.empl_name LIKE CONCAT('%', #{param1}, '%')
 GROUP BY 
     t.team_name,
     t.team_duty,
@@ -66,6 +70,8 @@ SELECT
     t.calup_date,
     t.deletion_date,
     e.empl_name AS team_head_name,
+    e.empl_cmp_phone AS head_cmp_phone,
+    e.empl_cmp_email AS head_cmp_email,
     p.position_name,
     d.duty_name,
     COUNT(tm.teammem_empl_idx) AS team_member_count
@@ -83,6 +89,14 @@ GROUP BY
     e.empl_name,
     p.position_name,
     d.duty_name;
+
+</select>
+
+<insert id="projectTeamAddDo" parameterType="Map">
+	insert into project_team (team_name,team_duty,team_head_idx,calup_date,deletion_date) values (#{team_name},#{team_duty},#{team_head_idx},#{calup_date},#{deletion_date})
+</insert>
+
+<select id="projectTeamInfo" resultType="com.toast.management.dto.ProjectInfoDTO">
 
 </select>
 
