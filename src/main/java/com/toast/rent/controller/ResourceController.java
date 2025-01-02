@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.toast.rent.dto.ResourceDTO;
+import com.toast.rent.dto.ResourcePhotoDTO;
 import com.toast.rent.service.ResourceService;
 
 @Controller
@@ -110,8 +111,9 @@ public class ResourceController {
 	public String prodDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
 		logger.info("prod_idx:"+prod_idx);
 		ResourceDTO detail = resourceService.prodDetail(prod_idx);
+		List<ResourcePhotoDTO> files = resourceService.prodFile(prod_idx);
 		model.addAttribute("detail", detail);
-		//model.addAttribute("file", file);
+		model.addAttribute("files", files);
 		return "rent_detail";
 	}
 	

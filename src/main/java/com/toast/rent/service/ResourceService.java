@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.toast.rent.dao.ResourceDAO;
 import com.toast.rent.dto.ResourceDTO;
+import com.toast.rent.dto.ResourcePhotoDTO;
 
 @Service
 public class ResourceService {
@@ -209,6 +210,12 @@ public class ResourceService {
 		return resourceDAO.prodDetail(prod_idx);
 		
 	}
+	
+	//물품 첨부파일 가져오기
+	public List<ResourcePhotoDTO> prodFile(int prod_idx) {
+		return resourceDAO.prodFile(prod_idx);
+		
+	}
 
 	//물품 대여 상태 보기
 	public ResourceDTO prodRentDetail(int prod_idx) {
@@ -246,6 +253,9 @@ public class ResourceService {
 		return row;
 		
 	}
+
+	
+
 
 
 

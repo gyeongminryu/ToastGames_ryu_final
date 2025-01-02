@@ -29,7 +29,8 @@
                     </li>
                 </ul>
                 <!-- //제목 -->
-                <form action="product_add.do" method="post">
+                
+                <form action="productAdd.do" method="post" enctype="multipart/form-data">
                     <div class="tst_flex">
 
                         <!-- 물품 정보 -->
@@ -55,6 +56,12 @@
                                     <th class="td_align_top">물품 정보</th>
                                     <td>
                                         <input type="text" name="information" maxlength="1000" placeholder="물품 정보를 입력하세요" value=""/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td_align_top">보관 장소</th>
+                                    <td>
+                                        <input type="text" name="place" maxlength="1000" placeholder="물품 보관장소를 입력하세요" value=""/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -100,7 +107,7 @@
                                 <tr>
                                     <th>카테고리</th>
                                     <td>
-                                        <select name="category" onchange="change_category_life(this)"><!-- 함수는 파일 'resources/js/manage_rent_write.js'에 작성해 주세요 -->
+                                        <select name="category" onchange="change_category_life(this)">
                                             <option value="0">카테고리</option>
                                             <c:forEach items="${categoryList}" var="category">
                                             	<option value="${category.prod_cate_idx}" data-prod-life="${category.prod_life}">
@@ -111,12 +118,12 @@
                                 </tr>
                                 <tr>
                                     <th>내용연수</th>
-                                    <td id="useful_life" class="useful_life">내용연수|${category.prod_life}년</td>
+                                    <td id="useful_life" class="useful_life">내용연수| ${category.prod_life}년</td>
                                 </tr>
                                 <tr>
                                     <th>사용연한</th>
                                     <td id="due_date" class="due_date">사용연한|
-                                    	<input type="hidden" name="due_date" id="due_date_input" value="">
+                                    	<input type="hidden" name="prod_date" id="due_date_input" value="">
                                     </td>
                                 </tr>
                                 </tbody>
@@ -136,25 +143,13 @@
                                     <th colspan="2">첨부 파일</th>
                                 </tr>
                                 </thead>
-                                <tbody id="fileList">
-<!--                                 <tr>
-                                    <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
-                                    <td>
-                                        <button type="button" onclick="delete_attach(this, '{첨부파일_번호}')" class="btn_primary btn_min">삭제하기</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
-                                    <td>
-                                        <button type="button" onclick="delete_attach(this, '{첨부파일_번호}')" class="btn_primary btn_min">삭제하기</button>
-                                    </td>
-                                </tr> -->
+                                <tbody id="file_list">
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                    	<input type="file" name="attached_file" id="attached_file" multiple onchange="handleFileUpload(event)" />
-                                        <!-- <input type="file" name="attached_file" multiple /> -->
+                                    	<input type="file" name="attached_file" id="attached_file" multiple onchange="file_upload(event)" />
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -172,5 +167,5 @@
 <c:import url="manage_rent_write_modal.jsp" />
 
 <script src="resources/js/common.js"></script>
-<script src="resources/js/manage_rent_write.js"></script>
+<script src="resources/js/manage_rent_write.js" defer></script>
 </html>

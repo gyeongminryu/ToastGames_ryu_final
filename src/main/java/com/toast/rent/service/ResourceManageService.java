@@ -1,17 +1,29 @@
 package com.toast.rent.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.rent.dao.ResourceManageDAO;
 import com.toast.rent.dto.ResourceManageDTO;
+import com.toast.rent.dto.ResourcePhotoDTO;
+import com.toast.schedule.dto.MeetingDTO;
+import com.toast.schedule.dto.MeetingPhotoDTO;
 
 @Service
 public class ResourceManageService {
@@ -225,6 +237,127 @@ public class ResourceManageService {
 		result.put("list", list);
 		return result;
 	}
+
+	//물품 등록(파일O)
+	@Transactional
+	public int prodWrite(List<MultipartFile> attachedFiles, Map<String, Object> param) {
+		ResourceManageDTO dto = new ResourceManageDTO();
+		dto.setProd_name((String) param.get("subject"));
+		dto.setProd_model((String) param.get("information"));
+		dto.setProd_cate_idx(Integer.parseInt((String) param.get("category")));
+		dto.setProd_info((String) param.get("content"));
+		dto.setProd_rent(1); //대여 여부
+		dto.setProd_state(1); //물품 상태
+		dto.setProd_place((String) param.get("place"));
+		dto.setProd_purch_date(LocalDateTime.now().withNano(0)); //등록일자
+	    // 날짜 문자열 가져오기
+	    String dueDateString = (String) param.get("due_date");
+
+	    // 날짜만 있는 경우에 대한 처리
+	    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDate = LocalDate.parse(dueDateString, dateFormatter);
+
+	    // LocalDateTime으로 변환 (시간은 00:00:00으로 설정)
+	    LocalDateTime dueDate = localDate.atStartOfDay();
+	    
+	    // DTO에 설정
+	    dto.setProd_dispo_date(dueDate);
+		
+		int row = 0;
+		resourceMgDAO.prodWrite(dto);  //물품 등록
+		int prod_idx = dto.getProd_idx();
+		
+		logger.info("prod_idx:"+prod_idx);
+		
+		if(prod_idx > 0) {
+			logger.info("여기 들어왔다고");
+			row = prodFileAdd(attachedFiles, prod_idx);
+		}
+		
+		return row;
+	}
+
+	
+	//물품 파일 등록
+	private int prodFileAdd( List<MultipartFile> files, int prod_idx) {
+		
+		int row =0;
+		for (MultipartFile file : files) {
+			
+			//1.파일명 추출
+			String oriFilename = file.getOriginalFilename();
+			logger.info(oriFilename);
+			
+			//2.기존 파일의 확장자만 분리
+			String ext = oriFilename.substring(oriFilename.lastIndexOf("."));
+			logger.info(ext);
+			
+			
+			//3.새파일명 생성
+			String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
+			logger.info(newFilename);
+			
+			
+			//4. 첨부파일 키 생성
+			String fileKey = UUID.randomUUID().toString();
+			
+			//5. 파일 저장
+			try {
+				byte[] arr = file.getBytes();
+				Path path = Paths.get("C:/files/"+newFilename);
+				Files.write(path, arr);
+				//6.저장 내용 files 테이블에 insert
+				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
+				photo_dto.setNew_filename(newFilename);
+				photo_dto.setOri_filename(oriFilename);
+				photo_dto.setFile_addr(path.toString());
+				photo_dto.setFile_type(ext);
+				photo_dto.setFile_key(fileKey);
+				photo_dto.setUploader_idx(prod_idx);
+				row = resourceMgDAO.prodFileAdd(photo_dto);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return row;
+		
+	}
+	
+	
+
+	//물품 등록(파일X)
+	public int prodOnlyWrite(Map<String, Object> param) {
+		ResourceManageDTO dto = new ResourceManageDTO();
+		dto.setProd_name((String) param.get("subject"));
+		dto.setProd_model((String) param.get("information"));
+		dto.setProd_cate_idx(Integer.parseInt((String) param.get("category")));
+		dto.setProd_info((String) param.get("content"));
+		dto.setProd_rent(1); //대여 여부
+		dto.setProd_state(1); //물품 상태
+		dto.setProd_place((String) param.get("place"));
+		dto.setProd_purch_date(LocalDateTime.now().withNano(0)); //등록일자
+	    // 날짜 문자열 가져오기
+	    String dueDateString = (String) param.get("due_date");
+
+	    // 날짜만 있는 경우에 대한 처리
+	    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDate = LocalDate.parse(dueDateString, dateFormatter);
+
+	    // LocalDateTime으로 변환 (시간은 00:00:00으로 설정)
+	    LocalDateTime dueDate = localDate.atStartOfDay();
+
+	    // DTO에 설정
+	    dto.setProd_dispo_date(dueDate);
+		
+		
+		int row = resourceMgDAO.prodWrite(dto);  //물품 등록
+		
+		return row;
+	}
+	
+
 
 
 

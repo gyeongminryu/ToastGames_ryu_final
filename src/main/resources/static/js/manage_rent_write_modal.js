@@ -1,4 +1,4 @@
-let isConfirmed = null;  // true 또는 false 값을 반환하기 위한 변수
+let isConfirmed = false;  // true 또는 false 값을 반환하기 위한 변수
 
 
 function tst_modal_call(cls) {
@@ -14,8 +14,7 @@ function tst_modal_call_param(cls, param) {
 
 function tst_modal_close(cls) {
     document.getElementsByClassName(cls)[0].style.display = 'none';
-    isConfirmed = false;  // 등록 취소
-    console.log('등록 취소: ' + isConfirmed);  // false 출력 (디버깅 용도)
+    console.log('현재등록: ' + isConfirmed);
 }
 
 
@@ -26,11 +25,17 @@ function confirmRegistration() {
     console.log('등록: ' + isConfirmed);  // true 출력 (디버깅 용도)
 }
 
-
-// 외부에서 isConfirmed 값을 사용할 수 있음
-function getConfirmationStatus() {
-    return isConfirmed;  // true 또는 false 반환
+// 물품 등록 취소 (false 값 반환)
+function cancelRegistration() {
+    isConfirmed = false;  // 등록 취소
+    tst_modal_close('tst_modal_write');  // 모달 닫기
+    console.log('등록 취소: ' + isConfirmed);  // false 출력 (디버깅 용도)
 }
 
-console.log(isConfirmed);
+// 외부에서 등록 여부 확인
+function getConfirmationStatus() {
+    return isConfirmed;
+}
+
+
 
