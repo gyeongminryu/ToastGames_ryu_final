@@ -160,8 +160,4 @@ public class BoardService {
 		return boardDAO.updateReply(reply_idx, reply, empl_idx);
 	}
 
-
-    // 대댓글 수정 및 삭제
-
-
 }
