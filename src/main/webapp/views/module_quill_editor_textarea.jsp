@@ -12,31 +12,4 @@
 
 <div id="module_quill_counter"></div>
 
-<div id="module_quill_toolbar" class="disp_hide">
-    <button type="button" id="toolbar_btn_bold"><i class="bi bi-type-bold"></i></button>
-    <button type="button" id="toolbar_btn_italic"><i class="bi bi-type-italic"></i></button>
-    <button type="button" id="toolbar_btn_strike"><i class="bi bi-type-strikethrough"></i></button>
-    <button type="button" id="toolbar_btn_underline"><i class="bi bi-type-underline"></i></button>
-    <button type="button" id="toolbar_btn_superscript"><i class="bi bi-superscript"></i></button>
-    <button type="button" id="toolbar_btn_script"><i class="bi bi-subscript"></i></button>
-    <span class="toolbar_seperator">|</span>
-    <button type="button" id="toolbar_btn_h1"><i class="bi bi-type-h1"></i></button>
-    <button type="button" id="toolbar_btn_h2"><i class="bi bi-type-h2"></i></button>
-    <span class="toolbar_seperator">|</span>
-    <button type="button" id="toolbar_btn_left"><i class="bi bi-text-left"></i></button>
-    <button type="button" id="toolbar_btn_center"><i class="bi bi-text-center"></i></button>
-    <button type="button" id="toolbar_btn_right"><i class="bi bi-text-right"></i></button>
-    <button type="button" id="toolbar_btn_justify"><i class="bi bi-justify"></i></button>
-    <span class="toolbar_seperator">|</span>
-    <button type="button" id="toolbar_btn_ol"><i class="bi bi-list-ol"></i></button>
-    <button type="button" id="toolbar_btn_ul"><i class="bi bi-list-ul"></i></button>
-    <span class="toolbar_seperator">|</span>
-    <button type="button" id="toolbar_btn_indentleft"><i class="bi bi-text-indent-left"></i></button>
-    <button type="button" id="toolbar_btn_indentright"><i class="bi bi-text-indent-right"></i></button>
-    <span class="toolbar_seperator">|</span>
-    <button type="button" id="toolbar_btn_seperator"><i class="bi bi-dash-lg"></i></button>
-    <button type="button" id="toolbar_btn_link"><i class="bi bi-link-45deg"></i></button>
-    <button type="button" id="toolbar_btn_image"><i class="bi bi-image"></i></button>
-</div>
-
 <script src="resources/js/module_quill_editor.js"></script>

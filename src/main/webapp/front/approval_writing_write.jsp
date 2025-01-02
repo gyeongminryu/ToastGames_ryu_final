@@ -50,24 +50,32 @@
                                 <tr>
                                     <th class="td_align_top">문서 제목</th>
                                     <td>
-                                        <input type="text" name="subject" maxlength="100" placeholder="문서 제목을 입력하세요" />
+                                        <input type="hidden" name="subject" maxlength="100" placeholder="문서 제목을 입력하세요" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="td_align_top">보고 내용</th>
                                     <td>
+
+
+                                        <!-- quill editor -->
                                         <c:import url="module_quill_editor_toolbar.jsp" />
+                                        <!-- 툴바 없이 사용하실 경우 "module_quill_editor_toolbar.jsp" 파일을 import하세요 -->
                                         <script>
                                             // draw editor
                                             const quill = new Quill('#module_quill_editor', {
                                                 placeholder: '보고할 내용을 입력하세요',
                                                 modules: {
-                                                    history: { delay: 100, maxStack: 500, userOnly: false },
+                                                    history: { delay: 500, maxStack: 500, userOnly: false },
                                                     counter: { container: '#module_quill_counter', maxLength: 1000, useMaxLength: false },
                                                     copier: { container: '#module_quill_copier'}
                                                 }
                                             });
                                         </script>
+                                        <!-- //quill editor -->
+
+
+
                                     </td>
                                 </tr>
                                 <tr>

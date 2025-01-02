@@ -11,7 +11,7 @@ class Counter {
 
     calculate() {
         const text = this.quill.getText();
-        return text.length-1;
+        return text.length - 1;
     }
 
     update() {
@@ -21,9 +21,9 @@ class Counter {
         let label = '자';
         let useMax = this.options.useMaxLength;
         if (useMax) {
-            this.container.innerText = `${length} ${separator} ${max}${label}`;
-            if (length > max) {
-                this.quill.history.undo();
+            this.container.innerText = `${length} ${separator} ${max} ${label}`;
+            if (length >= max) {
+                this.quill.deleteText(max, length);   // 글자수 초과시 초과한 글자수 삭제
                 this.container.classList.add('font_caution');
             } else {
                 this.container.classList.remove('font_caution');
