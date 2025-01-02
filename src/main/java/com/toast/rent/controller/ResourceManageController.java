@@ -1,5 +1,7 @@
 package com.toast.rent.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.rent.dto.ResourceDTO;
 import com.toast.rent.dto.ResourceManageDTO;
@@ -152,18 +155,77 @@ public class ResourceManageController {
 	
 	
 	//물품 등록(카테고리, 사용 기한, 첨부파일 포함)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@PostMapping(value="/productAdd.do")
+	@ResponseBody
+	public Map<String, Object> productWrite(
+			@RequestParam("attached_file") List<MultipartFile> attachedFiles,
+	        @RequestParam("subject") String subject,
+	        @RequestParam("information") String information,
+	        @RequestParam("content") String content,
+	        @RequestParam("category") String category,
+	        @RequestParam("due_date") String dueDate,
+	        @RequestParam("place") String place
+	        ) {
+		Map<String, Object> response = new HashMap<>();
+	    try {
+	        // 파라미터 값 로깅
+	        logger.info("subject: " + subject);
+	        logger.info("information: " + information);
+	        logger.info("content: " + content);
+	        logger.info("category: " + category);
+	        logger.info("due_date: " + dueDate);
+
+	        
+	        Map<String, Object> map = new HashMap<String, Object>();
+	        
+	        map.put("subject", subject);
+	        map.put("information", information);
+	        map.put("content", content);
+	        map.put("category", category);
+	        map.put("due_date", dueDate);
+	        map.put("place", place);
+	        
+	        
+
+	        if (attachedFiles != null && !attachedFiles.isEmpty()) {
+	            List<MultipartFile> validFiles = new ArrayList<>();
+
+	            for (MultipartFile file : attachedFiles) {
+	                if (file.getOriginalFilename() != null 
+	                        && !file.getOriginalFilename().isEmpty() 
+	                        && file.getSize() > 0) {
+	                    validFiles.add(file);
+	                }
+	            }
+
+	            if (!validFiles.isEmpty()) {
+	                resourceMgService.prodWrite(validFiles, map);
+	                for (MultipartFile file : validFiles) {
+	                    logger.info("파일 이름: " + file.getOriginalFilename());
+	                    logger.info("파일 크기: " + file.getSize() + " bytes");
+	                }
+	            } else {
+	                logger.info("유효한 파일이 없습니다.");
+	            }
+	        } else {
+	            resourceMgService.prodOnlyWrite(map);
+	            logger.info("업로드된 파일이 없습니다.");
+	        }
+
+
+	        // 성공적으로 처리된 경우
+	        response.put("status", "success");
+	        response.put("redirectUrl", "/manage_rent_list.go");
+
+	    } catch (Exception e) {
+	        logger.error("파일 업로드 또는 데이터 처리 중 오류 발생", e);
+	        response.put("status", "error");
+	        response.put("message", "Error processing request: " + e.getMessage());
+	        // 오류 처리 페이지로 리다이렉트
+	    }
+	    return response;
+	}
+
 	
 	
 	//물품 상세보기

@@ -26,7 +26,7 @@
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_list.go'">
                         <h1>공용 물품 대여</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/rent_mylist'">
+                    <li class="tst_title_item" onclick="location.href='/rent_mylist.go'">
                         <h1>내가 대여한 물품</h1>
                     </li>
                 </ul>

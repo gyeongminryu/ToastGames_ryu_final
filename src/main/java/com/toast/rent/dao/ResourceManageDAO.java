@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.toast.rent.dto.ResourceManageDTO;
+import com.toast.rent.dto.ResourcePhotoDTO;
 
 @Mapper
 public interface ResourceManageDAO {
@@ -42,6 +43,15 @@ public interface ResourceManageDAO {
 
 	//카테고리 선택 & 검색 목록 가져오기
 	List<ResourceManageDTO> filterSearchList(Map<String, Object> map);
+
+	
+	
+	
+	//물품 사진 등록
+	int prodFileAdd(ResourcePhotoDTO photo_dto);
+
+	//물품 등록
+	int prodWrite(ResourceManageDTO dto);
 
 
 }
