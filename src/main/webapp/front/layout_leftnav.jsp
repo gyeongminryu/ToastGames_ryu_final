@@ -84,6 +84,9 @@
                 <li onclick="location.href='/manage_employee_list'" class="tst_pointer">
                     <i class="bi bi-person-lines-fill"></i><h3>인사 관리</h3>
                 </li>
+                <li onclick="location.href='/manage_form_list'" class="tst_pointer">
+                    <i class="bi bi-file-earmark-text"></i><h3>문서 양식 관리</h3>
+                </li>
                 <li onclick="location.href='/manage_rent_list'" class="tst_pointer">
                     <i class="bi bi-pencil-square"></i><h3>공용 물품 관리</h3>
                 </li>

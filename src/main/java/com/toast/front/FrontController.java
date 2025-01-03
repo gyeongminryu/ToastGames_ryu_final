@@ -266,6 +266,35 @@ public class FrontController {
 
 
 
+    // Manage > Form =================================================
+
+    // 문서 양식 목록
+    @RequestMapping(value = "/manage_form_list")
+    public ModelAndView front_manage_form_list() {
+        return new ModelAndView("manage_form_list");
+    }
+
+    // 문서 양식 등록
+    @RequestMapping(value = "/manage_form_write")
+    public ModelAndView front_manage_form_write() {
+        return new ModelAndView("manage_form_write");
+    }
+
+    // 문서 양식 수정
+    @RequestMapping(value = "/manage_form_update")
+    public ModelAndView front_manage_form_update() {
+        return new ModelAndView("manage_form_update");
+    }
+
+    // 문서 양식 상세보기
+    @RequestMapping(value = "/manage_form_detail")
+    public ModelAndView front_manage_form_detail() {
+        return new ModelAndView("manage_form_detail");
+    }
+
+
+
+
     // Manage > Rent =================================================
 
     // 공용 물품 목록 (관리)
