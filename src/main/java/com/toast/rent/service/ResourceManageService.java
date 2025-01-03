@@ -3,6 +3,7 @@ package com.toast.rent.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -357,9 +358,123 @@ public class ResourceManageService {
 		
 		return row;
 	}
+
+	//물품 상세보기
+	public Map<String, Object> prodMgDetail(int prod_idx) {
+		ResourceManageDTO dto= resourceMgDAO.prodMgDetail(prod_idx);
+		ResourceManageDTO empl =resourceMgDAO.rentEmpl(dto.getProd_rent_empl_idx());
+		switch (dto.getProd_rent()) {
+		case 0:
+			dto.setProd_rent_str("대여 불가"); //물품 상태가 0(사용 불가)일때 
+			break;
+		case 1:
+			dto.setProd_rent_str("대여 가능");
+			break;
+		case 2:
+			dto.setProd_rent_str("대여 신청중");
+			break;
+		case 3:
+			dto.setProd_rent_str("대여 중");
+			break;
+		case 4:
+			dto.setProd_rent_str("연체");
+			break;
+		default:
+			dto.setProd_rent_str("알 수 없음");
+			break;
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		dto.getProd_dispo_date();
+		dto.getProd_rent_date();
+		dto.getProd_return_date();
+		dto.getProd_exp_date();
+		dto.getProd_purch_date();
+        // 날짜 포맷
+        Map<String, String> formattedDates = new HashMap<>();
+        formattedDates.put("prodDispoDate", formatDateTime(dto.getProd_dispo_date()));
+        formattedDates.put("prodRentDate", formatDateTime(dto.getProd_rent_date()));
+        formattedDates.put("prodReturnDate", formatDateTime(dto.getProd_return_date()));
+        formattedDates.put("prodExpDate", formatDateTime(dto.getProd_exp_date()));
+        formattedDates.put("prodPurchDate", formatDateTime(dto.getProd_purch_date()));
+        
+        // Model에 Map 객체 추가
+        map.put("formattedDates", formattedDates);
+		map.put("dto", dto);
+		map.put("empl", empl);
+		return map;
+	}
+
 	
+	//물품 상세 첨부파일 보기(테이블 추가 필요할 것으로 예상)
+	public List<ResourcePhotoDTO> prodMgFile(int prod_idx) {
+		//(첨부파일키 추가 필요)
+		return resourceMgDAO.prodMgFile(prod_idx);
+	}
+	
+	
+    // 날짜 포맷 함수 (LocalDateTime을 포맷하는 함수)
+    private String formatDateTime(LocalDateTime dateTime) {
+        if (dateTime == null) return "";  // null 값 처리
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return dateTime.format(formatter);
+    }
 
+	//물품 대여 기록 가져오기
+	public Map<String, Object> rentManageList(int page, int cnt, int prodIdx) {
+		
+		
+		logger.info("현재 페이지:"+page);	
+		logger.info("한 페이지에 보여줄 갯수: "+cnt);
+		logger.info("물품 번호: "+prodIdx);
 
+		
+		int limit = cnt;
+		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+		
+		int totalPages = resourceMgDAO.allHisCount(cnt, prodIdx);
+		
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("totalPages", totalPages);
+		result.put("currPage", page);
+		result.put("list", resourceMgDAO.rentManageList(limit,offset,prodIdx));
+		
+		
+		return result;
+	}
+
+	//대여 승인
+	public int permitProd(int prod_idx) {
+		return resourceMgDAO.permitProd(prod_idx);
+		
+	}
+
+	//물품 반납
+	@Transactional
+	public boolean permitReturn(int prod_idx,int prod_rent_idx) {
+		boolean success = false;
+		int  row = resourceMgDAO.permitReturn(prod_idx); //대여가능으로 업뎃
+		ResourceManageDTO dto = new ResourceManageDTO();
+		dto.setProd_return_date(LocalDateTime.now().withNano(0));//반납일시
+		dto.setProd_return_state(1);
+		dto.setProd_rent_idx(prod_rent_idx);
+		int isReturn = resourceMgDAO.insertReturnDate(dto);
+		if(row !=0 && isReturn !=0) {
+			success = true;
+		}
+		return success;
+	}
+
+	//물품 정보 가져오기
+	public Map<String, Object> getProductinfo(int prod_idx) {
+		ResourceManageDTO product = resourceMgDAO.getProductinfo(prod_idx);
+		List<ResourcePhotoDTO> files = resourceMgDAO.prodMgFile(prod_idx);
+		Map<String, Object> prodInfo = new HashMap<String, Object>();
+		List<ResourceManageDTO> categoryList = resourceMgDAO.resourceCateMg();
+		prodInfo.put("product", product);
+		prodInfo.put("files", files);
+		prodInfo.put("categoryList", categoryList);
+		return prodInfo;
+	}
 
 
 

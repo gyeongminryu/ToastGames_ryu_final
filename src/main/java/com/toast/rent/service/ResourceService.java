@@ -218,7 +218,7 @@ public class ResourceService {
 		
 	}
 	
-	//물품 첨부파일 가져오기
+	//물품 첨부파일 가져오기(첨부파일키 추가 필요)
 	public List<ResourcePhotoDTO> prodFile(int prod_idx) {
 		return resourceDAO.prodFile(prod_idx);
 		

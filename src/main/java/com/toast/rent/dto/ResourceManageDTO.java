@@ -39,14 +39,55 @@ public class ResourceManageDTO {
 	private LocalDateTime prod_rent_date;
 	private LocalDateTime prod_exp_date;
 	private LocalDateTime prod_return_date;
+	private int prod_return_state;
+	
+	
+	public int getProd_return_state() {
+		return prod_return_state;
+	}
+	public void setProd_return_state(int prod_return_state) {
+		this.prod_return_state = prod_return_state;
+	}
 
 	//관리사원 정보
 	private int empl_idx;
+	private String empl_name;
 	private int appo_last_idx;
 	private String empl_id;
 	private int appo_idx;
 	private int dept_idx;
+	private String position_name; //직급
+	private String duty_name; //직책
+	private String dept_name; //부서명
 	
+	
+	
+	
+	
+	public String getEmpl_name() {
+		return empl_name;
+	}
+	public void setEmpl_name(String empl_name) {
+		this.empl_name = empl_name;
+	}
+	public String getPosition_name() {
+		return position_name;
+	}
+	public void setPosition_name(String position_name) {
+		this.position_name = position_name;
+	}
+	public String getDuty_name() {
+		return duty_name;
+	}
+	public void setDuty_name(String duty_name) {
+		this.duty_name = duty_name;
+	}
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
 	public int getEmpl_idx() {
 		return empl_idx;
 	}
