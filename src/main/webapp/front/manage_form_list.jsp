@@ -21,7 +21,7 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_writing_select_form'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_list'">
                         <h1>문서 양식 관리</h1>
                     </li>
                 </ul>
@@ -59,6 +59,14 @@
                                 </td>
                             </tr>
                             <!-- //양식 이름 검색 -->
+
+                            <!-- 양식 작성 버튼 -->
+                            <tr>
+                                <td colspan="2">
+                                    <button onclick="location.href='/manage_form_write'" class="btn_primary btn_full">새 양식 작성하기</button>
+                                </td>
+                            </tr>
+                            <!-- //양식 작성 버튼 -->
 
                             <!-- 양식 목록 -->
                             <tr>
@@ -107,7 +115,7 @@
                             <tfoot>
                             <tr>
                                 <td class="td_align_left">
-                                    <button onclick="location.href='/manage_form_detail'" class="btn_primary">문서 양식 수정하기</button>
+                                    <button onclick="location.href='/manage_form_detail'" class="btn_secondary">문서 양식 수정하기</button>
                                 </td>
                             </tr>
                             </tfoot>

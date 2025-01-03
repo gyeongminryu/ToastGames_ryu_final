@@ -21,7 +21,7 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_writing_select_form'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_list'">
                         <h1>문서 양식 관리</h1>
                     </li>
                 </ul>
