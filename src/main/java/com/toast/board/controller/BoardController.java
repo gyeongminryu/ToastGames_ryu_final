@@ -1,5 +1,6 @@
 package com.toast.board.controller;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,6 +95,9 @@ public class BoardController {
 	@GetMapping(value = "/board_detail.go")
 	public String boardDetail(@RequestParam("board_idx") int board_idx, Model model, HttpSession session) {
 	    String id = (String) session.getAttribute("loginId");
+	    Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
+		int empl_idx = (Integer) memberInfo.get("appo_empl_idx"); // 사용자 idx
+		session.setAttribute("empl_idx", empl_idx);
 	    session.setAttribute("board_idx", board_idx); // board_idx를 세션에 저장
 		Map<String, Object> boardInfo = boardService.boardInfo(board_idx); // 필요한 개인 정보들을 담아온다.
 		String file_key = (String) boardInfo.get("file_key");
@@ -138,6 +143,7 @@ public class BoardController {
 		return "board_update";
 	}
 	
+	// 파일 리스트 불러오기
 	@ResponseBody
 	@GetMapping(value = "/updateFileList.ajax")
     public ResponseEntity<List<FileDTO>> getFileList(HttpSession session) {
@@ -148,10 +154,53 @@ public class BoardController {
         List<FileDTO> fileList = boardService.getFileList(board_idx, file_key);
         return ResponseEntity.ok(fileList); // 파일 목록을 JSON으로 반환
     }
+		
+	// 파일을 삭제하는 메서드
+	@ResponseBody
+	@PostMapping(value = "/deleteFile.ajax")
+	public ResponseEntity<List<FileDTO>> deleteFile(HttpSession session, int file_idx) {
+		String id = (String) session.getAttribute("loginId");
+		int board_idx = (int) session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
+		boardService.deleteFile(file_idx);
+	    // 삭제 후, 해당 게시글에 연결된 파일 목록을 가져옴
+	    Map<String, Object> boardInfo = boardService.boardInfo(board_idx);
+	    String file_key = (String) boardInfo.get("file_key");
+	    List<FileDTO> fileList = boardService.getFileList(board_idx, file_key);
+
+	    // 파일 목록을 JSON 형식으로 반환
+	    return ResponseEntity.ok(fileList);
+	}
 	
+	// 파일을 추가하는 메서드
+	@ResponseBody
+	@PostMapping(value = "/boardFileUpload.ajax")
+	public ResponseEntity<List<FileDTO>> fileUpload(@RequestParam("file") MultipartFile[] files, HttpSession session, Model model) {
+		int board_idx = (int) session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
+		String id = (String) session.getAttribute("loginId");
+	    Map<String, Object> boardInfo = boardService.boardInfo(board_idx); // 필요한 개인 정보들을 담아온다.
+		String file_key = (String) boardInfo.get("file_key"); // 해당 게시글의 file_key를 가져온다.	
+		Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
+		int empl_idx = (Integer) memberInfo.get("appo_empl_idx"); // 사용자 idx
+		try {
+			boardService.fileUpload(empl_idx, file_key, files);
+			List<FileDTO> fileList = boardService.getFileList(board_idx, file_key); // 업로드된 파일 리스트 불러오기
+			return ResponseEntity.ok(fileList);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	// 파일과는 별개로 게시글 내용을 수정하는 메서드
 	@PostMapping(value = "/board_update.do")
-	public String board_update() {
-		return "";
+	public String board_update(@RequestParam Map<String, Object>params, HttpSession session, Model model) {
+		int board_idx = (int)session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
+		String id = (String) session.getAttribute("loginId");
+		Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
+		int empl_idx = (Integer) memberInfo.get("appo_empl_idx"); // 사용자 idx
+		logger.info("map ?"  + params);
+		int success = boardService.updateBoard(params, board_idx, empl_idx);
+		return "redirect:/board_detail.go?board_idx=" + board_idx;
 	}
 	
 	// 다운로드 요청이 들어오면 작동되는 메서드.

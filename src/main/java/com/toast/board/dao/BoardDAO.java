@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.member.dto.FileDTO;
 
@@ -49,8 +50,12 @@ public interface BoardDAO {
 	boolean updateReReply(int re_reply_idx, String re_reply, int re_reply_empl_idx);
 
 	String getDeptName(String id);
-	
-    // 댓글 삭제, 대댓글 삭제
 
+	void fileUpload(FileDTO fileDTO);
+
+	void deleteFile(int file_idx);
+
+	int updateBoard(Map<String, Object> params, int board_idx, int empl_idx);
+	
 	
 }

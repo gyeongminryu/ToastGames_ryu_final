@@ -58,6 +58,10 @@
 		<form action="testLogin.do" method="post">
 		    <input type="hidden" name="idx" value="10003">
 		    <button type="submit">idx = 10,003</button>
+		</form>
+		<form action="testLogin.do" method="post">
+		    <input type="hidden" name="idx" value="10001">
+		    <button type="submit">idx = 10,001</button>
 		</form> 
 		<!-- 테스트용 로그인!!! 나중에 삭제 예정!!! -->		
     </div>

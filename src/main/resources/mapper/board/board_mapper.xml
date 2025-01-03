@@ -39,6 +39,16 @@
 		WHERE f.file_key = #{file_key}
 	</select>
 	
+	<insert id="fileUpload" parameterType="com.toast.member.dto.FileDTO">
+		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
+		VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr})
+	</insert>
+	
+	<delete id="deleteFile">
+		DELETE FROM file
+		WHERE file_idx = #{file_idx}
+	</delete>
+	
 	<select id="originalFileName" parameterType="String">
 		SELECT ori_filename
 		FROM file
@@ -63,93 +73,97 @@
 	</select>
 
 	<select id="boardList" resultType="map">
-		SELECT b.board_idx, b.board_empl_idx, b.board_type_idx, b.dept_idx, b.board_title, b.board_content, b.board_view_cnt,
-		DATE_FORMAT(b.board_write_date, '%Y-%m-%d %H:%i') AS board_write_date,
-		DATE_FORMAT(b.board_update_date, '%Y-%m-%d %H:%i') AS board_update_date,
-		e.empl_name, e.empl_id, d.dept_name, bt.board_type_name
-		FROM board b
-		JOIN employee e ON b.board_empl_idx = e.empl_idx
-		JOIN department d ON b.dept_idx = d.dept_idx
-		JOIN board_type bt ON b.board_type_idx = bt.board_type_idx
-		WHERE 1 = 1
-		<!-- 1. 부서와 유형을 아무것도 선택하지 않았을 때 -->
-		<if test="dept == '' and type == ''">
-		    AND (b.board_type_idx = 3 <!-- 전체공지 (type == 3) - 모든 부서에서 가져옴 -->
-		    OR b.board_type_idx = 1 <!-- 문서 (type == 1) - 모든 부서에서 가져옴 -->
-		    OR b.board_type_idx = 2) <!-- 부서공지 (type == 2) - 모든 부서에서 가져옴 -->
-		</if>
-
-		<!-- 2. 부서만 선택했을 때 -->
-		<if test="dept != '' and type == ''">
-        	AND (b.board_type_idx != 2 AND b.dept_idx = #{dept} <!-- 부서에서만 가져옴: 선택된 부서의 게시글만 가져옴 -->
-        	OR (b.board_type_idx = 2 AND b.dept_idx = #{userDept})) <!-- 부서공지 (type == 2) - 내 부서의 게시글만 가져옴 -->
-		</if>
-
-		<!-- 3. 유형만 선택했을 때 -->
-		<if test="dept == '' and type != ''">
-			AND bt.board_type_idx = #{type}	
-			<!-- 부서공지 (type == 2) 일 때만 내 부서의 게시글을 가져옴 -->
-		    <if test="type == 2">
-		    	AND b.board_type_idx = 2
-        		AND b.dept_idx = #{userDept} <!-- 부서공지일 경우, 내 부서의 게시글만 필터링 -->
-		    </if>
-		</if>
-		
-		<!-- 4. 부서와 유형을 둘 다 선택했을 때 -->
-		<if test="dept != '' and type != ''">
-			AND b.dept_idx = #{dept}
-			AND bt.board_type_idx = #{type}
-			<if test="type == 2">
-		        AND b.board_type_idx = 2
-		        AND b.dept_idx = #{userDept} <!-- 부서공지일 경우, 내 부서의 게시글만 필터링 -->
-		    </if>
-		</if>
-		<if test="searchType != null and searchType != '' and keyword != null and keyword != ''"> 
-			AND ${searchType} LIKE CONCAT('%', #{keyword}, '%') </if>
-			ORDER BY b.board_write_date DESC LIMIT #{limit} OFFSET #{offset}
+	    SELECT 
+	        b.board_idx, 
+	        b.board_empl_idx, 
+	        b.board_type_idx, 
+	        b.dept_idx, 
+	        b.board_title, 
+	        b.board_content, 
+	        b.board_view_cnt,
+	        DATE_FORMAT(b.board_write_date, '%Y-%m-%d %H:%i') AS board_write_date,
+	        DATE_FORMAT(b.board_update_date, '%Y-%m-%d %H:%i') AS board_update_date,
+	        e.empl_name, 
+	        e.empl_id, 
+	        d.dept_name, 
+	        bt.board_type_name
+	    FROM board b
+	    JOIN employee e ON b.board_empl_idx = e.empl_idx
+	    JOIN department d ON b.dept_idx = d.dept_idx
+	    JOIN board_type bt ON b.board_type_idx = bt.board_type_idx
+	    WHERE 1 = 1
+	
+	    <!-- 1. 부서와 유형을 아무것도 선택하지 않았을 때 -->
+	    <if test="dept == '' and type == ''">
+	        AND (b.board_type_idx = 3  <!-- 전체공지 -->
+	        OR b.board_type_idx = 1  <!-- 문서 -->
+	        OR b.board_type_idx = 2) <!-- 부서공지 (부서공지 제외!) -->
+	    </if>
+	
+	    <!-- 2. 부서만 선택했을 때 -->
+	    <if test="dept != '' and type == ''">
+	        AND b.dept_idx = #{dept}  <!-- 부서에서만 가져옴 -->
+	    </if>
+	
+	    <!-- 3. 유형만 선택했을 때 -->
+	    <if test="dept == '' and type != ''">
+	        AND bt.board_type_idx = #{type}
+	    </if>
+	
+	    <!-- 4. 부서와 유형을 둘 다 선택했을 때 -->
+	    <if test="dept != '' and type != ''">
+	        AND b.dept_idx = #{dept}
+	        AND bt.board_type_idx = #{type}
+	    </if>
+	
+	    <!-- 검색어가 있을 때 -->
+	    <if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
+	        AND ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+	    </if>
+	
+	    ORDER BY b.board_write_date DESC
+	    LIMIT #{limit} OFFSET #{offset}
 	</select>
+
 
 	<select id="countBoardList" resultType="map">
-		SELECT CEIL(COUNT(*) / COALESCE(#{cnt}, 15)) AS pages
-		<!-- cnt가 null일 경우 15로 처리 -->
-		FROM board b
-		JOIN employee e ON b.board_empl_idx = e.empl_idx
-		JOIN
-		department d ON b.dept_idx = d.dept_idx
-		JOIN board_type bt ON
-		b.board_type_idx = bt.board_type_idx
-		WHERE 1 = 1
-		<!-- 1. 부서와 유형을 아무것도 선택하지 않았을 때 -->
-		<if test="dept == '' and type == ''">
-		    AND (b.board_type_idx = 3 <!-- 전체공지 (type == 3) - 모든 부서에서 가져옴 -->
-		    OR b.board_type_idx = 1 <!-- 문서 (type == 1) - 모든 부서에서 가져옴 -->
-		    OR b.board_type_idx = 2) <!-- 부서공지 (type == 2) - 모든 부서에서 가져옴 -->
-		</if>
-
-		<!-- 2. 부서만 선택했을 때 -->
-		<if test="dept != '' and type == ''">
-        	AND b.dept_idx = #{dept} <!-- 부서에서만 가져옴: 선택된 부서의 게시글만 가져옴 -->
-		</if>
-
-		<!-- 3. 유형만 선택했을 때 -->
-		<if test="dept == '' and type != ''">
-			AND bt.board_type_idx = #{type}	
-			<!-- 부서공지 (type == 2) 일 때만 내 부서의 게시글을 가져옴 -->
-		    <if test="type == 2">
-		    	AND b.board_type_idx = 2
-        		AND b.dept_idx = #{userDept} <!-- 부서공지일 경우, 내 부서의 게시글만 필터링 -->
-		    </if>
-		</if>
-		
-		<!-- 4. 부서와 유형을 둘 다 선택했을 때 -->
-		<if test="dept != '' and type != ''">
-			AND b.dept_idx = #{dept}
-			AND bt.board_type_idx = #{type}
-		</if>	
-		
-		<if test="searchType != null and searchType != '' and keyword != null and keyword != ''"> 
-			AND ${searchType} LIKE CONCAT('%', #{keyword}, '%') </if>
+	    SELECT 
+	        CEIL(COUNT(*) / COALESCE(#{cnt}, 15)) AS pages  <!-- 페이지 수 계산 -->
+	    FROM board b
+	    JOIN employee e ON b.board_empl_idx = e.empl_idx
+	    JOIN department d ON b.dept_idx = d.dept_idx
+	    JOIN board_type bt ON b.board_type_idx = bt.board_type_idx
+	    WHERE 1 = 1
+	
+	    <!-- 1. 부서와 유형을 아무것도 선택하지 않았을 때 -->
+	    <if test="dept == '' and type == ''">
+	        AND (b.board_type_idx = 3  <!-- 전체공지 -->
+	        OR b.board_type_idx = 1  <!-- 문서 -->
+	        OR b.board_type_idx = 2) <!-- 부서공지 제외! -->
+	    </if>
+	
+	    <!-- 2. 부서만 선택했을 때 -->
+	    <if test="dept != '' and type == ''">
+	        AND b.dept_idx = #{dept}  <!-- 부서에서만 가져옴 -->
+	    </if>
+	
+	    <!-- 3. 유형만 선택했을 때 -->
+	    <if test="dept == '' and type != ''">
+	        AND bt.board_type_idx = #{type}
+	    </if>
+	
+	    <!-- 4. 부서와 유형을 둘 다 선택했을 때 -->
+	    <if test="dept != '' and type != ''">
+	        AND b.dept_idx = #{dept}
+	        AND bt.board_type_idx = #{type}
+	    </if>
+	
+	    <!-- 검색어가 있을 때 -->
+	    <if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
+	        AND ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+	    </if>
 	</select>
+
 	
 	<select id="commentCount" parameterType="int" resultType="int">
 		SELECT
@@ -255,5 +269,16 @@
 		SET re_reply_content = #{re_reply}
 		WHERE re_reply_idx = #{re_reply_idx}
 	</update>
-
+	
+	<update id="updateBoard" parameterType="map">
+		UPDATE board
+		<set>
+        	<if test="params.dept != null">dept_idx = #{params.dept},</if>
+			<if test="params.board_type_idx != null">board_type_idx = #{params.board_type_idx},</if>
+			<if test="params.board_title != null">board_title = #{params.board_title},</if>
+			<if test="params.board_content != null">board_content = #{params.board_content},</if>
+		</set>
+    	WHERE board_idx = #{board_idx} AND board_empl_idx = #{empl_idx}
+	</update>
+	
 </mapper>
