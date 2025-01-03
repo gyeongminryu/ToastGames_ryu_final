@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.toast.management.dao.ProjectDAO;
+import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.ProjectInfoDTO;
 import com.toast.management.dto.TeamListDTO;
 
@@ -42,14 +43,25 @@ public class ProjectService {
 	}
 
 	public void projectTeamDetail(String team_idx,Model model) {
-		// project history
 		
-		
-		// project info 
+		// project history 팀장 변경이력? 가져온 team_head_idx로 사원정보 가져오기?
+		List<ProjectInfoDTO> team_his = projectDAO.projectHistoty(team_idx);
+		for (ProjectInfoDTO projectInfoDTO : team_his) {
+			String head_idx =projectInfoDTO.getTeam_head_idx();
+			EmployeeDetailDTO member_detail =projectDAO.teammemberdetail(head_idx);
+			String head_name =	member_detail.getEmpl_name();
+			String head_dept_name =	member_detail.getDept_name();
+			String head_position_name =	member_detail.getPosition_name();
+			projectInfoDTO.setHead_position_name(head_position_name);
+			projectInfoDTO.setHead_name(head_name);
+			projectInfoDTO.setHead_dept_name(head_dept_name);
+		}
+		model.addAttribute("team_his",team_his);
+		// project info 팀 상세정보 - 이름 팀장정보 팀원수
 		ProjectInfoDTO team_info =projectDAO.projectTeamInfo(team_idx);
 		model.addAttribute("team_info",team_info);
 		
-		// project member
+		// project member 팀원 목록 보여주기
 		
 		
 	}

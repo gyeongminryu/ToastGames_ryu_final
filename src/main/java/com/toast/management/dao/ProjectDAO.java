@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.ProjectInfoDTO;
 import com.toast.management.dto.TeamListDTO;
 
@@ -20,6 +21,12 @@ public interface ProjectDAO {
 	int projectTeamAddDo(Map<String, String> param);
 
 	ProjectInfoDTO projectTeamInfo(String team_idx);
+
+	List<ProjectInfoDTO> projectHistoty(String team_idx);
+
+	EmployeeDetailDTO teammemberdetail(String head_idx);
+
+	
 
 	
 

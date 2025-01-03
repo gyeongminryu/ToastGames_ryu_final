@@ -22,7 +22,7 @@ JOIN appointment a ON a.appo_idx = e.appolast_idx
 JOIN duty d ON d.duty_idx = a.duty_idx
 JOIN position_ p ON p.position_idx = a.position_idx
 LEFT JOIN team_members tm ON tm.team_idx = t.team_idx
-WHERE t.team_name LIKE CONCAT('%', #{param1}, '%')  
+WHERE t.team_name LIKE CONCAT('%', #{param1}, '%') and tm.transfer_date is null
 GROUP BY 
     t.team_name,
     t.team_duty,
@@ -52,7 +52,7 @@ JOIN appointment a ON a.appo_idx = e.appolast_idx
 JOIN duty d ON d.duty_idx = a.duty_idx
 JOIN position_ p ON p.position_idx = a.position_idx
 LEFT JOIN team_members tm ON tm.team_idx = t.team_idx
-WHERE e.empl_name LIKE CONCAT('%', #{param1}, '%')
+WHERE e.empl_name LIKE CONCAT('%', #{param1}, '%') and tm.transfer_date is null
 GROUP BY 
     t.team_name,
     t.team_duty,
@@ -81,6 +81,7 @@ JOIN appointment a ON a.appo_idx = e.appolast_idx
 JOIN duty d ON d.duty_idx = a.duty_idx
 JOIN position_ p ON p.position_idx = a.position_idx
 LEFT JOIN team_members tm ON tm.team_idx = t.team_idx
+where tm.transfer_date is null
 GROUP BY 
     t.team_name,
     t.team_duty,
@@ -97,7 +98,107 @@ GROUP BY
 </insert>
 
 <select id="projectTeamInfo" resultType="com.toast.management.dto.ProjectInfoDTO">
+	select 
+		t.team_name,
+		t.team_duty,
+		t.team_idx,
+		t.team_head_idx,
+		t.calup_date,
+		t.deletion_date,
+		e.empl_name as head_name,
+		du.duty_name as head_duty_name,
+		d.dept_name as head_dept_name,
+		p.position_name as head_position_name,
+		COUNT(tm.teammem_empl_idx) AS team_member_count
+	from project_team t
+	JOIN employee e ON t.team_head_idx = e.empl_idx
+	JOIN appointment a ON a.appo_idx = e.appolast_idx
+	JOIN duty du ON du.duty_idx = a.duty_idx
+	JOIN department d ON d.dept_idx = a.dept_idx
+	JOIN position_ p ON p.position_idx = a.position_idx
+	LEFT JOIN team_members tm ON tm.team_idx = t.team_idx
+	where t.team_idx = #{param1} and tm.transfer_date is null
+		GROUP BY 
+	    t.team_name,
+	    t.team_duty,
+	    t.team_idx,
+	    t.team_head_idx,
+	    t.calup_date,
+	    t.deletion_date,
+	    e.empl_name,
+	    du.duty_name,
+	    d.dept_name,
+	    p.position_name;
+</select>
 
+<select id="projectHistoty" resultType="com.toast.management.dto.ProjectInfoDTO">
+SELECT 
+    teamhis_idx, 
+    team_idx, 
+    team_name, 
+    team_duty, 
+    team_head_idx, 
+    calup_date, 
+    deletion_date,
+    change_log_time
+FROM (
+    SELECT 
+        teamhis_idx, 
+        team_idx, 
+        team_name, 
+        team_duty, 
+        team_head_idx, 
+        calup_date, 
+        deletion_date,
+        change_log_time,
+        LAG(team_head_idx) OVER (PARTITION BY team_idx ORDER BY calup_date) AS prev_team_head_idx
+    FROM team_history 
+    WHERE team_idx = #{param1}
+      AND team_head_idx IS NOT NULL
+) AS subquery
+WHERE team_head_idx != prev_team_head_idx OR prev_team_head_idx IS NULL
+ORDER BY calup_date;
+	
+</select>
+
+<select id="teammemberdetail" resultType="com.toast.management.dto.EmployeeDetailDTO">
+	select 
+	 e.empl_idx,
+	 e.empl_name,
+	 e.empl_id,
+	 e.empl_pw,
+	 e.empl_gender,
+	 e.empl_birth,
+	  e.empl_ssn1,
+	  e.empl_ssn2,
+	  e.bank_idx,
+	  e.empl_account,
+	  e.empl_cmp_email,
+	  e.empl_cmp_phone,
+	  e.empl_per_email,
+	  e.empl_per_phone,
+	  e.empl_addr,
+	  e.statement_idx,
+	  e.empl_join_date,
+	  e.empl_resig_date,
+	  e.empl_job,
+	  e.empl_stamp,
+	  e.empl_profile,
+	  e.empl_changepw,
+	  e.file_key,
+	  e.appolast_idx,
+	  d.dept_idx,
+	  d.dept_name,
+	 du.duty_idx,
+	  du.duty_name,
+	  p.position_idx,
+	  p.position_name
+from employee e
+LEFT join appointment a on a.appo_idx = e.appolast_idx
+LEFT join department d on d.dept_idx = a.dept_idx
+LEFT join duty du on du.duty_idx = a.duty_idx
+LEFT join position_ p on p.position_idx = a.position_idx
+where e.empl_idx = #{param1}
 </select>
 
 

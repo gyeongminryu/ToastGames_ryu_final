@@ -8,12 +8,30 @@ public class ProjectInfoDTO {
 	private String calup_date;
 	private String deletion_date;
 	
+	private String change_log_time;
+	
 	private String head_name;
 	private String head_duty_name;
 	private String head_dept_name;
 	private String head_position_name;
 	
-	private String team_member_cnt;
+	private String team_member_count;
+
+	public String getChange_log_time() {
+		return change_log_time;
+	}
+
+	public void setChange_log_time(String change_log_time) {
+		this.change_log_time = change_log_time;
+	}
+
+	public String getTeam_member_count() {
+		return team_member_count;
+	}
+
+	public void setTeam_member_count(String team_member_count) {
+		this.team_member_count = team_member_count;
+	}
 
 	public String getTeam_idx() {
 		return team_idx;
@@ -95,11 +113,5 @@ public class ProjectInfoDTO {
 		this.head_position_name = head_position_name;
 	}
 
-	public String getTeam_member_cnt() {
-		return team_member_cnt;
-	}
-
-	public void setTeam_member_cnt(String team_member_cnt) {
-		this.team_member_cnt = team_member_cnt;
-	}
+	
 }
