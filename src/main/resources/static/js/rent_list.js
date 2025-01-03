@@ -232,7 +232,7 @@ function resource_list_print(list) {
                     content += '<span onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
                     content += '</td>';
                     content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
-                    content += '<td>' + (item.prod_exp_date == null ? '없음' : item.prod_exp_date) + '</td>';
+                    content += '<td>' + (item.prod_exp_date == null || item.prod_rent == 1? '없음' : formatDateTime(item.prod_exp_date)) + '</td>';
                     content += '</tr>';
                 }
             }
@@ -249,4 +249,19 @@ function resource_list_print(list) {
 }
 
 
+//날짜 형식 바꾸기
+function formatDateTime(dateTimeStr) {
+    var date = new Date(dateTimeStr);
 
+    // 년, 월, 일 추출
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+    var day = date.getDate().toString().padStart(2, '0');
+
+    // 시간, 분 추출
+    var hours = date.getHours().toString().padStart(2, '0');
+    var minutes = date.getMinutes().toString().padStart(2, '0');
+
+    // 원하는 형식으로 반환
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+}

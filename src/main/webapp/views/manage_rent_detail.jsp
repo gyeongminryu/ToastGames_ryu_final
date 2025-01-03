@@ -23,10 +23,10 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_rent_list'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_rent_list.go'">
                         <h1>공용 물품 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_dispose_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_dispose_list.go'">
                         <h1>폐기 물품 확인</h1>
                     </li>
                 </ul>
@@ -47,24 +47,26 @@
                             </tr>
                             </thead>
                             <tbody>
-
-                            <!-- 사용연한이 지났을 경우 -->
-                            <tr><!-- 사용연한이 지나지 않았을 경우 class="disp_hide"를 추가해 주시기 바랍니다. -->
-                                <th colspan="2" class="td_bg_subtle td_align_center">사용 연한이 종료되었습니다. 물품을 폐기하거나 직원에게 인계하세요.</th>
+							<!-- 사용연한이 지났을 경우 -->
+							<tr class="expire-message">
+							    <th colspan="2" class="td_bg_subtle td_align_center">사용 연한이 종료되었습니다. 물품을 폐기하거나 직원에게 인계하세요.</th>
+							</tr>
+							<!-- //사용연한이 지났을 경우 -->
+							<tr>
+                                <th>제품번호</th>
+                                <th id="prod_idx">${detail.dto.prod_idx}</th>
                             </tr>
-                            <!-- //사용연한이 지났을 경우 -->
-
                             <tr>
                                 <th>제품명</th>
-                                <th>#{prod.prod_name}</th>
+                                <th>${detail.dto.prod_name}</th>
                             </tr>
                             <tr>
                                 <th>제품 정보</th>
-                                <td>#{prod.prod_model}</td>
+                                <td>${detail.dto.prod_model}</td>
                             </tr>
                             <tr>
                                 <th>제품 설명</th>
-                                <td>#{prod.prod_info}</td>
+                                <td>${detail.dto.prod_info}</td>
                             </tr>
                             </tbody>
                             <tfoot>
@@ -100,86 +102,14 @@
                                 <th>반납 여부</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="rent_list">
 
                             <!-- 대여 내역이 없을 경우 -->
-                            <tr class="rent_history_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="7" class="td_no_data">
-                                    <p><i class="bi bi-box-seam"></i></p>
-                                    <h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>
-                                </td>
-                            </tr>
-                            <!-- //대여 내역이 없을 경우 -->
-
                             <!-- 대여 내역 > 대여중인 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일|yyyy-MM-dd}</td>
-                                <td>{반납 기한|yyyy-MM-dd}</td>
-                                <td><h3>대여중</h3></td>
-                                <td><h3>대여중</h3></td>
-                            </tr>
-                            <!-- //대여 내역 > 대여중인 물품 -->
-
                             <!-- 대여 내역 > 연체중인 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일|yyyy-MM-dd}</td>
-                                <td>{반납 기한|yyyy-MM-dd}</td>
-                                <td>{반납일|yyyy-MM-dd}</td>
-                                <td><h3 class="font_caution">연체</h3></td>
-                            </tr>
-                            <!-- //대여 내역 > 연체중인 물품 -->
-
                             <!-- 대여 내역 > 기한 내에 반납한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일|yyyy-MM-dd}</td>
-                                <td>{반납 기한|yyyy-MM-dd}</td>
-                                <td>{반납일|yyyy-MM-dd}</td>
-                                <td>정상 반납</td>
-                            </tr>
-                            <!-- //대여 내역 > 기한 내에 반납한 물품 -->
-
                             <!-- 대여 내역 > 연체 후 반납한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일|yyyy-MM-dd}</td>
-                                <td>{반납 기한|yyyy-MM-dd}</td>
-                                <td>{반납일|yyyy-MM-dd}</td>
-                                <td><span class="font_caution">연체 후 반납</span></td>
-                            </tr>
-                            <!-- //대여 내역 > 연체 후 반납한 물품 -->
-
-                            <!-- 예시 -->
-                            <tr>
-                                <td>16</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">김사원 (영업/대리)</span></h3></td>
-                                <td class="td_align_left">12일에 고객사 출장시 사용할 예정입니다.</td>
-                                <td>2025-01-11</td>
-                                <td>2025-01-11</td>
-                                <td><h3>대여중</h3></td>
-                                <td><h3>대여중</h3></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">박대리 (개발/대리)</span></h3></td>
-                                <td class="td_align_left">1월 3일에 고객사 출장시 사용할 예정입니다.</td>
-                                <td>2024-12-31</td>
-                                <td>2025-01-04</td>
-                                <td>2025-01-04</td>
-                                <td>정상 반납</td>
-                            </tr>
-                            <!-- //예시 -->
-
+                            
                             <!-- pagination -->
                             <tfoot>
                             <tr>
@@ -240,23 +170,23 @@
                             <tbody>
                             <tr>
                                 <th>대여자</th>
-                                <td>{사원명 (부서/직급)}</td>
+                                <td>${detail.empl.empl_name}(${detail.empl.dept_name}/${detail.empl.position_name})</td>
                             </tr>
                             <tr>
                                 <th>대여일</th>
-                                <td>${rent.prod_rent_date}</td>
+                                <td>${detail.formattedDates.prodRentDate}</td>
                             </tr>
                             <tr>
                                 <th>대여 사유</th>
-                                <td>${rent.prod_rent_reason}</td>
+                                <td id="prod_rent_reason">${detail.dto.prod_rent_reason}</td>
                             </tr>
                             <tr>
                                 <th>대여 상태</th>
-                                <td>${prod.prod_rent_srt}</td>
+                                <td>${detail.dto.prod_rent_str}</td>
                             </tr>
                             <tr>
                                 <th>반납 기한</th>
-                                <td>${rent.prod_exp_date}</td>
+                                <td id="prod_exp_date">${detail.formattedDates.prodExpDate}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -278,27 +208,18 @@
                             <tbody>
                             <tr>
                                 <th>카테고리</th>
-                                <td>${prod.prod_cate_name}</td>
+                                <td>${detail.dto.prod_cate_name}</td>
                             </tr>
                             <tr>
                                 <th>내용연수</th>
-                                <td>${prod.prod_life}</td>
+                                <td>${detail.dto.prod_life}</td>
                             </tr>
                             <tr>
                                 <th>등록일</th>
-                                <td>${prod.prod_purch_date}</td>
+                                <td id="purch_date">${detail.formattedDates.prodPurchDate}</td>
                             </tr>
+                            <tr id="dispo_date">
 
-                            <!-- 사용 연한이 지나지 않았을 경우 아래와 같이 출력해 주세요 -->
-                            <tr>
-                                <th>사용연한</th>
-                                <td>{사용연한|yyyy-MM-dd}</td>
-                            </tr>
-
-                            <!-- 사용 연한이 지났을 경우 아래와 같이 출력해 주세요 -->
-                            <tr>
-                                <th>사용연한</th>
-                                <td><h3 class="font_caution">{사용연한|yyyy-MM-dd}</h3></td>
                             </tr>
                             </tbody>
                         </table>
@@ -307,30 +228,8 @@
                         <hr class="separator" />
 
                         <!-- 버튼 -->
-                        <ul class="list_no_desc list_block">
+                        <ul class="list_no_desc list_block" id="button_list">
 
-                            <!-- 대여 신청중인 경우 아래와 같이 출력해 주세요 -->
-                            <li>
-                                <button class="btn_primary btn_full" onclick="tst_modal_call('tst_modal_rent')">대여하기</button>
-                            </li>
-
-                            <!-- 사용 연한이 지나지 않았을 경우 아래와 같이 출력해 주세요 -->
-                            <li>
-                                <button class="btn_primary btn_full" onclick="tst_modal_call('tst_modal_return')">반납 처리하기</button>
-                            </li>
-
-                            <!-- 사용 연한이 지났을 경우 아래와 같이 출력해 주세요 -->
-                            <li>
-                                <button class="btn_primary btn_full" onclick="location.href='/manage_rent_transfer'">직원에게 인계하기</button>
-                            </li>
-
-                            <!-- 이하 버튼은 사용 연한과 상관없이 동일하게 출력하세요 -->
-                            <li>
-                                <button class="btn_secondary btn_full" onclick="location.href='/manage_rent_dispose'">폐기하기</button>
-                            </li>
-                            <li>
-                                <button class="btn_subtle btn_full" onclick="location.href='/manage_rent_list.go'">목록으로 돌아가기</button>
-                            </li>
                         </ul>
                         <!-- //버튼 -->
 

@@ -178,7 +178,7 @@ public class ResourceController {
 	
 	//대여 승인 시 반납일정 일정 표시
 	
-	
+	//사용연한 지나면 물품 상태 0으로 업뎃
 	
 	
 	
