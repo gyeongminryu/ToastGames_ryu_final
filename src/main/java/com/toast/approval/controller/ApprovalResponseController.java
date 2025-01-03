@@ -52,4 +52,18 @@ public class ApprovalResponseController {
 		return data;
 	}
 
+	//반려 후
+	@RequestMapping (value="/approval_reject.ajax")
+	@ResponseBody
+	public Map<String,Object> approval_reject(String doc_idx,String reject_reason,String line_order){
+		logger.info("doc_idx:{}", doc_idx);
+		logger.info("reject_reason:{}", reject_reason);
+		logger.info("line_order:{}", line_order);
+
+		Map<String,Object> data = new HashMap<>();
+
+		data.put("success",approvalResponseService.approval_reject(doc_idx,reject_reason,line_order,empl_idx));
+		return data;
+	}
+
 }
