@@ -7,12 +7,11 @@ console.log("doc_idx",doc_idx);
 console.log("empl_idx",empl_idx);
 console.log("my_appr_order",my_appr_order);
 
+//직인 작성
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
-
 let drawing = false;
-
 canvas.addEventListener("mousedown", () => {
     drawing = true;
     context.beginPath(); //beginPath() : 새로운 경로를 만듦
@@ -51,30 +50,39 @@ function approval_sign_save(){
     console.log(isValid);
 
     var src = '';
-    if(isValid){
-         src = canvas.toDataURL();
+    const sign_preview = document.getElementById('sign_preview');
+
+    //직인이 있거나, 도장이 있는 경우 처리
+    if(isValid || sign_preview.getAttribute("src")!=null){
+        if(isValid){
+            alert('서명으로 결재가 진행됩니다.');
+            src = canvas.toDataURL();
+        }else{
+            alert('등록된 도장으로 결재가 진행됩니다.');
+            //만약 사인된게 없으면 도장 사용
+            console.log("sign_preview.src:",sign_preview.getAttribute("src"));
+            src = sign_preview.getAttribute("src");
+        }
+
+        signatureImage.src = src;
+        //사인된거 혹은 도장이 있을 경우에는
+        signatureImage.style.display = "block";
+        signatureImage.width = 50; // 원하는 너비로 설정
+        signatureImage.height = 50; // 원하는 높이로 설정
+        //html을 업데이트 해주기
+        var doc_content = $('.doc_content').html();
+        //console.log("doc_content",doc_content);
+
+
+        // 켜기
+        save_approved_doc_content(doc_content);
     }else{
-        //만약 사인된게 없으면,
-        const sign_preview = document.getElementById('sign_preview');
-        console.log("sign_preview.src:",sign_preview.getAttribute("src"));
-        src = sign_preview.getAttribute("src");
-
+        //직인이 있거나, 도장이 없는 경우 처리 -> alert 띄움
+        //아예 서명도 도장도 안된 경우
+        alert('서명 혹은 도장을 등록해주세요!');
     }
-    signatureImage.src = src;
-    //아예 사인 안된 경우
 
 
-    //사인된거 혹은 도장이 있을 경우에는
-    signatureImage.style.display = "block";
-    signatureImage.width = 60; // 원하는 너비로 설정
-    signatureImage.height = 60; // 원하는 높이로 설정
-
-    //html을 업데이트 해주기
-    var doc_content = $('.doc_content').html();
-    //console.log("doc_content",doc_content);
-
-    // 켜기
-   //save_approved_doc_content(doc_content);
 
 }
 

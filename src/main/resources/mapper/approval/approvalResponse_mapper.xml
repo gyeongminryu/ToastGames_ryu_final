@@ -20,5 +20,18 @@
         SET appr_state = 1, appr_date = #{formatted_date} WHERE doc_idx = #{doc_idx} AND appr_receiver_idx = #{empl_idx}
     </update>
 
+    <update id="appr_reject_state">
+        UPDATE approval SET appr_state = 2,appr_reason = #{reject_reason}
+                            WHERE doc_idx=#{doc_idx} AND appr_receiver_idx = #{empl_idx}
+    </update>
+
+    <select id="count_top_line_order">
+        SELECT COUNT(*) FROM approval WHERE doc_idx = #{doc_idx} AND appr_order > #{line_order}
+    </select>
+
+    <update id="update_top_line_order">
+        UPDATE approval SET appr_state = 3 WHERE doc_idx = #{doc_idx} AND appr_order > #{line_order}
+    </update>
+
 
 </mapper>

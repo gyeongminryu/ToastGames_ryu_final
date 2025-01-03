@@ -14,11 +14,18 @@
                 <ul class="list_no_desc list_block">
                     <li>
                         <p class="min font_subtle">반려할 문서</p>
-                        <h3>{반려할 문서명}</h3>
+                        <h3>
+                            <c:if test="${doc_info.doc_subject != null}">
+                            ${doc_info.doc_subject}
+                            </c:if>
+                            <c:if test="${doc_info.doc_subject == null}">
+                                제목 없음
+                            </c:if>
+                        </h3>
                     </li>
                     <li>
                         <label class="form_label">반려 사유</label>
-                        <textarea rows="5" maxlength="1000"></textarea>
+                        <textarea id = "reject_reason" rows="5" maxlength="1000"></textarea>
                     </li>
                 </ul>
             </div>
@@ -29,7 +36,7 @@
                         <!-- <input type="submit" value="반려하기" class="btn_primary btn_full" /> -->
 
                         <!-- 실제 작업시에는 아래 코드를 삭제하세요 -->
-                        <input type="button" onclick="location.href='/approval_received_list'" value="반려하기" class="btn_primary btn_full" />
+                        <input type="button" onclick="approval_reject()" value="반려하기" class="btn_primary btn_full" />
                     </div>
                     <div class="tst_col6">
                         <button type="button" class="btn_secondary btn_full" onclick="tst_modal_close('tst_modal_reject')">취소하기</button>
@@ -105,3 +112,5 @@
 <script src="resources/js/module_modal.js"></script>
 <script src="resources/js/approval_send_modal.js"></script>
 <script src="resources/js/approval_sign.js"></script>
+<script src="resources/js/approval_reject.js"></script>
+

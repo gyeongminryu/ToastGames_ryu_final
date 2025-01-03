@@ -259,7 +259,7 @@
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
                             <li>
-                                <button class="btn_primary btn_full" onclick="location.href='/approval_writing_write'">문서를 복사하여 다시 작성하기</button>
+                                <button class="btn_primary btn_full" onclick="location.href='/approval_write.go?form_idx'">문서를 복사하여 다시 작성하기</button>
                             </li>
                             <li>
                                 <button class="btn_secondary btn_full" onclick="location.href='/approval_writing_write'">양식만 복사하여 다시 작성하기</button>
