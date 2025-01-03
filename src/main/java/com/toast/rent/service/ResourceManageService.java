@@ -464,6 +464,18 @@ public class ResourceManageService {
 		return success;
 	}
 
+	//물품 정보 가져오기
+	public Map<String, Object> getProductinfo(int prod_idx) {
+		ResourceManageDTO product = resourceMgDAO.getProductinfo(prod_idx);
+		List<ResourcePhotoDTO> files = resourceMgDAO.prodMgFile(prod_idx);
+		Map<String, Object> prodInfo = new HashMap<String, Object>();
+		List<ResourceManageDTO> categoryList = resourceMgDAO.resourceCateMg();
+		prodInfo.put("product", product);
+		prodInfo.put("files", files);
+		prodInfo.put("categoryList", categoryList);
+		return prodInfo;
+	}
+
 
 
 }

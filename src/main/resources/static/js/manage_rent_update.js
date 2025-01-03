@@ -1,3 +1,16 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 카테고리 항목 변경시 내용연한 및 사용연수 변경
 function change_category_life(selectElement) {
     const selected_option = selectElement.options[selectElement.selectedIndex]; // 선택된 옵션

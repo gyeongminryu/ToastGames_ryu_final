@@ -57,6 +57,12 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th class="td_align_top">보관 장소</th>
+                                    <td>
+                                        <input type="text" name="place" maxlength="1000"  value="${product.prod_model}"/>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th class="td_align_top">물품 설명</th>
                                     <td>
                                         <textarea name="content" rows="27">${product.prod_info}</textarea>

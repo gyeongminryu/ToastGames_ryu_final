@@ -422,7 +422,26 @@
 			prod_rent_idx=#{prod_rent_idx}
 	</update>
 
-
+	<!-- 물품 정보가져오기 -->
+	<select id="getProductinfo">
+		SELECT
+			pd.prod_idx,
+			pd.prod_name,
+			pd.prod_model,
+			pd.prod_info,
+			pd.prod_place,
+			pd.prod_dispo_date,
+			pd.prod_state,
+			pc.prod_cate_idx,
+			pc.prod_cate_name,
+			pc.prod_life
+		FROM
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		WHERE
+			pd.prod_idx=#{param1}
+	</select>
 
 
 

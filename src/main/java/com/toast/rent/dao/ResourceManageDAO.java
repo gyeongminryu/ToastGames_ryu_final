@@ -73,6 +73,10 @@ public interface ResourceManageDAO {
 
 	//반납일시 입력
 	int insertReturnDate(ResourceManageDTO dto);
+
+	//물품 정보 가져오기
+	ResourceManageDTO getProductinfo(int prod_idx);
+	
 	
 
 

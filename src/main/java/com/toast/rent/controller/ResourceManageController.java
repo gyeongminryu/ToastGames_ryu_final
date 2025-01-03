@@ -263,15 +263,8 @@ public class ResourceManageController {
 	
 	//물품 정보 수정(카테고리, 사용 기한, 첨부파일 포함)
 	@GetMapping(value="/manage_rent_update.go")
-	public String rentUpdate(@RequestParam int prod_idx) {
-		
-		
-		
-		
-		
-		
-		return null;
-		
+	public Map<String, Object> rentUpdate(@RequestParam int prod_idx) {
+		return resourceMgService.getProductinfo(prod_idx);
 	}
 	
 	
