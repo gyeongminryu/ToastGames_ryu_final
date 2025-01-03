@@ -24,6 +24,7 @@ import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.EmployeeDTO;
+import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.PositionDTO;
 import com.toast.management.service.DepartmentService;
 import com.toast.management.service.EmployeeService;
@@ -302,6 +303,24 @@ public class DepartmentController {
 			
 			
 			return "redirect:/companyinfo_update.go";
+		}
+		
+		@GetMapping(value="/get_dept_list.ajax")
+		@ResponseBody
+		public Map<String,Object> getdeptlist(){
+			
+			Map<String,Object> dept_list =	departmentService.getdeptlist();
+			
+			return dept_list;
+		}
+		
+		@GetMapping(value="/get_dept_members.ajax")
+		@ResponseBody
+		public List<EmployeeDetailDTO> getDeptMembers(@RequestParam String dept_idx){
+			
+			List<EmployeeDetailDTO> dept_member_list = departmentService.getDeptMembers(dept_idx);
+			
+			return dept_member_list;
 		}
 		
 }

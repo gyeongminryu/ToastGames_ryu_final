@@ -269,7 +269,63 @@ SELECT
 </insert>
 
 <update id="compStampDel">
-	update company_info	set comp_stamp = null where id = 1;
+	update company_info	set comp_stamp = null where id = 1
 </update>
+
+<select id="gethighdeptlist" resultType="com.toast.management.dto.DepartmentDTO">
+	select * from department where dept_depth = 2 and dept_high is not null
+</select>
+
+<select id="getlowdeptlist" resultType="com.toast.management.dto.DepartmentDTO">
+	select * from department where dept_depth = 3 and dept_high is not null
+</select>
+
+
+<select id="getDeptMembers" resultType="com.toast.management.dto.EmployeeDetailDTO">
+	select 
+	 e.empl_idx,
+	 e.empl_name,
+	 e.empl_id,
+	 e.empl_pw,
+	 e.empl_gender,
+	 e.empl_birth,
+	  e.empl_ssn1,
+	  e.empl_ssn2,
+	  e.bank_idx,
+	  e.empl_account,
+	  e.empl_cmp_email,
+	  e.empl_cmp_phone,
+	  e.empl_per_email,
+	  e.empl_per_phone,
+	  e.empl_addr,
+	  e.statement_idx,
+	  e.empl_join_date,
+	  e.empl_resig_date,
+	  e.empl_job,
+	  e.empl_stamp,
+	  e.empl_profile,
+	  e.empl_changepw,
+	  e.file_key,
+	  e.appolast_idx,
+	  d.dept_idx,
+	  d.dept_name,
+	 du.duty_idx,
+	  du.duty_name,
+	  p.position_idx,
+	  p.position_name
+from employee e
+LEFT join appointment a on a.appo_idx = e.appolast_idx
+LEFT join department d on d.dept_idx = a.dept_idx
+LEFT join duty du on du.duty_idx = a.duty_idx
+LEFT join position_ p on p.position_idx = a.position_idx
+	where d.dept_idx = #{param1} and e.statement_idx = 1 and a.transfer_date is null
+</select>
+
+
+
+
+
+
+
 
 </mapper>

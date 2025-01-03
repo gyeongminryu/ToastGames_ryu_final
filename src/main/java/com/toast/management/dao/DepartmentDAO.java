@@ -12,6 +12,7 @@ import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.EmployeeDTO;
+import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.PositionDTO;
 import com.toast.member.dto.FileDTO;
 
@@ -60,6 +61,12 @@ public interface DepartmentDAO {
 	int compFileUpload(FileDTO filedto);
 
 	int compStampDel();
+
+	List<DepartmentDTO> gethighdeptlist();
+
+	List<DepartmentDTO> getlowdeptlist();
+
+	List<EmployeeDetailDTO> getDeptMembers(String dept_idx);
 
 	
 
