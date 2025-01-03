@@ -74,5 +74,12 @@ public class ProjectController {
 		return "project_team_detail";
 	}
 	
+	@GetMapping(value="/project_team_update.do")
+	public String projectTeamUpdateGo(@RequestParam Map<String,String> param) {
+		String team_idx = param.get("team_idx");
+		
+		return "redirect:/project_team_detail.go?team_idx="+team_idx;
+	}
+	
 	
 }
