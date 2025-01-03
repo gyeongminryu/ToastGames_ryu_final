@@ -33,9 +33,9 @@ RTE_DefaultConfig.enableObjectResizing = true; //Specifies whether or not to all
 RTE_DefaultConfig.toggleBorder = true; //Specifies the ToggleBorder state. ToggleBorder is a handy function which allows you to see the borders without setting things to border = 1 or something like that in code.
 RTE_DefaultConfig.readOnly = false; //Gets or sets a value which indicates whether the RichTextEditor should be an active HTML editor, or a read-only document viewer.
 
-RTE_DefaultConfig.editorResizeMode = "both"; //both, height or none. Gets or sets the resize mode.
+RTE_DefaultConfig.editorResizeMode = "height"; //both, height or none. Gets or sets the resize mode.
 RTE_DefaultConfig.showPlusButton = true; // Specifies whether to display the editor plus button.
-RTE_DefaultConfig.showTagList = true; // Specifies whether to display the tag selector in the editor bottom bar.
+RTE_DefaultConfig.showTagList = false; // Specifies whether to display the tag selector in the editor bottom bar.
 RTE_DefaultConfig.showStatistics = true; //Specifies whether to display the content statistics in the editor bottom bar.
 RTE_DefaultConfig.showSelectedBlock = true;    //show selected paragraph as [__rte_select_block]{...}
 RTE_DefaultConfig.focusOnLoad = false; // Specifies whether the editor grabs focus when the page loads. If this property is set to true then the editor will take focus, if it is set to false it will not.
@@ -44,7 +44,7 @@ RTE_DefaultConfig.showFloatTextToolBar = false;  // Specifies whether to display
 RTE_DefaultConfig.showFloatLinkToolBar = true; // Specifies whether to display the FloatLinkToolBar.
 RTE_DefaultConfig.showFloatImageToolBbar = true; // Specifies whether to display the FloatImageToolBbar.
 RTE_DefaultConfig.showFloatTableToolBar = true; // Specifies whether to display the FloatTableToolBar.
-RTE_DefaultConfig.showFloatParagraph = true; // Specifies whether to display the FloatParagraph.
+RTE_DefaultConfig.showFloatParagraph = false; // Specifies whether to display the FloatParagraph.
 RTE_DefaultConfig.maxHTMLLength = 0; // Gets or sets the maximum number of characters including the HTML tags allowed in the RichTextEditor. Default is -1, indicating no maximum.
 RTE_DefaultConfig.maxTextLength = 0; //Gets or sets the maximum number of characters excluding the HTML tags allowed in the RichTextEditor. Default is -1, indicating no maximum.
 RTE_DefaultConfig.tagWhiteList = [];  // The white list contains a list of tags that can be used in the editor.
@@ -58,7 +58,7 @@ RTE_DefaultConfig.pasteMode = "Auto"; // Specifies the manner in which the edito
 RTE_DefaultConfig.floatParagraphPos = "left";//left or right
 RTE_DefaultConfig.floatParagraphPosX = 0; //x offset
 RTE_DefaultConfig.floatParagraphPosY = 0; //y offset
-RTE_DefaultConfig.url_base = "/richtexteditor"; // Specifies a base URL of richtexteditor
+RTE_DefaultConfig.url_base = "resources/richtexteditor"; // Specifies a base URL of richtexteditor
 RTE_DefaultConfig.contentCssUrl = "%url_base%/runtime/richtexteditor_content.css"; // Specifies the location of the style sheet that will be used by the editable area.
 RTE_DefaultConfig.previewCssUrl = "%url_base%/runtime/richtexteditor_preview.css"; // Specifies the location of the style sheet that will be used by the preview window.
 RTE_DefaultConfig.previewScriptUrl = "%url_base%/runtime/richtexteditor_preview.js"; // Specifies the location of javascript file that will be used by the preview window.
@@ -81,13 +81,13 @@ RTE_DefaultConfig.insertOrderedListItems = [["decimal", "1,2,3,4,5"], ["lower-al
 
 RTE_DefaultConfig.insertUnorderedListItems = [["disc", "Disc"], ["circle", "Circle"], ["square", "Square"]];
 
-RTE_DefaultConfig.fontSizeItems = "8,9,10,11,12,13,14,16,18,24,36,48,60,72,96";// A predefined set of font sizes.
+RTE_DefaultConfig.fontSizeItems = "8,9,10,11,12,13,14,16,18,24,36,48,60,";// A predefined set of font sizes.
 RTE_DefaultConfig.fontNameItems = "Arial,Arial Black,Comic Sans MS,Courier New,Tahoma,Georgia,Helvetica, Segoe UI,Sans-Serif,Impact,Times New Roman,Verdana";// A predefined set of font names.
 RTE_DefaultConfig.lineHeightItems = "100%,150%,200%,250%,300%,350%,400%,450%,500%,600%"// A predefined set of line height items.
 // all text name shall be lower case
 
 
-RTE_DefaultConfig.paragraphItems = "Normal,H1,H2,H3,H4,H5,H6"// A predefined set of format blocks.
+RTE_DefaultConfig.paragraphItems = "Normal,H1,H2,H3,H4"// A predefined set of format blocks.
 
 RTE_DefaultConfig.characterItems = [
 	{ tab: "Unicode", items: ["&#402;", "&#913;", "&#914;", "&#915;", "&#916;", "&#917;", "&#918;", "&#919;", "&#920;", "&#921;", "&#922;", "&#923;", "&#924;", "&#925;", "&#926;", "&#927;", "&#928;", "&#929;", "&#931;", "&#932;", "&#933;", "&#934;", "&#935;", "&#936;", "&#937;", "&#945;", "&#946;", "&#947;", "&#948;", "&#949;", "&#950;", "&#951;", "&#952;", "&#953;", "&#954;", "&#955;", "&#956;", "&#957;", "&#958;", "&#959;", "&#960;", "&#961;", "&#962;", "&#963;", "&#964;", "&#965;", "&#966;", "&#967;", "&#968;", "&#969;", "&#977;", "&#978;", "&#982;", "&#8226;", "&#8230;", "&#8242;", "&#8243;", "&#8254;", "&#8260;", "&#8472;", "&#8465;", "&#8476;", "&#8482;", "&#8501;", "&#8592;", "&#8593;", "&#8594;", "&#8595;", "&#8596;", "&#8629;", "&#8656;", "&#8657;", "&#8658;", "&#8659;", "&#8660;", "&#8704;", "&#8706;", "&#8707;", "&#8709;", "&#8711;", "&#8712;", "&#8713;", "&#8715;", "&#8719;", "&#8722;", "&#8722;", "&#8727;", "&#8730;", "&#8733;", "&#8734;", "&#8736;", "&#8869;", "&#8870;", "&#8745;", "&#8746;", "&#8747;", "&#8756;", "&#8764;", "&#8773;", "&#8773;", "&#8800;", "&#8801;", "&#8804;", "&#8805;", "&#8834;", "&#8835;", "&#8836;", "&#8838;", "&#8839;", "&#8853;", "&#8855;", "&#8869;", "&#8901;", "&#8968;", "&#8969;", "&#8970;", "&#8971;", "&#9001;", "&#9002;", "&#9674;", "&#9824;", "&#9827;", "&#9829;", "&#9830;"] }
@@ -175,6 +175,13 @@ RTE_DefaultConfig.toolbar_full = "{bold,italic,underline,forecolor,backcolor}|{j
 	+ "#{preview,code,selectall}"
 	+ " /{paragraphs:dropdown | fontname:dropdown | fontsize:dropdown} {paragraphstyle,toggle_paragraphop,menu_paragraphop}"
 	+ "#{toggleborder,fullscreenenter,fullscreenexit,undo,redo,togglemore}"; // Full set of buttons that appears in the rich text editor's toolbar.
+
+//////////
+
+RTE_DefaultConfig.toolbar_document = "{bold,italic,underline}|{fontsize}|{forecolor,backcolor}|removeformat|{justifyleft,justifycenter,justifyright,justifyfull}|{inserttable,insertimage,insertcode}|code"
+	+ "#{find,undo,redo,fullscreenenter,fullscreenexit}";
+
+//////////
 
 RTE_DefaultConfig.toolbar_office = "<@COMMON,ribbonpaste,pastetext,pasteword,{save,new,print}/{cut,copy,delete,find}/{undo,redo|formatpainter}><@FORMAT,[fontname,fontsize]/{bold,italic,underlinemenu|forecolor,backcolor}/{superscript,subscript,changecase|removeformat,cleancode,selectall}><@PARAGRAPHS,[paragraphs,styles]/{justifymenu,lineheight,ltr,rtl,insertlinemenu}/{insertorderedlist,insertunorderedlist,indent,outdent,insertblockquote}><@INSERT,ribbontable,insertgallery,insertimage,{insertform,insertbox,insertlayer,insertfieldset,pageproperties,help,toggleborder,fullscreen}/{insertlink,unlink,insertanchor,insertimagemap,insertdate,insertchars,virtualkeyboard}/{inserttemplate,insertdocument,insertvideo,syntaxhighlighter,insertyoutube,html5,googlemap}>";
 
