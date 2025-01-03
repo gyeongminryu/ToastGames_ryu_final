@@ -107,7 +107,6 @@ public class ResourceController {
 	}
 	
 
-	
 	//물품 상세보기(사진, 첨부파일 필요함)
 	@RequestMapping(value="/prodDetail.go")
 	public String prodDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
@@ -178,7 +177,7 @@ public class ResourceController {
 	
 	//대여 승인 시 반납일정 일정 표시
 	
-	
+	//사용연한 지나면 물품 상태 0으로 업뎃
 	
 	
 	

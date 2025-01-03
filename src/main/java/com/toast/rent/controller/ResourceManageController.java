@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.rent.dto.ResourceDTO;
 import com.toast.rent.dto.ResourceManageDTO;
+import com.toast.rent.dto.ResourcePhotoDTO;
 import com.toast.rent.service.ResourceManageService;
 import com.toast.rent.service.ResourceService;
 
@@ -225,24 +227,101 @@ public class ResourceManageController {
 	    }
 	    return response;
 	}
-
 	
 	
 	//물품 상세보기
+	@GetMapping(value="/prodMgDetail.go")
+	public String prodMgDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
+		logger.info("prod_idx:"+prod_idx);
+		Map<String, Object> detail = resourceMgService.prodMgDetail(prod_idx);
+		
+		List<ResourcePhotoDTO> files = resourceMgService.prodMgFile(prod_idx);
+		model.addAttribute("detail", detail);
+		model.addAttribute("files", files);
+		return "manage_rent_detail";
+	}
 	
-	//물품 상세보기(대여 중)
+	//물품 기한 ajax
+	@GetMapping(value="/prodDate.ajax")
+	@ResponseBody
+	public Map<String, Object> prodDate(@RequestParam int prod_idx){
+		Map<String, Object> detail = resourceMgService.prodMgDetail(prod_idx);
+		return detail;	
+	}
 	
-	//물품 상세보기(대여 신청중)
+	//물품 대여기록가져오기
+	@GetMapping(value="/rentManageList.ajax")
+	@ResponseBody
+	public Map<String, Object> rentManageList(String page, String cnt, String prod_idx) {
+		int page_ = Integer.parseInt(page);
+		int cnt_ = Integer.parseInt(cnt);
+		int prodIdx = Integer.parseInt(prod_idx);
+		Map<String, Object> list = resourceMgService.rentManageList(page_,cnt_,prodIdx);
+		return list;
+	}
 	
-	//물품 상세보기(연체)
 	
 	//물품 정보 수정(카테고리, 사용 기한, 첨부파일 포함)
+	@GetMapping(value="/manage_rent_update.go")
+	public Map<String, Object> rentUpdate(@RequestParam int prod_idx) {
+		return resourceMgService.getProductinfo(prod_idx);
+	}
 	
-	//물품 종류별 보기
+	
+	//물품 정보수정
+	@PostMapping(value="/productUpdate.do")
+	
+	
+	
+	
+	
 	
 	//물품 목록보기
 	
+	
+	
+	
+	
 	//물품 대여 신청 승인(대여 여부 업뎃)
+	@GetMapping(value="/permitProd.do")
+	@ResponseBody
+	public Map<String, String> permitProd(@RequestParam int prod_idx) {
+		int row = resourceMgService.permitProd(prod_idx);
+		Map<String, String> response = new HashMap<String, String>();
+		if(row >0) {
+			response.put("redirectUrl", "/manage_rent_list.go?prod_idx=" + prod_idx);
+		}
+		return response;
+	}
+	
+	//물품 반납 승인(대여 여부 업뎃)
+	@GetMapping(value="/permitReturn.do")
+	@ResponseBody
+	public Map<String, String> permitReturn(@RequestParam int prod_rent_idx, @RequestParam int prod_idx) {
+		boolean success = resourceMgService.permitReturn(prod_idx, prod_rent_idx);
+		Map<String, String> response = new HashMap<String, String>();
+		if(success) {
+			response.put("redirectUrl", "/manage_rent_list.go?prod_idx=" + prod_idx);
+		}
+		return response;
+	}
+	
+	
+	
+	
+	//사용연한다되면물품 상태 0으로 업뎃
+	
+	
+	//물품 인계 승인
+	
+	
+	
+	//물품 폐기 처리
+	
+	
+	
+	
+	
 	
 	//
 	

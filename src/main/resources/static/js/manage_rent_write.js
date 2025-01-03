@@ -82,7 +82,6 @@ function file_upload(event) {
 
 document.getElementById("product_submit_button").addEventListener("click", function () {
     if (getConfirmationStatus()) {
-    	alert("등록함");
         submitForm();
     } else {
         alert("등록이 취소되었습니다. 다시 시도해주세요.");
