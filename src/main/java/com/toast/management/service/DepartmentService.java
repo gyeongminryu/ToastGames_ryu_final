@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -24,11 +25,13 @@ import com.toast.management.dao.EmployeeDAO;
 import com.toast.management.dto.AppointmentDTO;
 import com.toast.management.dto.CompInfo;
 import com.toast.management.dto.DepartmentDTO;
+import com.toast.management.dto.DeptDetailInfoDTO;
 import com.toast.management.dto.DeptDetailMemberDTO;
 import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
 import com.toast.management.dto.DutyDTO;
 import com.toast.management.dto.EmployeeDTO;
+import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.PositionDTO;
 import com.toast.member.dto.FileDTO;
 
@@ -367,11 +370,43 @@ public class DepartmentService {
 			}
 			return success;
 		} // public boolean compStampDel(String new_filename)
-		
 
 		
-
+		public Map<String,Object> getdeptlist() {
 		
+			// 뎁스가 2인 부서들 출력
+			List<DepartmentDTO> high_dept =departmentDAO.gethighdeptlist();
+			
+			// 뎁스가 3인 부서들 출력
+			List<DepartmentDTO> low_dept = departmentDAO.getlowdeptlist();
+			
+			Map<String,Object> deptlist = new HashMap();
+			
+			for (DepartmentDTO highDTO : high_dept) {
+					int high_idx = highDTO.getDept_idx();
+					String highidx = String.valueOf(high_idx);
+					
+					 List<DepartmentDTO> filteredLowDept = new ArrayList<>();
+					 filteredLowDept.add(highDTO); // 맨앞에 상위부서 정보 추가
+				for (DepartmentDTO lowDTO : low_dept) {
+						int low_idx = lowDTO.getDept_high();
+						if( high_idx == low_idx) {
+							 filteredLowDept.add(lowDTO);
+						}
+				}
+				 deptlist.put(highidx, filteredLowDept);
+			}
+			
+			
+			return deptlist;
+		}
+
+		public List<EmployeeDetailDTO> getDeptMembers(String dept_idx) {
+			
+			return departmentDAO.getDeptMembers(dept_idx);
+		}
+		
+
 
 }
 

@@ -52,23 +52,23 @@
                             <tbody>
                             <tr>
                                 <th>팀명</th>
-                                <td>{프로젝트 팀명}</td>
+                                <td>${team_info.team_name}</td>
                             </tr>
                             <tr>
                                 <th>팀장</th>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
+                                <td><span onclick="tst_view_profile('${team_info.team_head_idx}')" class="tst_pointer">${team_info.head_name} (${team_info.head_dept_name}/${team_info.head_position_name})</span></td>
                             </tr>
                             <tr>
                                 <th>직무</th>
-                                <td>{직무}</td>
+                                <td>${team_info.team_duty}</td>
                             </tr>
                             <tr>
                                 <th>팀원 수</th>
-                                <td>{팀원 수}명</td>
+                                <td>${team_info.team_member_count}명</td>
                             </tr>
                             <tr>
                                 <th>운영 기간</th>
-                                <td>{운영 시작일} ~ {운영 종료일}</td>
+                                <td>${team_info.calup_date} ~ ${team_info.deletion_date}</td>
                             </tr>
                             </tbody>
 
