@@ -1,6 +1,7 @@
 package com.toast.board.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -157,10 +158,6 @@ public class BoardService {
         return boardDAO.writeReReply(reply_idx, re_reply, re_reply_empl_idx) > 0;
     }
 
-	public List<FileDTO> getFileList(int board_idx, String file_key) {
-		return boardDAO.getFileList(board_idx, file_key);
-	}
-
 	public String originalFileName(String filename) {
 		return boardDAO.originalFileName(filename);
 	}
@@ -182,9 +179,44 @@ public class BoardService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public List<FileDTO> getFileList(int board_idx, String file_key) {
+		return boardDAO.getFileList(board_idx, file_key);
+	}
 
+	public void fileUpload(int empl_idx, String file_key, MultipartFile[] files) throws IOException {
+		// String file_key = UUID.randomUUID().toString();
+		for (MultipartFile file : files) {
+			if (!file.isEmpty()) {
+				String originalFileName = file.getOriginalFilename();
+				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
+				String newFileName = UUID.randomUUID().toString() + "." + fileType;
+				String fileAddr = uploadAddr + "/" + newFileName;
 
-    // 대댓글 수정 및 삭제
+				// 경로 설정 부분. 파일을 서버에 저장함. 필요한가? 이거 어떻게 해야할지 정해야 함..
+				File dest = new File(fileAddr);
+				file.transferTo(dest);
 
+				// 첨부 파일 정보를 DTO에 저장.
+				FileDTO fileDTO = new FileDTO();
+				fileDTO.setFile_key(file_key);
+				fileDTO.setOri_filename(originalFileName);
+				fileDTO.setNew_filename(newFileName);
+				fileDTO.setFile_type(fileType);
+				fileDTO.setFile_addr(fileAddr);
+				fileDTO.setUploader_idx(empl_idx);
 
+				// file 테이블에 파일정보 저장.
+				boardDAO.fileUpload(fileDTO);
+			}
+		}
+	}
+
+	public void deleteFile(int file_idx) {
+		boardDAO.deleteFile(file_idx);
+	}
+
+	public int updateBoard(Map<String, Object> params, int board_idx, int empl_idx) {
+		return boardDAO.updateBoard(params, board_idx, empl_idx);
+	}
 }

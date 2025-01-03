@@ -27,7 +27,8 @@
                 </ul>
                 <!-- //제목 -->
 
-                <form>
+                <form id="boardForm" action="board_update.do" method="post" enctype="multipart/form-data">
+                	<input type="hidden" name="board_idx" value="${board.board_idx}" />              	
                     <div class="tst_flex">
 
                         <!-- 게시글 -->
@@ -78,7 +79,7 @@
                                 <tr>
                                     <th class="td_align_top">내용</th>
                                     <td>
-                                        <textarea name="content" rows="27" placeholder="내용을 입력하세요">${board.board_content}</textarea>
+                                        <textarea name="board_content" rows="27" placeholder="내용을 입력하세요">${board.board_content}</textarea>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -125,7 +126,8 @@
 						    <tfoot>
 						        <tr>
 						            <td colspan="2">
-						                <input type="file" id="fileInput" name="attached_file" onchange="handleFileSelect(event)" multiple/>
+						                <input type="file" id="fileInput" name="attached_file" multiple style= "display:none;"/>
+						                <button type="button" id="customFileButton" class="btn_subtle btn_full">파일 선택</button>						                
 						            </td>
 						        </tr>
 						    </tfoot>
