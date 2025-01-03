@@ -239,12 +239,17 @@
                             <!-- 버튼 -->
                             <ul class="list_no_desc list_block">
                                 <li><button type="button" onclick="location.href='board_list.go'" class="btn_primary btn_full">목록으로 돌아가기</button></li>
-                                <!-- 작성자만 볼 수 있는 버튼입니다 -->
-                                <li><button type="button" onclick="location.href='board_update.go?board_idx=${board_idx}'" class="btn_secondary btn_full">게시글 수정하기</button></li>
-                                <!-- //작성자만 볼 수 있는 버튼입니다 -->
 
-                                <!-- 담당자만 볼 수 있는 버튼입니다 -->
-                                <li><button type="button" onclick="tst_modal_call('tst_modal_delete')" class="btn_subtle btn_full">게시글 삭제하기</button></li>
+                                <!-- 게시글 수정하기 버튼, 작성자만 보이게 설정 -->
+							    <c:if test="${board.empl_idx == sessionScope.empl_idx}">
+								    <li><button type="button" onclick="location.href='board_update.go?board_idx=${board.board_idx}'" class="btn_secondary btn_full">게시글 수정하기</button></li>
+								</c:if>
+							    <!-- 게시글 수정하기 버튼, 작성자만 보이게 설정 -->
+							    
+							    <!-- //담당자만 볼 수 있는 버튼입니다 -->
+							    <c:if test="${board.empl_idx == sessionScope.user.empl_idx}">
+							        <li><button type="button" onclick="tst_modal_call('tst_modal_delete')" class="btn_subtle btn_full">게시글 삭제하기</button></li>
+							    </c:if>
                                 <!-- //담당자만 볼 수 있는 버튼입니다 -->
                             </ul>
                             <!-- //버튼 -->
