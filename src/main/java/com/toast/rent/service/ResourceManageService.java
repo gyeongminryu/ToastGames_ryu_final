@@ -450,12 +450,13 @@ public class ResourceManageService {
 
 	//물품 반납
 	@Transactional
-	public boolean permitReturn(int prod_idx) {
+	public boolean permitReturn(int prod_idx,int prod_rent_idx) {
 		boolean success = false;
 		int  row = resourceMgDAO.permitReturn(prod_idx); //대여가능으로 업뎃
 		ResourceManageDTO dto = new ResourceManageDTO();
 		dto.setProd_return_date(LocalDateTime.now().withNano(0));//반납일시
 		dto.setProd_return_state(1);
+		dto.setProd_rent_idx(prod_rent_idx);
 		int isReturn = resourceMgDAO.insertReturnDate(dto);
 		if(row !=0 && isReturn !=0) {
 			success = true;

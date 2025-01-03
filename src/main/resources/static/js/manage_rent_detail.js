@@ -25,6 +25,12 @@ if (today < expirationDate) {
 const prodIdxElement = document.querySelector('#prod_idx');
 const prod_idx = prodIdxElement ? prodIdxElement.textContent.trim() : null;
 
+const prodRentIdx = document.querySelector('#prod_rent_idx');
+const prod_rent_idx = prodRentIdx ? prodRentIdx.textContent.trim() : null;
+
+
+
+
 // 초기 호출
 pageCall(1,prod_idx);
 
@@ -246,6 +252,7 @@ document.getElementById("permit_return").addEventListener("click", function () {
 	        type: 'GET',
 	        url: '/permitReturn.do', 
 	        data:{
+	        	'prod_rent_idx':prod_rent_idx,
 	        	'prod_idx':prod_idx
 	        },
 	        dataType: 'json', 

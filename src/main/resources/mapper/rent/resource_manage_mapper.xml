@@ -362,6 +362,7 @@
 	<!-- 대여기록 페이징 -->
 	<select id="rentManageList" resultType="com.toast.rent.dto.ResourceManageDTO">
 		SELECT 
+			pr.prod_rent_idx,
 			pr.prod_rent_reason,
 			pr.prod_rent_date,
 			pr.prod_exp_date,
@@ -411,10 +412,15 @@
 	</update>
 
 	<!-- 반납일시 입력 -->
-	<insert id="insertReturnDate">
-		INSERT INTO product_rent(prod_return_date, prod_return_state)
-			VALUE(#{prod_return_date}, #{prod_return_state})
-	</insert>
+	<update id="insertReturnDate">
+		UPDATE 
+			product_rent
+		SET
+			prod_return_date=#{prod_return_date}, 
+			prod_return_state=#{prod_return_state}
+		WHERE 
+			prod_rent_idx=#{prod_rent_idx}
+	</update>
 
 
 

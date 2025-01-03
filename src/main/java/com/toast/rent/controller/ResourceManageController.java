@@ -262,9 +262,32 @@ public class ResourceManageController {
 	
 	
 	//물품 정보 수정(카테고리, 사용 기한, 첨부파일 포함)
+	@GetMapping(value="/manage_rent_update.go")
+	public String rentUpdate(@RequestParam int prod_idx) {
+		
+		
+		
+		
+		
+		
+		return null;
+		
+	}
+	
+	
+	//물품 정보수정
+	@PostMapping(value="/productUpdate.do")
+	
+	
+	
+	
 	
 	
 	//물품 목록보기
+	
+	
+	
+	
 	
 	//물품 대여 신청 승인(대여 여부 업뎃)
 	@GetMapping(value="/permitProd.do")
@@ -281,8 +304,8 @@ public class ResourceManageController {
 	//물품 반납 승인(대여 여부 업뎃)
 	@GetMapping(value="/permitReturn.do")
 	@ResponseBody
-	public Map<String, String> permitReturn(@RequestParam int prod_idx) {
-		boolean success = resourceMgService.permitReturn(prod_idx);
+	public Map<String, String> permitReturn(@RequestParam int prod_rent_idx, @RequestParam int prod_idx) {
+		boolean success = resourceMgService.permitReturn(prod_idx, prod_rent_idx);
 		Map<String, String> response = new HashMap<String, String>();
 		if(success) {
 			response.put("redirectUrl", "/manage_rent_list.go?prod_idx=" + prod_idx);

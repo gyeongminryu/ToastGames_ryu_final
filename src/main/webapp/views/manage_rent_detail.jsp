@@ -53,26 +53,26 @@
 							</tr>
 							<!-- //사용연한이 지났을 경우 -->
 							<tr>
-                                <th>제품번호</th>
+                                <th>물품번호</th>
                                 <th id="prod_idx">${detail.dto.prod_idx}</th>
                             </tr>
                             <tr>
-                                <th>제품명</th>
+                                <th>물품명</th>
                                 <th>${detail.dto.prod_name}</th>
                             </tr>
                             <tr>
-                                <th>제품 정보</th>
+                                <th>물품 정보</th>
                                 <td>${detail.dto.prod_model}</td>
                             </tr>
                             <tr>
-                                <th>제품 설명</th>
+                                <th>물품 설명</th>
                                 <td>${detail.dto.prod_info}</td>
                             </tr>
                             </tbody>
                             <tfoot>
                             <tr>
                                 <th></th>
-                                <td><button onclick="location.href='/manage_rent_update.go'" class="btn_primary">물품 정보 수정하기</button></td>
+                                <td><button onclick="location.href='/manage_rent_update.go?prod_idx=${detail.dto.prod_idx}'" class="btn_primary">물품 정보 수정하기</button></td>
                             </tr>
                             </tfoot>
                         </table>
@@ -168,6 +168,10 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr>
+                                <th>대여번호</th>
+                                <td id="prod_rent_idx">${detail.dto.prod_rent_idx}</td>
+                            </tr>
                             <tr>
                                 <th>대여자</th>
                                 <td>${detail.empl.empl_name}(${detail.empl.dept_name}/${detail.empl.position_name})</td>
