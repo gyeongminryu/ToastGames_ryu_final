@@ -178,8 +178,10 @@ RTE_DefaultConfig.toolbar_full = "{bold,italic,underline,forecolor,backcolor}|{j
 
 //////////
 
-RTE_DefaultConfig.toolbar_document = "{bold,italic,underline}|{fontsize}|{forecolor,backcolor}|removeformat|{justifyleft,justifycenter,justifyright,justifyfull}|{inserttable,insertimage,insertcode}|code"
+RTE_DefaultConfig.toolbar_document = "{bold,italic,underline}|{fontsize}|{forecolor,backcolor}|removeformat|{justifyleft,justifycenter,justifyright,justifyfull}|{inserttable,insertimage}|code"
 	+ "#{find,undo,redo,fullscreenenter,fullscreenexit}";
+
+RTE_DefaultConfig.toolbar_none = "";
 
 //////////
 

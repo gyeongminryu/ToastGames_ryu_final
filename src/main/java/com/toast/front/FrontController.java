@@ -369,6 +369,6 @@ public class FrontController {
     // rich text editor test
     @RequestMapping(value = "/rte_test")
     public ModelAndView front_richtexteditor_test() {
-        return new ModelAndView("module_richtexteditor_test");
+        return new ModelAndView("module_rte");
     }
 }

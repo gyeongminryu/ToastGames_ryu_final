@@ -13,7 +13,7 @@
 }
 
 .tst_table.tr_hover_subtle tbody tr:hover{
-    background-color: var(--tst-color-subtle);
+    /* 없음 */
 }
 
 .tst_table thead th{
