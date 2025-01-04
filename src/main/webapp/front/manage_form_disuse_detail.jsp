@@ -75,42 +75,10 @@
                     <!-- 문서 양식 정보 확인 -->
                     <div class="tst_col3">
 
-                        <!-- 작성 정보 확인 -->
+                        <!-- 결재선 설정 -->
                         <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
-                                <col style="width: 100px" />
-                                <col style="width: auto" />
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th colspan="2">
-                                    문서 양식 정보
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>문서 제목</th>
-                                <th>{문서 제목}</th>
-                            </tr>
-                            <tr>
-                                <th>문서 유형</th>
-                                <td>{문서 유형} 예)기안서</td>
-                            </tr>
-                            <tr>
-                                <th>작성자</th>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <!-- //문서 양식 정보 확인 -->
-
-                        <hr class="separator" />
-
-                        <!-- 결재선 설정 -->
-                        <table class="tst_table table_align_left">
-                            <colgroup>
-                                <col style="width: 40px" />
+                                <col style="width: 80px;" />
                                 <col style="width: auto" />
                             </colgroup>
                             <thead>
@@ -124,37 +92,22 @@
 
                             <!-- 1차 결재자 -->
                             <tr>
-                                <td class="td_align_top td_no_padding">
-                                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                                </td>
-                                <td class="approval_line_info">
-                                    <h4>1차 결재자</h4>
-                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
-                                </td>
+                                <th>1차 결재자</th>
+                                <td>{팀}/{직급}</td>
                             </tr>
                             <!-- //1차 결재자 -->
 
                             <!-- 2차 결재자 -->
                             <tr>
-                                <td class="td_align_top td_no_padding">
-                                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                                </td>
-                                <td class="approval_line_info">
-                                    <h4>2차 결재자</h4>
-                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
-                                </td>
+                                <th>2차 결재자</th>
+                                <td>{부서}/{직급}</td>
                             </tr>
                             <!-- //2차 결재자 -->
 
                             <!-- 3차 결재자 -->
                             <tr>
-                                <td class="td_align_top td_no_padding">
-                                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                                </td>
-                                <td class="approval_line_info">
-                                    <h4>최종 결재자</h4>
-                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
-                                </td>
+                                <th>3차 결재자</th>
+                                <td>{부서}/{직급}</td>
                             </tr>
                             <!-- //3차 결재자 -->
 
@@ -165,10 +118,7 @@
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
                             <li>
-                                <button class="btn_primary btn_full" onclick="location.href='/manage_form_update'">양식 수정하기</button>
-                            </li>
-                            <li>
-                                <button class="btn_secondary btn_full" onclick="location.href='/manage_form_write'">양식을 복사하여 새 양식 작성하기</button>
+                                <button class="btn_primary btn_full" onclick="location.href='/manage_form_detail'">문서 양식 사용하기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->
