@@ -1,10 +1,10 @@
-// setting > write documents
+// set > write documents
 var configDocument = {
     toolbar: "document",
     allowScriptCode: true
 };
 
-// setting > no toolbar
+// set > no toolbar
 var configNone = {
     toolbar: "none",
     showPlusButton: false,
@@ -12,6 +12,8 @@ var configNone = {
     editorResizeMode: "none"
 };
 
-// run editor
-var editor1 = new RichTextEditor("#div_editor1", configNone);
-var editor2 = new RichTextEditor("#div_editor2", configDocument);
+
+
+// run editor example
+//var editor1 = new RichTextEditor("#div_editor1", configNone);
+//var editor2 = new RichTextEditor("#div_editor2", configDocument);

@@ -1,15 +1,3 @@
-.rte-toolbar-document{
-    height: 700px;
-}
-
-.rte-toolbar-none{
-    height: 230px;
-}
-
-.rte-toolbar-none.size-min{
-    height: 130px;
-}
-
 .rte-editable .rte-toggleborder table,
 .rte-editable .rte-toggleborder table tr,
 .rte-editable .rte-toggleborder table tr td{
