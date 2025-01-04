@@ -68,7 +68,7 @@ function listPrint(list, totalIdx, currentPage) {
             tags += '<tr>';
             tags += '<td>' + (totalIdx - ((currentPage - 1) * cnt) - i) + '</td>';
             tags += '<td class="td_align_left">';
-            tags += '<span onClick="previewPrint(\'' + list[i].form_idx + '\')" class="tst_badge_min btn_primary margin_right tst_pointer">미리보기</span>';
+            tags += '<span onClick="previewPrint(' + list[i].form_idx + ')" class="tst_badge_min btn_primary margin_right tst_pointer">미리보기</span>';
             tags += '<span onClick="location.href=\'/manage_form_detail?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
 
             // 1차 결재선
@@ -110,7 +110,7 @@ function listPrint(list, totalIdx, currentPage) {
 
 // 양식 미리보기
 function previewPrint(idx) {
-    console.log(idx);
+    //console.log(idx);
 
     // no_data 화면 감추기
     document.getElementsByClassName('approval_received_no_data')[0].classList.add('disp_hide');
@@ -123,9 +123,9 @@ function previewPrint(idx) {
             'idx': idx
         },
         dataType: 'json',
-        success: function(idx, data) {
+        success: function(data) {
             // 목록 출력
-            printTags(data.preview);
+            printTags(data.idx, data.preview);
         },
         error: function(e) {
             //console.log(e);
@@ -134,9 +134,12 @@ function previewPrint(idx) {
 }
 
 function printTags(idx, content) {
+    console.log(idx);
+    console.log(content);
+
     let tags = '';
-    tags += '<tr><td><iframe>' + content + '</iframe></td></tr>';
-    tags += '<tr><td class="td_align_left">';
+    tags += '<tr><td>' + content + '</td></tr>';
+    tags += '<tr class="td_align_left td_no_underline"><td>';
     tags += '<button onclick="location.href=\'/manage_form_detail?form_idx=\''+ idx +'" class="btn_secondary">문서 양식 수정하기</button>';
     tags += '</td></tr>';
     console.log(tags);

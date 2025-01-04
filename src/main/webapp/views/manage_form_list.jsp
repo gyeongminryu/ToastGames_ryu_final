@@ -96,7 +96,7 @@
 
                     <!-- 문서 양식 미리보기 -->
                     <div class="tst_col4">
-                        <table class="tst_table table_no_padding form_preview">
+                        <table class="tst_table table_no_padding">
                             <thead>
                             <tr>
                                 <th>미리보기</th>
