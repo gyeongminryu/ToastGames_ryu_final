@@ -6,10 +6,26 @@
     <!-- 게시글 목록 -->
     <select id="allCount" resultType="int">
         SELECT CEIL(COUNT(form_idx) / #{param1}) FROM form
+        <where>
+            <if test="param3 != null and !param3.equals('') and param2.equals('form_subject')">
+                form_subject LIKE CONCAT('%', #{param3}, '%')
+            </if>
+            <if test="param3 != null and !param3.equals('') and param2.equals('form_content')">
+                form_content LIKE CONCAT('%', #{param3}, '%')
+            </if>
+        </where>
     </select>
 
     <select id="countIdx" resultType="int">
         SELECT COUNT(form_idx) FROM form
+        <where>
+            <if test="param2 != null and !param2.equals('') and param1.equals('form_subject')">
+                form_subject LIKE CONCAT('%', #{param2}, '%')
+            </if>
+            <if test="param2 != null and !param2.equals('') and param1.equals('form_content')">
+                form_content LIKE CONCAT('%', #{param2}, '%')
+            </if>
+        </where>
     </select>
 
     <select id="list" resultType="com.toast.document.dto.ManageFormDTO">
@@ -26,7 +42,20 @@
             (SELECT (SELECT d.dept_name FROM department d WHERE d.dept_idx = l.dept_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'dept_name_3',
             (SELECT l.duty_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_idx_3',
             (SELECT (SELECT u.duty_name FROM duty u WHERE u.duty_idx = l.duty_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_name_3'
-        FROM form f ORDER BY f.form_idx DESC LIMIT #{param1} OFFSET #{param2}
+        FROM form f
+        <where>
+            <if test="param4 != null and !param4.equals('') and param3.equals('form_subject')">
+                form_subject LIKE CONCAT('%', #{param4}, '%')
+            </if>
+            <if test="param4 != null and !param4.equals('') and param3.equals('form_content')">
+                form_content LIKE CONCAT('%', #{param4}, '%')
+            </if>
+        </where>
+        ORDER BY f.form_idx DESC LIMIT #{param1} OFFSET #{param2}
+    </select>
+
+    <select id="preview" resultType="String">
+        SELECT form_content FROM form WHERE form_idx = #{param1}
     </select>
 
 </mapper>

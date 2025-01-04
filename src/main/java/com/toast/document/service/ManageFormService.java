@@ -19,19 +19,25 @@ public class ManageFormService {
     }
 
     // 문서 양식 목록
-    public Map<String, Object> list(int page, int cnt) {
+    public Map<String, Object> list(int page, int cnt, String opt, String keyword) {
         int limit = cnt;
         int offset = (page - 1) * cnt;
-        int totalPages = manageFormDAO.allCount(cnt);
-        int totalIdx = manageFormDAO.countIdx();
-        //logger.info("This is the service.");
+        int totalPages = manageFormDAO.allCount(cnt, opt, keyword);
+        int totalIdx = manageFormDAO.countIdx(opt, keyword);
 
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("totalPages", totalPages);
         result.put("totalIdx", totalIdx);
         result.put("currentPage", page);
         result.put("offset", offset);
-        result.put("list", manageFormDAO.list(limit, offset));
+        result.put("list", manageFormDAO.list(limit, offset, opt, keyword));
+
+        return result;
+    }
+
+    public Map<String, Object> preview(int idx) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("preview", manageFormDAO.preview(idx));
 
         return result;
     }

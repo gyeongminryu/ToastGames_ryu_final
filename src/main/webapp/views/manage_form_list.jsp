@@ -39,13 +39,13 @@
                 <form>
                     <div class="tst_search_container">
                         <div class="tst_search_select">
-                            <select name="">
-                                <option value="{양식명}">양식명</option>
-                                <option value="{양식 내용}">양식 내용</option>
+                            <select name="opt">
+                                <option value="0" selected>양식명</option>
+                                <option value="1">양식 내용</option>
                             </select>
                         </div>
                         <div class="tst_search_input">
-                            <input type="text" name="" maxlength="50" placeholder="검색어를 입력하세요" />
+                            <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
                         </div>
                         <div class="tst_search_icon">
                             <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
@@ -96,7 +96,7 @@
 
                     <!-- 문서 양식 미리보기 -->
                     <div class="tst_col4">
-                        <table class="tst_table table_no_padding">
+                        <table class="tst_table table_no_padding form_preview">
                             <thead>
                             <tr>
                                 <th>미리보기</th>
@@ -104,33 +104,17 @@
                             </thead>
 
                             <!-- 선택한 문서 양식이 없을 경우 -->
-                            <tbody>
-                            <tr class="approval_received_no_data"><!-- 양식을 선택했을 경우 클래스 disp_hide를 추가하세요. -->
+                            <tbody class="form_preview">
+                            <tr class="approval_received_no_data">
                                 <td class="td_no_data">
                                     <p>
                                         <i class="bi bi-file-earmark-text"></i>
                                     </p>
-                                    <h3>문서 양식 이름을 클릭하면</h3>
-                                    <h3>기본형을 확인할 수 있습니다.</h3>
+                                    <h3>미리보기 버튼을 클릭하세요.</h3>
                                 </td>
                             </tr>
                             </tbody>
                             <!-- //선택한 문서 양식이 없을 경우 -->
-
-                            <!-- 문서 양식을 선택했을 경우 -->
-                            <tbody>
-                            <tr>
-                                <td>{문서 양식 코드}</td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td class="td_align_left">
-                                    <button onclick="location.href='/manage_form_detail'" class="btn_secondary">문서 양식 수정하기</button>
-                                </td>
-                            </tr>
-                            </tfoot>
-                            <!-- //문서 양식을 선택했을 경우 -->
 
                         </table>
                     </div>

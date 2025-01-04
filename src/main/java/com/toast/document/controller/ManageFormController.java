@@ -31,11 +31,24 @@ public class ManageFormController {
     }
 
     @RequestMapping (value = "/manage_form_list.ajax")
-    public Map<String, Object> manage_form_list(String page, String cnt) {
+    public Map<String, Object> manage_form_list(String page, String cnt, String opt, String keyword) {
         int pageInt = Integer.parseInt(page);
         int cntInt = Integer.parseInt(cnt);
-        //logger.info("This is the controller.");
+        String optName = "";
 
-        return manageFormService.list(pageInt, cntInt);
+        if (opt.equals('0')) {
+            optName = "form_subject";
+        } else {
+            optName = "form_content";
+        }
+
+        return manageFormService.list(pageInt, cntInt, optName, keyword);
+    }
+
+    @RequestMapping (value = "/manage_form_preview.ajax")
+    public Map<String, Object> manage_form_preview(String idx) {
+        int idxInt = Integer.parseInt(idx);
+
+        return manageFormService.preview(idxInt);
     }
 }

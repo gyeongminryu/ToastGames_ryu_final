@@ -1,3 +1,24 @@
+// 검색 옵션 및 검색어 가져오기
+const searchParams = new URLSearchParams(window.location.search);
+var opt = searchParams.get('opt');
+var keyword = searchParams.get('keyword');
+
+fillSearchForm(opt, keyword);
+
+function fillSearchForm(opt, keyword) {
+    const opts = document.getElementsByName('opt')[0].options;
+
+    if (opt != null) {
+        for (var i = 0; i < opts.length; i++) {
+            opts[i].removeAttribute('selected');
+        }
+        opts[opt].setAttribute('selected', 'selected');
+    }
+
+    document.getElementsByName('keyword')[0].value = keyword;
+}
+
+// 목록 출력하기
 var showPage = 1;
 var cnt = 20;
 var vPages = 10;
@@ -10,7 +31,9 @@ function pageShow(page) {
         url: 'manage_form_list.ajax',
         data: {
             'page': page,
-            'cnt': cnt
+            'cnt': cnt,
+            'opt': opt,
+            'keyword': keyword
         },
         dataType: 'json',
         success: function(data) {
@@ -36,12 +59,12 @@ function pageShow(page) {
 
 function listPrint(list, totalIdx, currentPage) {
     //console.log(list);
-    console.log(list.length);
+    //console.log(list.length);
     let tags = '';
 
     if (list.length > 0) {
         for (let i = 0; i < list.length; i++) {
-            console.log(list[i]);
+            //console.log(list[i]);
             tags += '<tr>';
             tags += '<td>' + (totalIdx - ((currentPage - 1) * cnt) - i) + '</td>';
             tags += '<td class="td_align_left">';
@@ -85,7 +108,38 @@ function listPrint(list, totalIdx, currentPage) {
     document.getElementsByClassName('form_list')[0].innerHTML = tags;
 }
 
+// 양식 미리보기
 function previewPrint(idx) {
     console.log(idx);
+
+    // no_data 화면 감추기
+    document.getElementsByClassName('approval_received_no_data')[0].classList.add('disp_hide');
+
+    // 양식 태그 불러오기
+    $.ajax({
+        type: 'post',
+        url: 'manage_form_preview.ajax',
+        data: {
+            'idx': idx
+        },
+        dataType: 'json',
+        success: function(idx, data) {
+            // 목록 출력
+            printTags(data.preview);
+        },
+        error: function(e) {
+            //console.log(e);
+        }
+    });
+}
+
+function printTags(idx, content) {
     let tags = '';
+    tags += '<tr><td><iframe>' + content + '</iframe></td></tr>';
+    tags += '<tr><td class="td_align_left">';
+    tags += '<button onclick="location.href=\'/manage_form_detail?form_idx=\''+ idx +'" class="btn_secondary">문서 양식 수정하기</button>';
+    tags += '</td></tr>';
+    console.log(tags);
+
+    document.getElementsByClassName('form_preview')[0].innerHTML = tags;
 }
