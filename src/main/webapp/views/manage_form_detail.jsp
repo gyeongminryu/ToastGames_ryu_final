@@ -138,4 +138,5 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
+<script src="resources/js/manage_form_detail.js"></script>
 </html>

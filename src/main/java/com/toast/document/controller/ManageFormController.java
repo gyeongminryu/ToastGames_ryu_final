@@ -20,12 +20,19 @@ public class ManageFormController {
         this.manageFormService = manageFormService;
     }
 
+    // 권한 확인 - 작업하는 중
+    public ModelAndView authorize(HttpSession session, String addr) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("approval_writing_list");
+        // 세션 임의 저장
+        session.setAttribute("loginId", "tndls0110");
+
+        return mav;
+    }
+
     // 문서 양식 목록
     @RequestMapping (value = "/manage_form_list.go")
     public ModelAndView manage_form_list(HttpSession session) {
-        // 세션 임의 저장
-        session.setAttribute("loginId", "tndls0110");
-        logger.info(session.getAttribute("loginId").toString());
         
         return new ModelAndView("manage_form_list");
     }
