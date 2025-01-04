@@ -26,6 +26,12 @@
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_list'">
                         <h1>문서 양식 관리</h1>
                     </li>
+                    <li class="tst_title_item" onclick="location.href='/manage_form_disuse_list'">
+                        <h1>사용하지 않는 문서 양식 관리</h1>
+                    </li>
+                    <li class="tst_title_item" onclick="location.href='/manage_form_wip_list'">
+                        <h1>작성중인 문서 양식</h1>
+                    </li>
                 </ul>
                 <!-- //제목 -->
 
@@ -67,7 +73,7 @@
                                     <td class="td_align_left">
                                         <ul class="list_no_desc list_inline">
                                             <li>
-                                                <button type="button" onclick="tst_modal_call('tst_modal_send')" class="btn_primary">상신하기</button>
+                                                <button type="button" onclick="tst_modal_call('tst_modal_send')" class="btn_primary">양식 등록하기</button>
                                             </li>
                                             <li>
                                                 <button type="button" onclick="location.href=''" class="btn_secondary">임시 저장하기</button>

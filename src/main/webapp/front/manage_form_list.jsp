@@ -7,9 +7,11 @@
     <title>TOAST Games Groupware</title>
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_pagenation.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <body>
 <c:import url="layout_topnav.jsp" />
@@ -24,67 +26,134 @@
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_list'">
                         <h1>문서 양식 관리</h1>
                     </li>
+                    <li class="tst_title_item" onclick="location.href='/manage_form_disuse_list'">
+                        <h1>사용하지 않는 문서 양식 관리</h1>
+                    </li>
+                    <li class="tst_title_item" onclick="location.href='/manage_form_wip_list'">
+                        <h1>작성중인 문서 양식</h1>
+                    </li>
                 </ul>
                 <!-- //제목 -->
 
+                <!-- 양식 이름 검색 -->
+                <form>
+                    <div class="tst_search_container">
+                        <div class="tst_search_select">
+                            <select name="" onchange="<!-- 물품 상태가 바뀌었을 경우 작동할 함수를 입력하세요 -->">
+                                <option value="{양식명}">양식명</option>
+                                <option value="{양식 내용}">양식 내용</option>
+                            </select>
+                        </div>
+                        <div class="tst_search_input">
+                            <input type="text" name="" maxlength="50" placeholder="검색어를 입력하세요" />
+                        </div>
+                        <div class="tst_search_icon">
+                            <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+                <!-- //양식 이름 검색 -->
+
                 <div class="tst_flex">
 
-                    <div class="tst_col3">
-                        <table class="tst_table table_no_padding">
+                    <div class="tst_col8">
+                        <table class="tst_table tr_hover_subtle">
                             <colgroup>
-                                <col style="width: auto;" />
                                 <col style="width: 60px;" />
+                                <col style="width: auto;" />
+                                <col style="width: 150px;" />
+                                <col style="width: 150px;" />
+                                <col style="width: 150px;" />
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">문서 양식</th>
+                                <th>번호</th>
+                                <th>문서명</th>
+                                <th>1차 결재자</th>
+                                <th>2차 결재자</th>
+                                <th>3차 결재자</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <!-- 양식 이름 검색 -->
-                            <tr>
-                                <td colspan="2">
-                                    <hr class="separator" />
-                                    <form>
-                                        <div class="tst_search_container">
-                                            <div class="tst_search_input">
-                                                <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
-                                            </div>
-                                            <div class="tst_search_icon">
-                                                <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
-                                            </div>
-                                        </div>
-                                    </form>
+                            <!-- 검색되는 문서 양식이 없을 경우 -->
+                            <tr class="rent_list_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
+                                <td colspan="5" class="td_no_data">
+                                    <p><i class="bi bi-file-earmark-break"></i></p>
+                                    <h3>검색 조건에 해당하는 문서 양식이 없습니다.</h3>
                                 </td>
                             </tr>
-                            <!-- //양식 이름 검색 -->
+                            <!-- //검색되는 문서 양식이 없을 경우 -->
 
-                            <!-- 양식 작성 버튼 -->
+                            <!-- 문서 양식 목록 -->
                             <tr>
-                                <td colspan="2">
-                                    <button onclick="location.href='/manage_form_write'" class="btn_primary btn_full">새 양식 작성하기</button>
-                                </td>
-                            </tr>
-                            <!-- //양식 작성 버튼 -->
-
-                            <!-- 양식 목록 -->
-                            <tr>
+                                <td>{번호}</td>
                                 <td class="td_align_left">
-                                    <a href="/manage_form_list">{문서 양식명}</a>
+                                    <h3 onclick="location.href='/manage_form_detail?form_idx='" class="tst_pointer">{문서명}</h3>
                                 </td>
-                                <td>
-                                    <button onclick="location.href='/manage_form_detail'" class="btn_subtle btn_min">수정하기</button>
+                                <td>{팀}/{직책}</td>
+                                <td>{부서}/{직책}</td>
+                                <td>{부서}/{직책}</td>
+                            </tr>
+                            <!-- //문서 양식 목록 -->
+
+                            <!-- pagination -->
+                            <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <ul id="pagination" class="pagination-sm pagination">
+                                        <li class="page-item first disabled">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+                                        </li>
+                                        <li class="page-item prev disabled">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
+                                        </li>
+                                        <li class="page-item active">
+                                            <a href="#" class="page-link">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">4</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">5</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">6</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">7</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">8</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">9</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">10</a>
+                                        </li>
+                                        <li class="page-item next">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
+                                        </li>
+                                        <li class="page-item last">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+                                        </li>
+                                    </ul>
                                 </td>
                             </tr>
-                            <!-- //양식 목록 -->
-
-                            </tbody>
+                            </tfoot>
+                            <!-- //pagination -->
                         </table>
                     </div>
 
                     <!-- 문서 양식 미리보기 -->
-                    <div class="tst_col9">
+                    <div class="tst_col4">
                         <table class="tst_table table_no_padding">
                             <thead>
                             <tr>
@@ -93,7 +162,7 @@
                             </thead>
 
                             <!-- 선택한 문서 양식이 없을 경우 -->
-                            <tfoot>
+                            <tbody>
                             <tr class="approval_received_no_data"><!-- 양식을 선택했을 경우 클래스 disp_hide를 추가하세요. -->
                                 <td class="td_no_data">
                                     <p>
@@ -103,7 +172,7 @@
                                     <h3>기본형을 확인할 수 있습니다.</h3>
                                 </td>
                             </tr>
-                            </tfoot>
+                            </tbody>
                             <!-- //선택한 문서 양식이 없을 경우 -->
 
                             <!-- 문서 양식을 선택했을 경우 -->

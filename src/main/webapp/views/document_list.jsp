@@ -23,7 +23,7 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/document_list'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/document_list.go'">
                         <h1>문서함</h1>
                     </li>
                 </ul>
@@ -65,7 +65,7 @@
                             <tr>
                                 <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
                                 <th class="td_no_padding">
-                                    <span onclick="location.href='/board_list?'">{부서명}</span>
+                                    <span onclick="location.href='/document_list?'">{부서명}</span>
                                 </th>
                             </tr>
                             <tr class="disp_hide">
@@ -79,11 +79,11 @@
                                         <!-- 팀 목록 (필터링) -->
                                         <tr class="font_subtle">
                                             <th></th>
-                                            <td><span onclick="location.href='/board_list?'">{팀명}</span></td>
+                                            <td><span onclick="location.href='/document_list?dept_idx='">{팀명}</span></td>
                                         </tr>
                                         <tr class="font_subtle">
                                             <th></th>
-                                            <td><span onclick="location.href='/board_list?'">{팀명}</span></td>
+                                            <td><span onclick="location.href='/document_list?dept_idx='">{팀명}</span></td>
                                         </tr>
                                         <!-- //팀 목록 (필터링) -->
 

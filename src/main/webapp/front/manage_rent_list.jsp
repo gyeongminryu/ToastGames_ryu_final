@@ -224,7 +224,7 @@
                             <!-- pagination -->
                             <tfoot>
                             <tr>
-                                <td colspan="7">
+                                <td colspan="6">
                                     <ul id="pagination" class="pagination-sm pagination">
                                         <li class="page-item first disabled">
                                             <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>

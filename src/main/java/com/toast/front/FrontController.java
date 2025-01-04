@@ -274,13 +274,7 @@ public class FrontController {
         return new ModelAndView("manage_form_list");
     }
 
-    // 문서 양식 등록
-    @RequestMapping(value = "/manage_form_write")
-    public ModelAndView front_manage_form_write() {
-        return new ModelAndView("manage_form_write");
-    }
-
-    // 문서 양식 수정
+    // 문서 양식 등록 및 수정
     @RequestMapping(value = "/manage_form_update")
     public ModelAndView front_manage_form_update() {
         return new ModelAndView("manage_form_update");
@@ -290,6 +284,24 @@ public class FrontController {
     @RequestMapping(value = "/manage_form_detail")
     public ModelAndView front_manage_form_detail() {
         return new ModelAndView("manage_form_detail");
+    }
+
+    // 사용하지 않는 문서 양식 목록
+    @RequestMapping(value = "/manage_form_disuse_list")
+    public ModelAndView front_manage_form_disuse_list() {
+        return new ModelAndView("manage_form_disuse_list");
+    }
+
+    // 사용하지 않는 문서 양식 상세보기
+    @RequestMapping(value = "/manage_form_disuse_detail")
+    public ModelAndView front_manage_form_disuse_detail() {
+        return new ModelAndView("manage_form_disuse_detail");
+    }
+
+    // 작성중인 문서 양식 목록
+    @RequestMapping(value = "/manage_form_wip_list")
+    public ModelAndView front_manage_form_wip_list() {
+        return new ModelAndView("manage_form_wip_list");
     }
 
 
@@ -396,7 +408,7 @@ public class FrontController {
     // Editor ========================================================
 
     // rich text editor test
-    @RequestMapping(value = "/rte_test")
+    @RequestMapping(value = "/module_rte")
     public ModelAndView front_richtexteditor_test() {
         return new ModelAndView("module_rte");
     }
