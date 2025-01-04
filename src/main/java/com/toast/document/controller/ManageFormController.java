@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+import java.util.Map;
+
 @RestController
 public class ManageFormController {
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -15,5 +18,24 @@ public class ManageFormController {
 
     public ManageFormController(ManageFormService manageFormService) {
         this.manageFormService = manageFormService;
+    }
+
+    // 문서 양식 목록
+    @RequestMapping (value = "/manage_form_list.go")
+    public ModelAndView manage_form_list(HttpSession session) {
+        // 세션 임의 저장
+        session.setAttribute("loginId", "tndls0110");
+        logger.info(session.getAttribute("loginId").toString());
+        
+        return new ModelAndView("manage_form_list");
+    }
+
+    @RequestMapping (value = "/manage_form_list.ajax")
+    public Map<String, Object> manage_form_list(String page, String cnt) {
+        int pageInt = Integer.parseInt(page);
+        int cntInt = Integer.parseInt(cnt);
+        //logger.info("This is the controller.");
+
+        return manageFormService.list(pageInt, cntInt);
     }
 }
