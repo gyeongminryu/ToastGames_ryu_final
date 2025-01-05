@@ -61,7 +61,7 @@
                         <form>
                             <div class="tst_search_container">
                                 <div class="tst_search_select">
-                                    <select id="tst_search_select_category" name="category" onchange="location.href='/rent_mylist'">
+                                    <select id="tst_search_select_category" name="category" onchange="search_category()">
                                     	<option value="prod_name">제품명</option>
                                         <option value="prod_info">제품정보</option>
                                     </select>
@@ -140,7 +140,7 @@
                             <!-- 공유 물품 목록 > 연체중인 물품 -->
                             <tr>
                                 <td>{번호}</td>
-                                <td><span onclick="location.href='/'" class="tst_pointer">{분류}</span></td>
+                                <td><span class="tst_pointer">{분류}</span></td>
                                 <td class="td_align_left">
                                     <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">{제품명}</h3>
                                 </td>

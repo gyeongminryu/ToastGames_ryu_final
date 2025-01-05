@@ -130,6 +130,7 @@ function prodDate(prod_idx) {
 // 사용연한 관련
 var expiration_content = '';
 var prodExpDateStr = '';
+let expirationDate ='';
 
 // 오늘 날짜
 const today = new Date();
@@ -139,7 +140,7 @@ function prod_date(item) {
     prodExpDateStr = item.formattedDates.prodDispoDate;
 
     // prodExpDateStr를 Date 객체로 변환
-    const expirationDate = new Date(prodExpDateStr);
+    expirationDate = new Date(prodExpDateStr);
     console.log("Expiration Date: ", expirationDate);
 
     expiration_content = ''; // 초기화
