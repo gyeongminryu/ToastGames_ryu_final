@@ -286,7 +286,7 @@ public class ApprovalService {
 			// 탭 처리 + 검색 처리 위해 -> 결과 리스트에 추가하는 로직에서 분기처리
 			distinct_list_filter(filter,type,list_param,list_params,list_type);
 
-			logger.info("sent_list_params:{}", list_params);
+			//logger.info("sent_list_params:{}", list_params);
 		}
         return list_params;
     }

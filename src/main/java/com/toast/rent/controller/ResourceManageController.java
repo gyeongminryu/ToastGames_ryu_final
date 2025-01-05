@@ -54,7 +54,7 @@ public class ResourceManageController {
 		session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
 		session.setAttribute("dept_idx",dto.getDept_idx());//사원 부서 가져와
 		empl_idx = (int) session.getAttribute("empl_idx");  //세션에 저장한 사원idx 가져와
-		//dept_idx = (int) session.getAttribute("empl_idx"); //세션에 저장한 사원 부서idx 가져와
+		//dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
 		dept_idx=122;
 		String page = "rent_list";
 		if(dept_idx == 122) {	
@@ -263,14 +263,91 @@ public class ResourceManageController {
 	
 	//물품 정보 수정(카테고리, 사용 기한, 첨부파일 포함)
 	@GetMapping(value="/manage_rent_update.go")
-	public Map<String, Object> rentUpdate(@RequestParam int prod_idx) {
-		return resourceMgService.getProductinfo(prod_idx);
+	public String rentUpdate(@RequestParam int prod_idx, Model model) {
+		logger.info("prod_idx:"+prod_idx);
+		Map<String, Object> detail = resourceMgService.getProductinfo(prod_idx);		
+		List<ResourcePhotoDTO> files = resourceMgService.prodMgFile(prod_idx);
+		model.addAttribute("detail", detail);
+		model.addAttribute("files", files);
+		return "manage_rent_update";
 	}
 	
 	
 	//물품 정보수정
 	@PostMapping(value="/productUpdate.do")
-	
+	@ResponseBody
+	public Map<String, Object> productUpdate(
+			@RequestParam("attached_file") List<MultipartFile> attachedFiles,
+	        @RequestParam("subject") String subject,
+	        @RequestParam("number") String number,
+	        @RequestParam("information") String information,
+	        @RequestParam("content") String content,
+	        @RequestParam("category") String category,
+	        @RequestParam("due_date") String dueDate,
+	        @RequestParam("place") String place,
+	        @RequestParam("state") String prod_state
+	        ) {
+		Map<String, Object> response = new HashMap<>();
+	    try {
+	        // 파라미터 값 로깅
+	        logger.info("subject: " + subject);
+	        logger.info("information: " + information);
+	        logger.info("content: " + content);
+	        logger.info("category: " + category);
+	        logger.info("due_date: " + dueDate);
+
+	        
+	        Map<String, Object> map = new HashMap<String, Object>();
+	        
+	        map.put("number", number);
+	        map.put("subject", subject);
+	        map.put("information", information);
+	        map.put("content", content);
+	        map.put("category", category);
+	        map.put("due_date", dueDate);
+	        map.put("place", place);
+	        map.put("state", prod_state);
+	        
+	        
+
+	        if (attachedFiles != null && !attachedFiles.isEmpty()) {
+	            List<MultipartFile> validFiles = new ArrayList<>();
+
+	            for (MultipartFile file : attachedFiles) {
+	                if (file.getOriginalFilename() != null 
+	                        && !file.getOriginalFilename().isEmpty() 
+	                        && file.getSize() > 0) {
+	                    validFiles.add(file);
+	                }
+	            }
+
+	            if (!validFiles.isEmpty()) {
+	                resourceMgService.prodUpdate(validFiles, map);
+	                for (MultipartFile file : validFiles) {
+	                    logger.info("파일 이름: " + file.getOriginalFilename());
+	                    logger.info("파일 크기: " + file.getSize() + " bytes");
+	                }
+	            } else {
+	                logger.info("유효한 파일이 없습니다.");
+	            }
+	        } else {
+	            resourceMgService.prodOnlyUpdate(map);
+	            logger.info("업로드된 파일이 없습니다.");
+	        }
+
+
+	        // 성공적으로 처리된 경우
+	        response.put("status", "success");
+	        response.put("redirectUrl", "/manage_rent_list.go");
+
+	    } catch (Exception e) {
+	        logger.error("파일 업로드 또는 데이터 처리 중 오류 발생", e);
+	        response.put("status", "error");
+	        response.put("message", "Error processing request: " + e.getMessage());
+	        // 오류 처리 페이지로 리다이렉트
+	    }
+	    return response;
+	}
 	
 	
 	

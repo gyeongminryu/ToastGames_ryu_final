@@ -23,10 +23,10 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item" onclick="location.href='/rent_list'">
+                    <li class="tst_title_item" onclick="location.href='/rent_list.go'">
                         <h1>공용 물품 대여</h1>
                     </li>
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_mylist'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_mylist.go'">
                         <h1>내가 대여한 물품</h1>
                     </li>
                 </ul>
@@ -38,11 +38,11 @@
                             <tbody class="tst_pointer">
 
                             <!-- 전체 제품 조회 (필터링 초기화) -->
-                            <tr><th><span onclick="location.href='/rent_mylist'">전체 물품</span></th></tr>
+                            <tr><th><span onclick="location.href='/rent_mylist.go'">전체 물품</span></th></tr>
                             <!-- //전체 제품 조회 (필터링 초기화) -->
 
                             <!-- 분류 목록 (필터링) -->
-                            <tr><td><span onclick="location.href='/rent_mylist'">대여 신청한 물품 목록</span></td></tr>
+                            <tr><td><span onclick="location.href='/rent_mylist.go'">대여 신청한 물품 목록</span></td></tr>
                             <!-- //분류 목록 (필터링) -->
 
                             <!-- 분류 목록 > 선택한 항목 (필터링) -->
@@ -62,7 +62,8 @@
                             <div class="tst_search_container">
                                 <div class="tst_search_select">
                                     <select id="tst_search_select_category" name="category" onchange="location.href='/rent_mylist'">
-                                        <option value="{검색 분류}">검색 분류</option>
+                                    	<option value="prod_name">제품명</option>
+                                        <option value="prod_info">제품정보</option>
                                     </select>
                                 </div>
                                 <div class="tst_search_input">
@@ -206,19 +207,7 @@
                             <tr>
                                 <td colspan="7">
                                     <ul id="pagination" class="pagination-sm pagination">
-                                        <li class="page-item first disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item prev disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
-                                        </li>
 
-                                        <li class="page-item next">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
-                                        </li>
-                                        <li class="page-item last">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-                                        </li>
                                     </ul>
                                 </td>
                             </tr>
@@ -234,4 +223,7 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
+<script src="resources/js/rent_mylist.js"></script>
+
+
 </html>

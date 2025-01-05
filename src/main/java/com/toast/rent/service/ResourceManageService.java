@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -302,6 +303,8 @@ public class ResourceManageService {
 			//4. 첨부파일 키 생성
 			String fileKey = UUID.randomUUID().toString();
 			
+			
+			int empl_idx = (int) session.getAttribute("empl_idx");
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
@@ -314,9 +317,12 @@ public class ResourceManageService {
 				photo_dto.setFile_addr(path.toString());
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
-				photo_dto.setUploader_idx(prod_idx);
+				photo_dto.setUploader_idx(empl_idx);
 				photo_dto.setFile_size(file.getSize());
-				row = resourceMgDAO.prodFileAdd(photo_dto);
+				row = resourceMgDAO.prodFileAdd(photo_dto); 
+				
+				resourceMgDAO.prodFileKeyAdd(prod_idx, fileKey);
+				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -408,7 +414,17 @@ public class ResourceManageService {
 	//물품 상세 첨부파일 보기(테이블 추가 필요할 것으로 예상)
 	public List<ResourcePhotoDTO> prodMgFile(int prod_idx) {
 		//(첨부파일키 추가 필요)
-		return resourceMgDAO.prodMgFile(prod_idx);
+		List<String> fileKeys = resourceMgDAO.getProdFileKey(prod_idx);
+		List<ResourcePhotoDTO> fileList = new ArrayList<ResourcePhotoDTO>();
+	    for (String fileKey : fileKeys) {
+	        // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
+	        ResourcePhotoDTO file = resourceMgDAO.prodMgFile(fileKey);
+	        if (file != null) {
+	            fileList.add(file); // 가져온 파일 정보를 리스트에 추가
+	        }
+	    }
+		
+		return fileList;
 	}
 	
 	
@@ -467,15 +483,97 @@ public class ResourceManageService {
 	//물품 정보 가져오기
 	public Map<String, Object> getProductinfo(int prod_idx) {
 		ResourceManageDTO product = resourceMgDAO.getProductinfo(prod_idx);
-		List<ResourcePhotoDTO> files = resourceMgDAO.prodMgFile(prod_idx);
+		//(첨부파일키 추가 필요)
+		List<String> fileKeys = resourceMgDAO.getProdFileKey(prod_idx);
+		List<ResourcePhotoDTO> files = new ArrayList<ResourcePhotoDTO>();
+	    for (String fileKey : fileKeys) {
+	        // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
+	        ResourcePhotoDTO file = resourceMgDAO.prodMgFile(fileKey);
+	        if (file != null) {
+	            files.add(file); // 가져온 파일 정보를 리스트에 추가
+	        }
+	    }
+	    
 		Map<String, Object> prodInfo = new HashMap<String, Object>();
 		List<ResourceManageDTO> categoryList = resourceMgDAO.resourceCateMg();
+		prodInfo.put("prodDispoDate", formatDateTime(product.getProd_dispo_date()));
 		prodInfo.put("product", product);
 		prodInfo.put("files", files);
 		prodInfo.put("categoryList", categoryList);
 		return prodInfo;
 	}
 
+	//물품정보 수정(파일O)
+	@Transactional
+	public int prodUpdate(List<MultipartFile> validFiles, Map<String, Object> map) {
+		ResourceManageDTO dto = new ResourceManageDTO();
+		dto.setProd_idx(Integer.parseInt((String) map.get("number")));
+		dto.setProd_name((String) map.get("subject"));
+		dto.setProd_model((String) map.get("information"));
+		dto.setProd_cate_idx(Integer.parseInt((String) map.get("category")));
+		dto.setProd_info((String) map.get("content"));
+		dto.setProd_state(Integer.parseInt((String) map.get("state"))); //물품 상태
+		dto.setProd_place((String) map.get("place"));
+	    // 날짜 문자열 가져오기
+	    String dueDateString = (String) map.get("due_date");
+
+	    // 날짜만 있는 경우에 대한 처리
+	    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDate = LocalDate.parse(dueDateString, dateFormatter);
+
+	    // LocalDateTime으로 변환 (시간은 00:00:00으로 설정)
+	    LocalDateTime dueDate = localDate.atStartOfDay();
+	    
+	    // DTO에 설정
+	    dto.setProd_dispo_date(dueDate);
+		
+		int row = 0;
+		resourceMgDAO.prodUpdate(dto);  //물품 등록
+		int prod_idx = dto.getProd_idx();
+		
+		logger.info("prod_idx:"+prod_idx);
+		
+		if(prod_idx > 0) {
+			logger.info("여기 들어왔다고");
+			List<String> fileKeys = resourceMgDAO.getProdFileKey(prod_idx);
+			for (String fileKey : fileKeys) {
+				resourceMgDAO.prodFileRemove(prod_idx,fileKey);
+				resourceMgDAO.prodFileKeyRemove(prod_idx,fileKey);				
+			}
+			row = prodFileAdd(validFiles, prod_idx);
+		}
+		
+		return row;	
+	}
+
+	//물품정보 수정(파일X)
+	public int prodOnlyUpdate(Map<String, Object> map) {
+		ResourceManageDTO dto = new ResourceManageDTO();
+		dto.setProd_idx(Integer.parseInt((String) map.get("number")));
+		dto.setProd_name((String) map.get("subject"));
+		dto.setProd_model((String) map.get("information"));
+		dto.setProd_cate_idx(Integer.parseInt((String) map.get("category")));
+		dto.setProd_info((String) map.get("content"));
+		dto.setProd_state(Integer.parseInt((String) map.get("state"))); //물품 상태
+		dto.setProd_place((String) map.get("place"));
+	    // 날짜 문자열 가져오기
+	    String dueDateString = (String) map.get("due_date");
+
+	    // 날짜만 있는 경우에 대한 처리
+	    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDate = LocalDate.parse(dueDateString, dateFormatter);
+
+	    // LocalDateTime으로 변환 (시간은 00:00:00으로 설정)
+	    LocalDateTime dueDate = localDate.atStartOfDay();
+	    
+	    // DTO에 설정
+	    dto.setProd_dispo_date(dueDate);
+		
+		int row = 0;
+		row = resourceMgDAO.prodUpdate(dto);  //물품 등록
+
+		return row;
+	}
 
 
 }
