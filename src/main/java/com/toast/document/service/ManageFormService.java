@@ -43,6 +43,15 @@ public class ManageFormService {
         return result;
     }
 
+    // 문서 양식 상세보기
+    public Map<String, Object> detail(int form_idx) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("info", manageFormDAO.detail(form_idx));
+        //logger.info("This is service. The result is "+result.toString());
+
+        return result;
+    }
+
     // 문서 양식 작성하기
     public int write(String writer) {
         int form_idx = 0;
@@ -81,14 +90,5 @@ public class ManageFormService {
         }
 
         return success;
-    }
-
-    // 문서 양식 상세보기
-    public Map<String, Object> detail(int form_idx) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("info", manageFormDAO.detail(form_idx));
-        //logger.info("This is service. The result is "+result.toString());
-
-        return result;
     }
 }

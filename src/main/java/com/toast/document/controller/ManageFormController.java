@@ -37,7 +37,21 @@ public class ManageFormController {
         return new ModelAndView("manage_form_list");
     }
 
-    @PostMapping(value = "/manage_form_list.ajax")
+    // 사용하지 않는 문서 양식 목록
+    @GetMapping (value = "/manage_form_disuse_list.go")
+    public ModelAndView manage_form_disuse_list(HttpSession session) {
+
+        return new ModelAndView("manage_form_disuse_list");
+    }
+
+    // 작성중인 문서 양식 목록
+    @GetMapping (value = "/manage_form_wip_list.go")
+    public ModelAndView manage_form_wip_list(HttpSession session) {
+
+        return new ModelAndView("manage_form_wip_list");
+    }
+
+    @PostMapping (value = "/manage_form_list.ajax")
     public Map<String, Object> manage_form_list(String page, String cnt, String opt, String keyword, String sort) {
         int pageInt = Integer.parseInt(page);
         int cntInt = Integer.parseInt(cnt);
@@ -66,7 +80,7 @@ public class ManageFormController {
         return new ModelAndView("manage_form_detail");
     }
 
-    @PostMapping(value = "/manage_form_detail.ajax")
+    @PostMapping (value = "/manage_form_detail.ajax")
     public Map<String, Object> manage_form_detail(String form_idx) {
         //logger.info("This is controller. The form idx is: "+form_idx);
         int form_idxInt = Integer.parseInt(form_idx);
@@ -99,38 +113,32 @@ public class ManageFormController {
         return new ModelAndView("manage_form_update");
     }
 
-    @PostMapping(value = "/manage_form_update.ajax")
+    @PostMapping (value = "/manage_form_update.ajax")
     public Map<String, Object> manage_form_detail(HttpSession session, String form_idx, String form_subject, String form_content) {
-        Map<String,Object> mav = new HashMap<String, Object>();
+        Map<String,Object> map = new HashMap<String, Object>();
 
         session.setAttribute("loginId", "tndls0110");
         String updater = session.getAttribute("loginId").toString();
         int form_idxInt = Integer.parseInt(form_idx);
         logger.info("form_idxInt = "+form_idxInt);
 
-        mav.put("success", manageFormService.update(updater, form_idxInt, form_subject, form_content));
+        map.put("success", manageFormService.update(updater, form_idxInt, form_subject, form_content));
 
-        return mav;
+        return map;
     }
 
-    // 사용하지 않는 문서 양식 목록
-    @GetMapping (value = "/manage_form_disuse_list.go")
-    public ModelAndView manage_form_disuse_list(HttpSession session) {
-
-        return new ModelAndView("manage_form_disuse_list");
-    }
-
-    // 작성중인 문서 양식 목록
-    @GetMapping (value = "/manage_form_wip_list.go")
-    public ModelAndView manage_form_wip_list(HttpSession session) {
-
-        return new ModelAndView("manage_form_wip_list");
-    }
-
-    // 작성중인 문서 양식 수정
+    // 작성중인 문서 양식 수정하기
     @GetMapping (value = "/manage_form_wip_update.go")
     public ModelAndView manage_form_wip_update(HttpSession session) {
 
         return new ModelAndView("manage_form_wip_update");
+    }
+
+    // 결재선 설정하기
+    @PostMapping (value = "/manage_form_call_dept.ajax")
+    public Map<String, Object> manage_form_call_dept() {
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        return result;
     }
 }
