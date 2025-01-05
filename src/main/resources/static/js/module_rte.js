@@ -1,7 +1,15 @@
-// set > write documents
+// set > view documents
+var configView = {
+    toolbar: "viewDocument",
+    readOnly: true,
+    editorResizeMode: "none",
+    showPlusButton: false,
+    showStatistics: false
+};
+
+// set > update documents
 var configDocument = {
-    toolbar: "document",
-    allowScriptCode: true
+    toolbar: "updateDocument"
 };
 
 // set > no toolbar

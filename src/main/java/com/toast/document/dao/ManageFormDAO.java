@@ -12,6 +12,9 @@ public interface ManageFormDAO {
     int allCount(int cnt, String opt, String keyword);
     int countIdx(String opt, String keyword);
     List<ManageFormDTO> list(int limit, int offset, String opt, String keyword);
-    String preview(int idx);
+    String preview(int form_idx);
+
+    // 문서 양식 상세보기
+    ManageFormDTO detail(int form_idx);
 
 }

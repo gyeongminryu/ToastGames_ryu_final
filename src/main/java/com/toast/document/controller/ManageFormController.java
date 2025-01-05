@@ -3,8 +3,7 @@ package com.toast.document.controller;
 import com.toast.document.service.ManageFormService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -31,13 +30,13 @@ public class ManageFormController {
     }
 
     // 문서 양식 목록
-    @RequestMapping (value = "/manage_form_list.go")
+    @GetMapping (value = "/manage_form_list.go")
     public ModelAndView manage_form_list(HttpSession session) {
         
         return new ModelAndView("manage_form_list");
     }
 
-    @RequestMapping (value = "/manage_form_list.ajax")
+    @PostMapping(value = "/manage_form_list.ajax")
     public Map<String, Object> manage_form_list(String page, String cnt, String opt, String keyword) {
         int pageInt = Integer.parseInt(page);
         int cntInt = Integer.parseInt(cnt);
@@ -52,10 +51,25 @@ public class ManageFormController {
         return manageFormService.list(pageInt, cntInt, optName, keyword);
     }
 
-    @RequestMapping (value = "/manage_form_preview.ajax")
-    public Map<String, Object> manage_form_preview(String idx) {
-        int idxInt = Integer.parseInt(idx);
+    @PostMapping (value = "/manage_form_preview.ajax")
+    public Map<String, Object> manage_form_preview(String form_idx) {
+        int form_idxInt = Integer.parseInt(form_idx);
 
-        return manageFormService.preview(idxInt);
+        return manageFormService.preview(form_idxInt);
+    }
+
+    // 문서 양식 상세보기
+    @RequestMapping (value = "/manage_form_detail.go")
+    public ModelAndView manage_form_detail(HttpSession session) {
+
+        return new ModelAndView("manage_form_detail");
+    }
+
+    @PostMapping(value = "/manage_form_detail.ajax")
+    public Map<String, Object> manage_form_detail(String form_idx) {
+        //logger.info("This is controller. The form idx is: "+form_idx);
+        int form_idxInt = Integer.parseInt(form_idx);
+
+        return manageFormService.detail(form_idxInt);
     }
 }

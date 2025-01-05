@@ -110,7 +110,7 @@ function listPrint(list, totalIdx, currentPage) {
 
 // 양식 미리보기
 function previewPrint(idx) {
-    //console.log(idx);
+    //console.log(form_idx);
 
     // no_data 화면 감추기
     document.getElementsByClassName('approval_received_no_data')[0].classList.add('disp_hide');
@@ -120,7 +120,7 @@ function previewPrint(idx) {
         type: 'post',
         url: 'manage_form_preview.ajax',
         data: {
-            'idx': idx
+            'form_idx': idx
         },
         dataType: 'json',
         success: function(data) {
@@ -134,15 +134,15 @@ function previewPrint(idx) {
 }
 
 function printTags(idx, content) {
-    console.log(idx);
-    console.log(content);
+    //console.log(idx);
+    //console.log(content);
 
     let tags = '';
     tags += '<tr><td>' + content + '</td></tr>';
     tags += '<tr class="td_align_left td_no_underline"><td>';
     tags += '<button onclick="location.href=\'/manage_form_detail?form_idx=\''+ idx +'" class="btn_secondary">문서 양식 수정하기</button>';
     tags += '</td></tr>';
-    console.log(tags);
+    //console.log(tags);
 
     document.getElementsByClassName('form_preview')[0].innerHTML = tags;
 }

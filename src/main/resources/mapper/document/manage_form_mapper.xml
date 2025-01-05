@@ -58,4 +58,22 @@
         SELECT form_content FROM form WHERE form_idx = #{param1}
     </select>
 
+    <select id="detail" resultType="com.toast.document.dto.ManageFormDTO">
+        SELECT f.form_idx, f.form_subject, f.form_content, f.form_handler_idx,
+        (SELECT e.empl_name FROM employee e WHERE e.empl_idx = f.form_handler_idx) as 'empl_name',
+        (SELECT l.dept_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 1) as 'dept_idx_1',
+        (SELECT (SELECT d.dept_name FROM department d WHERE d.dept_idx = l.dept_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 1) as 'dept_name_1',
+        (SELECT l.duty_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 1) as 'duty_idx_1',
+        (SELECT (SELECT u.duty_name FROM duty u WHERE u.duty_idx = l.duty_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 1) as 'duty_name_1',
+        (SELECT l.dept_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 2) as 'dept_idx_2',
+        (SELECT (SELECT d.dept_name FROM department d WHERE d.dept_idx = l.dept_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 2) as 'dept_name_2',
+        (SELECT l.duty_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 2) as 'duty_idx_2',
+        (SELECT (SELECT u.duty_name FROM duty u WHERE u.duty_idx = l.duty_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 2) as 'duty_name_2',
+        (SELECT l.dept_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'dept_idx_3',
+        (SELECT (SELECT d.dept_name FROM department d WHERE d.dept_idx = l.dept_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'dept_name_3',
+        (SELECT l.duty_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_idx_3',
+        (SELECT (SELECT u.duty_name FROM duty u WHERE u.duty_idx = l.duty_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_name_3'
+        FROM form f WHERE f.form_idx = #{param1}
+    </select>
+
 </mapper>

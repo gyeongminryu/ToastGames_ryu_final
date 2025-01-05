@@ -35,9 +35,18 @@ public class ManageFormService {
         return result;
     }
 
-    public Map<String, Object> preview(int idx) {
+    public Map<String, Object> preview(int form_idx) {
         Map<String, Object> result = new HashMap<String, Object>();
-        result.put("preview", manageFormDAO.preview(idx));
+        result.put("preview", manageFormDAO.preview(form_idx));
+
+        return result;
+    }
+
+    // 문서 양식 상세보기
+    public Map<String, Object> detail(int form_idx) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("info", manageFormDAO.detail(form_idx));
+        //logger.info("This is service. The result is "+result.toString());
 
         return result;
     }

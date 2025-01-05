@@ -88,6 +88,10 @@
     margin-bottom: var(--tst-modal-container-listblock-margin-bottom);
 }
 
+.tst_modal .tst_modal_container .tst_modal_body .list_no_desc.list_block li p{
+    font-weight: 400;
+}
+
 .tst_modal .tst_modal_container .tst_modal_body .list_no_desc.list_block li p.min{
     margin-bottom: 4px;
 }
