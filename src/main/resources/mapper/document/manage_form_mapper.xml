@@ -42,7 +42,18 @@
             (SELECT (SELECT d.dept_name FROM department d WHERE d.dept_idx = l.dept_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'dept_name_3',
             (SELECT l.duty_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_idx_3',
             (SELECT (SELECT u.duty_name FROM duty u WHERE u.duty_idx = l.duty_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_name_3'
-        FROM form f WHERE form_state = 1
+        FROM form f
+        <where>
+            <if test="param5.equals('use')">
+                form_state = 1
+            </if>
+            <if test="param5.equals('disuse')">
+                form_state = 0
+            </if>
+            <if test="param5.equals('wip')">
+                form_state = 2
+            </if>
+        </where>
         <if test="param4 != null and !param4.equals('') and param3.equals('form_subject')">
             AND form_subject LIKE CONCAT('%', #{param4}, '%')
         </if>

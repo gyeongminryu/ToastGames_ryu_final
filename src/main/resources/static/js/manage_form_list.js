@@ -1,3 +1,24 @@
+// 주소 가져오기
+const path = window.location.pathname;
+var sort = '';
+//console.log(path);
+
+setSort(path);
+
+function setSort(path) {
+    switch(path) {
+        case "/manage_form_list.go":
+            sort = "use";
+            break;
+        case "/manage_form_disuse_list.go":
+            sort = "disuse";
+            break;
+        case "/manage_form_wip_list.go":
+            sort = "wip";
+            break;
+    }
+}
+
 // 검색 옵션 및 검색어 가져오기
 const searchParams = new URLSearchParams(window.location.search);
 var opt = searchParams.get('opt');
@@ -33,7 +54,8 @@ function pageShow(page) {
             'page': page,
             'cnt': cnt,
             'opt': opt,
-            'keyword': keyword
+            'keyword': keyword,
+            'sort': sort
         },
         dataType: 'json',
         success: function(data) {
@@ -69,7 +91,12 @@ function listPrint(list, totalIdx, currentPage) {
             tags += '<td>' + (totalIdx - ((currentPage - 1) * cnt) - i) + '</td>';
             tags += '<td class="td_align_left">';
             tags += '<span onClick="previewPrint(' + list[i].form_idx + ')" class="tst_badge_min btn_primary margin_right tst_pointer">미리보기</span>';
-            tags += '<span onClick="location.href=\'/manage_form_detail?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
+
+            if (sort === 'wip') {
+                tags += '<span onClick="location.href=\'/manage_form_update.go?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
+            } else {
+                tags += '<span onClick="location.href=\'/manage_form_detail.go?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
+            }
 
             // 1차 결재선
             if (list[i].dept_idx_1 === 0 && list[i].duty_idx_1 === 0) {
@@ -113,7 +140,10 @@ function previewPrint(idx) {
     //console.log(form_idx);
 
     // no_data 화면 감추기
-    document.getElementsByClassName('approval_received_no_data')[0].classList.add('disp_hide');
+    document.getElementsByClassName('select_form_no_data')[0].classList.add('disp_hide');
+
+    // 미리보기 표시하기
+    document.getElementsByClassName('select_form_data')[0].classList.remove('disp_hide');
 
     // 양식 태그 불러오기
     $.ajax({
@@ -137,12 +167,27 @@ function printTags(idx, content) {
     //console.log(idx);
     //console.log(content);
 
+    var editor = new RichTextEditor("#div_editor", configViewNone);
+    editor.setHTMLCode(content);
+    console.log(editor.document.firstChild.childNodes[1]);
+    editor.document.firstChild.childNodes[1].style.width = '200%';
+    editor.document.firstChild.childNodes[1].style.height = '50%';
+    editor.document.firstChild.childNodes[1].style.margin = '-15% 0 0 -50%';
+    editor.document.firstChild.childNodes[1].style.transform = 'scale(0.5)';
+
     let tags = '';
-    tags += '<tr><td>' + content + '</td></tr>';
-    tags += '<tr class="td_align_left td_no_underline"><td>';
-    tags += '<button onclick="location.href=\'/manage_form_detail?form_idx=\''+ idx +'" class="btn_secondary">문서 양식 수정하기</button>';
-    tags += '</td></tr>';
+    switch(sort) {
+        case "use":
+            tags += '<button onclick="location.href=\'/manage_form_update.go?form_idx=\''+ idx +'" class="btn_secondary">문서 양식 수정하기</button>';
+            break;
+        case "disuse":
+            tags += '<button onclick="location.href=\'/manage_form_restore.do?form_idx=\''+ idx +'" class="btn_secondary">문서 양식 복구하기</button>';
+            break;
+        case "wip":
+            tags += '<button onclick="location.href=\'/manage_form_update.go?form_idx=\''+ idx +'" class="btn_secondary">이어서 작성하기</button>';
+            break;
+    }
     //console.log(tags);
 
-    document.getElementsByClassName('form_preview')[0].innerHTML = tags;
+    document.getElementsByClassName('select_form_button')[0].innerHTML = tags;
 }

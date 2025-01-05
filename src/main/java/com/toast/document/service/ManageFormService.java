@@ -20,7 +20,7 @@ public class ManageFormService {
     }
 
     // 문서 양식 목록
-    public Map<String, Object> list(int page, int cnt, String opt, String keyword) {
+    public Map<String, Object> list(int page, int cnt, String opt, String keyword, String sort) {
         int limit = cnt;
         int offset = (page - 1) * cnt;
         int totalPages = manageFormDAO.allCount(cnt, opt, keyword);
@@ -31,7 +31,7 @@ public class ManageFormService {
         result.put("totalIdx", totalIdx);
         result.put("currentPage", page);
         result.put("offset", offset);
-        result.put("list", manageFormDAO.list(limit, offset, opt, keyword));
+        result.put("list", manageFormDAO.list(limit, offset, opt, keyword, sort));
 
         return result;
     }

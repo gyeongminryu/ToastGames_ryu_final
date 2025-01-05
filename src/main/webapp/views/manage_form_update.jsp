@@ -28,13 +28,13 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_list'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_list.go'">
                         <h1>문서 양식 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_form_disuse_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_form_disuse_list.go'">
                         <h1>사용하지 않는 문서 양식 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_form_wip_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_form_wip_list.go'">
                         <h1>작성중인 문서 양식</h1>
                     </li>
                 </ul>
@@ -67,11 +67,11 @@
                                 <tr>
                                     <th class="td_align_top">문서 양식</th>
                                     <td>
-                                        <p class="min font_subtle">1분마다 자동으로 임시 저장됩니다.</p>
+                                        <p class="min font_subtle">1분마다 자동으로 저장됩니다.</p>
 
                                         <!-- rte -->
                                         <div id="div_editor"></div>
-                                        <div id="div_editor_copy"></div>
+                                        <div id="div_editor_copy" class="disp_hide"></div>
                                         <!-- //rte -->
 
                                     </td>
@@ -126,7 +126,7 @@
                                     <button type="button" onclick="tst_modal_call('tst_modal_send')" class="btn_primary btn_full">양식 등록하기</button>
                                 </li>
                                 <li>
-                                    <button type="button" onclick="temporary_save()" class="btn_secondary btn_full">임시 저장하기</button>
+                                    <button type="button" onclick="temporary_save()" class="btn_secondary btn_full">저장하기</button>
                                 </li>
                                 <li>
                                     <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_subtle btn_full">작성 취소하기</button>

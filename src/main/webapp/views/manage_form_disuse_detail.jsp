@@ -21,13 +21,13 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item" onclick="location.href='/manage_form_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_form_list.go'">
                         <h1>문서 양식 관리</h1>
                     </li>
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_disuse_list'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_disuse_list.go'">
                         <h1>사용하지 않는 문서 양식 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_form_wip_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_form_wip_list.go'">
                         <h1>작성중인 문서 양식</h1>
                     </li>
                 </ul>

@@ -38,7 +38,7 @@ public class ManageFormController {
     }
 
     @PostMapping(value = "/manage_form_list.ajax")
-    public Map<String, Object> manage_form_list(String page, String cnt, String opt, String keyword) {
+    public Map<String, Object> manage_form_list(String page, String cnt, String opt, String keyword, String sort) {
         int pageInt = Integer.parseInt(page);
         int cntInt = Integer.parseInt(cnt);
         String optName = "";
@@ -49,7 +49,7 @@ public class ManageFormController {
             optName = "form_content";
         }
 
-        return manageFormService.list(pageInt, cntInt, optName, keyword);
+        return manageFormService.list(pageInt, cntInt, optName, keyword, sort);
     }
 
     @PostMapping (value = "/manage_form_preview.ajax")
@@ -111,5 +111,19 @@ public class ManageFormController {
         mav.put("success", manageFormService.update(updater, form_idxInt, form_subject, form_content));
 
         return mav;
+    }
+
+    // 사용하지 않는 문서 양식 목록
+    @GetMapping (value = "/manage_form_disuse_list.go")
+    public ModelAndView manage_form_disuse_list(HttpSession session) {
+
+        return new ModelAndView("manage_form_disuse_list");
+    }
+
+    // 작성중인 문서 양식 목록
+    @GetMapping (value = "/manage_form_wip_list.go")
+    public ModelAndView manage_form_wip_list(HttpSession session) {
+
+        return new ModelAndView("manage_form_wip_list");
     }
 }

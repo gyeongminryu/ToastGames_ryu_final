@@ -6,6 +6,13 @@ var configView = {
     showPlusButton: false
 };
 
+var configViewNone = {
+    toolbar: "none",
+    readOnly: true,
+    editorResizeMode: "none",
+    showPlusButton: false
+};
+
 // set > update documents
 var configDocument = {
     toolbar: "updateDocument",
