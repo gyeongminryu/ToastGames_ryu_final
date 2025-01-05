@@ -38,6 +38,8 @@ function printInfo(info) {
 
     // 문서
     editor.setHTMLCode(info.form_content);
+    document.getElementById('div_editor_copy').innerHTML = editor.getHTMLCode();
+    //console.log(editor.getHTMLCode());
 
     // 결재선
     // 1차 결재선
@@ -47,8 +49,12 @@ function printInfo(info) {
         tags += '없음';
     } else if (info.dept_idx_1 === 0 && info.duty_idx_1 !== 0) {
         tags += '작성자 소속/' + info.duty_name_1;
+        document.getElementById('approval_1').style.display = '';
+        setHtmlCode();
     } else {
         tags += info.dept_name_1 + '/' + info.duty_name_1;
+        document.getElementById('approval_1').style.display = '';
+        setHtmlCode();
     }
 
     document.getElementsByClassName('form_approval_line')[0].innerHTML = tags;
@@ -60,8 +66,12 @@ function printInfo(info) {
         tags += '없음';
     } else if (info.dept_idx_2 === 0 && info.duty_idx_2 !== 0) {
         tags += '작성자 소속/' + info.duty_name_2;
+        document.getElementById('approval_2').style.display = '';
+        setHtmlCode();
     } else {
         tags += info.dept_name_2 + '/' + info.duty_name_2;
+        document.getElementById('approval_2').style.display = '';
+        setHtmlCode();
     }
 
     document.getElementsByClassName('form_approval_line')[1].innerHTML = tags;
@@ -73,8 +83,12 @@ function printInfo(info) {
         tags += '없음';
     } else if (info.dept_idx_3 === 0 && info.duty_idx_3 !== 0) {
         tags += '작성자 소속/' + info.duty_name_3;
+        document.getElementById('approval_3').style.display = '';
+        setHtmlCode();
     } else {
         tags += info.dept_name_3 + '/' + info.duty_name_3;
+        document.getElementById('approval_3').style.display = '';
+        setHtmlCode();
     }
 
     document.getElementsByClassName('form_approval_line')[2].innerHTML = tags;
@@ -104,4 +118,28 @@ function temporary_save() {
             }
         });
     }
+}
+
+// 에디터를 수정하면 카피 div에 html 코드를 저장
+editor.attachEvent("change", function () {
+    //console.log(editor.getHTMLCode());
+    document.getElementById('div_editor_copy').innerHTML = editor.getHTMLCode();
+});
+
+function setHtmlCode() {
+    let html = document.getElementById('div_editor_copy').innerHTML;
+    editor.setHTMLCode(html);
+}
+
+// 제목을 입력하면 문서에 반영
+function syncTitleToEditor(elem) {
+    document.getElementById('form_title').innerHTML = elem.value;
+    setHtmlCode();
+}
+
+// 문서를 수정하면 제목에 반영
+//console.log(editor.document.getElementById('form_title').innerHTML);
+function syncTitleToForm() {
+    document.getElementsByName('subject')[0].value = document.getElementById('form_title').innerHTML;
+    setHtmlCode();
 }

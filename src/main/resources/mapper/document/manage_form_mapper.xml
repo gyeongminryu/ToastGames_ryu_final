@@ -58,7 +58,13 @@
 
     <!-- 문서 양식 상세보기 -->
     <select id="detail" resultType="com.toast.document.dto.ManageFormDTO">
-        SELECT f.form_idx, f.form_subject, f.form_content, f.form_handler_idx,
+        SELECT f.form_idx, f.form_subject, f.form_content, f.form_handler_idx, f.form_writer_idx, f.form_write_date, f.form_updater_idx, f.form_update_date,
+        (SELECT e.empl_name FROM employee e WHERE e.empl_idx = f.form_writer_idx) as 'form_writer_name',
+        (SELECT d.dept_name FROM department d WHERE d.dept_idx = f.form_writer_dept) as 'form_writer_dept_name',
+        (SELECT p.position_name FROM position_ p WHERE p.position_idx = f.form_writer_position) as 'form_writer_position_name',
+        (SELECT e.empl_name FROM employee e WHERE e.empl_idx = f.form_updater_idx) as 'form_updater_name',
+        (SELECT d.dept_name FROM department d WHERE d.dept_idx = f.form_updater_dept) as 'form_updater_dept_name',
+        (SELECT p.position_name FROM position_ p WHERE p.position_idx = f.form_updater_position) as 'form_updater_position_name',
         (SELECT e.empl_name FROM employee e WHERE e.empl_idx = f.form_handler_idx) as 'empl_name',
         (SELECT l.dept_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 1) as 'dept_idx_1',
         (SELECT (SELECT d.dept_name FROM department d WHERE d.dept_idx = l.dept_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 1) as 'dept_name_1',
@@ -89,7 +95,8 @@
     </select>
 
     <insert id="write" parameterType="com.toast.document.dto.ManageFormDTO" useGeneratedKeys="true" keyColumn="form_idx" keyProperty="form_idx">
-        INSERT INTO form (form_writer_idx, form_writer_dept, form_writer_position) VALUES (#{form_writer_idx}, #{form_writer_dept}, #{form_writer_position})
+        INSERT INTO form (form_writer_idx, form_writer_dept, form_writer_position, form_write_date)
+            VALUES (#{form_writer_idx}, #{form_writer_dept}, #{form_writer_position}, current_timestamp)
     </insert>
 
     <!-- 문서 양식 수정 -->

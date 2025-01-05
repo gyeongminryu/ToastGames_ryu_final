@@ -61,7 +61,7 @@
                                 <tr>
                                     <th class="td_align_top">문서 양식명</th>
                                     <td>
-                                        <input type="text" name="subject" maxlength="100" placeholder="문서 제목을 입력하세요" />
+                                        <input type="text" onkeyup="syncTitleToEditor(this)" name="subject" maxlength="100" placeholder="문서 제목을 입력하세요" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -71,6 +71,7 @@
 
                                         <!-- rte -->
                                         <div id="div_editor"></div>
+                                        <div id="div_editor_copy"></div>
                                         <!-- //rte -->
 
                                     </td>
@@ -131,7 +132,6 @@
                                     <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_subtle btn_full">작성 취소하기</button>
                                 </li>
                             </ul>
-
                         </div>
                     </div>
                 </form>

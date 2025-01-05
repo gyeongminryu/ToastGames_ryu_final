@@ -8,7 +8,8 @@ var configView = {
 
 // set > update documents
 var configDocument = {
-    toolbar: "updateDocument"
+    toolbar: "updateDocument",
+    allowScriptCode: false
 };
 
 // set > no toolbar

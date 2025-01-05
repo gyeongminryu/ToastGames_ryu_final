@@ -178,7 +178,7 @@ RTE_DefaultConfig.toolbar_full = "{bold,italic,underline,forecolor,backcolor}|{j
 
 //////////
 
-RTE_DefaultConfig.toolbar_viewDocument = "#{find,html2pdf,save,print,fullscreenenter,fullscreenexit}";
+RTE_DefaultConfig.toolbar_viewDocument = "#{html2pdf,print,fullscreenenter,fullscreenexit}";
 
 RTE_DefaultConfig.toolbar_updateDocument = "{bold,italic,underline}|{fontsize}|{forecolor,backcolor}|removeformat|{justifyleft,justifycenter,justifyright,justifyfull}|{inserttable,insertimage}|code"
 	+ "#{find,undo,redo,fullscreenenter,fullscreenexit}";

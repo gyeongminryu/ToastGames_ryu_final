@@ -25,7 +25,7 @@ public class ManageFormDTO {
     private String form_updater_dept_name;
     private int form_updater_position;
     private String form_updater_position_name;
-    private LocalDateTime form_updater_date;
+    private LocalDateTime form_update_date;
     private int form_state;
 
     // table g_approval_line
@@ -122,8 +122,8 @@ public class ManageFormDTO {
         return form_updater_position_name;
     }
 
-    public LocalDateTime getForm_updater_date() {
-        return form_updater_date;
+    public LocalDateTime getForm_update_date() {
+        return form_update_date;
     }
 
     public int getForm_state() {
@@ -271,8 +271,8 @@ public class ManageFormDTO {
         this.form_updater_position_name = form_updater_position_name;
     }
 
-    public void setForm_updater_date(LocalDateTime form_updater_date) {
-        this.form_updater_date = form_updater_date;
+    public void setForm_update_date(LocalDateTime form_update_date) {
+        this.form_update_date = form_update_date;
     }
 
     public void setForm_state(int form_state) {

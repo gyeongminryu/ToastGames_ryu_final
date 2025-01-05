@@ -39,14 +39,14 @@ function printInfo(info) {
 
     // 문서 최초 작성자
     tags = '';
-    tags += '<span onclick="tst_view_profile(\'' + info.form_handler_idx + '\')" class="tst_pointer">' + info.empl_name + ' (부서/직위)</span>';
-    tags += '<span class="font_subtle"> (최초 작성 일시: )</span>';
+    tags += '<span onclick="tst_view_profile(\'' + info.form_writer_idx + '\')" class="tst_pointer">' + info.form_writer_name + ' (' + info.form_writer_dept_name + '/' + info.form_writer_position_name + ')</span>';
+    tags += '<span class="font_subtle"> (최초 작성 일시: ' + info.form_write_date + ')</span>';
     document.getElementsByClassName('info_initial_issue')[0].innerHTML = tags;
 
     // 문서 최종 수정자
     tags = '';
-    tags += '<span onclick="tst_view_profile(\'idx\')" class="tst_pointer">최종 수정자 (부서/직위)</span>';
-    tags += '<span class="font_subtle"> (최종 수정 일시: )</span>';
+    tags += '<span onclick="tst_view_profile(\'' + info.form_updater_idx + '\')" class="tst_pointer">' + info.form_updater_name + ' (' + info.form_updater_dept_name + '/' + info.form_updater_position_name + ')</span>';
+    tags += '<span class="font_subtle"> (최종 수정 일시: ' + info.form_update_date + ')</span>';
     document.getElementsByClassName('info_final_issue')[0].innerHTML = tags;
 
     // 문서
