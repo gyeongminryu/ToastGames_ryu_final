@@ -1,6 +1,7 @@
 package com.toast.document.service;
 
 import com.toast.document.dao.ManageFormDAO;
+import com.toast.document.dto.ManageFormDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,25 @@ public class ManageFormService {
         result.put("preview", manageFormDAO.preview(form_idx));
 
         return result;
+    }
+
+    // 문서 양식 작성하기
+    public int write(String writer) {
+        int form_idx = 0;
+        int empl_idx = manageFormDAO.getIdx(writer);
+        ManageFormDTO dto = new ManageFormDTO();
+        dto.setForm_writer_idx(empl_idx);
+        dto.setForm_writer_dept(manageFormDAO.getDeptIdx(empl_idx));
+        dto.setForm_writer_position(manageFormDAO.getPositIdx(empl_idx));
+
+        if (manageFormDAO.write(dto) > 0) {
+            form_idx = dto.getForm_idx();
+        } else {
+            form_idx = -1;
+        }
+        logger.info("The form idx is " + form_idx + ".");
+
+        return form_idx;
     }
 
     // 문서 양식 상세보기

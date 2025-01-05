@@ -17,4 +17,10 @@ public interface ManageFormDAO {
     // 문서 양식 상세보기
     ManageFormDTO detail(int form_idx);
 
+    // 문서 양식 작성
+    int getIdx(String empl_id);
+    int getDeptIdx(int empl_idx);
+    int getPositIdx(int empl_idx);
+    int write(ManageFormDTO dto);
+
 }

@@ -42,15 +42,13 @@
             (SELECT (SELECT d.dept_name FROM department d WHERE d.dept_idx = l.dept_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'dept_name_3',
             (SELECT l.duty_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_idx_3',
             (SELECT (SELECT u.duty_name FROM duty u WHERE u.duty_idx = l.duty_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_name_3'
-        FROM form f
-        <where>
-            <if test="param4 != null and !param4.equals('') and param3.equals('form_subject')">
-                form_subject LIKE CONCAT('%', #{param4}, '%')
-            </if>
-            <if test="param4 != null and !param4.equals('') and param3.equals('form_content')">
-                form_content LIKE CONCAT('%', #{param4}, '%')
-            </if>
-        </where>
+        FROM form f WHERE form_state = 1
+        <if test="param4 != null and !param4.equals('') and param3.equals('form_subject')">
+            AND form_subject LIKE CONCAT('%', #{param4}, '%')
+        </if>
+        <if test="param4 != null and !param4.equals('') and param3.equals('form_content')">
+            AND form_content LIKE CONCAT('%', #{param4}, '%')
+        </if>
         ORDER BY f.form_idx DESC LIMIT #{param1} OFFSET #{param2}
     </select>
 
@@ -75,5 +73,21 @@
         (SELECT (SELECT u.duty_name FROM duty u WHERE u.duty_idx = l.duty_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_name_3'
         FROM form f WHERE f.form_idx = #{param1}
     </select>
+    
+    <select id="getIdx" resultType="int">
+        SELECT empl_idx FROM employee WHERE empl_id = #{param1}
+    </select>
+
+    <select id="getDeptIdx" resultType="int">
+        SELECT dept_idx FROM appointment WHERE appo_empl_idx = #{param1} ORDER BY appo_idx DESC LIMIT 1
+    </select>
+
+    <select id="getPositIdx" resultType="int">
+        SELECT position_idx FROM appointment WHERE appo_empl_idx = #{param1} ORDER BY appo_idx DESC LIMIT 1
+    </select>
+
+    <insert id="write" parameterType="com.toast.document.dto.ManageFormDTO" useGeneratedKeys="true" keyColumn="form_idx" keyProperty="form_idx">
+        INSERT INTO form (form_writer_idx, form_writer_dept, form_writer_position) VALUES (#{form_writer_idx}, #{form_writer_dept}, #{form_writer_position})
+    </insert>
 
 </mapper>

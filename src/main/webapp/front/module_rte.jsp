@@ -80,23 +80,23 @@
                                             <p style="text-align: center;"><span style="font-weight: bold; font-size: 24px;">구매 품의서</span></p>
                                             <p style="text-align: center;"><span style="font-weight: bold; font-size: 24px;"></span></p>
                                             <div style="text-align: right;">
-                                                <table style="width: 120px; height: 140px; float: right; text-align: center; border: 1px solid #000 !important; border-collapse: collapse;">
+                                                <table style="width: 120px; height: 140px; float: right; text-align: center; border-collapse: collapse;">
                                                     <colgroup>
                                                         <col style="width: 20px" />
                                                         <col style="width: auto" />
                                                     </colgroup>
                                                     <tbody>
                                                     <tr>
-                                                        <td rowspan="3" colspan="1" style="background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">기<br />
+                                                        <td rowspan="3" colspan="1" style="background-color: rgb(220, 220, 220);">기<br />
                                                             <p>안</p>
                                                         </td>
-                                                        <td style="height: 20px; border: 1px solid #000 !important;">사원</td>
+                                                        <td style="height: 20px;">사원</td>
                                                     </tr>
                                                     <tr>
                                                         <td style="border: 1px solid #000 !important;">김이름</td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="height: 20px; border: 1px solid #000 !important;"><br />
+                                                        <td style="height: 20px;"><br />
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -128,48 +128,48 @@
                                                 </colgroup>
                                                 <tbody>
                                                 <tr>
-                                                    <td rowspan="1" colspan="2" style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">담당 부서</td>
+                                                    <td rowspan="1" colspan="2" style="text-align: center; background-color: rgb(220, 220, 220);">담당 부서</td>
                                                     <td><br />
                                                     </td>
-                                                    <td rowspan="3" colspan="1" style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">납품자</td>
+                                                    <td rowspan="3" colspan="1" style="text-align: center; background-color: rgb(220, 220, 220);">납품자</td>
                                                     <td rowspan="1" colspan="3"><br />
                                                     </td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">작성 일자</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">작성 일자</td>
                                                     <td rowspan="1" colspan="2"><br />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td rowspan="1" colspan="2" style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">프로젝트 번호</td>
+                                                    <td rowspan="1" colspan="2" style="text-align: center; background-color: rgb(220, 220, 220);">프로젝트 번호</td>
                                                     <td><br />
                                                     </td>
-                                                    <td style="text-align: center; border: 1px solid #000 !important;">TEL:</td>
+                                                    <td style="text-align: center;">TEL:</td>
                                                     <td rowspan="1" colspan="2"><br />
                                                     </td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">인도장소</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">인도장소</td>
                                                     <td rowspan="1" colspan="2"><br />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td rowspan="1" colspan="2" style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">사용 목적</td>
+                                                    <td rowspan="1" colspan="2" style="text-align: center; background-color: rgb(220, 220, 220);">사용 목적</td>
                                                     <td><br />
                                                     </td>
-                                                    <td style="text-align: center; border: 1px solid #000 !important;">FAX:</td>
+                                                    <td style="text-align: center;">FAX:</td>
                                                     <td rowspan="1" colspan="2"><br />
                                                     </td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">희망 납기 일자</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">희망 납기 일자</td>
                                                     <td rowspan="1" colspan="2"><br />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">품번</td>
-                                                    <td rowspan="1" colspan="2" style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">품명</td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">규격</td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">단위</td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">수량</td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">단가</td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">금액</td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">수주금액</td>
-                                                    <td style="text-align: center; background-color: rgb(220, 220, 220); border: 1px solid #000 !important;">비고</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">품번</td>
+                                                    <td rowspan="1" colspan="2" style="text-align: center; background-color: rgb(220, 220, 220);">품명</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">규격</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">단위</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">수량</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">단가</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">금액</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">수주금액</td>
+                                                    <td style="text-align: center; background-color: rgb(220, 220, 220);">비고</td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center;">1</td>

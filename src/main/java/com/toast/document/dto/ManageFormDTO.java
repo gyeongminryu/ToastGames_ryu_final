@@ -2,16 +2,33 @@ package com.toast.document.dto;
 
 import org.apache.ibatis.type.Alias;
 
+import java.time.LocalDateTime;
+
 public class ManageFormDTO {
 
-    // form
+    // table form
     private int form_idx;
     private String form_subject;
     private String form_content;
     private int form_handler_idx;
-    private String empl_name;
+    private String form_handler_name;
+    private int form_writer_idx;
+    private String form_writer_name;
+    private int form_writer_dept;
+    private String form_writer_dept_name;
+    private int form_writer_position;
+    private String form_writer_position_name;
+    private LocalDateTime form_write_date;
+    private int form_updater_idx;
+    private String form_updater_name;
+    private int form_updater_dept;
+    private String form_updater_dept_name;
+    private int form_updater_position;
+    private String form_updater_position_name;
+    private LocalDateTime form_updater_date;
+    private int form_state;
 
-    // g_approval_line
+    // table g_approval_line
     private int line_detail_idx;
     private int gline_order;
     private int dept_idx_1;
@@ -27,7 +44,7 @@ public class ManageFormDTO {
     private int duty_idx_3;
     private String duty_name_3;
 
-    // department
+    // table department
     private int dept_high;
     private int dept_state;
     private int dept_depth;
@@ -49,8 +66,68 @@ public class ManageFormDTO {
         return form_handler_idx;
     }
 
-    public String getEmpl_name() {
-        return empl_name;
+    public String getForm_handler_name() {
+        return form_handler_name;
+    }
+
+    public int getForm_writer_idx() {
+        return form_writer_idx;
+    }
+
+    public String getForm_writer_name() {
+        return form_writer_name;
+    }
+
+    public int getForm_writer_dept() {
+        return form_writer_dept;
+    }
+
+    public String getForm_writer_dept_name() {
+        return form_writer_dept_name;
+    }
+
+    public int getForm_writer_position() {
+        return form_writer_position;
+    }
+
+    public String getForm_writer_position_name() {
+        return form_writer_position_name;
+    }
+
+    public LocalDateTime getForm_write_date() {
+        return form_write_date;
+    }
+
+    public int getForm_updater_idx() {
+        return form_updater_idx;
+    }
+
+    public String getForm_updater_name() {
+        return form_updater_name;
+    }
+
+    public int getForm_updater_dept() {
+        return form_updater_dept;
+    }
+
+    public String getForm_updater_dept_name() {
+        return form_updater_dept_name;
+    }
+
+    public int getForm_updater_position() {
+        return form_updater_position;
+    }
+
+    public String getForm_updater_position_name() {
+        return form_updater_position_name;
+    }
+
+    public LocalDateTime getForm_updater_date() {
+        return form_updater_date;
+    }
+
+    public int getForm_state() {
+        return form_state;
     }
 
     public int getLine_detail_idx() {
@@ -138,8 +215,68 @@ public class ManageFormDTO {
         this.form_handler_idx = form_handler_idx;
     }
 
-    public void setEmpl_name(String empl_name) {
-        this.empl_name = empl_name;
+    public void setForm_handler_name(String form_handler_name) {
+        this.form_handler_name = form_handler_name;
+    }
+
+    public void setForm_writer_idx(int form_writer_idx) {
+        this.form_writer_idx = form_writer_idx;
+    }
+
+    public void setForm_writer_name(String form_writer_name) {
+        this.form_writer_name = form_writer_name;
+    }
+
+    public void setForm_writer_dept(int form_writer_dept) {
+        this.form_writer_dept = form_writer_dept;
+    }
+
+    public void setForm_writer_dept_name(String form_writer_dept_name) {
+        this.form_writer_dept_name = form_writer_dept_name;
+    }
+
+    public void setForm_writer_position(int form_writer_position) {
+        this.form_writer_position = form_writer_position;
+    }
+
+    public void setForm_writer_position_name(String form_writer_position_name) {
+        this.form_writer_position_name = form_writer_position_name;
+    }
+
+    public void setForm_write_date(LocalDateTime form_write_date) {
+        this.form_write_date = form_write_date;
+    }
+
+    public void setForm_updater_idx(int form_updater_idx) {
+        this.form_updater_idx = form_updater_idx;
+    }
+
+    public void setForm_updater_name(String form_updater_name) {
+        this.form_updater_name = form_updater_name;
+    }
+
+    public void setForm_updater_dept(int form_updater_dept) {
+        this.form_updater_dept = form_updater_dept;
+    }
+
+    public void setForm_updater_dept_name(String form_updater_dept_name) {
+        this.form_updater_dept_name = form_updater_dept_name;
+    }
+
+    public void setForm_updater_position(int form_updater_position) {
+        this.form_updater_position = form_updater_position;
+    }
+
+    public void setForm_updater_position_name(String form_updater_position_name) {
+        this.form_updater_position_name = form_updater_position_name;
+    }
+
+    public void setForm_updater_date(LocalDateTime form_updater_date) {
+        this.form_updater_date = form_updater_date;
+    }
+
+    public void setForm_state(int form_state) {
+        this.form_state = form_state;
     }
 
     public void setLine_detail_idx(int line_detail_idx) {

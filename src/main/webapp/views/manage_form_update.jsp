@@ -52,7 +52,7 @@
                                 </colgroup>
                                 <thead>
                                 <tr>
-                                    <th colspan="2">문서 양식 수정</th>
+                                    <th colspan="2">문서 양식 관리</th>
                                 </tr>
                                 </thead>
 
@@ -67,6 +67,7 @@
                                 <tr>
                                     <th class="td_align_top">문서 양식</th>
                                     <td>
+                                        <p class="min font_subtle">1분마다 자동으로 임시 저장됩니다.</p>
 
                                         <!-- rte -->
                                         <div id="div_editor"></div>
@@ -124,7 +125,7 @@
                                     <button type="button" onclick="tst_modal_call('tst_modal_send')" class="btn_primary btn_full">양식 등록하기</button>
                                 </li>
                                 <li>
-                                    <button type="button" onclick="location.href=''" class="btn_secondary btn_full">임시 저장하기</button>
+                                    <button type="button" onclick="temporary_save()" class="btn_secondary btn_full">임시 저장하기</button>
                                 </li>
                                 <li>
                                     <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_subtle btn_full">작성 취소하기</button>

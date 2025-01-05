@@ -35,25 +35,37 @@
                 </ul>
                 <!-- //제목 -->
 
-                <!-- 양식 이름 검색 -->
-                <form>
-                    <div class="tst_search_container">
-                        <div class="tst_search_select">
-                            <select name="opt">
-                                <option value="0" selected>양식명</option>
-                                <option value="1">양식 내용</option>
-                            </select>
-                        </div>
-                        <div class="tst_search_input">
-                            <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
-                        </div>
-                        <div class="tst_search_icon">
-                            <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-                <!-- //양식 이름 검색 -->
+                <div class="tst_flex align_baseline">
+                    <div class="tst_col8">
 
+                        <!-- 양식 이름 검색 -->
+                        <form>
+                            <div class="tst_search_container">
+                                <div class="tst_search_select">
+                                    <select name="opt">
+                                        <option value="0" selected>양식명</option>
+                                        <option value="1">양식 내용</option>
+                                    </select>
+                                </div>
+                                <div class="tst_search_input">
+                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                </div>
+                                <div class="tst_search_icon">
+                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- //양식 이름 검색 -->
+
+                    </div>
+                    <div class="tst_col4">
+
+                        <!-- 새 양식 등록 -->
+                        <button onclick="location.href='/manage_form_write.do'" class="btn_primary" style="margin: 0 0 0 auto;">새 문서 양식 등록하기</button>
+                        <!-- //새 양식 등록 -->
+
+                    </div>
+                </div>
                 <div class="tst_flex">
 
                     <div class="tst_col8">

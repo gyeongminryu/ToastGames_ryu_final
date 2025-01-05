@@ -283,6 +283,10 @@ a:hover {
     align-items: center;
 }
 
+.tst_flex.align_baseline{
+    align-items: baseline;
+}
+
 .float_right{
     float: right;
 }

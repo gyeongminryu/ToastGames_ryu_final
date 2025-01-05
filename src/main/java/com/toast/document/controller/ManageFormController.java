@@ -73,6 +73,16 @@ public class ManageFormController {
         return manageFormService.detail(form_idxInt);
     }
 
+    // 문서 양식 작성하기
+    @RequestMapping (value = "/manage_form_write.do")
+    public ModelAndView manage_form_write(HttpSession session) {
+        session.setAttribute("loginId", "tndls0110");
+        String writer = session.getAttribute("loginId").toString();
+        int form_idx = manageFormService.write(writer);
+
+        return new ModelAndView("redirect:/manage_form_update.go?form_idx="+form_idx);
+    }
+
     // 문서 양식 수정하기
     @GetMapping (value = "/manage_form_update.go")
     public ModelAndView manage_form_update(HttpSession session) {
