@@ -1,5 +1,6 @@
 package com.toast.approval.controller;
 
+import com.toast.approval.service.ApprovalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,15 @@ import java.util.Map;
 
 @Controller
 public class ApprovalRequestController {
+	int empl_idx = 10024;
+	private final ApprovalService approvalService;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private final ApprovalRequestService approvalRequestService;
 	
-	public ApprovalRequestController(ApprovalRequestService approvalRequestService) {
+	public ApprovalRequestController(ApprovalRequestService approvalRequestService, ApprovalService approvalService) {
 		this.approvalRequestService = approvalRequestService;
+		this.approvalService = approvalService;
 	}
 
 	@GetMapping(value = "/approval_update.go")
@@ -33,8 +37,8 @@ public class ApprovalRequestController {
 	}
 
 
-	//결재 작성하기 페이지로 이동 + 최초 저장
-	@PostMapping(value = "/approval_write.go")
+	//결재 작성하기 페이지로 이동 + 최초 저장 //+ 문서양식만 복사
+	@RequestMapping(value = "/approval_write.go")
 	public String approval_write_go (Model model, String form_idx, String form_content) {
 		logger.info("approvalWrite_go 컨트롤러 도착");
 		logger.info("idx:{}", form_idx);
@@ -48,7 +52,6 @@ public class ApprovalRequestController {
 		int doc_idx = approvalRequestService.doc_write_initial(Integer.parseInt(form_idx),form_content,empl_idx);
 
 
-
 		//model.addAttribute("form_content", form_content);
 		model.addAttribute("doc_idx", doc_idx);
 		model.addAttribute("form_idx", form_idx);
@@ -57,13 +60,28 @@ public class ApprovalRequestController {
 	}
 
 
+	//문서 doc 복사하기
+	@RequestMapping(value="/approval_copy_doc.do")
+	public String approval_copy_doc (int doc_idx,int form_idx,Model model) {
+		//세션 처리
 
+		logger.info("doc_idx:{}",doc_idx);
+		logger.info("form_idx:{}",form_idx);
+
+		model.addAttribute("form_idx", form_idx);
+
+		//approvalService 통해
+		// 1. doc_idx의 내용 뽑아서 가져온후 insert
+		// 2. 얻은 doc_idx 전달
+		int doc_idx_copied = approvalRequestService.copy_doc(doc_idx,form_idx,empl_idx);
+		model.addAttribute("doc_idx",doc_idx_copied);
+		return "approval_writing_write";
+	}
 	//미리보기에서 수정해서 1차 저장한 결재 문서 가져오기
 	@GetMapping (value = "/approval_doc_get.ajax")
 	@ResponseBody
 	public Map<String,Object> doc_get (int doc_idx) {
 		//세션 처리
-		int empl_idx = 10024;
 
 		logger.info("doc_get.ajax 컨트롤러 도착");
 		logger.info("doc_idx: " + doc_idx);
@@ -162,6 +180,7 @@ public class ApprovalRequestController {
 		approvalRequestService.write_delete(doc_idx);
 		return "redirect:/approval_writing_list.go";
 	}
+
 
 
 

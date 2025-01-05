@@ -1,6 +1,5 @@
 package com.toast.approval.service;
 
-import com.toast.approval.dao.ApprovalDAO;
 import com.toast.approval.dto.ApprovalRequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,13 +29,23 @@ public class ApprovalRequestService {
 	public int doc_write_initial(int form_idx, String form_content, int empl_idx) {
 		int doc_idx = 0;
 
-				//방금 저장한 idx 가져오기
+
+		//방금 저장한 idx 가져오기
 		//BoardDTO에 값 저장하기
 		ApprovalRequestDTO app_dto = new ApprovalRequestDTO();
 		app_dto.setForm_idx(form_idx);
 		app_dto.setDoc_content(form_content);
 		app_dto.setDoc_empl_idx(empl_idx);
 
+		boolean success =false;
+		
+		if(form_content.equals("copy")){ //복사한 문서 양식의 경우 - form의 내용만 넣기
+			//먼저 form의 양식으로 doc_content를 가져오기
+			String form_content_copy = approvalRequestDAO.get_form_content(form_idx);
+			app_dto.setDoc_content(form_content_copy);
+		}
+		
+		//만약 true이면
 		if(approvalRequestDAO.doc_write_initial(app_dto)>0){
 			doc_idx = app_dto.getDoc_idx();
 			logger.info("방금 insert한 idx :{}",doc_idx);
@@ -538,5 +547,37 @@ public class ApprovalRequestService {
 	}
 
 
+	public int copy_doc(int doc_idx, int form_idx, int empl_idx) {
+			int doc_idx_copied = 0;
 
+			// 1. doc_idx의 내용 뽑아서 가져온후 insert
+			//doc_내용 등 가져오기
+			Map<String,Object> doc_info = approvalRequestDAO.get_doc_info(doc_idx);
+
+			//결재선 가져오기
+			List<Map<String,Object>> doc_line_infos = approvalRequestDAO.get_doc_line_infos(doc_idx);
+
+			//doc 내용 넣기
+			//DTO
+			ApprovalRequestDTO app_dto = new ApprovalRequestDTO();
+			app_dto.setForm_idx(form_idx);
+			app_dto.setDoc_subject((String) doc_info.get("doc_subject"));
+			app_dto.setDoc_content((String) doc_info.get("doc_content"));
+			app_dto.setDoc_content_sub((String) doc_info.get("doc_content_sub"));
+			app_dto.setDoc_empl_idx(empl_idx);
+
+			if(approvalRequestDAO.copy_doc_info(app_dto)>0){
+				doc_idx_copied = app_dto.getDoc_idx();
+			}
+
+			//결재선 내용 넣기
+		for(Map<String,Object> doc_line_info : doc_line_infos){
+			//여기서부터 작업
+			doc_line_info.put("doc_idx",doc_idx_copied); //doc_idx 새로운 거로 바꾸기 
+			approvalRequestDAO.copy_doc_line_info(doc_line_info);
+		}
+			// 2. 얻은 doc_idx 전달
+
+			return doc_idx_copied;
+	}
 }

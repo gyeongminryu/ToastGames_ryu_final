@@ -10,6 +10,11 @@
     </insert>
 
 
+    <!--form_content 가져오기 - 문서양식 복사-->
+    <select id="get_form_content" resultType="String">
+        SELECT form_content FROM form WHERE form_idx = #{form_idx}
+    </select>
+
     <!--form_idx 기반으로 저장된 g_approval_line 가져오기-->
     <select id="get_g_approval_line" resultType="Map">
         SELECT * FROM g_approval_line WHERE form_idx = #{form_idx};
@@ -264,5 +269,25 @@
 
     <!--모든 회사 사람들 정보 가져오기-->
 
+    <!--get_doc_info-->
+    <select id="get_doc_info" resultType="Map">
+        SELECT * FROM document WHERE doc_idx = #{doc_idx}
+    </select>
 
+    <!--get_doc_line_info-->
+    <select id="get_doc_line_infos" resultType="Map">
+        SELECT * FROM approval_line WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <!--copy_doc_info-->
+    <insert id="copy_doc_info" useGeneratedKeys="true" keyColumn="doc_idx" keyProperty="doc_idx" parameterType="com.toast.approval.dto.ApprovalRequestDTO">
+        INSERT INTO document(doc_empl_idx,doc_subject,doc_content,doc_content_sub,form_idx,doc_state)
+        VALUES(#{doc_empl_idx},#{doc_subject},#{doc_content},#{doc_content_sub},#{form_idx},0)
+    </insert>
+
+    <insert id="copy_doc_line_info">
+        INSERT INTO approval_line (doc_idx,line_order,dept_idx,duty_idx,empl_idx, position_idx)
+            VALUES (#{doc_idx},#{line_order},#{dept_idx},#{duty_idx},#{empl_idx}, #{position_idx})
+    </insert>
+    
 </mapper>

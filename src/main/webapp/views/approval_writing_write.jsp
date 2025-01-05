@@ -194,24 +194,13 @@
                                     <th colspan="2">첨부 파일</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
-                                    <td>
-                                        <!-- 삭제 경로/함수를 입력하세요 --><button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td_align_left">{첨부 파일명 (용량kb)}</td>
-                                    <td>
-                                        <!-- 삭제 경로/함수를 입력하세요 --><button type="button" onclick="location.href='/'" class="btn_primary btn_min">삭제하기</button>
-                                    </td>
-                                </tr>
+                                <tbody id = "file_preview">
+
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="2">
-                                            <input type="file" name="attached_file" multiple="multiple" />
+                                            <input type="file" name="attached_file" multiple="multiple" onchange="approval_read_file(this)"/>
                                         </td>
                                     </tr>
 
@@ -241,6 +230,8 @@
 <script src="/resources/js/approval_request.js"></script>
 
 <script src="/resources/js/approval_request_write.js"></script>
+
+<script src="/resources/js/approval_file.js"></script>
 
 <script>
     //모델앤뷰로 받은 파라메터
