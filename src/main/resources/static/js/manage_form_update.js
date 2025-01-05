@@ -143,3 +143,8 @@ function syncTitleToForm() {
     document.getElementsByName('subject')[0].value = document.getElementById('form_title').innerHTML;
     setHtmlCode();
 }
+
+// 이전 화면으로 돌아가기
+document.getElementsByClassName('form_return')[0].addEventListener('click', () => {
+    location.href = '/manage_form_detail.go?form_idx=' + form_idx;
+});

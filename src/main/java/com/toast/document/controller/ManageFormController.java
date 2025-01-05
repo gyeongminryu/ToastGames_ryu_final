@@ -126,4 +126,11 @@ public class ManageFormController {
 
         return new ModelAndView("manage_form_wip_list");
     }
+
+    // 작성중인 문서 양식 수정
+    @GetMapping (value = "/manage_form_wip_update.go")
+    public ModelAndView manage_form_wip_update(HttpSession session) {
+
+        return new ModelAndView("manage_form_wip_update");
+    }
 }

@@ -100,7 +100,12 @@ document.getElementsByClassName('form_update')[0].addEventListener('click', () =
 
 // 양식 작성하기
 document.getElementsByClassName('form_write')[0].addEventListener('click', () => {
-    location.href = '/manage_form_write.do?form_idx=' + form_idx;
+    location.href = '/manage_form_write.do?orig_form_idx=' + form_idx;
+});
+
+// 이전 화면으로 돌아가기
+document.getElementsByClassName('form_return')[0].addEventListener('click', () => {
+    location.href = '/manage_form_list.go';
 });
 
 // 양식 삭제하기

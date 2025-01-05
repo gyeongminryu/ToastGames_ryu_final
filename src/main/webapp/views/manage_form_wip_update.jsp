@@ -28,13 +28,13 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_list.go'">
+                    <li class="tst_title_item" onclick="location.href='/manage_form_list.go'">
                         <h1>문서 양식 관리</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/manage_form_disuse_list.go'">
                         <h1>사용하지 않는 문서 양식 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_form_wip_list.go'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_form_wip_list.go'">
                         <h1>작성중인 문서 양식</h1>
                     </li>
                 </ul>
@@ -129,7 +129,7 @@
                                     <button type="button" onclick="temporary_save()" class="btn_secondary btn_full">저장하기</button>
                                 </li>
                                 <li>
-                                    <button type="button" class="form_return btn_subtle btn_full">이전 화면으로 돌아가기</button>
+                                    <button type="button" onclick="location.href='/manage_form_wip_list.go'" class="btn_subtle btn_full">목록으로 돌아가기</button>
                                 </li>
                                 <li>
                                     <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_text btn_full">작성 취소하기</button>

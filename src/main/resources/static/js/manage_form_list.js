@@ -93,7 +93,7 @@ function listPrint(list, totalIdx, currentPage) {
             tags += '<span onClick="previewPrint(' + list[i].form_idx + ')" class="tst_badge_min btn_primary margin_right tst_pointer">미리보기</span>';
 
             if (sort === 'wip') {
-                tags += '<span onClick="location.href=\'/manage_form_update.go?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
+                tags += '<span onClick="location.href=\'/manage_form_wip_update.go?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
             } else {
                 tags += '<span onClick="location.href=\'/manage_form_detail.go?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
             }
@@ -184,7 +184,7 @@ function printTags(idx, content) {
             tags += '<button onclick="location.href=\'/manage_form_restore.do?form_idx=\''+ idx +'" class="btn_secondary">문서 양식 복구하기</button>';
             break;
         case "wip":
-            tags += '<button onclick="location.href=\'/manage_form_update.go?form_idx=\''+ idx +'" class="btn_secondary">이어서 작성하기</button>';
+            tags += '<button onclick="location.href=\'/manage_form_wip_update.go?form_idx=\''+ idx +'" class="btn_secondary">이어서 작성하기</button>';
             break;
     }
     //console.log(tags);
