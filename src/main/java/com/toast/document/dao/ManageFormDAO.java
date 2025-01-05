@@ -23,4 +23,6 @@ public interface ManageFormDAO {
     int getPositIdx(int empl_idx);
     int write(ManageFormDTO dto);
 
+    // 문서 양식 수정
+    int update(ManageFormDTO dto);
 }

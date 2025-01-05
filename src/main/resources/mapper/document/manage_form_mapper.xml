@@ -3,7 +3,7 @@
 
 <mapper namespace="com.toast.document.dao.ManageFormDAO">
 
-    <!-- 게시글 목록 -->
+    <!-- 문서 양식 목록 -->
     <select id="allCount" resultType="int">
         SELECT CEIL(COUNT(form_idx) / #{param1}) FROM form
         <where>
@@ -56,6 +56,7 @@
         SELECT form_content FROM form WHERE form_idx = #{param1}
     </select>
 
+    <!-- 문서 양식 상세보기 -->
     <select id="detail" resultType="com.toast.document.dto.ManageFormDTO">
         SELECT f.form_idx, f.form_subject, f.form_content, f.form_handler_idx,
         (SELECT e.empl_name FROM employee e WHERE e.empl_idx = f.form_handler_idx) as 'empl_name',
@@ -73,7 +74,8 @@
         (SELECT (SELECT u.duty_name FROM duty u WHERE u.duty_idx = l.duty_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 3) as 'duty_name_3'
         FROM form f WHERE f.form_idx = #{param1}
     </select>
-    
+
+    <!-- 문서 양식 작성 -->
     <select id="getIdx" resultType="int">
         SELECT empl_idx FROM employee WHERE empl_id = #{param1}
     </select>
@@ -89,5 +91,12 @@
     <insert id="write" parameterType="com.toast.document.dto.ManageFormDTO" useGeneratedKeys="true" keyColumn="form_idx" keyProperty="form_idx">
         INSERT INTO form (form_writer_idx, form_writer_dept, form_writer_position) VALUES (#{form_writer_idx}, #{form_writer_dept}, #{form_writer_position})
     </insert>
+
+    <!-- 문서 양식 수정 -->
+    <update id="update" parameterType="com.toast.document.dto.ManageFormDTO">
+        UPDATE form SET form_subject = #{form_subject}, form_content = #{form_content}, form_updater_idx = #{form_updater_idx},
+                        form_updater_dept = #{form_updater_dept}, form_updater_position = #{form_updater_position}, form_update_date = current_timestamp
+        WHERE form_idx = #{form_idx}
+    </update>
 
 </mapper>

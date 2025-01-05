@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -76,11 +77,19 @@ public class ManageFormController {
     // 문서 양식 작성하기
     @RequestMapping (value = "/manage_form_write.do")
     public ModelAndView manage_form_write(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+
         session.setAttribute("loginId", "tndls0110");
         String writer = session.getAttribute("loginId").toString();
         int form_idx = manageFormService.write(writer);
 
-        return new ModelAndView("redirect:/manage_form_update.go?form_idx="+form_idx);
+        if (form_idx < 0) {
+            mav.setViewName("redirect:/manage_form_list.go");
+        } else {
+            mav.setViewName("redirect:/manage_form_update.go?form_idx="+form_idx);
+        }
+
+        return mav;
     }
 
     // 문서 양식 수정하기
@@ -88,5 +97,19 @@ public class ManageFormController {
     public ModelAndView manage_form_update(HttpSession session) {
 
         return new ModelAndView("manage_form_update");
+    }
+
+    @PostMapping(value = "/manage_form_update.ajax")
+    public Map<String, Object> manage_form_detail(HttpSession session, String form_idx, String form_subject, String form_content) {
+        Map<String,Object> mav = new HashMap<String, Object>();
+
+        session.setAttribute("loginId", "tndls0110");
+        String updater = session.getAttribute("loginId").toString();
+        int form_idxInt = Integer.parseInt(form_idx);
+        logger.info("form_idxInt = "+form_idxInt);
+
+        mav.put("success", manageFormService.update(updater, form_idxInt, form_subject, form_content));
+
+        return mav;
     }
 }

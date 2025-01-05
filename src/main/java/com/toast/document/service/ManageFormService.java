@@ -47,6 +47,7 @@ public class ManageFormService {
     public int write(String writer) {
         int form_idx = 0;
         int empl_idx = manageFormDAO.getIdx(writer);
+
         ManageFormDTO dto = new ManageFormDTO();
         dto.setForm_writer_idx(empl_idx);
         dto.setForm_writer_dept(manageFormDAO.getDeptIdx(empl_idx));
@@ -57,9 +58,29 @@ public class ManageFormService {
         } else {
             form_idx = -1;
         }
-        logger.info("The form idx is " + form_idx + ".");
+        //logger.info("The form idx is " + form_idx + ".");
 
         return form_idx;
+    }
+
+    // 문서 양식 수정하기
+    public boolean update(String updater, int form_idx, String form_subject, String form_content) {
+        boolean success = false;
+        int empl_idx = manageFormDAO.getIdx(updater);
+
+        ManageFormDTO dto = new ManageFormDTO();
+        dto.setForm_idx(form_idx);
+        dto.setForm_subject(form_subject);
+        dto.setForm_content(form_content);
+        dto.setForm_updater_idx(empl_idx);
+        dto.setForm_updater_dept(manageFormDAO.getDeptIdx(empl_idx));
+        dto.setForm_updater_position(manageFormDAO.getPositIdx(empl_idx));
+
+        if (manageFormDAO.update(dto) > 0) {
+            success = true;
+        }
+
+        return success;
     }
 
     // 문서 양식 상세보기

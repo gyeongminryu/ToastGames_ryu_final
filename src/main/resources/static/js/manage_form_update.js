@@ -89,7 +89,7 @@ function temporary_save() {
     if (subject != null || subject != '' || subject != 'null') {
         $.ajax({
             type: 'post',
-            url: 'manage_form_save.ajax',
+            url: 'manage_form_update.ajax',
             data: {
                 'form_idx': form_idx,
                 'form_subject': subject,
@@ -97,7 +97,7 @@ function temporary_save() {
             },
             dataType: 'json',
             success: function(data) {
-                console.log('success');
+                console.log(data.success);
             },
             error: function(e) {
                 //console.log(e);
