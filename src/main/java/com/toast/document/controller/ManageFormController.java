@@ -59,7 +59,7 @@ public class ManageFormController {
     }
 
     // 문서 양식 상세보기
-    @RequestMapping (value = "/manage_form_detail.go")
+    @GetMapping (value = "/manage_form_detail.go")
     public ModelAndView manage_form_detail(HttpSession session) {
 
         return new ModelAndView("manage_form_detail");
@@ -71,5 +71,12 @@ public class ManageFormController {
         int form_idxInt = Integer.parseInt(form_idx);
 
         return manageFormService.detail(form_idxInt);
+    }
+
+    // 문서 양식 수정하기
+    @GetMapping (value = "/manage_form_update.go")
+    public ModelAndView manage_form_update(HttpSession session) {
+
+        return new ModelAndView("manage_form_update");
     }
 }

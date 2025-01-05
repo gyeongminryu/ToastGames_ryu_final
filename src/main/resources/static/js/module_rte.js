@@ -3,8 +3,7 @@ var configView = {
     toolbar: "viewDocument",
     readOnly: true,
     editorResizeMode: "none",
-    showPlusButton: false,
-    showStatistics: false
+    showPlusButton: false
 };
 
 // set > update documents
@@ -16,6 +15,7 @@ var configDocument = {
 var configNone = {
     toolbar: "none",
     showPlusButton: false,
+    showStatistics: true,
     maxTextLength: 1000,
     editorResizeMode: "none"
 };

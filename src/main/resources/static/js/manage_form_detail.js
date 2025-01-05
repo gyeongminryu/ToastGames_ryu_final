@@ -95,7 +95,7 @@ function printInfo(info) {
 
 // 양식 수정하기
 document.getElementsByClassName('form_update')[0].addEventListener('click', () => {
-    location.href = '/manage_form_update.do?form_idx=' + form_idx;
+    location.href = '/manage_form_update.go?form_idx=' + form_idx;
 });
 
 // 양식 작성하기
