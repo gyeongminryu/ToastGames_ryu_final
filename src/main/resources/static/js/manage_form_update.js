@@ -5,7 +5,7 @@ var form_idx = searchParams.get('form_idx');
 // 에디터 설정하기
 var editor = new RichTextEditor("#div_editor", configDocument);
 
-// 양식 미리보기
+// 양식 불러오기
 previewPrint(form_idx);
 
 function previewPrint(form_idx) {
@@ -95,7 +95,7 @@ function printInfo(info) {
 }
 
 // 임시 저장
-function temporary_save() {
+function saveForm() {
     const subject = document.getElementsByName('subject')[0].value;
     const content = editor.getHTMLCode();
     //console.log('input value: ' + subject + '/' + content);
@@ -111,7 +111,8 @@ function temporary_save() {
             },
             dataType: 'json',
             success: function(data) {
-                console.log(data.success);
+                //console.log(data.success);
+                saveMsg();
             },
             error: function(e) {
                 //console.log(e);
@@ -120,13 +121,27 @@ function temporary_save() {
     }
 }
 
+//const saveInterval = setInterval(saveForm(),120000);
+
+// 문서 양식을 저장할 시 메시지 출력
+function saveMsg() {
+    document.getElementsByClassName('msg')[0].innerHTML = '<span class="font_caution">문서 양식을 저장했습니다.</span>';
+    setTimeout(function() {
+        document.getElementsByClassName('msg')[0].innerHTML = '2분마다 자동으로 저장됩니다.';
+    }, 5000);
+}
+
 // 에디터를 수정하면 카피 div에 html 코드를 저장
 editor.attachEvent("change", function () {
     //console.log(editor.getHTMLCode());
     document.getElementById('div_editor_copy').innerHTML = editor.getHTMLCode();
 });
 
+// 카피 div의 코드를 에디터에 덮어 씌우기
 function setHtmlCode() {
+    document.querySelectorAll('#div_editor_copy td:empty').forEach(function(td) {
+        td.innerHTML = '<br />';
+    });
     let html = document.getElementById('div_editor_copy').innerHTML;
     editor.setHTMLCode(html);
 }
@@ -137,7 +152,7 @@ function syncTitleToEditor(elem) {
     setHtmlCode();
 }
 
-// 문서를 수정하면 제목에 반영
+// 문서를 수정하면 제목에 반영 - 사용 안 함
 //console.log(editor.document.getElementById('form_title').innerHTML);
 function syncTitleToForm() {
     document.getElementsByName('subject')[0].value = document.getElementById('form_title').innerHTML;

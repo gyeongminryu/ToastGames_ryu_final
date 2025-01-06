@@ -136,9 +136,10 @@ public class ManageFormController {
 
     // 결재선 설정하기
     @PostMapping (value = "/manage_form_call_dept.ajax")
-    public Map<String, Object> manage_form_call_dept() {
-        Map<String, Object> result = new HashMap<String, Object>();
+    public Map<String, Object> manage_form_call_dept(String dept_high) {
+        logger.info("Is this controller work?");
+        int dept_highInt = Integer.parseInt(dept_high);
 
-        return result;
+        return manageFormService.callDept(dept_highInt);
     }
 }

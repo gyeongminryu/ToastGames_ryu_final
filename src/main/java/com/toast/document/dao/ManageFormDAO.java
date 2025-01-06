@@ -9,8 +9,8 @@ import java.util.List;
 public interface ManageFormDAO {
 
     // 문서 양식 목록
-    int allCount(int cnt, String opt, String keyword);
-    int countIdx(String opt, String keyword);
+    int allCount(int cnt, String opt, String keyword, String sort);
+    int countIdx(String opt, String keyword, String sort);
     List<ManageFormDTO> list(int limit, int offset, String opt, String keyword, String sort);
     String preview(int form_idx);
 
@@ -22,7 +22,13 @@ public interface ManageFormDAO {
     int getDeptIdx(int empl_idx);
     int getPositIdx(int empl_idx);
     int write(ManageFormDTO dto);
+    int setLine1(int form_idx);
+    int setLine2(int form_idx);
+    int setLine3(int form_idx);
 
     // 문서 양식 수정하기
     int update(ManageFormDTO dto);
+
+    // 결재선 설정하기
+    List<ManageFormDTO> callDept(int dept_high);
 }

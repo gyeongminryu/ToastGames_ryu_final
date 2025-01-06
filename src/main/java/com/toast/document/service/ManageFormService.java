@@ -23,8 +23,8 @@ public class ManageFormService {
     public Map<String, Object> list(int page, int cnt, String opt, String keyword, String sort) {
         int limit = cnt;
         int offset = (page - 1) * cnt;
-        int totalPages = manageFormDAO.allCount(cnt, opt, keyword);
-        int totalIdx = manageFormDAO.countIdx(opt, keyword);
+        int totalPages = manageFormDAO.allCount(cnt, opt, keyword, sort);
+        int totalIdx = manageFormDAO.countIdx(opt, keyword, sort);
 
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("totalPages", totalPages);
@@ -69,6 +69,10 @@ public class ManageFormService {
         }
         //logger.info("The form idx is " + form_idx + ".");
 
+        manageFormDAO.setLine1(form_idx);
+        manageFormDAO.setLine2(form_idx);
+        manageFormDAO.setLine3(form_idx);
+
         return form_idx;
     }
 
@@ -90,5 +94,13 @@ public class ManageFormService {
         }
 
         return success;
+    }
+
+    // 결재선 설정하기
+    public Map<String, Object> callDept(int dept_high) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("info", manageFormDAO.callDept(dept_high));
+
+        return result;
     }
 }

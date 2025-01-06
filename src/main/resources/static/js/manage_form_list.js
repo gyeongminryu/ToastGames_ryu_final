@@ -172,7 +172,7 @@ function printTags(idx, content) {
     console.log(editor.document.firstChild.childNodes[1]);
     editor.document.firstChild.childNodes[1].style.width = '200%';
     editor.document.firstChild.childNodes[1].style.height = '50%';
-    editor.document.firstChild.childNodes[1].style.margin = '-10% 0 0 -50%';
+    editor.document.firstChild.childNodes[1].style.margin = '0 0 0 -50%';
     editor.document.firstChild.childNodes[1].style.transform = 'scale(0.5)';
 
     let tags = '';
