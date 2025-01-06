@@ -245,6 +245,7 @@ public class ResourceManageService {
 	public int prodWrite(List<MultipartFile> attachedFiles, Map<String, Object> param) {
 		ResourceManageDTO dto = new ResourceManageDTO();
 		dto.setProd_name((String) param.get("subject"));
+		dto.setProd_empl_idx((int) param.get("empl_idx"));
 		dto.setProd_model((String) param.get("information"));
 		dto.setProd_cate_idx(Integer.parseInt((String) param.get("category")));
 		dto.setProd_info((String) param.get("content"));

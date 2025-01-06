@@ -314,12 +314,194 @@
 		UPDATE product SET prod_rent=#{prod_rent} WHERE prod_idx=#{prod_idx}
 	</update>
 
+	<!-- 내 대여기록 가져오기 -->
+	<select id="myRentList" resultType="com.toast.rent.dto.ResourceDTO">
+		SELECT 
+			prod_rent_idx,
+			prod_idx,
+			prod_rent_reason,
+			prod_rent_date,
+			prod_exp_date,
+			prod_return_date,
+			prod_return_state
+		FROM
+			product_rent
+		WHERE 
+			prod_rent_empl_idx=#{param1}
+	</select>
+
+	<!-- 내 대여 총 페이지 -->
+	<select id="myAllCount">
+		SELECT CEIL(COUNT(pd.prod_idx)/#{param1}) AS pages 
+		FROM 
+			product_rent pr
+		JOIN 
+			product pd ON pr.prod_idx=pd.prod_idx
+		WHERE  
+    		pr.prod_rent_empl_idx=#{param2}
+	</select>
 
 
-
-
-
-
-
+	<!-- 내 대여 총 리스트 -->
+	<select id="myProdList">
+		SELECT 
+			pd.prod_idx,
+			pd.prod_name, 
+			pd.prod_cate_idx, 
+			pd.prod_model,
+			pd.prod_info,
+			pd.prod_rent, 
+			pd.prod_empl_idx, 
+			pd.prod_dispo_date, 
+			pd.prod_state,
+			pc.prod_cate_name,
+			pr.prod_rent_idx,
+			pr.prod_rent_reason,
+			pr.prod_rent_date,
+			pr.prod_exp_date,
+			pr.prod_return_date
+		FROM 
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		JOIN 
+			product_rent pr ON pr.prod_idx=pd.prod_idx
+    	WHERE
+    		pr.prod_rent_empl_idx=#{param1}
+		ORDER BY prod_idx DESC 
+			LIMIT #{param2} OFFSET #{param3}	
+	</select>
+	
+	<!-- 내 반납 총 페이지 -->
+	<select id="myReturnListCount">
+		SELECT CEIL(COUNT(pd.prod_idx)/#{cnt}) AS pages 
+		FROM 
+			product_rent pr
+		JOIN 
+			product pd ON pr.prod_idx=pd.prod_idx
+		WHERE  
+    		pr.prod_rent_empl_idx=#{empl_idx} AND pr.prod_return_state=#{state}
+	</select>
+	
+	
+	<!-- 내 반납 총 리스트 -->
+	<select id="myReturnList">
+		SELECT 
+			pd.prod_idx,
+			pd.prod_name, 
+			pd.prod_cate_idx, 
+			pd.prod_model,
+			pd.prod_info,
+			pd.prod_rent, 
+			pd.prod_empl_idx, 
+			pd.prod_dispo_date, 
+			pd.prod_state,
+			pc.prod_cate_name,
+			pr.prod_rent_idx,
+			pr.prod_rent_reason,
+			pr.prod_rent_date,
+			pr.prod_exp_date,
+			pr.prod_return_date
+		FROM 
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		JOIN 
+			product_rent pr ON pr.prod_idx=pd.prod_idx
+    	WHERE
+    		pr.prod_rent_empl_idx=#{empl_idx} AND pr.prod_return_state=#{state}
+		ORDER BY prod_idx DESC 
+			LIMIT #{limit} OFFSET #{offset}	
+	</select>
+	
+	
+	<!-- 내 대여 선택 페이지 -->
+	<select id="myRentListCount">
+		SELECT CEIL(COUNT(pd.prod_idx)/#{cnt}) AS pages 
+		FROM 
+			product_rent pr
+		JOIN 
+			product pd ON pr.prod_idx=pd.prod_idx
+		WHERE  
+    		pr.prod_rent_empl_idx=#{empl_idx} AND pr.prod_rent=#{state}
+	</select>
+	
+	
+	<!-- 내 대여 선택 리스트 -->
+	<select id="myRentFileterList">
+		SELECT 
+			pd.prod_idx,
+			pd.prod_name, 
+			pd.prod_cate_idx, 
+			pd.prod_model,
+			pd.prod_info,
+			pd.prod_rent, 
+			pd.prod_empl_idx, 
+			pd.prod_dispo_date, 
+			pd.prod_state,
+			pc.prod_cate_name,
+			pr.prod_rent_idx,
+			pr.prod_rent_reason,
+			pr.prod_rent_date,
+			pr.prod_exp_date,
+			pr.prod_return_date
+		FROM 
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		JOIN 
+			product_rent pr ON pr.prod_idx=pd.prod_idx
+    	WHERE
+    		pr.prod_rent_empl_idx=#{empl_idx} AND pr.prod_rent=#{state}
+		ORDER BY prod_idx DESC 
+			LIMIT #{limit} OFFSET #{offset}	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </mapper>

@@ -50,18 +50,23 @@
                                 <th colspan="2" class="td_bg_caution td_align_center">반납 예정 기한이 지났습니다. 조속히 반납하시기 바랍니다.</th>
                             </tr>
                             <!-- //연체했을 경우 -->
-
+                            <tr>
+                                <th>제품번호</th>
+                                <th id="prod_idx">${detail.prod_idx}</th>
+                            </tr>
                             <tr>
                                 <th>제품명</th>
-                                <th>{제품명}</th>
+                                 <th id="prod_name">${detail.prod_name}</th>
                             </tr>
                             <tr>
                                 <th>제품 정보</th>
-                                <td>{제품 정보}</td>
+                                <td id="prod_model">${detail.prod_model}</td>
                             </tr>
                             <tr>
                                 <th>제품 설명</th>
-                                <td>{제품 설명}</td>
+                                <td id="prod_info">
+                                	${detail.prod_info}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -82,12 +87,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>{파일명 (파일 용량kb)}</td>
-                                <td>
-                                    <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_min btn_primary">다운로드</button>
-                                </td>
-                            </tr>
+						        <c:forEach var="file" items="${files}">
+						            <tr>
+						                <td>
+						                    ${file.ori_filename} (${file.file_size / 1024} KB)
+						                </td>
+						                <td>
+						                    <button onclick="location.href='download.do?new_filename=${file.new_filename}&ori_filename=${file.ori_filename}'" 
+						                            class="btn_min btn_primary">다운로드</button>
+						                </td>
+						            </tr>
+						        </c:forEach>
                             </tbody>
                         </table>
                         <!-- //첨부 파일 목록 -->

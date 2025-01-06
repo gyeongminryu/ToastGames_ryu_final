@@ -64,7 +64,7 @@ public class ResourceController {
 	}
 	
 	//내가 대여한 물품 페이지 이동
-	//@RequestMapping(value="/rent_mylist.do")
+	//@RequestMapping(value="/rent_mylist.go")
 	
 	
 	//물품 목록 보기(대여 가능 여부 및 반납일시 포함)
@@ -169,15 +169,47 @@ public class ResourceController {
 	}
 
 	
+	
+	@GetMapping(value="/rent_mylist.go")
+	public String myList() {
+		return "rent_mylist";
+	}
+	
+	
+	
 	//내가 대여한 물품(목록 보기 물품 상태 포함)
+	@GetMapping(value="/myProductList.ajax")
+	@ResponseBody
+	public Map<String, Object> myResearchList(			
+			@RequestParam("page") String page, 
+	        @RequestParam("cnt") String cnt, 
+	        @RequestParam("rent_state") String rent_state) {
+		
+		int page_ = Integer.parseInt(page);
+		int cnt_ = Integer.parseInt(cnt);
+		int rent_state_ = Integer.parseInt(rent_state);
+		int empl_idx = (int) session.getAttribute("empl_idx");
+	    // 카테고리에 따른 처리
+	    if ("5".equals(rent_state)) {// 전체 보기
+	        return resourceService.myResourceList(page_, cnt_, empl_idx); 
+	    } else if(rent_state_ > 10){ //반납여부
+	        return resourceService.myResourceReturnList(rent_state_, page_, cnt_, empl_idx); // 특정 카테고리
+	    } else { //대여 상태
+	    	return resourceService.myResourceFilterList(rent_state_, page_, cnt_, empl_idx); // 특정 카테고리
+	    }
+	    
+	}
 	
-	//내가 대여한 물품 종류별 보기
-	
+
 	//내가 대여한 물품 상세보기(반납장소 포함)
+	@GetMapping(value = "/myProdDetail.go")
+	@ResponseBody
+	public ResourceDTO myRentDetail(@RequestParam("prod_idx") int prod_idx) {
+	    return resourceService.prodRentDetail(prod_idx);
+	}
 	
-	//대여 승인 시 반납일정 일정 표시
 	
-	//사용연한 지나면 물품 상태 0으로 업뎃
+	
 	
 	
 	

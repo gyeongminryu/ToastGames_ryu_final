@@ -38,19 +38,19 @@
                             <tbody class="tst_pointer">
 
                             <!-- 전체 제품 조회 (필터링 초기화) -->
-                            <tr><th><span onclick="location.href='/rent_mylist.go'">전체 물품</span></th></tr>
+                            <tr><th><span onclick="my_page_call(1, 5)">전체 물품</span></th></tr>
                             <!-- //전체 제품 조회 (필터링 초기화) -->
 
                             <!-- 분류 목록 (필터링) -->
-                            <tr><td><span onclick="location.href='/rent_mylist.go'">대여 신청한 물품 목록</span></td></tr>
+                            <tr><td><span onclick="my_page_call(1, 2)">대여 신청한 물품 목록</span></td></tr>
                             <!-- //분류 목록 (필터링) -->
 
                             <!-- 분류 목록 > 선택한 항목 (필터링) -->
-                            <tr><td class="td_bg_medium"><span onclick="location.href='/rent_mylist'">대여중인 물품 목록</span></td></tr>
+                            <tr><td class="td_bg_medium"><span onclick="my_page_call(1, 3)">대여중인 물품 목록</span></td></tr>
                             <!-- //분류 목록 > 선택한 항목 (필터링) -->
 
-                            <tr><td><span onclick="location.href='/rent_mylist'">반납한 물품 목록</span></td></tr>
-                            <tr><td><span onclick="location.href='/rent_mylist'">반납 기한이 지난 물품 목록</span></td></tr>
+                            <tr><td><span onclick="my_page_call(1, 11)">반납한 물품 목록</span></td></tr>
+                            <tr><td><span onclick="my_page_call(1, 30)">반납 기한이 지난 물품 목록</span></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -95,112 +95,9 @@
                                 <th>반납 예정 일시</th>
                             </tr>
                             </thead>
-                            <tbody>
-
-                            <!-- 검색되는 공유 물품이 없을 경우 -->
-                            <tr class="rent_list_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="6" class="td_no_data">
-                                    <p><i class="bi bi-box-seam"></i></p>
-                                    <h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>
-                                </td>
-                            </tr>
-                            <!-- //검색되는 공유 물품이 없을 경우 -->
-
-                            <!-- 공유 물품 목록 > 대여 신청한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><span class="tst_pointer">{분류}</span></td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">{제품명}</h3>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">{제품_정보}</span>
-                                </td>
-                                <td><span class="tst_badge_min btn_primary">대여 신청</span></td>
-                                <td>없음</td>
-                            </tr>
-                            <!-- //공유 물품 목록 > 대여 신청한 물품 -->
-
-                            <!-- 공유 물품 목록 > 대여중인 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><span class="tst_pointer">{분류}</span>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">{제품명}</h3>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">{제품_정보}</span>
-                                </td>
-                                <td><span class="tst_badge_min btn_secondary">대여중</span></td>
-                                <td>{반납 예정 일시}</td>
-                            </tr>
-                            <!-- //공유 물품 목록 > 대여중인 물품 -->
-
-                            <!-- 공유 물품 목록 > 연체중인 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><span class="tst_pointer">{분류}</span></td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">{제품명}</h3>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">{제품_정보}</span>
-                                </td>
-                                <td><span class="tst_badge_min btn_caution">연체</span></td>
-                                <td><h3 class="font_caution">{반납 예정 일시}</h3></td>
-                            </tr>
-                            <!-- //공유 물품 목록 > 연체중인 물품 -->
-
-                            <!-- 공유 물품 목록 > 반납한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><span class="tst_pointer">{분류}</span></td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">{제품명}</h3>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">{제품_정보}</span>
-                                </td>
-                                <td><span class="tst_badge_min btn_subtle">반납 완료</span></td>
-                                <td>{반납 예정 일시}</td>
-                            </tr>
-                            <!-- //공유 물품 목록 > 대여 가능한 물품 -->
-
-                            <!-- 예시 -->
-                            <tr>
-                                <td>1278</td>
-                                <td><span class="tst_pointer">윈도 노트북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">갤럭시북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">갤럭시 북 5 Pro 360 (40.6cm) Core Ultra 7 / iTB NVMe SSD</span></td>
-                                <td><span class="tst_badge_min btn_primary">대여 신청</span></td>
-                                <td>없음</td>
-                            </tr>
-                            <tr>
-                                <td>1277</td>
-                                <td><span class="tst_pointer">맥북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
-                                <td><span class="tst_badge_min btn_secondary">대여중</span></td>
-                                <td>2025-01-23 18:00</td>
-                            </tr>
-                            <tr>
-                                <td>1277</td>
-                                <td><span class="tst_pointer">맥북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
-                                <td><span class="tst_badge_min btn_caution">연체</span></td>
-                                <td><h3 class="font_caution">2025-01-23 18:00</h3></td>
-                            </tr>
-                            <tr>
-                                <td>1277</td>
-                                <td><span class="tst_pointer">맥북</span></td>
-                                <td class="td_align_left"><h3 onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/rent_mylist_detail?'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
-                                <td><span class="tst_badge_min btn_subtle">반납 완료</span></td>
-                                <td>2025-01-23 18:00</td>
-                            </tr>
-                            <!-- //예시 -->
+                            <tbody id="my_resource_list">
+                            
+                            </tbody>
 
                             <!-- pagination -->
                             <tfoot>

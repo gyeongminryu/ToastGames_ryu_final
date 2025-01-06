@@ -275,8 +275,8 @@
 		keyColumn="prod_idx"
 		keyProperty="prod_idx"
 		parameterType="com.toast.rent.dto.ResourceManageDTO">
-		INSERT INTO product(prod_name, prod_model, prod_cate_idx, prod_info,prod_dispo_date, prod_rent, prod_state,prod_place,prod_purch_date)
-			VALUES(#{prod_name},#{prod_model}, #{prod_cate_idx}, #{prod_info},#{prod_dispo_date}, #{prod_rent}, #{prod_state},#{prod_place},#{prod_purch_date})
+		INSERT INTO product(prod_name, prod_model, prod_cate_idx, prod_info,prod_dispo_date, prod_rent, prod_state,prod_place,prod_purch_date, prod_empl_idx)
+			VALUES(#{prod_name},#{prod_model}, #{prod_cate_idx}, #{prod_info},#{prod_dispo_date}, #{prod_rent}, #{prod_state},#{prod_place},#{prod_purch_date},#{prod_empl_idx})
 	</insert>
 
     <!-- 물품 사진 등록 -->

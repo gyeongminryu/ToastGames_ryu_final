@@ -177,7 +177,7 @@ public class ResourceManageController {
 	        logger.info("category: " + category);
 	        logger.info("due_date: " + dueDate);
 
-	        
+	        empl_idx = (int) session.getAttribute("empl_idx");
 	        Map<String, Object> map = new HashMap<String, Object>();
 	        
 	        map.put("subject", subject);
@@ -186,7 +186,7 @@ public class ResourceManageController {
 	        map.put("category", category);
 	        map.put("due_date", dueDate);
 	        map.put("place", place);
-	        
+	        map.put("empl_idx", empl_idx);
 	        
 
 	        if (attachedFiles != null && !attachedFiles.isEmpty()) {
@@ -387,6 +387,12 @@ public class ResourceManageController {
 	
 	
 	//사용연한다되면물품 상태 0으로 업뎃
+	
+		
+	
+	
+	//대여 승인 시 반납일정 일정 표시
+	
 	
 	
 	//물품 인계 승인
