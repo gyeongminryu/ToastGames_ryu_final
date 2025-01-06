@@ -61,4 +61,8 @@ public interface ApprovalDAO {
 
 
     int update_read_time(String read_time, int doc_idx, int empl_idx);
+
+    String get_doc_file_key(int doc_idx);
+
+    List<Map<String, Object>> get_file_info(String file_key);
 }

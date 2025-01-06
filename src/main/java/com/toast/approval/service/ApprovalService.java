@@ -2,11 +2,18 @@ package com.toast.approval.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.toast.approval.dao.ApprovalDAO;
 import org.springframework.ui.Model;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -376,6 +383,10 @@ public class ApprovalService {
 		model.addAttribute("form_info",form_info);
 
 		//파일 정보
+		//1.먼저 doc_idx에 해당하는 file_key 가져오기
+		String file_key = approvalDAO.get_doc_file_key(doc_idx);
+		List<Map<String,Object>> file_infos = approvalDAO.get_file_info(file_key);
+		model.addAttribute("file_infos",file_infos);
 
 		//결재자 정보 (appr_line) - 만약 sent면 모두, received면
 		List<Map<String,Object>> appr_lines =approvalDAO.get_all_appr_line(doc_idx);
@@ -399,6 +410,22 @@ public class ApprovalService {
 
 	}
 
+	public ResponseEntity<Resource> file_download(String new_filename, String ori_filename) {
+		//1. Header 만들기
+		//보낼 컨텐츠 타입, 형태 (문자인지, 파일인지), 파일일 경우 "저장할" 파일 명
+		HttpHeaders header = new HttpHeaders();
 
+		//2.본문 - FileSystem을 통해 특정 위치의 파일 가져오기
+		Resource resource = new FileSystemResource("C:/files/"+new_filename);
 
+		//한글 명인 파일 깨지지 않게 처리
+        try {
+			String encode_name = URLEncoder.encode(ori_filename,"UTF-8");
+			header.add("content-type", "application/octet-stream");
+			header.add("content-Disposition","attachment;filename="+encode_name);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+        return new ResponseEntity<Resource>(resource,header, HttpStatus.OK);
+    }
 }

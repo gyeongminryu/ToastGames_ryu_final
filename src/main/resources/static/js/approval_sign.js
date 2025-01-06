@@ -1,4 +1,7 @@
 var doc_idx = $('#doc_idx').val();
+var doc_subject = $('#doc_subject').val();
+var doc_content_sub = $('#doc_content_sub').val();
+
 var empl_idx = $('#empl_idx').val();
 
 var my_appr_order=$('#my_appr_order').val();
@@ -96,10 +99,19 @@ function save_approved_doc_content(doc_content){
         dataType : 'JSON',
         success : function (data){
             console.log(data);
-            console.log(location.pathname); //hostname(도메인)을 제외한 나머지 주소
+            console.log(location.pathname+location.search); //hostname(도메인)을 제외한 나머지 주소
 
-                    location.href = "/approval_received_list.go";
 
+                //target_user들을 받아오기 - line_order 이전의 사람들
+                //나 이후의 결재자들 가져오기
+
+                console.log("타겟 유저",data.target_user);
+
+                approval_insert_notify(location.pathname+location.search,data.target_user,empl_idx,doc_subject,doc_content_sub,2);
+
+                 //approval_set_notify(data.target,location.pathname);
+
+                location.href = "/approval_received_list.go";
 
         },error : function(e){
             console.log(e);

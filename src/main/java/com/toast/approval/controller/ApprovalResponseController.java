@@ -45,10 +45,9 @@ public class ApprovalResponseController {
 		//폼 양식 html 업데이트
 		//내 결재 상태 - 승인으로 처리 & 처리 일시 업데이트
 		//다음 결재자 show 및 알림 1
-		approvalResponseService.update_after_appr(doc_content,doc_idx,line_order,empl_idx);
+		int target_user = approvalResponseService.update_after_appr(doc_content,doc_idx,line_order,empl_idx);
+		data.put("target_user",target_user);
 
-
-		data.put("success", "성공");
 		return data;
 	}
 

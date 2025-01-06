@@ -181,3 +181,4 @@
 <!-- //인계하기 -->
 
 <script src="resources/js/module_modal.js"></script>
+<script src="resources/js/notify_list_show.js"></script>

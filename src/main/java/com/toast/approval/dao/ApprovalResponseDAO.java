@@ -17,4 +17,6 @@ public interface ApprovalResponseDAO {
     int count_top_line_order(String doc_idx, String line_order);
 
     int update_top_line_order(String doc_idx, String line_order);
+
+    int get_next_appr(String line_order, String doc_idx);
 }

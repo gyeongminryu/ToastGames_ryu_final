@@ -2,6 +2,8 @@ package com.toast.approval.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.toast.approval.service.ApprovalService;
@@ -22,9 +24,9 @@ public class ApprovalController {
 
 	//세션 처리
 	//보낸 + 작성한
-	int empl_idx = 10024;
+	//int empl_idx = 10024;
 
-	//int empl_idx = 10022;
+	int empl_idx = 10022;
 
 	public ApprovalController(ApprovalService approvalService) {
 		this.approvalService = approvalService;
@@ -200,6 +202,12 @@ public class ApprovalController {
 	}
 
 
+	/*file_다운로드*/
+	@RequestMapping (value ="/approval_download.do")
+	public ResponseEntity<Resource> download(String new_filename,String ori_filename){
+		logger.info(new_filename +":"+ ori_filename);
+		return approvalService.file_download(new_filename,ori_filename);
+	}
 
 
 }

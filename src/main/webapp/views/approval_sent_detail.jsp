@@ -98,21 +98,13 @@
                                 <th>첨부파일</th>
                                 <td>
                                     <ul class="list_no_desc list_inline">
-                                        <li>
-                                            <i class="bi bi-paperclip"></i>
-                                            <span>{첨부파일_1 (용량)}</span>
-                                            <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_secondary">다운로드</button>
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-paperclip"></i>
-                                            <span>{첨부파일_2 (000.0kb)}</span>
-                                            <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_secondary">다운로드</button>
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-paperclip"></i>
-                                            <span>{첨부파일_3 (000.0kb)}</span>
-                                            <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_secondary">다운로드</button>
-                                        </li>
+                                        <c:forEach items="${file_infos}" var="file_info">
+                                            <li>
+                                                <i class="bi bi-paperclip"></i>
+                                                <span>${file_info.ori_filename} (용량)}</span>
+                                                <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href='/approval_download.do?new_filename=${file_info.new_filename}&ori_filename=${file_info.ori_filename}'" class="btn_min btn_secondary">다운로드</button>
+                                            </li>
+                                        </c:forEach>
                                     </ul>
                                 </td>
                             </tr>
@@ -259,10 +251,11 @@
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
                             <li>
-                                <button class="btn_primary btn_full" onclick="location.href='/approval_write.go?form_idx'">문서를 복사하여 다시 작성하기</button>
+                                <button class="btn_primary btn_full" onclick="location.href='/approval_copy_doc.do?doc_idx=${doc_info.doc_idx}&form_idx=${form_info.form_idx}'">문서를 복사하여 다시 작성하기</button>
+
                             </li>
                             <li>
-                                <button class="btn_secondary btn_full" onclick="location.href='/approval_writing_write'">양식만 복사하여 다시 작성하기</button>
+                                <button class="btn_secondary btn_full" onclick="location.href='/approval_write.go?form_idx=${form_info.form_idx}&form_content=copy'">양식만 복사하여 다시 작성하기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->
@@ -281,4 +274,6 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/approval_detail.js"></script>
 
+<script>
+</script>
 </html>

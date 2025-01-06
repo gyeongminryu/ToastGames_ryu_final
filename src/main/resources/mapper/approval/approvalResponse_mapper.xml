@@ -15,6 +15,11 @@
         UPDATE approval SET appr_show = 1 WHERE doc_idx = #{doc_idx} AND appr_order = #{line_order}
     </update>
 
+    <select id="get_next_appr" resultType="int">
+        SELECT appr_receiver_idx FROM approval WHERE doc_idx = #{doc_idx} AND appr_order = #{line_order}
+    </select>
+
+
     <update id="update_my_approval_state">
         UPDATE approval
         SET appr_state = 1, appr_date = #{formatted_date} WHERE doc_idx = #{doc_idx} AND appr_receiver_idx = #{empl_idx}
