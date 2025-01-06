@@ -362,8 +362,8 @@ public class ResourceManageController {
 	//물품 대여 신청 승인(대여 여부 업뎃)
 	@GetMapping(value="/permitProd.do")
 	@ResponseBody
-	public Map<String, String> permitProd(@RequestParam int prod_idx) {
-		int row = resourceMgService.permitProd(prod_idx);
+	public Map<String, String> permitProd(@RequestParam int prod_rent_idx, @RequestParam int prod_idx) {
+		int row = resourceMgService.permitProd(prod_idx, prod_rent_idx);
 		Map<String, String> response = new HashMap<String, String>();
 		if(row >0) {
 			response.put("redirectUrl", "/manage_rent_list.go?prod_idx=" + prod_idx);
@@ -389,6 +389,7 @@ public class ResourceManageController {
 	//사용연한다되면물품 상태 0으로 업뎃
 	
 		
+	//연체시 상태 업뎃(prod_return_state: 2)
 	
 	
 	//대여 승인 시 반납일정 일정 표시

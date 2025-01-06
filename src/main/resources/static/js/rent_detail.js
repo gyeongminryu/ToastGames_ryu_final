@@ -93,6 +93,20 @@ function resource_print(item) {
         content += '</tr>';
     }
 
-    // 생성한 HTML을 DOM에 추가
-    document.getElementById('product_state').innerHTML = content;    
+    // HTML 업데이트
+    document.getElementById('product_state').innerHTML = content;
+
+    // 버튼 표시/숨기기
+    const rentRequestButton = document.getElementById("rent_request_button");
+    if (rentRequestButton) {
+        if (item.prod_rent === 1) {
+            rentRequestButton.style.display = "flex"; // 버튼 보이기
+        } else {
+            rentRequestButton.style.display = "none"; // 버튼 숨기기
+        }
+    }
 }
+
+
+
+

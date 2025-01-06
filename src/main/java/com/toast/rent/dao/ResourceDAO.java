@@ -49,9 +49,6 @@ public interface ResourceDAO {
 	
 	//물품 상세보기
 	ResourceDTO prodDetail(int prod_idx);
-
-	//물품 첨부파일 가져오기
-	List<ResourcePhotoDTO> prodFile(int prod_idx);
 	
 	//물품 대여상태 보기
 	ResourceDTO prodRentDetail(int prod_idx);
@@ -77,13 +74,17 @@ public interface ResourceDAO {
 	//내 반납 총 리스트
 	List<ResourceDTO> myReturnList(Map<String, Integer> map);
 
-	//내 대여 선택 페이지
-	int myRentListCount(Map<String, Integer> map);
+	//내 대여 상세보기
+	ResourceDTO myRentDetail(int prod_rent_idx);
 
-	//내 대여 선택 리스트
-	List<ResourceDTO> myRentFileterList(Map<String, Integer> map);
+	//파일키 가져오기
+	List<String> getProdFileKey(int prod_idx);
 
-	
+	//물품 파일 가져오기
+	ResourcePhotoDTO prodFile(String file_key);
+
+	//물품 idx가져오기
+	int getIdx(int prod_rent_idx);
 
 	
 

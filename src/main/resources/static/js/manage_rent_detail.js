@@ -235,6 +235,7 @@ document.getElementById("permit_product").addEventListener("click", function () 
 	        type: 'GET',
 	        url: '/permitProd.do', 
 	        data:{
+	        	'prod_rent_idx':prod_rent_idx,
 	        	'prod_idx':prod_idx
 	        },
 	        dataType: 'json', 

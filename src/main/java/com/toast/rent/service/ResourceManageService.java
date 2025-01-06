@@ -460,8 +460,11 @@ public class ResourceManageService {
 	}
 
 	//대여 승인
-	public int permitProd(int prod_idx) {
-		return resourceMgDAO.permitProd(prod_idx);
+	@Transactional
+	public int permitProd(int prod_idx,int prod_rent_idx) {
+		resourceMgDAO.permitProd(prod_idx);
+		int row = resourceMgDAO.permitProdState(prod_rent_idx);
+		return row;
 		
 	}
 
@@ -471,8 +474,19 @@ public class ResourceManageService {
 		boolean success = false;
 		int  row = resourceMgDAO.permitReturn(prod_idx); //대여가능으로 업뎃
 		ResourceManageDTO dto = new ResourceManageDTO();
-		dto.setProd_return_date(LocalDateTime.now().withNano(0));//반납일시
-		dto.setProd_return_state(1);
+		dto.setProd_exp_date(resourceMgDAO.getExpDate(prod_rent_idx));
+	    LocalDateTime returnDate = LocalDateTime.now().withNano(0); // 현재 날짜 및 시간 (밀리초 제거)
+	    dto.setProd_return_date(returnDate);
+
+	    // 반납 예정일시
+	    LocalDateTime dueDate = dto.getProd_exp_date(); // DTO에서 예정일시 가져오기
+
+	    // 반납일시와 예정일시 비교
+	    if (dueDate != null && returnDate.isAfter(dueDate)) {
+	        dto.setProd_return_state(3); // 반납 상태를 3으로 설정 (연체 반납)
+	    } else {
+	        dto.setProd_return_state(1); // 정상 반납
+	    }
 		dto.setProd_rent_idx(prod_rent_idx);
 		int isReturn = resourceMgDAO.insertReturnDate(dto);
 		if(row !=0 && isReturn !=0) {

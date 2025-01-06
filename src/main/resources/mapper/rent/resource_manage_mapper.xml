@@ -400,6 +400,23 @@
 		WHERE 
 			prod_idx = #{param1}
 	</update>
+	
+	<!-- 대여 승인  상태 업뎃-->
+	<update id="permitProdState">
+		UPDATE 
+			product_rent
+		SET 
+			prod_return_state = 0
+		WHERE 
+			prod_rent_idx = #{param1}
+	</update>
+	
+	<!-- 반납예정일시 가져오기 -->
+	<select id="getExpDate">
+		SELECT prod_exp_date
+		FROM product_rent
+		WHERE prod_rent_idx=#{param1}
+	</select>
 
 	<!-- 반납 처리 -->
 	<update id="permitReturn">
@@ -481,7 +498,6 @@
 		DELETE FROM product_file
 			WHERE prod_idx=#{param1} AND file_key=#{param2}
 	</delete>
-
 
 
 
