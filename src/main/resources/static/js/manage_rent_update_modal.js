@@ -21,14 +21,14 @@ function tst_modal_close(cls) {
 // 물품 등록 확인 (true 값 반환)
 function confirmUpdate() {
     isUpdated = true;  // 등록 확인
-    tst_modal_close('tst_modal_write');  // 모달 닫기
+    tst_modal_close('tst_modal_update');  // 모달 닫기
     console.log('등록: ' + isUpdated);  // true 출력 (디버깅 용도)
 }
 
 // 물품 등록 취소 (false 값 반환)
 function cancelUpdate() {
     isUpdated = false;  // 등록 취소
-    tst_modal_close('tst_modal_write');  // 모달 닫기
+    tst_modal_close('tst_modal_update');  // 모달 닫기
     console.log('등록 취소: ' + isUpdated);  // false 출력 (디버깅 용도)
 }
 

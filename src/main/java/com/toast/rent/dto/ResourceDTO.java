@@ -39,10 +39,16 @@ public class ResourceDTO {
 	private LocalDateTime prod_rent_date;
 	private LocalDateTime prod_exp_date;
 	private LocalDateTime prod_return_date;
-	
+	private int prod_return_state;
 	//물품 파일가져오기
 	
 	
+	public int getProd_return_state() {
+		return prod_return_state;
+	}
+	public void setProd_return_state(int prod_return_state) {
+		this.prod_return_state = prod_return_state;
+	}
 	public int getProd_idx() {
 		return prod_idx;
 	}

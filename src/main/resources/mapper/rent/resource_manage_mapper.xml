@@ -275,8 +275,8 @@
 		keyColumn="prod_idx"
 		keyProperty="prod_idx"
 		parameterType="com.toast.rent.dto.ResourceManageDTO">
-		INSERT INTO product(prod_name, prod_model, prod_cate_idx, prod_info,prod_dispo_date, prod_rent, prod_state,prod_place,prod_purch_date)
-			VALUES(#{prod_name},#{prod_model}, #{prod_cate_idx}, #{prod_info},#{prod_dispo_date}, #{prod_rent}, #{prod_state},#{prod_place},#{prod_purch_date})
+		INSERT INTO product(prod_name, prod_model, prod_cate_idx, prod_info,prod_dispo_date, prod_rent, prod_state,prod_place,prod_purch_date, prod_empl_idx)
+			VALUES(#{prod_name},#{prod_model}, #{prod_cate_idx}, #{prod_info},#{prod_dispo_date}, #{prod_rent}, #{prod_state},#{prod_place},#{prod_purch_date},#{prod_empl_idx})
 	</insert>
 
     <!-- 물품 사진 등록 -->
@@ -343,11 +343,11 @@
 
 	<!-- 물품  첨부파일 가져오기-->
 	<select id="prodMgFile" resultType="com.toast.rent.dto.ResourcePhotoDTO">
-			SELECT 		
+		SELECT 		
 			file_idx, file_key, ori_filename, new_filename, file_type, file_addr, uploader_idx
 		FROM 
 			file
-		WHERE uploader_idx=#{param1}
+		WHERE file_key=#{param1}
 	</select>
 
     <!-- 대여기록 총페이지 -->
@@ -423,7 +423,7 @@
 	</update>
 
 	<!-- 물품 정보가져오기 -->
-	<select id="getProductinfo">
+	<select id="getProductinfo" resultType="com.toast.rent.dto.ResourceManageDTO">
 		SELECT
 			pd.prod_idx,
 			pd.prod_name,
@@ -443,16 +443,44 @@
 			pd.prod_idx=#{param1}
 	</select>
 
+	<!-- 파일키 저장 -->
+	<insert id="prodFileKeyAdd">
+		INSERT INTO product_file(prod_idx,file_key)
+			VALUES(#{param1},#{param2})	
+	</insert>
 
 
+	<!-- 파일키 가져오기 -->
+	<select id="getProdFileKey" resultType="String">
+		SELECT file_key FROM product_file WHERE prod_idx=#{param1}
+	</select>
 
+	<!-- 물품 정보 수정 -->
+	<update id="prodUpdate" parameterType="com.toast.rent.dto.ResourceManageDTO">
+		UPDATE 
+			product
+		SET
+			prod_name=#{prod_name},
+			prod_model=#{prod_model},
+			prod_info=#{prod_info},
+			prod_cate_idx=#{prod_cate_idx},
+			prod_state=#{prod_state},
+			prod_place=#{prod_place}
+		WHERE 
+			prod_idx=#{prod_idx}
+	</update>
 
+	<!-- 물품 첨부파일 삭제 -->
+	<delete id="prodFileRemove">
+		DELETE FROM file 
+			WHERE prod_idx=#{param1} AND file_key=#{param2}
+	</delete>
 
-
-
-
-
-
+	<!-- 물품 파일키 삭제 -->
+	<delete id="prodFileKeyRemove">
+		DELETE FROM product_file
+			WHERE prod_idx=#{param1} AND file_key=#{param2}
+	</delete>
 
 
 

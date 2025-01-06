@@ -1,20 +1,26 @@
+let use_date ='';
 
+document.addEventListener("DOMContentLoaded", function () {
+    const dueDateElement = document.getElementById("due_date");
 
+    if (dueDateElement) {
+        use_date = dueDateElement.getAttribute("data-due-date"); // data-due-date 속성 값 가져오기
 
+        // 시간 부분 제거
+        if (use_date) {
+            use_date = use_date.split(" ")[0];  // 날짜만 추출 (예: "2027-01-04")
+        }
 
-
-
-
-
-
-
-
-
+        console.log("초기 use_date:", use_date);
+    } else {
+        console.error("'due_date' 요소를 찾을 수 없습니다.");
+    }
+});
 
 // 카테고리 항목 변경시 내용연한 및 사용연수 변경
-function change_category_life(selectElement) {
+function change_category(selectElement) {
     const selected_option = selectElement.options[selectElement.selectedIndex]; // 선택된 옵션
-    const prod_life = parseInt(selected_option.getAttribute('data-prod-life'), 10); // 내용연수 값 가져오기
+	const prod_life = parseInt(selected_option.getAttribute('data-prod-life'), 10); // 내용연수 값 가져오기
 
     if (!isNaN(prod_life)) {
         // 내용연수 표시
@@ -35,7 +41,6 @@ function change_category_life(selectElement) {
     }
 }
 
-
 //사용연한 계산
 function calculate_use_date(prod_life) {
     const currentDate = new Date(); // 현재 날짜
@@ -43,22 +48,29 @@ function calculate_use_date(prod_life) {
     return currentDate.toISOString().split('T')[0]; // YYYY-MM-DD 형식 반환
 }
 
+
+// 상태 변경 처리
+function change_state(selectElement) {
+    prod_state = selectElement.value; // 선택된 값으로 prod_state 업데이트
+    console.log('현재 상태:', prod_state);
+}
+
 // 첨부 파일 삭제
-/*function delete_attach(elem, no) {
+function delete_attach(elem, no) {
     elem.parentElement.previousElementSibling.classList.add('font_cancellation');
     elem.parentElement.previousElementSibling.classList.add('font_subtle');
     elem.parentElement.innerHTML = '<button type="button" onclick="delete_cancel(this, \''+no+'\')" class="btn_secondary btn_min">삭제 취소</button>';
 
-}*/
+}
     // 첨부 파일 삭제시 작동하는 함수를 하단에 작성해 주세요
 
 // 첨부 파일 삭제 취소
-/*function delete_cancel(elem, no) {
+function delete_cancel(elem, no) {
     elem.parentElement.previousElementSibling.classList.remove('font_cancellation');
     elem.parentElement.previousElementSibling.classList.remove('font_subtle');
     elem.parentElement.innerHTML = '<button type="button" onclick="delete_attach(this, \''+no+'\')" class="btn_primary btn_min">삭제하기</button>';
 
-}*/
+}
     // 첨부 파일 삭제 취소시 작동하는 함수를 하단에 작성해 주세요
 
 
@@ -107,7 +119,7 @@ function file_upload(event) {
 
 
 document.getElementById("product_update_button").addEventListener("click", function () {
-    if (getConfirmationStatus()) {
+    if (getUpdateStatus()) {
         submitUpdateForm();
     } else {
         alert("수정이 취소되었습니다. 다시 시도해주세요.");
@@ -120,6 +132,8 @@ document.getElementById("product_update_button").addEventListener("click", funct
 // 폼 제출 처리 (삭제되지 않은 파일만 전송)
 function submitUpdateForm() {
 
+
+	console.log(use_date);
     var form = document.querySelector("form[action='productUpdate.do']");
     var formData = new FormData(form);
     
@@ -131,6 +145,7 @@ function submitUpdateForm() {
 
     // 'due_date' 추가
     formData.append('due_date', use_date);
+
 
     // 삭제되지 않은 파일만 추가
     uploadedFiles.forEach(function (item) {
@@ -145,7 +160,7 @@ function submitUpdateForm() {
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/productAdd.do", true);
+    xhr.open("POST", "/productUpdate.do", true);
 
     // 응답 형식을 JSON으로 설정
     xhr.responseType = 'json';

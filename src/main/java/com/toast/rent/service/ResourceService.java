@@ -122,7 +122,7 @@ public class ResourceService {
 		return result;
 	}
  
-	//물품 목록 보기(전체)
+	//물품 목록 검색(전체)
 	public Map<String, Object> resourceSearch(int page, int cnt, String option, String keyword) {
 		logger.info("현재 페이지:"+page);	
 		logger.info("한 페이지에 보여줄 갯수: "+cnt);
@@ -164,7 +164,7 @@ public class ResourceService {
 	}
 	
 	
-	//물품 목록 보기(특정 카테고리)
+	//물품 목록 검색(특정 카테고리)
 	public Map<String, Object> resourceFilterSearch(String category, int page, int cnt, String option,
 			String keyword) {
 		logger.info("현재 페이지:"+page);	
@@ -283,6 +283,146 @@ public class ResourceService {
 		//body,header,status
 		return new ResponseEntity<Resource>(res, header, HttpStatus.OK);
 	}
+
+	//나의 물건 리스트 전체보기
+	public Map<String, Object> myResourceList(int page, int cnt , int empl_idx) {
+		Map<String,Object> result = new HashMap<String, Object>();
+			logger.info("현재 페이지:"+page);	
+			logger.info("한 페이지에 보여줄 갯수: "+cnt);
+			
+			int limit = cnt;
+			int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+			
+			int totalPages = resourceDAO.myAllCount(cnt, empl_idx);
+			
+			result.put("totalPages", totalPages);
+			result.put("currPage", page);
+			List<ResourceDTO> list = resourceDAO.myProdList(empl_idx,limit,offset);
+			for (ResourceDTO dto : list) {
+				switch (dto.getProd_rent()) {
+				case 0:
+					dto.setProd_rent_str("대여 불가"); //물품 상태가 0(사용 불가)일때 
+					break;
+				case 1:
+					dto.setProd_rent_str("대여 가능");
+					break;
+				case 2:
+					dto.setProd_rent_str("대여 신청 중");
+					break;
+				case 3:
+					dto.setProd_rent_str("대여 중");
+					break;
+				case 4:
+					dto.setProd_rent_str("연체");
+					break;
+				default:
+					dto.setProd_rent_str("알 수 없음");
+					break;
+				}
+			}
+			result.put("list", list);
+
+		return result;
+	}
+
+	//반납여부에따라 나의 물건 보기
+	public Map<String, Object> myResourceReturnList(int rent_state, int page, int cnt, int empl_idx) {
+		int state = 0;
+		if(rent_state == 11) { //반납한물품
+			state = 1;
+		} else {
+			state = 0; //미반납 물품
+		}
+		logger.info("현재 페이지:"+page);	
+		logger.info("한 페이지에 보여줄 갯수: "+cnt);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		int limit = cnt;
+		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+		map.put("cnt", cnt);
+		map.put("limit", limit);
+		map.put("offset", offset);
+		map.put("state", state);
+		map.put("empl_idx", empl_idx);
+
+		
+		int totalPages = resourceDAO.myReturnListCount(map);
+		
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("totalPages", totalPages);
+		result.put("currPage", page);
+		List<ResourceDTO> list = resourceDAO.myReturnList(map);
+		for (ResourceDTO dto : list) {
+			switch (dto.getProd_rent()) {
+			case 0:
+				dto.setProd_rent_str("대여 불가"); //물품 상태가 0(사용 불가)일때 
+				break;
+			case 1:
+				dto.setProd_rent_str("대여 가능");
+				break;
+			case 2:
+				dto.setProd_rent_str("대여 신청 중");
+				break;
+			case 3:
+				dto.setProd_rent_str("대여 중");
+				break;
+			case 4:
+				dto.setProd_rent_str("연체");
+				break;
+			default:
+				dto.setProd_rent_str("알 수 없음");
+				break;
+			}
+		}
+		result.put("list", list);
+		return result;
+	}
+
+	//대여 상태에따른 물건보기
+	public Map<String, Object> myResourceFilterList(int rent_state, int page, int cnt, int empl_idx) {
+		logger.info("현재 페이지:"+page);	
+		logger.info("한 페이지에 보여줄 갯수: "+cnt);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		int limit = cnt;
+		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+		map.put("cnt", cnt);
+		map.put("limit", limit);
+		map.put("offset", offset);
+		map.put("state", rent_state);
+		map.put("empl_idx", empl_idx);
+
+		
+		int totalPages = resourceDAO.myRentListCount(map);
+		
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("totalPages", totalPages);
+		result.put("currPage", page);
+		List<ResourceDTO> list = resourceDAO.myRentFileterList(map);
+		for (ResourceDTO dto : list) {
+			switch (dto.getProd_rent()) {
+			case 0:
+				dto.setProd_rent_str("대여 불가"); //물품 상태가 0(사용 불가)일때 
+				break;
+			case 1:
+				dto.setProd_rent_str("대여 가능");
+				break;
+			case 2:
+				dto.setProd_rent_str("대여 신청 중");
+				break;
+			case 3:
+				dto.setProd_rent_str("대여 중");
+				break;
+			case 4:
+				dto.setProd_rent_str("연체");
+				break;
+			default:
+				dto.setProd_rent_str("알 수 없음");
+				break;
+			}
+		}
+		result.put("list", list);
+		return result;
+	}
+	
 	
 
 

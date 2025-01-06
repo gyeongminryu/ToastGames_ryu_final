@@ -137,19 +137,7 @@
                             <tr>
                                 <td colspan="7">
                                     <ul id="pagination" class="pagination-sm pagination">
-                                        <!-- <li class="page-item first disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item prev disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
-                                        </li>
-
-                                        <li class="page-item next">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
-                                        </li>
-                                        <li class="page-item last">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-                                        </li> -->
+                                    
                                     </ul>
                                 </td>
                             </tr>
