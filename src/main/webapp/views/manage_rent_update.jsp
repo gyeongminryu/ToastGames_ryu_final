@@ -47,25 +47,31 @@
                                 <tr>
                                     <th class="td_align_top">물품명</th>
                                     <td>
-                                        <input type="text" name="subject" maxlength="100" value="${product.prod_idx}" />
+                                        <input type="text" name="number" maxlength="100" value="${detail.product.prod_idx}" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td_align_top">물품명</th>
+                                    <td>
+                                        <input type="text" name="subject" maxlength="100" value="${detail.product.prod_name}" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="td_align_top">물품 정보</th>
                                     <td>
-                                        <input type="text" name="information" maxlength="1000" value="${product.prod_model}" />
+                                        <input type="text" name="information" maxlength="1000" value="${detail.product.prod_model}" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="td_align_top">보관 장소</th>
                                     <td>
-                                        <input type="text" name="place" maxlength="1000"  value="${product.prod_model}"/>
+                                        <input type="text" name="place" maxlength="1000"  value="${detail.product.prod_place}"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="td_align_top">물품 설명</th>
                                     <td>
-                                        <textarea name="content" rows="27">${product.prod_info}</textarea>
+                                        <textarea name="content" rows="27">${detail.product.prod_info}</textarea>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -107,8 +113,9 @@
                                     <td>
                                         <select name="category" onchange="change_category(this)">
                                             <option value="0">카테고리</option>
-                                            <c:forEach items="${categoryList}" var="category">
-                                            	<option value="${category.prod_cate_idx}" data-prod-life="${category.prod_life}">
+                                            <c:forEach items="${detail.categoryList}" var="category">
+                                            	<option value="${category.prod_cate_idx}" data-prod-life="${category.prod_life}"
+            										<c:if test="${category.prod_cate_idx == detail.product.prod_cate_idx}">selected</c:if>>
                                             		${category.prod_cate_name}</option>
                                             </c:forEach>                          
                                         </select>
@@ -116,12 +123,20 @@
                                 </tr>
                                 <tr>
                                     <th>내용연수</th>
-                                    <td id="useful_life" class="useful_life">내용연수| ${category.prod_life}년</td>
+                                    <td id="useful_life" class="useful_life">내용연수| ${detail.product.prod_life}년</td>
                                 </tr>
                                 <tr>
                                     <th>사용연한</th>
-                                    <td id="due_date" class="due_date">사용연한|
-                                    	<input type="hidden" name="prod_date" id="due_date_input" value="">
+                                    <td id="due_date" class="due_date" data-due-date="${detail.prodDispoDate}">사용연한| ${detail.prodDispoDate}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>물품 상태</th>
+                                    <td>
+                                        <select id="prod_state" name="state" onchange="change_state(this)">
+										    <option value="1" ${prod_state == 1 ? 'selected' : ''}>사용 가능</option>
+										    <option value="0" ${prod_state == 0 ? 'selected' : ''}>사용 불가</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -142,7 +157,17 @@
                                 </tr>
                                 </thead>
                                 <tbody id="file_list">
-
+                                <c:forEach var="file" items="${files}">
+						            <tr>
+						                <td>
+						                    ${file.ori_filename} (${file.file_size / 1024} KB)
+						                </td>
+						                <td>
+						                    <button onclick="location.href='download.do?new_filename=${file.new_filename}&ori_filename=${file.ori_filename}'" 
+						                            class="btn_min btn_primary">다운로드</button>
+						                </td>
+						            </tr>
+						        </c:forEach>
                                 </tbody>
                                 <tfoot>
                                 <tr>

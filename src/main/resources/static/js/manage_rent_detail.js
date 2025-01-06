@@ -1,26 +1,5 @@
 
 
-// 오늘 날짜와 사용 연한을 비교
-const today = new Date();
-var prodExpDateStr = document.getElementById('prod_exp_date').innerText;
-
-// 가져온 값을 new Date()로 변환하여 expirationDate에 할당
-const expirationDate = new Date(prodExpDateStr);
-
-// expirationDate 출력 (확인용)
-console.log("Expiration Date: ", expirationDate);
-
-// 사용 연한이 지나지 않았을 경우, 해당 테이블 행을 숨기고 메시지를 보이게 함
-const expireMessageRow = document.querySelector('.expire-message');
-
-if (today < expirationDate) {
-    // 사용 연한이 지나지 않았을 경우 'disp_hide' 클래스 추가
-    expireMessageRow.classList.add('disp_hide');
-} else {
-    // 사용 연한이 지난 경우 'disp_hide' 클래스 제거하여 메시지 보이게 함
-    expireMessageRow.classList.remove('disp_hide');
-}
-
 // 테이블의 prod_idx 값을 가져옴
 const prodIdxElement = document.querySelector('#prod_idx');
 const prod_idx = prodIdxElement ? prodIdxElement.textContent.trim() : null;
@@ -28,7 +7,7 @@ const prod_idx = prodIdxElement ? prodIdxElement.textContent.trim() : null;
 const prodRentIdx = document.querySelector('#prod_rent_idx');
 const prod_rent_idx = prodRentIdx ? prodRentIdx.textContent.trim() : null;
 
-
+prodDate(prod_idx);
 
 
 // 초기 호출
@@ -80,7 +59,7 @@ function resource_list_print(list) {
         for (var item of list) {
 			content += '<tr>';
 			content += '<td>' + item.prod_rent_idx + '</td>';
-			content += '<td><h3><span onclick="tst_view_profile(\'' + item.empl_idx + '\')" class="tst_pointer">' + item.empl_name + ' (' + item.position_name + '/' + item.duty_name + ')</span></h3></td>';
+			content += '<td><h3>' + item.empl_name + ' (' + item.position_name + '/' + item.duty_name + ')</span></h3></td>';
 			content += '<td class="td_align_left">' + item.prod_rent_reason + '</td>';
 			content += '<td>' + formatDateTime(item.prod_rent_date) + '</td>';
 			content += '<td>' + formatDateTime(item.prod_exp_date) + '</td>';
@@ -123,7 +102,7 @@ function resource_list_print(list) {
 	$('#rent_list').html(content);
 }
 
-prodDate(prod_idx);
+
 
 //카테고리별 목록
 function prodDate(prod_idx) {
@@ -146,25 +125,53 @@ function prodDate(prod_idx) {
     });
 }
 
-//사용연한 관련
+
+
+// 사용연한 관련
 var expiration_content = '';
+var prodExpDateStr = '';
+let expirationDate ='';
 
-function prod_date(item){
-	// 사용 연한이 지나지 않았을 경우
-	if (expirationDate.getTime() - today.getTime() > 0) {
-	    expiration_content += '<th>사용연한</th>';
-	    expiration_content += '<td>' + item.formattedDates.prodDispoDate + '</td>';
-	} else {
-	    // 사용 연한이 지났을 경우
-	    expiration_content += '<th>사용연한</th>';
-	    expiration_content += '<td><h3 class="font_caution">' + item.formattedDates.prodDispoDate + '</h3></td>';
-	}
-	
-	// 동적으로 테이블에 삽입
-	$('#dispo_date').html(expiration_content);
+// 오늘 날짜
+const today = new Date();
 
+function prod_date(item) {
+    // item에서 사용 연한 값 추출
+    prodExpDateStr = item.formattedDates.prodDispoDate;
+
+    // prodExpDateStr를 Date 객체로 변환
+    expirationDate = new Date(prodExpDateStr);
+    console.log("Expiration Date: ", expirationDate);
+
+    expiration_content = ''; // 초기화
+    if (expirationDate.getTime() - today.getTime() > 0) {
+        // 사용 연한이 지나지 않았을 경우
+        expiration_content += '<th>사용연한</th>';
+        expiration_content += '<td>' + prodExpDateStr + '</td>';
+    } else {
+        // 사용 연한이 지났을 경우
+        expiration_content += '<th>사용연한</th>';
+        expiration_content += '<td><h3 class="font_caution">' + prodExpDateStr + '</h3></td>';
+    }
+
+    // 동적으로 테이블에 삽입
+    $('#dispo_date').html(expiration_content);
+
+    // 사용 연한에 따라 메시지 표시
+    const expireMessageRow = document.querySelector('.expire-message');
+    if (today < expirationDate) {
+        // 사용 연한이 지나지 않았을 경우 메시지 숨김
+        expireMessageRow.classList.add('disp_hide');
+    } else {
+        // 사용 연한이 지난 경우 메시지 표시
+        expireMessageRow.classList.remove('disp_hide');
+    }
 }
+
  
+ 
+
+
 
 //버튼
 var button_content = '';

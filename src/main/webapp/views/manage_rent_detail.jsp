@@ -168,30 +168,43 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th>대여번호</th>
-                                <td id="prod_rent_idx">${detail.dto.prod_rent_idx}</td>
-                            </tr>
-                            <tr>
-                                <th>대여자</th>
-                                <td>${detail.empl.empl_name}(${detail.empl.dept_name}/${detail.empl.position_name})</td>
-                            </tr>
-                            <tr>
-                                <th>대여일</th>
-                                <td>${detail.formattedDates.prodRentDate}</td>
-                            </tr>
-                            <tr>
-                                <th>대여 사유</th>
-                                <td id="prod_rent_reason">${detail.dto.prod_rent_reason}</td>
-                            </tr>
-                            <tr>
-                                <th>대여 상태</th>
-                                <td>${detail.dto.prod_rent_str}</td>
-                            </tr>
-                            <tr>
-                                <th>반납 기한</th>
-                                <td id="prod_exp_date">${detail.formattedDates.prodExpDate}</td>
-                            </tr>
+							<c:choose>
+							    <c:when test="${detail.dto.prod_rent == 1}">
+							        <!-- 대여 상태만 표시 -->
+							        <tr>
+							            <th>대여 상태</th>
+							            <td>${detail.dto.prod_rent_str}</td>
+							        </tr>
+							    </c:when>
+							    <c:otherwise>
+							        <!-- 모든 정보 표시 -->
+							        <tr>
+							            <th>대여번호</th>
+							            <td id="prod_rent_idx">${detail.dto.prod_rent_idx}</td>
+							        </tr>
+							        <tr>
+							            <th>대여자</th>
+							            <td>${detail.empl.empl_name}(${detail.empl.dept_name}/${detail.empl.position_name})</td>
+							        </tr>
+							        <tr>
+							            <th>대여일</th>
+							            <td>${detail.formattedDates.prodRentDate}</td>
+							        </tr>
+							        <tr>
+							            <th>대여 사유</th>
+							            <td id="prod_rent_reason">${detail.dto.prod_rent_reason}</td>
+							        </tr>
+							        <tr>
+							            <th>대여 상태</th>
+							            <td>${detail.dto.prod_rent_str}</td>
+							        </tr>
+							        <tr>
+							            <th>반납 기한</th>
+							            <td id="prod_exp_date">${detail.formattedDates.prodExpDate}</td>
+							        </tr>
+							    </c:otherwise>
+							</c:choose>
+
                             </tbody>
                         </table>
                         <!-- //대여 정보 -->

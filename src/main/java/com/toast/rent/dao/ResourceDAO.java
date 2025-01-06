@@ -62,6 +62,27 @@ public interface ResourceDAO {
 	//물품 대여 상태 업뎃
 	int updateRentState(ResourceDTO dto);
 
+	//내 대여 기록 가져오기
+	List<ResourceDTO> myRentList(int empl_idx);
+
+	//내 대여 총 페이지
+	int myAllCount(int cnt, int empl_idx);
+
+	//내 대여 총 리스트
+	List<ResourceDTO> myProdList(int empl_idx, int limit, int offset);
+
+	//내 반납 총 페이지
+	int myReturnListCount(Map<String, Integer> map);
+
+	//내 반납 총 리스트
+	List<ResourceDTO> myReturnList(Map<String, Integer> map);
+
+	//내 대여 선택 페이지
+	int myRentListCount(Map<String, Integer> map);
+
+	//내 대여 선택 리스트
+	List<ResourceDTO> myRentFileterList(Map<String, Integer> map);
+
 	
 
 	
