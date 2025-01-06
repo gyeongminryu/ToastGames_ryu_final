@@ -55,6 +55,7 @@ public class ApprovalRequestController {
 		//model.addAttribute("form_content", form_content);
 		model.addAttribute("doc_idx", doc_idx);
 		model.addAttribute("form_idx", form_idx);
+		model.addAttribute("empl_idx", empl_idx);
 
 		return "approval_writing_write";
 	}
@@ -165,11 +166,7 @@ public class ApprovalRequestController {
 		int empl_idx = 10024;
 
 		Map<String,Object> data = new HashMap<>();
-		boolean success = false;
-		if(approvalRequestService.approval_request(doc_idx,empl_idx)){
-			success = true;
-		}
-		data.put("success",success);
+		data.put("target_user",approvalRequestService.approval_request(doc_idx,empl_idx));
 		return data;
 	}
 

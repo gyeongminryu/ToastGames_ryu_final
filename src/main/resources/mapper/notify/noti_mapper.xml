@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toast.notify.dao.NotiDAO"></mapper>
+<mapper namespace="com.toast.notify.dao.NotiDAO">
+    <insert id="approval_noti_insert" parameterType="Map">
+        INSERT INTO notify(noti_cate_idx,noti_sender_empl_idx,noti_receiver_empl_idx,noti_subject,noti_content,noti_sent_date,noti_read_date,noti_deleted,noti_link)
+            VALUES(1,#{sender_idx},#{receiver_idx},#{doc_subject},#{doc_content},#{doc_date},null,#{notify_category},#{url})
+    </insert>
+
+</mapper>

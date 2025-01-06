@@ -58,6 +58,9 @@
                             <tbody>
                             <tr>
                                 <input type="hidden" id = "doc_idx" value = ${doc_info.doc_idx}>
+                                <input type="hidden" id = "doc_subject" value = ${doc_info.doc_subject}>
+                                <input type="hidden" id = "doc_content_sub" value = ${doc_info.doc_content_sub}>
+
                                 <input type="hidden" id = "empl_idx" value = ${empl_idx}>
                                 <input type="hidden" id = "my_appr_order" value = ${my_appr_order}>
 
@@ -294,18 +297,23 @@
 <script src="resources/js/module_modal.js"></script>
 <script src="resources/js/approval_detail.js"></script>
 <%--<script src="resources/js/approval_sign.js"></script>--%>
+<%--<script src="resources/js/approval_set_notify.js"></script>--%>
 
 
 <script>
-    //line_order 및 doc_idx 가져오기
-    //line_order에 해당하는 결재선에 직인 집어넣기
-    //doc_idx 기반으로 html 업데이트
 
-    //반려할 결재 문서 명
+    //알림에 넣을 정보
+    var doc_subject = '';
+    if('${doc_info.doc_subject}'!=null){
+        doc_subject = '${doc_info.doc_subject}';
+    }else{
+        doc_subject = '제목 없음';
+    }
 
 
+    var content_sub = '${doc_info.doc_content_sub}';
 
-
+    var noti_content = content_sub.slice(1,10);
 
 
 </script>

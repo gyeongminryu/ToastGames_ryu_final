@@ -117,7 +117,7 @@
                         <td>${received_list.form_subject}</td>
                         <td class="td_align_left">
                             <span class="tst_badge_min btn_primary margin_right">${received_list.i_approval_state}</span>
-                            <span onclick="location.href='/approval_received_detail.go?doc_idx= ${received_list.doc_idx}&type=received'" class="tst_pointer">${received_list.doc_subject}</span>
+                            <span onclick="location.href='/approval_received_detail.go?doc_idx=${received_list.doc_idx}&type=received'" class="tst_pointer">${received_list.doc_subject}</span>
                         </td>
                         <td><span class="tst_badge_min btn_primary">${received_list.approval_state}</span></td>
                         <td>${received_list.update_date}</td>

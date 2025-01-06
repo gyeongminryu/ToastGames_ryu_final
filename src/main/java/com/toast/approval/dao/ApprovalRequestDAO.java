@@ -102,9 +102,12 @@ public interface ApprovalRequestDAO {
 
     int update_first_approval_line(String doc_idx);
 
-    Map<String, Object> get_empl_info(int empl_idx);
+    //알림 위해 첫번째 결재 라인의 사람 가져오기
+    int get_first_approval_line(String doc_idx);
 
+    Map<String, Object> get_empl_info(int empl_idx);
     //확인하기
+
     int doc_line_changed_update(Map<String, Object> lineEmplInfo);
 
     int copy_doc_form(ApprovalRequestDTO app_dto);
@@ -116,8 +119,8 @@ public interface ApprovalRequestDAO {
 
     List<Map<String,Object>> get_doc_line_infos(int doc_idx);
 
-
     //여기서부터 작업
+
     int copy_doc_info(ApprovalRequestDTO appDto);
 
     void copy_doc_line_info(Map<String, Object> doc_line_info);

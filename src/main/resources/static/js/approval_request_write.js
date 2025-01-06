@@ -1,9 +1,20 @@
 
-
+let notification_data= {};
 
 window.onload = function initialize(){
+
     //문서 가져오기
         approval_doc_get();
+
+    notification_data={
+        "/approval_request.go":{
+            noti_category : 1,
+            noti_target_user : noti_receiver,
+            noti_subject : '결재할 문서가 있습니다.',
+            noti_content : doc_subject,
+            noti_url : url
+        }
+    }
 }
 
 //저장된 문서 가져오는 함수

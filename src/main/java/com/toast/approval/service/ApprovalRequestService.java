@@ -482,7 +482,7 @@ public class ApprovalRequestService {
 
 	}
 
-	public boolean approval_request(String doc_idx, int empl_idx) {
+	public int approval_request(String doc_idx, int empl_idx) {
 		logger.info("approval_request 컨트롤러");
 		logger.info("doc_idx:{}",doc_idx);
 		boolean success = false;
@@ -505,15 +505,12 @@ public class ApprovalRequestService {
 
 		logger.info("상신 전 final_doc 가져오기:{}",final_doc);
 
-
-
-
-
 			//2. 결재 라인들 가져오기
 			List<Map<String,Object>> approval_lines = approvalRequestDAO.doc_appr_line_get(Integer.parseInt(doc_idx));
 			//3. 결재 라인에 먼저 결재자 내용 인서트 시키기 위해 분리할 때
 			int appr_receiver_idx = 0;
 			int appr_order = 0;
+			logger.info("approval_lines:{}",approval_lines);
 
 
 			for(Map<String,Object> approval_line : approval_lines){
@@ -536,13 +533,16 @@ public class ApprovalRequestService {
 				param.put("form_idx", String.valueOf(form_idx));
 
 				logger.info("상신할 param 값 :{}",param);
-
-                success = approvalRequestDAO.request(param) > 0 && approvalRequestDAO.update_approval_doc_state(doc_idx)>0&&approvalRequestDAO.update_first_approval_line(doc_idx)>0;
-
-
+				//approval에 값 저장
+                approvalRequestDAO.request(param);
 			}
-
-		return success;
+		//doc_state = 상신으로 변경
+		approvalRequestDAO.update_approval_doc_state(doc_idx);
+		//첫번째 결재자 보이는 상태 1
+		approvalRequestDAO.update_first_approval_line(doc_idx);
+		var target_user_id = approvalRequestDAO.get_first_approval_line(doc_idx);
+		logger.info("target_user_id:{}",target_user_id);
+		return target_user_id;
 
 	}
 
@@ -573,7 +573,7 @@ public class ApprovalRequestService {
 			//결재선 내용 넣기
 		for(Map<String,Object> doc_line_info : doc_line_infos){
 			//여기서부터 작업
-			doc_line_info.put("doc_idx",doc_idx_copied); //doc_idx 새로운 거로 바꾸기 
+			doc_line_info.put("doc_idx",doc_idx_copied); //doc_idx 새로운 거로 바꾸기
 			approvalRequestDAO.copy_doc_line_info(doc_line_info);
 		}
 			// 2. 얻은 doc_idx 전달

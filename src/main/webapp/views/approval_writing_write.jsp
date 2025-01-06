@@ -34,6 +34,7 @@
                 <!-- //제목 -->
 
                 <form  method="POST" enctype="multipart/form-data">
+                    <input type = "hidden" name = "empl_idx" class="hidden_empl_idx" value="${empl_idx}"/>
                     <input type = "hidden" name = "doc_idx" class="hidden_doc_idx"/>
                     <input type = "hidden" name = "doc_write_date" id="hidden_doc_date"/>
 
@@ -220,18 +221,35 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/approval_send_modal.js"></script>
 
-<script src="/resources/js/approval_request_form_row.js"></script>
+<%--폼양식 조정 위한 css--%>
 <script src="/resources/js/approval_request_form_adjust.js"></script>
+
+<%--저장--%>
 <script src="/resources/js/approval_request_save.js"></script>
+
+
+<%--결재선--%>
 <script src="/resources/js/approval_write_line_parent.js"></script>
 <script src="/resources/js/approval_write_line_child.js"></script>
 
+
+<%--삭제--%>
 <script src="/resources/js/approval_write_delete.js"></script>
+
+<%--결재--%>
 <script src="/resources/js/approval_request.js"></script>
 
+<%--작성--%>
 <script src="/resources/js/approval_request_write.js"></script>
 
+<%--파일 처리--%>
 <script src="/resources/js/approval_file.js"></script>
+
+<%--알림--%>
+<script src="resources/js/approval_noti_insert.js"></script>
+<script src="resources/js/approval_set_notify.js"></script>
+<script src="resources/js/notify_websocket.js"></script>
+
 
 <script>
     //모델앤뷰로 받은 파라메터

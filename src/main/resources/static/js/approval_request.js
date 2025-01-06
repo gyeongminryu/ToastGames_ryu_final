@@ -10,8 +10,30 @@ function approval_request(){
             data : {"doc_idx" : doc_idx},
             dataType : 'JSON',
             success : function (data){
-                console.log(data);
-                location.href ="/approval_writing_list.go"
+                //첫번째 결재자 가져오기
+                console.log("target_user:",data.target_user);
+
+
+                //알림
+                var sender_idx = $('.hidden_empl_idx').val();
+                console.log("sender_idx:",sender_idx);
+
+
+
+                //제목
+                var doc_subject = $('input[name="doc_subject"]').val();
+
+                //내용
+                //richtexteditor 내용
+                var doc_content ='';
+
+                approval_insert_notify(location.pathname+location.search,data.target_user,sender_idx,doc_subject,doc_content,1);
+                //웹소켓
+                //approval_set_notify(data.target_user,location.pathname,sender_idx);
+
+                //리스트로 이동
+                location.href ="/approval_writing_list.go";
+
             },error : function(e){
                 console.log(e);
                 alert('문서 상신에 실패했습니다.');
@@ -23,3 +45,4 @@ function approval_request(){
     }
 
 }
+

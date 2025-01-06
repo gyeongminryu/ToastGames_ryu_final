@@ -257,6 +257,10 @@
         UPDATE approval SET appr_show = 1 WHERE doc_idx = #{doc_idx} AND appr_order = 1
     </update>
 
+    <select id="get_first_approval_line" resultType="int">
+        SELECT appr_receiver_idx FROM approval WHERE doc_idx = #{doc_idx} AND appr_order = 1
+    </select>
+
 
     <!--인사 발령되었는지 확인-->
     <!--empl_idx의 사원의 정보 알아내기-->

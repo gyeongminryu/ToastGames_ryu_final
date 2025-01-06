@@ -114,3 +114,11 @@
 <script src="resources/js/approval_sign.js"></script>
 <script src="resources/js/approval_reject.js"></script>
 
+<script src="resources/js/approval_noti_insert.js"></script>
+<script src="resources/js/approval_set_notify.js"></script>
+
+<script>
+
+</script>
+
+

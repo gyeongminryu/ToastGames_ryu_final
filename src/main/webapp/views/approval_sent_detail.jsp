@@ -274,4 +274,6 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/approval_detail.js"></script>
 
+<script>
+</script>
 </html>
