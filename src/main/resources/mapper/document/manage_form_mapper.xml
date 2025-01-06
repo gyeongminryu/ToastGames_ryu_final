@@ -69,7 +69,7 @@
                 form_state = 0
             </if>
             <if test="param5.equals('wip')">
-                form_state = 2
+                form_state = 2 AND form_writer_idx = #{param6}
             </if>
         </where>
         <if test="param4 != null and !param4.equals('') and param3.equals('form_subject')">
@@ -85,9 +85,13 @@
         SELECT form_content FROM form WHERE form_idx = #{param1}
     </select>
 
+    <select id="getWriterIdx" resultType="int">
+        SELECT empl_idx FROM employee WHERE empl_id = #{param1}
+    </select>
+
     <!-- 문서 양식 상세보기 -->
     <select id="detail" resultType="com.toast.document.dto.ManageFormDTO">
-        SELECT f.form_idx, f.form_subject, f.form_content, f.form_handler_idx, f.form_writer_idx, f.form_write_date, f.form_updater_idx, f.form_update_date,
+        SELECT f.form_idx, f.form_subject, f.form_content, f.form_handler_idx, f.form_writer_idx, f.form_write_date, f.form_updater_idx, f.form_update_date, f.form_state,
         (SELECT e.empl_name FROM employee e WHERE e.empl_idx = f.form_writer_idx) as 'form_writer_name',
         (SELECT d.dept_name FROM department d WHERE d.dept_idx = f.form_writer_dept) as 'form_writer_dept_name',
         (SELECT p.position_name FROM position_ p WHERE p.position_idx = f.form_writer_position) as 'form_writer_position_name',
@@ -124,8 +128,8 @@
     </select>
 
     <insert id="write" parameterType="com.toast.document.dto.ManageFormDTO" useGeneratedKeys="true" keyColumn="form_idx" keyProperty="form_idx">
-        INSERT INTO form (form_writer_idx, form_writer_dept, form_writer_position, form_write_date)
-            VALUES (#{form_writer_idx}, #{form_writer_dept}, #{form_writer_position}, current_timestamp)
+        INSERT INTO form (form_subject, form_content, form_writer_idx, form_writer_dept, form_writer_position, form_write_date)
+            VALUES (#{form_subject}, #{form_content}, #{form_writer_idx}, #{form_writer_dept}, #{form_writer_position}, current_timestamp)
     </insert>
 
     <insert id="setLine1">
@@ -159,5 +163,19 @@
     <update id="setLine" parameterType="map">
         UPDATE g_approval_line SET dept_idx = #{dept_idx}, duty_idx = #{duty_idx} WHERE form_idx = #{form_idx} AND gline_order = #{gline_order}
     </update>
+
+    <!-- 작성중인 문서 양식 등록하기 -->
+    <update id="register">
+        UPDATE form SET form_state = 1 WHERE form_idx = #{param1}
+    </update>
+
+    <!-- 작성중인 문서 양식 삭제하기 -->
+    <delete id="deleteForm">
+        DELETE FROM form WHERE form_idx = #{param1}
+    </delete>
+
+    <delete id="deleteLines">
+        DELETE FROM g_approval_line WHERE form_idx = #{param1}
+    </delete>
 
 </mapper>

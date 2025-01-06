@@ -52,7 +52,11 @@ public class ManageFormController {
     }
 
     @PostMapping (value = "/manage_form_list.ajax")
-    public Map<String, Object> manage_form_list(String page, String cnt, String opt, String keyword, String sort) {
+    public Map<String, Object> manage_form_list(HttpSession session, String page, String cnt, String opt, String keyword, String sort) {
+        session.setAttribute("loginId", "tndls0110");
+        String writer = session.getAttribute("loginId").toString();
+        int form_writer_idx = manageFormService.getWriterIdx(writer);
+
         int pageInt = Integer.parseInt(page);
         int cntInt = Integer.parseInt(cnt);
         String optName = "";
@@ -63,7 +67,7 @@ public class ManageFormController {
             optName = "form_content";
         }
 
-        return manageFormService.list(pageInt, cntInt, optName, keyword, sort);
+        return manageFormService.list(pageInt, cntInt, optName, keyword, sort, form_writer_idx);
     }
 
     @PostMapping (value = "/manage_form_preview.ajax")
@@ -155,9 +159,29 @@ public class ManageFormController {
 
     @RequestMapping (value = "/manage_form_set_line.do")
     public ModelAndView manage_form_set_line(@RequestParam Map<String, String> params) {
-        logger.info("params: {}", params);
+        //logger.info("params: {}", params);
         manageFormService.setLine(params);
 
         return new ModelAndView("redirect:/manage_form_update.go?form_idx=" + params.get("form_idx_modal"));
+    }
+
+    // 작성중인 문서 양식 등록하기
+    @RequestMapping (value = "/manage_form_register.do")
+    public ModelAndView manage_form_register(String form_idx) {
+        //logger.info("form_idx = "+form_idx);
+        int form_idxInt = Integer.parseInt(form_idx);
+        manageFormService.register(form_idxInt);
+
+        return new ModelAndView("redirect:/manage_form_detail.go?form_idx=" + form_idx);
+    }
+
+    // 작성중인 문서 양식 삭제하기
+    @RequestMapping (value = "/manage_form_delete.do")
+    public ModelAndView manage_form_delete(String form_idx) {
+        //logger.info("form_idx = "+form_idx);
+        int form_idxInt = Integer.parseInt(form_idx);
+        manageFormService.delete(form_idxInt);
+
+        return new ModelAndView("redirect:/manage_form_wip_list.go");
     }
 }

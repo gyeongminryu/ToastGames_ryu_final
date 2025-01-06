@@ -21,8 +21,22 @@ function previewPrint(form_idx) {
         },
         dataType: 'json',
         success: function(data) {
+
             // 목록 출력
             printInfo(data.info);
+
+            // 목록으로 돌아가기 버튼 이벤트 설정하기
+            //console.log(data.info.form_state);
+            document.getElementsByName('goToList')[0].onclick = function () {
+                switch (data.info.form_state) {
+                    case 1:
+                        location.href="/manage_form_list.go";
+                        break;
+                    case 2:
+                        location.href="/manage_form_wip_list.go";
+                        break;
+                }
+            }
         },
         error: function(e) {
             //console.log(e);
@@ -36,6 +50,7 @@ function printInfo(info) {
 
     // 문서 양식명
     document.getElementsByName('subject')[0].value = info.form_subject;
+    document.getElementsByClassName('modal_form_name')[0].innerHTML = info.form_subject;
 
     // 문서
     editor.setHTMLCode(info.form_content);
@@ -48,17 +63,24 @@ function printInfo(info) {
 
     if (info.dept_idx_1 === 0 && info.duty_idx_1 === 0) {
         tags += '없음';
-        document.getElementById('approval_1').style.display = 'none';
-        document.getElementById('approval_duty_1').innerHTML = '';
+        if (document.getElementById('approval_1')) {
+            document.getElementById('approval_1').style.display = 'none';
+            document.getElementById('approval_duty_1').innerHTML = '';
+        }
+        setHtmlCode();
     } else if (info.dept_idx_1 === 0 && info.duty_idx_1 !== 0) {
         tags += '작성자 소속/' + info.duty_name_1;
-        document.getElementById('approval_1').style.display = '';
-        document.getElementById('approval_duty_1').innerHTML = info.duty_name_1;
+        if (document.getElementById('approval_1')) {
+            document.getElementById('approval_1').style.display = '';
+            document.getElementById('approval_duty_1').innerHTML = info.duty_name_1;
+        }
         setHtmlCode();
     } else {
         tags += info.dept_name_1 + '/' + info.duty_name_1;
-        document.getElementById('approval_1').style.display = '';
-        document.getElementById('approval_duty_1').innerHTML = info.duty_name_1;
+        if (document.getElementById('approval_1')) {
+            document.getElementById('approval_1').style.display = '';
+            document.getElementById('approval_duty_1').innerHTML = info.duty_name_1;
+        }
         setHtmlCode();
     }
 
@@ -69,17 +91,24 @@ function printInfo(info) {
 
     if (info.dept_idx_2 === 0 && info.duty_idx_2 === 0) {
         tags += '없음';
-        document.getElementById('approval_2').style.display = 'none';
-        document.getElementById('approval_duty_2').innerHTML = '';
+        if (document.getElementById('approval_2')) {
+            document.getElementById('approval_2').style.display = 'none';
+            document.getElementById('approval_duty_2').innerHTML = '';
+        }
+        setHtmlCode();
     } else if (info.dept_idx_2 === 0 && info.duty_idx_2 !== 0) {
         tags += '작성자 소속/' + info.duty_name_2;
-        document.getElementById('approval_2').style.display = '';
-        document.getElementById('approval_duty_2').innerHTML = info.duty_name_2;
+        if (document.getElementById('approval_2')) {
+            document.getElementById('approval_2').style.display = '';
+            document.getElementById('approval_duty_2').innerHTML = info.duty_name_2;
+        }
         setHtmlCode();
     } else {
         tags += info.dept_name_2 + '/' + info.duty_name_2;
-        document.getElementById('approval_2').style.display = '';
-        document.getElementById('approval_duty_2').innerHTML = info.duty_name_2;
+        if (document.getElementById('approval_2')) {
+            document.getElementById('approval_2').style.display = '';
+            document.getElementById('approval_duty_2').innerHTML = info.duty_name_2;
+        }
         setHtmlCode();
     }
 
@@ -90,17 +119,24 @@ function printInfo(info) {
 
     if (info.dept_idx_3 === 0 && info.duty_idx_3 === 0) {
         tags += '없음';
-        document.getElementById('approval_3').style.display = 'none';
-        document.getElementById('approval_duty_3').innerHTML = '';
+        if (document.getElementById('approval_3')) {
+            document.getElementById('approval_3').style.display = 'none';
+            document.getElementById('approval_duty_3').innerHTML = '';
+        }
+        setHtmlCode();
     } else if (info.dept_idx_3 === 0 && info.duty_idx_3 !== 0) {
         tags += '작성자 소속/' + info.duty_name_3;
-        document.getElementById('approval_3').style.display = '';
-        document.getElementById('approval_duty_3').innerHTML = info.duty_name_3;
+        if (document.getElementById('approval_3')) {
+            document.getElementById('approval_3').style.display = '';
+            document.getElementById('approval_duty_3').innerHTML = info.duty_name_3;
+        }
         setHtmlCode();
     } else {
         tags += info.dept_name_3 + '/' + info.duty_name_3;
-        document.getElementById('approval_3').style.display = '';
-        document.getElementById('approval_duty_3').innerHTML = info.duty_name_3;
+        if (document.getElementById('approval_3')) {
+            document.getElementById('approval_3').style.display = '';
+            document.getElementById('approval_duty_3').innerHTML = info.duty_name_3;
+        }
         setHtmlCode();
     }
 
@@ -159,23 +195,20 @@ function setHtmlCode() {
     editor.setHTMLCode(html);
 }
 
-// 제목을 입력하면 문서에 반영
+// 제목을 입력하면 문서 및 모달에 반영
 function syncTitleToEditor(elem) {
     document.getElementById('form_title').innerHTML = elem.value;
     setHtmlCode();
+
+    document.getElementsByClassName('modal_form_name')[0].innerHTML = elem.value;
 }
 
 // 문서를 수정하면 제목에 반영 - 사용 안 함
 //console.log(editor.document.getElementById('form_title').innerHTML);
-function syncTitleToForm() {
-    document.getElementsByName('subject')[0].value = document.getElementById('form_title').innerHTML;
-    setHtmlCode();
-}
-
-// 이전 화면으로 돌아가기
-document.getElementsByClassName('form_return')[0].addEventListener('click', () => {
-    location.href = '/manage_form_detail.go?form_idx=' + form_idx;
-});
+// function syncTitleToForm() {
+//     document.getElementsByName('subject')[0].value = document.getElementById('form_title').innerHTML;
+//     setHtmlCode();
+// }
 
 
 
@@ -305,4 +338,14 @@ function saveValues() {
             }
         });
     }
+}
+
+// 작성중인 문서 등록하기
+document.getElementsByName('form_wip_register')[0].onclick = function() {
+    location.href='/manage_form_register.do?form_idx=' + form_idx;
+}
+
+// 작성중인 문서 삭제하기
+document.getElementsByName('form_wip_delete')[0].onclick = function () {
+    location.href='/manage_form_delete.do?form_idx=' + form_idx;
 }

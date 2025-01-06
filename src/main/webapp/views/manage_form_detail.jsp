@@ -137,7 +137,7 @@
                                 <button class="form_write btn_secondary btn_full">양식을 복사하여 새 양식 작성하기</button>
                             </li>
                             <li>
-                                <button class="form_return btn_subtle btn_full">이전 화면으로 돌아가기</button>
+                                <button class="form_return btn_subtle btn_full">목록으로 돌아가기</button>
                             </li>
                             <li>
                                 <button onclick="tst_modal_call('tst_modal_delete')" class="btn_text btn_full">양식 삭제하기</button>

@@ -104,7 +104,7 @@ function listPrint(list, totalIdx, currentPage) {
             } else if (list[i].dept_idx_1 === 0 && list[i].duty_idx_1 !== 0) {
                 tags += '<td>작성자 소속/' + list[i].duty_name_1 + '</td>';
             } else {
-                tags += '<td>' + list[i].dept_name_1 + list[i].duty_name_1 + '</td>';
+                tags += '<td>' + list[i].dept_name_1 + '/' + list[i].duty_name_1 + '</td>';
             }
 
             // 2차 결재선
@@ -113,7 +113,7 @@ function listPrint(list, totalIdx, currentPage) {
             } else if (list[i].dept_idx_2 === 0 && list[i].duty_idx_2 !== 0) {
                 tags += '<td>작성자 소속/' + list[i].duty_name_2 + '</td>';
             } else {
-                tags += '<td>' + list[i].dept_name_2 + list[i].duty_name_2 + '</td>';
+                tags += '<td>' + list[i].dept_name_2 + '/' + list[i].duty_name_2 + '</td>';
             }
 
             // 3차 결재선
@@ -122,7 +122,7 @@ function listPrint(list, totalIdx, currentPage) {
             } else if (list[i].dept_idx_3 === 0 && list[i].duty_idx_3 !== 0) {
                 tags += '<td>작성자 소속/' + list[i].duty_name_3 + '</td>';
             } else {
-                tags += '<td>' + list[i].dept_name_3 + list[i].duty_name_3 + '</td>';
+                tags += '<td>' + list[i].dept_name_3 + '/' + list[i].duty_name_3 + '</td>';
             }
             tags += '</tr>';
         }

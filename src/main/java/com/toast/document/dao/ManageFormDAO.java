@@ -12,8 +12,9 @@ public interface ManageFormDAO {
     // 문서 양식 목록
     int allCount(int cnt, String opt, String keyword, String sort);
     int countIdx(String opt, String keyword, String sort);
-    List<ManageFormDTO> list(int limit, int offset, String opt, String keyword, String sort);
+    List<ManageFormDTO> list(int limit, int offset, String opt, String keyword, String sort, int form_writer_idx);
     String preview(int form_idx);
+    int getWriterIdx(String writer);
 
     // 문서 양식 상세보기
     ManageFormDTO detail(int form_idx);
@@ -34,5 +35,12 @@ public interface ManageFormDAO {
     List<ManageFormDTO> callDept(int dept_high);
     String callDeptName(int dept_idx);
     void setLine(Map<String, Integer> params);
+
+    // 작성중인 문서 양식 등록하기
+    void register(int form_idx);
+
+    // 작성중인 문서 양식 삭제하기
+    void deleteForm(int form_idx);
+    void deleteLines(int form_idx);
 
 }
