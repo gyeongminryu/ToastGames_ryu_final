@@ -137,9 +137,27 @@ public class ManageFormController {
     // 결재선 설정하기
     @PostMapping (value = "/manage_form_call_dept.ajax")
     public Map<String, Object> manage_form_call_dept(String dept_high) {
-        logger.info("Is this controller work?");
+        //logger.info("Is this controller work?");
+        //logger.info("dept_high="+dept_high);
         int dept_highInt = Integer.parseInt(dept_high);
+        //logger.info("dept_highInt="+dept_highInt);
 
         return manageFormService.callDept(dept_highInt);
+    }
+
+    @PostMapping (value = "/manage_form_call_name.ajax")
+    public Map<String, Object> manage_form_call_name(String dept_idx) {
+        logger.info("dept_idx = "+dept_idx);
+        int dept_idxInt = Integer.parseInt(dept_idx);
+
+        return manageFormService.callDeptname(dept_idxInt);
+    }
+
+    @RequestMapping (value = "/manage_form_set_line.do")
+    public ModelAndView manage_form_set_line(@RequestParam Map<String, String> params) {
+        logger.info("params: {}", params);
+        manageFormService.setLine(params);
+
+        return new ModelAndView("redirect:/manage_form_update.go?form_idx=" + params.get("form_idx_modal"));
     }
 }

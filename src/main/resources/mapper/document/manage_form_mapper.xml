@@ -152,4 +152,12 @@
         SELECT dept_idx, dept_name FROM department WHERE dept_high = #{param1} AND dept_state = 1
     </select>
 
+    <select id="callDeptName" resultType="String">
+        SELECT dept_name FROM department WHERE dept_idx = #{param1}
+    </select>
+
+    <update id="setLine" parameterType="map">
+        UPDATE g_approval_line SET dept_idx = #{dept_idx}, duty_idx = #{duty_idx} WHERE form_idx = #{form_idx} AND gline_order = #{gline_order}
+    </update>
+
 </mapper>

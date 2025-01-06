@@ -27,7 +27,7 @@
                 <tr>
                     <th class="td_align_top">문서 양식</th>
                     <td>
-                        <p class="msg min font_subtle">2분마다 자동으로 저장됩니다.</p>
+                        <p class="msg min font_subtle"><!--2분마다 자동으로 저장됩니다.--></p>
 
                         <!-- rte -->
                         <div id="div_editor"></div>
@@ -58,21 +58,21 @@
                 <tbody>
                 <tr>
                     <th>1차 결재선</th>
-                    <td class="form_approval_line td_align_left">{팀}/팀장</td>
+                    <td class="form_approval_line td_align_left"></td>
                     <td>
                         <button type="button" onclick="tst_modal_call_param('tst_modal_select', '1')" class="btn_primary btn_min">변경하기</button>
                     </td>
                 </tr>
                 <tr>
                     <th>2차 결재선</th>
-                    <td class="form_approval_line td_align_left">{부서}/부서장</td>
+                    <td class="form_approval_line td_align_left"></td>
                     <td>
                         <button type="button" onclick="tst_modal_call_param('tst_modal_select', '2')" class="btn_primary btn_min">변경하기</button>
                     </td>
                 </tr>
                 <tr>
                     <th>3차 결재선</th>
-                    <td class="form_approval_line td_align_left">대표/대표이사</td>
+                    <td class="form_approval_line td_align_left"></td>
                     <td>
                         <button type="button" onclick="tst_modal_call_param('tst_modal_select', '3')" class="btn_primary btn_min">변경하기</button>
                     </td>

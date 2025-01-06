@@ -45,6 +45,8 @@ public class ManageFormDTO {
     private String duty_name_3;
 
     // table department
+    private int dept_idx;
+    private String dept_name;
     private int dept_high;
     private int dept_state;
     private int dept_depth;
@@ -184,6 +186,14 @@ public class ManageFormDTO {
 
     public String getDuty_name_3() {
         return duty_name_3;
+    }
+
+    public int getDept_idx() {
+        return dept_idx;
+    }
+
+    public String getDept_name() {
+        return dept_name;
     }
 
     public int getDept_high() {
@@ -333,6 +343,14 @@ public class ManageFormDTO {
 
     public void setDuty_name_3(String duty_name_3) {
         this.duty_name_3 = duty_name_3;
+    }
+
+    public void setDept_idx(int dept_idx) {
+        this.dept_idx = dept_idx;
+    }
+
+    public void setDept_name(String dept_name) {
+        this.dept_name = dept_name;
     }
 
     public void setDept_high(int dept_high) {

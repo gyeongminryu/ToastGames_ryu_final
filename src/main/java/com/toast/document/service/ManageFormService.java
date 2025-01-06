@@ -103,4 +103,38 @@ public class ManageFormService {
 
         return result;
     }
+
+    public Map<String, Object> callDeptname(int dept_idx) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("name", manageFormDAO.callDeptName(dept_idx));
+
+        return result;
+    }
+
+    public void setLine(Map<String, String> params) {
+        Map<String, Integer> newParams = new HashMap<String, Integer>();
+        newParams.put("form_idx", Integer.parseInt(params.get("form_idx_modal")));
+        newParams.put("gline_order", Integer.parseInt(params.get("tst_modal_param")));
+        newParams.put("dept_idx", Integer.parseInt(params.get("select_team")));
+        newParams.put("duty_idx", Integer.parseInt(params.get("duty_idx_modal")));
+
+        if (newParams.get("dept_idx") == 0 && newParams.get("duty_idx") == 0) {
+            if (newParams.get("gline_order") == 3) {
+                manageFormDAO.setLine(newParams);
+            } else if (newParams.get("gline_order") == 2) {
+                manageFormDAO.setLine(newParams);
+
+                newParams.put("gline_order", 3);
+                manageFormDAO.setLine(newParams);
+            } else if (newParams.get("gline_order") == 1) {
+                manageFormDAO.setLine(newParams);
+
+                newParams.put("gline_order", 2);
+                manageFormDAO.setLine(newParams);
+
+                newParams.put("gline_order", 3);
+                manageFormDAO.setLine(newParams);
+            }
+        }
+    }
 }

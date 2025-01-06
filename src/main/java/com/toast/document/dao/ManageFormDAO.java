@@ -4,6 +4,7 @@ import com.toast.document.dto.ManageFormDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ManageFormDAO {
@@ -31,4 +32,7 @@ public interface ManageFormDAO {
 
     // 결재선 설정하기
     List<ManageFormDTO> callDept(int dept_high);
+    String callDeptName(int dept_idx);
+    void setLine(Map<String, Integer> params);
+
 }

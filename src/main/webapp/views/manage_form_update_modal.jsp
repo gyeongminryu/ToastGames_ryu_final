@@ -3,11 +3,18 @@
 
 <!-- 결재선 선택하기 -->
 <div class="tst_modal tst_modal_input tst_modal_select">
-    <!-- 인자값 내포 -->
-    <input type="hidden" name="tst_modal_param" id="tst_modal_param" value="" />
-
     <div class="tst_modal_container">
-        <form>
+        <form action="manage_form_set_line.do" method="post">
+
+            <!-- 결재선 순서 -->
+            <input type="hidden" name="tst_modal_param" id="tst_modal_param" value="" />
+
+            <!-- 문서 양식 idx -->
+            <input type="hidden" name="form_idx_modal" value="" />
+
+            <!-- 직책 idx -->
+            <input type="hidden" name="duty_idx_modal" value="" />
+
             <div class="tst_modal_header">
                 <h1 class="tst_modal_title">결재선 설정하기</h1>
                 <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_select')"></i>
@@ -17,30 +24,26 @@
                     <li>
                         <label class="form_label">부서 선택</label>
                         <div>
-                            <select name="" onchange="">
-                                <option value="{부서 번호}">{부서명}</option>
-                                <option value="{부서 번호}">{부서명}</option>
-                            </select>
+                            <select name="select_dept" onchange="callDeptToModalTeam(this.value)"></select>
                         </div>
                     </li>
                     <li>
                         <label class="form_label">팀 선택</label>
                         <div>
-                            <select name="" onchange="">
-                                <option value="{부서 번호}">{부서명}</option>
-                                <option value="{부서 번호}">{부서명}</option>
+                            <select name="select_team" onchange="saveValues()">
+                                <option value="0">--부서를 선택하세요--</option>
                             </select>
                         </div>
                     </li>
                     <li>
-                        <p>{부서명}/{팀명}의 부서장|팀장을 결재선으로 설정하시겠습니까?</p>
+                        <p class="tst_modal_select_msg"></p>
                     </li>
                 </ul>
             </div>
             <div class="tst_modal_footer">
                 <div class="tst_flex">
                     <div class="tst_col6">
-                        <button type="button" onclick="location.href='/manage_form_setline'" class="btn_primary btn_full">결재선 설정하기</button>
+                        <button type="submit" class="btn_primary btn_full">결재선 설정하기</button>
                     </div>
                     <div class="tst_col6">
                         <button type="button" onclick="tst_modal_close('tst_modal_select')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
@@ -86,4 +89,3 @@
 <!-- //취소하기 -->
 
 <!-- <script src="resources/js/module_modal.js"></script> -->
-<script src="resources/js/manage_form_update_modal.js"></script>
