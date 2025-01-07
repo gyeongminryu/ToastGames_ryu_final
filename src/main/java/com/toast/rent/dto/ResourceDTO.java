@@ -18,7 +18,14 @@ public class ResourceDTO {
 	private int prod_state;
 	
 	private String prod_rent_str;
+	private String prod_return_state_str;
 	
+	public String getProd_return_state_str() {
+		return prod_return_state_str;
+	}
+	public void setProd_return_state_str(String prod_return_state_str) {
+		this.prod_return_state_str = prod_return_state_str;
+	}
 	public String getProd_rent_str() {
 		return prod_rent_str;
 	}

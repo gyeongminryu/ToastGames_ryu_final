@@ -208,7 +208,7 @@ function resource_list_print(list) {
                 content += '<span onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
                 content += '</td>';
                 content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
-                content += '<td>' + (item.prod_exp_date == null ? '없음' : item.prod_exp_date) + '</td>';
+                content += '<td>' + (item.prod_exp_date == null ? '없음' : formatDateTime(item.prod_exp_date)) + '</td>';
                 content += '</tr>';
             }
         } else {

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.rent.dao.ResourceManageDAO;
@@ -26,6 +27,7 @@ import com.toast.rent.dto.ResourceManageDTO;
 import com.toast.rent.dto.ResourcePhotoDTO;
 import com.toast.schedule.dto.MeetingDTO;
 import com.toast.schedule.dto.MeetingPhotoDTO;
+import com.toast.schedule.dto.ScheduleDTO;
 
 @Service
 public class ResourceManageService {
@@ -460,8 +462,11 @@ public class ResourceManageService {
 	}
 
 	//대여 승인
-	public int permitProd(int prod_idx) {
-		return resourceMgDAO.permitProd(prod_idx);
+	@Transactional
+	public int permitProd(int prod_idx,int prod_rent_idx) {
+		resourceMgDAO.permitProd(prod_idx);
+		int row = resourceMgDAO.permitProdState(prod_rent_idx);
+		return row;
 		
 	}
 
@@ -471,8 +476,19 @@ public class ResourceManageService {
 		boolean success = false;
 		int  row = resourceMgDAO.permitReturn(prod_idx); //대여가능으로 업뎃
 		ResourceManageDTO dto = new ResourceManageDTO();
-		dto.setProd_return_date(LocalDateTime.now().withNano(0));//반납일시
-		dto.setProd_return_state(1);
+		dto.setProd_exp_date(resourceMgDAO.getExpDate(prod_rent_idx));
+	    LocalDateTime returnDate = LocalDateTime.now().withNano(0); // 현재 날짜 및 시간 (밀리초 제거)
+	    dto.setProd_return_date(returnDate);
+
+	    // 반납 예정일시
+	    LocalDateTime dueDate = dto.getProd_exp_date(); // DTO에서 예정일시 가져오기
+
+	    // 반납일시와 예정일시 비교
+	    if (dueDate != null && returnDate.isAfter(dueDate)) {
+	        dto.setProd_return_state(3); // 반납 상태를 3으로 설정 (연체 반납)
+	    } else {
+	        dto.setProd_return_state(1); // 정상 반납
+	    }
 		dto.setProd_rent_idx(prod_rent_idx);
 		int isReturn = resourceMgDAO.insertReturnDate(dto);
 		if(row !=0 && isReturn !=0) {
@@ -574,6 +590,44 @@ public class ResourceManageService {
 		row = resourceMgDAO.prodUpdate(dto);  //물품 등록
 
 		return row;
+	}
+
+	//반납일정 추가정보 가져오기
+	@Transactional
+	public int getReturnInfo(int prod_rent_idx) {
+		ResourceManageDTO ReturnInfo = resourceMgDAO.getReturnInfo(prod_rent_idx);
+		ScheduleDTO scheduleReturn = new ScheduleDTO();
+		scheduleReturn.setSche_title("공용물품 반납일");
+		scheduleReturn.setSche_content(ReturnInfo.getProd_name()+"반납일 입니다. 18시까지 반납해주시기 바랍니다.");
+		scheduleReturn.setSche_type(1); //개인
+		LocalDateTime resetExpTime = ReturnInfo.getProd_exp_date().toLocalDate().atStartOfDay();
+		scheduleReturn.setSche_start_date(resetExpTime); 
+		scheduleReturn.setSche_end_date(ReturnInfo.getProd_exp_date());
+		scheduleReturn.setSche_allday(0);
+		scheduleReturn.setSche_empl_idx(ReturnInfo.getProd_rent_empl_idx());
+		scheduleReturn.setSche_write_date(LocalDateTime.now());
+		int row = resourceMgDAO.insertReturnSchedule(scheduleReturn); //일정 추가
+		return row; 
+		
+	}
+
+	//물품 폐기 처리 가기
+	public void prodInfo(int prod_idx, Model model) {
+		//(첨부파일키 추가 필요)
+		List<String> fileKeys = resourceMgDAO.getProdFileKey(prod_idx);
+		List<ResourcePhotoDTO> files = new ArrayList<ResourcePhotoDTO>();
+	    for (String fileKey : fileKeys) {
+	        // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
+	        ResourcePhotoDTO file = resourceMgDAO.prodMgFile(fileKey);
+	        if (file != null) {
+	            files.add(file); // 가져온 파일 정보를 리스트에 추가
+	        }
+	    }
+	    ResourceManageDTO detail = resourceMgDAO.prodInfo(prod_idx);
+	    model.addAttribute("prodDispoDate", formatDateTime(detail.getProd_dispo_date()));
+	    model.addAttribute("prodPurchDate", formatDateTime(detail.getProd_purch_date()));
+		model.addAttribute("detail", detail);
+		model.addAttribute("files", files);
 	}
 
 

@@ -1,5 +1,6 @@
 package com.toast.rent.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.toast.rent.dto.ResourceManageDTO;
 import com.toast.rent.dto.ResourcePhotoDTO;
+import com.toast.schedule.dto.ScheduleDTO;
 
 @Mapper
 public interface ResourceManageDAO {
@@ -68,6 +70,9 @@ public interface ResourceManageDAO {
 	//대여 승인
 	int permitProd(int prod_idx);
 
+	//물품 대여 승인 상태 업뎃
+	int permitProdState(int prod_rent_idx);
+	
 	//물품 반납
 	int permitReturn(int prod_idx);
 
@@ -91,6 +96,20 @@ public interface ResourceManageDAO {
 
 	//파일키 지우기
 	int prodFileKeyRemove(int prod_idx, String fileKey);
+
+	//반납예정일시
+	LocalDateTime getExpDate(int prod_rent_idx);
+
+	//반납일정 추가정보 가져오기
+	ResourceManageDTO getReturnInfo(int prod_rent_idx);
+
+	//반납 일정 추가(schedule)
+	int insertReturnSchedule(ScheduleDTO scheduleReturn);
+
+	//폐기물품 정보가져오기
+	ResourceManageDTO prodInfo(int prod_idx);
+
+
 	
 	
 
