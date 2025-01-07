@@ -77,7 +77,7 @@ function resource_list_print(list) {
 			        content += '<td><h3>정상 대여</h3></td>';
 			    }
 			} else { // 반납일이 있을 경우
-			    content += '<td>' + item.prod_return_date + '</td>';
+			    content += '<td>' + formatDateTime(item.prod_return_date) + '</td>';
 			    
 			    // 반납일과 반납기한 비교
 			    const returnDate = new Date(item.prod_return_date);
@@ -192,14 +192,14 @@ function prod_button(item) {
 	    } else {
 	        // 사용 연한이 지났을 경우
 	        button_content += '<li>';
-	        button_content += '<button class="btn_primary btn_full" onclick="location.href=\'/manage_rent_transfer\'">직원에게 인계하기</button>';
+	        button_content += '<button class="btn_primary btn_full" onclick="location.href=\'/manage_rent_transfer.go?prod_idx=' + prod_idx + '\'">직원에게 인계하기</button>';
 	        button_content += '</li>';
 	    }
 	}
 	
 	// 사용 연한과 상관없이 동일하게 출력하는 버튼들
 	button_content += '<li>';
-	button_content += '<button class="btn_secondary btn_full" onclick="location.href=\'/manage_rent_dispose.go\'">폐기하기</button>';
+	button_content += '<button class="btn_secondary btn_full" onclick="location.href=\'/manage_rent_dispose.go?prod_idx=' + prod_idx + '\'">폐기하기</button>';
 	button_content += '</li>';
 	button_content += '<li>';
 	button_content += '<button class="btn_subtle btn_full" onclick="location.href=\'/manage_rent_list.go\'">목록으로 돌아가기</button>';
@@ -235,6 +235,7 @@ document.getElementById("permit_product").addEventListener("click", function () 
 	        type: 'GET',
 	        url: '/permitProd.do', 
 	        data:{
+	        	'prod_rent_idx':prod_rent_idx,
 	        	'prod_idx':prod_idx
 	        },
 	        dataType: 'json', 

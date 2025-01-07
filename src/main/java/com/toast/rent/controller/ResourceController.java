@@ -1,6 +1,7 @@
 package com.toast.rent.controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -152,10 +153,10 @@ public class ResourceController {
 	    dto.setProd_rent_reason(prod_rent_reason);
 	    dto.setProd_rent_empl_idx(empl_idx);
 	    dto.setProd_rent_date(currentDateTime);
-	    
+	    dto.setProd_return_state(4);
 	    // 서비스 호출
 	    resourceService.rentRequest(dto);
-
+	    
 	 // 성공 메시지 반환
 	    return "redirect:/prodDetail.go?prod_idx=" + requestData.get("prod_idx");
 	}
@@ -169,7 +170,7 @@ public class ResourceController {
 	}
 
 	
-	
+	//내 물품 리스트 가기
 	@GetMapping(value="/rent_mylist.go")
 	public String myList() {
 		return "rent_mylist";
@@ -192,22 +193,45 @@ public class ResourceController {
 	    // 카테고리에 따른 처리
 	    if ("5".equals(rent_state)) {// 전체 보기
 	        return resourceService.myResourceList(page_, cnt_, empl_idx); 
-	    } else if(rent_state_ > 10){ //반납여부
+	    } else { //반납여부
 	        return resourceService.myResourceReturnList(rent_state_, page_, cnt_, empl_idx); // 특정 카테고리
-	    } else { //대여 상태
-	    	return resourceService.myResourceFilterList(rent_state_, page_, cnt_, empl_idx); // 특정 카테고리
-	    }
-	    
+	    } 
 	}
 	
 
 	//내가 대여한 물품 상세보기(반납장소 포함)
 	@GetMapping(value = "/myProdDetail.go")
-	@ResponseBody
-	public ResourceDTO myRentDetail(@RequestParam("prod_idx") int prod_idx) {
-	    return resourceService.prodRentDetail(prod_idx);
+	public String myRentDetail(@RequestParam("prod_rent_idx") int prod_rent_idx, Model model) {
+	    resourceService.myRentDetail(prod_rent_idx, model);
+	    int prod_idx = resourceService.getIdx(prod_rent_idx);
+	    List<ResourcePhotoDTO> files = resourceService.prodFile(prod_idx);
+	    model.addAttribute("files", files);
+		return "rent_mylist_detail";
 	}
 	
+	
+	//신청중일경우 취소 
+	@GetMapping(value="/rentRequestCancel.ajax")
+	@ResponseBody
+	public Map<String, Object> rentCancel(
+			@RequestParam("prod_idx") String prod_idx, 
+			@RequestParam("prod_rent_idx") String prod_rent_idx) {
+		
+		logger.info("prod_idx:"+prod_idx);
+		logger.info("prod_rent_idx:"+prod_rent_idx);
+		
+		int prodIdx = Integer.parseInt(prod_idx);
+		int prodRentIdx = Integer.parseInt(prod_rent_idx);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int row = resourceService.rentCancel(prodIdx, prodRentIdx);
+		if(row > 0) {
+			map.put("redirectURL", "/rent_mylist.go");
+		}else {
+			map.put("error", "신청 취소 중 문제가 발생하였습니다");
+		}
+		return map;
+	}
 	
 	
 	

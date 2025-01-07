@@ -119,8 +119,8 @@
 
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
-                            <li>
-                                <button class="btn_primary btn_full" onclick="tst_modal_call('tst_modal_detail')">물품 대여 신청하기</button>
+                            <li id="rent_request_button">
+                                <button  class="btn_primary btn_full" onclick="tst_modal_call('tst_modal_detail')">물품 대여 신청하기</button>
                             </li>
                             <li>
                                 <button class="btn_secondary btn_full" onclick="location.href='/rent_list.go'">목록으로 돌아가기</button>
