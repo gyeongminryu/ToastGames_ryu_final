@@ -7,6 +7,7 @@ public class ProjectInfoDTO {
 	private String team_head_idx;
 	private String calup_date;
 	private String deletion_date;
+	private String update_date;
 	
 	private String change_log_time;
 	
@@ -16,6 +17,14 @@ public class ProjectInfoDTO {
 	private String head_position_name;
 	
 	private String team_member_count;
+
+	public String getUpdate_date() {
+		return update_date;
+	}
+
+	public void setUpdate_date(String update_date) {
+		this.update_date = update_date;
+	}
 
 	public String getChange_log_time() {
 		return change_log_time;
