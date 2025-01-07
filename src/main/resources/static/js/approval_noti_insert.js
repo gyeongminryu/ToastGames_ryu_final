@@ -1,4 +1,4 @@
-function approval_insert_notify(url,target_users,sender_idx,doc_subject,doc_content,notify_category){
+function approval_insert_notify(url,target_users,sender_idx,doc_subject,doc_content,type){
     //send_date
     let today = new Date(); //오늘 날짜에 대한 전체 정보
 
@@ -18,8 +18,10 @@ function approval_insert_notify(url,target_users,sender_idx,doc_subject,doc_cont
     //ajax로 전달할 param
     var receiver_list = [];
     if(Array.isArray(target_users)){ //target_users가 여러명일 때
-        for(var target_user_key of Object.keys(target_users)){
-            receiver_list.push(target_users.target_user_key);
+        if(Object.keys(target_users).length>0){
+            for(var target_user_key of Object.keys(target_users)){
+                receiver_list.push(target_users[target_user_key]);
+            }
         }
     }else{ //한명일 때
         receiver_list.push(target_users);
@@ -43,7 +45,7 @@ function approval_insert_notify(url,target_users,sender_idx,doc_subject,doc_cont
     param.doc_subject = doc_subject;
     param.doc_content = doc_content;
     param.doc_date = doc_date;
-    param.notify_category = 1;
+    param.notify_category = type;
     console.log("param:{}",param);
     var success = false;
     $.ajax({

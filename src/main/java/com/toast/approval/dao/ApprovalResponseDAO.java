@@ -2,6 +2,9 @@ package com.toast.approval.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+import java.util.Map;
+
 @Mapper
 public interface ApprovalResponseDAO {
     int update_appr_content(String doc_content, String doc_idx);
@@ -17,6 +20,10 @@ public interface ApprovalResponseDAO {
     int count_top_line_order(String doc_idx, String line_order);
 
     int update_top_line_order(String doc_idx, String line_order);
+
+    int count_lower_line(String doc_idx, String line_order);
+
+    List<Map<String, Object>> get_lower_line(String doc_idx, String line_order);
 
     int get_next_appr(String line_order, String doc_idx);
 }

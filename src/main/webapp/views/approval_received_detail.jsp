@@ -60,7 +60,7 @@
                                 <input type="hidden" id = "doc_idx" value = ${doc_info.doc_idx}>
                                 <input type="hidden" id = "doc_subject" value = ${doc_info.doc_subject}>
                                 <input type="hidden" id = "doc_content_sub" value = ${doc_info.doc_content_sub}>
-
+                                <input type="hidden" id="doc_write_empl_idx" value="${doc_info.empl_idx}">
                                 <input type="hidden" id = "empl_idx" value = ${empl_idx}>
                                 <input type="hidden" id = "my_appr_order" value = ${my_appr_order}>
 
@@ -104,23 +104,21 @@
                             <tr>
                                 <th>첨부파일</th>
                                 <td>
+                                    <c:if test="${file_infos.size()==0}">첨부 파일 없음</c:if>
+                                    <c:if test="${file_infos.size()>0}">
                                     <ul class="list_no_desc list_inline">
+
+                                        <c:forEach items="${file_infos}" var = "file_info">
                                         <li>
                                             <i class="bi bi-paperclip"></i>
-                                            <span>{첨부파일_1 (용량)}</span>
-                                            <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_secondary">다운로드</button>
+                                            <span>${file_info.ori_filename}</span>
+                                            <button onclick="location.href='/approval_download.do?new_filename=${file_info.new_filename}&ori_filename=${file_info.ori_filename}'" class="btn_min btn_secondary">다운로드</button>
                                         </li>
-                                        <li>
-                                            <i class="bi bi-paperclip"></i>
-                                            <span>{첨부파일_2 (000.0kb)}</span>
-                                            <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_secondary">다운로드</button>
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-paperclip"></i>
-                                            <span>{첨부파일_3 (000.0kb)}</span>
-                                            <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href=''" class="btn_min btn_secondary">다운로드</button>
-                                        </li>
+                                        </c:forEach>
+
+
                                     </ul>
+                                    </c:if>
                                 </td>
                             </tr>
                             <tr>
