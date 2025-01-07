@@ -106,6 +106,9 @@ public interface ResourceManageDAO {
 	//반납 일정 추가(schedule)
 	int insertReturnSchedule(ScheduleDTO scheduleReturn);
 
+	//폐기물품 정보가져오기
+	ResourceManageDTO prodInfo(int prod_idx);
+
 
 	
 	

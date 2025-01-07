@@ -22,16 +22,16 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_rent_list'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_rent_list.go'">
                         <h1>공용 물품 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_dispose_list'">
+                    <li class="tst_title_item" onclick="location.href='/manage_dispose_list.go'">
                         <h1>폐기 물품 확인</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->
-                <form>
-                    <div class="tst_flex">
+                <form action="productTransfer.do" method="post">
+                    <div class="tst_flex" >
 
                         <!-- 인계 정보 -->
                         <div class="tst_col9">
@@ -67,11 +67,8 @@
                                             <div class="image_preview">
                                                 <table class="tst_table table_no_underline">
                                                     <tr>
-                                                        <td><img src="https://images3.theispot.com/1024x1024/a4140ir1003.jpg?v=210305104100" /></td>
-                                                        <td><img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" /></td>
-                                                        <td><img src="https://images3.theispot.com/1024x1024/a4140ir1071.jpg?v=210306093500" /></td>
-                                                        <td><img src="https://images2.theispot.com/1024x1024/a4140ir1124.jpg?v=211029051300" /></td>
-                                                        <td><img src="https://images3.theispot.com/1024x1024/a4140ir1062.jpg?v=210305062100" /></td>
+                                                        <!-- <td><img src="https://images3.theispot.com/1024x1024/a4140ir1003.jpg?v=210305104100" /></td> -->
+
                                                     </tr>
                                                 </table>
                                             </div>
@@ -107,33 +104,35 @@
                                 <tbody>
                                 <tr>
                                     <th>물품명</th>
-                                    <td id="prod_name" class="prod_name">{물품명}</td>
+                                    <td id="prod_name" class="prod_name">${detail.prod_name}</td>
                                 </tr>
                                 <tr>
                                     <th>물품 정보</th>
-                                    <td id="prod_cate_idx" class="prod_cate_idx">{물품 정보}</td>
+                                    <td id="prod_cate_idx" class="prod_cate_idx">${detail.prod_info}</td>
                                 </tr>
                                 <tr>
                                     <th>카테고리</th>
-                                    <td id="prod_cate_name" class="prod_cate_name">{물품 카테고리}</td>
+                                    <td id="prod_cate_name" class="prod_cate_name">${detail.prod_cate_name}</td>
                                 </tr>
                                 <tr>
                                     <th>내용연수</th>
-                                    <td id="prod_life" class="prod_life">{내용연수|0년}</td>
+                                    <td id="prod_life" class="prod_life">${detail.prod_life}년</td>
                                 </tr>
                                 <tr>
                                     <th>등록일</th>
-                                    <td id="prod_purch_date" class="prod_purch_date">{등록일|yyyy-MM-dd}</td>
+                                    <td id="prod_purch_date" class="prod_purch_date">${prodPurchDate}</td>
                                 </tr>
                                 <tr>
                                     <th>사용연한</th>
-                                    <td id="prod_dispo_date" class="prod_dispo_date">{사용연한|yyyy-MM-dd}</td>
+                                    <td id="prod_dispo_date" class="prod_dispo_date">${prodDispoDate}</td>
                                 </tr>
 
                                 <!-- 아직 사용 연한이 지나지 않았다면 아래 요소에 클래스 disp_hide를 추가해 주세요 -->
-                                <tr>
-                                    <th colspan="2" class="td_bg_subtle td_align_center">아직 사용 연한이 지나지 않은 물품입니다.</th>
-                                </tr>
+								<c:if test="${detail.prod_state != 0}">
+								    <tr>
+								        <th colspan="2" class="td_bg_subtle td_align_center">아직 사용 연한이 지나지 않은 물품입니다.</th>
+								    </tr>
+								</c:if>
                                 <!-- //아직 사용 연한이 지나지 않았다면 위 요소에 클래스 disp_hide를 추가해 주세요 -->
 
                                 </tbody>
@@ -146,7 +145,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <button type="button" onclick="location.href='/manage_rent_list'" class="btn_secondary btn_full">목록으로 돌아가기</button>
+                                        <button type="button" onclick="location.href='/manage_rent_list.go'" class="btn_secondary btn_full">목록으로 돌아가기</button>
                                     </td>
                                 </tr>
                                 </tfoot>

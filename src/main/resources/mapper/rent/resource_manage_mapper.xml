@@ -542,8 +542,23 @@
 			WHERE prod_idx=#{param1} AND file_key=#{param2}
 	</delete>
 
-
-
+	<!-- 폐기할 물품 정보가져오기 -->
+	<select id="prodInfo" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			pd.prod_name,
+			pd.prod_info,
+			pc.prod_cate_name,
+			pc.prod_life,
+			pd.prod_purch_date,
+			pd.prod_dispo_date,
+			pd.prod_state
+		FROM 
+			product pd
+		JOIN 
+			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
+		WHERE 
+			pd.prod_idx=#{param1}
+	</select>
 
 
 

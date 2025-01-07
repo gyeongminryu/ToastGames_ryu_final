@@ -386,17 +386,49 @@ public class ResourceManageController {
 		return response;
 	}
 	
+	
+	//폐기처리 리스트가기
+//	@GetMapping(value="/manage_dispose_list.go")     
+//	public String dispoList() {
+//		
+//	}
 
 	//사용연한다되면물품 상태 0으로 업뎃
+	
+	
+	
+	
+	//물품 폐기 처리 가기
+	@GetMapping(value="/manage_rent_dispose.go")
+	public String dispoGo(@RequestParam("prod_idx") String prod_idx, Model model) {
+		int prodIdx = Integer.parseInt(prod_idx);
+		resourceMgService.prodInfo(prodIdx, model);
+		return "manage_rent_dispose";
+	}
+	
+	//@물품 인계처리 가기
+	@GetMapping(value="/manage_rent_transfer.go")
+	public String dispoTransferGo(@RequestParam("prod_idx") String prod_idx, Model model) {
+		int prodIdx = Integer.parseInt(prod_idx);
+		resourceMgService.prodInfo(prodIdx, model);
+		return "manage_rent_dispose";
+	}
+	
+	
+	
+	
+	
+	
+	
+
 	
 		
 	//연체시 상태 업뎃(prod_return_state: 2)
 	
 
-	//물품 인계 승인
+	//물품 인계 
 	
 	
-	//물품 폐기 처리
 	
 
 	//

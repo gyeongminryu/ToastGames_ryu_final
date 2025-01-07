@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.rent.dao.ResourceManageDAO;
@@ -608,6 +609,25 @@ public class ResourceManageService {
 		int row = resourceMgDAO.insertReturnSchedule(scheduleReturn); //일정 추가
 		return row; 
 		
+	}
+
+	//물품 폐기 처리 가기
+	public void prodInfo(int prod_idx, Model model) {
+		//(첨부파일키 추가 필요)
+		List<String> fileKeys = resourceMgDAO.getProdFileKey(prod_idx);
+		List<ResourcePhotoDTO> files = new ArrayList<ResourcePhotoDTO>();
+	    for (String fileKey : fileKeys) {
+	        // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
+	        ResourcePhotoDTO file = resourceMgDAO.prodMgFile(fileKey);
+	        if (file != null) {
+	            files.add(file); // 가져온 파일 정보를 리스트에 추가
+	        }
+	    }
+	    ResourceManageDTO detail = resourceMgDAO.prodInfo(prod_idx);
+	    model.addAttribute("prodDispoDate", formatDateTime(detail.getProd_dispo_date()));
+	    model.addAttribute("prodPurchDate", formatDateTime(detail.getProd_purch_date()));
+		model.addAttribute("detail", detail);
+		model.addAttribute("files", files);
 	}
 
 
