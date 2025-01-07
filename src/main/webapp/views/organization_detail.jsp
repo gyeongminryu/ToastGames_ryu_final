@@ -177,6 +177,7 @@
         </div>
     </div>
 </div>
+<c:import url="organization_detail_modal.jsp" />
 <script>
 $(document).ready(function() {
     const emplNameContainer = $('#emplNameContainer');

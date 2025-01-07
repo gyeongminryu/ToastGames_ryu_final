@@ -405,6 +405,16 @@ public class DepartmentService {
 			
 			return departmentDAO.getDeptMembers(dept_idx);
 		}
+
+		public List<EmployeeDetailDTO> getDeptSearchMembers(String dept_idx, String category, String keyword,String team_idx) {
+			
+			return departmentDAO.getDeptSearchMembers(dept_idx,category,keyword,team_idx);
+		}
+
+		public List<EmployeeDetailDTO> getDeptTeamMembers(String dept_idx, String team_idx) {
+			// TODO Auto-generated method stub
+			return departmentDAO.getDeptTeamMembers(dept_idx,team_idx);
+		}
 		
 
 

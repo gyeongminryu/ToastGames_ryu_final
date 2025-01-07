@@ -100,17 +100,16 @@
                                 <th>발령일</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>{번호}</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
-                                <td>{발령일|yyyy-MM-dd}</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('10052')" class="tst_pointer">서연진 (프로그래밍 부/차장)</span></td>
-                                <td>2020-01-02</td>
-                            </tr>
+                            <tbody id="project_leader_history">
+                              <c:forEach var="his" items="${team_his}" varStatus="status">
+                              <tr> 
+                                <td>${status.index + 1}</td>
+                                <td class="td_align_left"><span onclick="tst_view_profile('${his.team_head_idx}')" class="tst_pointer">${his.head_name } (${his.head_dept_name }/${his.head_position_name })</span></td>
+                                <td>${his.change_log_time}</td>
+                              </tr>
+                              </c:forEach>
+                            
+                           
                             </tbody>
                         </table>
                         <!-- //프로젝트 팀장 변경 이력 -->
@@ -178,111 +177,45 @@
                             <tbody>
 
                             <!-- 프로젝트 팀원이 없을 경우 -->
-                            <tr class="rent_history_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="8" class="td_no_data">
-                                    <p><i class="bi bi-person-exclamation"></i></p>
-                                    <h3>검색 조건에 해당하는 팀원이 없습니다.</h3>
-                                </td>
-                            </tr>
+                            <!-- 데이터가 없는 경우 -->
+						    <c:if test="${empty team_members}">
+						        <tr class="rent_history_no_data">
+						            <td colspan="8" class="td_no_data">
+						                <p><i class="bi bi-person-exclamation"></i></p>
+						                <h3>검색 조건에 해당하는 팀원이 없습니다.</h3>
+						            </td>
+						        </tr>
+						    </c:if>
                             <!-- //프로젝트 팀원이 없을 경우 -->
 
                             <!-- 프로젝트 팀원 목록 -->
 
                             <!-- 프로젝트 팀원 목록 > 팀장 > 팀 소속 -->
-                            <tr class="td_bg_subtle"><!-- 팀장은 tr에 클래스 'td_bg_subtle'를 추가하세요 -->
-                                <td>{번호}</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급})</span></td>
-                                <td class="td_align_left">{소속 조직} (부서장|팀장)</td>
-                                <td class="td_align_left">{직무}</td>
-                                <td>{발령일|yyyy-MM-dd}</td>
-                                <td>없음</td>
-                                <td><span class="tst_badge_min btn_secondary">팀 소속</span></td>
-                                <td><!-- 팀장은 삭제할 수 없습니다. --></td>
-                            </tr>
-                            <!-- //프로젝트 팀원 목록 > 팀장 > 팀 소속 -->
-
-                            <!-- 프로젝트 팀원 목록 > 팀장 > 팀 소속 아님 -->
-                            <tr class="td_bg_subtle"><!-- 팀장은 tr에 클래스 'td_bg_subtle'를 추가하세요 -->
-                                <td>{번호}</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급})</span></td>
-                                <td class="td_align_left">{소속 조직} (부서장|팀장)</td>
-                                <td class="td_align_left">{직무}</td>
-                                <td>{발령일|yyyy-MM-dd}</td>
-                                <td>{전출일|yyyy-MM-dd}</td>
-                                <td><span class="tst_badge_min btn_disable">소속 아님</span></td>
-                                <td><!-- 팀 소속이 아닌 직원은 삭제할 수 없습니다. --></td>
-                            </tr>
-                            <!-- //프로젝트 팀원 목록 > 팀장 > 팀 소속 아님 -->
-
-                            <!-- 프로젝트 팀원 목록 > 팀원 > 팀 소속 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급})</span></td>
-                                <td class="td_align_left">{소속 조직}</td>
-                                <td class="td_align_left">{직무}</td>
-                                <td>{발령일|yyyy-MM-dd}</td>
-                                <td>없음</td>
-                                <td><span class="tst_badge_min btn_secondary">팀 소속</span></td>
-                                <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call_param('tst_modal_delete', '{직원 번호}')"></i></td>
-                            </tr>
-                            <!-- //프로젝트 팀원 목록 > 팀원 > 팀 소속 -->
-
-                            <!-- 프로젝트 팀원 목록 > 팀원 > 팀 소속 아님 -->
-                            <tr class="font_subtle">
-                                <td>{번호}</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급})</span></td>
-                                <td class="td_align_left">{소속 조직}</td>
-                                <td class="td_align_left">{직무}</td>
-                                <td>{발령일|yyyy-MM-dd}</td>
-                                <td>{전출일|yyyy-MM-dd}</td>
-                                <td><span class="tst_badge_min btn_disable">소속 아님</span></td>
-                                <td><!-- 팀 소속이 아닌 직원은 삭제할 수 없습니다. --></td>
-                            </tr>
-                            <!-- //프로젝트 팀원 목록 > 팀원 > 팀 소속 아님 -->
-
-                            <!-- 예시 -->
-                            <tr class="td_bg_subtle">
-                                <td>24</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('10052')" class="tst_pointer">서연진 (차장)</span></td>
-                                <td class="td_align_left">프로그래밍 부 (부서장)</td>
-                                <td class="td_align_left">토스트 타이쿤 2 제작 관련 업무 전반 관리</td>
-                                <td>2020-01-02</td>
-                                <td>없음</td>
-                                <td><span class="tst_badge_min btn_secondary">팀 소속</span></td>
-                                <td><!-- 팀장은 삭제할 수 없습니다. --></td>
-                            </tr>
-                            <tr>
-                                <td>23</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('10060')" class="tst_pointer">김인하 (과장)</span></td>
-                                <td class="td_align_left">게임엔진 개발 (팀장)</td>
-                                <td class="td_align_left">게임 엔진 개발 및 관련 업무 전반 관리</td>
-                                <td>2020-01-02</td>
-                                <td>없음</td>
-                                <td><span class="tst_badge_min btn_secondary">팀 소속</span></td>
-                                <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call_param('tst_modal_delete', '124')"></i></td>
-                            </tr>
-                            <tr>
-                                <td>22</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('')" class="tst_pointer">김이름 (대리)</span></td>
-                                <td class="td_align_left">게임엔진 개발</td>
-                                <td class="td_align_left">게임 엔진 개발</td>
-                                <td>2020-01-02</td>
-                                <td>없음</td>
-                                <td><span class="tst_badge_min btn_secondary">팀 소속</span></td>
-                                <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call_param('tst_modal_delete', '123')"></i></td>
-                            </tr>
-                            <tr class="font_subtle">
-                                <td>21</td>
-                                <td class="td_align_left"><span onclick="tst_view_profile('')" class="tst_pointer">김이름 (대리)</span></td>
-                                <td class="td_align_left">게임엔진 개발</td>
-                                <td class="td_align_left">게임 엔진 개발</td>
-                                <td>2020-01-02</td>
-                                <td>2020-03-02</td>
-                                <td><span class="tst_badge_min btn_disable">소속 아님</span></td>
-                                <td><!-- 팀 소속이 아닌 직원은 삭제할 수 없습니다. --></td>
-                            </tr>
-                            <!-- //예시 -->
-
+                           <c:forEach var="member" items="${team_members}" varStatus="status">
+						        <tr>
+						            <td>${status.index + 1}</td>
+						            <td class="td_align_left">
+						                <span onclick="tst_view_profile('${member.empl_idx}')" class="tst_pointer">
+						                    ${member.empl_name} (${member.position_name})
+						                </span>
+						            </td>
+						            <td class="td_align_left">${member.dept_name}</td>
+						            <td class="td_align_left">${member.empl_job}</td>
+						            <td>${member.movein_date}</td>
+						            <td>${member.transfer_date == null ? '없음' : member.transfer_date}</td>
+						            <td>
+						                <span class="tst_badge_min ${member.transfer_date ==null ?'btn_secondary' : 'btn_disable'  }">
+						                    ${member.transfer_date ==null ? '팀 소속':'소속 아님'}
+						                </span>
+						            </td>
+						            <td>
+						              <c:if test="${member.transfer_date == null}">
+						            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_call_param_custom('tst_modal_delete', '${member.empl_idx}','${member.empl_name}','${member.position_name}')"></i>
+						            </c:if>
+						            </td>
+						            
+						        </tr>
+						    </c:forEach>
                             </tbody>
 
                         </table>
@@ -297,4 +230,17 @@
 <c:import url="project_team_detail_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
+<script>
+function tst_modal_call_param_custom(modalId, memberId, memberName, memberPosition) {
+    // 기존 모달 호출 유지
+    tst_modal_call_param(modalId, memberId);
+
+    // 추가 데이터 설정
+      document.getElementById("member_idx").value = memberId;
+    var memberElement = document.getElementById("prod_name");
+    memberElement.textContent = memberName + " (" + memberPosition + ")"; // 이름과 직책 설정
+}
+</script>
+
+
 </html>

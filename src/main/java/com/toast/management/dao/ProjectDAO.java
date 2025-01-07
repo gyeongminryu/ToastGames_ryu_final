@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.ProjectInfoDTO;
+import com.toast.management.dto.ProjectMemberDetailDTO;
 import com.toast.management.dto.TeamListDTO;
 
 @Mapper
@@ -25,6 +26,14 @@ public interface ProjectDAO {
 	List<ProjectInfoDTO> projectHistoty(String team_idx);
 
 	EmployeeDetailDTO teammemberdetail(String head_idx);
+
+	int projectTeamMemberAdd(Integer integer, String team_idx);
+
+	List<ProjectMemberDetailDTO> projectTeamMemberList(String team_idx);
+
+	int removeTeamMember(String member_idx, String team_idx);
+
+	int projectTeamUpdateDo(Map<String, String> param);
 
 	
 

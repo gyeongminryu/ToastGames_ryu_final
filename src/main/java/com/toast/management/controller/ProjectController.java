@@ -70,6 +70,7 @@ public class ProjectController {
 	public String projectTeamDetail(@RequestParam(required = false) String team_idx, Model model) {
 		
 		projectService.projectTeamDetail(team_idx,model);
+		projectService.projectTeamMemberList(team_idx,model);
 		
 		return "project_team_detail";
 	}
@@ -81,5 +82,46 @@ public class ProjectController {
 		return "redirect:/project_team_detail.go?team_idx="+team_idx;
 	}
 	
+	@PostMapping(value="/project_team_member_add")
+	public String projectTeamMemberAdd(@RequestParam(required = false) List<Integer> members, String team_idx) {
+		
+		for (Integer integer : members) {
+			logger.info("멤버 idx : "+integer);
+		}
+		
+		projectService.projectTeamMemberAdd(members,team_idx);
+		
+		
+		return "redirect:/project_team_detail.go?team_idx="+team_idx;
+	}
+	
+	@PostMapping(value="/remove_team_member")
+	@ResponseBody
+	public Map<String, Object> removeTeamMember(@RequestParam String member_idx, String team_idx) {
+		logger.info("member_idx: "+member_idx);
+		logger.info("team_idx: "+team_idx);
+		Map<String, Object> response = new HashMap<>();
+	    try {
+	      
+	    	projectService.removeTeamMember(member_idx,team_idx);
+	        // 성공 응답
+	        response.put("success", true);
+	    } catch (Exception e) {
+	        // 실패 응답
+	        response.put("success", false);
+	        response.put("message", e.getMessage());
+	    }
+	    return response;
+	}
+	
+	@PostMapping(value="/project_team_update.do")
+	public String projectTeamUpdateDo(@RequestParam Map<String,String> param) {
+		
+		String team_idx = param.get("team_idx");
+		projectService.projectTeamUpdateDo(param);
+		
+		
+		return "redirect:/project_team_detail.go?team_idx="+team_idx;
+	}
 	
 }

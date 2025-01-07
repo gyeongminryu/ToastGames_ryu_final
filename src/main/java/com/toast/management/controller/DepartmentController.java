@@ -321,6 +321,32 @@ public class DepartmentController {
 			List<EmployeeDetailDTO> dept_member_list = departmentService.getDeptMembers(dept_idx);
 			
 			return dept_member_list;
-		}
+		} 
+
+		@PostMapping(value="/get_dept_search_member.ajax")
+		@ResponseBody
+		public List<EmployeeDetailDTO> getDeptSearchMembers(@RequestParam String dept_idx, String team_idx,@RequestParam(value ="category", required = false) String category,@RequestParam(value ="keyword", required = false) String keyword ){
+			
+			logger.info("get_dept_search_member.ajax 함수 도착");
+			logger.info("category" +category);
+			logger.info("keyword" +keyword);
+			
+			List<EmployeeDetailDTO> dept_member_list = departmentService.getDeptSearchMembers(dept_idx,category,keyword,team_idx);
+			
+			return dept_member_list;
+		} 
 		
-}
+		
+		// 프로젝트팀원이 아닌 부서원들 목록
+		@GetMapping(value="/get_dept_team_members.ajax")
+		@ResponseBody
+		public List<EmployeeDetailDTO> getDeptTeamMembers(@RequestParam String dept_idx, String team_idx){
+			
+			List<EmployeeDetailDTO> dept_member_list = departmentService.getDeptTeamMembers(dept_idx,team_idx);
+			
+			return dept_member_list;
+		} 
+		
+		
+		
+} // public class DepartmentController
