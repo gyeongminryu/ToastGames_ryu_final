@@ -42,11 +42,11 @@
                             <!-- //전체 제품 조회 (필터링 초기화) -->
 
                             <!-- 분류 목록 (필터링) -->
-                            <tr><td><span onclick="my_page_call(1, 2)">대여 신청한 물품 목록</span></td></tr>
+                            <tr><td><span onclick="my_page_call(1, 4)">대여 신청한 물품 목록</span></td></tr>
                             <!-- //분류 목록 (필터링) -->
 
                             <!-- 분류 목록 > 선택한 항목 (필터링) -->
-                            <tr><td class="td_bg_medium"><span onclick="my_page_call(1, 3)">대여중인 물품 목록</span></td></tr>
+                            <tr><td><span onclick="my_page_call(1, 0)">대여중인 물품 목록</span></td></tr>
                             <!-- //분류 목록 > 선택한 항목 (필터링) -->
 
                             <tr><td><span onclick="my_page_call(1, 11)">반납한 물품 목록</span></td></tr>
@@ -121,6 +121,5 @@
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/rent_mylist.js"></script>
-
 
 </html>

@@ -86,6 +86,11 @@ public interface ResourceDAO {
 	//물품 idx가져오기
 	int getIdx(int prod_rent_idx);
 
+	//대여 신청 취소 물품 상태 업뎃
+	int rentCancel(int i,int prodIdx);
+
+	//대여 신청 취소 사용자 삭제
+	int rentReturnCancel(int prodRentIdx);
 	
 
 	

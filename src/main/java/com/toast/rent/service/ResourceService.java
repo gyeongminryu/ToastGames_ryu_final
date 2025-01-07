@@ -322,7 +322,7 @@ public class ResourceService {
 			for (ResourceDTO dto : list) {
 				switch (dto.getProd_return_state()) {
 				case 0:
-					dto.setProd_return_state_str("미반납"); //물품 상태가 0(사용 불가)일때 
+					dto.setProd_return_state_str("미반납");
 					break;
 				case 1:
 					dto.setProd_return_state_str("정상 반납");
@@ -377,7 +377,7 @@ public class ResourceService {
 		for (ResourceDTO dto : list) {
 			switch (dto.getProd_return_state()) {
 			case 0:
-				dto.setProd_return_state_str("미반납"); //물품 상태가 0(사용 불가)일때 
+				dto.setProd_return_state_str("미반납"); 
 				break;
 			case 1:
 				dto.setProd_return_state_str("정상 반납");
@@ -387,6 +387,9 @@ public class ResourceService {
 				break;
 			case 3:
 				dto.setProd_return_state_str("연체 반납");
+				break;
+			case 4:
+				dto.setProd_return_state_str("대여 신청 중");
 				break;
 			default:
 				dto.setProd_return_state_str("알 수 없음");
@@ -403,7 +406,7 @@ public class ResourceService {
 		ResourceDTO detail = resourceDAO.myRentDetail(prod_rent_idx);
 		switch (detail.getProd_return_state()) {
 		case 0:
-			detail.setProd_return_state_str("미반납"); //물품 상태가 0(사용 불가)일때 
+			detail.setProd_return_state_str("미반납");
 			break;
 		case 1:
 			detail.setProd_return_state_str("정상 반납");
@@ -413,6 +416,9 @@ public class ResourceService {
 			break;
 		case 3:
 			detail.setProd_return_state_str("연체 반납");
+			break;
+		case 4:
+			detail.setProd_return_state_str("대여 신청 중");
 			break;
 		default:
 			detail.setProd_return_state_str("알 수 없음");
@@ -440,7 +446,17 @@ public class ResourceService {
 		return resourceDAO.getIdx(prod_rent_idx);
 	}
 
+	//물품 대여신청 취소
+	@Transactional
+	public int rentCancel(int prodIdx, int prodRentIdx) {
+		resourceDAO.rentCancel(1,prodIdx);
+		int row =resourceDAO.rentReturnCancel(prodRentIdx);
+		return row;
+		
+	}
 
+
+	
 
 
 }
