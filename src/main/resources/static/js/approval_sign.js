@@ -3,6 +3,7 @@ var doc_subject = $('#doc_subject').val();
 var doc_content_sub = $('#doc_content_sub').val();
 
 var empl_idx = $('#empl_idx').val();
+var doc_write_empl_idx = $('#doc_write_empl_idx').val();
 
 var my_appr_order=$('#my_appr_order').val();
 
@@ -101,17 +102,27 @@ function save_approved_doc_content(doc_content){
             console.log(data);
             console.log(location.pathname+location.search); //hostname(도메인)을 제외한 나머지 주소
 
-
-                //target_user들을 받아오기 - line_order 이전의 사람들
-                //나 이후의 결재자들 가져오기
-
+                //결재 다음 사람에게 요청
                 console.log("타겟 유저",data.target_user);
+                //가져올 필요 없음
+                //결재 요청자 가져오기
 
-                approval_insert_notify(location.pathname+location.search,data.target_user,empl_idx,doc_subject,doc_content_sub,2);
 
-                 //approval_set_notify(data.target,location.pathname);
+                //1.결재 요청 알람 -- 다음 결재자
+            approval_insert_notify_promise(location.pathname+location.search,data.target_user,empl_idx,doc_subject,doc_content_sub,2).then(function (){
+                console.log("첫 번째 알림 완료");
+                //2.결재 승인 알람 -- 결재 요청자
+                //sent 주소로 넣기
+                //approval_set_notify(data.target,location.pathname);
+                    return approval_insert_notify_promise('approval_sent_detail.go?doc_idx='+doc_idx+'&type=sent',doc_write_empl_idx,empl_idx,doc_subject,'내용 없음',1);
+                }).then(function (){
+                    console.log("두 번째 알림 완료");
+                    //location.href = "/approval_received_list.go";
+                }).catch(function(e){
+                console.log(e);
+               })
 
-                location.href = "/approval_received_list.go";
+
 
         },error : function(e){
             console.log(e);
@@ -119,3 +130,12 @@ function save_approved_doc_content(doc_content){
     })
 
 }
+
+//프로미스로 감싸야 함
+function approval_insert_notify_promise(url, target_user, empl_idx, doc_subject, doc_content_sub, type) {
+    return new Promise(function(resolve, reject) {
+        approval_insert_notify(url, target_user, empl_idx, doc_subject, doc_content_sub, type);
+        resolve();  // 비동기 작업이 완료되었음을 알림
+    });
+}
+

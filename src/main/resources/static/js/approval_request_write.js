@@ -36,10 +36,12 @@ function approval_doc_get(){
             $('#form_content').html(data.doc_content);
 
             //문서 정보란에 1차 정보 기입 (문서번호, 작성자, 부서명* -> 추가예정)
-            $('#doc_idx').html(data.doc_idx);
             $('.hidden_doc_idx').val(data.doc_idx);
-            $('#doc_write_empl').html(data.empl_name);
+            $('.hidden_empl_name').val(data.empl_name);
 
+            //폼 양식 수정
+            $('#doc_idx').html(data.doc_idx);
+            $('#doc_write_empl').html(data.empl_name);
             $('#doc_write_depart').html(data.dept_name);
 
             //가져온 정보를 html로 보여주는 코드
