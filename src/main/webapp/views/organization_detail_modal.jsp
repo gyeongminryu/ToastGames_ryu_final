@@ -13,24 +13,26 @@
                 <ul class="list_no_desc list_block">
                     <li>
                         <label class="form_label">조직명</label>
-                        <input type="text" name="" value="{조직명}" maxlength="100" placeholder="조직명을 입력하세요" />
+                        <input type="text" name="dept_name" value="${deptinfo.dept_name}" maxlength="100" placeholder="조직명을 입력하세요" />
                     </li>
                     <li>
                         <label class="form_label">직무</label>
-                        <textarea rows="5" name="" value="{직무}" maxlength="1000" placeholder="담당 직무를 입력하세요"></textarea>
+                        <textarea rows="5" name="dept_duty" value="${deptinfo.dept_duty}" maxlength="1000" placeholder="담당 직무를 입력하세요"></textarea>
                     </li>
                     <li>
                         <p class="min font_subtle">상위 조직</p>
                         <div>
-                            <select name="">
-                                <option value="{조직 idx}">{조직명}</option>
+                            <select name="high_dept" id="high_dept">
+                                <c:if test="${deptinfo.dept_high != null}">
+						            <option selected value="${deptinfo.dept_high}">${highdeptinfo.dept_name}</option>
+						        </c:if>
                                 <option value="{조직 idx}">{조직명}</option>
                             </select>
                         </div>
                     </li>
                     <li>
                         <label class="form_label">위치</label>
-                        <input type="text" name="" value="{위치}" maxlength="1000" placeholder="위치를 입력하세요" />
+                        <input type="text" name="dept_addr" value="${deptinfo.dept_addr}" maxlength="1000" placeholder="위치를 입력하세요" />
                     </li>
                 </ul>
             </div>

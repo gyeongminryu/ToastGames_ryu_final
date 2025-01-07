@@ -1,6 +1,7 @@
 package com.toast.management.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import com.toast.management.dao.ProjectDAO;
 import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.ProjectInfoDTO;
+import com.toast.management.dto.ProjectMemberDetailDTO;
 import com.toast.management.dto.TeamListDTO;
 
 @Service
@@ -36,7 +38,7 @@ public class ProjectService {
 		    }
 		return tema_list;
 	}
-
+	// projectTeamMemberAdd
 	public void projectTeamAddDo(Map<String, String> param) {
 		
 		projectDAO.projectTeamAddDo(param);
@@ -63,6 +65,32 @@ public class ProjectService {
 		
 		// project member 팀원 목록 보여주기
 		
+		
+	}
+
+	public void projectTeamMemberAdd(List<Integer> members, String team_idx) {
+		// 중복값 제거
+		 List<Integer> uniqueMembers = new ArrayList<>(new HashSet<>(members));
+		for (Integer integer : uniqueMembers) {
+			projectDAO.projectTeamMemberAdd(integer,team_idx);
+		}
+		
+	}
+	
+	// 프로젝트 팀원 목록 가져오는 서비스
+	public void projectTeamMemberList(String team_idx, Model model) {
+		
+		List<ProjectMemberDetailDTO> team_members =	projectDAO.projectTeamMemberList(team_idx);
+		model.addAttribute("team_members",team_members);
+	}
+
+	public void removeTeamMember(String member_idx, String team_idx) {
+		projectDAO.removeTeamMember(member_idx,team_idx);
+		
+	}
+
+	public void projectTeamUpdateDo(Map<String, String> param) {
+		projectDAO.projectTeamUpdateDo(param);
 		
 	}
 

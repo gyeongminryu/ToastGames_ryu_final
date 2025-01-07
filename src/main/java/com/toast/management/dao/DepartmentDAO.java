@@ -68,6 +68,10 @@ public interface DepartmentDAO {
 
 	List<EmployeeDetailDTO> getDeptMembers(String dept_idx);
 
+	List<EmployeeDetailDTO> getDeptSearchMembers(String dept_idx, String category, String keyword, String team_idx);
+
+	List<EmployeeDetailDTO> getDeptTeamMembers(String dept_idx, String team_idx);
+
 	
 
 	
