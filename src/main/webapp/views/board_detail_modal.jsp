@@ -11,10 +11,10 @@
         <div class="tst_modal_body">
             <ul class="tst_list list_no_desc list_block">
                 <li>
-                    <h3 id="employee_name" class="employee_name">{게시글 제목}</h3>
+                    <h3 id="employee_name" class="employee_name">${board_title}</h3>
                 </li>
                 <li>
-                    <p>위 게시글을 삭제하시겠습니까?</p>
+                    <p>게시글을 삭제하시겠습니까?</p>
                 </li>
                 <li>
                     <hr class="separator" />
@@ -24,10 +24,12 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <!-- 게시글을 삭제하는 주소를 입력하세요 --><button onclick="location.href=''" class="btn_primary btn_full">게시글 삭제하기</button>
+                	<form id="deleteForm" action="board_delete.do" method="POST">               	
+                    <!-- 게시글을 삭제하는 주소를 입력하세요 --><button onclick="submitForm()" class="btn_primary btn_full">게시글 삭제하기</button>
                 </div>
                 <div class="tst_col6">
                     <button onclick="tst_modal_close('tst_modal_delete')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
+                	</form>
                 </div>
             </div>
         </div>
@@ -37,3 +39,4 @@
 <!-- //게시글 삭제하기 -->
 
 <script src="resources/js/module_modal.js"></script>
+<script src="resources/js/board_delete_modal.js"></script>

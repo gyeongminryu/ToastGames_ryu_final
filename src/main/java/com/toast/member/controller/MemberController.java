@@ -39,7 +39,7 @@ public class MemberController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final MemberService memberService;
-	private final MailService mailService; // Pw초기화시, 입력된 email로 발송.
+	private final MailService mailService;
 
 	public MemberController(MemberService memberService, MailService mailService) {
 		this.memberService = memberService;
@@ -69,13 +69,18 @@ public class MemberController {
 	@PostMapping(value = "/login.do")
 	public String login(HttpSession session, Model model, String id, String pw) {
 		String page = "login";
-		boolean isValidId = memberService.isValidId(id); // DB에 저장된 아이디와 일치하는가?
+		boolean isValidId = memberService.isValidId(id); // DB에 저장된 아이디와 일치하는가? + 대소문자 구분하는 코드 필요!!!
 		if (!isValidId) { // 1. 아이디가 존재하지 않는 경우
 			model.addAttribute("idError", "아이디를 확인하세요."); // 아이디 오류 메시지 전달
 		} else { // 2. 아이디가 존재 하는 경우
 			if (memberService.login(id, pw)) { // 3. 아이디와 비밀번호가 일치한 경우.
 				int changePwCheck = memberService.changePwCheck(id); // 3-1. 비밀번호 변경했는지 여부를 가져옴.
+				int getEmployeeIdx = memberService.getEmployeeIdx(id); // id로 해당 사원의 idx를 가져온다.
+				int getDeptIdx = memberService.getDeptIdx(id); // id로 해당 dept_idx를 가져온다.
 				session.setAttribute("loginId", id);
+				session.setAttribute("empl_idx", getEmployeeIdx);
+				session.setAttribute("dept_idx", getDeptIdx);
+				// 사원 idx , 부서 dept_idx 세션에 넣어야 함..
 				if (changePwCheck != 0) { // 3-2. 비밀번호 변경한 경우.
 					return "redirect:/approval_writing_list.go"; // !!!나중에 다른 jsp로 수정필요!!!
 				} else { // 3-3. 비밀번호 변경을 안한 경우.
@@ -173,8 +178,8 @@ public class MemberController {
 	@GetMapping(value = "/mypage.go")
 	public String myPageView(Model model, HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
-		List<MemberDTO> memberInfo = memberService.memberInfo(id); // 리스트 형태로 가져옴. 해당 id에 맞는 사용자 정보를 가져옴.
-		String file_key = memberInfo.get(0).getFile_key(); // employee에 저장된 file_key를 가져오기 위함.
+		MemberDTO memberInfo = memberService.memberInfo(id).get(0); // 리스트 형태로 가져옴. 해당 id에 맞는 사용자 정보를 가져옴.
+		String file_key = memberInfo.getFile_key(); // employee에 저장된 file_key를 가져오기 위함.
 		List<FileDTO> fileList = memberService.getFileList(id, file_key); // 사용자가 첨부한 파일 리스트만 불러온다.
 		model.addAttribute("memberInfo", memberInfo); // 인포에 직인 정보도 포함!!!
 		model.addAttribute("fileList", fileList); // 사용자가 첨부한 파일리스트를 불러온다.
@@ -208,7 +213,7 @@ public class MemberController {
 		}
 	}
 
-	// 직인 이미지 파일 요청이 들어오면 작동되는 메서드.
+	// 이미지 파일 요청이 들어오면 작동되는 메서드.
 	@GetMapping(value = "/memberFiles/{filename}")
 	public ResponseEntity<Resource> Image(@PathVariable String filename) {
 		Path filePath = Paths.get(uploadAddr + "/" + filename);
@@ -226,7 +231,7 @@ public class MemberController {
 	@GetMapping(value = "/mypage_update.go")
 	public String myPageUpdateForm(Model model, HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
-		List<MemberDTO> memberInfo = memberService.memberInfo(id);
+		MemberDTO memberInfo = memberService.memberInfo(id).get(0);
 		model.addAttribute("memberInfo", memberInfo);
 		return "mypage_update";
 	}
@@ -316,6 +321,21 @@ public class MemberController {
 			model.addAttribute("msg", "회원정보 수정이 실패했습니다.");
 		}
 		return "redirect:/mypage.go";
+	}
+
+	@ResponseBody
+	@GetMapping(value = "/profileDetail")
+	public ResponseEntity<MemberDTO> getProfile(@RequestParam("tst_modal_employee_idx") int employeeIdx) {
+	    try {
+	        String id = memberService.getIdByIdx(employeeIdx);
+	        MemberDTO memberInfo = memberService.memberInfo(id).get(0);
+	        logger.info("memberInfo?" + memberInfo);
+	        // 응답으로 JSON 데이터 반환
+	        return ResponseEntity.ok(memberInfo);
+	    } catch (Exception e) {
+	        // 에러 발생 시 처리
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	    }
 	}
 	
 }

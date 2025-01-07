@@ -85,7 +85,7 @@
 		JOIN duty dt ON a.duty_idx = dt.duty_idx 
 		WHERE e.empl_id = #{id} 
 	</select>
-
+	
 	<select id="getFileList" parameterType="map"
 		resultType="com.toast.member.dto.FileDTO">
 		SELECT f.file_idx, f.file_key, f.uploader_idx,
@@ -178,6 +178,28 @@
 		file_addr
 		FROM file
 		WHERE uploader_idx = #{empl_idx} AND file_key = #{file_key}
+	</select>
+	
+	<select id="getIdByIdx" parameterType="int">
+		SELECT empl_id 
+		FROM employee
+		WHERE empl_idx = #{employeeIdx} 
+	</select>
+	
+	<select id="getEmployeeIdx" parameterType="String">
+		SELECT empl_idx
+		FROM employee
+		WHERE empl_id = #{id}
+	</select>
+	
+	<select id="getDeptIdx" parameterType="String">
+		SELECT d.dept_idx
+		FROM employee e
+		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
+		JOIN department d ON a.dept_idx = d.dept_idx
+		WHERE empl_id = #{id} 
+		ORDER BY a.appo_idx DESC
+		LIMIT 1
 	</select>
 
 </mapper>

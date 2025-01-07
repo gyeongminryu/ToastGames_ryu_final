@@ -72,8 +72,39 @@ function deleteFile(file_idx) {
 function uploadFile() {
     var formData = new FormData();
     var files = $('#fileInput')[0].files;  // input에서 파일들 가져오기
+    var maxFileSize = 2 * 1024 * 1024;  // 2MB
+    var allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/gif'];  // 허용되는 파일 유형
+
+    // 유효성 검사
+    if (files.length === 0) {
+        alert('파일을 선택해주세요.');
+        return;
+    }
+
+    if (files.length > 5) {
+        alert('최대 5개의 파일만 첨부할 수 있습니다.');
+        return;
+    }
+
+    // 각 파일에 대한 유효성 검사 (크기 및 형식)
     for (var i = 0; i < files.length; i++) {
-        formData.append('file', files[i]);  // FormData에 파일 추가
+        var file = files[i];
+
+        // 파일 크기 검사
+        if (file.size > maxFileSize) {
+            alert('파일 크기는 2MB 이하만 허용됩니다.');
+            $('#fileInput').val('');  // 파일 입력 필드를 초기화하여 선택된 파일을 리셋
+            return;
+        }
+
+        // 파일 형식 검사
+        if (!allowedTypes.includes(file.type)) {
+            alert('pdf, jpg, png, gif 파일만 첨부할 수 있습니다.');
+            $('#fileInput').val('');  // 파일 입력 필드를 초기화하여 선택된 파일을 리셋
+            return;
+        }
+
+        formData.append('file', file);  // 유효성 검사를 통과한 파일만 FormData에 추가
     }
 
     $.ajax({

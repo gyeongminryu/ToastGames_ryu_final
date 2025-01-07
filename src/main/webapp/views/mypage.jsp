@@ -46,32 +46,32 @@
                             <tbody>
                             <tr>
                                 <th class="td_bg_subtle">이름</th>
-                                <td>${memberInfo[0].empl_name}</td>
+                                <td>${memberInfo.empl_name}</td>
                                 <th class="td_bg_subtle">직원 번호</th>
-                                <td>${memberInfo[0].empl_idx}</td>
+                                <td>${memberInfo.empl_idx}</td>
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">성별</th>
-                                <td>${memberInfo[0].empl_gender}</td>
+                                <td>${memberInfo.empl_gender}</td>
                                 <th class="td_bg_subtle">아이디</th>
-                                <td>${memberInfo[0].empl_id}</td>
+                                <td>${memberInfo.empl_id}</td>
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">생년월일</th>
-                                <td>${memberInfo[0].empl_birth}</td>
+                                <td>${memberInfo.empl_birth}</td>
                                 <th class="td_bg_subtle">부서</th>
-                                <td>${memberInfo[0].dept_name}<!-- / {팀명} (조직장) --></td>
+                                <td>${memberInfo.dept_name}<!-- / {팀명} (조직장) --></td>
                                 <!-- 부서장인 경우에는 팀을 기재하지 않습니다 -->
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">주민등록번호</th>
-                                <td>${memberInfo[0].empl_ssn1}- *******</td>
+                                <td>${memberInfo.empl_ssn1}- *******</td>
                                 <th class="td_bg_subtle">직급/직책</th>
-                                <td>${memberInfo[0].duty_name}/${memberInfo[0].position_name}</td>
+                                <td>${memberInfo.duty_name}/${memberInfo.position_name}</td>
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">급여 입금 계좌</th>
-                                <td colspan="3">${memberInfo[0].bank_name} ${memberInfo[0].empl_account} (예금주: ${memberInfo[0].empl_name})</td>
+                                <td colspan="3">${memberInfo.bank_name} ${memberInfo.empl_account} (예금주: ${memberInfo.empl_name})</td>
                             </tr>
                             </tbody>
                         </table>
@@ -92,19 +92,19 @@
                             <tbody>
                             <tr>
                                 <th class="td_bg_subtle">회사 내 유선번호</th>
-                                <td>${memberInfo[0].empl_cmp_phone}</td>
+                                <td>${memberInfo.empl_cmp_phone}</td>
                                 <th class="td_bg_subtle">회사 내 이메일</th>
-                                <td>${memberInfo[0].empl_cmp_email}</td>
+                                <td>${memberInfo.empl_cmp_email}</td>
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">개인 전화번호</th>
-                                <td>${memberInfo[0].empl_per_phone}</td>
+                                <td>${memberInfo.empl_per_phone}</td>
                                 <th class="td_bg_subtle">개인 이메일</th>
-                                <td>${memberInfo[0].empl_per_email}</td>
+                                <td>${memberInfo.empl_per_email}</td>
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">주소</th>
-                                <td colspan="3">${memberInfo[0].empl_addr}</td>
+                                <td colspan="3">${memberInfo.empl_addr}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -202,7 +202,7 @@
                             </thead>
                             <tbody>
                             <!-- 프로필 파일이 있을 경우 -->
-                            <c:if test="${not empty memberInfo[0].empl_profile}">
+                            <c:if test="${not empty memberInfo.empl_profile}">
                             <tr class="td_no_underline">
                                 <td><!-- {파일 이름 (용량kb)} --></td>
                             </tr>
@@ -210,14 +210,14 @@
                                 <td>
                                     <div class="tst_flex">
                                         <div class="tst_col12 align_center align_middle">
-                                            <img src="memberFiles/${memberInfo[0].empl_profile}" class="companyinfo_stamp" />
+                                            <img src="memberFiles/${memberInfo.empl_profile}" class="companyinfo_stamp" />
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                             </c:if>
                             <!-- 프로필 파일이 없을 경우 -->
-                            <c:if test="${empty memberInfo[0].empl_profile}">
+                            <c:if test="${empty memberInfo.empl_profile}">
                             <tr>
                             	<td><p class="font_subtle align_center">프로필 이미지가 없습니다.</p></td>
                             </tr>
@@ -270,7 +270,7 @@
                             </thead>
                             <tbody>
                             <!-- 직인이 있을 경우 -->
-                            <c:if test="${not empty memberInfo[0].empl_stamp}">        
+                            <c:if test="${not empty memberInfo.empl_stamp}">        
                             <tr class="td_no_underline">
                                 <td><!-- {파일 이름 (용량kb)} --></td>
                             </tr>
@@ -278,14 +278,14 @@
                                 <td>
                                     <div class="tst_flex">
                                         <div class="tst_col12 align_center align_middle">
-                                            <img src="memberFiles/${memberInfo[0].empl_stamp}" class="companyinfo_stamp" />
+                                            <img src="memberFiles/${memberInfo.empl_stamp}" class="companyinfo_stamp" />
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                             </c:if>
                             <!-- 직인이 없을 경우 -->
-							<c:if test="${empty memberInfo[0].empl_stamp}">
+							<c:if test="${empty memberInfo.empl_stamp}">
 								<tr>
 									<td><p class="font_subtle align_center">직인이 없습니다.</p></td>
 								</tr>

@@ -9,7 +9,30 @@ function tst_file_name(elem) {
     // elem: 파일 입력창
 }
 
+// 직인 파일 첨부하기
+function mypage_summit_stamp(no) {
+    // no: 사원번호
+}
 
+// 직인 파일 첨부하기 > 파일 첨부시 시행되는 함수
+// 2mb 미만의 gif, png 파일만 첨부할 수 있습니다.
+// 위 규칙을 벗어나면 alert을 띄우세요.
+function tst_file_summit(elem) {
+    // elem: 파일 입력창
+
+    // 파일 미리보기는 '#image_preview'에 아래와 같이 입력하시면 됩니다.
+    //
+    // <div id="img_preview" className="tst_col12 align_center align_middle"></div>
+    //
+    //  ▼ 위의 div에 아래와 같이 이미지를 삽입하세요.
+    //
+    // <div id="img_preview" className="tst_col12 align_center align_middle">
+    //     <img src="{이미지 바이너리 코드}" className="companyinfo_stamp"/>
+    // </div>
+
+}
+
+	
 
 // 증명 서류 제출하기
 function mypage_summit_file(key) {
@@ -184,27 +207,73 @@ function submitPasswordChange() {
     });
 }
 
+// 마이페이지에서 개인정보 수정할 때, 유효성 검사.
+function validateForm() {
 
+    // 전화번호 패턴: 010-xxxx-xxxx 형태
+    var phoneRegex = /^010-\d{4}-\d{4}$/;
+    // 이메일 패턴: 기본적인 이메일 형식
+    var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-// 직인 파일 첨부하기
-function mypage_summit_stamp(no) {
-    // no: 사원번호
+    // 사내 유선번호 검사
+    var emplCmpPhone = document.getElementById('empl_cmp_phone').value;
+    if (!emplCmpPhone.trim()) {  // 입력이 없으면
+        alert("사내 유선번호를 입력해주세요.");
+        return false;  // 유효하지 않으면 폼 제출 중단
+    }
+    if (!phoneRegex.test(emplCmpPhone.trim())) {  // 형식이 잘못되었으면
+        alert("사내 유선번호는 010-xxxx-xxxx 형태로 입력해주세요.");
+        return false;
+    }
+
+    // 비상 연락처 검사
+    var emplPerPhone = document.getElementById('empl_per_phone').value;
+    if (!emplPerPhone.trim()) {  // 입력이 없으면
+        alert("비상 연락처를 입력해주세요.");
+        return false;
+    }
+    if (!phoneRegex.test(emplPerPhone.trim())) {  // 형식이 잘못되었으면
+        alert("비상 연락처는 010-xxxx-xxxx 형태로 입력해주세요.");
+        return false;
+    }
+
+    // 개인 이메일 검사
+    var emplPerEmail = document.getElementById('empl_per_email').value;
+    if (!emplPerEmail.trim()) {  // 입력이 없으면
+        alert("개인 이메일을 입력해주세요.");
+        return false;
+    }
+    if (!emailRegex.test(emplPerEmail.trim())) {  // 형식이 잘못되었으면
+        alert("올바른 이메일 주소를 입력해주세요.");
+        return false;
+    }
+
+    // 주소 검사
+    var emplAddr = document.getElementById('empl_addr').value;
+    if (!emplAddr.trim()) {  // 입력이 없으면
+        alert("주소를 입력해주세요.");
+        return false;
+    }
+
+    console.log("Form validation passed");
+    return true;  // 모든 검사 통과 시 폼 제출 허용
 }
 
-// 직인 파일 첨부하기 > 파일 첨부시 시행되는 함수
-// 2mb 미만의 gif, png 파일만 첨부할 수 있습니다.
-// 위 규칙을 벗어나면 alert을 띄우세요.
-function tst_file_summit(elem) {
-    // elem: 파일 입력창
+// 프로필 이미지 미리보기 함수
+function previewProfileImage() {
+    var fileInput = document.getElementById('profileImageInput');
+    var previewImage = document.getElementById('profileImagePreview');
 
-    // 파일 미리보기는 '#image_preview'에 아래와 같이 입력하시면 됩니다.
-    //
-    // <div id="img_preview" className="tst_col12 align_center align_middle"></div>
-    //
-    //  ▼ 위의 div에 아래와 같이 이미지를 삽입하세요.
-    //
-    // <div id="img_preview" className="tst_col12 align_center align_middle">
-    //     <img src="{이미지 바이너리 코드}" className="companyinfo_stamp"/>
-    // </div>
+    // 파일이 선택되었을 경우
+    if (fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
 
+        // 파일 읽기를 성공적으로 완료하면 미리보기 이미지를 업데이트
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;  // 미리보기 이미지로 파일 내용 지정
+        }
+
+        // 파일 읽기 시작
+        reader.readAsDataURL(fileInput.files[0]);
+    }
 }

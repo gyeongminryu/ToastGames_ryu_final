@@ -109,7 +109,7 @@
                             <thead>
                             <tr>
                                 <th>번호</th>
-                                <th>부서/팀</th>
+                                <th>부서</th>
                                 <th>제목</th>
                                 <th>작성자</th>
                                 <th>조회수</th>
