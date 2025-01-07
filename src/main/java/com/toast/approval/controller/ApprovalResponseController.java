@@ -16,6 +16,8 @@ import java.util.Map;
 @Controller
 public class ApprovalResponseController {
 	int empl_idx = 10022; //세션 적용 후 없애기
+	//int empl_idx = 10021; //세션 적용 후 없애기
+	//int empl_idx = 10002; //최종 결재자
 
 	private final ApprovalService approvalService;
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -61,7 +63,7 @@ public class ApprovalResponseController {
 
 		Map<String,Object> data = new HashMap<>();
 
-		data.put("success",approvalResponseService.approval_reject(doc_idx,reject_reason,line_order,empl_idx));
+		data.put("target_user",approvalResponseService.approval_reject(doc_idx,reject_reason,line_order,empl_idx));
 		return data;
 	}
 

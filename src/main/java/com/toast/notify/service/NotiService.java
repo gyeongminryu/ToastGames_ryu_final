@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.toast.notify.dao.NotiDAO;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +29,8 @@ public class NotiService {
 		String doc_subject = (String) param.get("doc_subject");
 		String doc_content = (String) param.get("doc_content");
 		String doc_date = (String) param.get("doc_date");
-		int notify_category = (int) param.get("notify_category");
 		String url = (String)param.get("url");
+		Integer notify_category = (int) param.get("notify_category");
 
 		logger.info("doc_subject = " + doc_subject);
 		logger.info("receiver_list = " + receiver_list);
@@ -55,4 +56,63 @@ public class NotiService {
 
 		return success;
     }
+
+	public List<Map<String,Object>> get_all_noti(int empl_idx) {
+		List<Map<String,Object>> all_noti = notiDAO.get_all_noti(empl_idx);
+		List<Map<String,Object>> noti_info = new ArrayList<>();
+		logger.info("all_noti size= " + all_noti.size());
+
+		int noti_cate = 0;
+
+			for(Map<String,Object> noti : all_noti){
+				noti_cate = (int) noti.get("noti_cate_idx");
+				if(noti_cate == 22){ //부서
+				//부서 가져와서 넣기
+					//empl_idx가 속한 부서 idx 및 depth, 상위 부서 idx 가져오기
+					Map<String,Object> dept_info = notiDAO.get_empl_dept_info(empl_idx);
+					//1. 만약 상위 부서면
+					if(dept_info.get("dept_depth").equals('2')){ //
+						//해당 부서 명 가져오기
+						noti.put("dept_name",notiDAO.get_dept_name(dept_info.get("dept_idx")));
+						//2. 만약 하위 팀이면
+					}else if (dept_info.get("dept_depth").equals('3')){
+						// 상위 부서 idx 넣어서 부서명 가져오기
+						noti.put("dept_name",notiDAO.get_dept_name(dept_info.get("dept_high")));
+					}
+
+
+				}else if(noti_cate == 23){//팀
+				//팀 가져와서 넣기
+					//본인의 하위부서 idx 넣어서 부서명 알아내기
+					Map<String,Object> dept_info = notiDAO.get_empl_dept_info(empl_idx);
+					noti.put("dept_name",notiDAO.get_dept_name(dept_info.get("dept_idx")));
+				}
+				noti_info.add(noti);
+			}
+
+		logger.info("noti_info = " + noti_info);
+	return noti_info;
+	}
+
+	public boolean delete_noti_one(String noti_idx) {
+		logger.info("noti_idx = " + noti_idx);
+		boolean success = false;
+
+		if(notiDAO.delete_noti_one(noti_idx)>0){
+			success = true;
+		}
+
+		return success;
+	}
+
+	public boolean delete_noti_all(String empl_idx) {
+		logger.info("empl_idx= " + empl_idx);
+		boolean success = false;
+
+		if(notiDAO.delete_noti_all(empl_idx)>0){
+			success = true;
+		}
+
+		return success;
+	}
 }

@@ -38,5 +38,11 @@
         UPDATE approval SET appr_state = 3 WHERE doc_idx = #{doc_idx} AND appr_order > #{line_order}
     </update>
 
+    <select id="count_lower_line" resultType="int">
+        SELECT COUNT(*) FROM approval WHERE doc_idx = #{doc_idx} AND appr_order BETWEEN 1 AND #{line_order}-1
+    </select>
 
+    <select id="get_lower_line" resultType="Map">
+        SELECT appr_receiver_idx FROM approval WHERE doc_idx = #{doc_idx} AND appr_order BETWEEN 1 AND #{line_order}-1
+    </select>
 </mapper>

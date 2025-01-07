@@ -20,12 +20,6 @@
         SELECT * FROM g_approval_line WHERE form_idx = #{form_idx};
     </select>
 
-    <!--결재자의 이름 가져오기-->
-    <!--<select id="get_approval_empl_idx" resultType="Map">
-        SELECT e.empl_idx,a.position_idx from employee e join appointment a on e.appolast_idx = a.appo_idx
-            where a.dept_idx = #{dept_idx} AND a.duty_idx = (SELECT duty_idx FROM g_approval_line WHERE form_idx = #{form_idx} AND gline_order = #{step})
-    </select>-->
-
     <!--상위 부서가 있는지 확인-->
     <select id="get_high_dept_count" resultType="int">
         SELECT COUNT(dept_idx) FROM department WHERE dept_idx = (SELECT dept_high FROM department WHERE dept_idx= #{dept_idx})
