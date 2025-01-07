@@ -77,7 +77,7 @@ function resource_list_print(list) {
 			        content += '<td><h3>정상 대여</h3></td>';
 			    }
 			} else { // 반납일이 있을 경우
-			    content += '<td>' + item.prod_return_date + '</td>';
+			    content += '<td>' + formatDateTime(item.prod_return_date) + '</td>';
 			    
 			    // 반납일과 반납기한 비교
 			    const returnDate = new Date(item.prod_return_date);

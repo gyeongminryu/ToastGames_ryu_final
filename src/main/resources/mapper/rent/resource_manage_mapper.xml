@@ -387,7 +387,7 @@
 			product_rent pr ON pr.prod_rent_empl_idx=empl.empl_idx
 		WHERE 
 			pr.prod_idx=#{param3}
-		ORDER BY prod_idx DESC 
+		ORDER BY prod_rent_idx DESC 
 			LIMIT #{param1} OFFSET #{param2}	
 	</select>
 
@@ -410,6 +410,49 @@
 		WHERE 
 			prod_rent_idx = #{param1}
 	</update>
+	
+	<!-- 반납일정 추가정보 가져오기 -->
+	<select id="getReturnInfo">
+		SELECT
+			pd.prod_idx,
+			pd.prod_name,
+			pr.prod_rent_idx,
+			pr.prod_exp_date,
+			prod_rent_empl_idx
+		FROM 
+			product pd
+		JOIN 
+			product_rent pr ON pr.prod_idx=pd.prod_idx
+		WHERE 
+			pr.prod_rent_idx=#{param1}
+	</select>
+	
+	<!-- 반납일정 추가schedule -->
+	<insert id="insertReturnSchedule">
+		INSERT INTO schedule(
+			sche_title, 
+			sche_content, 
+			sche_type, 
+			sche_start_date, 
+			sche_end_date, 
+			sche_allday, 
+			sche_empl_idx, 
+			sche_write_date)
+			VALUES(
+				#{sche_title},
+				#{sche_content},
+				#{sche_type},
+				#{sche_start_date},
+				#{sche_end_date},
+				#{sche_allday},
+				#{sche_empl_idx},
+				#{sche_write_date})
+	</insert>
+	
+	
+	
+	
+	
 	
 	<!-- 반납예정일시 가져오기 -->
 	<select id="getExpDate">

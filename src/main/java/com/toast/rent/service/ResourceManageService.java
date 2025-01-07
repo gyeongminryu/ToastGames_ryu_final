@@ -26,6 +26,7 @@ import com.toast.rent.dto.ResourceManageDTO;
 import com.toast.rent.dto.ResourcePhotoDTO;
 import com.toast.schedule.dto.MeetingDTO;
 import com.toast.schedule.dto.MeetingPhotoDTO;
+import com.toast.schedule.dto.ScheduleDTO;
 
 @Service
 public class ResourceManageService {
@@ -588,6 +589,25 @@ public class ResourceManageService {
 		row = resourceMgDAO.prodUpdate(dto);  //물품 등록
 
 		return row;
+	}
+
+	//반납일정 추가정보 가져오기
+	@Transactional
+	public int getReturnInfo(int prod_rent_idx) {
+		ResourceManageDTO ReturnInfo = resourceMgDAO.getReturnInfo(prod_rent_idx);
+		ScheduleDTO scheduleReturn = new ScheduleDTO();
+		scheduleReturn.setSche_title("공용물품 반납일");
+		scheduleReturn.setSche_content(ReturnInfo.getProd_name()+"반납일 입니다. 18시까지 반납해주시기 바랍니다.");
+		scheduleReturn.setSche_type(1); //개인
+		LocalDateTime resetExpTime = ReturnInfo.getProd_exp_date().toLocalDate().atStartOfDay();
+		scheduleReturn.setSche_start_date(resetExpTime); 
+		scheduleReturn.setSche_end_date(ReturnInfo.getProd_exp_date());
+		scheduleReturn.setSche_allday(0);
+		scheduleReturn.setSche_empl_idx(ReturnInfo.getProd_rent_empl_idx());
+		scheduleReturn.setSche_write_date(LocalDateTime.now());
+		int row = resourceMgDAO.insertReturnSchedule(scheduleReturn); //일정 추가
+		return row; 
+		
 	}
 
 

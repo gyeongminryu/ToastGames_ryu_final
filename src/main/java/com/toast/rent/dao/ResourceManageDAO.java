@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.toast.rent.dto.ResourceManageDTO;
 import com.toast.rent.dto.ResourcePhotoDTO;
+import com.toast.schedule.dto.ScheduleDTO;
 
 @Mapper
 public interface ResourceManageDAO {
@@ -98,6 +99,12 @@ public interface ResourceManageDAO {
 
 	//반납예정일시
 	LocalDateTime getExpDate(int prod_rent_idx);
+
+	//반납일정 추가정보 가져오기
+	ResourceManageDTO getReturnInfo(int prod_rent_idx);
+
+	//반납 일정 추가(schedule)
+	int insertReturnSchedule(ScheduleDTO scheduleReturn);
 
 
 	
