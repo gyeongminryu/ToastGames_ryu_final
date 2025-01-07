@@ -27,7 +27,7 @@
                     </li>
                 </ul>
                 <!-- //제목 -->
-                <form action="mypageUpdate.do" method="post" enctype="multipart/form-data">
+					<form action="mypageUpdate.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                     <div class="tst_flex">
                         <div class="tst_col9">
                             <div class="tst_flex tst_flex_block">
@@ -39,7 +39,7 @@
                                                     <label class="form_label">이름</label>
                                                     <div class="tst_flex">
                                                         <div class="tst_col8">
-                                                            <input type="text" name="" maxlength="100" value="${memberInfo[0].empl_name}" class="input_disable" readonly />
+                                                            <input type="text" name="" maxlength="100" value="${memberInfo.empl_name}" class="input_disable" readonly />
                                                         </div>
                                                         <div class="tst_col4">
                                                             <button onclick="tst_modal_call('tst_modal_name')" type="button" class="btn_subtle btn_full">정정 신청</button>
@@ -48,7 +48,7 @@
                                                 </li>
                                                 <li>
                                                     <label class="form_label">ID</label>
-                                                    <input type="text" name="" maxlength="100" value="${memberInfo[0].empl_id}" class="input_disable" readonly />
+                                                    <input type="text" name="" maxlength="100" value="${memberInfo.empl_id}" class="input_disable" readonly />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">비밀번호</label>
@@ -56,15 +56,15 @@
                                                 </li>
                                                 <li>
                                                     <label class="form_label">성별</label>
-                                                    <input type="text" name="" maxlength="100" value="${memberInfo[0].empl_gender}" class="input_disable" readonly />
+                                                    <input type="text" name="" maxlength="100" value="${memberInfo.empl_gender}" class="input_disable" readonly />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">생년월일</label>
-                                                    <input type="date" name="" value="${memberInfo[0].empl_birth}" class="input_disable" readonly />
+                                                    <input type="date" name="" value="${memberInfo.empl_birth}" class="input_disable" readonly />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">주민등록번호</label>
-                                                    <input type="text" name="" maxlength="100" value="${memberInfo[0].empl_ssn1}-*******" class="input_disable" readonly />
+                                                    <input type="text" name="" maxlength="100" value="${memberInfo.empl_ssn1}-*******" class="input_disable" readonly />
                                                 </li>
                                             </ul>
                                         </div>
@@ -72,38 +72,38 @@
                                             <ul class="list_no_desc list_block">
                                                 <li>
                                                     <label class="form_label">사내 유선번호</label>
-                                                    <input type="text" name="empl_cmp_phone" maxlength="100" value="${memberInfo[0].empl_cmp_phone}" placeholder="사내 유선번호를 입력하세요" />
+                                                    <input type="text" id="empl_cmp_phone" name="empl_cmp_phone" maxlength="100" value="${memberInfo.empl_cmp_phone}" placeholder="사내 유선번호를 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">사내 이메일</label>
-                                                    <input type="text" name="" maxlength="100" value="${memberInfo[0].empl_cmp_email}" class="input_disable" readonly />
+                                                    <input type="text" name="" maxlength="100" value="${memberInfo.empl_cmp_email}" class="input_disable" readonly />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">
                                                         비상 연락처
                                                         <span class="font_caution">* 비상시 연락할 수 있는 전화번호를 입력하세요.</span>
                                                     </label>
-                                                    <input type="text" name="empl_per_phone" maxlength="100" value="${memberInfo[0].empl_per_phone}" placeholder="비상 연락처를 입력하세요" />
+                                                    <input type="text" id="empl_per_phone" name="empl_per_phone" maxlength="100" value="${memberInfo.empl_per_phone}" placeholder="비상 연락처를 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">
                                                         개인 이메일
                                                         <span class="font_caution">* 비밀번호 분실시 새 비밀번호를 수령할 수 있는 메일 주소를 입력하세요.</span>
                                                     </label>
-                                                    <input type="text" name="empl_per_email" maxlength="100" value="${memberInfo[0].empl_per_email}" placeholder="개인 이메일을 입력하세요" />
+                                                    <input type="text" id="empl_per_email" name="empl_per_email" maxlength="100" value="${memberInfo.empl_per_email}" placeholder="개인 이메일을 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">입사일</label>
-                                                    <input type="date" name="" maxlength="100" value="${memberInfo[0].empl_join_date}" class="input_disable" readonly />
+                                                    <input type="date" name="" maxlength="100" value="${memberInfo.empl_join_date}" class="input_disable" readonly />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">급여 지급 계좌번호</label>
                                                     <div class="tst_flex">
                                                         <div class="tst_col4">
-                                                            <input type="text" name="" maxlength="100" value="${memberInfo[0].bank_name}" class="input_disable" readonly />
+                                                            <input type="text" name="" maxlength="100" value="${memberInfo.bank_name}" class="input_disable" readonly />
                                                         </div>
                                                         <div class="tst_col8">
-                                                            <input type="text" name="" maxlength="100" value="${memberInfo[0].empl_account}" class="input_disable" readonly />
+                                                            <input type="text" name="" maxlength="100" value="${memberInfo.empl_account}" class="input_disable" readonly />
                                                         </div>
                                                     </div>
                                                 </li>
@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="tst_col12">
                                     <label class="form_label">주소</label>
-                                    <input type="text" name="empl_addr" maxlength="100" value="${memberInfo[0].empl_addr}" placeholder="주소를 입력하세요" />
+                                    <input type="text" id="empl_addr" name="empl_addr" maxlength="100" value="${memberInfo.empl_addr}" placeholder="주소를 입력하세요" />
                                     <hr class="separator" />
                                 </div>
                                 <div class="tst_col12">
@@ -138,7 +138,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:if test="${not empty memberInfo[0].empl_profile}">                                   
+                                <c:if test="${not empty memberInfo.empl_profile}">                                   
                                 <tr class="td_no_underline">
                                     <td><!-- {파일 이름} --></td>
                                 </tr>
@@ -146,23 +146,24 @@
                                     <td>
                                         <div class="tst_flex">
                                             <div class="tst_col12 align_center align_middle">
-                                                <img src="memberFiles/${memberInfo[0].empl_profile}" class="companyinfo_stamp" />
+                            					<img src="memberFiles/${memberInfo.empl_profile}" id="profileImagePreview" class="companyinfo_stamp" />
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                                 </c:if>
-                                <c:if test="${empty memberInfo[0].empl_stamp}">
+                                <c:if test="${empty memberInfo.empl_stamp}">
                                 <tr>
-                                    <td><p class="font_subtle align_center">직인이 없습니다.</p></td>
+                                    <td><p class="font_subtle align_center">프로필 이미지가 없습니다.</p></td>
                                 </tr>
                                 </c:if> 
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <input type="file" name="imageFile" multiple />
-                                    </td>
+						                <!-- 프로필 이미지 파일 선택 -->
+						                <input type="file" name="imageFile" id="profileImageInput" accept="image/*" onchange="previewProfileImage()" />
+						            </td>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -205,7 +206,7 @@
                                 </thead>
                                 <tbody>
                                 <!-- 직인 > 파일이 있을 경우 -->                               
-                                <c:if test="${not empty memberInfo[0].empl_stamp}">                              
+                                <c:if test="${not empty memberInfo.empl_stamp}">                              
                                 <tr class="td_no_underline">
                                     <td><!-- {파일 이름 (용량kb)} --></td>
                                 </tr>
@@ -213,14 +214,14 @@
                                     <td>
                                         <div class="tst_flex">
                                             <div class="tst_col12 align_center align_middle">
-                                                <img src="memberFiles/${memberInfo[0].empl_stamp}" class="companyinfo_stamp" />
+                                                <img src="memberFiles/${memberInfo.empl_stamp}" class="companyinfo_stamp" />
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                                 </c:if>
                                 <!-- //직인 > 파일이 없을 경우 -->                              
-                                <c:if test="${empty memberInfo[0].empl_stamp}">
+                                <c:if test="${empty memberInfo.empl_stamp}">
                                 <tr>
                                     <td><p class="font_subtle align_center">직인이 없습니다.</p></td>
                                 </tr>

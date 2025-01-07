@@ -73,7 +73,7 @@ public class MemberService {
 	public List<MemberDTO> memberInfo(String id) {
 		return memberDAO.memberInfo(id);
 	}
-
+	
 	public List<FileDTO> getFileList(String id, String file_key) {
 		Map<String, Object> params = new HashMap<>(); // DB에 map형식으로 parameterType을 지정하기 위함.
 		params.put("id", id);
@@ -168,6 +168,18 @@ public class MemberService {
 				memberDAO.fileUpload(fileDTO);
 			}
 		}
+	}
+
+	public String getIdByIdx(int emplIdx) {
+		return memberDAO.getIdByIdx(emplIdx);
+	}
+
+	public int getEmployeeIdx(String id) {
+		return memberDAO.getEmployeeIdx(id);
+	}
+
+	public int getDeptIdx(String id) {
+		return memberDAO.getDeptIdx(id);
 	}
 	
 }

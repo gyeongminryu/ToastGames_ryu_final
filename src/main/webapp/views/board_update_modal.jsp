@@ -37,4 +37,4 @@
 <!-- //수정하기 -->
 
 <script src="resources/js/module_modal.js"></script>
-<script src="resources/js/board_write_modal.js"></script>
+<script src="resources/js/board_update_modal.js"></script>

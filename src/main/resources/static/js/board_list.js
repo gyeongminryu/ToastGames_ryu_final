@@ -40,9 +40,6 @@
 		        },
 		        dataType: 'JSON',
 		        success: function(data) { 
-		            console.log('Received data:', data);  // 서버에서 받은 전체 데이터를 출력
-		            console.log('Received totalpages:', data.totalpages);
-    				console.log('Last totalpages:', lastTotalPages);
 		            if (data.error) {
 		                alert(data.error);
 		            } else {
@@ -82,7 +79,7 @@
                content += '<td class="td_align_left">';
 			   content += '<span class="tst_pointer" onclick="location.href=\'board_detail.go?board_idx=' + b.board_idx + '\'">' 
          	   + '[' + b.board_type_name + ']' + b.board_title 
-          	   + '(' + b.commentCount + ')</span>';
+          	   + ' (' + b.commentCount + ')</span>';
                 
                 // 첨부파일 아이콘 추가 (파일이 있을 경우)
                 if (b.file_key) {
@@ -91,7 +88,7 @@
                 
                 content += '</td>';
                 
-                content += '<td><span onclick="tst_view_profile(\'' + b.empl_id + '\')" class="tst_pointer">' 
+				content += `<td><span onclick="tst_view_profile('${b.board_empl_idx}')" class="tst_pointer">`
                           + b.empl_name + ' (' + b.empl_id + ')</span></td>'; // 이름
                 content += '<td>' + b.board_view_cnt + '</td>'; // 조회수
                 content += '<td>' + b.board_write_date + '</td>'; // 작성일자

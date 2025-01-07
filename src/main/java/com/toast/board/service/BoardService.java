@@ -40,6 +40,10 @@ public class BoardService {
 		return boardDAO.getDeptName(id);
 	}
 	
+	public String getDutyName(String id) {
+		return boardDAO.getDutyName(id);
+	}
+	
 	public Map<String, Object> boardInfo(int board_idx) {
 		return boardDAO.boardInfo(board_idx);
 	}
@@ -49,8 +53,6 @@ public class BoardService {
 		params.put("file_key", file_key);
 	    // 게시글 작성 후, 자동 생성된 board_idx를 params에 저장
 	    boardDAO.boardWrite(params);
-	    
-	    // board_idx는 BigInteger로 반환될 수 있으므로, 이를 int로 변환
 	    BigInteger boardIdxBigInteger = (BigInteger) params.get("board_idx");
 	    int boardIdx = boardIdxBigInteger.intValue();  // BigInteger -> int 변환
 	    
@@ -62,6 +64,8 @@ public class BoardService {
 					String file_type = ori_filename.substring(ori_filename.lastIndexOf("."));
 					String new_filename = UUID.randomUUID().toString() + "." + file_type;
 					String file_addr = uploadAddr + "/" + new_filename;
+	                long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
+
 
 					File dest = new File(file_addr);
 					file.transferTo(dest);
@@ -73,6 +77,7 @@ public class BoardService {
 					    fileParams.put("new_filename", new_filename);
 					    fileParams.put("file_type", file_type);
 					    fileParams.put("file_addr", file_addr);
+		                fileParams.put("file_size", file_size);  // 파일 크기 추가
 					
 					boardDAO.saveFile(fileParams);
 				}
@@ -124,6 +129,10 @@ public class BoardService {
 	    result.put("list", boardList);
 
 	    return result;
+	}
+	
+	public void boardDelete(int board_idx) {
+		boardDAO.boardDelete(board_idx);
 	}
 	
 	public String getUserDept(String id) {
@@ -192,6 +201,7 @@ public class BoardService {
 				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 				String newFileName = UUID.randomUUID().toString() + "." + fileType;
 				String fileAddr = uploadAddr + "/" + newFileName;
+                long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
 
 				// 경로 설정 부분. 파일을 서버에 저장함. 필요한가? 이거 어떻게 해야할지 정해야 함..
 				File dest = new File(fileAddr);
@@ -205,11 +215,57 @@ public class BoardService {
 				fileDTO.setFile_type(fileType);
 				fileDTO.setFile_addr(fileAddr);
 				fileDTO.setUploader_idx(empl_idx);
-
+				fileDTO.setFile_size(file_size);
 				// file 테이블에 파일정보 저장.
 				boardDAO.fileUpload(fileDTO);
 			}
 		}
+	}
+	
+	public void saveBoardNotify(Map<String, Object> params, int boardIdx) {
+	     int board_type_idx = Integer.parseInt(params.get("board_type_idx").toString()); // 안전하게 변환
+		 String boardTitle = (String) params.get("board_title");
+		 String boardContent = (String) params.get("board_content");
+		 String notiLink = "/board_detail.go?board_idx=" + boardIdx;  // 게시글 링크
+		 	
+		 	if (board_type_idx == 1) {
+				// 1은 기본 문서이기 때문에, 알림에 저장이 되면 안됨.
+		 		return;
+			}
+		 
+		    // 알림 유형에 따라 알림 테이블에 데이터 삽입
+		 	// 부서 공지(board_type_idx == 2): dept_idx를 기준으로 해당 부서에 속한 직원들을 조회.
+		 	// 게시글의 상세 페이지 URL
+		    if (board_type_idx == 2) {  // 부서공지
+		        int dept_idx = Integer.parseInt(params.get("dept_idx").toString());  // 부서 ID
+		    	List<Integer> deptMembers = boardDAO.getDeptMembers(dept_idx); // 부서에 속한 사람들 리스트 가져오기
+		    	for (int empl_idx : deptMembers) {
+		    		Map<String, Object> notifyParams = new HashMap<>();
+		            notifyParams.put("noti_cate_idx", 22); // 부서 공지
+		            notifyParams.put("noti_sender_empl_idx", params.get("appo_empl_idx"));
+		            notifyParams.put("noti_receiver_empl_idx", empl_idx);
+		            notifyParams.put("noti_subject", boardTitle);
+		            notifyParams.put("noti_content", boardContent);
+		            notifyParams.put("noti_link", notiLink);
+		            boardDAO.saveBoardNotify(notifyParams);
+				}
+		    } 
+		    
+		    // 전체 공지(board_type_idx == 3): 모든 직원들에게 알림을 보내는 경우.
+		    // 게시글의 상세 페이지 URL
+		    if (board_type_idx == 3) {  // 전체공지
+		    	List<Integer> getAllMembers = boardDAO.getAllMembers();  // 전체 직원 가져오기		        
+		        for (int empl_idx : getAllMembers) {
+		        Map<String, Object> notifyParams = new HashMap<>();
+		            notifyParams.put("noti_cate_idx", 21); // 부서 공지
+		            notifyParams.put("noti_sender_empl_idx", params.get("appo_empl_idx"));
+		            notifyParams.put("noti_receiver_empl_idx", empl_idx);
+		            notifyParams.put("noti_subject", boardTitle);
+		            notifyParams.put("noti_content", boardContent);
+		            notifyParams.put("noti_link", notiLink);
+			        boardDAO.saveBoardNotify(notifyParams);
+		        }
+		    }
 	}
 
 	public void deleteFile(int file_idx) {
@@ -219,4 +275,9 @@ public class BoardService {
 	public int updateBoard(Map<String, Object> params, int board_idx, int empl_idx) {
 		return boardDAO.updateBoard(params, board_idx, empl_idx);
 	}
+
+	public String getFileKeyByBoardIdx(Integer boardIdx) {
+	    return boardDAO.getFileKeyByBoardIdx(boardIdx);
+	}
+
 }

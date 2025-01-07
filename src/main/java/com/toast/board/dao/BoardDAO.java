@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.member.dto.FileDTO;
 
@@ -21,9 +20,13 @@ public interface BoardDAO {
 
 	List<Map<String, Object>> getDepartmentList();
 	
+	String getDutyName(String id);
+	
 	List<Map<String, Object>> boardList(Map<String, Object> params);
 	
 	Map<String, Object> countBoardList(Map<String, Object> params);
+	
+	void boardDelete(int board_idx);	
 
 	int commentCount(int board_idx);
 	
@@ -56,6 +59,14 @@ public interface BoardDAO {
 	void deleteFile(int file_idx);
 
 	int updateBoard(Map<String, Object> params, int board_idx, int empl_idx);
-	
+
+	String getFileKeyByBoardIdx(Integer board_idx);
+
+	void saveBoardNotify(Map<String, Object> params);
+
+	// dept_idx를 기준으로 해당 부서의 사람들 리스트로 가져오기.
+	List<Integer> getDeptMembers(int dept_idx);
+
+	List<Integer> getAllMembers();
 	
 }

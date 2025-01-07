@@ -1,8 +1,46 @@
-
 function handleFileSelect(event) {
     var fileList = event.target.files; // 선택된 파일 목록
     var fileListBody = document.getElementById('fileListBody'); // 파일 리스트가 표시될 tbody   
     var filesArray = Array.from(fileList); // 선택된 파일들을 배열로 변환
+
+	// 파일 유효성 검사
+    var maxFileSize = 2 * 1024 * 1024; // 2MB
+    var allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/gif'];
+
+    console.log('선택된 파일들:', filesArray); // 파일 목록 확인  
+
+    // 파일이 선택되지 않았을 경우 처리
+    if (filesArray.length === 0) {
+        alert('파일을 선택해주세요.');
+        return;  // 종료
+    }
+
+    // 파일 수 체크
+    if (filesArray.length > 5) {
+        alert('최대 5개의 파일만 첨부할 수 있습니다.');
+        event.target.value = ''; // 파일 입력 리셋       
+        return;  // 종료
+    }
+
+    // 파일 검증 (크기 및 형식)
+    for (let i = 0; i < filesArray.length; i++) {
+        let file = filesArray[i];
+        console.log('검증 중인 파일:', file); // 현재 검증 중인 파일
+        
+        // 파일 크기 체크
+        if (file.size > maxFileSize) {
+            alert('파일 크기는 2MB 이하만 허용됩니다.');
+            event.target.value = ''; // 파일 입력 리셋          
+            return;  // 종료
+        }
+
+        // 파일 형식 체크
+        if (!allowedTypes.includes(file.type)) {
+            alert('pdf, jpg, png, gif 파일만 첨부할 수 있습니다.');
+            event.target.value = ''; // 파일 입력 리셋      
+            return;  // 종료
+        }
+    }
 
     // 기존의 첨부 파일 메시지 제거
     var noFileMessage = document.getElementById('noFileMessage');

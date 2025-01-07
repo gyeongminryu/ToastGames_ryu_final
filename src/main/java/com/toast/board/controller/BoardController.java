@@ -56,7 +56,7 @@ public class BoardController {
 		params.putAll(memberInfo);
 		try {
 			int boardIdx = boardService.boardWrite(params, files);
-			logger.info("boardIdx?" + boardIdx);
+			boardService.saveBoardNotify(params, boardIdx);
 			if (boardIdx > 0) {
 				model.addAttribute("msg", "게시글 작성 완료");
 	            return "redirect:/board_detail.go?board_idx=" + boardIdx; // 게시글 작성 후 해당 게시글 페이지로 리다이렉트
@@ -88,6 +88,21 @@ public class BoardController {
 
 	    // 서비스 호출 시 필터 파라미터 전달
 	    Map<String, Object> result = boardService.boardList(page_, cnt_, id, dept, type, searchType, keyword, userDept);
+
+	    // 게시글 리스트 추출
+	    List<Map<String, Object>> boardList = (List<Map<String, Object>>) result.get("list");
+
+	    // 각 게시글에 대해 file_key 추가
+	    for (Map<String, Object> board : boardList) {
+	        Integer boardIdx = (Integer) board.get("board_idx");
+	        
+	        if (boardIdx != null) {
+	            // 파일 키 조회
+	            String fileKey = boardService.getFileKeyByBoardIdx(boardIdx); // 단일 board_idx만 전달
+	            board.put("file_key", fileKey); // 게시글에 file_key 추가
+	        }
+	    }
+
 	    return result;
 	}
 	
@@ -107,10 +122,16 @@ public class BoardController {
 	    Map<String, Object> board = boardService.getBoardByIdx(board_idx);
 	    boardService.incrementView(board_idx); // 조회수 증가 로직
 	    
+	    // 게시글이 삭제된 경우 처리
+	    if ((int) board.get("board_deleted") == 1) {
+	        model.addAttribute("message", "삭제된 게시글입니다.");
+	        return "board_list"; // error_page.jsp 또는 다른 오류 페이지로 리다이렉트
+	    }
+	    
 	    // 개인이 소속된 dept를 가져오는 메서드
 	    String deptName = boardService.getDeptName(id);
 	    model.addAttribute("deptName", deptName);
-	    
+    
 	    // 댓글 목록 조회
 	    List<Map<String, Object>> comments = boardService.getReplyList(board_idx);
         model.addAttribute("comments", comments);
@@ -218,6 +239,12 @@ public class BoardController {
 		}
 	}
 	
+	@PostMapping(value = "/board_delete.do")
+	public String board_delete(HttpSession session) {
+		int board_idx = (int)session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
+		boardService.boardDelete(board_idx);
+		return "board_list";
+	}
 	// 댓글 작성
 	@PostMapping(value = "/reply_write.do")
 	public String writeReply(@RequestParam("board_idx") int board_idx, @RequestParam("reply") String reply, HttpSession session) {

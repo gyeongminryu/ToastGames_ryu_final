@@ -26,6 +26,17 @@
 		LIMIT 1
 	</select>
 	
+	<select id="getDutyName" parameterType="String">
+		SELECT d.duty_name
+		FROM employee e
+		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
+		JOIN duty d ON a.duty_idx = d.duty_idx
+		WHERE empl_id = #{id}
+		ORDER BY appo_idx
+		DESC
+		LIMIT 1
+	</select>
+	
 	<select id="boardInfo" parameterType="int">
 		SELECT file_key
 		FROM board
@@ -33,15 +44,15 @@
 	</select>
 	
 	<select id="getFileList" parameterType="map" resultType="com.toast.member.dto.FileDTO">
-		SELECT f.file_idx, f.file_key, f.uploader_idx, f.ori_filename, f.new_filename, f.file_type, f.file_addr
+		SELECT f.file_idx, f.file_key, f.uploader_idx, f.ori_filename, f.new_filename, f.file_type, f.file_addr, f.file_size
 		FROM file f
 		JOIN employee e ON f.uploader_idx = e.empl_idx
 		WHERE f.file_key = #{file_key}
 	</select>
 	
 	<insert id="fileUpload" parameterType="com.toast.member.dto.FileDTO">
-		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
-		VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr})
+		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr, file_size)
+		VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename}, #{file_type}, #{file_addr}, #{file_size})
 	</insert>
 	
 	<delete id="deleteFile">
@@ -60,18 +71,31 @@
 		board(board_empl_idx, board_type_idx, dept_idx, board_title, board_content, file_key)
 		VALUES(#{appo_empl_idx}, #{board_type_idx}, #{dept_idx}, #{board_title}, #{board_content}, #{file_key})
 	</insert>
+	
+	<insert id="saveBoardNotify">
+		INSERT INTO notify(noti_cate_idx, noti_sender_empl_idx, noti_receiver_empl_idx, noti_subject, noti_content, noti_deleted, noti_link)
+			VALUES(#{noti_cate_idx}, #{noti_sender_empl_idx}, #{noti_receiver_empl_idx}, #{noti_subject}, #{noti_content}, 0, #{noti_link})
+	</insert>
 
 	<insert id="saveFile" parameterType="map">
 		INSERT INTO file(file_key,
-		uploader_idx, ori_filename, new_filename, file_type, file_addr)
+		uploader_idx, ori_filename, new_filename, file_type, file_addr, file_size)
 		VALUES(#{file_key}, #{uploader_idx}, #{ori_filename}, #{new_filename},
-		#{file_type}, #{file_addr})
+		#{file_type}, #{file_addr}, #{file_size})
 	</insert>
 	
 	<select id="getDepartmentList" parameterType="map" resultType="map">
 		SELECT dept_idx, dept_name FROM department
 	</select>
-
+	
+	<select id="getFileKeyByBoardIdx" parameterType="int" resultType="String">
+	    SELECT f.file_key
+	    FROM board b
+	    JOIN file f ON b.file_key = f.file_key
+	    WHERE b.board_idx = #{board_idx}
+	    LIMIT 1
+	</select>
+	
 	<select id="boardList" resultType="map">
 	    SELECT 
 	        b.board_idx, 
@@ -92,6 +116,7 @@
 	    JOIN department d ON b.dept_idx = d.dept_idx
 	    JOIN board_type bt ON b.board_type_idx = bt.board_type_idx
 	    WHERE 1 = 1
+	    AND b.board_deleted = 0 
 	
 	    <!-- 1. 부서와 유형을 아무것도 선택하지 않았을 때 -->
 	    <if test="dept == '' and type == ''">
@@ -134,6 +159,7 @@
 	    JOIN department d ON b.dept_idx = d.dept_idx
 	    JOIN board_type bt ON b.board_type_idx = bt.board_type_idx
 	    WHERE 1 = 1
+	    AND b.board_deleted = 0 
 	
 	    <!-- 1. 부서와 유형을 아무것도 선택하지 않았을 때 -->
 	    <if test="dept == '' and type == ''">
@@ -164,6 +190,11 @@
 	    </if>
 	</select>
 
+	<update id="boardDelete" parameterType="int">
+		UPDATE board
+    	SET board_deleted = 1
+    	WHERE board_idx = #{board_idx}
+	</update>
 	
 	<select id="commentCount" parameterType="int" resultType="int">
 		SELECT
@@ -189,7 +220,7 @@
 	<!-- 게시글 ID로 게시글을 조회하는 쿼리 -->
 	<select id="getBoardByIdx" parameterType="int" resultType="map">
 		SELECT b.board_idx, b.board_empl_idx, b.board_type_idx, b.dept_idx,
-		b.board_title, b.board_content, b.board_view_cnt, 
+		b.board_title, b.board_content, b.board_view_cnt, b.board_deleted,
 		DATE_FORMAT(b.board_write_date, '%Y-%m-%d %H:%i') AS board_write_date,
 		DATE_FORMAT(b.board_update_date, '%Y-%m-%d %H:%i') AS board_update_date,
 		e.empl_name, e.empl_id, d.dept_name,
@@ -217,28 +248,22 @@
 		DATE_FORMAT(r.reply_write_date, '%Y-%m-%d %H:%i') AS reply_write_date,
 		r.reply_update_date, e.empl_name, d.dept_name
 		FROM reply r
-		JOIN employee
-		e ON r.reply_empl_idx = e.empl_idx
-		JOIN board b ON
-		r.board_idx =
-		b.board_idx
+		JOIN employee e ON r.reply_empl_idx = e.empl_idx
+		JOIN board b ON r.board_idx = b.board_idx
 		JOIN department d ON b.dept_idx = d.dept_idx
-		WHERE
-		r.board_idx = #{board_idx}
+
+		WHERE r.board_idx = #{board_idx}
 		ORDER BY reply_write_date ASC
 	</select>
 
 	<select id="getReReplyList" parameterType="int" resultType="map">
-		SELECT rr.re_reply_idx, rr.reply_idx, rr.re_reply_empl_idx,
-		rr.re_reply_content, DATE_FORMAT(rr.re_reply_write_date, '%Y-%m-%d
-		%H:%i') AS re_reply_write_date, rr.re_reply_update_date, e.empl_name,
-		d.dept_name
+		SELECT rr.re_reply_idx, rr.reply_idx, rr.re_reply_empl_idx, rr.re_reply_content, 
+		DATE_FORMAT(rr.re_reply_write_date, '%Y-%m-%d%H:%i') AS re_reply_write_date, 
+		rr.re_reply_update_date, e.empl_name, d.dept_name
 		FROM reply_reply rr
-		JOIN employee e ON rr.re_reply_empl_idx
-		= e.empl_idx
+		JOIN employee e ON rr.re_reply_empl_idx = e.empl_idx
 		JOIN reply r ON rr.reply_idx = r.reply_idx
-		JOIN board b ON
-		r.board_idx = b.board_idx
+		JOIN board b ON r.board_idx = b.board_idx
 		JOIN department d ON b.dept_idx = d.dept_idx
 		WHERE r.reply_idx = #{reply_idx}
 		ORDER BY re_reply_write_date ASC
@@ -280,5 +305,18 @@
 		</set>
     	WHERE board_idx = #{board_idx} AND board_empl_idx = #{empl_idx}
 	</update>
+	
+	<select id="getDeptMembers" parameterType="int">
+		SELECT appo_empl_idx
+		FROM appointment
+		WHERE dept_idx = #{dept_idx}
+		AND(transfer_date IS NULL)
+	</select>
+	
+	<select id="getAllMembers" parameterType="int">
+		SELECT appo_empl_idx
+		FROM appointment
+		WHERE trasfer_date IS NULL;	
+	</select>
 	
 </mapper>

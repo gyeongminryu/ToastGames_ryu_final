@@ -42,16 +42,21 @@
                                 <tbody>
                                     <tr>
                                         <th>제목</th>
-                                        <th>${board.board_type_name} ${board.board_title}</th>
+                                        <th>[${board.board_type_name}] ${board.board_title}</th>
                                     </tr>
                                     <tr>
                                         <th>작성자</th>
-                                        <td><span onclick="tst_view_profile('${board.empl_idx}')" class="tst_pointer">${board.empl_name} (${deptName})</span></td>
+                                        <td><span onclick="tst_view_profile('${board.board_empl_idx}')" class="tst_pointer">${board.empl_name} (${deptName})</span></td>
                                     </tr>
                                     <tr>
-                                        <th>작성</th>
-                                        <td>${board.board_write_date} (마지막 수정일시: ${board.board_update_date})</td>
-                                    </tr>
+								    <th>작성</th>
+								    <td>
+								        ${board.board_write_date}
+								        <c:if test="${board.board_write_date ne board.board_update_date}">
+								            (${board.board_update_date} 수정)
+								        </c:if>
+								    </td>
+								</tr>
                                     <tr>
                                         <th>내용</th>
                                         <td><div id="content" class="content">${board.board_content}</div></td>
@@ -93,8 +98,8 @@
                                                     <c:forEach var="comment" items="${comments}">
                                                         <tr id="td_comment_${comment.reply_idx}" class="td_reply_${comment.reply_idx}">
                                                             <td class="td_align_top">
-                                                                <h3><span onclick="tst_view_profile('${comment.empl_idx}')" class="tst_pointer">${comment.empl_name}</span></h3>
-                                                                <p class="min">${comment.dept_name}/${comment.position_name}</p>
+                                                                <h3><span onclick="tst_view_profile('${comment.reply_empl_idx}')" class="tst_pointer">${comment.empl_name}</span></h3>
+                                                                <p class="min">${comment.dept_name}/${comment.duty_name}</p>
                                                                 <p class="min font_subtle">${comment.reply_write_date}</p>
                                                             </td>
                                                             <td class="td_align_top">${comment.reply_content}</td>
@@ -102,8 +107,10 @@
                                                                 <ul class="tst_list list_no_desc list_block">
                                                                     <li><button onclick="reply_write('${comment.reply_idx}')" class="btn_primary btn_min">댓글쓰기</button></li>
                                                                     <!-- 작성자만 볼 수 있는 버튼입니다 -->
+                                                                    <c:if test="${comment.reply_empl_idx == sessionScope.empl_idx}">					                                                                	                                                                                                                            
                                                                     <li><button onclick="reply_update('${comment.reply_idx}')" class="btn_secondary btn_min">수정하기</button></li>
                                                                     <!-- 작성자만 볼 수 있는 버튼입니다 -->
+                                                                    </c:if>
                                                                 </ul>
                                                             </td>
                                                         </tr>
@@ -157,16 +164,18 @@
                                                                             <tr class="reReply" id="re_reply_${reReply.re_reply_idx}">
                                                                                 <td class="td_align_top"><i class="bi bi-arrow-return-right"></i></td>
                                                                                 <td class="td_align_top">
-                                                                                    <h3><span onclick="tst_view_profile('${reReply.empl_idx}')" class="tst_pointer">${reReply.empl_name}</span></h3>
-                                                                                    <p class="min">${reReply.dept_name}/${reReply.position_name}</p>
+                                                                                    <h3><span onclick="tst_view_profile('${reReply.re_reply_empl_idx}')" class="tst_pointer">${reReply.empl_name}</span></h3>
+                                                                                    <p class="min">${reReply.dept_name}/${reReply.duty_name}</p>
                                                                                     <p class="min font_subtle">${reReply.re_reply_write_date}</p>
                                                                                 </td>
                                                                                 <td class="td_align_top">${reReply.re_reply_content}</td>
                                                                                 <td class="td_align_top td_align_right">
                                                                                     <ul class="tst_list list_no_desc list_block">
+                                                                                    	<c:if test="${reReply.re_reply_empl_idx == sessionScope.empl_idx}">					                                                                	                                                                                                                                           	
                                                                                         <!-- 작성자만 볼 수 있는 버튼입니다 -->
                                                                                         <li><button onclick="re_reply_update('${reReply.re_reply_idx}')" class="btn_secondary btn_min">수정하기</button></li>
                                                                                         <!-- //작성자만 볼 수 있는 버튼입니다 -->
+                                                                                        </c:if>
                                                                                     </ul>
                                                                                 </td>
                                                                             </tr>
@@ -241,13 +250,13 @@
                                 <li><button type="button" onclick="location.href='board_list.go'" class="btn_primary btn_full">목록으로 돌아가기</button></li>
 
                                 <!-- 게시글 수정하기 버튼, 작성자만 보이게 설정 -->
-							    <c:if test="${board.empl_idx == sessionScope.empl_idx}">
+							    <c:if test="${board.board_empl_idx == sessionScope.empl_idx}">
 								    <li><button type="button" onclick="location.href='board_update.go?board_idx=${board.board_idx}'" class="btn_secondary btn_full">게시글 수정하기</button></li>
 								</c:if>
 							    <!-- 게시글 수정하기 버튼, 작성자만 보이게 설정 -->
 							    
 							    <!-- //담당자만 볼 수 있는 버튼입니다 -->
-							    <c:if test="${board.empl_idx == sessionScope.user.empl_idx}">
+								<c:if test="${sessionScope.empl_idx == 10017}">
 							        <li><button type="button" onclick="tst_modal_call('tst_modal_delete')" class="btn_subtle btn_full">게시글 삭제하기</button></li>
 							    </c:if>
                                 <!-- //담당자만 볼 수 있는 버튼입니다 -->

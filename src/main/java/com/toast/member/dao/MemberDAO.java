@@ -26,7 +26,7 @@ public interface MemberDAO {
 	int UpdatePw(String id, String encryptPw);	
 
 	List<MemberDTO> memberInfo(String id);
-
+	
 	List<FileDTO> getFileList(Map<String, Object> params);
 	
 	String originalFileName(String filename);
@@ -49,6 +49,12 @@ public interface MemberDAO {
 	List<Map<String, Object>> employmentHistory(int limit, int offset, String id);
 
 	void fileUpload(FileDTO fileDTO);
+
+	String getIdByIdx(int emplIdx);
+
+	int getEmployeeIdx(String id);
+
+	int getDeptIdx(String id);
 	
 }
 
