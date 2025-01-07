@@ -122,18 +122,20 @@
                                 <td class="td_align_bottom">
 
                                     <!-- 프로젝트 팀원 검색 -->
-                                    <form>
+                                    <form id="searchMemberForm">
+                                    	<input type="hidden" id="team_idx_mem" name="team_idx" value="${team_info.team_idx}" />
                                         <div class="tst_search_container">
                                             <div class="tst_search_select">
-                                                <select id="tst_search_select_category" name="category">
+                                                <select id="tst_search_select_category_mem" name="category">
                                                     <option value="{검색 분류}">검색 분류</option>
+                                                    <option value="empl_name">이름</option>
                                                 </select>
                                             </div>
                                             <div class="tst_search_input">
-                                                <input type="text" name="keyword_class" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                                                <input type="text" name="keyword_class" id="keyword_mem" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
                                             </div>
                                             <div class="tst_search_icon">
-                                                <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                                <button type="button" class="btn_icon" id="searchMemberButton"><i class="bi bi-search"></i></button>
                                             </div>
                                         </div>
                                     </form>
@@ -174,7 +176,7 @@
                                 <th></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="project_member">
 
                             <!-- 프로젝트 팀원이 없을 경우 -->
                             <!-- 데이터가 없는 경우 -->
@@ -239,6 +241,89 @@ function tst_modal_call_param_custom(modalId, memberId, memberName, memberPositi
       document.getElementById("member_idx").value = memberId;
     var memberElement = document.getElementById("prod_name");
     memberElement.textContent = memberName + " (" + memberPosition + ")"; // 이름과 직책 설정
+}
+
+$(document).ready(function () {
+    $('#searchMemberButton').on('click', function (e) {
+        e.preventDefault();
+
+        // 입력 값 가져오기
+        const category = $('#tst_search_select_category_mem').val();
+        const keyword = $('#keyword_mem').val();
+		const teamIdx = $('#team_idx_mem').val();
+        
+		console.log(teamIdx);
+        
+        if (!category || !keyword) {
+            alert('검색 분류와 검색어를 입력하세요.');
+            return;
+        }
+
+        // AJAX 요청
+        $.ajax({
+            url: './search_project_team_members.ajax', // 서버의 검색 API 엔드포인트
+            type: 'POST',
+            data:{
+                category: category,
+                keyword: keyword,
+                team_idx: teamIdx
+            },
+            dataType: 'json',
+            success: function (response) {
+                // 검색 결과 렌더링
+                renderProjectMembers(response);
+            },
+            error: function (xhr, status, error) {
+                console.error('검색 실패:', error);
+                alert('검색 중 문제가 발생했습니다. 다시 시도해주세요.');
+            }
+        });
+    });
+});
+
+//검색 결과 렌더링 함수
+function renderProjectMembers(data) {
+    const projectMemberContainer = $('#project_member');
+    projectMemberContainer.empty(); // 기존 결과 초기화
+
+    if (data.length === 0) {
+        projectMemberContainer.append(
+            '<tr class="rent_history_no_data">' +
+            '<td colspan="8" class="td_no_data">' +
+            '<p><i class="bi bi-person-exclamation"></i></p>' +
+            '<h3>검색 조건에 해당하는 팀원이 없습니다.</h3>' +
+            '</td>' +
+            '</tr>'
+        );
+        return;
+    }
+
+    data.forEach(function (member, index) {
+        projectMemberContainer.append(
+            '<tr>' +
+            '<td>' + (index + 1) + '</td>' +
+            '<td class="td_align_left">' +
+            '<span onclick="tst_view_profile(\'' + member.empl_idx + '\')" class="tst_pointer">' +
+            member.empl_name + ' (' + member.position_name + ')' +
+            '</span>' +
+            '</td>' +
+            '<td class="td_align_left">' + member.dept_name + '</td>' +
+            '<td class="td_align_left">' + member.empl_job + '</td>' +
+            '<td>' + member.movein_date + '</td>' +
+            '<td>' + (member.transfer_date ? member.transfer_date : '없음') + '</td>' +
+            '<td>' +
+            '<span class="tst_badge_min ' + (member.transfer_date == null ? 'btn_secondary' : 'btn_disable') + '">' +
+            (member.transfer_date == null ? '팀 소속' : '소속 아님') +
+            '</span>' +
+            '</td>' +
+            '<td>' +
+            (member.transfer_date == null
+                ? '<i class="bi bi-dash-circle-dotted" onclick="tst_modal_call_param_custom(\'tst_modal_delete\', \'' + member.empl_idx + '\', \'' + member.empl_name + '\', \'' + member.position_name + '\')"></i>'
+                : '') +
+            '</td>' +
+            '</tr>'
+        );
+    });
 }
 </script>
 

@@ -42,7 +42,7 @@ public interface DepartmentDAO {
 
 	List<DeptDetailMemberDTO> getdeptmeberlist(String dept_idx);
 
-	List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx);
+	
 
 	List<DeptDetailMemberDTO> deptmemsearchname(String emplName, String dept_idx);
 
@@ -71,6 +71,8 @@ public interface DepartmentDAO {
 	List<EmployeeDetailDTO> getDeptSearchMembers(String dept_idx, String category, String keyword, String team_idx);
 
 	List<EmployeeDetailDTO> getDeptTeamMembers(String dept_idx, String team_idx);
+
+	List<DeptDetailMemberDTO> searchDeptMember(String dept_idx, String category, String keyword);
 
 	
 

@@ -272,7 +272,7 @@
                     <!-- 검색 -->
                     <form id="searchForm">
                     
-                    <input type="hidden" id="team_idx" name="team_idx" value="${team_info.team_idx}" />
+                    <input type="hidden" id="team_idx_ser" name="team_idx" value="${team_info.team_idx}" />
                      <input type="hidden" id="dept_idx" name="dept_idx" value="" />
                         <div class="tst_search_container">
                             <div class="tst_search_select">
@@ -530,7 +530,7 @@ function getdept(deptidx){
 // 프로젝트 팀원 추가 검색 아작스
 $(document).ready(function () {
     // 검색 버튼 클릭 이벤트
-    $('#searchButton').on('click', function (e) {
+    $('#searchButton').off('click').on('click', function (e) {
     	console.log("검색 함수 실행");
     	
         e.preventDefault(); // 기본 동작 방지
@@ -539,7 +539,7 @@ $(document).ready(function () {
         var deptIdx = $('#dept_idx').val(); // 숨겨진 부서 ID
         var category = $('#tst_search_select_category_pro').val(); // 선택된 검색 분류
         var keyword = $('#keyword_pro').val(); // 입력된 검색어
-        
+        var teamIdx = $('#team_idx_ser').val();
         
         
         console.log("deptIdx:",deptIdx);
@@ -548,18 +548,18 @@ $(document).ready(function () {
 			
         // AJAX 요청
         $.ajax({
-            url: 'get_dept_search_member.ajax', // 서버 URL
+            url: './get_dept_search_member.ajax', // 서버 URL
             type: 'POST', // 요청 방식
             data: {
                 dept_idx: deptIdx,
                 category: category,
-                team_idx: team_idx,
+                team_idx: teamIdx,
                 keyword: keyword
             },
             dataType: 'json', // 서버에서 JSON 응답을 받음
             success: function (response) {
                 console.log('검색 결과:', response);
-             //   renderSearchResults(response); // 결과 렌더링 함수 호출
+                renderSearchResults(response); // 결과 렌더링 함수 호출
             },
             error: function (xhr, status, error) {
                 console.error('검색 실패:', error);
@@ -597,7 +597,7 @@ function renderSearchResults(members){
 }
 
 //체크박스 상태 변경 시 hidden 필드를 추가/제거
-$(document).on('change', 'input[name="add_member"]', function () {
+$(document).off('change').on('change', 'input[name="add_member"]', function () {
     var memberId = $(this).val(); // 체크박스의 value 값 (empl_idx)
     var hiddenForm = $('#hiddenMembersForm'); // 폼 태그 선택
 
@@ -648,6 +648,8 @@ function removeTeamMember() {
 
 // 초기 데이터 로드
 fetchAndRenderDeptList();
+
+
 
 
 

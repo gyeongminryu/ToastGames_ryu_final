@@ -94,4 +94,9 @@ public class ProjectService {
 		
 	}
 
+	public List<ProjectMemberDetailDTO> searchProjectTeamMembers(String team_idx, String category, String keyword) {
+		// TODO Auto-generated method stub
+		return projectDAO.searchProjectTeamMembers(team_idx,category,keyword);
+	}
+
 }

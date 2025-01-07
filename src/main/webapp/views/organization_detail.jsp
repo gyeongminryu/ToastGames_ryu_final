@@ -129,14 +129,15 @@
                         <form id="searchForm">
                             <div class="tst_search_container">
                                 <div class="tst_search_select">
-                                    <select id="tst_search_select_category" name="searchKey">
+                                <input type="hidden" name="dept_idx" id="dept_idx" value="${deptinfo.dept_idx }" />
+                                    <select id="tst_search_select_category" name="category">
                                         <option value="">검색 분류</option>
                                          <option value="empl_name">이름</option>
                 							<option value="empl_cmp_email">이메일</option>
                                     </select>
                                 </div>
                                 <div class="tst_search_input">
-                                    <input type="text" id="searchValue" name="searchValue" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                                    <input type="text" id="keyword" name="keyword" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
                                 </div>
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
@@ -158,7 +159,7 @@
                                     <th>근무 상태</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody >
                                 <c:forEach var="member" items="${deptmember}">
                                     <tr>
                                         <td>${member.empl_name}</td>
@@ -184,39 +185,28 @@ $(document).ready(function() {
     const cmpEmailContainer = $('#cmpEmailContainer');
     const searchOptions = $('input[name="searchOption"]');
 
-    // 라디오 버튼 변경 시 입력 필드 토글
-    searchOptions.on('change', function() {
-        if ($(this).val() === 'emplName') {
-            emplNameContainer.show();
-            cmpEmailContainer.hide();
-            $('#cmpEmail').val('');
-        } else if ($(this).val() === 'cmpEmail') {
-            emplNameContainer.hide();
-            cmpEmailContainer.show();
-            $('#emplName').val('');
-        }
-    });
+
 
     // 폼 제출 시 AJAX 요청
     $('#searchForm').on('submit', function(event) {
         event.preventDefault();
 
-        var emplName = $('#emplName').val();
-        var cmpEmail = $('#cmpEmail').val();
+        var keyword = $('#keyword').val();
+        var category = $('#tst_search_select_category').val();
         var dept_idx = $('#dept_idx').val();
 
         $.ajax({
             url: './search_dept_member.ajax',
             method: 'GET',
             data: {
-                emplName: emplName,
-                cmpEmail: cmpEmail,
+            	keyword: keyword,
+            	category: category,
                 dept_idx: dept_idx
             },
             success: function(response) {
                 var tableBody = $('#employeeTable tbody');
                 tableBody.empty();
-
+	
                 if (response.length > 0) {
                     response.forEach(function(employee) {
                         tableBody.append('<tr>' +

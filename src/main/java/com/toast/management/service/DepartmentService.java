@@ -198,19 +198,13 @@ public class DepartmentService {
 		
 	} // public void organizationDetailGo(String dept_idx, Model model)
 
-	public List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx) {
+	public List<DeptDetailMemberDTO> searchDeptMember(String dept_idx,String category,String keyword) {
 		
-		List<DeptDetailMemberDTO> dept_search_list = new ArrayList();
 		
-		if(emplName != null && !emplName.isEmpty()) { 
-			dept_search_list = departmentDAO.deptmemsearchname(emplName,dept_idx);
-		}
 		
-		else if(cmpEmail != null&& !cmpEmail.isEmpty()) {
-			dept_search_list = departmentDAO.deptmemsearchemail(cmpEmail,dept_idx);
-		}
 		
-		return  dept_search_list;
+		
+		return  departmentDAO.searchDeptMember(dept_idx,category,keyword);
 	} // public List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx)
 
 	public CompInfo getcompinfo() {
