@@ -4,7 +4,39 @@
 <mapper namespace="com.toast.notify.dao.NotiDAO">
     <insert id="approval_noti_insert" parameterType="Map">
         INSERT INTO notify(noti_cate_idx,noti_sender_empl_idx,noti_receiver_empl_idx,noti_subject,noti_content,noti_sent_date,noti_read_date,noti_deleted,noti_link)
-            VALUES(1,#{sender_idx},#{receiver_idx},#{doc_subject},#{doc_content},#{doc_date},null,#{notify_category},#{url})
+            VALUES(#{notify_category},#{sender_idx},#{receiver_idx},#{doc_subject},#{doc_content},#{doc_date},null,0,#{url})
     </insert>
+
+    <select id="get_all_noti" resultType="Map">
+        SELECT e.empl_name, n.noti_receiver_empl_idx, n.noti_cate_idx,nc.noti_cate_name, n.noti_subject, n.noti_idx, n.noti_content,n.noti_link,n.noti_sent_date FROM notify n
+           join employee e on e.empl_idx = n.noti_sender_empl_idx
+           join appointment a on e.appolast_idx = a.appo_idx
+           join notify_category nc on n.noti_cate_idx = nc.noti_cate_idx
+        WHERE noti_deleted = 0 AND noti_receiver_empl_idx = #{empl_idx}
+    </select>
+
+
+    <!--get_empl_dept_info-->
+    <select id="get_empl_dept_info" resultType="Map">
+        SELECT a.dept_idx,d.dept_depth,d.dept_high FROM employee e
+                join appointment a on a.appo_idx = e.appolast_idx
+                join department d on d.dept_idx = a.dept_idx
+        WHERE empl_idx = #{empl_idx};
+    </select>
+
+    <!--get_dept_name-->
+    <select id="get_dept_name" resultType="String">
+        SELECT dept_name FROM department WHERE dept_idx = #{dept_idx};
+    </select>
+
+
+
+    <update id="delete_noti_one">
+        UPDATE notify SET noti_deleted = 1 WHERE noti_idx = #{noti_idx}
+    </update>
+
+    <update id="delete_noti_all">
+        UPDATE notify SET noti_deleted = 1 WHERE noti_receiver_empl_idx = #{empl_idx}
+    </update>
 
 </mapper>

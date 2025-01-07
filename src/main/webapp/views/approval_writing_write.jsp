@@ -35,6 +35,8 @@
 
                 <form  method="POST" enctype="multipart/form-data">
                     <input type = "hidden" name = "empl_idx" class="hidden_empl_idx" value="${empl_idx}"/>
+                    <input type = "hidden" name = "empl_name" class="hidden_empl_name"/>
+
                     <input type = "hidden" name = "doc_idx" class="hidden_doc_idx"/>
                     <input type = "hidden" name = "doc_write_date" id="hidden_doc_date"/>
 
