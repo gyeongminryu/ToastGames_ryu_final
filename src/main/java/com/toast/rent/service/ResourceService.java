@@ -2,6 +2,9 @@ package com.toast.rent.service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.toast.rent.dao.ResourceDAO;
 import com.toast.rent.dto.ResourceDTO;
@@ -220,8 +224,17 @@ public class ResourceService {
 	
 	//물품 첨부파일 가져오기(첨부파일키 추가 필요)
 	public List<ResourcePhotoDTO> prodFile(int prod_idx) {
-		return resourceDAO.prodFile(prod_idx);
-		
+		//(첨부파일키 추가 필요)
+		List<String> fileKeys = resourceDAO.getProdFileKey(prod_idx);
+		List<ResourcePhotoDTO> fileList = new ArrayList<ResourcePhotoDTO>();
+	    for (String fileKey : fileKeys) {
+	        // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
+	        ResourcePhotoDTO file = resourceDAO.prodFile(fileKey);
+	        if (file != null) {
+	            fileList.add(file); // 가져온 파일 정보를 리스트에 추가
+	        }
+	    }
+	    return fileList;
 	}
 
 	//물품 대여 상태 보기
@@ -284,6 +297,14 @@ public class ResourceService {
 		return new ResponseEntity<Resource>(res, header, HttpStatus.OK);
 	}
 
+	//prod_rent_state 0: 미반납 
+	//prod_rent_state 1: 정상 반납 
+	//prod_rent_state 2: 연체중
+	//prod_rent_state 3: 연체 반납
+	//prod_rent_state 4: 대여 신청 중
+
+
+
 	//나의 물건 리스트 전체보기
 	public Map<String, Object> myResourceList(int page, int cnt , int empl_idx) {
 		Map<String,Object> result = new HashMap<String, Object>();
@@ -299,24 +320,24 @@ public class ResourceService {
 			result.put("currPage", page);
 			List<ResourceDTO> list = resourceDAO.myProdList(empl_idx,limit,offset);
 			for (ResourceDTO dto : list) {
-				switch (dto.getProd_rent()) {
+				switch (dto.getProd_return_state()) {
 				case 0:
-					dto.setProd_rent_str("대여 불가"); //물품 상태가 0(사용 불가)일때 
+					dto.setProd_return_state_str("미반납");
 					break;
 				case 1:
-					dto.setProd_rent_str("대여 가능");
+					dto.setProd_return_state_str("정상 반납");
 					break;
 				case 2:
-					dto.setProd_rent_str("대여 신청 중");
+					dto.setProd_return_state_str("연체 중");
 					break;
 				case 3:
-					dto.setProd_rent_str("대여 중");
+					dto.setProd_return_state_str("연체 반납");
 					break;
 				case 4:
-					dto.setProd_rent_str("연체");
+					dto.setProd_return_state_str("대여 신청 중");
 					break;
 				default:
-					dto.setProd_rent_str("알 수 없음");
+					dto.setProd_return_state_str("알 수 없음");
 					break;
 				}
 			}
@@ -330,8 +351,10 @@ public class ResourceService {
 		int state = 0;
 		if(rent_state == 11) { //반납한물품
 			state = 1;
-		} else {
+		} else if(rent_state == 30){
 			state = 0; //미반납 물품
+		} else {
+			state = rent_state;
 		}
 		logger.info("현재 페이지:"+page);	
 		logger.info("한 페이지에 보여줄 갯수: "+cnt);
@@ -352,24 +375,24 @@ public class ResourceService {
 		result.put("currPage", page);
 		List<ResourceDTO> list = resourceDAO.myReturnList(map);
 		for (ResourceDTO dto : list) {
-			switch (dto.getProd_rent()) {
+			switch (dto.getProd_return_state()) {
 			case 0:
-				dto.setProd_rent_str("대여 불가"); //물품 상태가 0(사용 불가)일때 
+				dto.setProd_return_state_str("미반납"); 
 				break;
 			case 1:
-				dto.setProd_rent_str("대여 가능");
+				dto.setProd_return_state_str("정상 반납");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청 중");
+				dto.setProd_return_state_str("연체 중");
 				break;
 			case 3:
-				dto.setProd_rent_str("대여 중");
+				dto.setProd_return_state_str("연체 반납");
 				break;
 			case 4:
-				dto.setProd_rent_str("연체");
+				dto.setProd_return_state_str("대여 신청 중");
 				break;
 			default:
-				dto.setProd_rent_str("알 수 없음");
+				dto.setProd_return_state_str("알 수 없음");
 				break;
 			}
 		}
@@ -377,55 +400,63 @@ public class ResourceService {
 		return result;
 	}
 
-	//대여 상태에따른 물건보기
-	public Map<String, Object> myResourceFilterList(int rent_state, int page, int cnt, int empl_idx) {
-		logger.info("현재 페이지:"+page);	
-		logger.info("한 페이지에 보여줄 갯수: "+cnt);
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		int limit = cnt;
-		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
-		map.put("cnt", cnt);
-		map.put("limit", limit);
-		map.put("offset", offset);
-		map.put("state", rent_state);
-		map.put("empl_idx", empl_idx);
 
-		
-		int totalPages = resourceDAO.myRentListCount(map);
-		
-		Map<String,Object> result = new HashMap<String, Object>();
-		result.put("totalPages", totalPages);
-		result.put("currPage", page);
-		List<ResourceDTO> list = resourceDAO.myRentFileterList(map);
-		for (ResourceDTO dto : list) {
-			switch (dto.getProd_rent()) {
-			case 0:
-				dto.setProd_rent_str("대여 불가"); //물품 상태가 0(사용 불가)일때 
-				break;
-			case 1:
-				dto.setProd_rent_str("대여 가능");
-				break;
-			case 2:
-				dto.setProd_rent_str("대여 신청 중");
-				break;
-			case 3:
-				dto.setProd_rent_str("대여 중");
-				break;
-			case 4:
-				dto.setProd_rent_str("연체");
-				break;
-			default:
-				dto.setProd_rent_str("알 수 없음");
-				break;
-			}
+	//내 물품 자세히보기(파일 가져오기)
+	public void myRentDetail(int prod_rent_idx, Model model) {
+		ResourceDTO detail = resourceDAO.myRentDetail(prod_rent_idx);
+		switch (detail.getProd_return_state()) {
+		case 0:
+			detail.setProd_return_state_str("미반납");
+			break;
+		case 1:
+			detail.setProd_return_state_str("정상 반납");
+			break;
+		case 2:
+			detail.setProd_return_state_str("연체 중");
+			break;
+		case 3:
+			detail.setProd_return_state_str("연체 반납");
+			break;
+		case 4:
+			detail.setProd_return_state_str("대여 신청 중");
+			break;
+		default:
+			detail.setProd_return_state_str("알 수 없음");
+			break;
 		}
-		result.put("list", list);
-		return result;
+        // 날짜 포맷
+        Map<String, String> formattedDates = new HashMap<>();
+        formattedDates.put("prodExpDate", formatDateTime(detail.getProd_exp_date()));
+        formattedDates.put("prodRentDate", formatDateTime(detail.getProd_rent_date()));
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("formattedDates", formattedDates);
+        model.addAttribute("detail", detail);
+        model.addAttribute("map", map);
 	}
 	
+    // 날짜 포맷 함수 (LocalDateTime을 포맷하는 함수)
+    private String formatDateTime(LocalDateTime dateTime) {
+        if (dateTime == null) return "";  // null 값 처리
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return dateTime.format(formatter);
+    }
+
+    //물품 idx가져오기
+	public int getIdx(int prod_rent_idx) {
+		return resourceDAO.getIdx(prod_rent_idx);
+	}
+
+	//물품 대여신청 취소
+	@Transactional
+	public int rentCancel(int prodIdx, int prodRentIdx) {
+		resourceDAO.rentCancel(1,prodIdx);
+		int row =resourceDAO.rentReturnCancel(prodRentIdx);
+		return row;
+		
+	}
+
+
 	
-
-
 
 
 }

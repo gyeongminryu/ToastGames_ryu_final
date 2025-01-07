@@ -271,41 +271,27 @@
 		    pd.prod_idx,
 		    pd.prod_rent,
 		    pd.prod_place,
+		    pr.prod_rent_idx,
 		    pr.prod_exp_date,
 		    pr.prod_rent_date
 		FROM 
 		    product pd
 		LEFT JOIN 
-		    product_rent pr ON pr.prod_idx = pd.prod_idx
-		LEFT JOIN 
-		    (
-		        SELECT 
-		            prod_idx, MAX(prod_rent_idx) max_rent_idx
-		        FROM 
-		            product_rent
-		        GROUP BY 
-		            prod_idx
-		    ) latest_rent 
-		    ON pr.prod_idx = latest_rent.prod_idx 
-		    AND pr.prod_rent_idx = latest_rent.max_rent_idx
-		WHERE pd.prod_idx = #{prod_idx} AND pd.prod_state=1
+		    product_rent pr 
+		    ON pr.prod_idx = pd.prod_idx 
+		    AND pr.prod_rent_idx = (
+		        SELECT MAX(prod_rent_idx)
+		        FROM product_rent
+		        WHERE prod_idx = pd.prod_idx
+		    )
+		WHERE 
+		    pd.prod_idx = #{prod_idx} AND pd.prod_state = 1
 	</select>
-
-	<!-- 물품 상세보기 첨부파일, 이미지 -->
-	<select id="prodFile" resultType="com.toast.rent.dto.ResourcePhotoDTO">
-		SELECT 		
-			file_idx, file_key, ori_filename, new_filename, file_type, file_addr, uploader_idx
-		FROM 
-			file
-		WHERE uploader_idx=#{param1}
-	</select>
-
-
 
 	<!-- 물품 대여신청 -->
 	<insert id="rentRequest" parameterType="com.toast.rent.dto.ResourceDTO">
-		INSERT INTO product_rent(prod_idx,prod_rent_empl_idx, prod_rent_reason, prod_rent_date, prod_exp_date)
-			VALUES(#{prod_idx}, #{prod_rent_empl_idx}, #{prod_rent_reason}, #{prod_rent_date}, #{prod_exp_date})
+		INSERT INTO product_rent(prod_idx,prod_rent_empl_idx, prod_rent_reason, prod_rent_date, prod_exp_date, prod_return_state)
+			VALUES(#{prod_idx}, #{prod_rent_empl_idx}, #{prod_rent_reason}, #{prod_rent_date}, #{prod_exp_date}, #{prod_return_state})
 	</insert>
 
 
@@ -328,6 +314,7 @@
 			product_rent
 		WHERE 
 			prod_rent_empl_idx=#{param1}
+		ORDER BY prod_rent_idx DESC 
 	</select>
 
 	<!-- 내 대여 총 페이지 -->
@@ -359,7 +346,8 @@
 			pr.prod_rent_reason,
 			pr.prod_rent_date,
 			pr.prod_exp_date,
-			pr.prod_return_date
+			pr.prod_return_date,
+			pr.prod_return_state
 		FROM 
 			product pd
 		JOIN 
@@ -368,7 +356,7 @@
 			product_rent pr ON pr.prod_idx=pd.prod_idx
     	WHERE
     		pr.prod_rent_empl_idx=#{param1}
-		ORDER BY prod_idx DESC 
+		ORDER BY prod_rent_idx DESC 
 			LIMIT #{param2} OFFSET #{param3}	
 	</select>
 	
@@ -401,7 +389,8 @@
 			pr.prod_rent_reason,
 			pr.prod_rent_date,
 			pr.prod_exp_date,
-			pr.prod_return_date
+			pr.prod_return_date,
+			pr.prod_return_state
 		FROM 
 			product pd
 		JOIN 
@@ -410,25 +399,13 @@
 			product_rent pr ON pr.prod_idx=pd.prod_idx
     	WHERE
     		pr.prod_rent_empl_idx=#{empl_idx} AND pr.prod_return_state=#{state}
-		ORDER BY prod_idx DESC 
+		ORDER BY prod_rent_idx DESC 
 			LIMIT #{limit} OFFSET #{offset}	
 	</select>
 	
 	
-	<!-- 내 대여 선택 페이지 -->
-	<select id="myRentListCount">
-		SELECT CEIL(COUNT(pd.prod_idx)/#{cnt}) AS pages 
-		FROM 
-			product_rent pr
-		JOIN 
-			product pd ON pr.prod_idx=pd.prod_idx
-		WHERE  
-    		pr.prod_rent_empl_idx=#{empl_idx} AND pr.prod_rent=#{state}
-	</select>
-	
-	
-	<!-- 내 대여 선택 리스트 -->
-	<select id="myRentFileterList">
+	<!-- 내 대여 상세보기 -->
+	<select id="myRentDetail">
 		SELECT 
 			pd.prod_idx,
 			pd.prod_name, 
@@ -436,42 +413,58 @@
 			pd.prod_model,
 			pd.prod_info,
 			pd.prod_rent, 
+			pd.prod_place,
 			pd.prod_empl_idx, 
 			pd.prod_dispo_date, 
 			pd.prod_state,
-			pc.prod_cate_name,
 			pr.prod_rent_idx,
 			pr.prod_rent_reason,
 			pr.prod_rent_date,
 			pr.prod_exp_date,
-			pr.prod_return_date
+			pr.prod_return_date,
+			pr.prod_return_state
 		FROM 
 			product pd
 		JOIN 
-			product_category pc ON pd.prod_cate_idx=pc.prod_cate_idx
-		JOIN 
 			product_rent pr ON pr.prod_idx=pd.prod_idx
     	WHERE
-    		pr.prod_rent_empl_idx=#{empl_idx} AND pr.prod_rent=#{state}
-		ORDER BY prod_idx DESC 
-			LIMIT #{limit} OFFSET #{offset}	
+    		pr.prod_rent_idx=#{param1}
+	</select>
+	
+	<!-- 파일키 가져오기 -->
+	<select id="getProdFileKey" resultType="String">
+		SELECT file_key FROM product_file WHERE prod_idx=#{param1}
+	</select>
+	
+	<!-- 물품  첨부파일 가져오기-->
+	<select id="prodFile" resultType="com.toast.rent.dto.ResourcePhotoDTO">
+		SELECT 		
+			file_idx, file_key, ori_filename, new_filename, file_type, file_addr, uploader_idx
+		FROM 
+			file
+		WHERE file_key=#{param1}
+	</select>
+	
+	<!-- 물품 idx가져오기 -->
+	<select id="getIdx" resultType="int">
+		SELECT prod_idx
+		FROM product_rent
+		WHERE prod_rent_idx=#{param1}
 	</select>
 	
 	
+	<!-- 대여 신청 취소 물품 상태 업뎃 -->
+	<update id="rentCancel">
+		UPDATE product
+		SET prod_rent=#{param1}
+		WHERE prod_idx=#{param2}
+	</update>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 대여 신청 취소 사용자 삭제 -->
+	<delete id="rentReturnCancel">
+		DELETE FROM product_rent
+			WHERE prod_rent_idx=#{param1}
+	</delete>
 	
 	
 	
