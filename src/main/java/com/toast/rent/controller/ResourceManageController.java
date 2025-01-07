@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -362,9 +363,11 @@ public class ResourceManageController {
 	//물품 대여 신청 승인(대여 여부 업뎃)
 	@GetMapping(value="/permitProd.do")
 	@ResponseBody
-	public Map<String, String> permitProd(@RequestParam int prod_idx) {
-		int row = resourceMgService.permitProd(prod_idx);
+	@Transactional
+	public Map<String, String> permitProd(@RequestParam int prod_rent_idx, @RequestParam int prod_idx) {
+		int row = resourceMgService.permitProd(prod_idx, prod_rent_idx);
 		Map<String, String> response = new HashMap<String, String>();
+		resourceMgService.getReturnInfo(prod_rent_idx); //반납일정 추가정보 가져오기/일정 추가
 		if(row >0) {
 			response.put("redirectUrl", "/manage_rent_list.go?prod_idx=" + prod_idx);
 		}
@@ -384,28 +387,50 @@ public class ResourceManageController {
 	}
 	
 	
-	
-	
+	//폐기처리 리스트가기
+//	@GetMapping(value="/manage_dispose_list.go")     
+//	public String dispoList() {
+//		
+//	}
+
 	//사용연한다되면물품 상태 0으로 업뎃
 	
+	
+	
+	
+	//물품 폐기 처리 가기
+	@GetMapping(value="/manage_rent_dispose.go")
+	public String dispoGo(@RequestParam("prod_idx") String prod_idx, Model model) {
+		int prodIdx = Integer.parseInt(prod_idx);
+		resourceMgService.prodInfo(prodIdx, model);
+		return "manage_rent_dispose";
+	}
+	
+	//@물품 인계처리 가기
+	@GetMapping(value="/manage_rent_transfer.go")
+	public String dispoTransferGo(@RequestParam("prod_idx") String prod_idx, Model model) {
+		int prodIdx = Integer.parseInt(prod_idx);
+		resourceMgService.prodInfo(prodIdx, model);
+		return "manage_rent_dispose";
+	}
+	
+	
+	
+	
+	
+	
+	
+
+	
 		
+	//연체시 상태 업뎃(prod_return_state: 2)
 	
-	
-	//대여 승인 시 반납일정 일정 표시
-	
-	
-	
-	//물품 인계 승인
+
+	//물품 인계 
 	
 	
 	
-	//물품 폐기 처리
-	
-	
-	
-	
-	
-	
+
 	//
 	
 	

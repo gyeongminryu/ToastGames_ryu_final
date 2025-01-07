@@ -20,10 +20,10 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item" onclick="location.href='/rent_list'">
+                    <li class="tst_title_item" onclick="location.href='/rent_list.go'">
                         <h1>공용 물품 대여</h1>
                     </li>
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_mylist'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/rent_mylist.go'">
                         <h1>내가 대여한 물품</h1>
                     </li>
                 </ul>
@@ -45,10 +45,12 @@
                             </thead>
                             <tbody>
 
-                            <!-- 연체했을 경우 -->
-                            <tr><!-- 연체하지 않았을 경우 class="disp_hide"를 추가해 주시기 바랍니다. -->
-                                <th colspan="2" class="td_bg_caution td_align_center">반납 예정 기한이 지났습니다. 조속히 반납하시기 바랍니다.</th>
-                            </tr>
+                            <!-- 연체했을 경우 --><!-- 연체하지 않았을 경우 class="disp_hide"를 추가해 주시기 바랍니다. -->
+							<c:if test="${detail.prod_return_state == 3}">
+							    <tr>
+							        <th colspan="2" class="td_bg_caution td_align_center">반납 예정 기한이 지났습니다. 조속히 반납하시기 바랍니다.</th>
+							    </tr>
+							</c:if>
                             <!-- //연체했을 경우 -->
                             <tr>
                                 <th>제품번호</th>
@@ -117,23 +119,27 @@
                             </thead>
                             <tbody>
                             <tr>
+                                <th>대여 번호</th>
+                                <td id="prod_rent_idx">${detail.prod_rent_idx}</td>
+                            </tr>
+                            <tr>
                                 <th>대여일</th>
-                                <td>{대여일}</td>
+                                <td>${map.formattedDates.prodRentDate}</td>
                             </tr>
                             <tr>
                                 <th>대여 사유</th>
-                                <td>{대여 사유}</td>
+                                <td>${detail.prod_rent_reason}</td>
                             </tr>
                             <tr>
-                                <th>대여 상태</th>
-                                <td>대여 신청|대여중|연체</td>
+                                <th >대여 상태</th>
+                                <td id="prod_rent_state" data-value="${detail.prod_return_state}">${detail.prod_return_state_str}</td>
                             </tr>
                             <tr>
                                 <th>반납 예정일</th>
-                                <td>{반납 예정일}</td>
+                                <td>${map.formattedDates.prodExpDate}</td>
                             </tr>
                             <tr>
-                                <th colspan="2" class="td_align_center td_bg_subtle">대여 장소는 본관 3층 312호 경영 지원실입니다.</th>
+                                <th colspan="2" class="td_align_center td_bg_subtle">대여 장소는 ${detail.prod_place}입니다.</th>
                             </tr>
                             </tbody>
                         </table>
@@ -143,11 +149,11 @@
 
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
-                            <li><!-- 대여 신청시가 아닐 때는 'class="disp_hide"'를 추가하여 보이지 않게 처리해 주세요 -->
-                                <button class="btn_primary btn_full" onclick="tst_modal_call('cancel_modal')">대여 신청 취소하기</button>
+                            <li id="rentCancelButton"><!-- 대여 신청시가 아닐 때는 'class="disp_hide"'를 추가하여 보이지 않게 처리해 주세요 -->
+                                <button class="btn_primary btn_full" onclick="tst_modal_call('tst_modal_cancel')">대여 신청 취소하기</button>
                             </li>
                             <li>
-                                <button class="btn_secondary btn_full" onclick="location.href='/rent_mylist'">목록으로 돌아가기</button>
+                                <button class="btn_secondary btn_full" onclick="location.href='/rent_mylist.go'">목록으로 돌아가기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->
@@ -163,4 +169,6 @@
 <c:import url="rent_mylist_detail_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
+<script src="resources/js/rent_mylist_detail.js"></script>
+
 </html>

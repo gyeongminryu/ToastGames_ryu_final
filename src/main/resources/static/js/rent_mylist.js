@@ -129,12 +129,12 @@ function resource_list_print(list) {
 				content += '<td>' + item.prod_idx + '</td>';
 				content += '<td><span class="tst_pointer">' + item.prod_cate_name + '</span></td>';
 				content += '<td class="td_align_left">';
-				content += '<h3 onclick="location.href=\'/myProdDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
+				content += '<h3 onclick="location.href=\'/myProdDetail.go?prod_rent_idx=' + item.prod_rent_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
 				content += '</td>';
 				content += '<td class="td_align_left">';
-				content += '<span onclick="location.href=\'/myProdDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
+				content += '<span onclick="location.href=\'/myProdDetail.go?prod_rent_idx=' + item.prod_rent_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
 	        	content += '</td>';
-				content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
+				content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_return_state_str + '</span></td>';
 				content += '<td>' + (item.prod_exp_date == null ? '없음' : formatDateTime(item.prod_exp_date)) + '</td>';
 				content += '</tr>';
     		} else {
