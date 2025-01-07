@@ -50,7 +50,7 @@
                 <li class="tst_pointer" onclick="location.href='/schedule.go'">
                     <i class="bi bi-calendar-event"></i><h3>일정 관리</h3>
                 </li>
-                <li class="tst_pointer">
+                <li class="tst_pointer" onclick="location.href='/document_list.go'">
                     <i class="bi bi-archive-fill"></i><h3>문서함</h3>
                 </li>
                 <li class="tst_pointer" onclick="location.href='/board_list.go'">

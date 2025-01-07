@@ -21,24 +21,49 @@ public class DocumentDTO {
     // approval_line
     private int line_idx;
     private int line_order;
-    private int dept_idx;
-    private String dept_name;
-    private int duty_idx;
-    private String duty_name;
-    private int empl_idx;
-    private int position_idx;
-    private String position_name;
-
-    // reference
-    private int ref_idx;
-    private int ref_doc_idx;
-    private int ref_empl_idx;
-
-    // reference_department
-    private int ref_dept_idx;
+    private int dept_idx_0;
+    private String dept_name_0;
+    private int duty_idx_0;
+    private String duty_name_0;
+    private int empl_idx_0;
+    private String empl_name_0;
+    private int position_idx_0;
+    private String position_name_0;
+    private LocalDateTime appr_date_0;
+    private int dept_idx_1;
+    private String dept_name_1;
+    private int duty_idx_1;
+    private String duty_name_1;
+    private int empl_idx_1;
+    private String empl_name_1;
+    private int position_idx_1;
+    private String position_name_1;
+    private LocalDateTime appr_date_1;
+    private int dept_idx_2;
+    private String dept_name_2;
+    private int duty_idx_2;
+    private String duty_name_2;
+    private int empl_idx_2;
+    private String empl_name_2;
+    private int position_idx_2;
+    private LocalDateTime appr_date_2;
+    private String position_name_2;
+    private int dept_idx_3;
+    private String dept_name_3;
+    private int duty_idx_3;
+    private String duty_name_3;
+    private int empl_idx_3;
+    private String empl_name_3;
+    private int position_idx_3;
+    private String position_name_3;
+    private LocalDateTime appr_date_3;
 
     // form
     private String form_subject;
+
+    // others
+    private int cnt_file;
+    private boolean authority;
 
     // Getter
     public int getDoc_idx() {
@@ -97,52 +122,160 @@ public class DocumentDTO {
         return line_order;
     }
 
-    public int getDept_idx() {
-        return dept_idx;
+    public int getDept_idx_0() {
+        return dept_idx_0;
     }
 
-    public String getDept_name() {
-        return dept_name;
+    public String getDept_name_0() {
+        return dept_name_0;
     }
 
-    public int getDuty_idx() {
-        return duty_idx;
+    public int getDuty_idx_0() {
+        return duty_idx_0;
     }
 
-    public String getDuty_name() {
-        return duty_name;
+    public String getDuty_name_0() {
+        return duty_name_0;
     }
 
-    public int getEmpl_idx() {
-        return empl_idx;
+    public int getEmpl_idx_0() {
+        return empl_idx_0;
     }
 
-    public int getPosition_idx() {
-        return position_idx;
+    public String getEmpl_name_0() {
+        return empl_name_0;
     }
 
-    public String getPosition_name() {
-        return position_name;
+    public int getPosition_idx_0() {
+        return position_idx_0;
     }
 
-    public int getRef_idx() {
-        return ref_idx;
+    public String getPosition_name_0() {
+        return position_name_0;
     }
 
-    public int getRef_doc_idx() {
-        return ref_doc_idx;
+    public LocalDateTime getAppr_date_0() {
+        return appr_date_0;
     }
 
-    public int getRef_empl_idx() {
-        return ref_empl_idx;
+    public int getDept_idx_1() {
+        return dept_idx_1;
     }
 
-    public int getRef_dept_idx() {
-        return ref_dept_idx;
+    public String getDept_name_1() {
+        return dept_name_1;
+    }
+
+    public int getDuty_idx_1() {
+        return duty_idx_1;
+    }
+
+    public String getDuty_name_1() {
+        return duty_name_1;
+    }
+
+    public int getEmpl_idx_1() {
+        return empl_idx_1;
+    }
+
+    public String getEmpl_name_1() {
+        return empl_name_1;
+    }
+
+    public int getPosition_idx_1() {
+        return position_idx_1;
+    }
+
+    public String getPosition_name_1() {
+        return position_name_1;
+    }
+
+    public LocalDateTime getAppr_date_1() {
+        return appr_date_1;
+    }
+
+    public int getDept_idx_2() {
+        return dept_idx_2;
+    }
+
+    public String getDept_name_2() {
+        return dept_name_2;
+    }
+
+    public int getDuty_idx_2() {
+        return duty_idx_2;
+    }
+
+    public String getDuty_name_2() {
+        return duty_name_2;
+    }
+
+    public int getEmpl_idx_2() {
+        return empl_idx_2;
+    }
+
+    public String getEmpl_name_2() {
+        return empl_name_2;
+    }
+
+    public int getPosition_idx_2() {
+        return position_idx_2;
+    }
+
+    public String getPosition_name_2() {
+        return position_name_2;
+    }
+
+    public LocalDateTime getAppr_date_2() {
+        return appr_date_2;
+    }
+
+    public int getDept_idx_3() {
+        return dept_idx_3;
+    }
+
+    public String getDept_name_3() {
+        return dept_name_3;
+    }
+
+    public int getDuty_idx_3() {
+        return duty_idx_3;
+    }
+
+    public String getDuty_name_3() {
+        return duty_name_3;
+    }
+
+    public int getEmpl_idx_3() {
+        return empl_idx_3;
+    }
+
+    public String getEmpl_name_3() {
+        return empl_name_3;
+    }
+
+    public int getPosition_idx_3() {
+        return position_idx_3;
+    }
+
+    public String getPosition_name_3() {
+        return position_name_3;
+    }
+
+    public LocalDateTime getAppr_date_3() {
+        return appr_date_3;
     }
 
     public String getForm_subject() {
         return form_subject;
+    }
+
+    public int getCnt_file() {
+        return cnt_file;
+    }
+
+    public boolean isAuthority() {
+        return authority;
     }
 
     // Setter
@@ -202,52 +335,160 @@ public class DocumentDTO {
         this.line_order = line_order;
     }
 
-    public void setDept_idx(int dept_idx) {
-        this.dept_idx = dept_idx;
+    public void setDept_idx_0(int dept_idx_0) {
+        this.dept_idx_0 = dept_idx_0;
     }
 
-    public void setDept_name(String dept_name) {
-        this.dept_name = dept_name;
+    public void setDept_name_0(String dept_name_0) {
+        this.dept_name_0 = dept_name_0;
     }
 
-    public void setDuty_idx(int duty_idx) {
-        this.duty_idx = duty_idx;
+    public void setDuty_idx_0(int duty_idx_0) {
+        this.duty_idx_0 = duty_idx_0;
     }
 
-    public void setDuty_name(String duty_name) {
-        this.duty_name = duty_name;
+    public void setDuty_name_0(String duty_name_0) {
+        this.duty_name_0 = duty_name_0;
     }
 
-    public void setEmpl_idx(int empl_idx) {
-        this.empl_idx = empl_idx;
+    public void setEmpl_idx_0(int empl_idx_0) {
+        this.empl_idx_0 = empl_idx_0;
     }
 
-    public void setPosition_idx(int position_idx) {
-        this.position_idx = position_idx;
+    public void setEmpl_name_0(String empl_name_0) {
+        this.empl_name_0 = empl_name_0;
     }
 
-    public void setPosition_name(String position_name) {
-        this.position_name = position_name;
+    public void setPosition_idx_0(int position_idx_0) {
+        this.position_idx_0 = position_idx_0;
     }
 
-    public void setRef_idx(int ref_idx) {
-        this.ref_idx = ref_idx;
+    public void setPosition_name_0(String position_name_0) {
+        this.position_name_0 = position_name_0;
     }
 
-    public void setRef_doc_idx(int ref_doc_idx) {
-        this.ref_doc_idx = ref_doc_idx;
+    public void setAppr_date_0(LocalDateTime appr_date_0) {
+        this.appr_date_0 = appr_date_0;
     }
 
-    public void setRef_empl_idx(int ref_empl_idx) {
-        this.ref_empl_idx = ref_empl_idx;
+    public void setDept_idx_1(int dept_idx_1) {
+        this.dept_idx_1 = dept_idx_1;
     }
 
-    public void setRef_dept_idx(int ref_dept_idx) {
-        this.ref_dept_idx = ref_dept_idx;
+    public void setDept_name_1(String dept_name_1) {
+        this.dept_name_1 = dept_name_1;
+    }
+
+    public void setDuty_idx_1(int duty_idx_1) {
+        this.duty_idx_1 = duty_idx_1;
+    }
+
+    public void setDuty_name_1(String duty_name_1) {
+        this.duty_name_1 = duty_name_1;
+    }
+
+    public void setEmpl_idx_1(int empl_idx_1) {
+        this.empl_idx_1 = empl_idx_1;
+    }
+
+    public void setEmpl_name_1(String empl_name_1) {
+        this.empl_name_1 = empl_name_1;
+    }
+
+    public void setPosition_idx_1(int position_idx_1) {
+        this.position_idx_1 = position_idx_1;
+    }
+
+    public void setPosition_name_1(String position_name_1) {
+        this.position_name_1 = position_name_1;
+    }
+
+    public void setAppr_date_1(LocalDateTime appr_date_1) {
+        this.appr_date_1 = appr_date_1;
+    }
+
+    public void setDept_idx_2(int dept_idx_2) {
+        this.dept_idx_2 = dept_idx_2;
+    }
+
+    public void setDept_name_2(String dept_name_2) {
+        this.dept_name_2 = dept_name_2;
+    }
+
+    public void setDuty_idx_2(int duty_idx_2) {
+        this.duty_idx_2 = duty_idx_2;
+    }
+
+    public void setDuty_name_2(String duty_name_2) {
+        this.duty_name_2 = duty_name_2;
+    }
+
+    public void setEmpl_idx_2(int empl_idx_2) {
+        this.empl_idx_2 = empl_idx_2;
+    }
+
+    public void setEmpl_name_2(String empl_name_2) {
+        this.empl_name_2 = empl_name_2;
+    }
+
+    public void setPosition_idx_2(int position_idx_2) {
+        this.position_idx_2 = position_idx_2;
+    }
+
+    public void setPosition_name_2(String position_name_2) {
+        this.position_name_2 = position_name_2;
+    }
+
+    public void setAppr_date_2(LocalDateTime appr_date_2) {
+        this.appr_date_2 = appr_date_2;
+    }
+
+    public void setDept_idx_3(int dept_idx_3) {
+        this.dept_idx_3 = dept_idx_3;
+    }
+
+    public void setDept_name_3(String dept_name_3) {
+        this.dept_name_3 = dept_name_3;
+    }
+
+    public void setDuty_idx_3(int duty_idx_3) {
+        this.duty_idx_3 = duty_idx_3;
+    }
+
+    public void setDuty_name_3(String duty_name_3) {
+        this.duty_name_3 = duty_name_3;
+    }
+
+    public void setEmpl_idx_3(int empl_idx_3) {
+        this.empl_idx_3 = empl_idx_3;
+    }
+
+    public void setEmpl_name_3(String empl_name_3) {
+        this.empl_name_3 = empl_name_3;
+    }
+
+    public void setPosition_idx_3(int position_idx_3) {
+        this.position_idx_3 = position_idx_3;
+    }
+
+    public void setPosition_name_3(String position_name_3) {
+        this.position_name_3 = position_name_3;
+    }
+
+    public void setAppr_date_3(LocalDateTime appr_date_3) {
+        this.appr_date_3 = appr_date_3;
     }
 
     public void setForm_subject(String form_subject) {
         this.form_subject = form_subject;
+    }
+
+    public void setCnt_file(int cnt_file) {
+        this.cnt_file = cnt_file;
+    }
+
+    public void setAuthority(boolean authority) {
+        this.authority = authority;
     }
 
 }

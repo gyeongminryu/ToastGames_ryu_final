@@ -4,9 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.toast.document.service.DocumentService;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @RestController
 public class DocumentController {
@@ -22,6 +26,28 @@ public class DocumentController {
 	@RequestMapping(value = "/document_list.go")
 	public ModelAndView document_list() {
 		return new ModelAndView("document_list");
+	}
+
+	@PostMapping(value = "/document_list.ajax")
+	public Map<String, Object> document_list(HttpSession session, String page, String cnt) {
+		session.setAttribute("loginId", "tndls0110");
+		String empl_id = session.getAttribute("loginId").toString();
+		int empl_idx = documentService.getEmplIdx(empl_id);
+		int dept_idx = documentService.getDeptIdx(empl_idx);
+		logger.info("dept_idx = " + dept_idx);
+
+		int pageInt = Integer.parseInt(page);
+		int cntInt = Integer.parseInt(cnt);
+		//int dept1Int = Integer.parseInt(dept1);
+		//int dept2Int = Integer.parseInt(dept2);
+//		boolean accessibleFiltering = false;
+//		if (accessible_filtering.equals("true")) {
+//			accessibleFiltering = true;
+//		} else if (accessible_filtering.equals("false")) {
+//			accessibleFiltering = false;
+//		}
+
+		return documentService.list(pageInt, cntInt, dept_idx);
 	}
 
 	// 문서 열람

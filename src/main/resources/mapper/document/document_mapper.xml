@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toast.document.dao.DocumentDAO"></mapper>
+<mapper namespace="com.toast.document.dao.DocumentDAO">
+
+    <!-- 문서 목록 -->
+    <select id="getEmplIdx" resultType="int">
+        SELECT empl_idx FROM employee WHERE empl_id = #{param1}
+    </select>
+
+    <select id="getDeptIdx" resultType="int">
+        SELECT dept_idx FROM appointment WHERE appo_empl_idx = #{param1} ORDER BY appo_idx DESC LIMIT 1
+    </select>
+
+    <select id="allCount" resultType="int">
+        SELECT CEIL(COUNT(doc_idx) / #{param1}) FROM document
+    </select>
+
+    <select id="countIdx" resultType="int">
+        SELECT COUNT(doc_idx) FROM document
+    </select>
+
+    <select id="list" resultType="com.toast.document.dto.DocumentDTO">
+        SELECT d.doc_idx, d.doc_subject, d.doc_update_date,
+            (SELECT a.appr_sender_idx FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 0) as 'empl_idx_0',
+            (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 0) as 'empl_idx_0',
+            (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'dept_idx_0',
+            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'dept_name_0',
+            (SELECT l.position_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'position_idx_0',
+            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'position_name_0',
+            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 0) as 'appr_date_0',
+            (SELECT COUNT(f.file_idx) FROM file f WHERE f.file_key = d.file_key) as 'cnt_file'
+        FROM document d ORDER BY d.doc_idx DESC LIMIT #{param1} OFFSET #{param2}
+    </select>
+
+    <select id="line" resultType="int">
+        SELECT dept_idx FROM approval_line WHERE doc_idx = #{param1}
+    </select>
+
+    <select id="deptList" resultType="int">
+        SELECT dept_idx FROM department WHERE dept_high = #{param1}
+    </select>
+
+</mapper>

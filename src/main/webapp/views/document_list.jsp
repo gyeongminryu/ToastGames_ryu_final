@@ -32,19 +32,6 @@
                 <div class="tst_flex">
                     <div class="tst_col2">
 
-                        <!-- 분류 검색 -->
-                        <form>
-                            <div class="tst_search_container width_full disp_hide">
-                                <div class="tst_search_input">
-                                    <input type="text" name="department" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
-                                </div>
-                                <div class="tst_search_icon">
-                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- //분류 검색 -->
-
                         <table class="tst_table table_align_left">
                             <colgroup>
                                 <col style="width: 20px;" />
@@ -136,11 +123,11 @@
                         <div class="tst_flex">
                             <div class="tst_col8">
 
-                                <!-- 물품 검색 -->
+                                <!-- 문서 검색 -->
                                 <form>
                                     <div class="tst_search_container">
                                         <div class="tst_search_select">
-                                            <select id="tst_search_select_category" onchange="<!-- 분류 선택시 실행할 함수를 입력하세요 -->">
+                                            <select id="tst_search_select_category" name="opt">
                                                 <option value="{검색 분류}">검색 분류</option>
                                             </select>
                                         </div>
@@ -152,7 +139,7 @@
                                         </div>
                                     </div>
                                 </form>
-                                <!-- //물품 검색 -->
+                                <!-- //문서 검색 -->
 
                             </div>
                             <div class="tst_col4">
@@ -177,10 +164,10 @@
                                 <col style="width: 80px;" />
                                 <col style="width: 120px;" />
                                 <col style="width: auto;" />
+                                <col style="width: 150px;" />
                                 <col style="width: 120px;" />
-                                <col style="width: 100px;" />
+                                <col style="width: 150px;" />
                                 <col style="width: 120px;" />
-                                <col style="width: 100px;" />
                             </colgroup>
                             <thead>
                             <tr>
@@ -193,52 +180,15 @@
                                 <th>최종 승인일</th>
                             </tr>
                             </thead>
-                            <tbody>
-
-                            <!-- 검색되는 문서가 없을 경우 -->
-                            <tr class="document_list_no_data disp_hide"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="7" class="td_no_data">
-                                    <p><i class="bi bi-file-earmark-break"></i></p>
-                                    <h3>검색 조건에 해당하는 문서가 없습니다.</h3>
-                                </td>
-                            </tr>
-                            <!-- //검색되는 문서가 없을 경우 -->
-
-                            <!-- 문서 목록 > 열람 가능한 문서 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td class="td_align_left">출장 결과 보고서</td>
-                                <td class="td_align_left">
-                                    <span class="tst_badge_min btn_secondary">열람 가능</span>
-                                    <span onclick="location.href='/document_detail?'" class="tst_pointer">출장 결과 보고서입니다 {첨부파일여부}</span>
-                                </td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">직원명 (부서/직급)</span></td>
-                                <td>yyyy-MM-dd</td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">직원명 (부서/직급)</span></td>
-                                <td>yyyy-MM-dd</td>
-                            </tr>
-                            <!-- //문서 목록 > 열람 가능한 문서 -->
-
-                            <!-- 문서 목록 > 열람 불가한 문서 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td class="td_align_left">지출 품의서</td>
-                                <td class="td_align_left">
-                                    <span class="tst_badge_min btn_disable">열람 불가</span>
-                                    <span class="font_cancellation font_subtle">구매 요청드립니다</span>
-                                </td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">직원명 (부서/직급)</span></td>
-                                <td>yyyy-MM-dd</td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">직원명 (부서/직급)</span></td>
-                                <td>yyyy-MM-dd</td>
-                            </tr>
-                            <!-- //문서 목록 > 열람 불가한 문서 -->
+                            <tbody class="doc_list"></tbody>
 
                             <!-- pagination -->
                             <tfoot>
                             <tr>
                                 <td colspan="7">
-                                    <ul id="pagination" class="pagination-sm pagination"></ul>
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination" id="pagination"></ul>
+                                    </nav>
                                 </td>
                             </tr>
                             </tfoot>

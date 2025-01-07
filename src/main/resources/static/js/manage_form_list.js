@@ -41,7 +41,7 @@ function fillSearchForm(opt, keyword) {
 
 // 목록 출력하기
 var showPage = 1;
-var cnt = 20;
+var cnt = 15;
 var vPages = 10;
 
 pageShow(showPage);
@@ -169,7 +169,7 @@ function printTags(idx, content) {
 
     var editor = new RichTextEditor("#div_editor", configViewNone);
     editor.setHTMLCode(content);
-    console.log(editor.document.firstChild.childNodes[1]);
+    //console.log(editor.document.firstChild.childNodes[1]);
     editor.document.firstChild.childNodes[1].style.width = '200%';
     editor.document.firstChild.childNodes[1].style.height = '50%';
     editor.document.firstChild.childNodes[1].style.margin = '0 0 0 -50%';
