@@ -311,6 +311,15 @@ public class DepartmentController {
 			return dept_list;
 		}
 		
+		@GetMapping(value="/get_dept_basic_list.ajax")
+		@ResponseBody
+		public Map<String,Object> getDeptBasicList(){
+			
+			Map<String,Object> dept_list =	departmentService.getDeptBasicList();
+			
+			return dept_list;
+		}
+		
 		@GetMapping(value="/get_dept_members.ajax")
 		@ResponseBody
 		public List<EmployeeDetailDTO> getDeptMembers(@RequestParam String dept_idx){

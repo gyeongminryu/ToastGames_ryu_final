@@ -82,7 +82,7 @@ public class EmployeeController {
 	
 		employeeService.employeeDetail(empl_idx,model);
 		
-		return "employee_detail";
+		return "manage_employee_detail";
 	}
 	
 	@ResponseBody
@@ -221,7 +221,7 @@ public class EmployeeController {
 		}
 		
 		model.addAttribute("empl_info",employee);
-		return "staff_detail";
+		return "manage_staff_detail";
 	}
 
 }

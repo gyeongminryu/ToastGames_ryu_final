@@ -66,6 +66,8 @@
                                     <div class="tst_search_select">
                                         <select id="tst_search_select_category" name="category">
                                             <option value="{검색 분류}">검색 분류</option>
+                                            <option value="dept_name">부서이름</option>
+                                            <option value="head_name">부서장 이름/팀장 이름</option>
                                         </select>
                                     </div>
                                     <div class="tst_search_input">
@@ -112,7 +114,7 @@
                         <th>위치</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="dept_list">
 
                     <!-- 부서 출력 -->
                     <tr class="td_bg_subtle">
@@ -166,65 +168,7 @@
                     </tr>
                     <!-- //부서 출력 -->
 
-                    <!-- 예시 -->
-                    <tr class="td_bg_subtle">
-                        <th><i class="bi bi-folder"></i></th>
-                        <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">프로그래밍</th>
-                        <td class="td_align_left"><span onclick="tst_view_profile('10052')" class="tst_pointer">서연진 (차장)</span></td>
-                        <td>02-2345-6789</td>
-                        <td>member@toastgames.com</td>
-                        <td>8명</td>
-                        <td class="td_align_left">엔진 개발, 게임 콘텐츠 개발, 유지 보수시 이슈 처리, 프로그래밍</td>
-                        <td>5층 503-5호</td>
-                    </tr>
-                    <tr>
-                        <td colspan="8" class="td_no_padding">
-                            <table class="tst_table tst_table_in_table">
-                                <colgroup>
-                                    <col style="width: 16px" />
-                                    <col style="width: 120px" />
-                                    <col style="width: 150px" />
-                                    <col style="width: 180px" />
-                                    <col style="width: 220px" />
-                                    <col style="width: 120px" />
-                                    <col style="width: auto" />
-                                    <col style="width: 180px" />
-                                </colgroup>
-                                <tr>
-                                    <th>├</th>
-                                    <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">게임엔진</th>
-                                    <td class="td_align_left"><span onclick="tst_view_profile('10060')" class="tst_pointer">김인하 (과장)</span></td>
-                                    <td>02-2345-6789</td>
-                                    <td>member@toastgames.com</td>
-                                    <td>3명</td>
-                                    <td class="td_align_left">게임엔진 개발</td>
-                                    <td>5층 503호</td>
-                                </tr>
-                                <tr>
-                                    <th>├</th>
-                                    <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">게임플레이</th>
-                                    <td class="td_align_left"><span onclick="tst_view_profile('10059')" class="tst_pointer">박사금 (과장)</span></td>
-                                    <td>02-2345-6789</td>
-                                    <td>member@toastgames.com</td>
-                                    <td>3명</td>
-                                    <td class="td_align_left">QA 및 테스트</td>
-                                    <td>5층 503호</td>
-                                </tr>
-                                <tr>
-                                    <th>└</th>
-                                    <th class="td_align_left tst_pointer" onclick="location.href='/organization_detail?'">DBA</th>
-                                    <td class="td_align_left"><span onclick="tst_view_profile('10064')" class="tst_pointer">주차장 (과장)</span></td>
-                                    <td>02-2345-6789</td>
-                                    <td>member@toastgames.com</td>
-                                    <td>2명</td>
-                                    <td class="td_align_left">데이터베이스 관리</td>
-                                    <td>5층 504호</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <!-- //예시 -->
-
+                  
                     </tbody>
                 </table>
                 <!-- //표 -->
@@ -283,9 +227,18 @@
          
                 // 서버로부터 받은 데이터를 Google OrgChart 데이터 테이블에 반영
                 response.deptlist.forEach(function(dept) {
- 
+ 						var dept_duty = '';
+ 						if(dept.dept_depth == 2){
+ 							dept_duty = '부서장-'
+ 						}
+ 						else if(dept.dept_depth == 3){
+ 							dept_duty = '팀장-'
+ 						}
+ 						else if(dept.dept_depth == 1){
+ 							dept_duty = '대표-'
+ 						}
                 	data.addRow([
-                		  {v:dept.dept_idx, f:dept.dept_name+'<div>'+dept.dept_name +'장-' +(dept.dept_head_name ? dept.dept_head_name : '공석')+'</div>'+'<div>'+dept.total_dept_count+'</div>'}, // Name
+                		  {v:dept.dept_idx, f:dept.dept_name+'<div>'+dept_duty  +(dept.dept_head_name ? dept.dept_head_name : '공석')+'</div>'+'<div>'+dept.total_dept_count+'</div>'}, // Name
                 	    dept.dept_high, // Manager를 완전한 비어있는 div로 대체
                 	    dept.dept_idx // ToolTip
                 	]);
@@ -312,5 +265,113 @@
             }
         });
     }
+    
+    $(document).ready(function () {
+        // 부서 기본 정보 가져오기
+        fetchDeptBasicList();
+
+        function fetchDeptBasicList() {
+            $.ajax({
+                url: 'get_dept_basic_list.ajax', // 서버에서 데이터를 제공하는 엔드포인트
+                type: 'GET', // GET 요청
+                dataType: 'json', // JSON 형식의 응답
+                success: function (response) {
+                    console.log('부서 기본 정보:', response);
+                    renderDeptTable(response); // 데이터를 테이블에 렌더링
+                },
+                error: function (xhr, status, error) {
+                    console.error('부서 목록 가져오기 실패:', error);
+                    alert('부서 목록을 가져오는 중 오류가 발생했습니다.');
+                }
+            });
+        }
+
+        // 테이블 데이터 렌더링
+        function renderDeptTable(data) {
+            var tbody = $('#dept_list'); // 테이블의 tbody 선택
+            tbody.empty(); // 기존 데이터를 초기화
+
+            if (!data || Object.keys(data).length === 0) {
+                tbody.append('<tr><td colspan="8">부서 정보가 없습니다.</td></tr>');
+                return;
+            }
+
+            // 상위 부서 반복
+            for (var highDeptId in data) {
+                if (data.hasOwnProperty(highDeptId)) {
+                    var deptList = data[highDeptId];
+                    var highDept = deptList[0]; // 상위 부서 정보
+                    var subDepts = deptList.slice(1); // 하위 부서 목록
+
+                    // 상위 부서 추가
+                    var highDeptRow = '<tr class="td_bg_subtle">' +
+                        '<th><i class="bi bi-folder"></i></th>' +
+                        '<th class="td_align_left tst_pointer" onclick="location.href=\'/organization_detail.go?dept_idx=' + highDept.dept_idx + '\'">' + highDept.dept_name + '</th>' + // 경로설정
+                        '<td class="td_align_left">' +
+                        (highDept.dept_head_idx
+                            ? '<span onclick="tst_view_profile(\'' + highDept.dept_head_idx + '\')" class="tst_pointer">' + highDept.empl_name + ' (' + highDept.position_name + ')</span>'
+                            : '부서장 없음') +
+                        '</td>' +
+                        '<td>' + (highDept.empl_cmp_phone || '-') + '</td>' +
+                        '<td>' + (highDept.empl_cmp_email || '-') + '</td>' +
+                        '<td>' + (highDept.total_dept_count || '0') + '명</td>' +
+                        '<td class="td_align_left">' + (highDept.dept_duty || '-') + '</td>' +
+                        '<td>' + (highDept.dept_addr || '-') + '</td>' +
+                        '</tr>';
+
+                    tbody.append(highDeptRow);
+
+                    // 하위 부서 출력
+                    var subDeptTable = '<tr><td colspan="8" class="td_no_padding">' +
+                        '<table class="tst_table tst_table_in_table">' +
+                        '<colgroup>' +
+                        '<col style="width: 16px" />' +
+                        '<col style="width: 120px" />' +
+                        '<col style="width: 150px" />' +
+                        '<col style="width: 180px" />' +
+                        '<col style="width: 220px" />' +
+                        '<col style="width: 120px" />' +
+                        '<col style="width: auto" />' +
+                        '<col style="width: 180px" />' +
+                        '</colgroup>' +
+                        '<tbody>' +
+                        renderSubDepts(subDepts) +
+                        '</tbody>' +
+                        '</table>' +
+                        '</td></tr>';
+
+                    tbody.append(subDeptTable);
+                }
+            }
+        }
+
+        // 하위 부서 데이터 렌더링
+        function renderSubDepts(subDepts) {
+        //    if (!subDepts || subDepts.length === 0) return '<tr><td colspan="8">소속 팀이 없습니다.</td></tr>';
+
+            var subDeptRows = '';
+            for (var i = 0; i < subDepts.length; i++) {
+                var subDept = subDepts[i];
+                var prefix = (i === subDepts.length - 1) ? '└' : '├';
+                subDeptRows += '<tr>' +
+                    '<th>' + prefix + '</th>' +
+                    '<th class="td_align_left tst_pointer" onclick="location.href=\'/organization_detail.go?dept_idx=' + subDept.dept_idx + '\'">' + subDept.dept_name + '</th>' + // 경로설정
+                    '<td class="td_align_left">' +
+                    (subDept.dept_head_idx
+                        ? '<span onclick="tst_view_profile(\'' + subDept.dept_head_idx + '\')" class="tst_pointer">' + subDept.empl_name + ' (' + subDept.position_name + ')</span>'
+                        : '팀장 없음') +
+                    '</td>' +
+                    '<td>' + (subDept.empl_cmp_phone || '-') + '</td>' +
+                    '<td>' + (subDept.empl_cmp_email || '-') + '</td>' +
+                    '<td>' + (subDept.total_dept_count || '0')+ '명</td>' +
+                    '<td class="td_align_left">' + (subDept.dept_duty || '-') + '</td>' +
+                    '<td>' + (subDept.dept_addr || '-') + '</td>' +
+                    '</tr>';
+            }
+            return subDeptRows;
+        }
+    });    
+
+   
     </script>
 </html>

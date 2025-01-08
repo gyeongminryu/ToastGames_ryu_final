@@ -229,7 +229,7 @@ public class DepartmentService {
 		String duty_idx = "2";
 		EmployeeDTO employee = employeeDAO.employeeDetail(ceo_idx);
 		String appo_idx = employee.getAppolast_idx();
-		String empl_job = "사장이올시다";
+		String empl_job = "사장";
 		 // 포맷 정의
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");       
         // 현재 시간 가져오기
@@ -410,6 +410,83 @@ public class DepartmentService {
 			return departmentDAO.getDeptTeamMembers(dept_idx,team_idx);
 		}
 		
+
+		public Map<String, Object> getDeptBasicList() {
+		    // 부서 인원수 가져오기
+		    List<Map<String, Object>> deptMemberCounts = departmentDAO.getDeptMemberCounts();
+
+		    // 기본 부서(뎁스 1), 상위 부서(뎁스 2), 하위 부서(뎁스 3) 목록 가져오기
+		    List<DeptDetailInfoDTO> basicDeptList = departmentDAO.getbasicdeptinfolist();
+		    List<DeptDetailInfoDTO> highDeptList = departmentDAO.gethighdeptinfolist();
+		    List<DeptDetailInfoDTO> lowDeptList = departmentDAO.getlowdeptinfolist();
+
+		    // 최종 결과를 담을 Map
+		    Map<String, Object> deptMap = new HashMap<>();
+
+		    // 1. 기본 부서(뎁스 1) 처리
+		    for (DeptDetailInfoDTO basicDept : basicDeptList) {
+		        String basicDeptIdx = String.valueOf(basicDept.getDept_idx());
+		        String totalDeptCount = "0";
+
+		        // 부서 인원수 설정 (기존 방식 활용)
+		        for (Map<String, Object> count : deptMemberCounts) {
+		            if (count.get("dept_idx").toString().equals(basicDeptIdx)) {
+		                totalDeptCount = count.get("member_count").toString();
+		                break;
+		            }
+		        }
+		        basicDept.setTotal_dept_count(totalDeptCount);
+
+		        // 기본 부서를 단독 리스트로 추가
+		        List<DeptDetailInfoDTO> basicList = new ArrayList<>();
+		        basicList.add(basicDept);
+		        deptMap.put(basicDeptIdx, basicList);
+		    }
+
+		    // 2. 상위 부서(뎁스 2)와 하위 부서(뎁스 3) 처리
+		    for (DeptDetailInfoDTO highDept : highDeptList) {
+		        String highDeptIdx = String.valueOf(highDept.getDept_idx());
+		        String totalDeptCount = "0";
+
+		        // 상위 부서 인원수 설정
+		        for (Map<String, Object> count : deptMemberCounts) {
+		            if (count.get("dept_idx").toString().equals(highDeptIdx)) {
+		                totalDeptCount = count.get("member_count").toString();
+		                break;
+		            }
+		        }
+		        highDept.setTotal_dept_count(totalDeptCount);
+
+		        // 상위 부서와 하위 부서를 함께 저장할 리스트 생성
+		        List<DeptDetailInfoDTO> highDeptWithLowList = new ArrayList<>();
+		        highDeptWithLowList.add(highDept);
+
+		        // 하위 부서 필터링
+		        for (DeptDetailInfoDTO lowDept : lowDeptList) {
+		            if (String.valueOf(lowDept.getDept_high()).equals(highDeptIdx)) {
+		                String lowDeptCount = "0";
+
+		                // 하위 부서 인원수 설정
+		                for (Map<String, Object> count : deptMemberCounts) {
+		                    if (count.get("dept_idx").toString().equals(String.valueOf(lowDept.getDept_idx()))) {
+		                        lowDeptCount = count.get("member_count").toString();
+		                        break;
+		                    }
+		                }
+		                lowDept.setTotal_dept_count(lowDeptCount);
+
+		                // 하위 부서를 상위 부서 리스트에 추가
+		                highDeptWithLowList.add(lowDept);
+		            }
+		        }
+
+		        // 최종 매핑
+		        deptMap.put(highDeptIdx, highDeptWithLowList);
+		    }
+
+		    return deptMap;
+		}
+
 
 
 }
