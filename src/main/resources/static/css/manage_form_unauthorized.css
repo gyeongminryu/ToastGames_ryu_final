@@ -1,0 +1,15 @@
+.module_unauthorized{
+    width: 100%;
+    padding: 250px 0 0;
+    text-align: center;
+}
+
+.module_unauthorized i{
+    color: var(--tst-color-medium);
+    font-size: 100px;
+}
+
+.module_unauthorized h2{
+    margin: 14px 0 0;
+    font-size: 16px;
+}

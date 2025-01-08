@@ -27,7 +27,7 @@
                 <tr>
                     <th class="td_align_top">문서 양식</th>
                     <td>
-                        <p class="msg min font_subtle"><!--2분마다 자동으로 저장됩니다.--></p>
+                        <p class="msg min font_subtle">2분마다 자동으로 저장됩니다.</p>
 
                         <!-- rte -->
                         <div id="div_editor"></div>

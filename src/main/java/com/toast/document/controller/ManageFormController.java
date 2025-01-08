@@ -20,35 +20,56 @@ public class ManageFormController {
         this.manageFormService = manageFormService;
     }
 
-    // 권한 확인 - 작업하는 중
+    // 권한 확인
     public ModelAndView authorize(HttpSession session, String addr) {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("approval_writing_list");
-        // 세션 임의 저장
+        mav.setViewName("manage_form_unauthorized");
+
+        // 세션 임의 지정
         session.setAttribute("loginId", "tndls0110");
+        session.setAttribute("empl_idx", "10001");
+        session.setAttribute("dept_idx", "100");
+
+        // 세션 내 부서 번호 인출
+        int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
+
+        // 부서 번호 확인
+        if (dept_idx == 122 || (dept_idx >= 152 && dept_idx <= 157)) {
+            logger.info("Valid dept_idx = " + dept_idx);
+            mav.setViewName(addr);
+        } else {
+            logger.warn("Invalid dept_idx = " + dept_idx);
+        }
 
         return mav;
     }
 
     // 문서 양식 목록
+    @GetMapping (value = "/manage_form_unauthorized.go")
+    public ModelAndView manage_form_unauthorized(HttpSession session) {
+
+        return new ModelAndView("manage_form_unauthorized");
+    }
+
+    // 문서 양식 목록
     @GetMapping (value = "/manage_form_list.go")
     public ModelAndView manage_form_list(HttpSession session) {
-        
-        return new ModelAndView("manage_form_list");
+
+        return authorize(session, "manage_form_list");
     }
 
     // 사용하지 않는 문서 양식 목록
     @GetMapping (value = "/manage_form_disuse_list.go")
     public ModelAndView manage_form_disuse_list(HttpSession session) {
 
-        return new ModelAndView("manage_form_disuse_list");
+        return authorize(session, "manage_form_disuse_list");
     }
 
     // 작성중인 문서 양식 목록
     @GetMapping (value = "/manage_form_wip_list.go")
     public ModelAndView manage_form_wip_list(HttpSession session) {
 
-        return new ModelAndView("manage_form_wip_list");
+        return authorize(session, "manage_form_wip_list");
     }
 
     @PostMapping (value = "/manage_form_list.ajax")
@@ -82,7 +103,7 @@ public class ManageFormController {
     @GetMapping (value = "/manage_form_detail.go")
     public ModelAndView manage_form_detail(HttpSession session) {
 
-        return new ModelAndView("manage_form_detail");
+        return authorize(session, "manage_form_detail");
     }
 
     @PostMapping (value = "/manage_form_detail.ajax")
@@ -119,7 +140,7 @@ public class ManageFormController {
     @GetMapping (value = "/manage_form_update.go")
     public ModelAndView manage_form_update(HttpSession session) {
 
-        return new ModelAndView("manage_form_update");
+        return authorize(session, "manage_form_update");
     }
 
     @PostMapping (value = "/manage_form_update.ajax")
@@ -144,7 +165,7 @@ public class ManageFormController {
     @GetMapping (value = "/manage_form_wip_update.go")
     public ModelAndView manage_form_wip_update(HttpSession session) {
 
-        return new ModelAndView("manage_form_wip_update");
+        return authorize(session, "manage_form_wip_update");
     }
 
     // 결재선 설정하기

@@ -144,6 +144,10 @@ function printInfo(info) {
 }
 
 // 임시 저장
+setInterval(function () {
+    saveForm();
+} ,120000);
+
 function saveForm() {
     const subject = document.getElementsByName('subject')[0].value;
     const content = editor.getHTMLCode();
@@ -170,14 +174,13 @@ function saveForm() {
     }
 }
 
-//const saveInterval = setInterval(saveForm(),120000);
-
 // 문서 양식을 저장할 시 메시지 출력
 function saveMsg() {
+    console.log('자동 저장 완료');
     document.getElementsByClassName('msg')[0].innerHTML = '<span class="font_caution">문서 양식을 저장했습니다.</span>';
     setTimeout(function() {
         document.getElementsByClassName('msg')[0].innerHTML = '2분마다 자동으로 저장됩니다.';
-    }, 5000);
+    }, 3000);
 }
 
 // 에디터를 수정하면 카피 div에 html 코드를 저장
