@@ -124,8 +124,7 @@ public class BoardController {
 	    
 	    // 게시글이 삭제된 경우 처리
 	    if ((int) board.get("board_deleted") == 1) {
-	        model.addAttribute("message", "삭제된 게시글입니다.");
-	        return "board_list"; // error_page.jsp 또는 다른 오류 페이지로 리다이렉트
+	        return "board_list";
 	    }
 	    
 	    // 개인이 소속된 dept를 가져오는 메서드
@@ -245,6 +244,7 @@ public class BoardController {
 		boardService.boardDelete(board_idx);
 		return "board_list";
 	}
+	
 	// 댓글 작성
 	@PostMapping(value = "/reply_write.do")
 	public String writeReply(@RequestParam("board_idx") int board_idx, @RequestParam("reply") String reply, HttpSession session) {

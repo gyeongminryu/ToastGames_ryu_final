@@ -27,7 +27,7 @@ public interface BoardDAO {
 	Map<String, Object> countBoardList(Map<String, Object> params);
 	
 	void boardDelete(int board_idx);	
-
+	
 	int commentCount(int board_idx);
 	
 	String getUserDept(String id);

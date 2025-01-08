@@ -24,3 +24,16 @@ function re_reply_update(no) {
 function update_re_reply_cancel(no) {
     document.getElementsByClassName('re_reply_update_'+no)[0].classList.add('disp_hide');
 }
+
+// 리치텍스트에디터
+	var config = {}	
+	config.editorResizeMode = "none";
+		
+	config.toolbar="simple";
+	// html 저장, 출력, pdf 저장, 코드보기 만 노출
+	config.toolbar_simple = "{save, print, html2pdf, code}";
+	
+	
+	var editor = new RichTextEditor("#div_editor", config);
+	editor.setHTMLCode($('#content').html());
+	editor.setReadOnly();

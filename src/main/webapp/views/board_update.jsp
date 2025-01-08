@@ -9,6 +9,13 @@
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/manage_rent.css" />
+    <link rel="stylesheet" href="resources/richtexteditor/rte_theme_default.css" />
+    <script type="text/javascript" src="resources/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src="resources/richtexteditor/plugins/all_plugins.js"></script>
+    <script type='text/javascript' src="resources/richtexteditor/lang/rte-lang-ko.js"></script>
+    <link rel="stylesheet" href="resources/css/module_rte.css" />
+    <script type="text/javascript" src="resources/js/module_rte.js"></script>
+    
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -79,8 +86,10 @@
                                 <tr>
                                     <th class="td_align_top">내용</th>
                                     <td>
-                                        <textarea name="board_content" rows="27" placeholder="내용을 입력하세요">${board.board_content}</textarea>
-                                    </td>
+								        <!-- 에디터용 div 추가 -->
+								        <div id="div_editor"></div>
+								        <input type="hidden" name="board_content" id="board_content" value="" />
+								    </td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
@@ -137,6 +146,7 @@
                         </div>
                     </div>
                 </form>
+              <div id="content" style="display:none;">${board.board_content}</div>	              
             </div>
         </div>
     </div>

@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+    <link rel="stylesheet" href="resources/richtexteditor/rte_theme_default.css" />
+    <script type="text/javascript" src="resources/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src="resources/richtexteditor/plugins/all_plugins.js"></script>
+    <script type='text/javascript' src="resources/richtexteditor/lang/rte-lang-ko.js"></script>
+    <link rel="stylesheet" href="resources/css/module_rte.css" />
+    <script type="text/javascript" src="resources/js/module_rte.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -46,20 +52,22 @@
                                     </tr>
                                     <tr>
                                         <th>작성자</th>
-                                        <td><span onclick="tst_view_profile('${board.board_empl_idx}')" class="tst_pointer">${board.empl_name} (${deptName})</span></td>
+                                        <td><span onclick="tst_view_profile('${board.board_empl_idx}')" class="tst_pointer">${board.empl_name} (${board.dept_name})</span></td>
                                     </tr>
                                     <tr>
-								    <th>작성</th>
-								    <td>
-								        ${board.board_write_date}
-								        <c:if test="${board.board_write_date ne board.board_update_date}">
-								            (${board.board_update_date} 수정)
-								        </c:if>
-								    </td>
-								</tr>
+								    	<th>작성일시</th>
+									    <td>
+									        ${board.board_write_date}
+									        <c:if test="${board.board_write_date ne board.board_update_date}">
+									            (${board.board_update_date} 수정)
+									        </c:if>
+									    </td>
+									</tr>
                                     <tr>
                                         <th>내용</th>
-                                        <td><div id="content" class="content">${board.board_content}</div></td>
+                                        <td>
+                                        	<div id="content" class="content">${board.board_content}</div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="td_align_top">댓글</th>
@@ -99,7 +107,7 @@
                                                         <tr id="td_comment_${comment.reply_idx}" class="td_reply_${comment.reply_idx}">
                                                             <td class="td_align_top">
                                                                 <h3><span onclick="tst_view_profile('${comment.reply_empl_idx}')" class="tst_pointer">${comment.empl_name}</span></h3>
-                                                                <p class="min">${comment.dept_name}/${comment.duty_name}</p>
+                                                                <p class="min">${comment.dept_name}</p>
                                                                 <p class="min font_subtle">${comment.reply_write_date}</p>
                                                             </td>
                                                             <td class="td_align_top">${comment.reply_content}</td>
@@ -165,7 +173,7 @@
                                                                                 <td class="td_align_top"><i class="bi bi-arrow-return-right"></i></td>
                                                                                 <td class="td_align_top">
                                                                                     <h3><span onclick="tst_view_profile('${reReply.re_reply_empl_idx}')" class="tst_pointer">${reReply.empl_name}</span></h3>
-                                                                                    <p class="min">${reReply.dept_name}/${reReply.duty_name}</p>
+                                                                                    <p class="min">${reReply.dept_name}</p>
                                                                                     <p class="min font_subtle">${reReply.re_reply_write_date}</p>
                                                                                 </td>
                                                                                 <td class="td_align_top">${reReply.re_reply_content}</td>
