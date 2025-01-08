@@ -131,16 +131,16 @@
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
                             <li>
-                                <button class="form_update btn_primary btn_full">양식 수정하기</button>
+                                <button onclick="updateForm()" class="btn_primary btn_full">양식 수정하기</button>
                             </li>
                             <li>
-                                <button class="form_write btn_secondary btn_full">양식을 복사하여 새 양식 작성하기</button>
+                                <button onclick="copyForm()" class="btn_secondary btn_full">양식을 복사하여 새 양식 작성하기</button>
                             </li>
                             <li>
-                                <button class="form_return btn_subtle btn_full">목록으로 돌아가기</button>
+                                <button onclick="location.href='/manage_form_list.go'" class="btn_subtle btn_full">목록으로 돌아가기</button>
                             </li>
                             <li>
-                                <button onclick="tst_modal_call('tst_modal_delete')" class="btn_text btn_full">양식 삭제하기</button>
+                                <button onclick="tst_modal_call('tst_modal_disuse')" class="btn_text btn_full">양식 삭제하기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->

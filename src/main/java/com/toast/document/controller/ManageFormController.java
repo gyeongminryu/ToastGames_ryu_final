@@ -105,6 +105,11 @@ public class ManageFormController {
 
         return authorize(session, "manage_form_detail");
     }
+    @GetMapping (value = "/manage_form_disuse_detail.go")
+    public ModelAndView manage_form_disuse_detail(HttpSession session) {
+
+        return authorize(session, "manage_form_disuse_detail");
+    }
 
     @PostMapping (value = "/manage_form_detail.ajax")
     public Map<String, Object> manage_form_detail(String form_idx) {
@@ -125,15 +130,16 @@ public class ManageFormController {
         String writer = session.getAttribute("loginId").toString();
         int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
         int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
-        int form_idx = manageFormService.write(writer, empl_idx, dept_idx);
+        int form_idx = manageFormService.write(writer, empl_idx, dept_idx, "write", 0);
 
+        String viewName = "";
         if (form_idx < 0) {
-            mav.setViewName("redirect:/manage_form_list.go");
+            viewName = "redirect:/manage_form_list.go";
         } else {
-            mav.setViewName("redirect:/manage_form_update.go?form_idx="+form_idx);
+            viewName = "redirect:/manage_form_update.go?form_idx="+form_idx;
         }
 
-        return mav;
+        return authorize(session, viewName);
     }
 
     // 문서 양식 수정하기
@@ -213,5 +219,49 @@ public class ManageFormController {
         manageFormService.delete(form_idxInt);
 
         return new ModelAndView("redirect:/manage_form_wip_list.go");
+    }
+
+    // 등록한 문서 양식 삭제하기 (사용하지 않기)
+    @RequestMapping (value = "/manage_form_disuse.do")
+    public ModelAndView manage_form_disuse(String form_idx) {
+        //logger.info("form_idx = "+form_idx);
+        int form_idxInt = Integer.parseInt(form_idx);
+        manageFormService.disuse(form_idxInt);
+
+        return new ModelAndView("redirect:/manage_form_disuse_list.go");
+    }
+
+    // 양식 복구하기
+    @RequestMapping (value = "/manage_form_restore.do")
+    public ModelAndView manage_form_restore(String form_idx) {
+        //logger.info("form_idx = "+form_idx);
+        int form_idxInt = Integer.parseInt(form_idx);
+        manageFormService.register(form_idxInt);
+
+        return new ModelAndView("redirect:/manage_form_detail.go?form_idx=" + form_idx);
+    }
+
+    // 양식 복사하기
+    @RequestMapping (value = "/manage_form_copy.do")
+    public ModelAndView manage_form_copy(HttpSession session, String form_idx_ori) {
+        ModelAndView mav = new ModelAndView();
+
+        session.setAttribute("loginId", "tndls0110");
+        session.setAttribute("empl_idx", "10001");
+        session.setAttribute("dept_idx", "100");
+        String writer = session.getAttribute("loginId").toString();
+        int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
+        int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
+        int form_idx_oriInt = Integer.parseInt(form_idx_ori);
+        int form_idx = manageFormService.write(writer, empl_idx, dept_idx, "copy", form_idx_oriInt);
+
+        String viewName = "";
+        if (form_idx < 0) {
+            viewName = "redirect:/manage_form_list.go";
+        } else {
+            viewName = "redirect:/manage_form_update.go?form_idx="+form_idx;
+        }
+
+        return authorize(session, viewName);
     }
 }

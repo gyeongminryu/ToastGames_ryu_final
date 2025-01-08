@@ -344,11 +344,16 @@ function saveValues() {
 }
 
 // 작성중인 문서 등록하기
-document.getElementsByName('form_wip_register')[0].onclick = function() {
+function registWIP() {
     location.href='/manage_form_register.do?form_idx=' + form_idx;
 }
 
 // 작성중인 문서 삭제하기
-document.getElementsByName('form_wip_delete')[0].onclick = function () {
+function deleteWIP() {
     location.href='/manage_form_delete.do?form_idx=' + form_idx;
+}
+
+// 등록한 문서 삭제하기 (사용하지 않기)
+function disuseForm() {
+    location.href='/manage_form_disuse.do?form_idx=' + form_idx;
 }

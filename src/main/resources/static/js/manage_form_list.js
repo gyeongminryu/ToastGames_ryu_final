@@ -92,10 +92,12 @@ function listPrint(list, totalIdx, currentPage) {
             tags += '<td class="td_align_left">';
             tags += '<span onClick="previewPrint(' + list[i].form_idx + ')" class="tst_badge_min btn_primary margin_right tst_pointer">미리보기</span>';
 
-            if (sort === 'wip') {
-                tags += '<span onClick="location.href=\'/manage_form_wip_update.go?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
-            } else {
+            if (sort === 'use') {
                 tags += '<span onClick="location.href=\'/manage_form_detail.go?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
+            } else if (sort === 'disuse') {
+                tags += '<span onClick="location.href=\'/manage_form_disuse_detail.go?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
+            } else if (sort === 'wip') {
+                tags += '<span onClick="location.href=\'/manage_form_wip_update.go?form_idx=' + list[i].form_idx + '\'" class="tst_pointer">' + list[i].form_subject + '</span>';
             }
 
             // 1차 결재선

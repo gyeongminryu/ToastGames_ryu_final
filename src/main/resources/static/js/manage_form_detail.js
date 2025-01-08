@@ -94,21 +94,19 @@ function printInfo(info) {
 }
 
 // 양식 수정하기
-document.getElementsByClassName('form_update')[0].addEventListener('click', () => {
+function updateForm() {
     location.href = '/manage_form_update.go?form_idx=' + form_idx;
-});
-
-// 양식 작성하기
-document.getElementsByClassName('form_write')[0].addEventListener('click', () => {
-    location.href = '/manage_form_write.do?orig_form_idx=' + form_idx;
-});
-
-// 이전 화면으로 돌아가기
-document.getElementsByClassName('form_return')[0].addEventListener('click', () => {
-    location.href = '/manage_form_list.go';
-});
-
+}
+// 양식 복사하기
+function copyForm() {
+    location.href = '/manage_form_copy.do?form_idx_ori=' + form_idx;
+}
 // 양식 삭제하기
-document.getElementsByClassName('form_disuse')[0].addEventListener('click', () => {
-    location.href = '/manage_form_delete.do?form_idx=' + form_idx;
-});
+function disuseForm() {
+    location.href = '/manage_form_disuse.do?form_idx=' + form_idx;
+}
+
+// 양식 복구하기
+function restoreForm() {
+    location.href = '/manage_form_restore.do?form_idx=' + form_idx;
+}

@@ -82,7 +82,7 @@
             <!-- //결재선 수정 -->
 
             <ul class="tst_list list_no_desc list_block">
-                <li>
+                <li class="only_in_wip">
                     <button type="button" onclick="tst_modal_call('tst_modal_register')" class="btn_primary btn_full">양식 등록하기</button>
                 </li>
                 <li>
@@ -91,8 +91,11 @@
                 <li>
                     <button type="button" name="goToList" class="btn_subtle btn_full">목록으로 돌아가기</button>
                 </li>
-                <li>
+                <li class="only_in_wip">
                     <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_text btn_full">작성 취소하기</button>
+                </li>
+                <li class="only_in_complete disp_hide">
+                    <button type="button" onclick="tst_modal_call('tst_modal_cancel')" class="btn_text btn_full">양식 삭제하기</button>
                 </li>
             </ul>
         </div>

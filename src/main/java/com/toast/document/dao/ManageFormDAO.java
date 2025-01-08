@@ -40,4 +40,10 @@ public interface ManageFormDAO {
     void deleteForm(int form_idx);
     void deleteLines(int form_idx);
 
+    // 등록한 문서 양식 삭제하기 (사용하지 않기)
+    void disuse(int form_idx);
+
+    // 문서 양식 복사하기
+    String copySubject(int form_idx);
+    String copyContent(int form_idx);
 }

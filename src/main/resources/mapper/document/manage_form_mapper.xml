@@ -174,4 +174,18 @@
         DELETE FROM g_approval_line WHERE form_idx = #{param1}
     </delete>
 
+    <!-- 등록한 문서 양식 삭제하기 (사용하지 않기) -->
+    <update id="disuse">
+        UPDATE form SET form_state = 0 WHERE form_idx = #{param1}
+    </update>
+
+    <!-- 문서 양식 복사하기 -->
+    <select id="copySubject" resultType="String">
+        SELECT form_subject FROM form WHERE form_idx = #{param1}
+    </select>
+
+    <select id="copyContent" resultType="String">
+        SELECT form_content FROM form WHERE form_idx = #{param1}
+    </select>
+
 </mapper>
