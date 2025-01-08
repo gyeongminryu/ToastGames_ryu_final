@@ -114,10 +114,19 @@ function save_approved_doc_content(doc_content){
                 //2.결재 승인 알람 -- 결재 요청자
                 //sent 주소로 넣기
                 //approval_set_notify(data.target,location.pathname);
-                    return approval_insert_notify_promise('approval_sent_detail.go?doc_idx='+doc_idx+'&type=sent',doc_write_empl_idx,empl_idx,doc_subject,'내용 없음',1);
+                url = '/approval_sent_detail.go?doc_idx='+doc_idx+'&type=sent';
+                console.log(parseInt(doc_write_empl_idx));
+
+                doc_subject ='';
+                doc_subject += $('#doc_write_empl_name').val();
+                doc_subject += '가 결재를 요청한 문서가 있습니다. (결재 마감일시 : ';
+                doc_subject += $('#doc_end_date').val();
+                doc_subject +=')';
+
+                return approval_insert_notify_promise(url,parseInt(doc_write_empl_idx),empl_idx,doc_subject,'내용 없음',1);
                 }).then(function (){
                     console.log("두 번째 알림 완료");
-                    //location.href = "/approval_received_list.go";
+                    location.href = "/approval_received_list.go";
                 }).catch(function(e){
                 console.log(e);
                })

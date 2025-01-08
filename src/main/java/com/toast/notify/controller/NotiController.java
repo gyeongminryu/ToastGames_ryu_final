@@ -17,6 +17,9 @@ import java.util.Map;
 @Controller
 public class NotiController {
 	int empl_idx = 10024;
+	//int empl_idx = 10022;
+
+
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	

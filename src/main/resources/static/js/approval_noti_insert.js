@@ -3,7 +3,7 @@ function approval_insert_notify(url,target_users,sender_idx,doc_subject,doc_cont
     let today = new Date(); //오늘 날짜에 대한 전체 정보
 
     let year = today.getFullYear();//년도 구하기
-    let month = today.getMonth(); //달 구하기
+    let month = today.getMonth()+1; //달 구하기
     let date = today.getDate(); // 일 구하기
 
     let hours = today.getHours();
