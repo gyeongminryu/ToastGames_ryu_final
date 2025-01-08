@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.toast.employee_add.dao.EmployeeAddDAO">
+    <insert id="empl_add_all" parameterType = "list">
+        INSERT INTO employee(empl_name,empl_id,empl_pw,empl_gender,empl_birth,empl_ssn1,empl_ssn2,empl_per_email,empl_per_phone,empl_addr,empl_join_date)
+        VALUES
+        <foreach collection="list" item = "excel" separator = ",">
+            (#{excel.empl_name},#{excel.empl_id},#{excel.empl_pw},#{excel.empl_gender},#{excel.empl_birth},#{excel.empl_ssn1},#{excel.empl_ssn2},#{excel.empl_per_email},#{excel.empl_per_phone},#{excel.empl_addr},#{excel.empl_join_date})
+        </foreach>
+
+    </insert>
+
+    <select id="find_bank_idx" resultType="int">
+        SELECT * FROM bank WHERE bank
+    </select>
+</mapper>

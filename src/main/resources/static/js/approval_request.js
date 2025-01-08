@@ -35,7 +35,7 @@ function approval_request(){
                 ///approval_received_detail.go?doc_idx=511&type=received
 
                 //첫번째 결재자
-                approval_insert_notify('approval_received_detail.go?doc_idx='+doc_idx+'&type=received',data.target_user,sender_idx,doc_subject,'',1);
+                approval_insert_notify('/approval_received_detail.go?doc_idx='+doc_idx+'&type=received',data.target_user,sender_idx,doc_subject,'',1);
 
                 //웹소켓
                 //approval_set_notify(data.target_user,location.pathname,sender_idx);

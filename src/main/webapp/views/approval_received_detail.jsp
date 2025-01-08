@@ -60,8 +60,12 @@
                                 <input type="hidden" id = "doc_idx" value = ${doc_info.doc_idx}>
                                 <input type="hidden" id = "doc_subject" value = ${doc_info.doc_subject}>
                                 <input type="hidden" id = "doc_content_sub" value = ${doc_info.doc_content_sub}>
-                                <input type="hidden" id="doc_write_empl_idx" value="${doc_info.empl_idx}">
+                                <input type="hidden" id = "doc_end_date" value = ${doc_info.doc_end_date}>
+
+                                <input type="hidden" id="doc_write_empl_idx" value="${doc_info.doc_empl_idx}">
+                                <input type="hidden" id = "doc_write_empl_name" value = ${doc_info.empl_name}>
                                 <input type="hidden" id = "empl_idx" value = ${empl_idx}>
+
                                 <input type="hidden" id = "my_appr_order" value = ${my_appr_order}>
 
                                 <th>제목</th>
