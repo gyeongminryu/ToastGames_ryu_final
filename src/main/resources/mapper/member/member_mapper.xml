@@ -61,7 +61,7 @@
 
 	<!-- myPage 멤버정보 가져오기 -->
 	<select id="memberInfo" parameterType="String" resultType="com.toast.member.dto.MemberDTO"> 
-		SELECT e.empl_idx, e.empl_name, e.empl_id, e.empl_pw, 
+		SELECT e.empl_idx, e.empl_name, e.empl_id, e.empl_pw, appo_idx, 
 		CASE
 			WHEN e.empl_gender = 0 THEN '남자' 
 			WHEN e.empl_gender = 1 THEN '여자' 
@@ -73,8 +73,13 @@
 			WHEN e.bank_idx = 5 THEN '신한' 
 			WHEN e.bank_idx = 6 THEN 'KEB하나' 
 			WHEN e.bank_idx = 7 THEN '기업' 
+			WHEN e.bank_idx IS NULL THEN '은행이 등록되지 않았습니다.'
 			ELSE '알 수 없음' END AS bank_name,
-		e.empl_birth, e.empl_ssn1, e.empl_ssn2, e.empl_account, e.empl_cmp_email, e.empl_cmp_phone, e.empl_per_email, e.empl_per_phone, e.empl_addr, e.empl_emp_state,
+		e.empl_birth, e.empl_ssn1, e.empl_ssn2, 
+		IFNULL(e.empl_account, '은행 계좌가 등록되지 않았습니다.') AS empl_account, 		
+		IFNULL(e.empl_cmp_phone, '사내 유선번호가 등록되지 않았습니다.') AS empl_cmp_phone,
+		IFNULL(e.empl_cmp_email, '사내 이메일이 등록되지 않았습니다.') AS empl_cmp_email,
+		e.empl_per_email, e.empl_per_phone, e.empl_addr,
 		DATE_FORMAT(e.empl_join_date, '%Y-%m-%d') AS empl_join_date,
 		e.empl_resig_date, e.empl_stamp, e.empl_profile, e.empl_changepw,
 		e.file_key, a.dept_idx, a.position_idx, a.duty_idx, p.position_name, dt.duty_name, d.dept_name 
@@ -83,7 +88,8 @@
 		JOIN department d ON a.dept_idx = d.dept_idx 
 		JOIN position_ p ON a.position_idx = p.position_idx 
 		JOIN duty dt ON a.duty_idx = dt.duty_idx 
-		WHERE e.empl_id = #{id} 
+		WHERE e.empl_id = #{id}
+		ORDER BY appo_idx DESC LIMIT 1 
 	</select>
 	
 	<select id="getFileList" parameterType="map"

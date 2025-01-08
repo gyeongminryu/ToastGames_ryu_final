@@ -5,9 +5,11 @@ function submitForm() {
     var typeValue = typeSelect.value;
 
     var titleInput = document.querySelector('input[name="board_title"]'); // 제목
-    var contentTextarea = document.querySelector('textarea[name="board_content"]'); // 내용
     var titleValue = titleInput.value.trim();
-    var contentValue = contentTextarea.value.trim();
+    var contentDiv = document.getElementById('div_editor'); // 내용이 담긴 div
+
+    // 에디터 객체가 이미 생성된 상태에서 다시 생성하지 않도록 수정
+    var contentValue = editor.getHTMLCode(); // RichTextEditor에서 HTML 가져오기
 
     // 필수 입력값 검사 및 유효성 검사
     if (deptValue === "") {
@@ -33,11 +35,20 @@ function submitForm() {
 
     if (contentValue === "") {
         alert("내용을 입력하세요.");
-        contentTextarea.focus(); // 내용 입력창에 포커스 이동
+        contentDiv.focus();
         tst_modal_close('tst_modal_write');
         return false; // 폼 제출을 막음
     }
     
-    // 모든 항목이 정상이라면 폼을 제출
+    // contentValue를 board_content에 설정
+    document.getElementById('board_content').value = contentValue;
+    
+    // 작성된 내용이 100MB 이상이면 제출하지 않도록
+    console.log("전체 문서의 크기 : " + (contentValue.length / 1024 / 1024) + ' MB');
+    if (contentValue.length > 100 * 1024 * 1024) {
+        alert('100MB 이상 크기는 전송이 불가능 합니다.');
+        return false;
+    }
+    
     document.forms[0].submit(); // 폼 제출
 }

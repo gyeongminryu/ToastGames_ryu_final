@@ -246,6 +246,7 @@ public class BoardService {
 		            notifyParams.put("noti_receiver_empl_idx", empl_idx);
 		            notifyParams.put("noti_subject", boardTitle);
 		            notifyParams.put("noti_content", boardContent);
+		            notifyParams.put("noti_read_date", null);       // 읽지 않은 상태로 설정 (기본값 null)
 		            notifyParams.put("noti_link", notiLink);
 		            boardDAO.saveBoardNotify(notifyParams);
 				}
@@ -262,6 +263,7 @@ public class BoardService {
 		            notifyParams.put("noti_receiver_empl_idx", empl_idx);
 		            notifyParams.put("noti_subject", boardTitle);
 		            notifyParams.put("noti_content", boardContent);
+		            notifyParams.put("noti_read_date", null);       // 읽지 않은 상태로 설정 (기본값 null)
 		            notifyParams.put("noti_link", notiLink);
 			        boardDAO.saveBoardNotify(notifyParams);
 		        }

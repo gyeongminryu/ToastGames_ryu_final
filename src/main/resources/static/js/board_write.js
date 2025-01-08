@@ -1,3 +1,21 @@
+   // 에디터 설정하기
+	var config = {}
+	    config.toolbar = "basic";  // 기본 툴바 설정
+	    config.editorResizeMode = "none";  // 에디터 크기 조정 안함
+	
+	document.querySelector("#div_editor").style.height = "550px";
+			
+	//파일 업로드 시 설정
+	config.file_upload_handler = function(file,pathReplace){//파일객체, 경로변경 함수
+		console.log(file);	
+		if(file.size > (2*1024*1024)){
+			alert('2MB 이상의 파일은 올릴수 없습니다.');
+			return false;
+		}
+	}
+	
+	var editor = new RichTextEditor("#div_editor", config);
+	
 function handleFileSelect(event) {
     var fileList = event.target.files; // 선택된 파일 목록
     var fileListBody = document.getElementById('fileListBody'); // 파일 리스트가 표시될 tbody   
