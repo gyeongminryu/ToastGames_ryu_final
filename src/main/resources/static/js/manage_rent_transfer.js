@@ -30,19 +30,19 @@ function select_type(type){
     }
 }
 
-function show_team_list(elem, no){
-    // no: 부서 번호
-    let number = "'"+no+"'";
+/*function show_team_list(elem){
+	console.log(elem);
+
     elem.parentElement.parentElement.nextElementSibling.classList.remove('disp_hide');
-    elem.parentElement.innerHTML = '<i class="bi bi-caret-down-fill" onclick="hide_team_list(this, '+number+')"></i>';
+    elem.parentElement.innerHTML = '<i class="bi bi-caret-down-fill" onclick="hide_team_list(this)"></i>';
 }
 
-function hide_team_list(elem, no){
-    // no: 부서 번호
-    let number = "'"+no+"'";
+function hide_team_list(elem){
+	console.log(elem);
+
     elem.parentElement.parentElement.nextElementSibling.classList.add('disp_hide');
-    elem.parentElement.innerHTML = '<i class="bi bi-caret-right-fill" onclick="show_team_list(this, '+number+')"></i>';
-}
+    elem.parentElement.innerHTML = '<i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i>';
+}*/
 
 
 

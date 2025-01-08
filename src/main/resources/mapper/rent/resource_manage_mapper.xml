@@ -630,31 +630,7 @@
 			dept.dept_name,
 			pos.position_name,
 			du.duty_name,
-			empl.empl_profile,
-		FROM 
-			employee empl
-		JOIN
-			appointment appo ON empl.appolast_idx=appo.appo_idx
-		JOIN 
-			position_ pos ON pos.position_idx=appo.position_idx
-		JOIN 
-			duty du ON du.duty_idx=appo.duty_idx
-		JOIN
-			department dept ON dept.dept_idx=appo.dept_idx
-		JOIN
-			team_members tm ON tm.teammem_empl_idx=empl.empl_idx
-		WHERE 
-			tm.team_idx=#{param1}
-	</select>
-
-	<select id="getTeamEmpl" resultType="com.toast.rent.dto.ResourceManageDTO">
-		SELECT 
-			empl.empl_idx,
-			empl.empl_name,
-			dept.dept_name,
-			pos.position_name,
-			du.duty_name,
-			empl.empl_profile,
+			empl.empl_profile
 		FROM 
 			employee empl
 		JOIN
@@ -678,7 +654,7 @@
 			dept.dept_name,
 			pos.position_name,
 			du.duty_name,
-			empl.empl_profile,
+			empl.empl_profile
 		FROM 
 			employee empl
 		JOIN
@@ -690,9 +666,9 @@
 		JOIN
 			department dept ON dept.dept_idx=appo.dept_idx
 		JOIN
-			team_members tm ON tm.teammem_empl_idx=empl.empl_idx
+			project_team pt ON pt.team_head_idx=empl.empl_idx
 		WHERE 
-			tm.team_idx=#{param1}
+			pt.team_idx=#{param1}
 	</select>
 
 </mapper>

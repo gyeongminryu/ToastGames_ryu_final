@@ -28,7 +28,7 @@
                         <tbody class="tst_pointer">
                         <tr>
                             <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
-                            <td onclick="show_team_list(this)" class="tst_pointer">부서</td>
+                            <td onclick="show_second_team_list(this)" class="tst_pointer">부서</td>
                         </tr>
 
                         <!-- 부서원 목록 출력 -->
@@ -51,7 +51,7 @@
                         <!-- 예시 -->
                         <tr>
                             <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i></td>
-                            <td onclick="show_team_list(this)" class="tst_pointer">팀</td>
+                            <td onclick="show_second_team_list(this)" class="tst_pointer">팀</td>
                         </tr>
 					        <tr class="disp_hide">
 					            <td></td>

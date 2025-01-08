@@ -46,8 +46,8 @@ function get_team_empl(team_idx) {
 function empl_list(emplList) {
     let content = '';
 
-    if (Array.isArray(employeeList) && employeeList.length > 0) {
-        for (let item of employeeList) {
+    if (Array.isArray(emplList) && emplList.length > 0) {
+        for (let item of emplList) {
             content += '<tr onclick="select_transfer_empl(' + item.empl_idx + ')">';
             content += '<td class="td_align_top td_no_padding">';
             content += '<img src="' + (item.profile_img || 'http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png') + '" ';
@@ -102,6 +102,7 @@ function tst_modal_close(cls) {
 
 
 
+//직원 선택
 function select_type(type){
     switch (type) {
         case 'sign':
@@ -120,18 +121,51 @@ function select_type(type){
 }
 
 function show_team_list(elem, no){
-    // no: 부서 번호
-    let number = "'"+no+"'";
     elem.parentElement.parentElement.nextElementSibling.classList.remove('disp_hide');
-    elem.parentElement.innerHTML = '<i class="bi bi-caret-down-fill" onclick="hide_team_list(this, '+number+')"></i>';
+    elem.parentElement.innerHTML = '<i class="bi bi-caret-down-fill" onclick="hide_team_list(this)"></i>';
 }
 
 function hide_team_list(elem, no){
-    // no: 부서 번호
-    let number = "'"+no+"'";
     elem.parentElement.parentElement.nextElementSibling.classList.add('disp_hide');
-    elem.parentElement.innerHTML = '<i class="bi bi-caret-right-fill" onclick="show_team_list(this, '+number+')"></i>';
+    elem.parentElement.innerHTML = '<i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i>';
 }
+
+
+function show_second_team_list(elem) {
+	console.log(elem);
+    // `nextElementSibling`이 부서원 목록을 가리키는지 확인
+    let teamListRow = elem.closest("tr").nextElementSibling;
+
+    // 부서원 목록 행의 'disp_hide' 클래스 제거
+    if (teamListRow && teamListRow.classList.contains('disp_hide')) {
+        teamListRow.classList.remove('disp_hide');
+    }
+
+    if(elem.outerHTML === '<td onclick="show_second_team_list(this)" class="tst_pointer">부서</td>'){
+		elem.outerHTML = '<td onclick="hide_second_team_list(this)" class="tst_pointer">부서</td>';
+    } else{
+    	elem.outerHTML = '<td onclick="hide_second_team_list(this)" class="tst_pointer">팀</td>';
+    }
+}
+
+function hide_second_team_list(elem) {
+	console.log(elem);
+    // `nextElementSibling`이 부서원 목록을 가리키는지 확인
+    let teamListRow = elem.closest("tr").nextElementSibling;
+
+    // 부서원 목록 행에 'disp_hide' 클래스 추가
+    if (teamListRow && !teamListRow.classList.contains('disp_hide')) {
+        teamListRow.classList.add('disp_hide');
+    }
+    
+    if(elem.outerHTML === '<td onclick="hide_second_team_list(this)" class="tst_pointer">부서</td>'){
+		elem.outerHTML = '<td onclick="show_second_team_list(this)" class="tst_pointer">부서</td>';
+    }	else{
+    	elem.outerHTML = '<td onclick="show_second_team_list(this)" class="tst_pointer">팀</td>';
+    }
+}
+
+
 
 
 // 물품 등록 확인 (true 값 반환)
