@@ -349,16 +349,7 @@ public class ResourceManageController {
 	    }
 	    return response;
 	}
-	
-	
-	
-	
-	
-	//물품 목록보기
-	
-	
-	
-	
+
 	
 	//물품 대여 신청 승인(대여 여부 업뎃)
 	@GetMapping(value="/permitProd.do")
@@ -406,17 +397,82 @@ public class ResourceManageController {
 		return "manage_rent_dispose";
 	}
 	
+	
+	
+	//물품 폐기 처리 하기
+	@PostMapping(value="/productDisp.do")
+	@ResponseBody
+	public Map<String, Object> productDispo(
+	        @RequestParam("file") List<MultipartFile> files,
+	        @RequestParam("disp_reason") String disp_reason,
+	        @RequestParam("prod_idx") String prod_idx
+	) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        // 세션 처리: empl_idx가 없을 경우 예외 처리
+	        Integer empl_idx = (Integer) session.getAttribute("empl_idx");
+	        if (empl_idx == null) {
+	            response.put("status", "error");
+	            response.put("message", "User not logged in.");
+	            return response;
+	        }
+
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("prod_idx", prod_idx);
+	        map.put("dispo_reason", disp_reason);
+	        map.put("disp_empl_idx", empl_idx);
+	        map.put("disp_state", 0); // 처리 상태: 0 폐기
+
+	        // 파일 처리
+	        if (files != null && !files.isEmpty()) {
+	            List<MultipartFile> validFiles = new ArrayList<>();
+
+	            for (MultipartFile file : files) {
+	                if (file.getOriginalFilename() != null 
+	                        && !file.getOriginalFilename().isEmpty() 
+	                        && file.getSize() > 0) {
+	                    validFiles.add(file);
+	                }
+	            }
+
+	            if (!validFiles.isEmpty()) {
+	            	for (MultipartFile file : validFiles) {
+	            		logger.info("파일 이름: " + file.getOriginalFilename());
+	            		logger.info("파일 크기: " + file.getSize() + " bytes");
+	            	}
+	                resourceMgService.prodDispo(validFiles, map);
+	            } else {
+	                logger.info("유효한 파일이 없습니다.");
+	            }
+	        } else {
+	            resourceMgService.prodOnlyDispo(map);
+	            logger.info("업로드된 파일이 없습니다.");
+	        }
+
+	        // 성공적인 처리
+	        response.put("status", "success");
+	        response.put("redirectUrl", "/manage_rent_list.go");
+
+	    } catch (Exception e) {
+	        logger.error("파일 업로드 또는 데이터 처리 중 오류 발생", e);
+	        response.put("status", "error");
+	        response.put("message", "Error processing request: " + e.getMessage());
+	    }
+	    return response;
+	}
+
+	
+
 	//@물품 인계처리 가기
 	@GetMapping(value="/manage_rent_transfer.go")
 	public String dispoTransferGo(@RequestParam("prod_idx") String prod_idx, Model model) {
 		int prodIdx = Integer.parseInt(prod_idx);
 		resourceMgService.prodInfo(prodIdx, model);
-		return "manage_rent_dispose";
+		return "manage_rent_transfer";
 	}
 	
 	
-	
-	
+	//물품 인계처리 하기
 	
 	
 	

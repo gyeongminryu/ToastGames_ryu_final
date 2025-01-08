@@ -70,8 +70,6 @@
                 		WHERE prod_idx = pr.prod_idx
             		)
     		) pr ON pr.prod_idx = pd.prod_idx
-    	WHERE
-    		pd.prod_state=1
 		ORDER BY prod_idx DESC 
 			LIMIT #{param1} OFFSET #{param2}		
 	</select>
@@ -123,8 +121,6 @@
     		) pr ON pr.prod_idx = pd.prod_idx
 		WHERE 
 			pd.prod_cate_idx=#{param1}
-		AND 
-    		pd.prod_state=1
 		ORDER BY prod_idx DESC 
 			LIMIT #{param2} OFFSET #{param3}		
 	</select>
@@ -344,7 +340,7 @@
 	<!-- 물품  첨부파일 가져오기-->
 	<select id="prodMgFile" resultType="com.toast.rent.dto.ResourcePhotoDTO">
 		SELECT 		
-			file_idx, file_key, ori_filename, new_filename, file_type, file_addr, uploader_idx
+			file_idx, file_key, ori_filename, new_filename, file_type, file_addr, uploader_idx,file_size
 		FROM 
 			file
 		WHERE file_key=#{param1}
@@ -489,6 +485,7 @@
 			pd.prod_name,
 			pd.prod_model,
 			pd.prod_info,
+			pd.prod_model,
 			pd.prod_place,
 			pd.prod_dispo_date,
 			pd.prod_state,
@@ -504,15 +501,15 @@
 	</select>
 
 	<!-- 파일키 저장 -->
-	<insert id="prodFileKeyAdd">
-		INSERT INTO product_file(prod_idx,file_key)
-			VALUES(#{param1},#{param2})	
-	</insert>
+	<update id="prodFileKeyAdd">
+		UPDATE product SET file_key=#{param1}
+			WHERE prod_idx=#{param2}
+	</update>
 
 
 	<!-- 파일키 가져오기 -->
 	<select id="getProdFileKey" resultType="String">
-		SELECT file_key FROM product_file WHERE prod_idx=#{param1}
+		SELECT file_key FROM product WHERE prod_idx=#{param1}
 	</select>
 
 	<!-- 물품 정보 수정 -->
@@ -533,20 +530,23 @@
 	<!-- 물품 첨부파일 삭제 -->
 	<delete id="prodFileRemove">
 		DELETE FROM file 
-			WHERE prod_idx=#{param1} AND file_key=#{param2}
+			WHERE file_key=#{param1}
 	</delete>
 
 	<!-- 물품 파일키 삭제 -->
-	<delete id="prodFileKeyRemove">
-		DELETE FROM product_file
-			WHERE prod_idx=#{param1} AND file_key=#{param2}
-	</delete>
+	<update id="prodFileKeyRemove">
+	    UPDATE product
+	    SET file_key = NULL
+	    WHERE prod_idx = #{param1} AND file_key = #{param2}
+	</update>
 
 	<!-- 폐기할 물품 정보가져오기 -->
 	<select id="prodInfo" resultType="com.toast.rent.dto.ResourceManageDTO">
 		SELECT 
+			pd.prod_idx,
 			pd.prod_name,
 			pd.prod_info,
+			pd.prod_model,
 			pc.prod_cate_name,
 			pc.prod_life,
 			pd.prod_purch_date,
@@ -560,8 +560,27 @@
 			pd.prod_idx=#{param1}
 	</select>
 
+	<!-- 물품 폐기처리 -->
+	<insert id="prodDispo">
+		INSERT INTO disposed_product(prod_idx,disp_state,disp_reason,disp_empl_idx,disp_date)
+			VALUES(#{prod_idx},#{disp_state},#{disp_reason},#{disp_empl_idx},#{disp_date})
+	</insert>
 
-
+	<!--폐기 파일키 저장 -->
+	<update id="dispFileKeyAdd">
+		UPDATE disposed_product
+		SET file_key=#{param1}
+		WHERE prod_idx=#{param2}
+	</update>
+	
+	<!-- 물품 사용 불가 처리 -->
+	<update id="prodDispUpdate">
+		UPDATE product
+		SET 
+			prod_state=#{param1},
+			prod_rent=#{param2}
+		WHERE prod_idx=#{param3}
+	</update>
 
 
 </mapper>

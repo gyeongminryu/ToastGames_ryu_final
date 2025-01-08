@@ -47,8 +47,8 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
 
 
-//폐기하기 버튼 클릭시
-document.getElementById("product_dispo_button").addEventListener("click", function () {
+//인계하기 버튼 클릭시
+document.getElementById("product_transfer_button").addEventListener("click", function () {
     if (getDisposeStatus()) {
         submitDispoForm();
     } else {

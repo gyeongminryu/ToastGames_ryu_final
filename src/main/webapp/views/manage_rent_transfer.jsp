@@ -54,7 +54,7 @@
                                                 <input type="text" id="take_empl_idx" class="take_empl_idx" onclick="tst_modal_call('tst_modal_select')" placeholder="인수할 직원을 선택하세요" readonly />
                                             </div>
                                             <div class="tst_col3">
-                                                <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_secondary btn_full">직원 선택하기</button>
+                                                <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_secondary btn_full">인수자 등록</button>
                                             </div>
                                         </div>
                                     </td>
@@ -62,12 +62,11 @@
                                 <tr>
                                     <th class="td_align_top">사진 첨부</th>
                                     <td>
-                                        <input type="file" name="file" placeholder="첨부할 사진을 등록하세요. 장당 최대 5MB, 총 다섯 장까지 등록 가능합니다." />
+                                        <input type="file" name="file" id="fileInput" placeholder="첨부할 사진을 등록하세요. 장당 최대 5MB, 총 다섯 장까지 등록 가능합니다." />
                                         <div class="image_preview_container">
                                             <div class="image_preview">
                                                 <table class="tst_table table_no_underline">
-                                                    <tr>
-                                                        <!-- <td><img src="https://images3.theispot.com/1024x1024/a4140ir1003.jpg?v=210305104100" /></td> -->
+                                                    <tr id="preview_row">
 
                                                     </tr>
                                                 </table>
@@ -102,6 +101,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <tr>
+                                    <th>물품번호</th>
+                                    <td id="prod_idx" class="prod_idx">${detail.prod_idx}</td>
+                                </tr>
                                 <tr>
                                     <th>물품명</th>
                                     <td id="prod_name" class="prod_name">${detail.prod_name}</td>
@@ -162,6 +165,6 @@
 <c:import url="manage_rent_transfer_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
-<script src="resources/js/manage_rent_disuse.js"></script>
+<script src="resources/js/manage_rent_transfer.js"></script>
 <script src="resources/js/approval_send_modal.js"></script>
 </html>
