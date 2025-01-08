@@ -582,5 +582,33 @@
 		WHERE prod_idx=#{param3}
 	</update>
 
+	<!-- 인수자 부서 가져오기 -->	
+	<select id="getDeptList">
+		SELECT 
+			appo.dept_idx,
+			duty.duty_name,
+			posi.position_idx,
+			posi.position_name,
+			dept.dept_name
+		FROM
+			appointment appo
+		JOIN
+			position posi ON posi.position_idx=appo.position_idx
+		JOIN 
+			duty duty ON duty.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+	</select>
+
+	<!-- 인수자 팀 정보 -->
+	<select id="getTeamList">
+		SELECT 
+			team_idx,
+			team_name
+		FROM 
+			project_team
+		WHERE 
+			deletion_date IS NULL
+	</select>
 
 </mapper>

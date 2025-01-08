@@ -463,13 +463,29 @@ public class ResourceManageController {
 
 	
 
-	//@물품 인계처리 가기
+	//물품 인계처리 가기
 	@GetMapping(value="/manage_rent_transfer.go")
 	public String dispoTransferGo(@RequestParam("prod_idx") String prod_idx, Model model) {
 		int prodIdx = Integer.parseInt(prod_idx);
 		resourceMgService.prodInfo(prodIdx, model);
 		return "manage_rent_transfer";
 	}
+	
+	//인수자 부서/팀 가져오기
+	@GetMapping(value="/getDeptList.ajax")
+	@ResponseBody
+	public Map<String, Object> getDeptList() {
+		List<ResourceManageDTO> deptList = resourceMgService.getDeptList();
+		List<ResourceManageDTO> teamList= resourceMgService.getTeamList();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("deptList", deptList);
+		map.put("teamList", teamList);
+		return map;
+	}
+	
+	
+	
+	
 	
 	
 	//물품 인계처리 하기

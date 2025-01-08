@@ -118,6 +118,13 @@ public interface ResourceManageDAO {
 	//물품 사용불가처리
 	int prodDispUpdate(int i, int j, int prod_idx);
 
+	//인수자 부서 정보
+	List<ResourceManageDTO> getDeptList();
+
+	//인수자 팀 정보
+	List<ResourceManageDTO> getTeamList();
+	
+
 
 	
 	

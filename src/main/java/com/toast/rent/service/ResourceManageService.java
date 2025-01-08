@@ -688,4 +688,15 @@ public class ResourceManageService {
 	}
 
 
+	//인수자 부서정보
+	public List<ResourceManageDTO> getDeptList() {
+		return resourceMgDAO.getDeptList();
+	}
+
+	//인수자 팀 정보
+	public List<ResourceManageDTO> getTeamList() {
+		return resourceMgDAO.getTeamList();
+	}
+
+
 }

@@ -30,7 +30,7 @@
                     </li>
                 </ul>
                 <!-- //제목 -->
-                <form action="productTransfer.do" method="post">
+                <form action="productTransfer.do" method="post" enctype="multipart/form-data">
                     <div class="tst_flex" >
 
                         <!-- 인계 정보 -->
@@ -166,5 +166,4 @@
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/manage_rent_transfer.js"></script>
-<script src="resources/js/approval_send_modal.js"></script>
 </html>
