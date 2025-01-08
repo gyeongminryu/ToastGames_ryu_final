@@ -1,0 +1,25 @@
+.tst_flex.tst_flex_block .tst_col12.form_container{
+    padding: 200px 0;
+}
+
+.tst_flex.tst_flex_block .tst_col12.form_container div{
+    width: 450px;
+    margin: 0 auto;
+}
+
+.tst_flex.tst_flex_block .tst_col12.title_container .tst_flex{
+    align-items: end;
+}
+
+.tst_flex.tst_flex_block .tst_col12.title_container .tst_flex .tst_col6:last-child button{
+    margin: 0 0 0 auto;
+}
+
+.tst_flex.tst_flex_block .tst_col12.table_container{
+    padding: 14px 0 20px;
+    overflow-x: scroll;
+}
+
+.tst_flex.tst_flex_block .tst_col12.table_container table{
+    width: max-content;
+}

@@ -264,6 +264,11 @@ public class FrontController {
         return new ModelAndView("manage_employee_regist_multiple");
     }
 
+    @RequestMapping(value = "/manage_employee_regist_insert")
+    public ModelAndView front_manage_employee_regist_insert() {
+        return new ModelAndView("manage_employee_regist_insert");
+    }
+
 
 
     // Manage > Form =================================================

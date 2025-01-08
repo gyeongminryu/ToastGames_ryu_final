@@ -1,0 +1,55 @@
+.tst_flex.tst_flex_block .tst_col12.form_container{
+    padding: 200px 0;
+}
+
+.tst_flex.tst_flex_block .tst_col12.form_container div{
+    width: 450px;
+    margin: 0 auto;
+}
+
+.tst_flex.tst_flex_block .tst_col12.title_container .tst_flex{
+    align-items: end;
+}
+
+.tst_flex.tst_flex_block .tst_col12.title_container .tst_flex .tst_col6:first-child h2 span:last-child{
+    font-size: var(--tst-body-font-size);
+    font-weight: 400;
+}
+
+.tst_flex.tst_flex_block .tst_col12.title_container .tst_flex .tst_col6:last-child button{
+    margin: 0 0 0 auto;
+}
+
+.tst_flex.tst_flex_block .tst_col12.table_container{
+    padding: 14px 0 20px;
+    overflow-x: scroll;
+}
+
+.tst_flex.tst_flex_block .tst_col12.table_container table{
+    width: max-content;
+}
+
+.tst_flex.tst_flex_block .tst_col12.table_container table th,
+.tst_flex.tst_flex_block .tst_col12.table_container table td{
+    min-width: 80px;
+    padding: 0;
+    border-right: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+}
+
+.tst_flex.tst_flex_block .tst_col12.table_container table th:first-child,
+.tst_flex.tst_flex_block .tst_col12.table_container table td:first-child{
+    width: 30px;
+    min-width: 30px;
+    padding: 5px;
+    border-right: none;
+    text-align: left;
+    color: var(--tst-color-warning);
+}
+
+.tst_flex.tst_flex_block .tst_col12.table_container table td input[type="text"]{
+    width: fit-content;
+    min-width: 80px;
+    padding: 5px;
+    border: none;
+    border-radius: 0;
+}
