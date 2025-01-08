@@ -29,7 +29,7 @@
                     </li>
                 </ul>
                 <!-- //제목 -->
-                <form action="productDispo.do" method="post">
+                <form action="productDisp.do" method="post" enctype="multipart/form-data">
                     <div class="tst_flex">
                         <!-- 폐기 정보 -->
                         <div class="tst_col9">
@@ -53,11 +53,11 @@
                                 <tr>
                                     <th class="td_align_top">사진 첨부</th>
                                     <td>
-                                        <input type="file" name="file" placeholder="첨부할 사진을 등록하세요. 장당 최대 5MB, 총 다섯 장까지(25MB) 등록 가능합니다." />
+                                        <input type="file" name="file" id="fileInput" placeholder="첨부할 사진을 등록하세요. 장당 최대 5MB, 총 다섯 장까지(25MB) 등록 가능합니다." accept="image/*" multiple/>
                                         <div class="image_preview_container">
                                             <div class="image_preview">
                                                 <table class="tst_table table_no_underline">
-                                                    <tr>
+                                                    <tr id="preview_row">
                                                         <!-- <td><img src="https://images3.theispot.com/1024x1024/a4140ir1003.jpg?v=210305104100" /></td>-->
 
                                                     </tr>
@@ -93,6 +93,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <tr>
+                                    <th>물품번호</th>
+                                    <td id="prod_idx" class="prod_idx">${detail.prod_idx}</td>
+                                </tr>
                                 <tr>
                                     <th>물품명</th>
                                     <td id="prod_name" class="prod_name">${detail.prod_name}</td>
@@ -141,7 +145,7 @@
                                 </tr>
                                 </tfoot>
                             </table>
-                            <!-- //믈픔 정보 -->
+                            <!-- //물픔 정보 -->
 
                         </div>
                     </div>

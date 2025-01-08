@@ -43,14 +43,14 @@ function getConfirmationStatus() {
 //반납 확인 (true 값 반환)
 function confirmReturn() {
     isReturned = true;  // 등록 확인
-    tst_modal_close('tst_modal_rent');  // 모달 닫기
+    tst_modal_close('tst_modal_return');  // 모달 닫기
     console.log('등록: ' + isReturned);  // true 출력 (디버깅 용도)
 }
 
 // 반납 취소 (false 값 반환)
 function cancelReturn() {
     isReturned = false;  // 등록 취소
-    tst_modal_close('tst_modal_rent');  // 모달 닫기
+    tst_modal_close('tst_modal_return');  // 모달 닫기
     console.log('등록 취소: ' + isReturned);  // false 출력 (디버깅 용도)
 }
 

@@ -1,4 +1,36 @@
-//폐기 사진 미리보기
+function select_type(type){
+    switch (type) {
+        case 'sign':
+            document.getElementsByClassName('sign_area')[0].style.display = 'block';
+            document.getElementsByClassName('stamp_area')[0].style.display = 'none';
+            document.getElementsByClassName('item_sign')[0].classList.add('tst_tablist_item_active');
+            document.getElementsByClassName('item_stamp')[0].classList.remove('tst_tablist_item_active');
+            break;
+        case 'stamp':
+            document.getElementsByClassName('sign_area')[0].style.display = 'none';
+            document.getElementsByClassName('stamp_area')[0].style.display = 'flex';
+            document.getElementsByClassName('item_sign')[0].classList.remove('tst_tablist_item_active');
+            document.getElementsByClassName('item_stamp')[0].classList.add('tst_tablist_item_active');
+            break;
+    }
+}
+
+function show_team_list(elem, no){
+    // no: 부서 번호
+    let number = "'"+no+"'";
+    elem.parentElement.parentElement.nextElementSibling.classList.remove('disp_hide');
+    elem.parentElement.innerHTML = '<i class="bi bi-caret-down-fill" onclick="hide_team_list(this, '+number+')"></i>';
+}
+
+function hide_team_list(elem, no){
+    // no: 부서 번호
+    let number = "'"+no+"'";
+    elem.parentElement.parentElement.nextElementSibling.classList.add('disp_hide');
+    elem.parentElement.innerHTML = '<i class="bi bi-caret-right-fill" onclick="show_team_list(this, '+number+')"></i>';
+}
+
+
+
 // 선택한 파일을 저장할 배열
 let selectedFiles = [];
 
@@ -47,8 +79,8 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
 
 
-//폐기하기 버튼 클릭시
-document.getElementById("product_dispo_button").addEventListener("click", function () {
+//인계하기 버튼 클릭시
+document.getElementById("product_transfer_button").addEventListener("click", function () {
     if (getDisposeStatus()) {
         submitDispoForm();
     } else {
@@ -60,7 +92,7 @@ document.getElementById("product_dispo_button").addEventListener("click", functi
 // 폼 제출 처리 (삭제되지 않은 파일만 전송)
 function submitDispoForm() {
     var prodIdx = document.querySelector("#prod_idx").textContent.trim(); // #prod_idx에서 텍스트 가져오기
-    var form = document.querySelector("form[action='productDisp.do']");
+    var form = document.querySelector("form[action='productTransfer.do']");
     var formData = new FormData(form);
     
     // 가져온 물품 번호를 FormData에 추가
@@ -78,7 +110,7 @@ function submitDispoForm() {
 	}
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/productDisp.do", true);
+    xhr.open("POST", "/productTransfer.do", true);
 
     // 응답 형식을 JSON으로 설정
     xhr.responseType = 'json';
@@ -104,3 +136,9 @@ function submitDispoForm() {
     // 폼 데이터를 서버로 전송
     xhr.send(formData);
 }
+
+
+
+
+
+
