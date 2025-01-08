@@ -209,7 +209,6 @@
                             <!-- 기존에 작성한 문서 양식 불러오기 -->
                             <li>
                                 <h2>기존에 작성한 문서 양식 불러오기</h2>
-                                <button onclick="location.href='/'" class="btn_secondary btn_full">사내 문서함 참조하기</button>
                                 <ul class="tst_list list_block">
 
                                     <!-- 기존에 작성한 문서 -->
