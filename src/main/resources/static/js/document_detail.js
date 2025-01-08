@@ -1,6 +1,7 @@
 // doc_idx 가져오기
 const searchParams= new URLSearchParams(window.location.search);
 var doc_idx = searchParams.get('doc_idx');
+var form_idx = '';
 
 // 에디터 설정하기
 var editor = new RichTextEditor("#div_editor", configView);
@@ -22,6 +23,7 @@ function pageShow(idx) {
         success: function(data) {
             // 목록 출력
             infoPrint(data.info);
+            form_idx = data.info.form_idx;
             //console.log(data.info);
         },
         error: function(e) {
@@ -172,7 +174,7 @@ function referPrint(list) {
 }
 
 function filePrint(list) {
-    console.log(list);
+    //console.log(list);
     tags = '';
 
     if (list.length === 0 || (list.length !== 0 && list[0] == null)) {
@@ -193,4 +195,9 @@ function filePrint(list) {
     //console.log(tags);
 
     document.getElementsByClassName('file_list')[0].innerHTML = tags;
+}
+
+// 문서를 복사하여 새 문서 작성하기
+function copyThisDoc() {
+    location.href = '/approval_copy_doc.do?doc_idx=' + doc_idx + '&form_idx=' + form_idx;
 }

@@ -150,6 +150,9 @@
                             <li>
                                 <button class="btn_primary btn_full" onclick="location.href='/document_list.go'">목록으로 돌아가기</button>
                             </li>
+                            <li>
+                                <button class="btn_secondary btn_full" onclick="copyThisDoc()">문서를 복사하여 새 문서 작성하기</button>
+                            </li>
                         </ul>
                         <!-- //버튼 -->
 
