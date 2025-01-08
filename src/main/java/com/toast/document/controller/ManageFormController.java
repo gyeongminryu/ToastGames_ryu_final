@@ -259,7 +259,7 @@ public class ManageFormController {
         if (form_idx < 0) {
             viewName = "redirect:/manage_form_list.go";
         } else {
-            viewName = "redirect:/manage_form_update.go?form_idx="+form_idx;
+            viewName = "redirect:/manage_form_wip_update.go?form_idx="+form_idx;
         }
 
         return authorize(session, viewName);
