@@ -209,6 +209,7 @@
 			pd.prod_cate_idx, 
 			pd.prod_model,
 			pd.prod_info,
+			pd.prod_model,
 			pd.prod_rent, 
 			pd.prod_empl_idx, 
 			pd.prod_dispo_date, 
@@ -439,7 +440,7 @@
 	<!-- 물품  첨부파일 가져오기-->
 	<select id="prodFile" resultType="com.toast.rent.dto.ResourcePhotoDTO">
 		SELECT 		
-			file_idx, file_key, ori_filename, new_filename, file_type, file_addr, uploader_idx
+			file_idx, file_key, ori_filename, new_filename, file_type, file_addr, uploader_idx, file_size
 		FROM 
 			file
 		WHERE file_key=#{param1}

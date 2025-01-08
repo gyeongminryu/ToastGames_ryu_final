@@ -59,7 +59,7 @@ public interface ResourceManageDAO {
 	ResourceManageDTO rentEmpl(int prod_rent_empl_idx);
 
 	//물품 파일 가져오기
-	ResourcePhotoDTO prodMgFile(String file_key);
+	List<ResourcePhotoDTO> prodMgFile(String file_key);
 
 	//대여기록 총 페이지
 	int allHisCount(int cnt, int prodIdx);
@@ -83,16 +83,16 @@ public interface ResourceManageDAO {
 	ResourceManageDTO getProductinfo(int prod_idx);
 
 	//물품 파일키 추가
-	int prodFileKeyAdd(int prod_idx, String fileKey);
+	int prodFileKeyAdd(String fileKey,int prod_idx);
 
 	//물품 정보 수정
 	int prodUpdate(ResourceManageDTO dto);
 
 	//물품 첨부파일 삭제
-	int prodFileRemove(int prod_idx, String fileKey);
+	int prodFileRemove(String fileKey);
 
 	//파일키 가져오기
-	List<String> getProdFileKey(int prod_idx);
+	String getProdFileKey(int prod_idx);
 
 	//파일키 지우기
 	int prodFileKeyRemove(int prod_idx, String fileKey);
@@ -108,6 +108,22 @@ public interface ResourceManageDAO {
 
 	//폐기물품 정보가져오기
 	ResourceManageDTO prodInfo(int prod_idx);
+
+	//물품 폐기 처리
+	int prodDispo(ResourceManageDTO dto);
+
+	//폐기처리 사진
+	int dispFileKeyAdd(String fileKey,int prod_idx);
+
+	//물품 사용불가처리
+	int prodDispUpdate(int i, int j, int prod_idx);
+
+	//인수자 부서 정보
+	List<ResourceManageDTO> getDeptList();
+
+	//인수자 팀 정보
+	List<ResourceManageDTO> getTeamList();
+	
 
 
 	

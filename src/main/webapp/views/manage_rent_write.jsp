@@ -10,6 +10,17 @@
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/manage_rent.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    
+    
+    
+    <link rel="stylesheet" href="resources/richtexteditor/rte_theme_default.css" />
+    <script type="text/javascript" src="resources/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src="resources/richtexteditor/plugins/all_plugins.js"></script>
+    <script type='text/javascript' src="resources/richtexteditor/lang/rte-lang-ko.js"></script>
+    <link rel="stylesheet" href="resources/css/module_rte.css" />
+    <script type="text/javascript" src="resources/js/module_rte.js"></script>
+    
 </head>
 <body>
 <c:import url="layout_topnav.jsp" />
@@ -67,7 +78,10 @@
                                 <tr>
                                     <th class="td_align_top">물품 설명</th>
                                     <td>
-                                        <textarea name="content" rows="27" placeholder="물품 설명을 입력하세요"></textarea>
+                                        <!-- <textarea name="content" rows="27" placeholder="물품 설명을 입력하세요"></textarea> -->
+                                    	<!-- rte -->
+										<div id="div_editor"></div>
+										<!-- //rte -->
                                     </td>
                                 </tr>
                                 </tbody>

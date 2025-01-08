@@ -205,7 +205,7 @@ function resource_list_print(list) {
                 content += '<h3 onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
                 content += '</td>';
                 content += '<td class="td_align_left">';
-                content += '<span onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
+                content += '<span onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_model + '</span>';
                 content += '</td>';
                 content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
                 content += '<td>' + (item.prod_exp_date == null ? '없음' : formatDateTime(item.prod_exp_date)) + '</td>';
@@ -230,7 +230,7 @@ function resource_list_print(list) {
                     content += '<h3 onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_name + '</h3>';
                     content += '</td>';
                     content += '<td class="td_align_left">';
-                    content += '<span onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_info + '</span>';
+                    content += '<span onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_model + '</span>';
                     content += '</td>';
                     content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
                     content += '<td>' + (item.prod_exp_date == null || item.prod_rent == 1? '없음' : formatDateTime(item.prod_exp_date)) + '</td>';

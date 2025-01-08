@@ -9,6 +9,15 @@
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <link rel="stylesheet" href="resources/richtexteditor/rte_theme_default.css" />
+    <script type="text/javascript" src="resources/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src="resources/richtexteditor/plugins/all_plugins.js"></script>
+    <script type='text/javascript' src="resources/richtexteditor/lang/rte-lang-ko.js"></script>
+    <link rel="stylesheet" href="resources/css/module_rte.css" />
+    <script type="text/javascript" src="resources/js/module_rte.js"></script>
+    
+    
 </head>
 <body>
 <c:import url="layout_topnav.jsp" />
@@ -45,7 +54,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th class="td_align_top">물품명</th>
+                                    <th class="td_align_top">물품번호</th>
                                     <td>
                                         <input type="text" name="number" maxlength="100" value="${detail.product.prod_idx}" readonly/>
                                     </td>
@@ -71,7 +80,11 @@
                                 <tr>
                                     <th class="td_align_top">물품 설명</th>
                                     <td>
-                                        <textarea name="content" rows="27">${detail.product.prod_info}</textarea>
+                                        <!-- <textarea name="content" rows="27">${detail.product.prod_info}</textarea> -->
+                                    	<!-- rte -->
+										<div id="div_editor"></div>
+										<!-- //rte -->
+                                    <div id="content" style="display: none;">${detail.product.prod_info}</div>
                                     </td>
                                 </tr>
                                 </tbody>
