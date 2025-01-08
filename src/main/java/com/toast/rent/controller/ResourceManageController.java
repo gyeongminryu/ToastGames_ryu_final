@@ -467,29 +467,39 @@ public class ResourceManageController {
 	@GetMapping(value="/manage_rent_transfer.go")
 	public String dispoTransferGo(@RequestParam("prod_idx") String prod_idx, Model model) {
 		int prodIdx = Integer.parseInt(prod_idx);
+		List<ResourceManageDTO> deptList = resourceMgService.getDeptList();
+		List<ResourceManageDTO> teamList= resourceMgService.getTeamList();
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("teamList", teamList);
 		resourceMgService.prodInfo(prodIdx, model);
 		return "manage_rent_transfer";
 	}
 	
 	//인수자 부서/팀 가져오기
-	@GetMapping(value="/getDeptList.ajax")
+	@GetMapping(value="/getDeptEmpl.ajax")
 	@ResponseBody
-	public Map<String, Object> getDeptList() {
-		List<ResourceManageDTO> deptList = resourceMgService.getDeptList();
-		List<ResourceManageDTO> teamList= resourceMgService.getTeamList();
+	public Map<String, Object> getDeptEmpl(@RequestParam("dept_idx") String dept_idx) {
+		
+		int deptIdx = Integer.parseInt(dept_idx);
+		List<ResourceManageDTO> emplList = resourceMgService.getDeptEmpl(deptIdx);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("deptList", deptList);
-		map.put("teamList", teamList);
+		map.put("emplList", emplList);
 		return map;
 	}
 	
-	
-	
-	
-	
+
 	
 	//물품 인계처리 하기
-	
+	@GetMapping(value="/getTeamEmpl.ajax")
+	@ResponseBody
+	public Map<String, Object> getTeamEmpl(@RequestParam("team_idx") String team_idx) {
+		
+		int teamIdx = Integer.parseInt(team_idx);
+		List<ResourceManageDTO> emplList = resourceMgService.getTeamEmpl(teamIdx);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emplList", emplList);
+		return map;
+	}
 	
 	
 

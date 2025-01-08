@@ -123,6 +123,15 @@ public interface ResourceManageDAO {
 
 	//인수자 팀 정보
 	List<ResourceManageDTO> getTeamList();
+
+	//부서별 인수자
+	List<ResourceManageDTO> getDeptEmpl(int deptIdx);
+
+	//팀별 인수자
+	List<ResourceManageDTO> getTeamEmpl(int teamIdx);
+
+	//팀장 인수자
+	ResourceManageDTO getTeamHeadEmpl(int teamIdx);
 	
 
 

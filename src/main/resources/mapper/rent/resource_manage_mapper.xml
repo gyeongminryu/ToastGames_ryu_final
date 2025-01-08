@@ -583,32 +583,116 @@
 	</update>
 
 	<!-- 인수자 부서 가져오기 -->	
-	<select id="getDeptList">
+	<select id="getDeptList" resultType="com.toast.rent.dto.ResourceManageDTO">
 		SELECT 
-			appo.dept_idx,
-			duty.duty_name,
-			posi.position_idx,
-			posi.position_name,
-			dept.dept_name
+			dept_idx,
+			dept_name
 		FROM
-			appointment appo
-		JOIN
-			position posi ON posi.position_idx=appo.position_idx
-		JOIN 
-			duty duty ON duty.duty_idx=appo.duty_idx
-		JOIN
-			department dept ON dept.dept_idx=appo.dept_idx
+			department
 	</select>
 
 	<!-- 인수자 팀 정보 -->
-	<select id="getTeamList">
+	<select id="getTeamList" resultType="com.toast.rent.dto.ResourceManageDTO">
 		SELECT 
 			team_idx,
 			team_name
 		FROM 
 			project_team
+	</select>
+	
+	<!-- 부서별 인수자 -->
+	<select id="getDeptEmpl" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
 		WHERE 
-			deletion_date IS NULL
+			appo.dept_idx=#{param1}
+	</select>
+
+	<select id="getTeamEmpl" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile,
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		JOIN
+			team_members tm ON tm.teammem_empl_idx=empl.empl_idx
+		WHERE 
+			tm.team_idx=#{param1}
+	</select>
+
+	<select id="getTeamEmpl" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile,
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		JOIN
+			team_members tm ON tm.teammem_empl_idx=empl.empl_idx
+		WHERE 
+			tm.team_idx=#{param1}
+	</select>
+	
+	<select id="getTeamHeadEmpl" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile,
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		JOIN
+			team_members tm ON tm.teammem_empl_idx=empl.empl_idx
+		WHERE 
+			tm.team_idx=#{param1}
 	</select>
 
 </mapper>

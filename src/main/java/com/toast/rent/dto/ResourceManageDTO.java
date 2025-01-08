@@ -69,8 +69,21 @@ public class ResourceManageDTO {
 	private int take_empl_idx;
 	private int disp_empl_idx;
 	private LocalDateTime disp_date;
+	private int team_idx;
+	private String team_name;
 	
-	
+	public int getTeam_idx() {
+		return team_idx;
+	}
+	public void setTeam_idx(int team_idx) {
+		this.team_idx = team_idx;
+	}
+	public String getTeam_name() {
+		return team_name;
+	}
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
+	}
 	public int getDisp_prod_idx() {
 		return disp_prod_idx;
 	}

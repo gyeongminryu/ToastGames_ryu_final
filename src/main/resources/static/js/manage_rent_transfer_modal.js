@@ -1,57 +1,91 @@
 let isTransfer = false;  // true 또는 false 값을 반환하기 위한 변수
 
-//부서 가져오기
-function get_dept() {
+
+//부서별 직원 가져오기
+function get_dept_empl(dept_idx) {
 	$.ajax({
         type: 'GET',
-        url: '/getDeptList.ajax', 
+        url: '/getDeptEmpl.ajax', 
+        data: {
+        	'dept_idx':dept_idx
+        },
         dataType: 'json', 
         success: function(data) {
 					console.log(data);
-					dept_list(data.deptList);	
-					team_list(data.teamList);		
+					empl_list(data.emplList);		
         },
         error: function(e) {
             console.log("오류 발생", e);
         }       
     });
-}
-
-
-
-function dept_list(deptList) {
-    var deptContent = '';  // 부서 목록을 추가할 문자열 변수
-
-    // deptList가 배열인지 확인하고, 길이가 0보다 큰 경우에만 진행
-    if (Array.isArray(deptList) && deptList.length > 0) {
-        for (var dept of deptList) {
-            deptContent += '<tr>';
-            deptContent += '<td onclick="get_dept_empl('+dept.dept_idx+')">' + dept.dept_name + '</td>';
-            deptContent += '</tr>';
-        }
-    } 
-
-    $('#get_dept').html(deptContent);
-}
-
-
-//부서별 직원 가져오기
-function get_dept_empl(dept_idx) {
-    console.log("선택된 부서 ID:", dept_idx);
-    // 해당 부서의 정보를 서버에서 가져오는 등의 작업을 수행
-}
-
-//팀 가져오기
-function get_team_empl(){
-
 
 }
+
 
 //팀별 직원 가져오기
-function get_team_empl() {
-
+function get_team_empl(team_idx) {
+	$.ajax({
+        type: 'GET',
+        url: '/getTeamEmpl.ajax', 
+        data: {
+        	'team_idx':team_idx
+        },
+        dataType: 'json', 
+        success: function(data) {
+					console.log(data);
+					empl_list(data.emplList);		
+        },
+        error: function(e) {
+            console.log("오류 발생", e);
+        }       
+    });
 
 }
+
+
+function empl_list(emplList) {
+    let content = '';
+
+    if (Array.isArray(employeeList) && employeeList.length > 0) {
+        for (let item of employeeList) {
+            content += '<tr onclick="select_transfer_empl(' + item.empl_idx + ')">';
+            content += '<td class="td_align_top td_no_padding">';
+            content += '<img src="' + (item.profile_img || 'http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png') + '" ';
+            content += 'alt="' + item.empl_name + '의 프로필 사진" ';
+            content += 'class="approval_profile_image" />';
+            content += '</td>';
+            content += '<td>';
+            content += '<p>' + item.empl_name + ' (' + item.dept_name + '/' + item.position_name + ')</p>';
+            content += '<p class="min font_subtle">' + item.duty_name + '</p>';
+            content += '</td>';
+            content += '</tr>';
+        }
+    }
+
+    // 결과를 HTML에 삽입
+    document.getElementById('empl_list').innerHTML = content;
+}
+
+
+
+
+
+
+
+
+
+
+
+//직원선택
+function select_transfer_empl(empl_idx){
+
+}
+
+
+
+
+
+
 
 function tst_modal_call(cls) {
     document.getElementsByClassName(cls)[0].style.display = 'flex';

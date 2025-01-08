@@ -698,5 +698,19 @@ public class ResourceManageService {
 		return resourceMgDAO.getTeamList();
 	}
 
+	//부서별 사원
+	public List<ResourceManageDTO> getDeptEmpl(int deptIdx) {
+		return resourceMgDAO.getDeptEmpl(deptIdx);
+	}
+
+	
+	//팀별 사원
+	public List<ResourceManageDTO> getTeamEmpl(int teamIdx) {
+		List<ResourceManageDTO> teamEmpl = resourceMgDAO.getTeamEmpl(teamIdx);
+		ResourceManageDTO headerEmpl = resourceMgDAO.getTeamHeadEmpl(teamIdx);
+		teamEmpl.add(headerEmpl);
+		return teamEmpl;
+	}
+
 
 }
