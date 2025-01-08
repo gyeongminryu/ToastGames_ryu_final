@@ -26,7 +26,7 @@ function dept_list(deptList) {
     if (Array.isArray(deptList) && deptList.length > 0) {
         for (var dept of deptList) {
             deptContent += '<tr>';
-            deptContent += '<td onclick="get_dept_empl()">' + dept.dept_name + '</td>';
+            deptContent += '<td onclick="get_dept_empl('+dept.dept_idx+')">' + dept.dept_name + '</td>';
             deptContent += '</tr>';
         }
     } 
@@ -36,9 +36,9 @@ function dept_list(deptList) {
 
 
 //부서별 직원 가져오기
-function get_dept_empl() {
-
-
+function get_dept_empl(dept_idx) {
+    console.log("선택된 부서 ID:", dept_idx);
+    // 해당 부서의 정보를 서버에서 가져오는 등의 작업을 수행
 }
 
 //팀 가져오기
