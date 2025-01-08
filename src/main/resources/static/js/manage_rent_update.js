@@ -1,5 +1,13 @@
 let use_date ='';
 
+// 에디터 설정하기
+var editor = new RichTextEditor("#div_editor", configDocument);
+
+
+editor.setHTMLCode($('#content').html());
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const dueDateElement = document.getElementById("due_date");
 
@@ -128,10 +136,11 @@ document.getElementById("product_update_button").addEventListener("click", funct
 
 
 
-
 // 폼 제출 처리 (삭제되지 않은 파일만 전송)
 function submitUpdateForm() {
 
+	let content = editor.getHTMLCode();
+	console.log(content);
 
 	console.log(use_date);
     var form = document.querySelector("form[action='productUpdate.do']");
@@ -146,6 +155,8 @@ function submitUpdateForm() {
     // 'due_date' 추가
     formData.append('due_date', use_date);
 
+	//'content'추가
+	formData.append('content', content);
 
     // 삭제되지 않은 파일만 추가
     uploadedFiles.forEach(function (item) {
