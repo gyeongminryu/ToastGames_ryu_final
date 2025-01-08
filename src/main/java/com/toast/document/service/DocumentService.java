@@ -46,7 +46,7 @@ public class DocumentService {
 		// 열람 권한 확인하기
 		List<DocumentDTO> list = documentDAO.list(limit, offset);
 		List<Integer> line = new ArrayList<Integer>();
-		List<Integer> dept = documentDAO.deptList(dept_idx);
+		List<Integer> dept = documentDAO.deptList(dept_idx); // 하위 부서 목록
 
 		for (DocumentDTO dto : list) {
 			line = documentDAO.line(dto.getDoc_idx());
