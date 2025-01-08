@@ -1,5 +1,7 @@
 package com.toast.document.dto;
 
+import java.time.LocalDateTime;
+
 public class DocumentLineDTO {
 
     // approval_line
@@ -15,6 +17,7 @@ public class DocumentLineDTO {
     private int position_idx;
     private String position_name;
     private String empl_profile;
+    private LocalDateTime appr_date;
 
     // Getter
     public int getLine_idx() {
@@ -65,6 +68,10 @@ public class DocumentLineDTO {
         return empl_profile;
     }
 
+    public LocalDateTime getAppr_date() {
+        return appr_date;
+    }
+
     // Setter
     public void setLine_idx(int line_idx) {
         this.line_idx = line_idx;
@@ -112,6 +119,10 @@ public class DocumentLineDTO {
 
     public void setEmpl_profile(String empl_profile) {
         this.empl_profile = empl_profile;
+    }
+
+    public void setAppr_date(LocalDateTime appr_date) {
+        this.appr_date = appr_date;
     }
 
 }

@@ -6,7 +6,7 @@ public class DocumentRefDTO {
     private int ref_idx;
     private int ref_doc_idx;
     private int ref_empl_idx;
-    private String ref_empl_name;
+    private String empl_name;
 
     // reference_department
     private int ref_dept_idx;
@@ -25,8 +25,8 @@ public class DocumentRefDTO {
         return ref_empl_idx;
     }
 
-    public String getRef_empl_name() {
-        return ref_empl_name;
+    public String getEmpl_name() {
+        return empl_name;
     }
 
     public int getRef_dept_idx() {
@@ -50,8 +50,8 @@ public class DocumentRefDTO {
         this.ref_empl_idx = ref_empl_idx;
     }
 
-    public void setRef_empl_name(String ref_empl_name) {
-        this.ref_empl_name = ref_empl_name;
+    public void setEmpl_name(String empl_name) {
+        this.empl_name = empl_name;
     }
 
     public void setRef_dept_idx(int ref_dept_idx) {

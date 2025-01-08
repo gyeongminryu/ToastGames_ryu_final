@@ -1,13 +1,14 @@
 // doc_idx 가져오기
 const searchParams= new URLSearchParams(window.location.search);
 var doc_idx = searchParams.get('doc_idx');
-var form_idx = '';
 
 // 에디터 설정하기
 var editor = new RichTextEditor("#div_editor", configView);
 
 // 문서 정보 출력하기
 var tags = '';
+var form_idx = '';
+var write_date;
 pageShow(doc_idx);
 
 function pageShow(idx) {
@@ -25,60 +26,60 @@ function pageShow(idx) {
             infoPrint(data.info);
             form_idx = data.info.form_idx;
             //console.log(data.info);
-        },
-        error: function(e) {
-            //console.log(e);
-        }
-    });
 
-    // 결재선 출력하기
-    $.ajax({
-        type: 'post',
-        url: 'document_line.ajax',
-        data: {
-            'doc_idx': idx
-        },
-        dataType: 'json',
-        success: function(data) {
-            // 목록 출력
-            apprPrint(data.list);
-            //console.log(data.list);
-        },
-        error: function(e) {
-            //console.log(e);
-        }
-    });
+            // 결재선 출력하기
+            $.ajax({
+                type: 'post',
+                url: 'document_line.ajax',
+                data: {
+                    'doc_idx': idx
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // 목록 출력
+                    apprPrint(data.list);
+                    //console.log(data.list);
+                },
+                error: function(e) {
+                    //console.log(e);
+                }
+            });
 
-    // 참조인 출력하기
-    $.ajax({
-        type: 'post',
-        url: 'document_reference.ajax',
-        data: {
-            'doc_idx': idx
-        },
-        dataType: 'json',
-        success: function(data) {
-            // 목록 출력
-            referPrint(data.list);
-            //console.log(data.list);
-        },
-        error: function(e) {
-            //console.log(e);
-        }
-    });
+            // 참조인 출력하기
+            $.ajax({
+                type: 'post',
+                url: 'document_reference.ajax',
+                data: {
+                    'doc_idx': idx
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // 목록 출력
+                    referPrint(data.list);
+                    //console.log(data.list);
+                },
+                error: function(e) {
+                    //console.log(e);
+                }
+            });
 
-    // 첨부파일 출력하기
-    $.ajax({
-        type: 'post',
-        url: 'document_file.ajax',
-        data: {
-            'doc_idx': idx
-        },
-        dataType: 'json',
-        success: function(data) {
-            // 목록 출력
-            filePrint(data.list);
-            //console.log(data.list);
+            // 첨부파일 출력하기
+            $.ajax({
+                type: 'post',
+                url: 'document_file.ajax',
+                data: {
+                    'doc_idx': idx
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // 목록 출력
+                    filePrint(data.list);
+                    //console.log(data.list);
+                },
+                error: function(e) {
+                    //console.log(e);
+                }
+            });
         },
         error: function(e) {
             //console.log(e);
@@ -95,6 +96,9 @@ function infoPrint(info) {
     document.getElementsByClassName('doc_subject')[0].innerHTML = info.doc_subject;
     document.getElementsByClassName('form_subject')[0].innerHTML = info.form_subject;
     document.getElementsByClassName('doc_empl')[0].innerHTML = writer;
+
+    write_date = info.doc_write_date;
+    document.getElementsByClassName('send_date')[0].innerHTML = write_date;
 
     if (info.appr_date_3 != null) {
         document.getElementsByClassName('appr_date')[0].innerHTML = info.appr_date_3;
@@ -114,6 +118,7 @@ function infoPrint(info) {
 
 function apprPrint(list) {
     //console.log(list);
+    console.log(write_date);
     tags = '';
 
     for (let i = 0; i < list.length; i++) {
@@ -121,7 +126,13 @@ function apprPrint(list) {
         tags += '<td class="td_align_top td_no_padding">';
         tags += '<img src="' + list[i].empl_profile + '" alt="' + list[i].empl_name + '의 프로필 사진" class="approval_profile_image" /></td>';
         tags += '<td class="approval_line_info">';
-        tags += '<h4 class="font_subtle approval_datetime_subtle">' + list[i].appr_date + '</h4>';
+
+        if (i === 0) {
+            tags += '<h4 class="font_subtle approval_datetime_subtle">' + write_date + '</h4>';
+            console.log(write_date);
+        } else {
+            tags += '<h4 class="font_subtle approval_datetime_subtle">' + list[i].appr_date + '</h4>';
+        }
 
         switch (list[i].line_order) {
             case 0:
@@ -163,7 +174,7 @@ function referPrint(list) {
     } else {
         for (let i = 0; i < list.length; i++) {
             tags += '<tr>';
-            tags += '<th>참조 ' + i + '</th>';
+            tags += '<th>참조 ' + (i + 1) + '</th>';
             tags += '<td><span onclick="tst_view_profile(\'' + list[i].ref_empl_idx + '\')" class="tst_pointer">' + list[i].empl_name + '</span></td>';
             tags += '</tr>';
         }

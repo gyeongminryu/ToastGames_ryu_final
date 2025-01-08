@@ -65,6 +65,10 @@
                             </tr>
                             <tr>
                                 <th>최종 결재 일시</th>
+                                <td class="send_date"></td>
+                            </tr>
+                            <tr>
+                                <th>최종 승인 일시</th>
                                 <td class="appr_date"></td>
                             </tr>
                             <tr>
