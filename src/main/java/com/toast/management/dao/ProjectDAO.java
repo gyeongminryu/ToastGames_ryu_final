@@ -35,6 +35,8 @@ public interface ProjectDAO {
 
 	int projectTeamUpdateDo(Map<String, String> param);
 
+	List<ProjectMemberDetailDTO> searchProjectTeamMembers(String team_idx, String category, String keyword);
+
 	
 
 	

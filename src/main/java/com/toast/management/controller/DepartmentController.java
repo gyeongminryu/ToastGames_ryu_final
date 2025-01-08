@@ -203,15 +203,12 @@ public class DepartmentController {
 	
 	@GetMapping(value="/search_dept_member.ajax")
 	@ResponseBody
-	public Map<String, Object>searchDeptMember(@RequestParam(required = false) String emplName,
-            @RequestParam(required = false) String cmpEmail, String dept_idx){
-		logger.info(dept_idx+" = dept_idx, cmpemail = "+cmpEmail +" emplName = "+emplName);
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<DeptDetailMemberDTO> dept_member = new ArrayList<>();
-		dept_member = departmentService.searchDeptMember(emplName,cmpEmail,dept_idx);
-		map.put("searchmember", dept_member);	
+	public List<DeptDetailMemberDTO> searchDeptMember(@RequestParam String dept_idx,@RequestParam(value ="category", required = false) String category,@RequestParam(value ="keyword", required = false) String keyword ){
+	
 		
-		return map;
+		List<DeptDetailMemberDTO> dept_member = departmentService.searchDeptMember(dept_idx,category,keyword);
+
+		return dept_member;
 	}
 
 	@GetMapping(value="/companyinfo_detail.go")
@@ -310,6 +307,15 @@ public class DepartmentController {
 		public Map<String,Object> getdeptlist(){
 			
 			Map<String,Object> dept_list =	departmentService.getdeptlist();
+			
+			return dept_list;
+		}
+		
+		@GetMapping(value="/get_dept_basic_list.ajax")
+		@ResponseBody
+		public Map<String,Object> getDeptBasicList(){
+			
+			Map<String,Object> dept_list =	departmentService.getDeptBasicList();
 			
 			return dept_list;
 		}
