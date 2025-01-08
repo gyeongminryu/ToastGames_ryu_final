@@ -23,14 +23,6 @@ public class DocumentService {
 	}
 
 	// 문서 목록
-	public int getEmplIdx(String empl_id) {
-		return documentDAO.getEmplIdx(empl_id);
-	}
-
-	public int getDeptIdx(int empl_idx) {
-		return documentDAO.getDeptIdx(empl_idx);
-	}
-
 	public Map<String, Object> list(int page, int cnt, int dept_idx) {
 		int limit = cnt;
 		int offset = (page - 1) * cnt;

@@ -14,14 +14,11 @@ public interface ManageFormDAO {
     int countIdx(String opt, String keyword, String sort);
     List<ManageFormDTO> list(int limit, int offset, String opt, String keyword, String sort, int form_writer_idx);
     String preview(int form_idx);
-    int getWriterIdx(String writer);
 
     // 문서 양식 상세보기
     ManageFormDTO detail(int form_idx);
 
     // 문서 양식 작성하기
-    int getIdx(String empl_id);
-    int getDeptIdx(int empl_idx);
     int getPositIdx(int empl_idx);
     int write(ManageFormDTO dto);
     int setLine1(int form_idx);

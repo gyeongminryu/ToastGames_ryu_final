@@ -54,8 +54,9 @@ public class ManageFormController {
     @PostMapping (value = "/manage_form_list.ajax")
     public Map<String, Object> manage_form_list(HttpSession session, String page, String cnt, String opt, String keyword, String sort) {
         session.setAttribute("loginId", "tndls0110");
-        String writer = session.getAttribute("loginId").toString();
-        int form_writer_idx = manageFormService.getWriterIdx(writer);
+        session.setAttribute("empl_idx", "10001");
+        session.setAttribute("dept_idx", "100");
+        int form_writer_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
 
         int pageInt = Integer.parseInt(page);
         int cntInt = Integer.parseInt(cnt);
@@ -98,8 +99,12 @@ public class ManageFormController {
         ModelAndView mav = new ModelAndView();
 
         session.setAttribute("loginId", "tndls0110");
+        session.setAttribute("empl_idx", "10001");
+        session.setAttribute("dept_idx", "100");
         String writer = session.getAttribute("loginId").toString();
-        int form_idx = manageFormService.write(writer);
+        int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
+        int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
+        int form_idx = manageFormService.write(writer, empl_idx, dept_idx);
 
         if (form_idx < 0) {
             mav.setViewName("redirect:/manage_form_list.go");
@@ -122,11 +127,15 @@ public class ManageFormController {
         Map<String,Object> map = new HashMap<String, Object>();
 
         session.setAttribute("loginId", "tndls0110");
+        session.setAttribute("empl_idx", "10001");
+        session.setAttribute("dept_idx", "100");
         String updater = session.getAttribute("loginId").toString();
+        int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
+        int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
         int form_idxInt = Integer.parseInt(form_idx);
-        logger.info("form_idxInt = "+form_idxInt);
+        //logger.info("form_idxInt = "+form_idxInt);
 
-        map.put("success", manageFormService.update(updater, form_idxInt, form_subject, form_content));
+        map.put("success", manageFormService.update(updater, form_idxInt, form_subject, form_content, empl_idx, dept_idx));
 
         return map;
     }

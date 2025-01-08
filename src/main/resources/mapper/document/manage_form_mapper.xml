@@ -85,10 +85,6 @@
         SELECT form_content FROM form WHERE form_idx = #{param1}
     </select>
 
-    <select id="getWriterIdx" resultType="int">
-        SELECT empl_idx FROM employee WHERE empl_id = #{param1}
-    </select>
-
     <!-- 문서 양식 상세보기 -->
     <select id="detail" resultType="com.toast.document.dto.ManageFormDTO">
         SELECT f.form_idx, f.form_subject, f.form_content, f.form_handler_idx, f.form_writer_idx, f.form_write_date, f.form_updater_idx, f.form_update_date, f.form_state,

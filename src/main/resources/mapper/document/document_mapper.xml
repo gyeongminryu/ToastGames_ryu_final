@@ -4,14 +4,6 @@
 <mapper namespace="com.toast.document.dao.DocumentDAO">
 
     <!-- 문서 목록 -->
-    <select id="getEmplIdx" resultType="int">
-        SELECT empl_idx FROM employee WHERE empl_id = #{param1}
-    </select>
-
-    <select id="getDeptIdx" resultType="int">
-        SELECT dept_idx FROM appointment WHERE appo_empl_idx = #{param1} ORDER BY appo_idx DESC LIMIT 1
-    </select>
-
     <select id="allCount" resultType="int">
         SELECT CEIL(COUNT(doc_idx) / #{param1}) FROM document
     </select>

@@ -31,10 +31,10 @@ public class DocumentController {
 	@PostMapping(value = "/document_list.ajax")
 	public Map<String, Object> document_list(HttpSession session, String page, String cnt) {
 		session.setAttribute("loginId", "tndls0110");
-		String empl_id = session.getAttribute("loginId").toString();
-		int empl_idx = documentService.getEmplIdx(empl_id);
-		int dept_idx = documentService.getDeptIdx(empl_idx);
-		logger.info("dept_idx = " + dept_idx);
+		session.setAttribute("empl_idx", "10001");
+		session.setAttribute("dept_idx", "100");
+		int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
+		//logger.info("dept_idx = " + dept_idx);
 
 		int pageInt = Integer.parseInt(page);
 		int cntInt = Integer.parseInt(cnt);

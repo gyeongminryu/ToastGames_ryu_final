@@ -9,8 +9,6 @@ import java.util.List;
 public interface DocumentDAO {
 
     // 문서 목록
-    int getEmplIdx(String empl_id);
-    int getDeptIdx(int empl_idx);
     int allCount(int cnt);
     int countIdx();
     List<DocumentDTO> list(int limit, int offset);
