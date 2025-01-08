@@ -1,3 +1,4 @@
+// 팀 목록 토글
 function show_team_list(elem, no){
     // no: 부서 번호
     let number = "'"+no+"'";
@@ -12,6 +13,7 @@ function hide_team_list(elem, no){
     elem.parentElement.innerHTML = '<i class="bi bi-caret-right-fill" onclick="show_team_list(this, '+number+')"></i>';
 }
 
+// 열람 가능한 문서만 볼 수 있도록 필터링하는 기능 토글
 var accessible_filtering;
 
 function accessible_filtering_on(elem) {
@@ -42,7 +44,30 @@ function fillSearchForm(opt, keyword) {
         for (var i = 0; i < opts.length; i++) {
             opts[i].removeAttribute('selected');
         }
-        opts[opt].setAttribute('selected', 'selected');
+
+        switch (opt) {
+            case 'doc_subject':
+                opts[0].setAttribute('selected', 'selected');
+                break;
+            case 'doc_content':
+                opts[1].setAttribute('selected', 'selected');
+                break;
+            case 'form_subject':
+                opts[2].setAttribute('selected', 'selected');
+                break;
+            case 'empl_name_0':
+                opts[3].setAttribute('selected', 'selected');
+                break;
+            case 'empl_name_1':
+                opts[4].setAttribute('selected', 'selected');
+                break;
+            case 'empl_name_2':
+                opts[5].setAttribute('selected', 'selected');
+                break;
+            case 'empl_name_3':
+                opts[6].setAttribute('selected', 'selected');
+                break;
+        }
     }
 
     document.getElementsByName('keyword')[0].value = keyword;
@@ -91,7 +116,7 @@ function pageShow(page) {
 }
 
 function listPrint(list, totalIdx, currentPage) {
-    console.log(list);
+    //console.log(list);
     let tags = '';
 
     if (list.length > 0) {

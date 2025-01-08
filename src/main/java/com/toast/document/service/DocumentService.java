@@ -23,11 +23,11 @@ public class DocumentService {
 	}
 
 	// 문서 목록
-	public Map<String, Object> list(int page, int cnt, int dept_idx) {
+	public Map<String, Object> list(int page, int cnt, int dept_idx, String opt, String keyword) {
 		int limit = cnt;
 		int offset = (page - 1) * cnt;
-		int totalPages = documentDAO.allCount(cnt);
-		int totalIdx = documentDAO.countIdx();
+		int totalPages = documentDAO.allCount(cnt, opt, keyword);
+		int totalIdx = documentDAO.countIdx(opt, keyword);
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("totalPages", totalPages);
@@ -36,9 +36,9 @@ public class DocumentService {
 		result.put("offset", offset);
 
 		// 열람 권한 확인하기
-		List<DocumentDTO> list = documentDAO.list(limit, offset);
-		List<Integer> line = new ArrayList<Integer>();
+		List<DocumentDTO> list = documentDAO.list(limit, offset, opt, keyword);
 		List<Integer> dept = documentDAO.deptList(dept_idx); // 하위 부서 목록
+		List<Integer> line = new ArrayList<Integer>();
 
 		for (DocumentDTO dto : list) {
 			line = documentDAO.line(dto.getDoc_idx());
@@ -80,4 +80,20 @@ public class DocumentService {
 
 		return result;
 	}
+
+	// 문서 열람
+	public Map<String, Object> detail(int doc_idx) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("info", documentDAO.detail(doc_idx));
+
+		return result;
+	}
+
+	public Map<String, Object> appr(int doc_idx) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("list", documentDAO.appr(doc_idx));
+
+		return result;
+	}
+
 }

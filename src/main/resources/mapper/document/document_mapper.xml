@@ -5,45 +5,68 @@
 
     <!-- 문서 목록 -->
     <select id="allCount" resultType="int">
-        SELECT CEIL(COUNT(doc_idx) / #{param1}) FROM document
+        SELECT CEIL(COUNT(doc_idx) / #{param1}) AS result FROM (SELECT doc_idx FROM approval GROUP BY doc_idx HAVING AVG(appr_state) = 1) AS subquery
+
     </select>
 
     <select id="countIdx" resultType="int">
-        SELECT COUNT(doc_idx) FROM document
+        SELECT COUNT(doc_idx) AS result FROM (SELECT doc_idx FROM approval GROUP BY doc_idx HAVING AVG(appr_state) = 1) AS subquery
     </select>
 
     <select id="list" resultType="com.toast.document.dto.DocumentDTO">
-        SELECT d.doc_idx, d.doc_subject, d.doc_update_date,
-            (SELECT a.appr_sender_idx FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 0) as 'empl_idx_0',
-            (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 0) as 'empl_idx_0',
-            (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'dept_idx_0',
-            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'dept_name_0',
-            (SELECT l.position_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'position_idx_0',
-            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'position_name_0',
-            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 0) as 'appr_date_0',
-            (SELECT a.appr_sender_idx FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 1) as 'empl_idx_1',
-            (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 1) as 'empl_idx_1',
-            (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 1) as 'dept_idx_1',
-            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 1) as 'dept_name_1',
-            (SELECT l.position_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 1) as 'position_idx_1',
-            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 1) as 'position_name_1',
-            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 1) as 'appr_date_1',
-            (SELECT a.appr_sender_idx FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 2) as 'empl_idx_2',
-            (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 2) as 'empl_idx_2',
-            (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 2) as 'dept_idx_2',
-            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 2) as 'dept_name_2',
-            (SELECT l.position_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 2) as 'position_idx_2',
-            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 2) as 'position_name_2',
-            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 2) as 'appr_date_2',
-            (SELECT a.appr_sender_idx FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 3) as 'empl_idx_3',
-            (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 3) as 'empl_idx_3',
-            (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 3) as 'dept_idx_3',
-            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 3) as 'dept_name_3',
-            (SELECT l.position_idx FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 3) as 'position_idx_3',
-            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 3) as 'position_name_3',
-            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 3) as 'appr_date_3',
-            (SELECT COUNT(f.file_idx) FROM file f WHERE f.file_key = d.file_key) as 'cnt_file'
-        FROM document d ORDER BY d.doc_idx DESC LIMIT #{param1} OFFSET #{param2}
+        SELECT a.doc_idx,
+            (SELECT d.doc_subject FROM document d WHERE d.doc_idx = a.doc_idx) as 'doc_subject',
+            (SELECT d.doc_content FROM document d WHERE d.doc_idx = a.doc_idx) as 'doc_content',
+            (SELECT f.form_subject FROM form f WHERE f.form_idx = a.form_idx) as 'form_name',
+            a.appr_sender_idx as 'empl_idx_0',
+            (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) as 'empl_name_0',
+            (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) as 'dept_idx_0',
+            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) as 'dept_name_0',
+            (SELECT l.position_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) as 'position_idx_0',
+            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) as 'position_name_0',
+            (SELECT l.empl_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) as 'empl_idx_1',
+            (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) as 'empl_name_1',
+            (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) as 'dept_idx_1',
+            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) as 'dept_name_1',
+            (SELECT l.position_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) as 'position_idx_1',
+            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) as 'position_name_1',
+            (SELECT l.empl_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) as 'empl_idx_2',
+            (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) as 'empl_name_2',
+            (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) as 'dept_idx_2',
+            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) as 'dept_name_2',
+            (SELECT l.position_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) as 'position_idx_2',
+            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) as 'position_name_2',
+            (SELECT l.empl_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) as 'empl_idx_3',
+            (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) as 'empl_name_3',
+            (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) as 'dept_idx_3',
+            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) as 'dept_name_3',
+            (SELECT l.position_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) as 'position_idx_3',
+            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) as 'position_name_3'
+        FROM approval a
+        <where>
+            <if test="param4 != null and !param4.equals('') and param3.equals('doc_subject')">
+                (SELECT d.doc_subject FROM document d WHERE d.doc_idx = a.doc_idx) LIKE CONCAT('%', #{param4}, '%')
+            </if>
+            <if test="param4 != null and !param4.equals('') and param3.equals('doc_content')">
+                (SELECT d.doc_content FROM document d WHERE d.doc_idx = a.doc_idx) LIKE CONCAT('%', #{param4}, '%')
+            </if>
+            <if test="param4 != null and !param4.equals('') and param3.equals('form_subject')">
+                (SELECT f.form_subject FROM form f WHERE f.form_idx = a.form_idx) LIKE CONCAT('%', #{param4}, '%')
+            </if>
+            <if test="param4 != null and !param4.equals('') and param3.equals('empl_name_0')">
+                (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) LIKE CONCAT('%', #{param4}, '%')
+            </if>
+            <if test="param4 != null and !param4.equals('') and param3.equals('empl_name_1')">
+                (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) LIKE CONCAT('%', #{param4}, '%')
+            </if>
+            <if test="param4 != null and !param4.equals('') and param3.equals('empl_name_2')">
+                (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) LIKE CONCAT('%', #{param4}, '%')
+            </if>
+            <if test="param4 != null and !param4.equals('') and param3.equals('empl_name_3')">
+                (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) LIKE CONCAT('%', #{param4}, '%')
+            </if>
+        </where>
+        GROUP BY a.doc_idx HAVING AVG(a.appr_state) = 1 ORDER BY a.doc_idx DESC LIMIT #{param1} OFFSET #{param2}
     </select>
 
     <select id="line" resultType="int">
@@ -52,6 +75,29 @@
 
     <select id="deptList" resultType="int">
         SELECT dept_idx FROM department WHERE dept_high = #{param1}
+    </select>
+
+    <!-- 문서 열람 -->
+    <select id="detail" resultType="com.toast.document.dto.DocumentDTO">
+        SELECT d.doc_empl_idx, d.doc_subject, d.doc_content, d.form_idx, d.doc_write_date, d.doc_update_date,
+            (SELECT f.form_subject FROM form f WHERE f.form_idx = d.form_idx) as 'form_subject',
+            (SELECT e.empl_name FROM employee e WHERE e.empl_idx = d.doc_empl_idx) as 'empl_name_0',
+            (SELECT (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'dept_name_0',
+            (SELECT (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) FROM approval_line l WHERE l.doc_idx = d.doc_idx AND l.line_order = 0) as 'position_name_0',
+            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 1) as 'appr_date_1',
+            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 2) as 'appr_date_2',
+            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = d.doc_idx AND a.appr_order = 3) as 'appr_date_3'
+        FROM document d WHERE doc_idx = #{param1}
+    </select>
+    
+    <select id="appr" resultType="com.toast.document.dto.DocumentLineDTO">
+        SELECT l.line_order, l.empl_idx, l.dept_idx, l.position_idx,
+            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = l.doc_idx) as 'empl_date',
+            (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) as 'empl_name',
+            (SELECT e.empl_profile FROM employee e WHERE e.empl_idx = l.empl_idx) as 'empl_profile',
+            (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) as 'dept_name',
+            (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) as 'position_name'
+        FROM approval_line l WHERE l.doc_idx = #{param1} ORDER BY l.line_order DESC
     </select>
 
 </mapper>

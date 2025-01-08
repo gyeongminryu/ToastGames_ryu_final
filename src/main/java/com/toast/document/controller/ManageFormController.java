@@ -28,7 +28,7 @@ public class ManageFormController {
         // 세션 임의 지정
         session.setAttribute("loginId", "tndls0110");
         session.setAttribute("empl_idx", "10001");
-        session.setAttribute("dept_idx", "100");
+        session.setAttribute("dept_idx", "122");
 
         // 세션 내 부서 번호 인출
         int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());

@@ -10,6 +10,13 @@
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <link rel="stylesheet" href="resources/richtexteditor/rte_theme_default.css" />
+    <script type="text/javascript" src="resources/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src="resources/richtexteditor/plugins/all_plugins.js"></script>
+    <script type='text/javascript' src="resources/richtexteditor/lang/rte-lang-ko.js"></script>
+    <link rel="stylesheet" href="resources/css/module_rte.css" />
+    <script type="text/javascript" src="resources/js/module_rte.js"></script>
 </head>
 <body>
 <c:import url="layout_topnav.jsp" />
@@ -31,7 +38,7 @@
 
                     <!-- 문서 상세보기 -->
                     <div class="tst_col9">
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 120px" />
                                 <col style="width: auto" />
@@ -46,23 +53,29 @@
                             <tbody>
                             <tr>
                                 <th>문서명</th>
-                                <th>{문서명}</th>
+                                <th class="doc_subject"></th>
                             </tr>
                             <tr>
                                 <th>문서 유형</th>
-                                <td>{문서 유형}</td>
+                                <td class="form_subject"></td>
                             </tr>
                             <tr>
                                 <th>작성자</th>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
+                                <td class="doc_empl"></td>
                             </tr>
                             <tr>
                                 <th>최종 결재 일시</th>
-                                <td>{yyyy-MM-dd HH:mm}</td>
+                                <td class="appr_date"></td>
                             </tr>
                             <tr>
-                                <th>문서</th>
-                                <td id="doc_content" class="doc_content">{문서}</td>
+                                <th class="td_align_top">문서</th>
+                                <td>
+
+                                    <!-- rte -->
+                                    <div id="div_editor"></div>
+                                    <!-- //rte -->
+
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -154,17 +167,17 @@
                             <thead>
                             <tr>
                                 <th colspan="2">
-                                    참조인
+                                    참조
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <th>참조인 1</th>
+                                <th>참조 1</th>
                                 <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
                             </tr>
                             <tr>
-                                <th>참조인 2</th>
+                                <th>참조 2</th>
                                 <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
                             </tr>
                             </tbody>
@@ -230,4 +243,5 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
+<script src="resources/js/document_detail.js"></script>
 </html>

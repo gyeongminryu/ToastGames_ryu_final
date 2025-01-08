@@ -128,7 +128,13 @@
                                     <div class="tst_search_container">
                                         <div class="tst_search_select">
                                             <select id="tst_search_select_category" name="opt">
-                                                <option value="{검색 분류}">검색 분류</option>
+                                                <option value="doc_subject">문서명</option>
+                                                <option value="doc_content">문서 내용</option>
+                                                <option value="form_subject">문서 형식</option>
+                                                <option value="empl_name_0">작성자</option>
+                                                <option value="empl_name_1">1차 결재자</option>
+                                                <option value="empl_name_2">2차 결재자</option>
+                                                <option value="empl_name_3">3차 결재자</option>
                                             </select>
                                         </div>
                                         <div class="tst_search_input">
@@ -136,6 +142,9 @@
                                         </div>
                                         <div class="tst_search_icon">
                                             <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                        </div>
+                                        <div class="tst_search_icon">
+                                            <button type="button" onclick="location.href='/document_list.go'" class="btn_min btn_subtle" style="margin-left: 10px;">초기화</button>
                                         </div>
                                     </div>
                                 </form>

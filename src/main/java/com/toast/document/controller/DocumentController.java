@@ -29,7 +29,7 @@ public class DocumentController {
 	}
 
 	@PostMapping(value = "/document_list.ajax")
-	public Map<String, Object> document_list(HttpSession session, String page, String cnt) {
+	public Map<String, Object> document_list(HttpSession session, String page, String cnt, String opt, String keyword) {
 		session.setAttribute("loginId", "tndls0110");
 		session.setAttribute("empl_idx", "10001");
 		session.setAttribute("dept_idx", "100");
@@ -47,7 +47,7 @@ public class DocumentController {
 //			accessibleFiltering = false;
 //		}
 
-		return documentService.list(pageInt, cntInt, dept_idx);
+		return documentService.list(pageInt, cntInt, dept_idx, opt, keyword);
 	}
 
 	// 문서 열람
@@ -55,5 +55,20 @@ public class DocumentController {
 	public ModelAndView document_detail() {
 		return new ModelAndView("document_detail");
 	}
+
+	@PostMapping(value = "/document_detail.ajax")
+	public Map<String, Object> document_detail(HttpSession session, String doc_idx) {
+		int doc_idxInt = Integer.parseInt(doc_idx);
+
+		return documentService.detail(doc_idxInt);
+	}
+
+	@PostMapping(value = "/document_line.ajax")
+	public Map<String, Object> document_line(HttpSession session, String doc_idx) {
+		int doc_idxInt = Integer.parseInt(doc_idx);
+
+		return documentService.appr(doc_idxInt);
+	}
+
 
 }
