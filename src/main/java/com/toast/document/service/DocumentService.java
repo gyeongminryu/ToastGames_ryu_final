@@ -96,4 +96,18 @@ public class DocumentService {
 		return result;
 	}
 
+	public Map<String, Object> refer(int doc_idx) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("list", documentDAO.refer(doc_idx));
+
+		return result;
+	}
+
+	public Map<String, Object> file(int doc_idx) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("list", documentDAO.file(doc_idx));
+
+		return result;
+	}
+
 }

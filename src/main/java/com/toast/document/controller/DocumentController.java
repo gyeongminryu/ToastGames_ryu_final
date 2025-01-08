@@ -70,5 +70,18 @@ public class DocumentController {
 		return documentService.appr(doc_idxInt);
 	}
 
+	@PostMapping(value = "/document_reference.ajax")
+	public Map<String, Object> document_reference(HttpSession session, String doc_idx) {
+		int doc_idxInt = Integer.parseInt(doc_idx);
+
+		return documentService.refer(doc_idxInt);
+	}
+
+	@PostMapping(value = "/document_file.ajax")
+	public Map<String, Object> document_file(HttpSession session, String doc_idx) {
+		int doc_idxInt = Integer.parseInt(doc_idx);
+
+		return documentService.file(doc_idxInt);
+	}
 
 }

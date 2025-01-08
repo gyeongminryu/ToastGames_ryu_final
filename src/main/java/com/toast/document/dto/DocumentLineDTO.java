@@ -14,6 +14,7 @@ public class DocumentLineDTO {
     private String empl_name;
     private int position_idx;
     private String position_name;
+    private String empl_profile;
 
     // Getter
     public int getLine_idx() {
@@ -60,6 +61,10 @@ public class DocumentLineDTO {
         return position_name;
     }
 
+    public String getEmpl_profile() {
+        return empl_profile;
+    }
+
     // Setter
     public void setLine_idx(int line_idx) {
         this.line_idx = line_idx;
@@ -103,6 +108,10 @@ public class DocumentLineDTO {
 
     public void setPosition_name(String position_name) {
         this.position_name = position_name;
+    }
+
+    public void setEmpl_profile(String empl_profile) {
+        this.empl_profile = empl_profile;
     }
 
 }

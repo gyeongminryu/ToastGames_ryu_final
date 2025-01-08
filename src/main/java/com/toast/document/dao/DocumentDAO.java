@@ -1,7 +1,9 @@
 package com.toast.document.dao;
 
 import com.toast.document.dto.DocumentDTO;
+import com.toast.document.dto.DocumentFileDTO;
 import com.toast.document.dto.DocumentLineDTO;
+import com.toast.document.dto.DocumentRefDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,5 +21,7 @@ public interface DocumentDAO {
     //문서 열람
     DocumentDTO detail(int doc_idx);
     List<DocumentLineDTO> appr(int doc_idx);
+    List<DocumentRefDTO> refer(int doc_idx);
+    List<DocumentFileDTO> file(int doc_idx);
 
 }

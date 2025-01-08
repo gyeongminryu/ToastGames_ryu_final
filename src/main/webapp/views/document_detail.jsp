@@ -93,66 +93,10 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">
-                                    결재 이력
-                                </th>
+                                <th colspan="2">결재 이력</th>
                             </tr>
                             </thead>
-                            <tbody>
-
-                            <!-- 작성자 -->
-                            <tr>
-                                <td class="td_align_top td_no_padding">
-                                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                                </td>
-                                <td class="approval_line_info">
-                                    <h4 class="font_subtle approval_datetime_subtle">{상신일시}</h4>
-                                    <h4>작성자</h4>
-                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
-                                </td>
-                            </tr>
-                            <!-- //작성자 -->
-
-                            <!-- 1차 결재자 -->
-                            <tr>
-                                <td class="td_align_top td_no_padding">
-                                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                                </td>
-                                <td class="approval_line_info">
-                                    <h4 class="font_subtle approval_datetime_subtle">{결재 일시}</h4>
-                                    <h4>1차 결재자</h4>
-                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
-                                </td>
-                            </tr>
-                            <!-- //1차 결재자 -->
-
-                            <!-- 2차 결재자 -->
-                            <tr>
-                                <td class="td_align_top td_no_padding">
-                                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                                </td>
-                                <td class="approval_line_info">
-                                    <h4 class="font_subtle approval_datetime_subtle">{결재 일시}</h4>
-                                    <h4>2차 결재자</h4>
-                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
-                                </td>
-                            </tr>
-                            <!-- //2차 결재자 -->
-
-                            <!-- 최종 결재자 -->
-                            <tr>
-                                <td class="td_align_top td_no_padding">
-                                    <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                                </td>
-                                <td class="approval_line_info">
-                                    <h4 class="font_subtle approval_datetime_subtle">{결재 일시}</h4>
-                                    <h4>최종 결재자</h4>
-                                    <p><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></p>
-                                </td>
-                            </tr>
-                            <!-- //최종 결재자 -->
-
-                            </tbody>
+                            <tbody class="appr_list"></tbody>
                         </table>
                         <!-- //결재선 -->
 
@@ -166,12 +110,10 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">
-                                    참조
-                                </th>
+                                <th colspan="2">참조</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="refer_list">
                             <tr>
                                 <th>참조 1</th>
                                 <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
@@ -197,29 +139,7 @@
                                 <th colspan="2">첨부 파일</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>{파일명 (파일 용량kb)}</td>
-                                <td>
-                                    <!-- 다운로드 경로를 입력하세요 --><button type="button" onclick="location.href=''" class="btn_min btn_primary">다운로드</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{파일명 (파일 용량kb)}</td>
-                                <td>
-                                    <!-- 다운로드 경로를 입력하세요 --><button type="button" onclick="location.href=''" class="btn_min btn_primary">다운로드</button>
-                                </td>
-                            </tr>
-
-                            <!-- 첨부 파일이 없는 경우 아래와 같이 입력하세요 -->
-                            <tr>
-                                <td colspan="2" class="td_align_center">
-                                    <span class="font_subtle">첨부 파일이 없습니다.</span>
-                                </td>
-                            </tr>
-                            <!-- //첨부 파일이 없는 경우 아래와 같이 입력하세요 -->
-
-                            </tbody>
+                            <tbody class="file_list"></tbody>
                         </table>
                         <!-- //첨부 파일 목록 -->
 
@@ -228,7 +148,7 @@
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
                             <li>
-                                <button class="btn_primary btn_full" onclick="location.href='/document_list'">목록으로 돌아가기</button>
+                                <button class="btn_primary btn_full" onclick="location.href='/document_list.go'">목록으로 돌아가기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->

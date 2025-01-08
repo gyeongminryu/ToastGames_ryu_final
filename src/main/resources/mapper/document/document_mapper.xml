@@ -92,12 +92,28 @@
     
     <select id="appr" resultType="com.toast.document.dto.DocumentLineDTO">
         SELECT l.line_order, l.empl_idx, l.dept_idx, l.position_idx,
-            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = l.doc_idx) as 'empl_date',
+            (SELECT a.appr_date FROM approval a WHERE a.doc_idx = l.doc_idx AND a.appr_order = l.line_order) as 'appr_date',
             (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) as 'empl_name',
             (SELECT e.empl_profile FROM employee e WHERE e.empl_idx = l.empl_idx) as 'empl_profile',
             (SELECT dp.dept_name FROM department dp WHERE dp.dept_idx = l.dept_idx) as 'dept_name',
             (SELECT p.position_name FROM position_ p WHERE p.position_idx = l.position_idx) as 'position_name'
-        FROM approval_line l WHERE l.doc_idx = #{param1} ORDER BY l.line_order DESC
+        FROM approval_line l WHERE l.doc_idx = #{param1} ORDER BY l.line_order
+    </select>
+
+    <select id="refer" resultType="com.toast.document.dto.DocumentRefDTO">
+        SELECT r.ref_doc_idx, r.ref_empl_idx,
+            (SELECT e.empl_name FROM employee e WHERE e.empl_idx = r.ref_empl_idx) as 'empl_name'
+        FROM reference r WHERE r.ref_doc_idx = #{param1}
+    </select>
+
+    <select id="file" resultType="com.toast.document.dto.DocumentFileDTO">
+        SELECT d.file_key,
+            (SELECT f.file_addr FROM file f WHERE f.file_key = d.file_key) as 'file_addr',
+            (SELECT f.ori_filename FROM file f WHERE f.file_key = d.file_key) as 'ori_filename',
+            (SELECT f.new_filename FROM file f WHERE f.file_key = d.file_key) as 'new_filename',
+            (SELECT f.file_type FROM file f WHERE f.file_key = d.file_key) as 'file_type',
+            (SELECT f.file_size FROM file f WHERE f.file_key = d.file_key) as 'file_size'
+        FROM document d WHERE d.doc_idx = #{param1}
     </select>
 
 </mapper>

@@ -6,6 +6,7 @@ var doc_idx = searchParams.get('doc_idx');
 var editor = new RichTextEditor("#div_editor", configView);
 
 // 문서 정보 출력하기
+var tags = '';
 pageShow(doc_idx);
 
 function pageShow(idx) {
@@ -47,9 +48,40 @@ function pageShow(idx) {
     });
 
     // 참조인 출력하기
+    $.ajax({
+        type: 'post',
+        url: 'document_reference.ajax',
+        data: {
+            'doc_idx': idx
+        },
+        dataType: 'json',
+        success: function(data) {
+            // 목록 출력
+            referPrint(data.list);
+            //console.log(data.list);
+        },
+        error: function(e) {
+            //console.log(e);
+        }
+    });
 
     // 첨부파일 출력하기
-    //
+    $.ajax({
+        type: 'post',
+        url: 'document_file.ajax',
+        data: {
+            'doc_idx': idx
+        },
+        dataType: 'json',
+        success: function(data) {
+            // 목록 출력
+            filePrint(data.list);
+            //console.log(data.list);
+        },
+        error: function(e) {
+            //console.log(e);
+        }
+    });
 }
 
 function infoPrint(info) {
@@ -79,18 +111,86 @@ function infoPrint(info) {
 }
 
 function apprPrint(list) {
-    console.log(list);
-    let tags = '';
+    //console.log(list);
+    tags = '';
 
     for (let i = 0; i < list.length; i++) {
         tags += '<tr>';
         tags += '<td class="td_align_top td_no_padding">';
-        tags += '<img src="' + list.empl_profile + ' alt="' + list.empl_name + '의 프로필 사진" class="approval_profile_image"/></td>';
+        tags += '<img src="' + list[i].empl_profile + '" alt="' + list[i].empl_name + '의 프로필 사진" class="approval_profile_image" /></td>';
         tags += '<td class="approval_line_info">';
-        tags += '<h4 class="font_subtle approval_datetime_subtle">' + list.empl_date + '</h4>';
-            //<h4>작성자</h4>
-            //<p><span onClick="tst_view_profile('{직원 번호}')" className="tst_pointer">{직원명} ({부서}/{직급})</span></p>
+        tags += '<h4 class="font_subtle approval_datetime_subtle">' + list[i].appr_date + '</h4>';
+
+        switch (list[i].line_order) {
+            case 0:
+                tags += '<h4>작성</h4>';
+                break;
+            case 1:
+                tags += '<h4>1차 결재</h4>';
+                break
+            case 2:
+                tags += '<h4>2차 결재</h4>';
+                break;
+            case 3:
+                tags += '<h4>3차 결재</h4>';
+                break
+        }
+
+        tags += '<p><span onClick="tst_view_profile(\'' + list[i].empl_idx + '\')" class="tst_pointer">';
+        tags += list[i].empl_name + ' (' + list[i].dept_name + '/' + list[i].position_name + ')</span></p>';
         tags += '</td>';
         tags += '</tr>';
     }
+    //console.log(tags);
+
+    document.getElementsByClassName('appr_list')[0].innerHTML = tags;
+    const elem = document.getElementsByClassName('appr_list')[0].querySelector('tr:last-child').getElementsByClassName('approval_line_info');
+    elem.item(0).getElementsByTagName('h4')[1].innerHTML = '최종 결재';
+}
+
+function referPrint(list) {
+    //console.log(list);
+    tags = '';
+
+    if (list.length === 0) {
+        tags += '<tr>';
+        tags += '<td colspan="2" class="td_align_center">';
+        tags += '<span class="font_subtle">참조인이 없습니다.</span>';
+        tags += '</td>';
+        tags += '</tr>';
+    } else {
+        for (let i = 0; i < list.length; i++) {
+            tags += '<tr>';
+            tags += '<th>참조 ' + i + '</th>';
+            tags += '<td><span onclick="tst_view_profile(\'' + list[i].ref_empl_idx + '\')" class="tst_pointer">' + list[i].empl_name + '</span></td>';
+            tags += '</tr>';
+        }
+    }
+    //console.log(tags);
+
+    document.getElementsByClassName('refer_list')[0].innerHTML = tags;
+}
+
+function filePrint(list) {
+    console.log(list);
+    tags = '';
+
+    if (list.length === 0 || (list.length !== 0 && list[0] == null)) {
+        tags += '<tr>';
+        tags += '<td colspan="2" class="td_align_center">';
+        tags += '<span class="font_subtle">첨부 파일이 없습니다.</span>';
+        tags += '</td>';
+        tags += '</tr>';
+    } else {
+        for (let i = 0; i < list.length; i++) {
+            tags += '<tr>';
+            tags += '<td>' + list[i].ori_filename + '.' + list[i].file_type + ' (' + list[i].file_size + 'kb)</td>';
+            tags += '<td><button type="button" onclick="location.href=/\'' + list[i].addr;
+            tags += list[i].new_filename + '.' + list[i].file_type + '\'" class="btn_min btn_primary">다운로드</button></td>';
+            tags += '</tr>';
+        }
+    }
+    //console.log(tags);
+
+    document.getElementsByClassName('file_list')[0].innerHTML = tags;
 }
