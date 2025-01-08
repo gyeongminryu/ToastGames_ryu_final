@@ -27,56 +27,43 @@
                         <!-- 부서 목록 출력 -->
                         <tbody class="tst_pointer">
                         <tr>
-                            <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
-                            <!-- 부서 내 직원을 출력하는 함수를 입력하세요 --><td onclick="{함수}" class="tst_pointer">{부서명}</td>
+                            <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
+                            <td onclick="get_dept()" class="tst_pointer">부서</td>
                         </tr>
 
-                        <!-- 팀 목록 출력 -->
+                        <!-- 부서원 목록 출력 -->
                         <tr class="disp_hide">
                             <td></td>
                             <td>
                                 <table class="tst_table table_align_left table_no_padding">
-                                    <tbody>
+                                    <tbody id="get_dept">
                                     <tr>
-                                        <!-- 팀 내 직원을 출력하는 함수를 입력하세요 --><td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    <tr>
-                                        <td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    <tr>
-                                        <td onclick="{함수}">{팀명}</td>
+                                        <td onclick="get_dept_empl()">{부서명}</td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </td>
                         </tr>
-                        <!-- //팀 목록 출력 -->
+                        <!-- //부서원 목록 출력 -->
 
                         <!-- 예시 -->
                         <tr>
-                            <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
-                            <td onclick="{함수}">{부서명}</td>
+                            <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i></td>
+                            <td onclick="get_team()">팀</td>
                         </tr>
                         <tr class="disp_hide">
                             <td></td>
                             <td>
                                 <table class="tst_table table_align_left table_no_padding">
-                                    <tbody>
+                                    <tbody id="team_empl">
                                     <tr>
-                                        <td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    <tr>
-                                        <td onclick="{함수}">{팀명}</td>
-                                    </tr>
-                                    <tr>
-                                        <td onclick="{함수}">{팀명}</td>
+                                        <td onclick="get_team_empl()">{팀명}</td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </td>
                         </tr>
                         <!-- //예시 -->
-
                         </tbody>
                         <!-- //부서 목록 출력 -->
 
@@ -89,7 +76,9 @@
                         <div class="tst_search_container">
                             <div class="tst_search_select">
                                 <select id="tst_search_select_category" name="category">
-                                    <option value="{검색 분류}">검색 분류</option>
+                                    <option value="">부서 검색</option>
+                                    <option value="">직급 검색</option>
+                                    <option value="">사원명 검색</option>
                                 </select>
                             </div>
                             <div class="tst_search_input">
@@ -117,7 +106,7 @@
 
                         <!-- 직원 정보 -->
                         <tr>
-                            <!-- 직원을 결재선 혹은 참조에 추가하는 함수를 입력하세요 --><tr onclick="{함수}">
+                        <tr onclick="select_transfer_empl()">
                             <td class="td_align_top td_no_padding">
                                 <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                             </td>
@@ -127,29 +116,6 @@
                             </td>
                         </tr>
                         <!-- //직원 정보 -->
-
-                        <!-- 예시 -->
-                        <tr>
-                        <tr onclick="{함수}">
-                            <td class="td_align_top td_no_padding">
-                                <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                            </td>
-                            <td>
-                                <p>{직원명 (부서/직급)}</p>
-                                <p class="min font_subtle">{직책}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                        <tr onclick="{함수}">
-                            <td class="td_align_top td_no_padding">
-                                <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                            </td>
-                            <td>
-                                <p>{직원명 (부서/직급)}</p>
-                                <p class="min font_subtle">{직책}</p>
-                            </td>
-                        </tr>
-                        <!-- //예시 -->
 
                         </tbody>
                     </table>
@@ -174,7 +140,7 @@
         <div class="tst_modal_body">
             <ul class="tst_list list_no_desc list_block">
                 <li>
-                    <h3><span id="prod_name" class="prod_name">{물품명}</span> ▶ <span id="empl_name" class="empl_name">{직원명}</span></h3>
+                    <h3><span id="prod_name" class="prod_name">${detail.prod_name}</span> ▶ <span id="empl_name" class="empl_name">{직원명}</span></h3>
                 </li>
                 <li>
                     <p>물품을 위와 같이 인계하시겠습니까?</p>
@@ -200,4 +166,3 @@
 <!-- //인계하기 -->
 
 <script src="resources/js/module_modal.js"></script>
-<script src="resources/js/approval_send_modal.js"></script>

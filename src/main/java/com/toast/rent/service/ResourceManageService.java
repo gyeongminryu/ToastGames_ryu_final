@@ -286,6 +286,8 @@ public class ResourceManageService {
 	//물품 파일 등록
 	private int prodFileAdd( List<MultipartFile> files, int prod_idx) {
 		
+		//0. 첨부파일 키 생성
+		String fileKey = UUID.randomUUID().toString();
 		int row =0;
 		for (MultipartFile file : files) {
 			
@@ -301,11 +303,7 @@ public class ResourceManageService {
 			//3.새파일명 생성
 			String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
 			logger.info(newFilename);
-			
-			
-			//4. 첨부파일 키 생성
-			String fileKey = UUID.randomUUID().toString();
-			
+	
 			
 			int empl_idx = (int) session.getAttribute("empl_idx");
 			//5. 파일 저장
@@ -323,13 +321,11 @@ public class ResourceManageService {
 				photo_dto.setUploader_idx(empl_idx);
 				photo_dto.setFile_size(file.getSize());
 				row = resourceMgDAO.prodFileAdd(photo_dto); 
-				
-				resourceMgDAO.prodFileKeyAdd(prod_idx, fileKey);
-				
-				
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			resourceMgDAO.prodFileKeyAdd(fileKey, prod_idx);
 		}
 
 		return row;
@@ -417,16 +413,9 @@ public class ResourceManageService {
 	//물품 상세 첨부파일 보기(테이블 추가 필요할 것으로 예상)
 	public List<ResourcePhotoDTO> prodMgFile(int prod_idx) {
 		//(첨부파일키 추가 필요)
-		List<String> fileKeys = resourceMgDAO.getProdFileKey(prod_idx);
-		List<ResourcePhotoDTO> fileList = new ArrayList<ResourcePhotoDTO>();
-	    for (String fileKey : fileKeys) {
-	        // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
-	        ResourcePhotoDTO file = resourceMgDAO.prodMgFile(fileKey);
-	        if (file != null) {
-	            fileList.add(file); // 가져온 파일 정보를 리스트에 추가
-	        }
-	    }
-		
+		String fileKey = resourceMgDAO.getProdFileKey(prod_idx);
+	    // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
+	    List<ResourcePhotoDTO> fileList = resourceMgDAO.prodMgFile(fileKey);
 		return fileList;
 	}
 	
@@ -500,22 +489,13 @@ public class ResourceManageService {
 	//물품 정보 가져오기
 	public Map<String, Object> getProductinfo(int prod_idx) {
 		ResourceManageDTO product = resourceMgDAO.getProductinfo(prod_idx);
-		//(첨부파일키 추가 필요)
-		List<String> fileKeys = resourceMgDAO.getProdFileKey(prod_idx);
-		List<ResourcePhotoDTO> files = new ArrayList<ResourcePhotoDTO>();
-	    for (String fileKey : fileKeys) {
-	        // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
-	        ResourcePhotoDTO file = resourceMgDAO.prodMgFile(fileKey);
-	        if (file != null) {
-	            files.add(file); // 가져온 파일 정보를 리스트에 추가
-	        }
-	    }
+		
 	    
 		Map<String, Object> prodInfo = new HashMap<String, Object>();
 		List<ResourceManageDTO> categoryList = resourceMgDAO.resourceCateMg();
 		prodInfo.put("prodDispoDate", formatDateTime(product.getProd_dispo_date()));
 		prodInfo.put("product", product);
-		prodInfo.put("files", files);
+		prodInfo.put("files", prodMgFile(prod_idx));
 		prodInfo.put("categoryList", categoryList);
 		return prodInfo;
 	}
@@ -552,11 +532,9 @@ public class ResourceManageService {
 		
 		if(prod_idx > 0) {
 			logger.info("여기 들어왔다고");
-			List<String> fileKeys = resourceMgDAO.getProdFileKey(prod_idx);
-			for (String fileKey : fileKeys) {
-				resourceMgDAO.prodFileRemove(prod_idx,fileKey);
-				resourceMgDAO.prodFileKeyRemove(prod_idx,fileKey);				
-			}
+			String fileKey = resourceMgDAO.getProdFileKey(prod_idx);
+			resourceMgDAO.prodFileRemove(fileKey);
+			resourceMgDAO.prodFileKeyRemove(prod_idx,fileKey);				
 			row = prodFileAdd(validFiles, prod_idx);
 		}
 		
@@ -587,7 +565,7 @@ public class ResourceManageService {
 	    dto.setProd_dispo_date(dueDate);
 		
 		int row = 0;
-		row = resourceMgDAO.prodUpdate(dto);  //물품 등록
+		row = resourceMgDAO.prodUpdate(dto);  //물품 수정
 
 		return row;
 	}
@@ -613,21 +591,111 @@ public class ResourceManageService {
 
 	//물품 폐기 처리 가기
 	public void prodInfo(int prod_idx, Model model) {
-		//(첨부파일키 추가 필요)
-		List<String> fileKeys = resourceMgDAO.getProdFileKey(prod_idx);
-		List<ResourcePhotoDTO> files = new ArrayList<ResourcePhotoDTO>();
-	    for (String fileKey : fileKeys) {
-	        // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
-	        ResourcePhotoDTO file = resourceMgDAO.prodMgFile(fileKey);
-	        if (file != null) {
-	            files.add(file); // 가져온 파일 정보를 리스트에 추가
-	        }
-	    }
 	    ResourceManageDTO detail = resourceMgDAO.prodInfo(prod_idx);
 	    model.addAttribute("prodDispoDate", formatDateTime(detail.getProd_dispo_date()));
 	    model.addAttribute("prodPurchDate", formatDateTime(detail.getProd_purch_date()));
 		model.addAttribute("detail", detail);
-		model.addAttribute("files", files);
+	}
+
+	
+	//폐기처리(fileO)
+	@Transactional
+	public int prodDispo(List<MultipartFile> validFiles, Map<String, Object> map) {
+		ResourceManageDTO dto = new ResourceManageDTO();
+		dto.setDisp_state((int) map.get("disp_state"));
+		dto.setDisp_empl_idx((int) map.get("disp_empl_idx"));
+		dto.setDisp_reason((String) map.get("dispo_reason"));
+		dto.setProd_idx(Integer.parseInt((String) map.get("prod_idx")));
+		dto.setDisp_date(LocalDateTime.now().withNano(0)); //등록일자
+
+		resourceMgDAO.prodDispo(dto);  //폐기등록
+		int prod_idx = dto.getProd_idx();
+		
+		logger.info("prod_idx:"+prod_idx);
+		
+		int row = 0;
+		if(prod_idx > 0) {
+			logger.info("여기 들어왔다고");
+			row = dispFileAdd(validFiles, prod_idx);
+		}
+		resourceMgDAO.prodDispUpdate(0,0, prod_idx);
+		return row;
+	}
+	
+	
+	//물품 파일 등록
+	private int dispFileAdd( List<MultipartFile> files, int prod_idx) {
+		//0. 첨부파일 키 생성
+		String fileKey = UUID.randomUUID().toString();
+		int row =0;
+		for (MultipartFile file : files) {
+			
+			//1.파일명 추출
+			String oriFilename = file.getOriginalFilename();
+			logger.info(oriFilename);
+			
+			//2.기존 파일의 확장자만 분리
+			String ext = oriFilename.substring(oriFilename.lastIndexOf("."));
+			logger.info(ext);
+			
+			
+			//3.새파일명 생성
+			String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
+			logger.info(newFilename);
+
+			
+			int empl_idx = (int) session.getAttribute("empl_idx");
+			//5. 파일 저장
+			try {
+				byte[] arr = file.getBytes();
+				Path path = Paths.get("C:/files/"+newFilename);
+				Files.write(path, arr);
+				//6.저장 내용 files 테이블에 insert
+				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
+				photo_dto.setNew_filename(newFilename);
+				photo_dto.setOri_filename(oriFilename);
+				photo_dto.setFile_addr(path.toString());
+				photo_dto.setFile_type(ext);
+				photo_dto.setFile_key(fileKey);
+				photo_dto.setUploader_idx(empl_idx);
+				photo_dto.setFile_size(file.getSize());
+				row = resourceMgDAO.prodFileAdd(photo_dto); 
+				
+							
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			resourceMgDAO.dispFileKeyAdd(fileKey,prod_idx);
+		}
+
+		return row;
+		
+	}
+
+	
+	//폐기처리(fileX)
+	@Transactional
+	public void prodOnlyDispo(Map<String, Object> map) {
+		int prod_idx=Integer.parseInt((String) map.get("prod_idx"));
+		ResourceManageDTO dto = new ResourceManageDTO();
+		dto.setDisp_state((int) map.get("disp_state"));
+		dto.setDisp_empl_idx((int) map.get("disp_empl_idx"));
+		dto.setDisp_reason((String) map.get("dispo_reason"));
+		dto.setProd_idx(Integer.parseInt((String) map.get("prod_idx")));
+		dto.setDisp_date(LocalDateTime.now().withNano(0)); //등록일자
+		resourceMgDAO.prodDispo(dto);  //폐기등록
+		resourceMgDAO.prodDispUpdate(0,0, prod_idx);
+	}
+
+
+	//인수자 부서정보
+	public List<ResourceManageDTO> getDeptList() {
+		return resourceMgDAO.getDeptList();
+	}
+
+	//인수자 팀 정보
+	public List<ResourceManageDTO> getTeamList() {
+		return resourceMgDAO.getTeamList();
 	}
 
 

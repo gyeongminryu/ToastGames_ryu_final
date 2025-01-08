@@ -1,5 +1,11 @@
 let use_date;
 
+// 에디터 설정하기
+var editor = new RichTextEditor("#div_editor", configDocument);
+
+
+
+
 function change_category_life(selectElement) {
     const selected_option = selectElement.options[selectElement.selectedIndex]; // 선택된 옵션
     const prod_life = parseInt(selected_option.getAttribute('data-prod-life'), 10); // 내용연수 값 가져오기
@@ -104,12 +110,15 @@ document.getElementById("product_submit_button").addEventListener("click", funct
     }
 });
 
-
+let content = editor.getHTMLCode();
 
 
 // 폼 제출 처리 (삭제되지 않은 파일만 전송)
 function submitForm() {
 
+	let content = editor.getHTMLCode();
+	console.log(content);
+	
     var form = document.querySelector("form[action='productAdd.do']");
     var formData = new FormData(form);
     
@@ -121,6 +130,9 @@ function submitForm() {
 
     // 'due_date' 추가
     formData.append('due_date', use_date);
+
+	//'content'추가
+	formData.append('content', content);
 
     // 삭제되지 않은 파일만 추가
     uploadedFiles.forEach(function (item) {

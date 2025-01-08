@@ -61,9 +61,52 @@ public class ResourceManageDTO {
 	private String dept_name; //부서명
 	
 	
+	//공용물품 폐기처리
+	private int disp_prod_idx;
+	//private int prod_idx;
+	private int disp_state;
+	private String disp_reason;
+	private int take_empl_idx;
+	private int disp_empl_idx;
+	private LocalDateTime disp_date;
 	
 	
-	
+	public int getDisp_prod_idx() {
+		return disp_prod_idx;
+	}
+	public void setDisp_prod_idx(int disp_prod_idx) {
+		this.disp_prod_idx = disp_prod_idx;
+	}
+	public int getDisp_state() {
+		return disp_state;
+	}
+	public void setDisp_state(int disp_state) {
+		this.disp_state = disp_state;
+	}
+	public String getDisp_reason() {
+		return disp_reason;
+	}
+	public void setDisp_reason(String disp_reason) {
+		this.disp_reason = disp_reason;
+	}
+	public int getTake_empl_idx() {
+		return take_empl_idx;
+	}
+	public void setTake_empl_idx(int take_empl_idx) {
+		this.take_empl_idx = take_empl_idx;
+	}
+	public int getDisp_empl_idx() {
+		return disp_empl_idx;
+	}
+	public void setDisp_empl_idx(int disp_empl_idx) {
+		this.disp_empl_idx = disp_empl_idx;
+	}
+	public LocalDateTime getDisp_date() {
+		return disp_date;
+	}
+	public void setDisp_date(LocalDateTime disp_date) {
+		this.disp_date = disp_date;
+	}
 	public String getEmpl_name() {
 		return empl_name;
 	}
