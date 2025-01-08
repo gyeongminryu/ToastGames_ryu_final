@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.toast.management.dto.CompInfo;
 import com.toast.management.dto.DepartmentDTO;
+import com.toast.management.dto.DeptDetailInfoDTO;
 import com.toast.management.dto.DeptDetailMemberDTO;
 import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
@@ -42,7 +43,7 @@ public interface DepartmentDAO {
 
 	List<DeptDetailMemberDTO> getdeptmeberlist(String dept_idx);
 
-	List<DeptDetailMemberDTO> searchDeptMember(String emplName, String cmpEmail, String dept_idx);
+	
 
 	List<DeptDetailMemberDTO> deptmemsearchname(String emplName, String dept_idx);
 
@@ -71,6 +72,14 @@ public interface DepartmentDAO {
 	List<EmployeeDetailDTO> getDeptSearchMembers(String dept_idx, String category, String keyword, String team_idx);
 
 	List<EmployeeDetailDTO> getDeptTeamMembers(String dept_idx, String team_idx);
+
+	List<DeptDetailMemberDTO> searchDeptMember(String dept_idx, String category, String keyword);
+
+	List<DeptDetailInfoDTO> gethighdeptinfolist();
+
+	List<DeptDetailInfoDTO> getlowdeptinfolist();
+
+	List<DeptDetailInfoDTO> getbasicdeptinfolist();
 
 	
 

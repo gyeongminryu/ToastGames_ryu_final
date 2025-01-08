@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.toast.management.dto.DeptDetailMemberDTO;
+import com.toast.management.dto.EmployeeDetailDTO;
+import com.toast.management.dto.ProjectMemberDetailDTO;
 import com.toast.management.dto.TeamListDTO;
 import com.toast.management.service.ProjectService;
 
@@ -123,5 +125,16 @@ public class ProjectController {
 		
 		return "redirect:/project_team_detail.go?team_idx="+team_idx;
 	}
+	// search_project_team_members
 	
+	@PostMapping(value="/search_project_team_members.ajax")
+	@ResponseBody
+	public List<ProjectMemberDetailDTO> searchProjectTeamMembers(@RequestParam String team_idx,@RequestParam(value ="category", required = false) String category,@RequestParam(value ="keyword", required = false) String keyword ) {
+		
+		logger.info("team_idx: "+team_idx);
+		List<ProjectMemberDetailDTO> member_list = projectService.searchProjectTeamMembers(team_idx,category,keyword);
+	   
+		
+	    return member_list;
+	}
 }

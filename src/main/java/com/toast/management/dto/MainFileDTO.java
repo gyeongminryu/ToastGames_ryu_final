@@ -8,7 +8,14 @@ public class MainFileDTO {
 	private String new_filename;
 	private String file_type;
 	private String file_addr;
+	private String file_size;
 	
+	public String getFile_size() {
+		return file_size;
+	}
+	public void setFile_size(String file_size) {
+		this.file_size = file_size;
+	}
 	public int getFile_idx() {
 		return file_idx;
 	}

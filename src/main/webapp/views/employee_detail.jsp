@@ -162,7 +162,7 @@
             <th>다운로드</th>
             <th>삭제</th>
         </tr>
-        <c:forEach var="fileItem" items="${file}">
+        <c:forEach var="fileItem" items="${file}" varStatus="status">
       	<tr>
             <td class="file_idx">${fileItem.file_idx}</td>
             <td class="file_key">${fileItem.file_key}</td>

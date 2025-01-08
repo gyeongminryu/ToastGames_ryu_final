@@ -12,7 +12,14 @@ public class DeptInfoTreeDTO {
 	private String high_dept_head_duty;
 	private String total_dept_count;
 	private String total_high_dept_count;
+	private String dept_depth;
 	
+	public String getDept_depth() {
+		return dept_depth;
+	}
+	public void setDept_depth(String dept_depth) {
+		this.dept_depth = dept_depth;
+	}
 	public String getDept_high() {
 		return dept_high;
 	}
