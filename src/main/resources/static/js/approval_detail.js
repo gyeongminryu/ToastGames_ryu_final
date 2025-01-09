@@ -1,5 +1,11 @@
+var editor1 = new RichTextEditor("#div_editor", configViewNone);
+
+
 window.onload = function initialize(){
-    approval_content_none_edit();
+
+    //approval_content_none_edit();
+    //doc_content 가져오기
+    approval_get_doc_content();
 }
 
 //contenteditable = false 처리
@@ -23,4 +29,11 @@ function approval_content_none_edit(){
         item.setAttribute("contenteditable","false");
         //$('td').attr("contenteditable","true");
     });
+}
+
+function approval_get_doc_content(){
+    //리치텍스트에 doc_idx의 html코드 가져와서 뿌리기
+
+    document.getElementById('div_editor_copy').setHTMLCode(doc_content);
+    setHtmlCode();
 }

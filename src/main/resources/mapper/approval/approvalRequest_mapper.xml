@@ -63,6 +63,25 @@
         WHERE duty_idx =2;
     </select>
 
+
+    <!--결재자를 g_line_order에 지정해서 넣었을 경우, empl_idx, position_idx 있는지 보고 가져오기-->
+    <select id="count_appr_selected" resultType="int">
+        SELECT COUNT(empl_idx) FROM appointment a
+             join employee e on a.appo_idx = e.appolast_idx
+        WHERE a.dept_idx = #{approval_dept_idx} AND a.duty_idx = #{duty_idx};
+    </select>
+
+    <select id="get_appr_selected_info" resultType="Map">
+        SELECT empl_idx,position_idx FROM appointment a
+             join employee e on a.appo_idx = e.appolast_idx
+        WHERE a.dept_idx = #{approval_dept_idx} AND a.duty_idx = #{duty_idx} order by a.appo_idx DESC LIMIT 1;
+    </select>
+
+    <!--결재선 아무도 없을 경우 알림 띄우기 위함-->
+    <select id="appr_line_exists" resultType="int">
+        SELECT COUNT(*) FROM approval_line WHERE doc_idx = #{doc_idx}
+    </select>
+
     <!--결재 라인 최초 저장-->
     <insert id="save_approval_line_initial" parameterType="Map">
         INSERT INTO approval_line (doc_idx,line_order,dept_idx,duty_idx,empl_idx,position_idx)
@@ -127,7 +146,6 @@
         <if test="doc_subject != ''">doc_subject = #{doc_subject},</if>
         <if test="doc_content_sub!= ''"> doc_content_sub = #{doc_content_sub},</if>
         <if test="doc_content!= ''">doc_content = #{doc_content},</if>
-        <if test="doc_write_date!= ''">doc_write_date=#{doc_write_date},</if>
         <if test="doc_write_date!= ''">doc_update_date = #{doc_write_date}</if>
         </set>
         WHERE doc_idx = #{doc_idx}
@@ -259,8 +277,11 @@
     <!--인사 발령되었는지 확인-->
     <!--empl_idx의 사원의 정보 알아내기-->
     <select id="get_empl_info" resultType="Map">
-        SELECT e.empl_idx,a.dept_idx,a.position_idx,a.dept_idx,a.duty_idx from employee e
-        join appointment a on e.appolast_idx = a.appo_idx
+        SELECT e.empl_idx,e.empl_name, a.dept_idx,a.position_idx, dp.dept_name ,p.position_name,d.duty_idx,d.duty_name from employee e
+            join appointment a on e.appolast_idx = a.appo_idx
+            join position_ p on a.position_idx = p.position_idx
+            join department dp on a.dept_idx = dp.dept_idx
+            join duty d on d.duty_idx = a.duty_idx
         WHERE e.empl_idx = #{empl_idx}
     </select>
 

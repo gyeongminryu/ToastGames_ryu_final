@@ -146,8 +146,6 @@ public class EmployeeAddController {
 
         */
 
-
-
         colname.put("개인 이메일", "empl_per_email");
         colname.put("개인 전화번호", "empl_per_phone");
         colname.put("주소", "empl_addr");
