@@ -142,14 +142,26 @@ public class DepartmentService {
 		List<DeptHistoryDTO> dept_his =	departmentDAO.getdeptheadhistory(dept_idx);
 		
 		for (DeptHistoryDTO deptHistoryDTO : dept_his) {
+			
+			if (deptHistoryDTO == null) {
+		        continue; // deptHistoryDTO가 null이면 다음 항목으로 건너뜀
+		    }
+			
 			String head_idx =deptHistoryDTO.getDept_head_idx();
+			
+			if (head_idx == null) {
+		        deptHistoryDTO.setEmpl_name("정보 없음");
+		        deptHistoryDTO.setPosition_name("정보 없음");
+		        deptHistoryDTO.setDuty_name("정보 없음");
+		        continue; // head_idx가 null이면 기본값 설정 후 다음 항목으로 건너뜀
+		    }
 			
 			// 직급 직책 가져오기
 			AppointmentDTO appo_info =	employeeDAO.employeeAppolast(head_idx);
 			EmployeeDTO empl_info =	employeeDAO.employeeDetail(head_idx);
-			String duty_name =	appo_info.getDuty_name();
-			String posi_name =	appo_info.getPosition_name();
-			String empl_name =	empl_info.getEmpl_name();
+			String duty_name = (appo_info != null) ? appo_info.getDuty_name() : "정보 없음";
+			String posi_name = (appo_info != null) ? appo_info.getPosition_name() : "정보 없음";
+			String empl_name = (empl_info != null) ? empl_info.getEmpl_name() : "정보 없음";
 			
 			deptHistoryDTO.setEmpl_name(empl_name);
 			deptHistoryDTO.setPosition_name(posi_name);
@@ -485,6 +497,21 @@ public class DepartmentService {
 		    }
 
 		    return deptMap;
+		}
+
+		public List<EmployeeDetailDTO> getresignDeptMembers(String dept_idx) {
+			// TODO Auto-generated method stub
+			return departmentDAO.getresignDeptMembers(dept_idx);
+		}
+
+		public List<DeptDetailInfoDTO> searchgetDeptlist(String category, String keyword) {
+			
+			return departmentDAO.searchgetDeptlist(category,keyword);
+		}
+
+		public List<DepartmentDTO> getdeptHighdept() {
+			
+			return departmentDAO.getdeptHighdept();
 		}
 
 

@@ -81,6 +81,12 @@ public interface DepartmentDAO {
 
 	List<DeptDetailInfoDTO> getbasicdeptinfolist();
 
+	List<EmployeeDetailDTO> getresignDeptMembers(String dept_idx);
+
+	List<DeptDetailInfoDTO> searchgetDeptlist(String category, String keyword);
+
+	List<DepartmentDTO> getdeptHighdept();
+
 	
 
 	

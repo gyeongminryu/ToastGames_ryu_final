@@ -8,7 +8,8 @@
             <h1 class="tst_modal_title">조직 정보 수정하기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_update')"></i>
         </div>
-        <form>
+        <form action="./organization_update.do" method="POST" id="organization-update-form">
+        <input type="hidden" name="dept_idx" value="${deptinfo.dept_idx}" />
             <div class="tst_modal_body">
                 <ul class="list_no_desc list_block">
                     <li>
@@ -17,17 +18,36 @@
                     </li>
                     <li>
                         <label class="form_label">직무</label>
-                        <textarea rows="5" name="dept_duty" value="${deptinfo.dept_duty}" maxlength="1000" placeholder="담당 직무를 입력하세요"></textarea>
+                        <textarea rows="5" name="dept_duty" maxlength="1000" placeholder="담당 직무를 입력하세요">${deptinfo.dept_duty}</textarea>
                     </li>
                     <li>
                         <p class="min font_subtle">상위 조직</p>
                         <div>
-                            <select name="high_dept" id="high_dept">
-                                <c:if test="${deptinfo.dept_high != null}">
-						            <option selected value="${deptinfo.dept_high}">${highdeptinfo.dept_name}</option>
-						        </c:if>
-                                <option value="{조직 idx}">{조직명}</option>
-                            </select>
+                            <c:choose>
+					            <c:when test="${deptinfo.dept_depth == 3}">
+					                <select name="dept_high" id="high_dept">
+					                    <c:if test="${deptinfo.dept_high != null}">
+					                        <option selected value="${deptinfo.dept_high}">${highdeptinfo.dept_name}</option>
+					                    </c:if> 
+					                    <c:forEach var="dept" items="${deptList}">
+								            <!-- 선택된 상위 부서와 중복되지 않는 항목만 추가 -->
+								            <c:if test="${dept.dept_idx != deptinfo.dept_high}">
+								                <option value="${dept.dept_idx}">${dept.dept_name}</option>
+								            </c:if>
+								        </c:forEach>
+					                </select>
+					            </c:when>       
+					            <c:when test="${deptinfo.dept_depth == 2}">
+					                <select name="dept_high" id="high_dept" disabled>
+					                    <c:if test="${deptinfo.dept_high != null}">
+					                        <option selected value="${deptinfo.dept_high}">${highdeptinfo.dept_name}</option>
+					                    </c:if>
+					                </select>
+					            </c:when>          
+					            <c:otherwise>
+					                <p>없음</p>
+					            </c:otherwise>
+					        </c:choose>
                         </div>
                     </li>
                     <li>
@@ -53,3 +73,16 @@
 <!-- //조직 추가하기 -->
 
 <script src="resources/js/module_modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('organization-update-form');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault(); // 기본 제출 동작 막기
+
+        // 정상적인 경우 폼 제출
+        form.submit();
+    });
+});
+</script>
+

@@ -68,7 +68,7 @@ LEFT JOIN
 LEFT JOIN 
     duty du2 ON d2.dept_idx = du2.duty_idx
     where
-    d1.dept_idx >= 1 
+    d1.dept_idx >= 2 
 </select>
 
 <select id="getDeptMemberCounts" resultType="java.util.HashMap">
@@ -277,7 +277,7 @@ SELECT
 </update>
 
 <select id="gethighdeptlist" resultType="com.toast.management.dto.DepartmentDTO">
-	select * from department where dept_depth = 2 and dept_high is not null
+	select * from department where dept_depth = 2
 </select>
 
 <select id="getlowdeptlist" resultType="com.toast.management.dto.DepartmentDTO">
@@ -419,8 +419,8 @@ e.empl_idx,
 	 left join appointment a on a.appo_idx = e.appolast_idx
 	 left join duty du on du.duty_idx = a.duty_idx
 	 left join position_ p on p.position_idx = a.position_idx
-	  where  d.dept_depth = 1
-    OR d.dept_depth IS NULL
+	  where  (d.dept_depth = 1 AND d.dept_idx >= 2)
+    OR (d.dept_depth IS NULL AND d.dept_idx >= 2)
 </select>
 
 
@@ -462,6 +462,46 @@ LEFT join department d on d.dept_idx = a.dept_idx
 LEFT join duty du on du.duty_idx = a.duty_idx
 LEFT join position_ p on p.position_idx = a.position_idx
 	where d.dept_idx = #{param1} and e.statement_idx = 1 and a.transfer_date is null
+</select>
+
+<select id="getresignDeptMembers" resultType="com.toast.management.dto.EmployeeDetailDTO">
+	select 
+	 e.empl_idx,
+	 e.empl_name,
+	 e.empl_id,
+	 e.empl_pw,
+	 e.empl_gender,
+	 e.empl_birth,
+	  e.empl_ssn1,
+	  e.empl_ssn2,
+	  e.bank_idx,
+	  e.empl_account,
+	  e.empl_cmp_email,
+	  e.empl_cmp_phone,
+	  e.empl_per_email,
+	  e.empl_per_phone,
+	  e.empl_addr,
+	  e.statement_idx,
+	  e.empl_join_date,
+	  e.empl_resig_date,
+	  e.empl_job,
+	  e.empl_stamp,
+	  e.empl_profile,
+	  e.empl_changepw,
+	  e.file_key,
+	  e.appolast_idx,
+	  d.dept_idx,
+	  d.dept_name,
+	 du.duty_idx,
+	  du.duty_name,
+	  p.position_idx,
+	  p.position_name
+from employee e
+LEFT join appointment a on a.appo_idx = e.appolast_idx
+LEFT join department d on d.dept_idx = a.dept_idx
+LEFT join duty du on du.duty_idx = a.duty_idx
+LEFT join position_ p on p.position_idx = a.position_idx
+	where d.dept_idx = #{param1} and e.statement_idx = 3
 </select>
 
 
@@ -614,9 +654,62 @@ WHERE
 
 </select>
 
+<select id="searchgetDeptlist" resultType="com.toast.management.dto.DeptDetailInfoDTO">
+select
+d.dept_idx,
+d.dept_name,
+d.dept_head_idx,
+ d.dept_duty,
+ d.dept_addr,
+ d.dept_high,
+ d.dept_state,
+d.dept_depth,
+p.position_name,
+ du.duty_name,
+ p.position_idx,
+	 du.duty_idx,
+e.empl_idx,
+ e.empl_name,
+	  e.empl_id,
+	  e.empl_pw,
+	  e.empl_gender,
+	 e.empl_birth,
+	  e.empl_ssn1,
+	e.empl_ssn2,
+	  e.bank_idx,
+	  e.empl_account,
+	  e.empl_cmp_email,
+	  e.empl_cmp_phone,
+	  e.empl_per_email,
+	  e.empl_per_phone,
+	  e.empl_addr,
+	  e.statement_idx,
+	  e.empl_join_date,
+	  e.empl_resig_date,
+	  e.empl_job,
+	  e.empl_stamp,
+	  e.empl_profile,
+	  e.empl_changepw,
+	  e.file_key,
+	  e.appolast_idx
+	  from department d
+	 left join employee e on e.empl_idx = d.dept_head_idx
+	 left join appointment a on a.appo_idx = e.appolast_idx
+	 left join duty du on du.duty_idx = a.duty_idx
+	 left join position_ p on p.position_idx = a.position_idx
+	  where  d.dept_idx >= 2
+    <if test="param1 != null and param2 != null and param1 != '' and param2 != ''">
+            AND (
+                (#{param1} = 'head_name' AND e.empl_name LIKE CONCAT('%', #{param2}, '%'))
+                OR (#{param1} = 'empl_id' AND e.empl_id LIKE CONCAT('%', #{param2}, '%'))
+                OR (#{param1} = 'dept_name' AND d.dept_name LIKE CONCAT('%', #{param2}, '%'))
+            )
+        </if>
+</select>
 
-
-
+<select id="getdeptHighdept" resultType="com.toast.management.dto.DepartmentDTO">
+select * from department where dept_depth = 2
+</select>
 
 
 
