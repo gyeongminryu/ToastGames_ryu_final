@@ -23,11 +23,27 @@ public class DocumentService {
 	}
 
 	// 문서 목록
-	public Map<String, Object> list(int page, int cnt, int dept_idx, String opt, String keyword) {
+	public int findPresident() {
+
+		return documentDAO.findPresident();
+	}
+
+	public Map<String, Object> depList(int dept_depth, int dept_high) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("list", documentDAO.depList(dept_depth, dept_high));
+
+		return result;
+	}
+
+	public Map<String, Object> list(int page, int cnt, int dept_idx, String opt, String keyword, String dept1, String dept2, String accessible_filtering) {
+		if (accessible_filtering.equals("true")) {
+			dept1 = String.valueOf(dept_idx);
+		}
+
 		int limit = cnt;
 		int offset = (page - 1) * cnt;
-		int totalPages = documentDAO.allCount(cnt, opt, keyword);
-		int totalIdx = documentDAO.countIdx(opt, keyword);
+		int totalPages = documentDAO.allCount(cnt, opt, keyword, dept1, dept2);
+		int totalIdx = documentDAO.countIdx(opt, keyword, dept1, dept2);
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("totalPages", totalPages);
@@ -36,8 +52,8 @@ public class DocumentService {
 		result.put("offset", offset);
 
 		// 열람 권한 확인하기
-		List<DocumentDTO> list = documentDAO.list(limit, offset, opt, keyword);
 		List<Integer> dept = documentDAO.deptList(dept_idx); // 하위 부서 목록
+		List<DocumentDTO> list = documentDAO.list(limit, offset, opt, keyword, dept1, dept2, dept);
 		List<Integer> line = new ArrayList<Integer>();
 
 		for (DocumentDTO dto : list) {
@@ -109,5 +125,4 @@ public class DocumentService {
 
 		return result;
 	}
-
 }

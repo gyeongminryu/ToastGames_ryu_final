@@ -37,84 +37,7 @@
                                 <col style="width: 20px;" />
                                 <col style="width: auto;" />
                             </colgroup>
-                            <tbody class="tst_pointer">
-
-                            <!-- 모든 문서 조회 (필터링 초기화) -->
-                            <tr>
-                                <td></td>
-                                <th class="td_no_padding">
-                                    <span onclick="location.href='/document_list'">전체 보기</span>
-                                </th>
-                            </tr>
-                            <!-- //모든 문서 조회 (필터링 초기화) -->
-
-                            <!-- 부서 목록 (필터링) -->
-                            <tr>
-                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
-                                <th class="td_no_padding">
-                                    <span onclick="location.href='/document_list?'">{부서명}</span>
-                                </th>
-                            </tr>
-                            <tr class="disp_hide">
-                                <td colspan="2" class="td_no_padding">
-                                    <table class="tst_table tst_table_in_table table_align_left">
-                                        <colgroup>
-                                            <col style="width: 23px;" />
-                                            <col style="width: auto;" />
-                                        </colgroup>
-
-                                        <!-- 팀 목록 (필터링) -->
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/document_list?dept_idx='">{팀명}</span></td>
-                                        </tr>
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/document_list?dept_idx='">{팀명}</span></td>
-                                        </tr>
-                                        <!-- //팀 목록 (필터링) -->
-
-                                    </table>
-                                </td>
-                            </tr>
-                            <!-- //부서 목록 (필터링) -->
-
-                            <!-- 부서 목록 > 선택한 항목 (필터링) -->
-                            <tr class="td_bg_medium">
-                                <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, '부서번호')"></i></td>
-                                <th class="td_no_padding">
-                                    <span onclick="location.href='/board_list?'">{분류명}</span>
-                                </th>
-                            </tr>
-
-                            <tr class="disp_hide">
-                                <td colspan="2" class="td_no_padding">
-                                    <table class="tst_table tst_table_in_table table_align_left">
-                                        <colgroup>
-                                            <col style="width: 23px;" />
-                                            <col style="width: auto;" />
-                                        </colgroup>
-
-                                        <!-- 팀 목록 (필터링) -->
-                                        <!-- 팀 > 선택한 항목 (필터링) -->
-                                        <tr class="td_bg_medium">
-                                            <th></th>
-                                            <td><span onclick="location.href='/board_list?'">{팀명}</span></td>
-                                        </tr>
-                                        <!-- //팀 > 선택한 항목 (필터링) -->
-
-                                        <tr class="font_subtle">
-                                            <th></th>
-                                            <td><span onclick="location.href='/board_list?'">{팀명}</span></td>
-                                        </tr>
-                                        <!-- //팀 목록 (필터링) -->
-
-                                    </table>
-                                </td>
-                            </tr>
-                            <!-- //부서 > 선택한 항목 (필터링) -->
-
-                            </tbody>
+                            <tbody class="dept_list_high tst_pointer"></tbody>
                         </table>
                     </div>
 
@@ -131,10 +54,8 @@
                                                 <option value="doc_subject">문서명</option>
                                                 <option value="doc_content">문서 내용</option>
                                                 <option value="form_subject">문서 형식</option>
-                                                <option value="empl_name_0">작성자</option>
-                                                <option value="empl_name_1">1차 결재자</option>
-                                                <option value="empl_name_2">2차 결재자</option>
-                                                <option value="empl_name_3">3차 결재자</option>
+                                                <option value="writer">작성자</option>
+                                                <option value="approval">결재자</option>
                                             </select>
                                         </div>
                                         <div class="tst_search_input">
@@ -143,7 +64,7 @@
                                         <div class="tst_search_icon">
                                             <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
                                         </div>
-                                        <div class="tst_search_icon">
+                                        <div class="tst_search_icon disp_hide">
                                             <button type="button" onclick="location.href='/document_list.go'" class="btn_min btn_subtle" style="margin-left: 10px;">초기화</button>
                                         </div>
                                     </div>

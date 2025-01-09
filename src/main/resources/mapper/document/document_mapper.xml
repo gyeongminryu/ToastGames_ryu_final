@@ -4,16 +4,77 @@
 <mapper namespace="com.toast.document.dao.DocumentDAO">
 
     <!-- 문서 목록 -->
-    <select id="allCount" resultType="int">
-        SELECT CEIL(COUNT(doc_idx) / #{param1}) AS result FROM (SELECT doc_idx FROM approval GROUP BY doc_idx HAVING AVG(appr_state) = 1) AS subquery
+    <select id="findPresident" resultType="int">
+        SELECT dept_idx FROM department WHERE dept_state = 1 AND dept_depth = 1 ORDER BY dept_idx DESC LIMIT 1
+    </select>
 
+    <select id="depList" resultType="com.toast.document.dto.DocumentDeptDTO">
+        SELECT dept_idx, dept_name, dept_high, dept_depth FROM department WHERE dept_depth = #{param1} AND dept_high = #{param2} AND dept_state = 1
+    </select>
+
+    <select id="allCount" resultType="int">
+        SELECT CEIL(COUNT(doc_idx) / #{param1}) AS result FROM (SELECT doc_idx FROM approval a
+        <where>
+            <if test="param3 != null and !param3.equals('') and param2.equals('doc_subject')">
+                (SELECT d.doc_subject FROM document d WHERE d.doc_idx = a.doc_idx) LIKE CONCAT('%', #{param3}, '%')
+            </if>
+            <if test="param3 != null and !param3.equals('') and param2.equals('doc_content')">
+                (SELECT d.doc_content FROM document d WHERE d.doc_idx = a.doc_idx) LIKE CONCAT('%', #{param3}, '%')
+            </if>
+            <if test="param3 != null and !param3.equals('') and param2.equals('form_subject')">
+                (SELECT f.form_subject FROM form f WHERE f.form_idx = a.form_idx) LIKE CONCAT('%', #{param3}, '%')
+            </if>
+            <if test="param3 != null and !param3.equals('') and param2.equals('writer')">
+                (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) LIKE CONCAT('%', #{param3}, '%')
+            </if>
+            <if test="param3 != null and !param3.equals('') and param2.equals('approval')">
+                (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) LIKE CONCAT('%', #{param3}, '%')
+                OR (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) LIKE CONCAT('%', #{param3}, '%')
+                OR (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) LIKE CONCAT('%', #{param3}, '%')
+            </if>
+
+            <if test="param5 != null and !param5.equals('')">
+                (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) = #{param5}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) = #{param5}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) = #{param5}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) = #{param5}
+            </if>
+        </where>
+        GROUP BY doc_idx HAVING AVG(appr_state) = 1) AS subquery
     </select>
 
     <select id="countIdx" resultType="int">
-        SELECT COUNT(doc_idx) AS result FROM (SELECT doc_idx FROM approval GROUP BY doc_idx HAVING AVG(appr_state) = 1) AS subquery
+        SELECT COUNT(doc_idx) AS result FROM (SELECT doc_idx FROM approval a
+        <where>
+            <if test="param2 != null and !param2.equals('') and param1.equals('doc_subject')">
+                (SELECT d.doc_subject FROM document d WHERE d.doc_idx = a.doc_idx) LIKE CONCAT('%', #{param2}, '%')
+            </if>
+            <if test="param2 != null and !param2.equals('') and param1.equals('doc_content')">
+                (SELECT d.doc_content FROM document d WHERE d.doc_idx = a.doc_idx) LIKE CONCAT('%', #{param2}, '%')
+            </if>
+            <if test="param2 != null and !param2.equals('') and param1.equals('form_subject')">
+                (SELECT f.form_subject FROM form f WHERE f.form_idx = a.form_idx) LIKE CONCAT('%', #{param2}, '%')
+            </if>
+            <if test="param2 != null and !param2.equals('') and param1.equals('writer')">
+                (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) LIKE CONCAT('%', #{param2}, '%')
+            </if>
+            <if test="param2 != null and !param2.equals('') and param1.equals('approval')">
+                (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) LIKE CONCAT('%', #{param2}, '%')
+                OR (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) LIKE CONCAT('%', #{param2}, '%')
+                OR (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) LIKE CONCAT('%', #{param2}, '%')
+            </if>
+
+            <if test="param4 != null and !param4.equals('')">
+                (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) = #{param4}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) = #{param4}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) = #{param4}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) = #{param4}
+            </if>
+        </where>
+        GROUP BY doc_idx HAVING AVG(appr_state) = 1) AS subquery
     </select>
 
-    <select id="list" resultType="com.toast.document.dto.DocumentDTO">
+    <select id="list" resultType="com.toast.document.dto.DocumentDTO" parameterType="list">
         SELECT a.doc_idx,
             (SELECT d.doc_subject FROM document d WHERE d.doc_idx = a.doc_idx) as 'doc_subject',
             (SELECT d.doc_content FROM document d WHERE d.doc_idx = a.doc_idx) as 'doc_content',
@@ -53,17 +114,35 @@
             <if test="param4 != null and !param4.equals('') and param3.equals('form_subject')">
                 (SELECT f.form_subject FROM form f WHERE f.form_idx = a.form_idx) LIKE CONCAT('%', #{param4}, '%')
             </if>
-            <if test="param4 != null and !param4.equals('') and param3.equals('empl_name_0')">
+            <if test="param4 != null and !param4.equals('') and param3.equals('writer')">
                 (SELECT e.empl_name FROM employee e WHERE e.empl_idx = a.appr_sender_idx) LIKE CONCAT('%', #{param4}, '%')
             </if>
-            <if test="param4 != null and !param4.equals('') and param3.equals('empl_name_1')">
+            <if test="param4 != null and !param4.equals('') and param3.equals('approval')">
                 (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) LIKE CONCAT('%', #{param4}, '%')
+                OR (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) LIKE CONCAT('%', #{param4}, '%')
+                OR (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) LIKE CONCAT('%', #{param4}, '%')
             </if>
-            <if test="param4 != null and !param4.equals('') and param3.equals('empl_name_2')">
-                (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) LIKE CONCAT('%', #{param4}, '%')
+
+            <if test="param5 != null and !param5.equals('')">
+                (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) IN
+                <foreach collection="dept" item="dept" open="(" separator=", " close=")">#{dept}</foreach>
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) IN
+                <foreach collection="dept" item="dept" open="(" separator=", " close=")">#{dept}</foreach>
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) IN
+                <foreach collection="dept" item="dept" open="(" separator=", " close=")">#{dept}</foreach>
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) IN
+                <foreach collection="dept" item="dept" open="(" separator=", " close=")">#{dept}</foreach>
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) = #{param5}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) = #{param5}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) = #{param5}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) = #{param5}
             </if>
-            <if test="param4 != null and !param4.equals('') and param3.equals('empl_name_3')">
-                (SELECT (SELECT e.empl_name FROM employee e WHERE e.empl_idx = l.empl_idx) FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) LIKE CONCAT('%', #{param4}, '%')
+
+            <if test="param6 != null and !param6.equals('')">
+                (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 0) = #{param6}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 1) = #{param6}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 2) = #{param6}
+                OR (SELECT l.dept_idx FROM approval_line l WHERE l.doc_idx = a.doc_idx AND l.line_order = 3) = #{param6}
             </if>
         </where>
         GROUP BY a.doc_idx HAVING AVG(a.appr_state) = 1 ORDER BY a.doc_idx DESC LIMIT #{param1} OFFSET #{param2}

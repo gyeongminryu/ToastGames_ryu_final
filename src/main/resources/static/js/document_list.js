@@ -14,18 +14,22 @@ function hide_team_list(elem, no){
 }
 
 // 열람 가능한 문서만 볼 수 있도록 필터링하는 기능 토글
-var accessible_filtering;
+var accessible_filtering = false;
 
 function accessible_filtering_on(elem) {
+    $('#pagination').twbsPagination('destroy');
     elem.classList.add("disp_hide");
     elem.nextElementSibling.classList.remove("disp_hide");
     accessible_filtering = true;
+    pageShow(showPage);
 }
 
 function accessible_filtering_off(elem) {
+    $('#pagination').twbsPagination('destroy');
     elem.classList.add("disp_hide");
     elem.previousElementSibling.classList.remove("disp_hide");
     accessible_filtering = false;
+    pageShow(showPage);
 }
 
 // 검색 옵션 및 검색어, 부서 번호 가져오기
@@ -73,6 +77,118 @@ function fillSearchForm(opt, keyword) {
     document.getElementsByName('keyword')[0].value = keyword;
 }
 
+// 부서 목록 출력하기
+printDepartment(2, 0);
+
+function printDepartment(depth, high) {
+    $.ajax({
+        type: 'post',
+        url: 'document_list_call_dept.ajax',
+        data: {
+            'dept_depth': depth,
+            'dept_high': high
+        },
+        dataType: 'json',
+        success: function(data) {
+            // 목록 출력
+            executeFunctions(data.list);
+            //console.log(data.list);
+        },
+        error: function(e) {
+            //console.log(e);
+        }
+    });
+}
+
+// 비동기 문제 해결
+async function executeFunctions(list) {
+    await printDeptList(list);
+    callTeamList(list);
+}
+
+// 부서 목록 출력
+async function printDeptList(list) {
+    //console.log(list);
+    let tags = '';
+
+    tags += '<tr><td></td><th class="td_no_padding">';
+    tags += '<span onClick="location.href=\'/document_list\'">전체 보기</span>';
+    tags += '</th></tr>';
+
+    for (let i = 0; i < list.length; i++) {
+        //console.log(dept1);
+        //console.log(list[i].dept_idx);
+        if (dept1 == list[i].dept_idx) {
+            tags += '<tr class="td_bg_medium">';
+        } else {
+            tags += '<tr>';
+        }
+        tags += '<td><i class="bi bi-caret-right-fill" onClick="show_team_list(this, ' + list[i].dept_idx + ')"></i></td>';
+        tags += '<th class="td_no_padding"><span onClick="location.href=\'/document_list?dept1=' + list[i].dept_idx + '\'">';
+        tags += list[i].dept_name + '</span>';
+        tags += '</th></tr>';
+        tags += '<tr id="dept_list_' + list[i].dept_idx + '" class="disp_hide"></tr>';
+        printTeam(3, list[i].dept_idx);
+    }
+    //console.log(tags);
+
+    //console.log(document.getElementsByClassName('dept_list_high')[0]);
+    document.getElementsByClassName('dept_list_high')[0].innerHTML = tags;
+}
+
+// 하위 부서(팀) 목록 출력
+async function callTeamList(list) {
+    for (let i = 0; i < list.length; i++) {
+        printTeam(3, list[i].dept_idx);
+    }
+}
+
+function printTeam(depth, high) {
+    $.ajax({
+        type: 'post',
+        url: 'document_list_call_dept.ajax',
+        data: {
+            'dept_depth': depth,
+            'dept_high': high
+        },
+        dataType: 'json',
+        success: function(data) {
+            // 목록 출력
+            printTeamList(data.list, high);
+            //console.log(data.list);
+        },
+        error: function(e) {
+            //console.log(e);
+        }
+    });
+}
+
+function printTeamList(list, high) {
+    //console.log(list);
+    let tags = '';
+
+    tags += '<td colspan="2" class="td_no_padding">';
+    tags += '<table class="tst_table tst_table_in_table table_align_left">';
+    tags += '<colgroup><col style="width: 23px;" /><col style="width: auto;" /></colgroup>';
+
+    for (let i = 0; i < list.length; i++) {
+        if (dept2 == list[i].dept_idx) {
+            tags += '<tr id="dept_list_' + list[i].dept_idx + '" class="font_subtle td_bg_medium">';
+            document.getElementById('dept_list_' + high).classList.remove("disp_hide");
+        } else {
+            tags += '<tr id="dept_list_' + list[i].dept_idx + '" class="font_subtle">';
+        }
+        tags += '<td></td>';
+        tags += '<td><span onClick="location.href=\'/document_list?dept2=' + list[i].dept_idx + '\'">';
+        tags += list[i].dept_name + '</span>';
+        tags += '</td></tr>';
+    }
+    //console.log(tags);
+
+    //console.log(document.getElementById('dept_list_' + high));
+    document.getElementById('dept_list_' + high).innerHTML = tags;
+}
+
 // 목록 출력하기
 var showPage = 1;
 var cnt = 15;
@@ -96,7 +212,7 @@ function pageShow(page) {
         dataType: 'json',
         success: function(data) {
             // 목록 출력
-            listPrint(data.list, data.totalIdx, data.currentPage);
+            printList(data.list, data.totalIdx, data.currentPage);
             //console.log(data.list);
 
             // 페이지네이션 출력
@@ -115,7 +231,7 @@ function pageShow(page) {
     });
 }
 
-function listPrint(list, totalIdx, currentPage) {
+function printList(list, totalIdx, currentPage) {
     //console.log(list);
     let tags = '';
 

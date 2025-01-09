@@ -29,7 +29,7 @@ public class DocumentController {
 	}
 
 	@PostMapping(value = "/document_list.ajax")
-	public Map<String, Object> document_list(HttpSession session, String page, String cnt, String opt, String keyword) {
+	public Map<String, Object> document_list(HttpSession session, String page, String cnt, String opt, String keyword, String dept1, String dept2, String accessible_filtering) {
 		session.setAttribute("loginId", "tndls0110");
 		session.setAttribute("empl_idx", "10001");
 		session.setAttribute("dept_idx", "100");
@@ -38,16 +38,22 @@ public class DocumentController {
 
 		int pageInt = Integer.parseInt(page);
 		int cntInt = Integer.parseInt(cnt);
-		//int dept1Int = Integer.parseInt(dept1);
-		//int dept2Int = Integer.parseInt(dept2);
-//		boolean accessibleFiltering = false;
-//		if (accessible_filtering.equals("true")) {
-//			accessibleFiltering = true;
-//		} else if (accessible_filtering.equals("false")) {
-//			accessibleFiltering = false;
-//		}
 
-		return documentService.list(pageInt, cntInt, dept_idx, opt, keyword);
+		return documentService.list(pageInt, cntInt, dept_idx, opt, keyword, dept1, dept2, accessible_filtering);
+	}
+
+	@PostMapping(value = "/document_list_call_dept.ajax")
+	public Map<String, Object> document_list_call_dept(HttpSession session, String dept_depth, String dept_high) {
+		int dept_depthInt = Integer.parseInt(dept_depth);
+		int dept_highInt = Integer.parseInt(dept_high);
+		//logger.info("dept_depth = " + dept_depthInt + ", dept_high = " + dept_highInt);
+
+		if (dept_highInt == 0) {
+			dept_highInt = documentService.findPresident();
+			//logger.info("president_idx = " + dept_highInt);
+		}
+
+		return documentService.depList(dept_depthInt, dept_highInt);
 	}
 
 	// 문서 열람

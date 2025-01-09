@@ -118,7 +118,7 @@ function infoPrint(info) {
 
 function apprPrint(list) {
     //console.log(list);
-    console.log(write_date);
+    //console.log(write_date);
     tags = '';
 
     for (let i = 0; i < list.length; i++) {
@@ -129,7 +129,7 @@ function apprPrint(list) {
 
         if (i === 0) {
             tags += '<h4 class="font_subtle approval_datetime_subtle">' + write_date + '</h4>';
-            console.log(write_date);
+            //console.log(write_date);
         } else {
             tags += '<h4 class="font_subtle approval_datetime_subtle">' + list[i].appr_date + '</h4>';
         }
