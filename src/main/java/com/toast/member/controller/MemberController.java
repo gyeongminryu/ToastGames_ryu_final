@@ -85,7 +85,7 @@ public class MemberController {
 					return "redirect:/approval_writing_list.go"; // !!!나중에 다른 jsp로 수정필요!!!
 				} else { // 3-3. 비밀번호 변경을 안한 경우.
 					model.addAttribute("msg", "보안을 위해 비밀번호를 변경해주세요.");
-					page = "myPageUpdate.go";
+					page = "redirect:/mypage_update.go";
 				}
 			} else { // 4. 아이디는 맞으나, 비밀번호가 틀린 경우.
 				model.addAttribute("pwError", "비밀번호를 확인하세요."); // 비밀번호 오류 메시지 전달

@@ -6,12 +6,13 @@
 	<!-- 게시글 작성할 때, 필요한 개인 정보들을 가져온다. (사원번호, 부서번호) -->
 	<!-- 발령정보에서 가져와야 하는데, 인사 이동이 있을 시 여러개의 값이 있을 수 있다. 가장 최신걸 가져오는 쿼리 필요. -->
 	<select id="memberInfo" parameterType="String" resultType="map">
-		SELECT a.appo_empl_idx, e.file_key
+		SELECT a.appo_empl_idx, e.file_key, a.dept_idx AS board_empl_dept_idx, d2.duty_idx
 		FROM employee e
 		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
+		JOIN department d On a.dept_idx = d.dept_idx
+		JOIN duty d2 ON a.duty_idx = d2.duty_idx 
 		WHERE e.empl_id = #{id}
-		ORDER BY appo_idx
-		DESC
+		ORDER BY appo_idx DESC
 		LIMIT 1
 	</select>
 	
@@ -67,9 +68,8 @@
 	</select>
 
 	<insert id="boardWrite" parameterType="map" useGeneratedKeys="true" keyProperty="board_idx">
-		INSERT INTO
-		board(board_empl_idx, board_type_idx, dept_idx, board_title, board_content, file_key)
-		VALUES(#{appo_empl_idx}, #{board_type_idx}, #{dept_idx}, #{board_title}, #{board_content}, #{file_key})
+		INSERT INTO board(board_empl_idx, board_type_idx, dept_idx, board_title, board_content, file_key, board_empl_dept_idx)
+		VALUES(#{appo_empl_idx}, #{board_type_idx}, #{dept_idx}, #{board_title}, #{board_content}, #{file_key}, #{board_empl_dept_idx})
 	</insert>
 	
 	<insert id="saveBoardNotify">
@@ -226,13 +226,10 @@
 		e.empl_name, e.empl_id, d.dept_name,
 		bt.board_type_name
 		FROM board b
-		JOIN employee e ON b.board_empl_idx =
-		e.empl_idx
-		JOIN department d ON b.dept_idx = d.dept_idx
-		JOIN board_type
-		bt ON b.board_type_idx = bt.board_type_idx
-		WHERE b.board_idx =
-		#{board_idx}
+		JOIN employee e ON b.board_empl_idx = e.empl_idx
+		JOIN department d ON b.board_empl_dept_idx = d.dept_idx
+		JOIN board_type bt ON b.board_type_idx = bt.board_type_idx
+		WHERE b.board_idx = #{board_idx}
 	</select>
 
 	<update id="incrementView" parameterType="int">
@@ -246,12 +243,12 @@
 		SELECT
 		r.reply_idx, r.board_idx, r.reply_empl_idx, r.reply_content,
 		DATE_FORMAT(r.reply_write_date, '%Y-%m-%d %H:%i') AS reply_write_date,
-		r.reply_update_date, e.empl_name, d.dept_name
+		r.reply_update_date, e.empl_name, d.dept_name, d2.duty_name
 		FROM reply r
 		JOIN employee e ON r.reply_empl_idx = e.empl_idx
 		JOIN board b ON r.board_idx = b.board_idx
-		JOIN department d ON b.dept_idx = d.dept_idx
-
+		JOIN department d ON r.reply_empl_dept_idx = d.dept_idx
+		JOIN duty d2 ON r.reply_empl_duty_idx = d2.duty_idx		
 		WHERE r.board_idx = #{board_idx}
 		ORDER BY reply_write_date ASC
 	</select>
@@ -259,21 +256,20 @@
 	<select id="getReReplyList" parameterType="int" resultType="map">
 		SELECT rr.re_reply_idx, rr.reply_idx, rr.re_reply_empl_idx, rr.re_reply_content, 
 		DATE_FORMAT(rr.re_reply_write_date, '%Y-%m-%d%H:%i') AS re_reply_write_date, 
-		rr.re_reply_update_date, e.empl_name, d.dept_name
+		rr.re_reply_update_date, e.empl_name, d.dept_name, d2.duty_name
 		FROM reply_reply rr
 		JOIN employee e ON rr.re_reply_empl_idx = e.empl_idx
 		JOIN reply r ON rr.reply_idx = r.reply_idx
 		JOIN board b ON r.board_idx = b.board_idx
-		JOIN department d ON b.dept_idx = d.dept_idx
+		JOIN department d ON rr.re_reply_empl_dept_idx = d.dept_idx
+		JOIN duty d2 ON rr.re_reply_empl_duty_idx = d2.duty_idx
 		WHERE r.reply_idx = #{reply_idx}
 		ORDER BY re_reply_write_date ASC
 	</select>
 
 	<insert id="writeReply" parameterType="map">
-		INSERT INTO reply
-		(board_idx, reply_empl_idx, reply_content)
-		VALUES (#{board_idx},
-		#{empl_idx}, #{reply})
+		INSERT INTO reply (board_idx, reply_empl_idx, reply_content, reply_empl_dept_idx, reply_empl_duty_idx)
+		VALUES (#{board_idx}, #{empl_idx}, #{reply}, #{dept_idx}, #{duty_idx})
 	</insert>
 	
 	<update id="updateReply">
@@ -283,10 +279,8 @@
 	</update>
 
 	<insert id="writeReReply" parameterType="map">
-		INSERT INTO reply_reply
-		(reply_idx, re_reply_empl_idx, re_reply_content)
-		VALUES (#{reply_idx},
-		#{re_reply_empl_idx}, #{re_reply})
+		INSERT INTO reply_reply (reply_idx, re_reply_empl_idx, re_reply_content, re_reply_empl_dept_idx, re_reply_empl_duty_idx)
+		VALUES (#{reply_idx}, #{re_reply_empl_idx}, #{re_reply}, #{dept_idx}, #{duty_idx})
 	</insert>
 	
 	<update id="updateReReply">
@@ -317,6 +311,14 @@
 		SELECT appo_empl_idx
 		FROM appointment
 		WHERE transfer_date IS NULL
+	</select>
+	
+	<select id="isDeptHR" parameterType="String">
+		SELECT a.dept_idx
+		FROM employee e
+		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
+		WHERE empl_id = #{id}
+		ORDER BY appo_idx DESC LIMIT 1;
 	</select>
 	
 </mapper>
