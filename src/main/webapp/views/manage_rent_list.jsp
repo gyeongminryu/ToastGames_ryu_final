@@ -80,7 +80,7 @@
                             <div class="tst_search_container">
 		                        <!-- 물품 검색 -->
 		                       <div class="tst_search_select">
-		                       		<select id="tst_search_select_state" name="rent_state" onchange="<!-- 물품 상태가 바뀌었을 경우 작동할 함수를 입력하세요 -->" class="btn_secondary">
+		                       		<select id="tst_search_select_state" name="rent_state" class="btn_secondary">
 		                            	<option value="all">대여 상태</option>
 		                                <option value="1">대여 가능</option>
 		                                <option value="2">대여 신청중</option>

@@ -434,7 +434,7 @@
 	
 	<!-- 파일키 가져오기 -->
 	<select id="getProdFileKey" resultType="String">
-		SELECT file_key FROM product_file WHERE prod_idx=#{param1}
+		SELECT file_key FROM product WHERE prod_idx=#{param1}
 	</select>
 	
 	<!-- 물품  첨부파일 가져오기-->
