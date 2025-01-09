@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.toast.management.dto.CompInfo;
 import com.toast.management.dto.DepartmentDTO;
+import com.toast.management.dto.DeptDetailInfoDTO;
 import com.toast.management.dto.DeptDetailMemberDTO;
 import com.toast.management.dto.DeptHistoryDTO;
 import com.toast.management.dto.DeptInfoTreeDTO;
@@ -141,11 +142,13 @@ public class DepartmentController {
 	
 	@PostMapping(value="/organization_update.do")
 	public String organizationUpdateDo(@RequestParam Map<String,String> param) {
-	
+		String dept_idx = param.get("dept_idx");
+		logger.info("param ====== "+param);
+		
 		departmentService.organizationUpdate(param);
 	
 		
-		return "organization_update";
+		return "redirect:/organization_detail.go?dept_idx="+dept_idx;
 	}
 	
 	@GetMapping(value="/organization_list.go")
@@ -179,6 +182,8 @@ public class DepartmentController {
 		// 부서장 히스토리
 		List<DeptHistoryDTO> dept_his = departmentService.getdeptheadhistory(dept_idx);
 		model.addAttribute("depthis",dept_his);
+		List<DepartmentDTO> deptList = departmentService.getdeptHighdept();
+		model.addAttribute("deptList",deptList);
 		/*
 		// 부서 히스토리 정보
 		List<DeptHistoryDTO> dept_his = departmentService.getdeptheadhistory(dept_idx);
@@ -320,11 +325,22 @@ public class DepartmentController {
 			return dept_list;
 		}
 		
+		// 해당 부서의 재직 인원
 		@GetMapping(value="/get_dept_members.ajax")
 		@ResponseBody
 		public List<EmployeeDetailDTO> getDeptMembers(@RequestParam String dept_idx){
 			
 			List<EmployeeDetailDTO> dept_member_list = departmentService.getDeptMembers(dept_idx);
+			
+			return dept_member_list;
+		} 
+		
+		// 해당 부서의 퇴사자 명단
+		@GetMapping(value="/get_resign_dept_members.ajax")
+		@ResponseBody
+		public List<EmployeeDetailDTO> getresignDeptMembers(@RequestParam String dept_idx){
+			
+			List<EmployeeDetailDTO> dept_member_list = departmentService.getresignDeptMembers(dept_idx);
 			
 			return dept_member_list;
 		} 
@@ -342,7 +358,19 @@ public class DepartmentController {
 			return dept_member_list;
 		} 
 		
-		
+		// 부서리스트페이지 검색 결과의 부서 리스트 
+		@GetMapping(value="/search_get_dept_list.ajax")
+		@ResponseBody
+		public List<DeptDetailInfoDTO> searchgetDeptlist(@RequestParam(value ="category", required = false) String category,@RequestParam(value ="keyword", required = false) String keyword ){
+			
+			logger.info("get_dept_search_member.ajax 함수 도착");
+			logger.info("category" +category);
+			logger.info("keyword" +keyword);
+			
+			List<DeptDetailInfoDTO> dept_member_list = departmentService.searchgetDeptlist(category,keyword);
+			
+			return dept_member_list;
+		} 
 		// 프로젝트팀원이 아닌 부서원들 목록
 		@GetMapping(value="/get_dept_team_members.ajax")
 		@ResponseBody

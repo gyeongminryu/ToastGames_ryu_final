@@ -299,9 +299,162 @@ b.bank_name
             bank b ON b.bank_idx = e.bank_idx   
         WHERE 
             e.empl_idx = #{param1}
-            
-
 </select>
 
+<select id="emplAllList" resultType="com.toast.management.dto.EmployeeDetailDTO">
+    SELECT 
+e.empl_idx,
+e.empl_name,
+e.empl_id,
+e.empl_cmp_email,
+e.empl_cmp_phone,
+d.dept_name,
+du.duty_name,
+e.statement_idx,
+s.statement_name,
+e.empl_join_date,
+e.empl_resig_date,
+p.position_name,
+e.empl_pw,
+e.empl_gender,
+e.empl_birth,
+e.empl_ssn1,
+e.empl_ssn2,
+e.bank_idx,
+e.empl_account,
+e.empl_per_email,
+e.empl_per_phone,
+e.empl_addr,
+e.empl_job,
+e.empl_stamp,
+e.empl_profile,
+e.empl_changepw,
+e.file_key,
+e.appolast_idx,
+d.dept_idx,
+du.duty_idx,
+p.position_idx,
+b.bank_name
+        FROM 
+            employee e
+        LEFT JOIN 
+            appointment a ON a.appo_idx = e.appolast_idx
+        LEFT JOIN 
+            department d ON d.dept_idx = a.dept_idx
+        LEFT JOIN 
+            duty du ON du.duty_idx = a.duty_idx
+        LEFT JOIN 
+            position_ p ON p.position_idx = a.position_idx
+        LEFT JOIN 
+            statement s ON s.statement_idx = e.statement_idx
+        LEFT JOIN 
+            bank b ON b.bank_idx = e.bank_idx
+             WHERE 
+            e.statement_idx != 3
+</select>
+
+<select id="emplPreAllList" resultType="com.toast.management.dto.EmployeeDetailDTO">
+    SELECT 
+e.empl_idx,
+e.empl_name,
+e.empl_id,
+e.empl_cmp_email,
+e.empl_cmp_phone,
+d.dept_name,
+du.duty_name,
+e.statement_idx,
+s.statement_name,
+e.empl_join_date,
+e.empl_resig_date,
+p.position_name,
+e.empl_pw,
+e.empl_gender,
+e.empl_birth,
+e.empl_ssn1,
+e.empl_ssn2,
+e.bank_idx,
+e.empl_account,
+e.empl_per_email,
+e.empl_per_phone,
+e.empl_addr,
+e.empl_job,
+e.empl_stamp,
+e.empl_profile,
+e.empl_changepw,
+e.file_key,
+e.appolast_idx,
+d.dept_idx,
+du.duty_idx,
+p.position_idx,
+b.bank_name
+        FROM 
+            employee e
+        LEFT JOIN 
+            appointment a ON a.appo_idx = e.appolast_idx
+        LEFT JOIN 
+            department d ON d.dept_idx = a.dept_idx
+        LEFT JOIN 
+            duty du ON du.duty_idx = a.duty_idx
+        LEFT JOIN 
+            position_ p ON p.position_idx = a.position_idx
+        LEFT JOIN 
+            statement s ON s.statement_idx = e.statement_idx
+        LEFT JOIN 
+            bank b ON b.bank_idx = e.bank_idx
+             WHERE 
+            e.statement_idx = 4
+</select>
+
+<select id="emplresignAllList" resultType="com.toast.management.dto.EmployeeDetailDTO">
+ SELECT 
+e.empl_idx,
+e.empl_name,
+e.empl_id,
+e.empl_cmp_email,
+e.empl_cmp_phone,
+d.dept_name,
+du.duty_name,
+e.statement_idx,
+s.statement_name,
+e.empl_join_date,
+e.empl_resig_date,
+p.position_name,
+e.empl_pw,
+e.empl_gender,
+e.empl_birth,
+e.empl_ssn1,
+e.empl_ssn2,
+e.bank_idx,
+e.empl_account,
+e.empl_per_email,
+e.empl_per_phone,
+e.empl_addr,
+e.empl_job,
+e.empl_stamp,
+e.empl_profile,
+e.empl_changepw,
+e.file_key,
+e.appolast_idx,
+d.dept_idx,
+du.duty_idx,
+p.position_idx,
+b.bank_name
+        FROM 
+            employee e
+        LEFT JOIN 
+            appointment a ON a.appo_idx = e.appolast_idx
+        LEFT JOIN 
+            department d ON d.dept_idx = a.dept_idx
+        LEFT JOIN 
+            duty du ON du.duty_idx = a.duty_idx
+        LEFT JOIN 
+            position_ p ON p.position_idx = a.position_idx
+        LEFT JOIN 
+            statement s ON s.statement_idx = e.statement_idx
+        LEFT JOIN 
+            bank b ON b.bank_idx = e.bank_idx
+             WHERE 
+            e.statement_idx = 3
+</select>
 
 </mapper>

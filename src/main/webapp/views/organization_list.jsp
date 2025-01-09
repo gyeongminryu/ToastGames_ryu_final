@@ -61,11 +61,11 @@
                         <td class="td_align_bottom">
 
                             <!-- 검색 -->
-                            <form>
+                            <form id="dept-search-form" onsubmit="return searchDept(event);">
                                 <div class="tst_search_container">
                                     <div class="tst_search_select">
                                         <select id="tst_search_select_category" name="category">
-                                            <option value="{검색 분류}">검색 분류</option>
+                                            <option value="">검색 분류</option>
                                             <option value="dept_name">부서이름</option>
                                             <option value="head_name">부서장 이름/팀장 이름</option>
                                         </select>
@@ -199,17 +199,17 @@
         chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
 
         var option = {
-            allowHtml: true,
-            size: 'small',
+           allowHtml: true,
+         //   size: 'small',
          //   color: '#ffcc00',
         //    highlightColor: '#ffff00',
          //   selectionColor: '#ff0000',
             allowCollapse: true,
-            animationDuration: 400,
-            nodeContent: 'title',
-            maxDepth: 3,
-            width: '100%',
-            height: '400px'
+        //    animationDuration: 400,
+        //    nodeContent: 'title',
+        //    maxDepth: 3,
+        //    width: '100%',
+        //    height: '400px'
         };
 
         // AJAX를 통해 서버 데이터 가져오기
@@ -238,7 +238,7 @@
  							dept_duty = '대표-'
  						}
                 	data.addRow([
-                		  {v:dept.dept_idx, f:dept.dept_name+'<div>'+dept_duty  +(dept.dept_head_name ? dept.dept_head_name : '공석')+'</div>'+'<div>'+dept.total_dept_count+'</div>'}, // Name
+                		  {v:dept.dept_idx, f:'<p>'+dept.dept_name+'</p>'+'<p class="font_subtle">'+dept_duty  +(dept.dept_head_name ? dept.dept_head_name : '공석')+'</p>'+'<p class="min font_subtle"><i class="bi bi-people-fill"></i>'+dept.total_dept_count+'</p>'}, // Name
                 	    dept.dept_high, // Manager를 완전한 비어있는 div로 대체
                 	    dept.dept_idx // ToolTip
                 	]);
@@ -257,6 +257,7 @@
                         console.log('Selected Name: ', name);
                         console.log('Manager: ', manager);
                         console.log('Tooltip: ', tooltip);
+                        window.location.href = './organization_detail.go?dept_idx=' + tooltip;
                     }
                 });
             },
@@ -371,7 +372,77 @@
             return subDeptRows;
         }
     });    
+	
+    
+    
+   // 검색 기능 검색 부서 가져오기 
+function searchDept(event) {
+    event.preventDefault(); // 폼 기본 동작 막기
 
-   
+    // 검색 카테고리와 키워드 가져오기
+    var category = document.getElementById('tst_search_select_category').value;
+    var keyword = document.querySelector('input[name="keyword"]').value.trim();
+
+    if (!category) {
+        alert('검색 분류를 선택하세요.');
+        return false;
+    }
+
+    if (!keyword) {
+        alert('검색어를 입력하세요.');
+        return false;
+    }
+
+    // AJAX로 검색 요청
+    $.ajax({
+        url: './search_get_dept_list.ajax', // 검색을 처리할 서버 엔드포인트
+        type: 'GET',
+        data: { category: category, keyword: keyword },
+        dataType: 'json',
+        success: function (response) {
+            console.log('검색 결과:', response);
+            searchDeptTable(response); // 검색 결과를 테이블에 렌더링
+        },
+        error: function (xhr, status, error) {
+            console.error('검색 실패:', error);
+            alert('검색 중 오류가 발생했습니다.');
+        }
+    });
+}
+ 
+function searchDeptTable(data) {
+    var tbody = $('#dept_list'); // 테이블의 tbody 선택
+    tbody.empty(); // 기존 데이터를 초기화
+
+    // 데이터가 없는 경우 처리
+    if (!data || data.length === 0) {
+        tbody.append('<tr><td colspan="8">부서 정보가 없습니다.</td></tr>');
+        return;
+    }
+
+    // 부서 데이터 렌더링
+    for (var i = 0; i < data.length; i++) {
+        var subDept = data[i]; // 현재 부서 정보
+
+        // 부서 정보 추가
+        tbody.append(
+            '<tr>' +
+            '<th>' + '-' + '</th>' +
+            '<th class="td_align_left tst_pointer" onclick="location.href=\'/organization_detail.go?dept_idx=' + subDept.dept_idx + '\'">' + subDept.dept_name + '</th>' +
+            '<td class="td_align_left">' +
+            (subDept.dept_head_idx
+                ? '<span onclick="tst_view_profile(\'' + subDept.dept_head_idx + '\')" class="tst_pointer">' + subDept.empl_name + ' (' + subDept.position_name + ')</span>'
+                : '팀장 없음') +
+            '</td>' +
+            '<td>' + (subDept.empl_cmp_phone || '-') + '</td>' +
+            '<td>' + (subDept.empl_cmp_email || '-') + '</td>' +
+            '<td>' + (subDept.total_dept_count || '0') + '명</td>' +
+            '<td class="td_align_left">' + (subDept.dept_duty || '-') + '</td>' +
+            '<td>' + (subDept.dept_addr || '-') + '</td>' +
+            '</tr>'
+        );
+    }
+}
+    
     </script>
 </html>

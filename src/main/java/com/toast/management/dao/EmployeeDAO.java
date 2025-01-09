@@ -57,6 +57,12 @@ public interface EmployeeDAO {
 
 	EmployeeDetailDTO getStaffDetail(String empl_idx);
 
+	List<EmployeeDetailDTO> emplAllList();
+
+	List<EmployeeDetailDTO> emplPreAllList();
+
+	List<EmployeeDetailDTO> emplresignAllList();
+
 	
 
 	

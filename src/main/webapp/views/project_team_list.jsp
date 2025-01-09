@@ -186,6 +186,9 @@
 </body>
 <script src="resources/js/common.js"></script>
 <script>
+
+
+
 function updateInputNameAndParam() {
     const selectBox = document.getElementById("tst_search_select_category");
     const keywordInput = document.getElementById("searchKeyword") || document.getElementById("searchValueInput");
@@ -197,6 +200,23 @@ function updateInputNameAndParam() {
         console.error("Select box or input field not found!");
     }
 }
+
+function teamAllList() {
+	 $.ajax({
+	     url: './empl_resign_all_list.ajax', // 요청 경로
+	     type: 'GET',
+	     dataType: 'json',
+	     success: function(data) {
+	        // renderDeptMembers(data); // 부서원 정보 렌더링
+	         allMembers = data; // 전체 데이터를 저장
+	         setupPagination(allMembers.length); // 페이지네이션 설정
+	         renderCurrentPage(); // 첫 페이지 렌더링
+	     },
+	     error: function(xhr, status, error) {
+	         console.error('부서원 정보 가져오기 실패:', error);
+	     }
+	 });
+	}
 
 //검색 버튼 클릭 시 Ajax 요청
 document.getElementById("searchBtn").addEventListener("click", function () {

@@ -223,5 +223,51 @@ public class EmployeeController {
 		model.addAttribute("empl_info",employee);
 		return "manage_staff_detail";
 	}
+	
+	@GetMapping(value="/manage_employee_list.go")
+	public String emplListGo() {
+		
+		
+		return "manage_employee_list";
+	}
+	
+	// 사원 모든 리스트(퇴사자 제외)
+	@GetMapping(value="/empl_all_list.ajax")
+	@ResponseBody
+	public List<EmployeeDetailDTO> emplAllList() {
+        // 예제 데이터 생성
+        List<EmployeeDetailDTO> employees = new ArrayList<>();
+        employees = employeeService.emplAllList();
 
+        return employees;
+    }
+	
+	//  가발령인 목록 가져오기
+	@GetMapping(value="/empl_pre_all_list.ajax")
+	@ResponseBody
+	public List<EmployeeDetailDTO> emplPreAllList() {
+        // 예제 데이터 생성
+        List<EmployeeDetailDTO> employees = new ArrayList<>();
+        employees = employeeService.emplPreAllList();
+
+        return employees;
+    }
+	
+	@GetMapping(value="/manage_employee_resign_list.go")
+	public String emplresignListGo() {
+		
+		
+		return "manage_employee_resign_list";
+	}
+	
+	// 퇴사자 모든 리스트
+	@GetMapping(value="/empl_resign_all_list.ajax")
+	@ResponseBody
+	public List<EmployeeDetailDTO> emplresignAllList() {
+        // 예제 데이터 생성
+        List<EmployeeDetailDTO> employees = new ArrayList<>();
+        employees = employeeService.emplresignAllList();
+
+        return employees;
+    }
 }
