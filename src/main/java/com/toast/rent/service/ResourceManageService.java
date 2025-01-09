@@ -698,5 +698,167 @@ public class ResourceManageService {
 		return resourceMgDAO.getTeamList();
 	}
 
+	//부서별 사원
+	public List<ResourceManageDTO> getDeptEmpl(int deptIdx) {
+		return resourceMgDAO.getDeptEmpl(deptIdx);
+	}
+
+	
+	//팀별 사원
+	public List<ResourceManageDTO> getTeamEmpl(int teamIdx) {
+		List<ResourceManageDTO> teamEmpl = resourceMgDAO.getTeamEmpl(teamIdx);
+		ResourceManageDTO headerEmpl = resourceMgDAO.getTeamHeadEmpl(teamIdx);
+		teamEmpl.add(headerEmpl);
+		return teamEmpl;
+	}
+
+	//인수자 검색
+	public List<ResourceManageDTO> takeEmplSearch(String option, String keyword) {
+		List<ResourceManageDTO> emplList = new ArrayList<ResourceManageDTO>();
+		if(option.equals("dept_name")) {
+			emplList = resourceMgDAO.takeDeptEmpl(keyword);
+		}else if(option.equals("position_name")) {
+			emplList = resourceMgDAO.takePosiEmpl(keyword);
+		}else {
+			emplList = resourceMgDAO.takeEmpl(keyword);		
+		}
+		return emplList;
+	}
+
+	//인수인계처리
+	@Transactional
+	public int prodTransfer(List<MultipartFile> validFiles, Map<String, Object> map) {
+		ResourceManageDTO dto = new ResourceManageDTO();
+		dto.setDisp_state((int) map.get("disp_state"));
+		dto.setDisp_empl_idx((int) map.get("disp_empl_idx"));
+		dto.setDisp_reason((String) map.get("take_empl_idx"));
+		dto.setProd_idx(Integer.parseInt((String) map.get("prod_idx")));
+		dto.setDisp_date(LocalDateTime.now().withNano(0)); //등록일자
+
+		resourceMgDAO.prodTransfer(dto);  //폐기등록
+		int prod_idx = dto.getProd_idx();
+		
+		logger.info("prod_idx:"+prod_idx);
+		
+		int row = 0;
+		if(prod_idx > 0) {
+			logger.info("여기 들어왔다고");
+			row = dispFileAdd(validFiles, prod_idx);
+		}
+		resourceMgDAO.prodDispUpdate(0,0, prod_idx);
+		
+		return row;
+	}
+
+	
+	//폐기목록 전체보기
+	public Map<String, Object> dispoList(int page, int cnt) {
+		logger.info("현재 페이지:"+page);	
+		logger.info("한 페이지에 보여줄 갯수: "+cnt);
+		
+		int limit = cnt;
+		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+		
+		int totalPages = resourceMgDAO.allDispoCount(cnt);
+		
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("totalPages", totalPages);
+		result.put("currPage", page);
+		List<ResourceManageDTO> list = resourceMgDAO.dispoList(limit,offset);
+		result.put("list", list);
+		return result;
+	}
+
+	
+	//카테고리별 폐기목록
+	public Map<String, Object> dispoFilterList(String category, int page, int cnt) {
+		logger.info("현재 페이지:"+page);	
+		logger.info("한 페이지에 보여줄 갯수: "+cnt);
+		
+		int limit = cnt;
+		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cnt", cnt);
+		map.put("limit", limit);
+		map.put("offset", offset);
+		map.put("category", category);
+		
+		
+		
+		int totalPages = resourceMgDAO.allCateDispoCount(map);
+		
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("totalPages", totalPages);
+		result.put("currPage", page);
+		List<ResourceManageDTO> list = resourceMgDAO.dispoCateList(map);
+		result.put("list", list);
+		return result;
+	}
+
+	//폐기 검색 전체 
+	public Map<String, Object> dispoSearch(int page, int cnt, String option, String keyword) {
+		logger.info("현재 페이지:"+page);	
+		logger.info("한 페이지에 보여줄 갯수: "+cnt);
+		
+		int limit = cnt;
+		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cnt", cnt);
+		map.put("limit", limit);
+		map.put("offset", offset);
+		map.put("option", option);
+		map.put("keyword", keyword);
+		
+		
+		
+		
+		//int totalPages = resourceMgDAO.allCateDispoCount(cnt,option,keyword);
+		int totalPages = resourceMgDAO.allSearchDispoCount(map);
+		
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("totalPages", totalPages);
+		result.put("currPage", page);
+		//List<ResourceManageDTO> list = resourceMgDAO.dispoCateList(option, limit,offset);
+		List<ResourceManageDTO> list = resourceMgDAO.dispoSearchList(map);
+		result.put("list", list);
+		return result;
+	}
+
+	//폐기 검색 카테고리
+	public Map<String, Object> dispoFilterSearch(String category, int page, int cnt, String option, String keyword) {
+		logger.info("현재 페이지:"+page);	
+		logger.info("한 페이지에 보여줄 갯수: "+cnt);
+		
+		int limit = cnt;
+		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cnt", cnt);
+		map.put("limit", limit);
+		map.put("offset", offset);
+		map.put("option", option);
+		map.put("keyword", keyword);
+		map.put("category", category);
+		
+		//int totalPages = resourceMgDAO.allCateDispoCount(cnt, category,option,keyword);
+		int totalPages = resourceMgDAO.allCateSearchDispoCount(map);
+		
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("totalPages", totalPages);
+		result.put("currPage", page);
+		//List<ResourceManageDTO> list = resourceMgDAO.dispoCateList(category, limit,offset,option,keyword);
+		List<ResourceManageDTO> list = resourceMgDAO.dispoCateSearchList(map);
+		result.put("list", list);
+		return result;
+	}
+
+	//폐기 상세보기
+	public Map<String, Object> dispDetail(int prodIdx, Model model) {
+		ResourceManageDTO dispDetail = resourceMgDAO.dispDetail(prodIdx);
+		String fileKey = dispDetail.getFile_key(); //폐기 파일키
+		List<ResourcePhotoDTO> dispFile = resourceMgDAO.dispFiles(fileKey);
+		prodMgFile(prodIdx);
+		return null;
+	}
+
 
 }
