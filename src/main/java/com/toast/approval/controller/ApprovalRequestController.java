@@ -39,7 +39,7 @@ public class ApprovalRequestController {
 
 	//결재 작성하기 페이지로 이동 + 최초 저장 //+ 문서양식만 복사
 	@RequestMapping(value = "/approval_write.go")
-	public String approval_write_go (Model model, String form_idx, String form_content) {
+	public String approval_write_go (Model model, String form_idx) {
 		logger.info("approvalWrite_go 컨트롤러 도착");
 		logger.info("idx:{}", form_idx);
 
@@ -49,13 +49,10 @@ public class ApprovalRequestController {
 
 		logger.info("empl_idx:{}",empl_idx);
 		//작성하기부터는 update로 하기
-		int doc_idx = approvalRequestService.doc_write_initial(Integer.parseInt(form_idx),form_content,empl_idx);
+		int doc_idx = approvalRequestService.doc_write_initial(Integer.parseInt(form_idx),empl_idx,model);
 
 
-		//model.addAttribute("form_content", form_content);
-		model.addAttribute("doc_idx", doc_idx);
-		model.addAttribute("form_idx", form_idx);
-		model.addAttribute("empl_idx", empl_idx);
+
 
 		return "approval_writing_write";
 	}

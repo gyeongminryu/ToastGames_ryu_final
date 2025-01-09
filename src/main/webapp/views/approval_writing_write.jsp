@@ -12,6 +12,16 @@
     <link rel="stylesheet" type="text/css" href="resources/css/approval.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />
 
+
+    <%--rich text editor--%>
+    <link rel="stylesheet" href="resources/richtexteditor/rte_theme_default.css" />
+    <script type="text/javascript" src="resources/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src="resources/richtexteditor/plugins/all_plugins.js"></script>
+    <script type='text/javascript' src="resources/richtexteditor/lang/rte-lang-ko.js"></script>
+    <link rel="stylesheet" href="resources/css/module_rte.css" />
+    <script type="text/javascript" src="resources/js/module_rte.js"></script>
+
+
     <%--폼 양식 css--%>
     <link rel="stylesheet" href="/resources/css/approval_form.css" />
 
@@ -72,14 +82,16 @@
                                 </tr>
                                 <tr>
                                     <th class="td_align_top">보고 내용</th>
-                                    <td>
-                                        <textarea name="content" rows="5" maxlength="1000" placeholder="보고할 내용을 입력하세요"></textarea>
-                                        <input type="hidden" name="doc_content_sub" class ="content"/>
-                                    </td>
+
+                                    <td id="div_editor_content_sub"></td>
+                                        <%--<textarea name="content" rows="5" maxlength="1000" placeholder="보고할 내용을 입력하세요"></textarea>--%>
+                                    <input type="hidden" name="doc_content_sub" class ="content"/>
+
                                 </tr>
                                 <tr>
                                     <th class="td_align_top">문서</th>
-                                    <td id="form_content">{문서 소스}</td>
+                                    <td id="div_editor_content"></td>
+                                    <div id="div_editor_copy" class="disp_hide"></div>
                                     <input type = "hidden" name = "doc_content"/>
 
                                 </tr>
@@ -123,6 +135,11 @@
                                 </thead>
                                 <tbody>
                                 <tr>
+                                    <input type="hidden" name = "empl_line0" id="empl_line0" value="${empl_idx}"/>
+                                    <input type="hidden" name = "dept_line0" id="dept_line0" value=""/>
+                                    <input type="hidden" name = "duty_line0" id="duty_line0" value=""/>
+                                    <input type="hidden" name = "position_line0" id="position_line0" value=""/>
+
                                     <th>1차 결재</th>
                                     <td class="td_align_left" id="approval_line1"></td>
                                     <input type="hidden" name = "empl_line1" id="empl_line1"/>
@@ -130,7 +147,8 @@
                                     <input type="hidden" name = "duty_line1" id="duty_line1"/>
                                     <input type="hidden" name = "position_line1" id="position_line1"/>
                                     <td>
-                                        <button type="button" onclick="appr_show_modal(1)" class="btn_primary btn_min">변경하기</button>                                    </td>
+                                        <button type="button" onclick="appr_show_modal(1)" class="btn_primary btn_min">변경하기</button>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>2차 결재</th>
@@ -253,6 +271,9 @@
 <script src="resources/js/notify_websocket.js"></script>
 
 
+<%--리치텍스트 설정--%>
+<script src="/resources/js/approval_rte_setting.js"></script>
+
 <script>
     //모델앤뷰로 받은 파라메터
     console.log("${form_idx}");
@@ -263,10 +284,11 @@
     var form_idx = "${form_idx}";
 
 
-    //quill editor -> 나중에 import하면 사용하기
-   /* const quill = new Quill('#editor', {
-        theme: 'snow'
-    });*/
+    var noti = '';
+    noti = '${alert}';
+    if(noti!=null && noti != ''){
+        alert(noti);
+    }
 
 </script>
 

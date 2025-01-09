@@ -12,6 +12,14 @@
     <%--폼 양식 css--%>
     <link rel="stylesheet" href="/resources/css/approval_form.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <%--rich text editor--%>
+    <link rel="stylesheet" href="resources/richtexteditor/rte_theme_default.css" />
+    <script type="text/javascript" src="resources/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src="resources/richtexteditor/plugins/all_plugins.js"></script>
+    <script type='text/javascript' src="resources/richtexteditor/lang/rte-lang-ko.js"></script>
+    <link rel="stylesheet" href="resources/css/module_rte.css" />
+    <script type="text/javascript" src="resources/js/module_rte.js"></script>
 </head>
 <body>
 <c:import url="layout_topnav.jsp" />
@@ -110,7 +118,9 @@
                             </tr>
                             <tr>
                                 <th>문서</th>
-                                <td id="doc_content" class="doc_content">${doc_info.doc_content}</td>
+                                <%--<td id="doc_content" class="doc_content">${doc_info.doc_content}</td>--%>
+                                <td id="div_editor"></td>
+                                <div id="div_editor_copy" class="disp_hide"></div>
                             </tr>
                             </tbody>
                         </table>
@@ -255,7 +265,7 @@
 
                             </li>
                             <li>
-                                <button class="btn_secondary btn_full" onclick="location.href='/approval_write.go?form_idx=${form_info.form_idx}&form_content=copy'">양식만 복사하여 다시 작성하기</button>
+                                <button class="btn_secondary btn_full" onclick="location.href='/approval_write.go?form_idx=${form_info.form_idx}'">양식만 복사하여 다시 작성하기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->
@@ -273,6 +283,7 @@
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/approval_detail.js"></script>
+<script src="resources/js/approval_rte_setting.js"></script>
 
 <script>
 </script>

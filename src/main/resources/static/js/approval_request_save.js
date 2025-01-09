@@ -24,15 +24,13 @@ function approval_set_save_data(){
     approval_write_current_date();
 
     //doc_content_sub ( //보고 내용 (*quill 에디터에 작성한 내용)) -> form에 넣어주기
-    //퀼 넣으면 다시 넣기
-    /*const quill_content = quill.getContents();
-    console.log(quill_content.ops[0].insert);
-
-    $('input[name="doc_content_sub"]').val(quill_content.ops[0].insert);*/
+    var doc_content_sub = editor2.getHTMLCode();
+    console.log(doc_content_sub);
+    $('input[name="doc_content_sub"]').val(doc_content_sub);
 
 
     //doc : form 내용 - form에 저장
-    var doc_content = $('#form_content').html()
+    var doc_content = editor1.getHTMLCode();
     console.log(doc_content);
     $('input[name="doc_content"]').val(doc_content);
 
@@ -48,22 +46,33 @@ function approval_write_current_date(){
     let today = new Date(); //오늘 날짜에 대한 전체 정보
 
     let year = today.getFullYear();//년도 구하기
-    let month = today.getMonth()+1; //달 구하기 -> 1월 = 0,12월 = 11
-    let date = today.getDate(); // 일 구하기
+    let month = today.getMonth()+1;
+    month = month.toString().padStart(2, '0'); //달 구하기 -> 1월 = 0,12월 = 11
+    let date = today.getDate().toString().padStart(2, '0'); // 일 구하기
 
-    let hours = today.getHours();
-    let minutes = today.getMinutes();
-    let seconds = today.getSeconds();
+    let hours = today.getHours().toString().padStart(2, '0');
+    let minutes = today.getMinutes().toString().padStart(2, '0');
+    let seconds = today.getSeconds().toString().padStart(2, '0');
 
     //format
-    var doc_date= year+'-'+month+'-'+date+ ' ' + hours+':'+minutes+':'+seconds;
+    var doc_date_time= year+'-'+month+'-'+date+ ' ' + hours+':'+minutes+':'+seconds;
+
+    var doc_date= year+'-'+month+'-'+date;
+
     console.log("작성 일자:",doc_date);
 
-    //현재 시간 구한 것 문서 양식에 넣어주기
-    $('#doc_date').html(doc_date);
+    //작성하던 코드 copy에 저장
+    getHtmlCode();
+
+    //현재 시간 구한 것 copy 문서 양식에 넣어주기
+    $('#send_date_left').html(doc_date_time);
+    $('#send_date_right').html(doc_date);
+
+    //copy 코드 리치텍스트에 저장
+    setHtmlCode();
 
     // 작성 일자 - <form>에 넣기
-    $('#hidden_doc_date').val(doc_date);
+    $('#hidden_doc_date').val(doc_date_time);
 
 
 }
