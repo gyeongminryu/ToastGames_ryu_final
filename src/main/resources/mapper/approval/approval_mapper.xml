@@ -5,7 +5,7 @@
 
     <!--옮기기-->
     <select id="form_list" resultType="Map">
-        SELECT form_subject,form_idx FROM form
+        SELECT form_subject,form_idx FROM form WHERE form_state = 1
     </select>
 
     <select id="form" resultType="Map">
@@ -148,14 +148,9 @@
 
     <!--form_info-->
     <select id="get_form_info" resultType="Map">
-        SELECT e.empl_name, dp.dept_name, p.position_name,d.form_idx,f.form_subject, f.form_handler_idx
-        FROM document d
-                 join form f on f.form_idx = d.form_idx
-                 join employee e on e.empl_idx = f.form_handler_idx
-                 join appointment a on a.appo_idx = e.appolast_idx
-                 join department dp on dp.dept_idx = a.dept_idx
-                 join position_ p on p.position_idx= a.position_idx
-        WHERE doc_idx = #{doc_idx}
+       SELECT f.form_idx,f.form_subject FROM document d
+             join form f on f.form_idx = d.form_idx
+       WHERE d.doc_idx = #{doc_idx};
     </select>
 
     <!--appr_line-->

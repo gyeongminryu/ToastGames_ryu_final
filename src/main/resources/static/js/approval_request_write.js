@@ -1,3 +1,7 @@
+//rich text editor
+var editor1 = new RichTextEditor("#div_editor_content", configDocument);
+var editor2 = new RichTextEditor("#div_editor_content_sub", configNone);
+
 
 let notification_data= {};
 
@@ -5,6 +9,9 @@ window.onload = function initialize(){
 
     //문서 가져오기
         approval_doc_get();
+
+    //저장된 파일 있으면 가져오기
+
 
     notification_data={
         "/approval_request.go":{
@@ -33,29 +40,40 @@ function approval_doc_get(){
             //editor.setHTMLCode(data.form_content);//편집기 안의 HTML code 설정
 
             //document.getElementById('form_content').innerHTML =data.doc_content;
-            $('#form_content').html(data.doc_content);
+            //$('#form_content').html(data.doc_content);
+            if(data.doc_content_sub!=null){
+                editor2.setHTMLCode(data.doc_content_sub);
+            }
+
+            document.getElementById('div_editor_copy').innerHTML = data.doc_content;
+            setHtmlCode();
 
             //문서 정보란에 1차 정보 기입 (문서번호, 작성자, 부서명* -> 추가예정)
             $('.hidden_doc_idx').val(data.doc_idx);
             $('.hidden_empl_name').val(data.empl_name);
 
             //폼 양식 수정
-            $('#doc_idx').html(data.doc_idx);
-            $('#doc_write_empl').html(data.empl_name);
-            $('#doc_write_depart').html(data.dept_name);
+            $('#document_idx_left').html(data.doc_idx);
+            $('#sender_name_left').html(data.empl_name);
+            $('#sender_name_right').html(data.empl_name);
+            $('#sender_dept_left').html(data.dept_name);
 
             //가져온 정보를 html로 보여주는 코드
             //만약에 제목, 마감일시, 보고 내용이 있다면?
             $('#doc_end_date').val(data.doc_end_date);
 
             $('input[name="doc_subject"]').val(data.doc_subject);
-            //$('#editor').html(data.doc_content_sub);
-           // $('input[name="doc_content_sub"]').val(data.doc_content_sub);
 
-            //퀼 에디터에 context 넣는 법
-            /*quill.setContents([
-                { insert: data.doc_content_sub },
-            ]);*/
+
+            //결재선에 결재 요청자 정보 넣기
+            $('#empl_line0').val(data.empl_idx);
+            $('#dept_line0').val(data.dept_idx);
+            $('#duty_line0').val(data.duty_idx);
+            $('#position_line0').val(data.position_idx);
+
+            //폼 양식 수정하면 copy에 있는 것 복붙
+            setHtmlCode();
+
 
             //임시저장 setInterval 함수
             setInterval(approval_write_temporal_save, 10000);

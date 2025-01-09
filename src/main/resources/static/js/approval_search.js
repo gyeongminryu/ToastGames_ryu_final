@@ -4,7 +4,7 @@ var search = document.getElementById('search');
 
 search.addEventListener('keyup',function(e){
 
-    if(e.key === 'Enter'){ //keyCode 대신 대체
+    /*if(e.key === 'Enter'){ *///keyCode 대신 대체
         var search_val = $('#search').val();
         console.log(search_val);
 
@@ -27,16 +27,17 @@ search.addEventListener('keyup',function(e){
                 approval_list(search_val,'writing');
                 break;
         }
-    }
+    /*}*/
 });
 
 //폼 양식 검색 함수
 function approval_form_search(search_val){
+    search_val = $('#search').val();
     console.log("폼 양식 검색 함수 실행!");
     $.ajax({
         type : 'GET',
         url : 'approval_form_search.ajax',
-        data : {'search_val' :search_val },
+        data : {'search_val' :search_val},
         dataType : 'JSON',
         success : function (data){
             console.log(data);

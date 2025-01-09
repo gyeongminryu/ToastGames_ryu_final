@@ -380,6 +380,9 @@ public class ApprovalService {
 
 		//폼 정보
 		Map<String,Object> form_info = approvalDAO.get_form_info(doc_idx);
+		logger.info("form_info:{}",form_info);
+		logger.info("doc_idx:{}",doc_idx);
+
 		model.addAttribute("form_info",form_info);
 
 		//파일 정보

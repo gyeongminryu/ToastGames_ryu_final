@@ -124,4 +124,13 @@ public interface ApprovalRequestDAO {
     int copy_doc_info(ApprovalRequestDTO appDto);
 
     void copy_doc_line_info(Map<String, Object> doc_line_info);
+
+    
+    //이거 해야함
+    Map<String, Object> get_appr_selected_info(int approval_dept_idx, int duty_idx);
+
+
+    int count_appr_selected(int approval_dept_idx, int duty_idx);
+
+    int appr_line_exists(int doc_idx);
 }
