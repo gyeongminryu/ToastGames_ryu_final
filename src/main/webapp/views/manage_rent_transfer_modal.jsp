@@ -28,41 +28,45 @@
                         <tbody class="tst_pointer">
                         <tr>
                             <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
-                            <td onclick="get_dept()" class="tst_pointer">부서</td>
+                            <td onclick="show_second_team_list(this)" class="tst_pointer">부서</td>
                         </tr>
 
                         <!-- 부서원 목록 출력 -->
-                        <tr class="disp_hide">
-                            <td></td>
-                            <td>
-                                <table class="tst_table table_align_left table_no_padding">
-                                    <tbody id="get_dept">
-                                    <tr>
-                                        <td onclick="get_dept_empl()">{부서명}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
+					        <tr class="disp_hide">
+					            <td></td>
+					            <td>
+					                <table class="tst_table table_align_left table_no_padding">
+					                    <tbody>
+									    <c:forEach var="dept" items="${deptList}">
+					                        <tr>
+					                            <td onclick="get_dept_empl(${dept.dept_idx})">${dept.dept_name}</td>
+					                        </tr>
+									    </c:forEach>
+					                    </tbody>
+					                </table>
+					            </td>
+					        </tr>
                         <!-- //부서원 목록 출력 -->
 
                         <!-- 예시 -->
                         <tr>
                             <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i></td>
-                            <td onclick="get_team()">팀</td>
+                            <td onclick="show_second_team_list(this)" class="tst_pointer">팀</td>
                         </tr>
-                        <tr class="disp_hide">
-                            <td></td>
-                            <td>
-                                <table class="tst_table table_align_left table_no_padding">
-                                    <tbody id="team_empl">
-                                    <tr>
-                                        <td onclick="get_team_empl()">{팀명}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
+					        <tr class="disp_hide">
+					            <td></td>
+					            <td>
+					                <table class="tst_table table_align_left table_no_padding">
+					                    <tbody>
+									    <c:forEach var="team" items="${teamList}">
+					                        <tr>
+					                            <td onclick="get_team_empl(${team.team_idx})">${team.team_name}</td>
+					                        </tr>
+									    </c:forEach>
+					                    </tbody>
+					                </table>
+					            </td>
+					        </tr>
                         <!-- //예시 -->
                         </tbody>
                         <!-- //부서 목록 출력 -->
@@ -72,17 +76,17 @@
                 <div class="tst_col7">
 
                     <!-- 검색 -->
-                    <form>
+                    <form onsubmit="return take_empl_search(event);">
                         <div class="tst_search_container">
                             <div class="tst_search_select">
                                 <select id="tst_search_select_category" name="category">
-                                    <option value="">부서 검색</option>
-                                    <option value="">직급 검색</option>
-                                    <option value="">사원명 검색</option>
+                                    <option value="dept_name">부서 검색</option>
+                                    <option value="position_name">직급 검색</option>
+                                    <option value="empl_name">사원명 검색</option>
                                 </select>
                             </div>
                             <div class="tst_search_input">
-                                <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                <input type="text" name="keyword" id="search_keyword" maxlength="50" placeholder="검색어를 입력하세요" />
                             </div>
                             <div class="tst_search_icon">
                                 <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
@@ -102,19 +106,19 @@
                         </tr>
                         </thead>
 
-                        <tbody class="tst_pointer">
+                        <tbody class="tst_pointer" id="empl_list">
 
                         <!-- 직원 정보 -->
-                        <tr>
-                        <tr onclick="select_transfer_empl()">
+                        <!-- <tr>
+                        <tr onclick="select_transfer_empl(item.empl_idx)">
                             <td class="td_align_top td_no_padding">
-                                <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
+                                <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="item.empl_name의 프로필 사진" class="approval_profile_image" />
                             </td>
                             <td>
-                                <p>{직원명 (부서/직급)}</p>
-                                <p class="min font_subtle">{직책}</p>
+                                <p>item.empl_name (item.dept_name/item.position_name)</p>
+                                <p class="min font_subtle">item.duty_name</p>
                             </td>
-                        </tr>
+                        </tr> -->
                         <!-- //직원 정보 -->
 
                         </tbody>
@@ -135,15 +139,15 @@
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">공용 물품 인계하기</h1>
-            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_transfer')"></i>
+            <i class="bi bi-dash-circle-dotted" onclick="cancelTransfer()"></i>
         </div>
         <div class="tst_modal_body">
             <ul class="tst_list list_no_desc list_block">
                 <li>
-                    <h3><span id="prod_name" class="prod_name">${detail.prod_name}</span> ▶ <span id="empl_name" class="empl_name">{직원명}</span></h3>
+                    <h3><span id="prod_name" class="prod_name">${detail.prod_name}</span><!--  ▶ <span id="empl_name" class="empl_name"></span> --></h3>
                 </li>
                 <li>
-                    <p>물품을 위와 같이 인계하시겠습니까?</p>
+                    <p>물품을 인계하시겠습니까?</p>
                 </li>
                 <li>
                     <hr class="separator" />
@@ -153,16 +157,16 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <button onclick="<!-- 인계 처리 함수를 입력하세요 -->" class="btn_primary btn_full">물품 인계하기</button>
+                    <button onclick="confirmTransfer()" class="btn_primary btn_full" id="product_transfer_button">물품 인계하기</button>
                 </div>
                 <div class="tst_col6">
-                    <button onclick="tst_modal_close('tst_modal_transfer')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
+                    <button onclick="cancelTransfer()" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_transfer')"></div>
+    <div class="tst_modal_backdrop" onclick="cancelTransfer()"></div>
 </div>
 <!-- //인계하기 -->
 
-<script src="resources/js/module_modal.js"></script>
+<script src="resources/js/manage_rent_transfer_modal.js"></script>

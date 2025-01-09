@@ -56,7 +56,7 @@ function resource_print(item) {
         content += '</tr>';
         content += '<tr>';
         content += '<th>반납 예정일</th>';
-        content += '<td>' + (item.prod_exp_date == null ? '없음' : formatDateTime(item.prod_exp_date)) + '</td>';
+        content += '<td>' + (item.prod_exp_date == null || item.prod_rent == 1? '없음' : formatDateTime(item.prod_exp_date)) + '</td>';
         content += '</tr>';
         content += '<tr>';
         content += '<th colspan="2" class="td_align_center td_bg_subtle">대여 장소는 ' + item.prod_place + ' 입니다.</th>';

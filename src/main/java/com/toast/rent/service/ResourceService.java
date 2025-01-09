@@ -225,16 +225,11 @@ public class ResourceService {
 	//물품 첨부파일 가져오기(첨부파일키 추가 필요)
 	public List<ResourcePhotoDTO> prodFile(int prod_idx) {
 		//(첨부파일키 추가 필요)
-		List<String> fileKeys = resourceDAO.getProdFileKey(prod_idx);
-		List<ResourcePhotoDTO> fileList = new ArrayList<ResourcePhotoDTO>();
-	    for (String fileKey : fileKeys) {
-	        // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
-	        ResourcePhotoDTO file = resourceDAO.prodFile(fileKey);
-	        if (file != null) {
-	            fileList.add(file); // 가져온 파일 정보를 리스트에 추가
-	        }
-	    }
-	    return fileList;
+		//(첨부파일키 추가 필요)
+		String fileKey = resourceDAO.getProdFileKey(prod_idx);
+	    // fileKey를 기반으로 ResourcePhotoDTO 객체를 가져옴
+	    List<ResourcePhotoDTO> fileList = resourceDAO.prodFile(fileKey);
+		return fileList;
 	}
 
 	//물품 대여 상태 보기

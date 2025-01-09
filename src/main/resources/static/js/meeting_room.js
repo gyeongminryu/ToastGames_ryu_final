@@ -101,7 +101,7 @@
                     "Content-Type": "application/json"  // JSON 형식으로 전송
                 },
                 body: JSON.stringify({
-                    room_idx: room_idx  // 삭제할 room_idx를 JSON 형식으로 전송
+                    room_idx: room_idx,  // 삭제할 room_idx를 JSON 형식으로 전송
                     image_filename: image_filename  // 삭제할 이미지 파일명
                 })
             })
