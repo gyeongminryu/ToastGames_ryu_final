@@ -132,10 +132,45 @@ public interface ResourceManageDAO {
 
 	//팀장 인수자
 	ResourceManageDTO getTeamHeadEmpl(int teamIdx);
+
+	//부서검색
+	List<ResourceManageDTO> takeDeptEmpl(String keyword);
+	
+	//직급검색
+	List<ResourceManageDTO> takePosiEmpl(String keyword);
+	
+	//사원검색
+	List<ResourceManageDTO> takeEmpl(String keyword);
+
+	//인수인계처리
+	int prodTransfer(ResourceManageDTO dto);
+
+	//모든 폐기 총 페이지
+	int allDispoCount(int cnt);
+
+	//모든 폐기 목록
+	List<ResourceManageDTO> dispoList(int limit, int offset);
+
+	//카테고리별 폐기 총 페이지
+	int allCateDispoCount(Map<String, Object> map);
+
+	//카테고리별 폐기목록
+	List<ResourceManageDTO> dispoCateList(Map<String, Object> map);
+
+	//폐기 검색 전체 페이지 
+	int allSearchDispoCount(Map<String, Object> map);
+
+	//폐기 검색 전체 목록
+	List<ResourceManageDTO> dispoSearchList(Map<String, Object> map);
+
+	//폐기 검색 카테고리 페이지
+	int allCateSearchDispoCount(Map<String, Object> map);
+
+	//폐기 검색 카테고리 목록
+	List<ResourceManageDTO> dispoCateSearchList(Map<String, Object> map);
+	
 	
 
-
-	
 	
 
 

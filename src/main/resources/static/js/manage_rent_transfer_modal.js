@@ -48,7 +48,8 @@ function empl_list(emplList) {
 
     if (Array.isArray(emplList) && emplList.length > 0) {
         for (let item of emplList) {
-            content += '<tr onclick="select_transfer_empl(' + item.empl_idx + ')">';
+        	const itemData = encodeURIComponent(JSON.stringify(item));
+            content += '<tr onclick="select_transfer_empl(\'' + itemData + '\')">';
             content += '<td class="td_align_top td_no_padding">';
             content += '<img src="' + (item.profile_img || 'http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png') + '" ';
             content += 'alt="' + item.empl_name + '의 프로필 사진" ';
@@ -66,59 +67,67 @@ function empl_list(emplList) {
     document.getElementById('empl_list').innerHTML = content;
 }
 
-
-
-
-
-
-
-
-
-
-
+var take_empl ='';
 //직원선택
-function select_transfer_empl(empl_idx){
+function select_transfer_empl(itemData) {
+    // JSON 문자열을 객체로 파싱
+    const item = JSON.parse(decodeURIComponent(itemData));
+
+    // <input> 필드에 값 설정
+    take_empl = item.empl_name + ' (' + item.dept_name + '/' + item.position_name + ')';
+    // <input> 필드에 값 설정
+    document.getElementById('take_empl_idx').value = take_empl;
+    document.getElementById('take_empl_idx').setAttribute('data-empl-idx', item.empl_idx);
+	tst_modal_close('tst_modal_select');
 
 }
 
 
+//인수자 검색
+function take_empl_search(event) {
+    // 폼 기본 제출 동작 방지
+    event.preventDefault();
 
+    // 선택된 옵션 값 가져오기
+    const option = document.getElementById('tst_search_select_category').value;
 
+    // 입력된 검색어 가져오기
+    const keyword = document.getElementById('search_keyword').value.trim();
 
-
-
-function tst_modal_call(cls) {
-    document.getElementsByClassName(cls)[0].style.display = 'flex';
-}
-
-function tst_modal_call_param(cls, param) {
-    document.getElementsByClassName(cls)[0].style.display = 'flex';
-    document.getElementById('tst_modal_param').value = param;
-}
-
-function tst_modal_close(cls) {
-    document.getElementsByClassName(cls)[0].style.display = 'none';
-}
-
-
-
-//직원 선택
-function select_type(type){
-    switch (type) {
-        case 'sign':
-            document.getElementsByClassName('sign_area')[0].style.display = 'block';
-            document.getElementsByClassName('stamp_area')[0].style.display = 'none';
-            document.getElementsByClassName('item_sign')[0].classList.add('tst_tablist_item_active');
-            document.getElementsByClassName('item_stamp')[0].classList.remove('tst_tablist_item_active');
-            break;
-        case 'stamp':
-            document.getElementsByClassName('sign_area')[0].style.display = 'none';
-            document.getElementsByClassName('stamp_area')[0].style.display = 'flex';
-            document.getElementsByClassName('item_sign')[0].classList.remove('tst_tablist_item_active');
-            document.getElementsByClassName('item_stamp')[0].classList.add('tst_tablist_item_active');
-            break;
+    if (!keyword) {
+        alert("검색어를 입력하세요.");
+        return false;
     }
+
+    // 검색 함수 호출
+    empl_search(option, keyword);
+    return false; // 폼 제출 방지
 }
+
+
+//검색함수
+function empl_search(option, keyword) {
+    console.log("검색 실행:", option, keyword);
+    // 예: AJAX 요청을 통한 검색 처리
+    $.ajax({
+        type: 'POST',
+        url: '/takeEmplSearch.ajax',
+        data:{
+        	'option' : option,
+        	'keyword': keyword
+        },
+        dataType: 'json',
+        success: function(data) {
+					console.log(data);
+					empl_list(data.emplList);
+        },
+        error: function(e) {
+            console.log("오류 발생", e);
+        } 
+    });
+}
+
+
 
 function show_team_list(elem, no){
     elem.parentElement.parentElement.nextElementSibling.classList.remove('disp_hide');
@@ -171,14 +180,14 @@ function hide_second_team_list(elem) {
 // 물품 등록 확인 (true 값 반환)
 function confirmTransfer() {
     isTransfer = true;  // 등록 확인
-    tst_modal_close('tst_modal_dispose');  // 모달 닫기
+    tst_modal_close('tst_modal_transfer');  // 모달 닫기
     console.log('등록: ' + isTransfer);  // true 출력 (디버깅 용도)
 }
 
 // 물품 등록 취소 (false 값 반환)
 function cancelTransfer() {
     isTransfer = false;  // 등록 취소
-    tst_modal_close('tst_modal_dispose');  // 모달 닫기
+    tst_modal_close('tst_modal_transfer');  // 모달 닫기
     console.log('등록 취소: ' + isTransfer);  // false 출력 (디버깅 용도)
 }
 

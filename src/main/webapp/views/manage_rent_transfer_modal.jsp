@@ -76,7 +76,7 @@
                 <div class="tst_col7">
 
                     <!-- 검색 -->
-                    <form>
+                    <form onsubmit="return take_empl_search(event);">
                         <div class="tst_search_container">
                             <div class="tst_search_select">
                                 <select id="tst_search_select_category" name="category">
@@ -86,7 +86,7 @@
                                 </select>
                             </div>
                             <div class="tst_search_input">
-                                <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                <input type="text" name="keyword" id="search_keyword" maxlength="50" placeholder="검색어를 입력하세요" />
                             </div>
                             <div class="tst_search_icon">
                                 <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
@@ -139,15 +139,15 @@
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">공용 물품 인계하기</h1>
-            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_transfer')"></i>
+            <i class="bi bi-dash-circle-dotted" onclick="cancelTransfer()"></i>
         </div>
         <div class="tst_modal_body">
             <ul class="tst_list list_no_desc list_block">
                 <li>
-                    <h3><span id="prod_name" class="prod_name">${detail.prod_name}</span> ▶ <span id="empl_name" class="empl_name">{직원명}</span></h3>
+                    <h3><span id="prod_name" class="prod_name">${detail.prod_name}</span><!--  ▶ <span id="empl_name" class="empl_name"></span> --></h3>
                 </li>
                 <li>
-                    <p>물품을 위와 같이 인계하시겠습니까?</p>
+                    <p>물품을 인계하시겠습니까?</p>
                 </li>
                 <li>
                     <hr class="separator" />
@@ -157,15 +157,15 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <button onclick="<!-- 인계 처리 함수를 입력하세요 -->" class="btn_primary btn_full" id="product_transfer_button">물품 인계하기</button>
+                    <button onclick="confirmTransfer()" class="btn_primary btn_full" id="product_transfer_button">물품 인계하기</button>
                 </div>
                 <div class="tst_col6">
-                    <button onclick="tst_modal_close('tst_modal_transfer')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
+                    <button onclick="cancelTransfer()" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_transfer')"></div>
+    <div class="tst_modal_backdrop" onclick="cancelTransfer()"></div>
 </div>
 <!-- //인계하기 -->
 

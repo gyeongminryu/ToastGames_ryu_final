@@ -53,7 +53,7 @@ public class ResourceManageController {
 		String loginId = (String) session.getAttribute("loginId");
 		ResourceManageDTO dto =  resourceMgService.getEmplMg(loginId);
 		session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
-		session.setAttribute("dept_idx",dto.getDept_idx());//사원 부서 가져와
+		//session.setAttribute("dept_idx",dto.getDept_idx());//사원 부서 가져와
 		empl_idx = (int) session.getAttribute("empl_idx");  //세션에 저장한 사원idx 가져와
 		//dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
 		dept_idx=122;
@@ -71,7 +71,6 @@ public class ResourceManageController {
 	@ResponseBody
 	public Map<String, Object> categroySearch(
 	        @RequestParam("keyword") String keyword) {
-		
 	    return resourceMgService.categroySearch(keyword); // 특정 카테고리
 	}
 	
@@ -117,24 +116,6 @@ public class ResourceManageController {
 	    }
 
 	}
-
-	
-	//물품 상세보기(사진, 첨부파일 필요함)
-	/*@RequestMapping(value="/prodMgDetail.go")
-	public String prodDetail(@RequestParam("prod_idx") int prod_idx, Model model) {
-		logger.info("prod_idx:"+prod_idx);
-		ResourceDTO detail = resourceMgService.prodMgDetail(prod_idx);
-		model.addAttribute("detail", detail);
-		//model.addAttribute("file", file);
-		return "rent_detail";
-	}
-	
-	//물품 상태 상세보기
-	@GetMapping(value = "/prodStateDetail.ajax")
-	@ResponseBody
-	public ResourceDTO prodRentDetail(@RequestParam("prod_idx") int prod_idx) {
-	    return resourceMgService.prodStateDetail(prod_idx);
-	}*/
 	
 	
 	//물품 등록 가기
@@ -379,11 +360,80 @@ public class ResourceManageController {
 	
 	
 	//폐기처리 리스트가기
-//	@GetMapping(value="/manage_dispose_list.go")     
-//	public String dispoList() {
-//		
-//	}
+	@RequestMapping(value="/manage_dispose_list.go")
+	public String dispoListGo(Model model) {
+		String loginId = (String) session.getAttribute("loginId");
+		ResourceManageDTO dto =  resourceMgService.getEmplMg(loginId);
+		session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
+		//session.setAttribute("dept_idx",dto.getDept_idx());//사원 부서 가져와
+		empl_idx = (int) session.getAttribute("empl_idx");  //세션에 저장한 사원idx 가져와
+		//dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
+		dept_idx=122;
+		String page = "rent_list";
+		if(dept_idx == 122) {	
+			List<ResourceManageDTO> categoryList =resourceMgService.resourceCateMg(); //카테고리 가져와
+			model.addAttribute("categoryList", categoryList);
+			page = "manage_dispose_list";
+		}
+		return page;
+	}
+	
+	
+	
+	//카테고리 검색 목록 가져오기(폐기)
+	@GetMapping(value="/dispoCategroySearch.ajax") 
+	@ResponseBody
+	public Map<String, Object> dispoCategroySearch(
+	        @RequestParam("keyword") String keyword) {
+	    return resourceMgService.categroySearch(keyword); // 특정 카테고리
+	}
 
+	
+	//카테고리별 목록(폐기)
+	@GetMapping(value="/manageDispoList.ajax")  
+	@ResponseBody
+	public Map<String, Object> manageDispoList(
+			@RequestParam("page") String page, 
+	        @RequestParam("cnt") String cnt, 
+	        @RequestParam("category") String category) {
+		
+		int page_ = Integer.parseInt(page);
+		int cnt_ = Integer.parseInt(cnt);
+	    // 카테고리에 따른 처리
+	    if ("all".equals(category)) {
+	        return resourceMgService.dispoList(page_, cnt_); // 전체 보기
+	    } else {
+	        return resourceMgService.dispoFilterList(category, page_, cnt_); // 특정 카테고리
+	    }
+	}
+	
+	
+	
+	//물품 검색별 보기
+	@PostMapping(value="/manageDispoSearch.ajax")
+	@ResponseBody
+	public Map<String, Object> manageDispoSearch(
+            @RequestParam("page") String page,
+            @RequestParam("cnt") String cnt,
+            @RequestParam("category") String category,
+            @RequestParam("option") String option,
+            @RequestParam("keyword") String keyword){
+		
+		int page_ = Integer.parseInt(page);
+		int cnt_ = Integer.parseInt(cnt);
+
+		
+	    if ("all".equals(category)) {
+	        return resourceMgService.dispoSearch(page_, cnt_,option, keyword); // 전체 보기
+	    } else {
+	        return resourceMgService.dispoFilterSearch(category, page_, cnt_,option, keyword); // 특정 카테고리
+	    }
+
+	}
+	
+	
+	
+	
 	//사용연한다되면물품 상태 0으로 업뎃
 	
 	
@@ -475,7 +525,7 @@ public class ResourceManageController {
 		return "manage_rent_transfer";
 	}
 	
-	//인수자 부서/팀 가져오기
+	//부서별 직원 가져오기
 	@GetMapping(value="/getDeptEmpl.ajax")
 	@ResponseBody
 	public Map<String, Object> getDeptEmpl(@RequestParam("dept_idx") String dept_idx) {
@@ -489,7 +539,7 @@ public class ResourceManageController {
 	
 
 	
-	//물품 인계처리 하기
+	//팀별 직원 가져오기
 	@GetMapping(value="/getTeamEmpl.ajax")
 	@ResponseBody
 	public Map<String, Object> getTeamEmpl(@RequestParam("team_idx") String team_idx) {
@@ -502,8 +552,79 @@ public class ResourceManageController {
 	}
 	
 	
-
+	//사원 검색
+	@PostMapping(value="/takeEmplSearch.ajax")
+	@ResponseBody
+	public Map<String, Object> takeEmplSearch(
+			@RequestParam("option") String option, 
+			@RequestParam("keyword") String keyword) {
+		
+		List<ResourceManageDTO> emplList = resourceMgService.takeEmplSearch(option, keyword);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emplList", emplList);
+		return map;
+		
+	}
 	
+	
+	//인수인계처리(진짜)
+	@PostMapping(value="/productTransfer.do")
+	@ResponseBody
+	public Map<String, Object> productTransfer(
+	        @RequestParam("file") List<MultipartFile> files,
+	        @RequestParam("take_empl_idx") String take_empl_idx,
+	        @RequestParam("prod_idx") String prod_idx
+	) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        // 세션 처리: empl_idx가 없을 경우 예외 처리
+	        Integer empl_idx = (Integer) session.getAttribute("empl_idx");
+	        if (empl_idx == null) {
+	            response.put("status", "error");
+	            response.put("message", "User not logged in.");
+	            return response;
+	        }
+
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("prod_idx", prod_idx);
+	        map.put("take_empl_idx", take_empl_idx);
+	        map.put("disp_empl_idx", empl_idx);
+	        map.put("disp_state", 1); // 처리 상태: 1 인수인계
+
+	        // 파일 처리
+	        if (files != null && !files.isEmpty()) {
+	            List<MultipartFile> validFiles = new ArrayList<>();
+
+	            for (MultipartFile file : files) {
+	                if (file.getOriginalFilename() != null 
+	                        && !file.getOriginalFilename().isEmpty() 
+	                        && file.getSize() > 0) {
+	                    validFiles.add(file);
+	                }
+	            }
+
+	            if (!validFiles.isEmpty()) {
+	            	for (MultipartFile file : validFiles) {
+	            		logger.info("파일 이름: " + file.getOriginalFilename());
+	            		logger.info("파일 크기: " + file.getSize() + " bytes");
+	            	}
+	                resourceMgService.prodTransfer(validFiles, map);
+	            } else {
+	                logger.info("유효한 파일이 없습니다.");
+	            }
+	        } 
+
+	        // 성공적인 처리
+	        response.put("status", "success");
+	        response.put("redirectUrl", "/manage_rent_list.go");
+
+	    } catch (Exception e) {
+	        logger.error("파일 업로드 또는 데이터 처리 중 오류 발생", e);
+	        response.put("status", "error");
+	        response.put("message", "Error processing request: " + e.getMessage());
+	    }
+	    return response;
+	}
 		
 	//연체시 상태 업뎃(prod_return_state: 2)
 	

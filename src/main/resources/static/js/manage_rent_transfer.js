@@ -1,5 +1,9 @@
 function tst_modal_call(cls) {
     document.getElementsByClassName(cls)[0].style.display = 'flex';
+    
+    setTimeout(function() {
+        document.getElementById('empl_name').innerText = window.take_empl_window;  // take_empl 값을 전달받아서 설정
+    }, 50); 
 }
 
 function tst_modal_call_param(cls, param) {
@@ -10,40 +14,6 @@ function tst_modal_call_param(cls, param) {
 function tst_modal_close(cls) {
     document.getElementsByClassName(cls)[0].style.display = 'none';
 }
-
-
-
-function select_type(type){
-    switch (type) {
-        case 'sign':
-            document.getElementsByClassName('sign_area')[0].style.display = 'block';
-            document.getElementsByClassName('stamp_area')[0].style.display = 'none';
-            document.getElementsByClassName('item_sign')[0].classList.add('tst_tablist_item_active');
-            document.getElementsByClassName('item_stamp')[0].classList.remove('tst_tablist_item_active');
-            break;
-        case 'stamp':
-            document.getElementsByClassName('sign_area')[0].style.display = 'none';
-            document.getElementsByClassName('stamp_area')[0].style.display = 'flex';
-            document.getElementsByClassName('item_sign')[0].classList.remove('tst_tablist_item_active');
-            document.getElementsByClassName('item_stamp')[0].classList.add('tst_tablist_item_active');
-            break;
-    }
-}
-
-/*function show_team_list(elem){
-	console.log(elem);
-
-    elem.parentElement.parentElement.nextElementSibling.classList.remove('disp_hide');
-    elem.parentElement.innerHTML = '<i class="bi bi-caret-down-fill" onclick="hide_team_list(this)"></i>';
-}
-
-function hide_team_list(elem){
-	console.log(elem);
-
-    elem.parentElement.parentElement.nextElementSibling.classList.add('disp_hide');
-    elem.parentElement.innerHTML = '<i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i>';
-}*/
-
 
 
 // 선택한 파일을 저장할 배열
@@ -96,8 +66,8 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
 //인계하기 버튼 클릭시
 document.getElementById("product_transfer_button").addEventListener("click", function () {
-    if (getDisposeStatus()) {
-        submitDispoForm();
+    if (getTransferStatus()) {
+        submitTransferForm();
     } else {
         alert("수정이 취소되었습니다. 다시 시도해주세요.");
     }
@@ -105,24 +75,29 @@ document.getElementById("product_transfer_button").addEventListener("click", fun
 
 
 // 폼 제출 처리 (삭제되지 않은 파일만 전송)
-function submitDispoForm() {
+function submitTransferForm() {
     var prodIdx = document.querySelector("#prod_idx").textContent.trim(); // #prod_idx에서 텍스트 가져오기
     var form = document.querySelector("form[action='productTransfer.do']");
     var formData = new FormData(form);
     
+    let emplIdx = document.getElementById('take_empl_idx').dataset.emplIdx;
+    
     // 가져온 물품 번호를 FormData에 추가
     formData.append("prod_idx", prodIdx);
 
-    // 파일 존재 여부 확인 후 유효한 파일만 추가
-	var files = selectedFiles;  
-	if (files.length > 0) {
-	    // 파일이 있는 경우만 formData에 추가
-	    for (var i = 0; i < files.length; i++) {
-	        formData.append("file", files[i]);
-	    }
-	} else {
-	    console.log("업로드할 파일이 없습니다.");
-	}
+	formData.append("take_empl_idx",emplIdx);
+
+    // 파일 존재 여부 확인
+    var files = selectedFiles;
+    if (files.length === 0) {
+        alert("업로드할 파일이 없습니다.");
+        return;  // 파일이 없으면 폼 제출을 중단
+    } else {
+        // 파일이 있는 경우 formData에 추가
+        for (var i = 0; i < files.length; i++) {
+            formData.append("file", files[i]);
+        }
+    }
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/productTransfer.do", true);
