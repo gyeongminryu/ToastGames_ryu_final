@@ -6,14 +6,17 @@
             <img src="/resources/img/logo.jpg" alt="" />
         </div>
         <ul class="tst_col8 align_center list_no_desc list_inline">
-            <li>
-                <i class="bi bi-menu-button-wide-fill"></i>
-            </li>
-            <li>
+            <li onclick="location.href='/approval_writing_list.go'" class="tst_pointer">
                 <i class="bi bi-file-earmark-fill"></i>
             </li>
-            <li>
+            <li onclick="location.href='/document_list.go'" class="tst_pointer">
                 <i class="bi bi-archive-fill"></i>
+            </li>
+            <li onclick="location.href='/schedule.go'" class="tst_pointer">
+                <i class="bi bi-calendar-event"></i>
+            </li>
+            <li onclick="location.href='/board_list.go'" class="tst_pointer">
+                <i class="bi bi-layout-text-window-reverse"></i>
             </li>
             <%--            <li>--%>
             <%--                <i class="bi bi-send-fill"></i>--%>
