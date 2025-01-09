@@ -18,9 +18,6 @@
             <li onclick="location.href='/board_list.go'" class="tst_pointer">
                 <i class="bi bi-layout-text-window-reverse"></i>
             </li>
-            <%--            <li>--%>
-            <%--                <i class="bi bi-send-fill"></i>--%>
-            <%--            </li>--%>
             <li onclick="open_alert_list()" class="tst_pointer">
                 <i class="bi bi-bell-fill"></i>
             </li>

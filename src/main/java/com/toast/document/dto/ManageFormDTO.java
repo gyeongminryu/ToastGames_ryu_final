@@ -3,6 +3,7 @@ package com.toast.document.dto;
 import org.apache.ibatis.type.Alias;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ManageFormDTO {
 
@@ -96,8 +97,13 @@ public class ManageFormDTO {
         return form_writer_position_name;
     }
 
-    public LocalDateTime getForm_write_date() {
-        return form_write_date;
+    public String getForm_write_date() {
+        if (form_write_date == null) {
+            return "";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return form_write_date.format(formatter);
+        }
     }
 
     public int getForm_updater_idx() {

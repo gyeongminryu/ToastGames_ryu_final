@@ -1,6 +1,7 @@
 package com.toast.document.dto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DocumentLineDTO {
 
@@ -68,8 +69,13 @@ public class DocumentLineDTO {
         return empl_profile;
     }
 
-    public LocalDateTime getAppr_date() {
-        return appr_date;
+    public String getAppr_date() {
+        if (appr_date == null) {
+            return "";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return appr_date.format(formatter);
+        }
     }
 
     // Setter

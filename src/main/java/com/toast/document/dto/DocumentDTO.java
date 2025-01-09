@@ -1,6 +1,7 @@
 package com.toast.document.dto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DocumentDTO {
 
@@ -98,16 +99,31 @@ public class DocumentDTO {
         return doc_state;
     }
 
-    public LocalDateTime getDoc_write_date() {
-        return doc_write_date;
+    public String getDoc_write_date() {
+        if (doc_write_date == null) {
+            return "";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return doc_write_date.format(formatter);
+        }
     }
 
-    public LocalDateTime getDoc_update_date() {
-        return doc_update_date;
+    public String getDoc_update_date() {
+        if (doc_update_date == null) {
+            return "";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return doc_update_date.format(formatter);
+        }
     }
 
-    public LocalDateTime getDoc_end_date() {
-        return doc_end_date;
+    public String getDoc_end_date() {
+        if (doc_end_date == null) {
+            return "";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return doc_end_date.format(formatter);
+        }
     }
 
     public String getFile_key() {
@@ -154,8 +170,13 @@ public class DocumentDTO {
         return position_name_0;
     }
 
-    public LocalDateTime getAppr_date_0() {
-        return appr_date_0;
+    public String getAppr_date_0() {
+        if (appr_date_0 == null) {
+            return "";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return appr_date_0.format(formatter);
+        }
     }
 
     public int getDept_idx_1() {
@@ -190,8 +211,13 @@ public class DocumentDTO {
         return position_name_1;
     }
 
-    public LocalDateTime getAppr_date_1() {
-        return appr_date_1;
+    public String getAppr_date_1() {
+        if (appr_date_1 == null) {
+            return "";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return appr_date_1.format(formatter);
+        }
     }
 
     public int getDept_idx_2() {
@@ -226,8 +252,13 @@ public class DocumentDTO {
         return position_name_2;
     }
 
-    public LocalDateTime getAppr_date_2() {
-        return appr_date_2;
+    public String getAppr_date_2() {
+        if (appr_date_2 == null) {
+            return "";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return appr_date_2.format(formatter);
+        }
     }
 
     public int getDept_idx_3() {
@@ -262,8 +293,13 @@ public class DocumentDTO {
         return position_name_3;
     }
 
-    public LocalDateTime getAppr_date_3() {
-        return appr_date_3;
+    public String getAppr_date_3() {
+        if (appr_date_3 == null) {
+        return "";
+    } else {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return appr_date_3.format(formatter);
+    }
     }
 
     public String getForm_subject() {
