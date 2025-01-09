@@ -35,10 +35,10 @@ public class ManageFormController {
 
         // 부서 번호 확인
         if (dept_idx == 122 || (dept_idx >= 152 && dept_idx <= 157)) {
-            logger.info("Valid dept_idx = " + dept_idx);
+            //logger.info("Valid dept_idx = " + dept_idx);
             mav.setViewName(addr);
         } else {
-            logger.warn("Invalid dept_idx = " + dept_idx);
+            //logger.warn("Invalid dept_idx = " + dept_idx);
         }
 
         return mav;

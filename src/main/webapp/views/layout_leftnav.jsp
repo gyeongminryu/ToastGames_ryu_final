@@ -56,6 +56,9 @@
                 <li class="tst_pointer" onclick="location.href='/board_list.go'">
                     <i class="bi bi-layout-text-window-reverse"></i><h3>전자 게시판</h3>
                 </li>
+                <li class="tst_pointer" onclick="location.href='/'">
+                    <i class="bi bi-bar-chart-line-fill"></i><h3>매출/통계</h3>
+                </li>
                 <li class="tst_pointer" onclick="location.href='/companyinfo_detail.go'">
                     <i class="bi bi-building-fill"></i><h3>회사 정보 관리</h3>
                 </li>
