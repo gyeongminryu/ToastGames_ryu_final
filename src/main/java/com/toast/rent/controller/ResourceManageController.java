@@ -430,13 +430,7 @@ public class ResourceManageController {
 	    }
 
 	}
-	
-	
-	
-	
-	//사용연한다되면물품 상태 0으로 업뎃
-	
-	
+
 	
 	
 	//물품 폐기 처리 가기
@@ -625,11 +619,21 @@ public class ResourceManageController {
 	    }
 	    return response;
 	}
-		
+	
+	//사용연한다되면물품 상태 0으로 업뎃
+	
+	
 	//연체시 상태 업뎃(prod_return_state: 2)
 	
 
-	//물품 인계 
+	//폐기물품 상세보기
+	@GetMapping(value="/manage_dispose_detail.go")
+	public String disposeDetail(@RequestParam("prod_idx") String prod_idx, Model model) {
+		int prodIdx = Integer.parseInt(prod_idx);
+		resourceMgService.dispDetail(prodIdx, model);
+	
+		return "manage_dispose_detail";
+	}
 	
 	
 	

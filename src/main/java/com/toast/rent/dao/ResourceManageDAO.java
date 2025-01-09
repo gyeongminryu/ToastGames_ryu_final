@@ -168,6 +168,12 @@ public interface ResourceManageDAO {
 
 	//폐기 검색 카테고리 목록
 	List<ResourceManageDTO> dispoCateSearchList(Map<String, Object> map);
+
+	//폐기 상세보기
+	ResourceManageDTO dispDetail(int prodIdx);
+
+	//폐기 파일
+	List<ResourcePhotoDTO> dispFiles(String fileKey);
 	
 	
 

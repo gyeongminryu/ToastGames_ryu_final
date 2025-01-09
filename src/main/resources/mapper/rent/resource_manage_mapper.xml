@@ -980,4 +980,46 @@
 		ORDER BY disp_prod_idx DESC 
 		LIMIT #{limit} OFFSET #{offset}	
 	</select>
+	
+	<!-- 폐기 상세보기 -->
+	<select id="dispDetail" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			pd.prod_idx,
+			pd.prod_name,
+			pd.prod_model,
+			pd.prod_info,
+			pc.prod_cate_name,
+			pc.prod_life,
+			pd.prod_purch_date,
+			pd.prod_dispo_date,
+			dp.disp_prod_idx,
+			dp.disp_reason,
+			dp.disp_empl_idx,
+			dp.disp_date,
+			dp.file_key
+		FROM
+			product pd
+		JOIN 
+			disposed_product dp ON dp.prod_idx=pd.prod_idx
+		JOIN 
+			product_category ON pc.prod_cate_idx=pd.prod_cate_idx
+		WHERE 
+			pd.prod_idx=#{param1}
+	</select>
+	
+	<!-- 폐기 파일 -->
+	<select id="dispFiles" resultType="com.toast.rent.dto.ResourcePhotoDTO">
+		SELECT 
+			file_addr,
+			new_filename
+		FROM 
+			file
+		WHERE file_key=#{param1}
+	</select>
+	
+	
+	
+	
+	
+	
 </mapper>

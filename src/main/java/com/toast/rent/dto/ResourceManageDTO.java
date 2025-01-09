@@ -79,10 +79,18 @@ public class ResourceManageDTO {
 	private int team_idx;
 	private String team_name;
 	private String empl_profile;
+	
+	private String file_key; 
 
 	
 	
 	
+	public String getFile_key() {
+		return file_key;
+	}
+	public void setFile_key(String file_key) {
+		this.file_key = file_key;
+	}
 	public int getTeam_idx() {
 		return team_idx;
 	}

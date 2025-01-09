@@ -851,5 +851,14 @@ public class ResourceManageService {
 		return result;
 	}
 
+	//폐기 상세보기
+	public Map<String, Object> dispDetail(int prodIdx, Model model) {
+		ResourceManageDTO dispDetail = resourceMgDAO.dispDetail(prodIdx);
+		String fileKey = dispDetail.getFile_key(); //폐기 파일키
+		List<ResourcePhotoDTO> dispFile = resourceMgDAO.dispFiles(fileKey);
+		prodMgFile(prodIdx);
+		return null;
+	}
+
 
 }
