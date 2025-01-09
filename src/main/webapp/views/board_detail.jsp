@@ -107,7 +107,7 @@
                                                         <tr id="td_comment_${comment.reply_idx}" class="td_reply_${comment.reply_idx}">
                                                             <td class="td_align_top">
                                                                 <h3><span onclick="tst_view_profile('${comment.reply_empl_idx}')" class="tst_pointer">${comment.empl_name}</span></h3>
-                                                                <p class="min">${comment.dept_name}</p>
+                                                                <p class="min">${comment.dept_name}/${comment.duty_name}</p>
                                                                 <p class="min font_subtle">${comment.reply_write_date}</p>
                                                             </td>
                                                             <td class="td_align_top">${comment.reply_content}</td>
@@ -173,7 +173,7 @@
                                                                                 <td class="td_align_top"><i class="bi bi-arrow-return-right"></i></td>
                                                                                 <td class="td_align_top">
                                                                                     <h3><span onclick="tst_view_profile('${reReply.re_reply_empl_idx}')" class="tst_pointer">${reReply.empl_name}</span></h3>
-                                                                                    <p class="min">${reReply.dept_name}</p>
+                                                                                    <p class="min">${reReply.dept_name}/${reReply.duty_name}</p>
                                                                                     <p class="min font_subtle">${reReply.re_reply_write_date}</p>
                                                                                 </td>
                                                                                 <td class="td_align_top">${reReply.re_reply_content}</td>
@@ -264,7 +264,7 @@
 							    <!-- 게시글 수정하기 버튼, 작성자만 보이게 설정 -->
 							    
 							    <!-- //담당자만 볼 수 있는 버튼입니다 -->
-								<c:if test="${sessionScope.empl_idx == 10017}">
+								<c:if test="${sessionScope.dept_idx == 103}">
 							        <li><button type="button" onclick="tst_modal_call('tst_modal_delete')" class="btn_subtle btn_full">게시글 삭제하기</button></li>
 							    </c:if>
                                 <!-- //담당자만 볼 수 있는 버튼입니다 -->

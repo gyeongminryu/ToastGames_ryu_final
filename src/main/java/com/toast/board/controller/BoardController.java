@@ -56,7 +56,7 @@ public class BoardController {
 		params.putAll(memberInfo);
 		try {
 			int boardIdx = boardService.boardWrite(params, files);
-			boardService.saveBoardNotify(params, boardIdx);
+			boardService.saveBoardNotify(params, boardIdx);// 알림 테이블에 insert.
 			if (boardIdx > 0) {
 				model.addAttribute("msg", "게시글 작성 완료");
 	            return "redirect:/board_detail.go?board_idx=" + boardIdx; // 게시글 작성 후 해당 게시글 페이지로 리다이렉트
@@ -112,8 +112,10 @@ public class BoardController {
 	    String id = (String) session.getAttribute("loginId");
 	    Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
 		int empl_idx = (Integer) memberInfo.get("appo_empl_idx"); // 사용자 idx
+		int isDeptHR = boardService.isDeptHR(id);
 		session.setAttribute("empl_idx", empl_idx);
 	    session.setAttribute("board_idx", board_idx); // board_idx를 세션에 저장
+	    session.setAttribute("dept_idx", isDeptHR); // board_idx를 세션에 저장
 		Map<String, Object> boardInfo = boardService.boardInfo(board_idx); // 필요한 개인 정보들을 담아온다.
 		String file_key = (String) boardInfo.get("file_key");
 		List<FileDTO> fileList = boardService.getFileList(board_idx, file_key);
@@ -250,9 +252,11 @@ public class BoardController {
 	public String writeReply(@RequestParam("board_idx") int board_idx, @RequestParam("reply") String reply, HttpSession session) {
 	    String id = (String) session.getAttribute("loginId"); // 세션에서 로그인한 id를 가져온다.
 	    Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
-	    int empl_idx = (Integer) memberInfo.get("appo_empl_idx");
+	    int empl_idx = (int) memberInfo.get("appo_empl_idx");
+	    int dept_idx = (int) memberInfo.get("board_empl_dept_idx");
+	    int duty_idx = (int) memberInfo.get("duty_idx");
 	    try {
-	        boolean success = boardService.writeReply(board_idx, reply, empl_idx);
+	        boolean success = boardService.writeReply(board_idx, reply, empl_idx, dept_idx, duty_idx);
 	        if (success) {
 	            return "redirect:/board_detail.go?board_idx=" + board_idx; // 댓글 작성 후 해당 게시글 페이지로 리다이렉트
 	        } else {
@@ -279,7 +283,7 @@ public class BoardController {
 	    }
 	}
     
-	// 댓글 삭제
+	// 댓글 삭제 
 	@PostMapping(value = "/reply_delete.do")
 	public String deleteReply(@RequestParam("reply_idx") int reply_idx, HttpSession session) {
 	    int board_idx = (int) session.getAttribute("board_idx"); // 세션에서 board_idx를 가져옴
@@ -304,8 +308,10 @@ public class BoardController {
     	String id = (String) session.getAttribute("loginId"); // 세션에서 로그인한 id를 가져온다.
         Map<String, Object> memberInfo = boardService.memberInfo(id); // 필요한 개인 정보들을 담아온다.
         int re_reply_empl_idx = (int) memberInfo.get("appo_empl_idx");
+	    int dept_idx = (int) memberInfo.get("board_empl_dept_idx");
+	    int duty_idx = (int) memberInfo.get("duty_idx");
         try {
-            boolean success = boardService.writeReReply(reply_idx, re_reply, re_reply_empl_idx);
+            boolean success = boardService.writeReReply(reply_idx, re_reply, re_reply_empl_idx, dept_idx, duty_idx);
             if (success) {
 	            return "redirect:/board_detail.go?board_idx=" + board_idx; // 댓글 작성 후 해당 게시글 페이지로 리다이렉트
             } else {

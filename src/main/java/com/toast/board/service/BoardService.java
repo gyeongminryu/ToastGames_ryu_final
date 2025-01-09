@@ -158,13 +158,13 @@ public class BoardService {
 	}
     
 	 // 댓글 작성
-    public boolean writeReply(int board_idx, String reply, int empl_idx) {
-        return boardDAO.writeReply(board_idx, reply, empl_idx) > 0;
+    public boolean writeReply(int board_idx, String reply, int empl_idx, int dept_idx, int duty_idx) {
+        return boardDAO.writeReply(board_idx, reply, empl_idx, dept_idx, duty_idx) > 0;
     }
     
     // 대댓글 작성
-    public boolean writeReReply(int reply_idx, String re_reply, int re_reply_empl_idx) {
-        return boardDAO.writeReReply(reply_idx, re_reply, re_reply_empl_idx) > 0;
+    public boolean writeReReply(int reply_idx, String re_reply, int re_reply_empl_idx, int dept_idx, int duty_idx) {
+        return boardDAO.writeReReply(reply_idx, re_reply, re_reply_empl_idx, dept_idx, duty_idx) > 0;
     }
 
 	public String originalFileName(String filename) {
@@ -280,6 +280,10 @@ public class BoardService {
 
 	public String getFileKeyByBoardIdx(Integer boardIdx) {
 	    return boardDAO.getFileKeyByBoardIdx(boardIdx);
+	}
+
+	public int isDeptHR(String id) {
+		return boardDAO.isDeptHR(id);
 	}
 
 }
