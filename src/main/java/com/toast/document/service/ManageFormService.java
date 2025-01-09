@@ -241,7 +241,7 @@ public class ManageFormService {
         newParams.put("dept_idx", Integer.parseInt(params.get("select_team")));
         newParams.put("duty_idx", Integer.parseInt(params.get("duty_idx_modal")));
 
-        if (newParams.get("dept_idx") == 0 && newParams.get("duty_idx") == 0) {
+        if (newParams.get("dept_idx") == -1 && newParams.get("duty_idx") == 0) {
             int i = newParams.get("gline_order");
             //logger.info("i="+i);
 
@@ -252,22 +252,6 @@ public class ManageFormService {
                 newParams.put("gline_order", i);
             }
 
-//            if (newParams.get("gline_order") == 3) {
-//                manageFormDAO.setLine(newParams);
-//            } else if (newParams.get("gline_order") == 2) {
-//                manageFormDAO.setLine(newParams);
-//
-//                newParams.put("gline_order", 3);
-//                manageFormDAO.setLine(newParams);
-//            } else if (newParams.get("gline_order") == 1) {
-//                manageFormDAO.setLine(newParams);
-//
-//                newParams.put("gline_order", 2);
-//                manageFormDAO.setLine(newParams);
-//
-//                newParams.put("gline_order", 3);
-//                manageFormDAO.setLine(newParams);
-//            }
         } else {
             manageFormDAO.setLine(newParams);
         }

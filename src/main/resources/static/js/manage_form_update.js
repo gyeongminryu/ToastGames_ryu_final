@@ -255,13 +255,14 @@ function fillSelectDept(info) {
     //console.log(info);
     let tags = '';
 
-    tags += '<option value="0" selected>부서를 선택하세요</option>';
+    tags += '<option value="-2" selected>부서를 선택하세요</option>';
+    tags += '<option value="0">본인 부서</option>';
     tags += '<option value="114">대표</option>';
 
     for (let item of info) {
         tags += '<option value="' + item.dept_idx + '">' + item.dept_name + '부</option>';
     }
-    tags += '<option value="0">결재선 비우기</option>';
+    tags += '<option value="-1">결재선 비우기</option>';
 
     document.getElementsByName('select_dept')[0].innerHTML = tags;
 }
@@ -290,16 +291,19 @@ function fillSelectTeam(info, idx) {
     let tags = '';
     tags += '<option value="0" selected>팀을 선택하세요</option>';
 
-    if (idx !== '114') {
+    if (idx === '114') {
+        tags += '<option value="114">대표</option>';
+    } else if (idx === '0') {
+        tags += '<option value="00">본인 팀</option>';
+        tags += '<option value="' + idx + '">팀 선택 안 함</option>';
+    } else if (idx === '-1') {
+        tags += '<option value="-1">결재선 비우기</option>';
+    } else if (idx !== '114') {
         tags += '<option value="' + idx + '">팀 선택 안 함</option>';
 
         for (let item of info) {
             tags += '<option value="' + item.dept_idx + '">' + item.dept_name + '팀</option>';
         }
-    } else if (idx === '114') {
-        tags += '<option value="114">대표</option>';
-    } else if (idx === '0') {
-        tags += '<option value="0">결재선 비우기</option>';
     }
 
     document.getElementsByName('select_team')[0].innerHTML = tags;
@@ -313,7 +317,9 @@ function saveValues() {
     const finalTeamIdx = document.getElementsByName('select_team')[0].value;
     let msgBox = document.getElementsByClassName('tst_modal_select_msg')[0]
 
-    if (finalDeptIdx === '0' && finalTeamIdx === '0') {
+    if (finalDeptIdx === '-1' && finalTeamIdx === '-1') {
+        document.getElementsByName('select_dept')[0].value = 0;
+        document.getElementsByName('select_team')[0].value = 0;
         document.getElementsByName('duty_idx_modal')[0].value = '0';
         msgBox.innerHTML = '결재선을 비우시겠습니까? 이후 결재선까지 같이 비워집니다.';
     } else if (finalTeamIdx === '114') {
@@ -330,10 +336,20 @@ function saveValues() {
             success: function(data) {
                 if (finalDeptIdx === finalTeamIdx) {
                     document.getElementsByName('duty_idx_modal')[0].value = '3';
-                    msgBox.innerHTML = data.name + '부의 부서장을 결재선으로 설정하시겠습니까?';
+
+                    if (finalDeptIdx === '0') {
+                        msgBox.innerHTML = '작성자의 부서장을 결재선으로 설정하시겠습니까?';
+                    } else {
+                        msgBox.innerHTML = data.name + '부의 부서장을 결재선으로 설정하시겠습니까?';
+                    }
                 } else if (finalDeptIdx !== finalTeamIdx) {
                     document.getElementsByName('duty_idx_modal')[0].value = '4';
-                    msgBox.innerHTML = data.name + '팀의 팀장을 결재선으로 설정하시겠습니까?';
+
+                    if (finalDeptIdx === '0') {
+                        msgBox.innerHTML = '작성자의 팀장을 결재선으로 설정하시겠습니까?';
+                    } else {
+                        msgBox.innerHTML = data.name + '팀의 팀장을 결재선으로 설정하시겠습니까?';
+                    }
                 }
             },
             error: function(e) {
