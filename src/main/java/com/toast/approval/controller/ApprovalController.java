@@ -44,19 +44,20 @@ public class ApprovalController {
 
 	//결재 양식 목록 조회 - 옮기기
 	@RequestMapping (value = "/approval_form_list.go")
-	public String approval_form_list_go () {
-		return "approval_form_list";
+	public String approval_form_list_go (Model model) {
+		model.addAttribute("form_list",approvalService.form_list());
+		return "approval_writing_select_form";
 	}
 
 	//결재 목록 양식 제목들 가져오기 - 옮기기
-	@GetMapping(value = "/approval_form_list.ajax")
+	/*@GetMapping(value = "/approval_form_list.ajax")
 	@ResponseBody
 	public Map<String, Object> approval_form_list() {
 		Map<String, Object> data = new HashMap<>();
-		data.put("list",approvalService.form_list());
+		data.put("forms",approvalService.form_list());
 		return data;
 	}
-
+*/
 	//선택한 결재 목록 양식 가져오기 - 옮기기
 	@GetMapping (value = "/approval_form.ajax")
 	@ResponseBody

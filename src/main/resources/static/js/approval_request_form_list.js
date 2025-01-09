@@ -1,3 +1,4 @@
+/*
 window.onload = function initialize() {
     //저장된 모든 결재 양식 조회
     $.ajax({
@@ -24,8 +25,7 @@ function approval_list_form(datas) {
     for (var data of datas) {
         console.log(data.form_subject); // 분리한 이름 목록에 넣어주기
         console.log(data.form_idx);
-        content += '<div class="form_subject" onclick="approval_data_form_preview(' + data.form_idx + ')">' + data.form_subject + '</div>';
-
+        content += '<tr><td className="td_align_left"><a onClick="approval_data_form_preview(' + data.form_idx + '">' + data.form_subject + '</a></td><td><button onClick="location.href=\'/approval_write.go?form_idx='+ data.form_idx +'\"className="btn_subtle btn_min">선택하기</button></td></tr>'
         // append('<div class="form_subject" onclick="approval_data_form_preview(' + data.form_idx + ')">' + data.form_subject + '</div>');
         //$('#content_box').append('<div class="form_subject" onclick="approval_data_form_preview(' + data.form_idx + ')">' + data.form_subject + '</div>');
     }
@@ -41,7 +41,7 @@ function approval_data_form_preview(idx) {
         $.ajax({
             type: 'GET',
             url: 'approval_form.ajax',
-            data: { 'form_idx': idx },
+            data: {'form_idx': idx},
             dataType: 'JSON',
             success: function (data) {
                 console.log("form의 정보들", data);
@@ -87,3 +87,4 @@ function approval_choose_form(){
 
     $('form').submit();
 }
+*/
