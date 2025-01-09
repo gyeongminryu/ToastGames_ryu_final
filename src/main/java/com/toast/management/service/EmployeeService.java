@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -172,14 +176,23 @@ public class EmployeeService {
 			// department 테이블에 부서장 업데이트
 			employeeDAO.deptHeadAdd(dept_idx,empl_idx);					
 		} 
-	
+		
+		// 인사발령나면 empl 상태 근무중으로 바꾸기
+		String statement_idx = "1";
+		employeeDAO.employeeChangeDo(empl_idx,statement_idx);
 	}// public void employeeAppoDo(String empl_idx, String dept_idx, String position_idx, String duty_idx,String movein_date)
 	
 	// 직원 퇴사, 근무, 휴직 처리
 	public void employeeChangeDo(String empl_idx, String statement_idx) {
+	    // 현재 시간 가져오기
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    String formattedDate = formatter.format(new Date()); // 현재 시간을 String으로 포맷팅
 		if(statement_idx.equals("3")) { // 퇴직처리이면
-			// 상태변화 + 퇴사일 입력
+		// 상태변화 + 퇴사일 입력
 		employeeDAO.employeeResigDo(empl_idx,statement_idx);
+		// 최근 발령상태 가져와서 전출날짜에 지금시간 넣기
+		int emplidx = Integer.parseInt(empl_idx);
+		employeeDAO.employeeTransfer(emplidx,formattedDate);
 		}else {
 		employeeDAO.employeeChangeDo(empl_idx,statement_idx);
 		}
@@ -284,6 +297,21 @@ public class EmployeeService {
 	public EmployeeDetailDTO getStaffDetail(String empl_idx) {
 		
 		return employeeDAO.getStaffDetail(empl_idx);
+	}
+
+	public List<EmployeeDetailDTO> emplAllList() {
+		// TODO Auto-generated method stub
+		return employeeDAO.emplAllList();
+	}
+
+	public List<EmployeeDetailDTO> emplPreAllList() {
+		// TODO Auto-generated method stub
+		return employeeDAO.emplPreAllList();
+	}
+
+	public List<EmployeeDetailDTO> emplresignAllList() {
+		// TODO Auto-generated method stub
+		return employeeDAO.emplresignAllList();
 	}
 	
 }
