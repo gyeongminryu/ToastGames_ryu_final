@@ -38,10 +38,10 @@
                     <div class="tst_col2">
 
                         <!-- 분류 검색 -->
-                        <form>
+                        <form onsubmit="return category_search(event);">
                             <div class="tst_search_container width_full">
                                 <div class="tst_search_input">
-                                    <input type="text" name="keyword_class" maxlength="50" class="input_min input_underline" placeholder="검색어를 입력하세요" />
+                                    <input type="text" name="keyword_class" maxlength="50" class="input_min input_underline" id="keyword_category" placeholder="검색어를 입력하세요" />
                                 </div>
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
@@ -53,26 +53,23 @@
                         <hr class="separator" />
 
                         <table class="tst_table table_align_left">
-                            <tbody class="tst_pointer">
+                            <tbody class="tst_pointer" id="category_table_tbody">
 
                             <!-- 전체 제품 조회 (필터링 초기화) -->
-                            <tr><th><span onclick="location.href='/manage_rent_list'">전체 보기</span></th></tr>
+                            <tr><th><span onclick="pageCall(1, 'all')">전체 보기</span></th></tr>
                             <!-- //전체 제품 조회 (필터링 초기화) -->
 
                             <!-- 분류 목록 (필터링) -->
-                            <tr><td><span onclick="location.href='/manage_rent_list'">{분류명}</span></td></tr>
+							<c:forEach items="${categoryList}" var="category">
+							    <tr>
+							        <td>
+							            <span onclick="pageCall(1, '${category.prod_cate_idx}')">
+							                ${category.prod_cate_name}
+							            </span>
+							        </td>
+							    </tr>
+							</c:forEach>
                             <!-- //분류 목록 (필터링) -->
-
-                            <!-- 분류 목록 > 선택한 항목 (필터링) -->
-                            <tr><td class="td_bg_medium"><span onclick="location.href='/manage_rent_list'">{분류명}</span></td></tr>
-                            <!-- //분류 목록 > 선택한 항목 (필터링) -->
-
-                            <!-- 예시 -->
-                            <tr><td><span onclick="location.href='/manage_rent_list'">{분류명}</span></td></tr>
-                            <tr><td><span onclick="location.href='/manage_rent_list'">{분류명}</span></td></tr>
-                            <tr><td><span onclick="location.href='/manage_rent_list'">{분류명}</span></td></tr>
-                            <tr><td><span onclick="location.href='/manage_rent_list'">{분류명}</span></td></tr>
-                            <!-- //예시 -->
 
                             </tbody>
                         </table>
@@ -81,15 +78,17 @@
                     <div class="tst_col10">
 
                         <!-- 물품 검색 -->
-                        <form>
+                        <form onsubmit="return dispo_search(event);">
                             <div class="tst_search_container">
                                 <div class="tst_search_select">
-                                    <select id="tst_search_select_category" name="category" onchange="location.href='/manage_rent_list'">
-                                        <option value="{검색 분류}">검색 분류</option>
+                                    <select id="tst_search_select_category" name="category">
+                                        <option value="prod_name">물품명</option>
+                                        <option value="prod_model">물품 정보</option>
+                                        <option value="prod_cate_name">분류</option>
                                     </select>
                                 </div>
                                 <div class="tst_search_input">
-                                    <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                    <input type="text" name="keyword" maxlength="50" id="search_keyword" placeholder="검색어를 입력하세요" />
                                 </div>
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
@@ -121,122 +120,14 @@
                                 <th>처리자</th>
                             </tr>
                             </thead>
-                            <tbody>
-
-                            <!-- 검색되는 공유 물품이 없을 경우 -->
-                            <tr class="rent_list_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="6" class="td_no_data">
-                                    <p><i class="bi bi-box-seam"></i></p>
-                                    <h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>
-                                </td>
-                            </tr>
-                            <!-- //검색되는 공유 물품이 없을 경우 -->
-
-                            <!-- 공유 물품 목록 > 대여 가능한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td>{분류}</td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/manage_dispose_detail?'" class="tst_pointer">{제품명}</h3>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/manage_dispose_detail?'" class="tst_pointer">{제품_정보}</span>
-                                </td>
-                                <td>{등록일}</td>
-                                <td>{사용연한}</td>
-                                <td><span class="tst_badge_min wide btn_subtle">사용연한 후</span></td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
-                            </tr>
-                            <!-- //공유 물품 목록 > 대여 가능한 물품 -->
-
-                            <!-- 공유 물품 목록 > 대여 신청중인 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td>{분류}</td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><h3 onclick="location.href='/manage_dispose_detail?'" class="tst_pointer">{제품명}</h3>
-                                </td>
-                                <td class="td_align_left">
-                                    <!-- 해당 제품으로 이동하는 주소를 입력하세요 --><span onclick="location.href='/manage_dispose_detail?'" class="tst_pointer">{제품_정보}</span>
-                                </td>
-                                <td>{등록일}</td>
-                                <td>{사용연한}</td>
-                                <td><span class="tst_badge_min wide btn_secondary">사용연한 전</span></td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
-                            </tr>
-                            <!-- //공유 물품 목록 > 대여 신청중인 물품 -->
-
-                            <!-- 예시 -->
-                            <tr>
-                                <td>1278</td>
-                                <td>윈도 노트북</td>
-                                <td class="td_align_left"><h3 onclick="location.href='/manage_dispose_detail?'" class="tst_pointer">갤럭시북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/manage_dispose_detail?'" class="tst_pointer">갤럭시 북 5 Pro 360 (40.6cm) Core Ultra 7 / iTB NVMe SSD</span></td>
-                                <td>2023-01-23</td>
-                                <td>2025-01-23</td>
-                                <td><span class="tst_badge_min wide btn_subtle">사용연한 후</span></td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">김사원 (경영/사원)</span></td>
-                            </tr>
-                            <tr>
-                                <td>1277</td>
-                                <td>맥북</td>
-                                <td class="td_align_left"><h3 onclick="location.href='/manage_dispose_detail?'" class="tst_pointer">맥북 Pro 16" (1)</h3></td>
-                                <td class="td_align_left"><span onclick="location.href='/manage_dispose_detail?'" class="tst_pointer">MacBook Pro 16 M4 Max(16코어 CPU)</span></td>
-                                <td>2023-01-23</td>
-                                <td>2025-01-23</td>
-                                <td><span class="tst_badge_min wide btn_secondary">사용연한 전</span></td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">김사원 (경영/사원)</span></td>
-
-                            </tr>
-                            <!-- //예시 -->
+                            <tbody id="prod_dispo_list">
 
                             <!-- pagination -->
                             <tfoot>
                             <tr>
                                 <td colspan="7">
                                     <ul id="pagination" class="pagination-sm pagination">
-                                        <li class="page-item first disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item prev disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">6</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">7</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">8</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">9</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">10</a>
-                                        </li>
-                                        <li class="page-item next">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
-                                        </li>
-                                        <li class="page-item last">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-                                        </li>
+
                                     </ul>
                                 </td>
                             </tr>
@@ -252,4 +143,5 @@
 </div>
 </body>
 <script src="resources/js/common.js"></script>
+<script src="resources/js/manage_dispose_list.js"></script>
 </html>

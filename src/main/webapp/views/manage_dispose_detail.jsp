@@ -48,18 +48,25 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             <tr>
-                                <th>제품명</th>
-                                <th>{제품명}</th>
+                                <th>물품 번호</th>
+                                <th>${detail.prod_idx}</th>
                             </tr>
                             <tr>
-                                <th>제품 정보</th>
-                                <td>{제품 정보}</td>
+                                <th>물품명</th>
+                                <th>${detail.prod_name}</th>
                             </tr>
                             <tr>
-                                <th>제품 설명</th>
-                                <td>{제품 설명}</td>
+                                <th>물품 정보</th>
+                                <td>${detail.prod_model}</td>
+                            </tr>
+                            <tr>
+                                <th>물품 설명</th>
+                                <td>${detail.prod_info}
+                                <c:forEach var="disp_file" items="${dispFile}">
+                                	<img src="${disp_file.file_addr}" alt="Product Image" style="max-width: 100px; max-height: 100px;" />
+                                </c:forEach>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -124,45 +131,14 @@
                             </tr>
                             <!-- //대여 내역 > 연체 후 반납한 물품 -->
 
-                            <!-- 예시 -->
-                            <tr>
-                                <td>16</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">김사원 (영업/대리)</span></h3></td>
-                                <td class="td_align_left">12일에 고객사 출장시 사용할 예정입니다.</td>
-                                <td>2025-01-11</td>
-                                <td>2025-01-13 18:00</td>
-                                <td>2025-01-14 09:20</td>
-                                <td><span class="font_caution">연체 후 반납</span></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">박대리 (개발/대리)</span></h3></td>
-                                <td class="td_align_left">1월 3일에 고객사 출장시 사용할 예정입니다.</td>
-                                <td>2024-12-31</td>
-                                <td>2025-01-04 18:00</td>
-                                <td>2025-01-04 09:20</td>
-                                <td>정상 반납</td>
-                            </tr>
-                            <!-- //예시 -->
+
 
                             <!-- pagination -->
                             <tfoot>
                             <tr>
                                 <td colspan="7">
                                     <ul id="pagination" class="pagination-sm pagination">
-                                        <li class="page-item first disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item prev disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
-                                        </li>
 
-                                        <li class="page-item next">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
-                                        </li>
-                                        <li class="page-item last">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-                                        </li>
                                     </ul>
                                 </td>
                             </tr>
@@ -186,18 +162,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>{파일명 (파일 용량kb)}</td>
-                                <td>
-                                    <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_min btn_primary">다운로드</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{파일명 (파일 용량kb)}</td>
-                                <td>
-                                    <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href='/'" class="btn_min btn_primary">다운로드</button>
-                                </td>
-                            </tr>
+						        <c:forEach var="file" items="${files}">
+						            <tr>
+						                <td>
+						                    ${file.ori_filename} (${file.file_size / 1024} KB)
+						                </td>
+						                <td>
+						                    <button onclick="location.href='download.do?new_filename=${file.new_filename}&ori_filename=${file.ori_filename}'" 
+						                            class="btn_min btn_primary">다운로드</button>
+						                </td>
+						            </tr>
+						        </c:forEach>
                             </tbody>
                         </table>
                         <!-- //첨부 파일 목록 -->
@@ -218,19 +193,19 @@
                             <tbody>
                             <tr>
                                 <th>카테고리</th>
-                                <td>{카테고리}</td>
+                                <td>${prod_cate_name}</td>
                             </tr>
                             <tr>
                                 <th>내용연수</th>
-                                <td>{내용연수|n년}</td>
+                                <td>${prod_life}</td>
                             </tr>
                             <tr>
                                 <th>등록일</th>
-                                <td>{등록일|yyyy-MM-dd}</td>
+                                <td>${prod_purch_date}</td>
                             </tr>
                             <tr>
                                 <th>사용연한</th>
-                                <td>{사용연한|yyyy-MM-dd}</td>
+                                <td>${prod_dispo_date}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -250,26 +225,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th>처리 방식</th>
-                                <td>폐기|인수</td>
-                            </tr>
-                            <tr>
-                                <th>대여자</th>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
-                            </tr>
-                            <tr>
-                                <th>폐기 사유</th>
-                                <td>{폐기 사유}</td>
-                            </tr>
-                            <tr>
-                                <th>처리자</th>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></td>
-                            </tr>
-                            <tr>
-                                <th>처리 일시</th>
-                                <td>{처리 일시|yyyy-MM-dd HH:dd}</td>
-                            </tr>
+								<tr>
+							       	<th>폐기번호</th>
+							        <td id="disp_prod_idx">${disp_prod_idx}</td>
+							    </tr>
+							    <tr>
+		                             <th>처리 방식</th>
+		                             <td>폐기|인수</td>
+                            	</tr>
+							    <tr>
+							        <th>폐기사유</th>
+							        <td>${disp_reason}</td>
+							    </tr>
+							    <tr>
+							        <th>처리자</th>
+							        <td id="disp_empl_idx">${disp_empl_idx}</td>
+							    </tr>
+							    <tr>
+							        <th>처리일시</th>
+							        <td>${disp_date}</td>
+							    </tr>
                             </tbody>
                         </table>
                         <!-- //폐기/인수 정보 -->
@@ -279,7 +254,7 @@
                         <!-- 버튼 -->
                         <ul class="list_no_desc list_block">
                             <li>
-                                <button class="btn_subtle btn_full" onclick="location.href='/manage_dispose_list'">목록으로 돌아가기</button>
+                                <button class="btn_subtle btn_full" onclick="location.href='/manage_dispose_list.go'">목록으로 돌아가기</button>
                             </li>
                         </ul>
                         <!-- //버튼 -->

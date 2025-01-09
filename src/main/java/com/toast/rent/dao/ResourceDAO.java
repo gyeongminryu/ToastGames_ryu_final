@@ -78,10 +78,10 @@ public interface ResourceDAO {
 	ResourceDTO myRentDetail(int prod_rent_idx);
 
 	//파일키 가져오기
-	List<String> getProdFileKey(int prod_idx);
+	String getProdFileKey(int prod_idx);
 
 	//물품 파일 가져오기
-	ResourcePhotoDTO prodFile(String file_key);
+	List<ResourcePhotoDTO> prodFile(String file_key);
 
 	//물품 idx가져오기
 	int getIdx(int prod_rent_idx);

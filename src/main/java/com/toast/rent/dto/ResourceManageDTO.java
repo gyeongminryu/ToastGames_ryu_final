@@ -54,6 +54,13 @@ public class ResourceManageDTO {
 	private String empl_name;
 	private int appo_last_idx;
 	private String empl_id;
+	public String getEmpl_profile() {
+		return empl_profile;
+	}
+	public void setEmpl_profile(String empl_profile) {
+		this.empl_profile = empl_profile;
+	}
+
 	private int appo_idx;
 	private int dept_idx;
 	private String position_name; //직급
@@ -69,8 +76,33 @@ public class ResourceManageDTO {
 	private int take_empl_idx;
 	private int disp_empl_idx;
 	private LocalDateTime disp_date;
+	private int team_idx;
+	private String team_name;
+	private String empl_profile;
+	
+	private String file_key; 
+
 	
 	
+	
+	public String getFile_key() {
+		return file_key;
+	}
+	public void setFile_key(String file_key) {
+		this.file_key = file_key;
+	}
+	public int getTeam_idx() {
+		return team_idx;
+	}
+	public void setTeam_idx(int team_idx) {
+		this.team_idx = team_idx;
+	}
+	public String getTeam_name() {
+		return team_name;
+	}
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
+	}
 	public int getDisp_prod_idx() {
 		return disp_prod_idx;
 	}
