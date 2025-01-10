@@ -996,13 +996,14 @@
 			dp.disp_reason,
 			dp.disp_empl_idx,
 			dp.disp_date,
-			dp.file_key
+			dp.file_key,
+			dp.disp_state
 		FROM
 			product pd
 		JOIN 
 			disposed_product dp ON dp.prod_idx=pd.prod_idx
 		JOIN 
-			product_category ON pc.prod_cate_idx=pd.prod_cate_idx
+			product_category pc ON pc.prod_cate_idx=pd.prod_cate_idx
 		WHERE 
 			pd.prod_idx=#{param1}
 	</select>
@@ -1016,10 +1017,46 @@
 			file
 		WHERE file_key=#{param1}
 	</select>
+
+	<!-- 모든 물품 목록 (날짜)-->
+	<select id="allProdList" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			prod_exp_date,
+			prod_dispo_date,
+			prod_idx
+		FROM 
+			product
+	</select>
 	
+	<!-- 물품 사용상태 업뎃 -->
+	<update id="updateProdState">
+		UPDATE 
+			product
+		SET
+			prod_state=#{param1}
+		WHERE 
+			prod_idx=#{param2}
+	</update>
 	
+	<!-- 모든 대여 가져오기 -->
+	<select id="allProdRentList" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			prod_exp_date,
+			prod_return_date,
+			prod_return_state,
+			prod_rent_idx,
+			prod_idx
+		FROM
+			product_rent
+	</select>
 	
-	
-	
-	
+	<!-- 연체시 상태 업뎃(prod_return_state: 2) -->
+	<update id="updateProdRentState">
+		UPDATE 
+			product_return
+		SET
+			prod_return_state=#{param1}
+		WHERE 
+			prod_rent_idx=#{param2}
+	</update>
 </mapper>
