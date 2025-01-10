@@ -182,6 +182,17 @@ public class FrontController {
 
 
 
+    // Statistics ====================================================
+
+    // 통계 대시보드
+    @RequestMapping(value = "/stats_dashboard")
+    public ModelAndView front_stats_dashboard() {
+        return new ModelAndView("stats_dashboard");
+    }
+
+
+
+
     // Company Info ==================================================
 
     // 회사 정보

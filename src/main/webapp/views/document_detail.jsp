@@ -64,7 +64,7 @@
                                 <td class="doc_empl"></td>
                             </tr>
                             <tr>
-                                <th>최종 결재 일시</th>
+                                <th>최초 상신 일시</th>
                                 <td class="send_date"></td>
                             </tr>
                             <tr>
