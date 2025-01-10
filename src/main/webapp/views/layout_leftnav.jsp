@@ -30,13 +30,13 @@
                         <li class="tst_pointer" onclick="location.href='/approval_received_list.go'">
                             <h3 class="font_subtle">내가 받은 업무</h3>
                         </li>
-                        <li class="tst_pointer" onclick="location.href='/approval_sent_list.go'">
+                        <li class="tst_pointer" onclick="location.href='/approval_send_list.go'">
                             <h3 class="font_subtle">내가 보낸 업무</h3>
                         </li>
                         <li class="tst_pointer" onclick="location.href='/approval_writing_list.go'">
                             <h3 class="font_subtle">작성중인 문서</h3>
                         </li>
-                        <li class="tst_pointer" onclick="location.href='/approval_write.go'">
+                        <li class="tst_pointer" onclick="location.href='/approval_form_list.go'">
                             <h3 class="font_subtle">문서 작성하기</h3>
                         </li>
                     </ul>
