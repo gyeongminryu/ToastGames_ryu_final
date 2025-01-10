@@ -225,7 +225,7 @@ function tst_modal_call_param(cls, param) {
     document.getElementById('tst_modal_param').value = param;
     //console.log(document.getElementById('tst_modal_param').value);
 
-    callDeptToModalDept(114);
+    callDeptToModalDept(2);
 }
 
 function tst_modal_close(cls) {
@@ -257,7 +257,7 @@ function fillSelectDept(info) {
 
     tags += '<option value="-2" selected>부서를 선택하세요</option>';
     tags += '<option value="0">본인 부서</option>';
-    tags += '<option value="114">대표</option>';
+    tags += '<option value="2">대표</option>';
 
     for (let item of info) {
         tags += '<option value="' + item.dept_idx + '">' + item.dept_name + '부</option>';
@@ -269,6 +269,7 @@ function fillSelectDept(info) {
 
 // 팀 정보 불러오기
 function callDeptToModalTeam(idx) {
+    //console.log(idx);
     $.ajax({
         type: 'post',
         url: 'manage_form_call_dept.ajax',
@@ -291,14 +292,14 @@ function fillSelectTeam(info, idx) {
     let tags = '';
     tags += '<option value="0" selected>팀을 선택하세요</option>';
 
-    if (idx === '114') {
-        tags += '<option value="114">대표</option>';
+    if (idx === '2') {
+        tags += '<option value="2">대표</option>';
     } else if (idx === '0') {
         tags += '<option value="00">본인 팀</option>';
         tags += '<option value="' + idx + '">팀 선택 안 함</option>';
     } else if (idx === '-1') {
         tags += '<option value="-1">결재선 비우기</option>';
-    } else if (idx !== '114') {
+    } else {
         tags += '<option value="' + idx + '">팀 선택 안 함</option>';
 
         for (let item of info) {
@@ -322,7 +323,7 @@ function saveValues() {
         document.getElementsByName('select_team')[0].value = 0;
         document.getElementsByName('duty_idx_modal')[0].value = '0';
         msgBox.innerHTML = '결재선을 비우시겠습니까? 이후 결재선까지 같이 비워집니다.';
-    } else if (finalTeamIdx === '114') {
+    } else if (finalTeamIdx === '2') {
         document.getElementsByName('duty_idx_modal')[0].value = '2';
         msgBox.innerHTML = '대표이사를 결재선으로 설정하시겠습니까?';
     } else {

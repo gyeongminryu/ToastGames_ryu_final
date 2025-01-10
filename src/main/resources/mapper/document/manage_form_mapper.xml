@@ -14,7 +14,7 @@
                 form_state = 0
             </if>
             <if test="param4.equals('wip')">
-                form_state = 2
+                form_state = 2 AND form_writer_idx = #{param5}
             </if>
         </where>
         <if test="param3 != null and !param3.equals('') and param2.equals('form_subject')">
@@ -35,7 +35,7 @@
                 form_state = 0
             </if>
             <if test="param3.equals('wip')">
-                form_state = 2
+                form_state = 2 AND form_writer_idx = #{param4}
             </if>
         </where>
         <if test="param2 != null and !param2.equals('') and param1.equals('form_subject')">

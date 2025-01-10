@@ -10,8 +10,8 @@ import java.util.Map;
 public interface ManageFormDAO {
 
     // 문서 양식 목록
-    int allCount(int cnt, String opt, String keyword, String sort);
-    int countIdx(String opt, String keyword, String sort);
+    int allCount(int cnt, String opt, String keyword, String sort, int form_writer_idx);
+    int countIdx(String opt, String keyword, String sort, int form_writer_idx);
     List<ManageFormDTO> list(int limit, int offset, String opt, String keyword, String sort, int form_writer_idx);
     String preview(int form_idx);
 

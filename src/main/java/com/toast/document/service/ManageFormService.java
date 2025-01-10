@@ -23,8 +23,8 @@ public class ManageFormService {
     public Map<String, Object> list(int page, int cnt, String opt, String keyword, String sort, int form_writer_idx) {
         int limit = cnt;
         int offset = (page - 1) * cnt;
-        int totalPages = manageFormDAO.allCount(cnt, opt, keyword, sort);
-        int totalIdx = manageFormDAO.countIdx(opt, keyword, sort);
+        int totalPages = manageFormDAO.allCount(cnt, opt, keyword, sort, form_writer_idx);
+        int totalIdx = manageFormDAO.countIdx(opt, keyword, sort, form_writer_idx);
 
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("totalPages", totalPages);

@@ -126,7 +126,7 @@ public class ManageFormController {
 
         session.setAttribute("loginId", "tndls0110");
         session.setAttribute("empl_idx", "10001");
-        session.setAttribute("dept_idx", "100");
+        session.setAttribute("dept_idx", "153");
         String writer = session.getAttribute("loginId").toString();
         int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
         int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
@@ -155,7 +155,7 @@ public class ManageFormController {
 
         session.setAttribute("loginId", "tndls0110");
         session.setAttribute("empl_idx", "10001");
-        session.setAttribute("dept_idx", "100");
+        session.setAttribute("dept_idx", "153");
         String updater = session.getAttribute("loginId").toString();
         int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
         int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
@@ -177,10 +177,7 @@ public class ManageFormController {
     // 결재선 설정하기
     @PostMapping (value = "/manage_form_call_dept.ajax")
     public Map<String, Object> manage_form_call_dept(String dept_high) {
-        //logger.info("Is this controller work?");
-        //logger.info("dept_high="+dept_high);
         int dept_highInt = Integer.parseInt(dept_high);
-        //logger.info("dept_highInt="+dept_highInt);
 
         return manageFormService.callDept(dept_highInt);
     }
@@ -248,7 +245,7 @@ public class ManageFormController {
 
         session.setAttribute("loginId", "tndls0110");
         session.setAttribute("empl_idx", "10001");
-        session.setAttribute("dept_idx", "100");
+        session.setAttribute("dept_idx", "153");
         String writer = session.getAttribute("loginId").toString();
         int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
         int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
