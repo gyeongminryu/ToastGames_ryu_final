@@ -59,7 +59,7 @@ function resource_list_print(list) {
         for (var item of list) {
 			content += '<tr>';
 			content += '<td>' + item.prod_rent_idx + '</td>';
-			content += '<td><h3>' + item.empl_name + ' (' + item.position_name + '/' + item.duty_name + ')</span></h3></td>';
+			content += '<td><h3><span onclick="tst_view_profile(\'' + item.empl_idx + '\')" class="tst_pointer">' + item.empl_name + ' (' + item.position_name + '/' + item.duty_name + ')</span></h3></td>';
 			content += '<td class="td_align_left">' + item.prod_rent_reason + '</td>';
 			content += '<td>' + formatDateTime(item.prod_rent_date) + '</td>';
 			content += '<td>' + formatDateTime(item.prod_exp_date) + '</td>';

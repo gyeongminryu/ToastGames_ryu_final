@@ -103,7 +103,7 @@ public class MeetingController {
 		logger.info("Received params: " + param);
 		logger.info("file count:"+file);
 		meetingService.meetingRoomAdd(param,file);
-		return new ModelAndView("redirect:/meeting/meeting.go");
+		return new ModelAndView("redirect:/meeting.go");
 	}
 
 	//회의실 정보 상세보기(회의실 정보 전체)+사진 추가
