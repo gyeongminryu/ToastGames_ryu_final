@@ -65,4 +65,8 @@ public interface ApprovalDAO {
     String get_doc_file_key(int doc_idx);
 
     List<Map<String, Object>> get_file_info(String file_key);
+
+    String get_doc_form_content(int doc_idx);
+
+    String get_my_appr_name(int empl_idx);
 }

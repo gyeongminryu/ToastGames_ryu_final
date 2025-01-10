@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Controller
 public class ApprovalRequestController {
-	int empl_idx = 10024;
+	int empl_idx = 10002;
 	private final ApprovalService approvalService;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -44,7 +44,6 @@ public class ApprovalRequestController {
 		logger.info("idx:{}", form_idx);
 
 		//세션 처리
-		int empl_idx = 10024;
 
 
 		logger.info("empl_idx:{}",empl_idx);
@@ -109,7 +108,6 @@ public class ApprovalRequestController {
 	public Map<String,Object> doc_write_do (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]attached_file) {
 		logger.info("결재 문서 저장 ajax 실행");
 		//세션 처리
-		int empl_idx = 10024;
 		String success = "결재 문서 저장 실패";
 		param.put("empl_idx", String.valueOf(empl_idx));
 		Map<String,Object> data = new HashMap<>();
@@ -127,6 +125,33 @@ public class ApprovalRequestController {
 
 		return data;
 	}
+
+
+	//결재 문서 저장
+	@PostMapping (value = "approval_doc_write_and_request.ajax")
+	@ResponseBody
+	public Map<String,Object> doc_write_and_request (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]attached_file) {
+		logger.info("결재 문서 저장 ajax 실행");
+		//세션 처리
+		String success = "결재 문서 저장 실패";
+		param.put("empl_idx", String.valueOf(empl_idx));
+		Map<String,Object> data = new HashMap<>();
+		logger.info("저장해야할 param 값:{}", param);
+
+		String doc_idx = param.get("doc_idx");
+
+		//logger.info("form_content:{}",doc_content);
+		//logger.info("files:{}", (Object) files);
+		//update로 하기
+		if(approvalRequestService.doc_write(param,attached_file) && approvalRequestService.save_approval_line(param)){
+			success = "결재 문서 저장 성공";
+			logger.info("결재 문서 저장 성공");
+			data.put("target_user",approvalRequestService.approval_request(doc_idx,empl_idx));
+		}
+
+		return data;
+	}
+
 
 	@PostMapping (value="/refer_save_doc.ajax")
 	@ResponseBody
@@ -154,7 +179,7 @@ public class ApprovalRequestController {
 		return data;
 	}
 
-
+/*
 	//문서 상신
 	@GetMapping (value = "/approval_request.ajax")
 	@ResponseBody
@@ -165,7 +190,7 @@ public class ApprovalRequestController {
 		Map<String,Object> data = new HashMap<>();
 		data.put("target_user",approvalRequestService.approval_request(doc_idx,empl_idx));
 		return data;
-	}
+	}*/
 
 
 	/*작성 중인 문서 삭제*/
