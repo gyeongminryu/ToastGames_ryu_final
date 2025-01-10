@@ -103,7 +103,7 @@
                                     <td class="td_align_left">
                                         <ul class="list_no_desc list_inline">
                                             <li>
-                                                <button type="button" onclick="approval_request()" class="btn_primary">상신하기</button>
+                                                <button type="button" onclick="approval_save_and_request()" class="btn_primary">상신하기</button>
                                             </li>
                                             <li>
                                                 <button type="button" onclick="approval_write_save()" class="btn_secondary">임시 저장하기</button>
@@ -221,7 +221,7 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="2">
-                                            <input type="file" name="attached_file" multiple="multiple" onchange="approval_read_file(this)"/>
+                                            <input type="file" id = "file_input" name="attached_file" multiple="multiple" onchange="approval_read_file(this)"/>
                                         </td>
                                     </tr>
 

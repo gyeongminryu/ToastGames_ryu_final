@@ -109,7 +109,7 @@
                                         <c:forEach items="${file_infos}" var="file_info">
                                             <li>
                                                 <i class="bi bi-paperclip"></i>
-                                                <span>${file_info.ori_filename} (용량)}</span>
+                                                <span>${file_info.ori_filename} (${file_info.file_size})</span>
                                                 <!-- 다운로드 경로를 입력하세요 --><button onclick="location.href='/approval_download.do?new_filename=${file_info.new_filename}&ori_filename=${file_info.ori_filename}'" class="btn_min btn_secondary">다운로드</button>
                                             </li>
                                         </c:forEach>
@@ -199,29 +199,31 @@
 
                             <c:forEach items="${appr_lines}" var="appr_line">
 
-
                                 <c:if test="${appr_line.appr_order!=null}">
-                                    <tr>
-                                        <td class="td_align_top td_no_padding">
-                                            <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
-                                        </td>
-                                        <td class="approval_line_info">
+                                    <c:if test="${appr_line.appr_order!=0}">
 
-                                            <h4 class="font_subtle approval_datetime_subtle">${appr_line.appr_date}</h4>
-                                            <c:if test="${appr_line.appr_order==1}"><h4>1차 결재자</h4></c:if>
-                                            <c:if test="${appr_line.appr_order==2}"><h4>2차 결재자</h4></c:if>
-                                            <c:if test="${appr_line.appr_order==3}"><h4>최종 결재자</h4></c:if>
+                                        <tr>
+                                            <td class="td_align_top td_no_padding">
+                                                <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
+                                            </td>
+                                            <td class="approval_line_info">
 
-                                            <p><span onclick="tst_view_profile('${appr_line.appr_receiver_idx}')" class="tst_pointer">${appr_line.empl_name} (${appr_line.dept_name}/${appr_line.position_name})</span></p>
+                                                <h4 class="font_subtle approval_datetime_subtle">${appr_line.appr_date}</h4>
+                                                <c:if test="${appr_line.appr_order==1}"><h4>1차 결재자</h4></c:if>
+                                                <c:if test="${appr_line.appr_order==2}"><h4>2차 결재자</h4></c:if>
+                                                <c:if test="${appr_line.appr_order==3}"><h4>최종 결재자</h4></c:if>
+
+                                                <p><span onclick="tst_view_profile('${appr_line.appr_receiver_idx}')" class="tst_pointer">${appr_line.empl_name} (${appr_line.dept_name}/${appr_line.position_name})</span></p>
 
 
-                                            <c:if test="${appr_line.appr_state == 0}"><p><span class="tst_badge_min btn_secondary approval_result_badge">결재 대기중</span></p></c:if>
-                                            <c:if test="${appr_line.appr_state == 1}"><p><span class="tst_badge_min btn_subtle approval_result_badge">결재 승인</span></p></c:if>
-                                            <c:if test="${appr_line.appr_state == 2}"><p><span class="tst_badge_min btn_caution approval_result_badge">반려</span><p class="font_caution approval_reject_reason">${appr_line.appr_reason}</p></p></c:if>
-                                            <c:if test="${appr_line.appr_state == 3}"><p><span class="tst_badge_min btn_disable approval_result_badge">결재 불가</span></p></c:if>
+                                                <c:if test="${appr_line.appr_state == 0}"><p><span class="tst_badge_min btn_secondary approval_result_badge">결재 대기중</span></p></c:if>
+                                                <c:if test="${appr_line.appr_state == 1}"><p><span class="tst_badge_min btn_subtle approval_result_badge">결재 승인</span></p></c:if>
+                                                <c:if test="${appr_line.appr_state == 2}"><p><span class="tst_badge_min btn_caution approval_result_badge">반려</span><p class="font_caution approval_reject_reason">${appr_line.appr_reason}</p></p></c:if>
+                                                <c:if test="${appr_line.appr_state == 3}"><p><span class="tst_badge_min btn_disable approval_result_badge">결재 불가</span></p></c:if>
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    </c:if>
                                 </c:if>
                             </c:forEach>
                             </tbody>
@@ -286,5 +288,6 @@
 <script src="resources/js/approval_rte_setting.js"></script>
 
 <script>
+    var doc_idx = '${doc_info.doc_idx}';
 </script>
 </html>

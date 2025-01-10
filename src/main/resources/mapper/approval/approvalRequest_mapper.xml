@@ -200,8 +200,8 @@
     
     
     <insert id="approval_doc_file_write">
-        INSERT INTO file (uploader_idx,file_key,ori_filename, new_filename,file_type,file_addr)
-        VALUES(#{empl_idx},#{file_key},#{ori_filename},#{new_filename},#{file_type},#{file_addr})
+        INSERT INTO file (uploader_idx,file_key,ori_filename, new_filename,file_type,file_addr,file_size)
+        VALUES(#{empl_idx},#{file_key},#{ori_filename},#{new_filename},#{file_type},#{file_addr},${file_size_format})
     </insert>
 
     <!--document의 file_key update-->
