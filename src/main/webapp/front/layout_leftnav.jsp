@@ -77,7 +77,7 @@
 <%--                </li>--%>
 
                 <li onclick="location.href='/stats_dashboard'" class="tst_pointer">
-                    <i class="bi bi-bar-chart-line-fill"></i><h3>매출/통계</h3>
+                    <i class="bi bi-bar-chart-line-fill"></i><h3>게임 통계</h3>
                 </li>
                 <li onclick="location.href='/companyinfo_detail'" class="tst_pointer">
                     <i class="bi bi-building-fill"></i><h3>회사 정보 관리</h3>
