@@ -329,11 +329,14 @@
                             </tr>
                             <!-- //예시 -->
 
+  
+
                             <!-- pagination -->
                             <tfoot>
                             <tr>
                                 <td colspan="7">
-                                    <ul id="pagination" class="pagination-sm pagination">
+                                <nav aria-label="Page navigation">
+                                    <ul id="pagination" class="pagination">
                                         <li class="page-item first disabled">
                                             <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
                                         </li>
@@ -377,6 +380,7 @@
                                             <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
                                         </li>
                                     </ul>
+                                    </nav>
                                 </td>
                             </tr>
                             </tfoot>
@@ -443,7 +447,24 @@ function emplAllList() {
 function setupPagination(totalItems) {
 	$('#pagination').twbsPagination('destroy');
     var totalPages = Math.ceil(totalItems / itemsPerPage);
-
+	
+    
+ // 데이터가 없는 경우 처리
+    if (totalPages === 0) {
+        $('#pagination').hide(); // 페이지네이션 숨기기
+        var membersTable = $('#dept_member');
+        membersTable.empty();
+        membersTable.append(
+            '<tr>' +
+            '<td colspan="6" class="td_no_data">' +
+            '<p><i class="bi bi-person-exclamation"></i></p>' +
+            '<h3>결과가 없습니다.</h3>' +
+            '</td>' +
+            '</tr>'
+        );
+        return; // 함수 종료
+    }
+    $('#pagination').show(); // 데이터가 있는 경우 페이지네이션 표시
     $('#pagination').twbsPagination({
         totalPages: totalPages,
         visiblePages: 5,

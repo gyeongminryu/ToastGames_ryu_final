@@ -81,6 +81,12 @@
                                 <th class="td_bg_subtle">급여 입금 계좌</th>
                                 <td colspan="3">{은행명} {급여 입금 계좌} (예금주: {직원명})</td>
                             </tr>
+                            <tr>
+                                <th class="td_bg_subtle">입사일</th>
+                                <td>${employee.empl_join_date}</td>
+                                <th class="td_bg_subtle">퇴사일</th>
+                                <td>${employee.empl_resig_date}</td>
+                            </tr>
                             </tbody>
                         </table>
                         <hr class="separator" />
@@ -102,7 +108,7 @@
                                 <th class="td_bg_subtle">회사 내 유선번호</th>
                                 <td>${employee.empl_cmp_phone}</td>
                                 <th class="td_bg_subtle">회사 내 이메일</th>
-                                <td>${employee.empl_cmp_phone}</td>
+                                <td>${employee.empl_cmp_email}</td>
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">개인 전화번호</th>
@@ -148,7 +154,7 @@
                             <tr>
                                 <td colspan="4" class="td_align_left td_no_padding">
                                     <hr class="separator" />
-                                    <button onclick="location.href='/manage_employee_update'" class="btn_primary">정보 수정하기</button>
+                                    <button onclick="location.href='./manage_employee_update.go?empl_idx=${employee.empl_idx}'" class="btn_primary">정보 수정하기</button>
                                 </td>
                             </tr>
                             </tfoot>
@@ -275,6 +281,53 @@
             </div>
         </div>
     </div>
+    
+  <!-- 모달창 -->
+<div id="appoModal" style="display: none; position: fixed; top: 20%; left: 30%; width: 40%; padding: 20px; background-color: #fff; border: 1px solid #000;">
+    <h3>인사 발령</h3>
+    
+   <!-- 폼 영역 -->
+    <form id="appoForm" action="employee_appo.do" method="POST">
+        <div>
+            <label for="department">부서:</label>
+            <select id="department" name="dept_idx">
+                <option value="">선택</option>
+            </select>
+        </div>
+        <div>
+            <label for="position">직급:</label>
+            <select id="position" name="position_idx">
+                <option value="">선택</option>
+            </select>
+        </div>
+        <div>
+            <label for="duty">직책:</label>
+            <select id="duty" name="duty_idx">
+                <option value="">선택</option>
+            </select>
+        </div>
+        <div>
+         	<label>직무</label>
+            <input type="text" name="empl_duty" /> 직무
+           
+        </div>
+         <div>
+            <label for="effectiveDate">선택 날짜:</label>
+            <input type="date" id="movein_date" name="movein_date">
+        </div>
+        <!-- 히든 필드 (선택값 동기화) -->
+        <input type="hidden" id="empl_idx" name="empl_idx" value="${employee.empl_idx}">
+       
+       <!-- <input type="hidden" id="hiddenDuty" name="hiddenDuty"> 처리자 empl_idx 넣기 세션아이디로 --> 
+        
+        <div style="margin-top: 10px;">
+            <button type="submit" id="submitAppo">확인</button>
+            <button type="button" id="closeAppoModal">취소</button>
+        </div>
+    </form>
+</div>  
+    
+    
 </body>
 
 <script src="resources/js/common.js"></script>
