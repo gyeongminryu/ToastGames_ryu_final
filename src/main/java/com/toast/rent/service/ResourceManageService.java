@@ -654,7 +654,7 @@ public class ResourceManageService {
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
 				photo_dto.setOri_filename(oriFilename);
-				photo_dto.setFile_addr(path.toString());
+				photo_dto.setFile_addr("/files/dispose/");
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
 				photo_dto.setUploader_idx(empl_idx);
@@ -852,12 +852,54 @@ public class ResourceManageService {
 	}
 
 	//폐기 상세보기
-	public Map<String, Object> dispDetail(int prodIdx, Model model) {
+	public void dispDetail(int prodIdx, Model model) {
 		ResourceManageDTO dispDetail = resourceMgDAO.dispDetail(prodIdx);
 		String fileKey = dispDetail.getFile_key(); //폐기 파일키
 		List<ResourcePhotoDTO> dispFile = resourceMgDAO.dispFiles(fileKey);
-		prodMgFile(prodIdx);
-		return null;
+		List<ResourcePhotoDTO> prodFile = prodMgFile(prodIdx);
+		model.addAttribute("prodPurchDate", formatDateTime(dispDetail.getProd_purch_date()));
+		model.addAttribute("prodDispoDate", formatDateTime(dispDetail.getProd_dispo_date()));
+		model.addAttribute("DispDate", formatDateTime(dispDetail.getDisp_date()));
+		model.addAttribute("dispDetail", dispDetail);
+		model.addAttribute("dispFile", dispFile);
+		model.addAttribute("prodFile", prodFile);
+	}
+
+	//폐기물품 대여기록
+	public Map<String,Object> dispRentList(int prodIdx, int page, int cnt) {
+		logger.info("현재 페이지:"+page);	
+		logger.info("한 페이지에 보여줄 갯수: "+cnt);
+		
+		int limit = cnt;
+		int offset = (page-1)*cnt ; //0~19, 20~39, 40~59, 60~79
+		int totalPages = resourceMgDAO.allHisCount(cnt,prodIdx);
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("totalPages", totalPages);
+		result.put("currPage", page);
+		List<ResourceManageDTO> list = resourceMgDAO.rentManageList(prodIdx,limit,offset);
+		result.put("list", list);
+		return result;
+	}
+
+	//모든 물품 가져오기 (날짜)
+	public List<ResourceManageDTO> allProdList() {
+		return resourceMgDAO.allProdList();
+	}
+
+	//물품 사용 상태 업뎃
+	public int updateProdState(int state, int prodIdx) {
+		return resourceMgDAO.updateProdState(state,prodIdx);
+		
+	}
+
+	//모든 대여 가져오기
+	public List<ResourceManageDTO> allProdRentList() {
+		return resourceMgDAO.allProdRentList();
+	}
+
+	//연체시 상태 업뎃(prod_return_state: 2)
+	public int updateProdRentState(int state, int prodRentIdx) {
+		return resourceMgDAO.updateProdRentState(state,prodRentIdx);
 	}
 
 

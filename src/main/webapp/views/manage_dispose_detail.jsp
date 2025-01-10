@@ -50,21 +50,21 @@
                             <tbody>
                             <tr>
                                 <th>물품 번호</th>
-                                <th>${detail.prod_idx}</th>
+                                <th>${dispDetail.prod_idx}</th>
                             </tr>
                             <tr>
                                 <th>물품명</th>
-                                <th>${detail.prod_name}</th>
+                                <th>${dispDetail.prod_name}</th>
                             </tr>
                             <tr>
                                 <th>물품 정보</th>
-                                <td>${detail.prod_model}</td>
+                                <td>${dispDetail.prod_model}</td>
                             </tr>
                             <tr>
                                 <th>물품 설명</th>
-                                <td>${detail.prod_info}
+                                <td>${dispDetail.prod_info}
                                 <c:forEach var="disp_file" items="${dispFile}">
-                                	<img src="${disp_file.file_addr}" alt="Product Image" style="max-width: 100px; max-height: 100px;" />
+                                	<img src="/photo/${disp_file.new_filename}" alt="Product Image" style="max-width: 300px; max-height: 300px; display:block;" />
                                 </c:forEach>
                                 </td>
                             </tr>
@@ -96,50 +96,15 @@
                                 <th>반납 여부</th>
                             </tr>
                             </thead>
-                            <tbody>
-
-                            <!-- 대여 내역이 없을 경우 -->
-                            <tr class="rent_history_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                <td colspan="7" class="td_no_data">
-                                    <p><i class="bi bi-box-seam"></i></p>
-                                    <h3>검색 조건에 해당하는 공용 물품이 없습니다.</h3>
-                                </td>
-                            </tr>
-                            <!-- //대여 내역이 없을 경우 -->
-
-                            <!-- 대여 내역 > 기한 내에 반납한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일}</td>
-                                <td>{반납 기한}</td>
-                                <td>{실제 반납일시}</td>
-                                <td>정상 반납</td>
-                            </tr>
-                            <!-- //대여 내역 > 기한 내에 반납한 물품 -->
-
-                            <!-- 대여 내역 > 연체 후 반납한 물품 -->
-                            <tr>
-                                <td>{번호}</td>
-                                <td><h3><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({부서}/{직급})</span></h3></td>
-                                <td class="td_align_left">{대여 사유}</td>
-                                <td>{대여일}</td>
-                                <td>{반납 기한}</td>
-                                <td>{실제 반납일시}</td>
-                                <td><span class="font_caution">연체 후 반납</span></td>
-                            </tr>
-                            <!-- //대여 내역 > 연체 후 반납한 물품 -->
-
-
+                            <tbody id="dipo_rent_list"> 
 
                             <!-- pagination -->
                             <tfoot>
                             <tr>
                                 <td colspan="7">
-                                    <ul id="pagination" class="pagination-sm pagination">
-
-                                    </ul>
+									<nav aria-label="Page navigation">
+									   <ul class="pagination" id="pagination"></ul>
+									</nav>
                                 </td>
                             </tr>
                             </tfoot>
@@ -162,7 +127,7 @@
                             </tr>
                             </thead>
                             <tbody>
-						        <c:forEach var="file" items="${files}">
+						        <c:forEach var="file" items="${prodFile}">
 						            <tr>
 						                <td>
 						                    ${file.ori_filename} (${file.file_size / 1024} KB)
@@ -193,19 +158,19 @@
                             <tbody>
                             <tr>
                                 <th>카테고리</th>
-                                <td>${prod_cate_name}</td>
+                                <td>${dispDetail.prod_cate_name}</td>
                             </tr>
                             <tr>
                                 <th>내용연수</th>
-                                <td>${prod_life}</td>
+                                <td>${dispDetail.prod_life}</td>
                             </tr>
                             <tr>
                                 <th>등록일</th>
-                                <td>${prod_purch_date}</td>
+                                <td>${prodPurchDate}</td>
                             </tr>
                             <tr>
                                 <th>사용연한</th>
-                                <td>${prod_dispo_date}</td>
+                                <td>${prodDispoDate}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -221,29 +186,38 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">대여 정보</th>
+                                <th colspan="2">폐기 정보</th>
                             </tr>
                             </thead>
                             <tbody>
 								<tr>
 							       	<th>폐기번호</th>
-							        <td id="disp_prod_idx">${disp_prod_idx}</td>
+							        <td id="disp_prod_idx">${dispDetail.disp_prod_idx}</td>
 							    </tr>
-							    <tr>
-		                             <th>처리 방식</th>
-		                             <td>폐기|인수</td>
-                            	</tr>
+								<tr>
+								    <th>처리 방식</th>
+								    <td>
+								        <c:choose>
+								            <c:when test="${dispDetail.disp_state == 0}">
+								                폐기
+								            </c:when>
+								            <c:otherwise>
+								                인수
+								            </c:otherwise>
+								        </c:choose>
+								    </td>
+								</tr>
 							    <tr>
 							        <th>폐기사유</th>
-							        <td>${disp_reason}</td>
+							        <td>${dispDetail.disp_reason}</td>
 							    </tr>
 							    <tr>
 							        <th>처리자</th>
-							        <td id="disp_empl_idx">${disp_empl_idx}</td>
+							        <td id="disp_empl_idx">${dispDetail.disp_empl_idx}</td>
 							    </tr>
 							    <tr>
 							        <th>처리일시</th>
-							        <td>${disp_date}</td>
+							        <td>${DispDate}</td>
 							    </tr>
                             </tbody>
                         </table>

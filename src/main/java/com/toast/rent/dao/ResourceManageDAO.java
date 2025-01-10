@@ -174,6 +174,20 @@ public interface ResourceManageDAO {
 
 	//폐기 파일
 	List<ResourcePhotoDTO> dispFiles(String fileKey);
+
+	//모든 물품 목록 (날짜)
+	List<ResourceManageDTO> allProdList();
+
+	//물품 사용상태 업뎃
+	int updateProdState(int state, int prodIdx);
+
+	//모든 대여 가져오기
+	List<ResourceManageDTO> allProdRentList();
+
+	//연체시 상태 업뎃(prod_return_state: 2)
+	int updateProdRentState(int state, int prodRentIdx);
+
+
 	
 	
 

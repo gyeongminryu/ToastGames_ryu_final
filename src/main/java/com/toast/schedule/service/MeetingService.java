@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,9 @@ import com.toast.schedule.dto.MeetingPhotoDTO;
 @Service
 public class MeetingService {
 
+    @Value("${spring.servlet.multipart.location}")
+    private String uploadLocation;
+	
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -105,6 +109,8 @@ public class MeetingService {
 	//회의실 (정보) 추가 사진
 	private void roomFileAdd(MultipartFile file, int room_idx) {
 		
+		//0. 첨부파일 키 생성
+		String fileKey = UUID.randomUUID().toString();
 		
 		//1.파일명 추출
 		String oriFilename = file.getOriginalFilename();
@@ -114,19 +120,18 @@ public class MeetingService {
 		//3.새파일명 생성
 		String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
 		
-		//4. 첨부파일 키 생성
-		String fileKey = UUID.randomUUID().toString();
 		
-		//5. 파일 저장
+		
+		//4. 파일 저장
 		try {
 			byte[] arr = file.getBytes();
-			Path path = Paths.get("C:/files/"+newFilename);
+			Path path = Paths.get(uploadLocation+'/'+newFilename);
 			Files.write(path, arr);
 			//6.저장 내용 files 테이블에 insert
 			MeetingPhotoDTO photo_dto = new MeetingPhotoDTO();
 			photo_dto.setNew_filename(newFilename);
 			photo_dto.setOri_filename(oriFilename);
-			photo_dto.setFile_addr(path.toString());
+			photo_dto.setFile_addr(uploadLocation+"/meeting");
 			photo_dto.setFile_type(ext);
 			photo_dto.setFile_key(fileKey);
 			photo_dto.setUploader_idx(room_idx);
@@ -138,9 +143,6 @@ public class MeetingService {
 		
 		
 	}
-	
-	
-
 	
 	
 	//회의 일정 보기
