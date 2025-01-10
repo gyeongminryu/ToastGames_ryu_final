@@ -383,20 +383,24 @@ public class ApprovalRequestService {
 							//3. file write
 							Files.write(path, bytes);
 
+							//4. 파일 크기 알아보기
+							double file_size = Files.size(path)/1024.0;  // 파일 크기 반환 (바이트 단위)
+							String file_size_format = String.format("%.2f", file_size);  // 소수점 두 자리로 포맷팅
 
+
+							//DB에 새로운 파일 업로드
+							if(approvalRequestDAO.approval_doc_file_write(doc_idx,ori_filename,new_filename,file_key, Integer.parseInt(empl_idx),file_type,file_addr,file_size_format)>0){
+								//logger.info("DB에 저장한 file_key:{}",file_key);
+
+
+								//logger.info("파일 입력 성공");
+
+								//document에 file key update
+								approvalRequestDAO.doc_write_file_key(doc_idx,file_key);
+
+							}
 						} catch (Exception e) {
 							throw new RuntimeException(e);
-						}
-						//DB에 새로운 파일 업로드
-						if(approvalRequestDAO.approval_doc_file_write(doc_idx,ori_filename,new_filename,file_key, Integer.parseInt(empl_idx),file_type,file_addr)>0){
-							//logger.info("DB에 저장한 file_key:{}",file_key);
-
-
-							//logger.info("파일 입력 성공");
-
-							//document에 file key update
-							approvalRequestDAO.doc_write_file_key(doc_idx,file_key);
-
 						}
 
 
@@ -541,7 +545,7 @@ public class ApprovalRequestService {
 	}
 
 	public int approval_request(String doc_idx, int empl_idx) {
-		logger.info("approval_request 컨트롤러");
+		logger.info("approval_request 서비스");
 		logger.info("doc_idx:{}",doc_idx);
 		boolean success = false;
 

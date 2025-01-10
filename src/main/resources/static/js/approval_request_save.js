@@ -1,25 +1,34 @@
 
-
 //임시 저장
 function approval_write_temporal_save(){
     console.log("임시 저장 함수 실행");
-    approval_set_save_data();
+    approval_set_save_data('save');
     refer_save_doc();
-    return true;
+
 }
+
 //저장 함수
 function approval_write_save(){
     console.log("save 함수 실행");
-    approval_set_save_data();
+    approval_set_save_data('save');
     refer_save_doc();
     //ajax 처리 끝나면 이동
     location.href = "/approval_writing_list.go";
 
 }
 
-//form안에 필요한 값들을 저장 전 세팅해주는 함수
-function approval_set_save_data(){
+//상신 후 저장 함수
+function approval_write_request_save(){
+    console.log("임시 저장 함수 실행");
+    approval_set_save_data('request_save');
+    refer_save_doc();
 
+}
+
+
+//form안에 필요한 값들을 저장 전 세팅해주는 함수
+function approval_set_save_data(type){
+    console.log("form 안에 저장 전 데이터 세팅");
     //현재 시간 구하기
     approval_write_current_date();
 
@@ -34,10 +43,13 @@ function approval_set_save_data(){
     console.log(doc_content);
     $('input[name="doc_content"]').val(doc_content);
 
+    if(type === 'request_save'){
+        approval_save_and_request();
+    }else{
+        approval_save_data_send();
+    }
 
-    approval_save_data_send();
-
-
+    approval_sent = 1;
 }
 
 //작성 일자 및 최종 업데이트 일자 구하고 세팅해주기 위한 함수 -> 저장 혹은 임시 저장 클릭 시에만 작동
@@ -79,12 +91,6 @@ function approval_write_current_date(){
 
 //ajax로 formData 값 보내서 저장하는 것
 function approval_save_data_send(){
-    //문서 저장
-    approval_save_doc();
-}
-
-//문서만 저장
-function approval_save_doc(){
     console.log("문서 저장 함수 실행");
     var form = new FormData($('form')[0]);
     $.ajax({
@@ -105,8 +111,50 @@ function approval_save_doc(){
     });
 }
 
-//문서 기반으로 file 저장
+//저장 및 상신 + request 알림
+function approval_save_and_request(){
+    console.log("request 및 문서 저장 함수 실행");
+    var form = new FormData($('form')[0]);
+    $.ajax({
+        type : 'POST',
+        url : 'approval_doc_write_and_request.ajax',
+        enctype : 'multipart/form-data',
+        processData: false,
+        contentType : false,
+        data : form,
+        dataType : 'JSON',
+        success : function(data){
+            console.log(data);
+            console.log("문서 저장 성공");
 
+            // 첫번째 결재자 가져오기
+            console.log("target_user:", data.target_user);
+
+            // 알림
+            var sender_idx = $('.hidden_empl_idx').val();
+            console.log("sender_idx:", sender_idx);
+
+            // 제목
+            var doc_subject = $('input[name="doc_subject"]').val();
+            doc_subject += $('.hidden_empl_name').val();
+            doc_subject += '가 결재를 요청한 문서가 있습니다. (결재 마감일시 : ';
+            doc_subject += $('#doc_end_date').val();
+            doc_subject += ')';
+
+            // 결재 요청했으면 received 그걸로 넣기
+            approval_insert_notify('/approval_received_detail.go?doc_idx=' + doc_idx + '&type=received', data.target_user, sender_idx, doc_subject, '', 1);
+
+            // 웹소켓
+            // approval_set_notify(data.target_user, location.pathname, sender_idx);
+
+            // 리스트로 이동
+            location.href = "/approval_writing_list.go";
+
+        },error : function (e){
+            console.log(e);
+        }
+    });
+}
 
 
 //문서의 참조를 저장 요청하는 함수
@@ -137,5 +185,4 @@ function refer_save_doc(){
             }
         });
     }
-
 }

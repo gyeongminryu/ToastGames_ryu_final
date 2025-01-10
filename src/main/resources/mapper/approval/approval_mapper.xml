@@ -33,7 +33,7 @@
     </select>
     
     <select id="form_list_searched" resultType="Map">
-        SELECT form_subject,form_idx FROM form WHERE form_subject LIKE CONCAT('%',#{search_val},'%')
+        SELECT form_subject,form_idx FROM form WHERE form_subject LIKE CONCAT('%',#{search_val},'%') AND form_state =1
     </select>
 
     <select id="show_team" resultType="Map">
@@ -177,7 +177,7 @@
     <!--my_appr_state-->
     <select id="get_my_appr_state" resultType="int">
         SELECT appr_state FROM approval
-        WHERE doc_idx = #{doc_idx} AND appr_receiver_idx = #{empl_idx};
+        WHERE doc_idx = #{doc_idx} AND appr_receiver_idx = #{empl_idx} AND appr_order != 0;
     </select>
 
     <!--파일 키 가져오기-->
@@ -188,5 +188,16 @@
     <!--파일 정보 가져오기-->
     <select id="get_file_info" resultType="Map">
         SELECT * FROM file WHERE file_key = #{file_key}
+    </select>
+
+
+    <!--doc의 form_content-->
+    <select id="get_doc_form_content" resultType="String">
+        SELECT doc_content FROM document WHERE doc_idx = #{doc_idx}
+    </select>
+
+    <!--결재 진행 중인 사람 이름 가져오기-->
+    <select id="get_my_appr_name" resultType="String">
+        SELECT empl_name FROM employee WHERE empl_idx = #{empl_idx}
     </select>
 </mapper>

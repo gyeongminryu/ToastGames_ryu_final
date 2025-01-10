@@ -112,7 +112,7 @@
                     <!-- 기본 -->
                     <tr>
                         <td class="td_align_left td_no_padding">
-                            <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">${received_list.empl_name} (${received_list.dept_name}/${received_list.position_name})</span>
+                            <span onclick="tst_view_profile('${received_list.empl_idx}')" class="tst_pointer">${received_list.empl_name} (${received_list.dept_name}/${received_list.position_name})</span>
                         </td>
                         <td>${received_list.form_subject}</td>
                         <td class="td_align_left">

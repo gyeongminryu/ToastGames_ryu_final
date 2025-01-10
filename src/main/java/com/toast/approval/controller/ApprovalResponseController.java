@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Controller
 public class ApprovalResponseController {
-	int empl_idx = 10022; //세션 적용 후 없애기
+	int empl_idx = 10002; //세션 적용 후 없애기
 	//int empl_idx = 10021; //세션 적용 후 없애기
 	//int empl_idx = 10002; //최종 결재자
 
@@ -29,10 +29,6 @@ public class ApprovalResponseController {
 		this.approvalService = approvalService;
 	}
 
-	@RequestMapping (value="/approval_received_detail.go")
-	public String approval_received_detail(){
-		return "approval_received_detail";
-	}
 
 	//결재 후
 	@PostMapping (value="save_approved_doc_content.ajax")

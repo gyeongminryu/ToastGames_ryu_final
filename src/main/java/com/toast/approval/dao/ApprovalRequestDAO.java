@@ -26,7 +26,7 @@ public interface ApprovalRequestDAO {
     int doc_write(Map<String, String> param);
 
 
-    int approval_doc_file_write(String doc_idx, String ori_filename, String new_filename, String file_key, int empl_idx, String file_type, String file_addr);
+    int approval_doc_file_write(String doc_idx, String ori_filename, String new_filename, String file_key, int empl_idx, String file_type, String file_addr, String file_size_format);
 
     int doc_write_file_key(String doc_idx, String file_key);
 
