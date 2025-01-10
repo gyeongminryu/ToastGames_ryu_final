@@ -22,13 +22,13 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item" onclick="location.href='/manage_employee_list'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_list'">
                         <h1>인사 관리</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/manage_employee_resign_list'">
                         <h1>퇴사자 관리</h1>
                     </li>
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_regist'">
+                    <li class="tst_title_item" onclick="location.href='/manage_employee_regist'">
                         <h1>직원 등록</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/manage_employee_regist_multiple'">
@@ -36,7 +36,8 @@
                     </li>
                 </ul>
                 <!-- //제목 -->
-                <form action="./employee_add.do" method="POST">
+                <form>
+                <input type="hidden" name="empl_idx" value="${employee.empl_idx}" />
                     <div class="tst_flex">
                         <div class="tst_col9">
                             <div class="tst_flex tst_flex_block">
@@ -44,22 +45,23 @@
                                     <div class="tst_flex">
                                         <div class="tst_col4">
                                             <ul class="list_no_desc list_block">
+                                            
                                                 <li>
                                                     <label class="form_label">이름</label>
-                                                    <input type="text" name="empl_name" maxlength="100" required placeholder="이름을 입력하세요" />
+                                                    <input type="text" name="empl_name" maxlength="100" value="${employee.empl_name}" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">ID</label>
-                                                    <input type="text" name="empl_id" maxlength="100" required placeholder="ID를 입력하세요" />
+                                                    <input type="text" name="empl_id" maxlength="100" value="${employee.empl_id}" class="input_disable" readonly />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">비밀번호</label>
-                                                    <input type="text" name="empl_pw" maxlength="100" required placeholder="ID를 입력하세요" />
+                                                    <button onclick="tst_modal_call('tst_modal_password')" type="button" class="btn_subtle btn_full">임시 비밀번호 발급하기</button>
                                                 </li>
                                                 <li>
                                                     <label class="form_label">성별</label>
                                                     <div class="tst_flex">
-                                                        <input type="hidden" name="gender" value="" />
+                                                        <input type="hidden" name="empl_gender" value="${employee.empl_gender ? '여성' : '남성'}" />
                                                         <div class="tst_col6">
                                                             <button type="button" onclick="select_gender('0')" class="btn_full btn_empty gender_0">남</button>
                                                         </div>
@@ -70,18 +72,11 @@
                                                 </li>
                                                 <li>
                                                     <label class="form_label">생년월일</label>
-                                                    <input type="date" name="empl_birth" required placeholder="생년월일을 입력하세요" />
+                                                    <input type="date" name="empl_birth" value="${employee.empl_birth}" placeholder="생년월일을 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">주민등록번호</label>
-                                                    <div class="tst_flex">
-                                                    <div class="tst_col6">
-                                                    <input type="text" name="empl_ssn1" maxlength="6" required placeholder="앞자리를 입력하세요" />
-                                                    </div>
-                                                    <div class="tst_col6">
-                                                    <input type="text" name="empl_ssn2" maxlength="7" required placeholder="뒷자리를 입력하세요" />
-                                                	</div>
-                                                	</div>
+                                                    <input type="text" name="empl_ssn1" maxlength="100" value="${employee.empl_ssn1}" placeholder="주민등록번호를 입력하세요" />
                                                 </li>
                                             </ul>
                                         </div>
@@ -89,29 +84,29 @@
                                             <ul class="list_no_desc list_block">
                                                 <li>
                                                     <label class="form_label">사내 유선번호</label>
-                                                    <input type="text" name="empl_cmp_phone" maxlength="100" placeholder="사내 유선번호를 입력하세요" />
+                                                    <input type="text" name="empl_cmp_phone" maxlength="100" value="${employee.empl_cmp_phone}" placeholder="사내 유선번호를 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">사내 이메일</label>
-                                                    <input type="text" name="empl_cmp_email" maxlength="100" placeholder="사내 이메일을 입력하세요" />
+                                                    <input type="text" name="empl_cmp_email" maxlength="100" value="${employee.empl_cmp_email}" placeholder="사내 이메일을 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">
                                                         비상 연락처
                                                         <span class="font_caution">* 비상시 연락할 수 있는 전화번호를 입력하세요.</span>
                                                     </label>
-                                                    <input type="text" name="empl_per_phone" maxlength="100" placeholder="비상 연락처를 입력하세요" />
+                                                    <input type="text" name="empl_per_phone" maxlength="100" value="${employee.empl_per_phone}" placeholder="비상 연락처를 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">
                                                         개인 이메일
                                                         <span class="font_caution">* 비밀번호 분실시 새 비밀번호를 수령할 수 있는 메일 주소를 입력하세요.</span>
                                                     </label>
-                                                    <input type="email" name="empl_per_email" maxlength="100" required placeholder="개인 이메일을 입력하세요" />
+                                                    <input type="text" name="empl_per_email" maxlength="100" value="${employee.empl_per_email}" placeholder="개인 이메일을 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">입사일</label>
-                                                    <input type="date" name="empl_join_date" maxlength="100" />
+                                                    <input type="date" name="empl_join_date" maxlength="100" value="${employee.empl_join_date}" class="input_disable" readonly />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">
@@ -120,18 +115,14 @@
                                                     </label>
                                                     <div class="tst_flex">
                                                         <div class="tst_col4">
-                                                            <select name="bank_idx">
-															    <option value="1">농협</option>
-															    <option value="2">수협</option>
-															    <option value="3">국민</option>
-															    <option value="4">우리</option>
-															    <option value="5">신한</option>
-															    <option value="6">KEB하나</option>
-															    <option value="7">기업</option>
-															  </select>
+                                                            <select name="">
+                                                                <option value="{은행 번호}">{은행명}</option>
+                                                                <option value="{은행 번호}">{은행명}</option>
+                                                                <option value="{은행 번호}">{은행명}</option>
+                                                            </select>
                                                         </div>
                                                         <div class="tst_col8">
-                                                            <input type="text" name="empl_account" maxlength="100" placeholder="계좌번호를 입력하세요" />
+                                                            <input type="text" name="" maxlength="100" value="{계좌번호}" placeholder="계좌번호를 입력하세요" />
                                                         </div>
                                                     </div>
                                                 </li>
@@ -141,22 +132,21 @@
                                 </div>
                                 <div class="tst_col12">
                                     <label class="form_label">주소</label>
-                                    <input type="text" name="" maxlength="100" placeholder="주소를 입력하세요" />
+                                    <input type="text" name="empl_addr" maxlength="100" value="${employee.empl_addr}" placeholder="주소를 입력하세요" />
                                     <hr class="separator" />
                                 </div>
                                 <div class="tst_col12">
                                     <ul class="tst_list list_no_desc list_inline">
                                         <li>
-                                            <input type="submit" class="btn_primary" value="직원 등록하기" />
+                                            <input type="submit" class="btn_primary" value="정보 수정하기" />
                                         </li>
                                         <li>
-                                            <input type="button" onclick="location.href='/manage_employee_list'" class="btn_secondary" value="목록으로 돌아가기" />
+                                            <input type="button" onclick="location.href='/employee_detail.go?empl_idx=${employee.empl_idx}'" class="btn_secondary" value="이전으로 돌아가기" />
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="tst_col3">
 
                             <!-- 첨부 파일 목록 -->
@@ -183,15 +173,6 @@
                                         <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
                                     </td>
                                 </tr>
-
-                                <!-- 첨부 파일이 없는 경우 아래와 같이 입력하세요 -->
-                                <tr>
-                                    <td colspan="2" class="td_align_center">
-                                        <span class="font_subtle">첨부 파일이 없습니다.</span>
-                                    </td>
-                                </tr>
-                                <!-- //첨부 파일이 없는 경우 아래와 같이 입력하세요 -->
-
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -267,53 +248,16 @@
                                 </tfoot>
                             </table>
                             <!-- //직인 > 파일이 없을 경우 -->
+
                         </div>
+
                     </div>
-                    
                 </form>
             </div>
         </div>
     </div>
-    </div>
-
-        <script src="resources/js/common.js"></script>
-<script>
-//성별 버튼 스타일 설정
-function scan_gender() {
-    const genderValue = document.querySelector('[name="gender"]').value;
-    const gender0 = document.querySelector('.gender_0');
-    const gender1 = document.querySelector('.gender_1');
-
-    if (genderValue === '0') {
-        gender0.classList.remove('btn_empty');
-        gender0.classList.add('btn_subtle');
-        gender1.classList.remove('btn_subtle');
-        gender1.classList.add('btn_empty');
-    } else if (genderValue === '1') {
-        gender0.classList.remove('btn_subtle');
-        gender0.classList.add('btn_empty');
-        gender1.classList.remove('btn_empty');
-        gender1.classList.add('btn_subtle');
-    }
-}
-
-// 성별 선택 함수
-function select_gender(gender) {
-    document.querySelector('[name="gender"]').value = gender;
-    scan_gender();
-}
-
-// DOMContentLoaded 이후에 초기화
-document.addEventListener('DOMContentLoaded', function () {
-    scan_gender(); // 초기 성별 버튼 스타일 설정
-});
-
-// 직인 파일 입력 시 이미지 미리보기
-function img_preview(elem) {
-    // 이미지 미리보기 로직 구현 (필요 시)
-}
-</script>
     <c:import url="manage_employee_update_modal.jsp" />
 </body>
-
+<script src="resources/js/common.js"></script>
+<script src="resources/js/manage_employee_update.js"></script>
 </html>

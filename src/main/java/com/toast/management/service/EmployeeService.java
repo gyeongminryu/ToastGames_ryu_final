@@ -94,7 +94,7 @@ public class EmployeeService {
 		}
 		
 		employeeDAO.employeeAdd(param);
-		
+		// 사원등록시 파일 등록하기 추가 ??
 		
 		
 	} // employeeAdd(MultipartFile[] files, Map<String, String> param)
