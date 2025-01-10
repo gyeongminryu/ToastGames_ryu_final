@@ -24,11 +24,7 @@ public class ApprovalController {
 
 	//세션 처리
 	//보낸 + 작성한
-	int empl_idx = 10024;
-
-	//int empl_idx = 10022;
-	//int empl_idx = 10021; //두번째 결재자
-	//int empl_idx = 10022; //최종 결재자
+	int empl_idx = 10002;
 
 	public ApprovalController(ApprovalService approvalService) {
 		this.approvalService = approvalService;
@@ -37,10 +33,10 @@ public class ApprovalController {
 	/*결재 작성 관련*/
 
 	//결재 목록 조회 - 옮기기
-	@RequestMapping(value = "/approval_writing_list.go")
+	/*@RequestMapping(value = "/approval_writing_list.go")
 	public String approval_writing_list() {
 		return "approval_writing_list";
-	}
+	}*/
 
 	//결재 양식 목록 조회 - 옮기기
 	@RequestMapping (value = "/approval_form_list.go")
@@ -192,7 +188,7 @@ public class ApprovalController {
 
 
 	/*detail 상세보기*/
-	@GetMapping (value={"/approval_sent_detail.go","/approval_received_detail.go"})
+	@RequestMapping (value={"/approval_sent_detail.go","/approval_received_detail.go"})
 	public String approval_received_detail(int doc_idx,String type, Model model){
 		logger.info("doc_idx:{}", doc_idx);
 		logger.info("type:{}", type);
@@ -212,5 +208,15 @@ public class ApprovalController {
 		return approvalService.file_download(new_filename,ori_filename);
 	}
 
+
+	/*문서 양식의 내용 가져오는 함수*/
+	@PostMapping (value = "/appr_doc_form_content.ajax")
+	@ResponseBody
+	public Map<String,Object> appr_doc_form_content(int doc_idx){
+		logger.info("form_doc_idx:{}",doc_idx);
+		Map<String,Object> data = new HashMap<>();
+		data.put("form_content",approvalService.get_doc_form_content(doc_idx));
+		return data;
+	}
 
 }

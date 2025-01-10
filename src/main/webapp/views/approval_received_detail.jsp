@@ -67,6 +67,7 @@
                                 <input type="hidden" id = "empl_idx" value = ${empl_idx}>
 
                                 <input type="hidden" id = "my_appr_order" value = ${my_appr_order}>
+                                <input type="hidden" id = "my_appr_name" value = ${empl_name}>
 
                                 <th>제목</th>
                                 <th>

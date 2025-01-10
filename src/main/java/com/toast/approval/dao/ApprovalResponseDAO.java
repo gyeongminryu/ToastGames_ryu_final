@@ -26,4 +26,6 @@ public interface ApprovalResponseDAO {
     List<Map<String, Object>> get_lower_line(String doc_idx, String line_order);
 
     int get_next_appr(String line_order, String doc_idx);
+
+    int update_reject_time(String doc_idx, int empl_idx, String formatted_date_time);
 }

@@ -349,6 +349,7 @@ public class ApprovalService {
 
 
 	public void get_all_detail(int doc_idx, int empl_idx, Model model, String type) {
+
 		//내 empl_idx, doc_idx의 읽음 시간 기록하기
 		LocalDate date = LocalDate.now();
 		LocalTime time = LocalTime.now();
@@ -369,6 +370,9 @@ public class ApprovalService {
 			//내 결재 상태 가져오기 - 이에 따라 버튼이 보일지 안 보일지
 			model.addAttribute("my_appr_state",approvalDAO.get_my_appr_state(doc_idx,empl_idx));
 
+			//결재하는 내 이름 가져오기
+			model.addAttribute("my_appr_name",approvalDAO.get_my_appr_name(empl_idx));
+
 		}
 
 
@@ -376,7 +380,8 @@ public class ApprovalService {
 		//문서 정보 (doc_info)
 		Map<String,Object> doc_info = approvalDAO.get_doc_info(doc_idx);
 		model.addAttribute("doc_info",doc_info);
-
+		model.addAttribute("doc_idx",doc_idx);
+		logger.info("doc_info:{}",doc_info);
 
 		//폼 정보
 		Map<String,Object> form_info = approvalDAO.get_form_info(doc_idx);
@@ -406,7 +411,6 @@ public class ApprovalService {
 		model.addAttribute("refer_lines",refer_lines);
 
 
-
 		//내 empl_idx 가져오기
 		model.addAttribute("empl_idx", empl_idx);
 
@@ -431,4 +435,10 @@ public class ApprovalService {
 		}
         return new ResponseEntity<Resource>(resource,header, HttpStatus.OK);
     }
+
+	public String get_doc_form_content(int doc_idx) {
+		logger.info("doc_idx:{}",doc_idx);
+
+		return approvalDAO.get_doc_form_content(doc_idx);
+	}
 }

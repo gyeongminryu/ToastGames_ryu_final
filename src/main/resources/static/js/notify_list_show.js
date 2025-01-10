@@ -47,7 +47,6 @@ function open_alert_list(){
                    case 1 :
                        console.log("결재 요청한 알람");
                        content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-megaphone margin_right"></i>결재 요청</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'"  class="alert_item_body tst_pointer"><p>'+noti.noti_subject+'</p></div></div></li>';
-
                        break;
                    case 2:
                        console.log("결재 승인한 알람");

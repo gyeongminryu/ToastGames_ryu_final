@@ -43,11 +43,11 @@ public class EmployeeAddController {
 
     @RequestMapping (value = "/employee_add_all.go")
     public String main() {
-        return "employee_add_all";
+        return "manage_employee_regist_multiple";
     }
 
     //엑셀 읽는 함수
-    @RequestMapping(value = "/submit.do")
+    @RequestMapping(value = "/manage_employee_regist_insert.do")
     public String readExcel(@RequestParam MultipartFile file, Model model) throws IOException, IOException {
 
 
@@ -55,7 +55,7 @@ public class EmployeeAddController {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         logger.info(extension);
         Workbook workbook = null;
-        String page = "excel_list";
+        String page = "manage_employee_regist_insert";
         String msg = "";
 
         try {
@@ -85,6 +85,7 @@ public class EmployeeAddController {
                 model.addAttribute("data",make_dataList(workbook,file));
                 model.addAttribute("data_col_names",data_col_names);
                 model.addAttribute("row_length",row_length);
+                model.addAttribute("col_length",col_length);
 
 
 
@@ -95,7 +96,7 @@ public class EmployeeAddController {
                 model.addAttribute("msg",msg);
                 logger.info("msg:{}",msg);
 
-                page = "excel"; //alert 내용 전달하려면 redirect (x), excel로
+                page = "manage_employee_regist_multiple"; //alert 내용 전달하려면 redirect (x), excel로
             }
 
         } catch (Exception e) {
@@ -120,6 +121,7 @@ public class EmployeeAddController {
     List<Map<String, Object>> data_list = new ArrayList<>();
     List<Map<String, Object>> data_col_names = new ArrayList<>();
     int row_length = 0;
+    int col_length = 0;
 
     //엑셀 읽어서 전달할 파라메터(데이터 리스트) 만드는 함수
     private List<Map<String, Object>> make_dataList(Workbook workbook, MultipartFile file) {
@@ -168,6 +170,7 @@ public class EmployeeAddController {
 
 
         row_length = worksheet.getPhysicalNumberOfRows();
+        col_length = first_row.getPhysicalNumberOfCells();
         for(int i = 0; i<worksheet.getPhysicalNumberOfRows();i++) {
 
 
@@ -180,7 +183,7 @@ public class EmployeeAddController {
                 data_col_names.add(data);//열 이름 가져와서 동적으로 표 구성하게끔 구성
             }else{
                 data_list.add(data);
-                }
+            }
 
 
 
@@ -229,10 +232,7 @@ public class EmployeeAddController {
                             break;
                     }
 
-                }
-
-
-
+            }
         }
         logger.info("함수 안에서 확인한 dataList:{}",data_list);
         logger.info("함수 안에서 확인한 data_colname:{}",data_col_names);

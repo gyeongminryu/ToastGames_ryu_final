@@ -61,7 +61,6 @@
 </div>
 </body>
 <script src="/resources/js/management_member_add_all.js"></script>
-<script>
-    var row_length = '${row_length}';//이름 열까지 포함된 값
-</script>
+
+
 </html>

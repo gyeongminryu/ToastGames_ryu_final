@@ -58,6 +58,23 @@ public class ApprovalResponseService {
 		//3. 내 line_order을 가져와서 그 line_order보다 큰 line_order 값이 있으면 그 값들을 가져와서 그것들의 state를 3(중단)으로 바꿈
 		success = approvalResponseDAO.count_top_line_order(doc_idx,line_order)>0 &&approvalResponseDAO.update_top_line_order(doc_idx,line_order)>0;
 
+		//4.반려 시간을 입력(approval_date)
+		LocalDate date = LocalDate.now();
+		LocalTime time = LocalTime.now();
+
+		logger.info("date:{}",date);
+		logger.info("time:{}",time);
+
+		//time format
+		String formatted_time = time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+		logger.info("formatted_time:{}",formatted_time);
+		logger.info("formatted_datetime:{}",date+ " "+formatted_time);
+		String formatted_datetime = date+ " "+formatted_time;
+
+		success= approvalResponseDAO.update_reject_time(doc_idx,empl_idx,formatted_datetime)>0;
+
+
 		List<Map<String,Object>> target_user = new ArrayList<Map<String,Object>>();
 		if(approvalResponseDAO.count_lower_line(doc_idx,line_order)>0){
 			target_user= approvalResponseDAO.get_lower_line(doc_idx,line_order);

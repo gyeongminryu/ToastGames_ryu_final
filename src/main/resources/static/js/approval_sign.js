@@ -6,6 +6,8 @@ var empl_idx = $('#empl_idx').val();
 var doc_write_empl_idx = $('#doc_write_empl_idx').val();
 
 var my_appr_order=$('#my_appr_order').val();
+var my_appr_name=$('#my_appr_name').val();
+
 
 console.log("doc_idx",doc_idx);
 console.log("empl_idx",empl_idx);
@@ -43,7 +45,8 @@ function approval_sign_close(){
 
 function approval_sign_save(){
     //본인의 결재선에 사인 저장
-    var line_url = "signatureImage"+my_appr_order;
+    var line_url = "approval_name"+my_appr_order;
+        //"signatureImage"+my_appr_order;
     console.log(line_url);
     const signatureImage = document.getElementById(line_url);
     //만약 사인된 게 있으면,
@@ -54,6 +57,8 @@ function approval_sign_save(){
     console.log(isValid);
 
     var src = '';
+
+    //도장 이미지
     const sign_preview = document.getElementById('sign_preview');
 
     //직인이 있거나, 도장이 있는 경우 처리
@@ -70,12 +75,16 @@ function approval_sign_save(){
 
         signatureImage.src = src;
         //사인된거 혹은 도장이 있을 경우에는
-        signatureImage.style.display = "block";
-        signatureImage.width = 50; // 원하는 너비로 설정
-        signatureImage.height = 50; // 원하는 높이로 설정
-        //html을 업데이트 해주기
-        var doc_content = $('.doc_content').html();
-        //console.log("doc_content",doc_content);
+        //signatureImage.style.display = "block";
+        //signatureImage.width = 50; // 원하는 너비로 설정
+        //signatureImage.height = 50; // 원하는 높이로 설정
+        signatureImage.style.backgroundImage = "url('" +src+"')";
+
+        //html을 업데이트 해주기 (확인)
+        //var doc_content = $('.doc_content').html();
+
+        var doc_content = editor1.getHTMLCode();
+        console.log("doc_content",doc_content);
 
 
         // 켜기
@@ -106,24 +115,24 @@ function save_approved_doc_content(doc_content){
                 console.log("타겟 유저",data.target_user);
                 //가져올 필요 없음
                 //결재 요청자 가져오기
+                doc_appr_subject ='';
+                doc_appr_subject += $('#doc_write_empl_name').val();
+                doc_appr_subject += '가 결재를 요청한 문서가 있습니다. (결재 마감일시 : ';
+                doc_appr_subject+= $('#doc_end_date').val();
+                doc_appr_subject+=')';
 
 
                 //1.결재 요청 알람 -- 다음 결재자
-            approval_insert_notify_promise(location.pathname+location.search,data.target_user,empl_idx,doc_subject,doc_content_sub,2).then(function (){
+                approval_insert_notify_promise(location.pathname+location.search,data.target_user,empl_idx,doc_appr_subject,doc_content_sub,2).then(function (){
                 console.log("첫 번째 알림 완료");
                 //2.결재 승인 알람 -- 결재 요청자
                 //sent 주소로 넣기
                 //approval_set_notify(data.target,location.pathname);
-                url = '/approval_sent_detail.go?doc_idx='+doc_idx+'&type=sent';
-                console.log(parseInt(doc_write_empl_idx));
+                    doc_content_sub = my_appr_name;
+                    url = '/approval_sent_detail.go?doc_idx='+doc_idx+'&type=sent';
+                    console.log(parseInt(doc_write_empl_idx));
 
-                doc_subject ='';
-                doc_subject += $('#doc_write_empl_name').val();
-                doc_subject += '가 결재를 요청한 문서가 있습니다. (결재 마감일시 : ';
-                doc_subject += $('#doc_end_date').val();
-                doc_subject +=')';
-
-                return approval_insert_notify_promise(url,parseInt(doc_write_empl_idx),empl_idx,doc_subject,'내용 없음',1);
+                return approval_insert_notify_promise(url,parseInt(doc_write_empl_idx),empl_idx,doc_subject,doc_content_sub,1);
                 }).then(function (){
                     console.log("두 번째 알림 완료");
                     location.href = "/approval_received_list.go";

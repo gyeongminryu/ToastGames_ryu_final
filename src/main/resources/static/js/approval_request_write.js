@@ -140,6 +140,8 @@ function approval_draw_appr_line(data){
 
 
         content = approval_line.empl_name +'('+approval_line.dept_name+'/'+approval_line.position_name+')';
+        
+        //폼 양식 수정
         switch (approval_line.line_order){
             case 1 :
             //이름(직책/직급) html에 넣기
@@ -157,9 +159,9 @@ function approval_draw_appr_line(data){
                 $(dept_line_id).val(approval_line.dept_idx);
                 $(duty_line_id).val(approval_line.duty_idx);
                 $(position_line_id).val(approval_line.position_idx);
-
-                $('#approval_1 .empl_name').html(approval_line.empl_name);
-                $('#approval_1 .position').html(approval_line.dept_name+'/'+approval_line.position_name);
+                getHtmlCode();
+                $('#approval_duty_1').html(approval_line.dept_name+'/'+approval_line.position_name+'/'+approval_line.empl_name);
+                setHtmlCode();
 
 
                 break;
@@ -178,9 +180,12 @@ function approval_draw_appr_line(data){
                 $(dept_line_id).val(approval_line.dept_idx);
                 $(duty_line_id).val(approval_line.duty_idx);
                 $(position_line_id).val(approval_line.position_idx);
-                $('#approval_2 .empl_name').html(approval_line.empl_name);
+                getHtmlCode();
+                $('#approval_duty_2').html(approval_line.dept_name+'/'+approval_line.position_name+'/'+approval_line.empl_name);
+                setHtmlCode();
+              /*  $('#approval_2 .empl_name').html(approval_line.empl_name);
                 $('#approval_2 .position').html(approval_line.dept_name+'/'+approval_line.position_name);
-
+               */
                 break;
 
             case 3 :
@@ -198,9 +203,14 @@ function approval_draw_appr_line(data){
                 $(dept_line_id).val(approval_line.dept_idx);
                 $(duty_line_id).val(approval_line.duty_idx);
                 $(position_line_id).val(approval_line.position_idx);
-                $('#approval_3 .empl_name').html(approval_line.empl_name);
-                $('#approval_3 .position').html(approval_line.dept_name+'/'+approval_line.position_name);
 
+                getHtmlCode();
+                $('#approval_duty_3').html(approval_line.dept_name+'/'+approval_line.position_name+'/'+approval_line.empl_name);
+                setHtmlCode();
+
+                /*$('#approval_3 .empl_name').html(approval_line.empl_name);
+                $('#approval_3 .position').html(approval_line.dept_name+'/'+approval_line.position_name);
+                */
                 break;
 
         }

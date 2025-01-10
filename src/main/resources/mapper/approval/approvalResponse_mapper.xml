@@ -30,6 +30,12 @@
                             WHERE doc_idx=#{doc_idx} AND appr_receiver_idx = #{empl_idx}
     </update>
 
+    <!--reject_time_update-->
+    <update id="update_reject_time">
+        UPDATE approval SET appr_date = #{formatted_date_time}
+        WHERE doc_idx=#{doc_idx} AND appr_receiver_idx = #{empl_idx}
+    </update>
+
     <select id="count_top_line_order">
         SELECT COUNT(*) FROM approval WHERE doc_idx = #{doc_idx} AND appr_order > #{line_order}
     </select>
