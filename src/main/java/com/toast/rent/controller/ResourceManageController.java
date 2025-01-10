@@ -1,5 +1,7 @@
 package com.toast.rent.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -43,6 +46,9 @@ public class ResourceManageController {
 		this.session = session;
 	}
 	
+	
+	
+	// 파일 경로 관리
 	//관리부서 변경 시 idx 변경 가능
 	
 	
@@ -621,11 +627,60 @@ public class ResourceManageController {
 	}
 	
 	//사용연한다되면물품 상태 0으로 업뎃
-	
+	@Scheduled(cron = "0 0 12 * * ?")
+	public void updateProdState() {
+		//모든 물품 날짜 확인
+		List<ResourceManageDTO> prodList = resourceMgService.allProdList();
+		for (ResourceManageDTO product : prodList) {
+			int prodIdx = product.getProd_idx();
+	        LocalDateTime prodDispoDateTime = product.getProd_dispo_date();
+
+	        // LocalDate로 변환 (시간 정보는 제거)
+	        LocalDate prodDispoDate = prodDispoDateTime.toLocalDate();
+
+	        // 오늘 날짜 가져오기
+	        LocalDate today = LocalDate.now();
+
+	        // 과거 날짜인지 확인
+	        if (prodDispoDate.isBefore(today)) {
+	        	//지난거 업뎃
+	            resourceMgService.updateProdState(0, prodIdx);
+	        } else if (prodDispoDate.isEqual(today)) {
+	        	logger.info("Product disposal date is today: " + prodDispoDate);
+	        } else {
+	            logger.info("Product disposal date is in the future: " + prodDispoDate);
+	        }
+		}
+		
+	}
 	
 	//연체시 상태 업뎃(prod_return_state: 2)
-	
+	@Scheduled(cron = "0 0 18 * * ?")
+	public void updateReturnState() {
+		//모든 물품 날짜 확인
+		List<ResourceManageDTO> prodList = resourceMgService.allProdRentList();
+		for (ResourceManageDTO product : prodList) {
+			int prodRentIdx = product.getProd_rent_idx();
+			LocalDateTime prodReturnDateTime = product.getProd_return_date();
+	        LocalDateTime prodExpDateTime = product.getProd_exp_date();
 
+
+	        // 오늘 날짜 가져오기
+	        LocalDateTime now = LocalDateTime.now();
+
+	        // 과거 날짜인지 확인
+	        if (prodReturnDateTime == null && prodExpDateTime.isBefore(now)) {
+	            resourceMgService.updateProdRentState(2, prodRentIdx);
+	        } else if (prodExpDateTime.isEqual(now)) {
+	        	logger.info("Product disposal date is today: " + prodExpDateTime);
+	        } else {
+	            logger.info("Product disposal date is in the future: " + prodExpDateTime);
+	        }
+		}
+	}
+	
+	
+	
 	//폐기물품 상세보기
 	@GetMapping(value="/manage_dispose_detail.go")
 	public String disposeDetail(@RequestParam("prod_idx") String prod_idx, Model model) {
@@ -636,9 +691,19 @@ public class ResourceManageController {
 	}
 	
 	
-	
-
-	//
+	//폐기물품 대여기록
+	@GetMapping(value="/dispoRentList.ajax")
+	@ResponseBody
+	public Map<String, Object> dispoRentList(
+			@RequestParam("page") String page,
+			@RequestParam("cnt") String cnt,
+			@RequestParam("prod_idx") String prod_idx
+			){
+		int page_ = Integer.parseInt(page);
+		int cnt_ = Integer.parseInt(cnt);
+		int prodIdx = Integer.parseInt(prod_idx);
+		return resourceMgService.dispRentList(prodIdx,page_,cnt_);	
+	}
 	
 	
 	
