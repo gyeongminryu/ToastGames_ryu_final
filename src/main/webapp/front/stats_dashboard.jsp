@@ -287,7 +287,7 @@
                                 </div>
                             </div>
                             <div class="button_container">
-                                <i class="bi bi-arrow-right-circle"></i>
+                                <i onclick="tst_modal_call_param('tst_modal_review', '{param}')" class="bi bi-arrow-right-circle"></i>
                             </div>
                         </div>
                     </div>
@@ -551,7 +551,7 @@
                                 </div>
                             </div>
                             <div class="button_container">
-                                <i class="bi bi-arrow-right-circle"></i>
+                                <i onclick="tst_modal_call_param('tst_modal_review', '{param}')" class="bi bi-arrow-right-circle"></i>
                             </div>
                         </div>
                     </div>
@@ -562,6 +562,7 @@
         </div>
     </div>
 </div>
+<c:import url="stats_dashboard_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 </html>

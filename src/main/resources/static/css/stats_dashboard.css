@@ -131,3 +131,27 @@
 .dashboard_container .content_container  .button_container{
     padding: 0 20px 0 10px;
 }
+
+
+
+.list_tab{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-bottom: var(--tst-border-width) var(--tst-border-style) var(--tst-color-white);
+}
+
+.list_tab .list_tab_item{
+    margin: 0 0 -1px;
+    padding: var(--tst-form-padding);
+    color: var(--tst-color-medium);
+    font-weight: 400;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.list_tab .list_tab_item.list_tab_item_active{
+    border-bottom: 2px var(--tst-border-style) var(--tst-color-medium);
+    color: var(--tst-body-color);
+    font-weight: 600;
+}
