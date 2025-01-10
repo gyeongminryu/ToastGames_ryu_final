@@ -59,7 +59,7 @@
                                     <th>부서장</th>
                                     <td>
                                         <span onclick="tst_view_profile('${employee.empl_idx}')" class="tst_pointer">
-                                            ${employee.empl_name} (${appoLast.duty_name}/${appoLast.position_name})
+                                           ${employee.empl_name != null ? employee.empl_name : '공석'} (${appoLast.duty_name!= null ? appoLast.duty_name : '없음'}/${appoLast.position_name!= null ? appoLast.position_name:'없음'})
                                         </span>
                                     </td>
                                 </tr>

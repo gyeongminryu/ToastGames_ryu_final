@@ -63,11 +63,14 @@ public class EmployeeController {
 		
 		// model.addAllAttributes(null);
 		
-		return "employee_add";
+		return "manage_employee_regist";
 	}
 	
 	@PostMapping(value="/employee_add.do")
 	public String employeeAddDo(@RequestParam Map<String,String> param) {
+		String empl_gender = param.get("gender");
+		
+		param.put("empl_gender", empl_gender);
 		
 		employeeService.employeeAdd(param);
 		
@@ -83,6 +86,17 @@ public class EmployeeController {
 		employeeService.employeeDetail(empl_idx,model);
 		
 		return "manage_employee_detail";
+	}
+	
+	@GetMapping(value="/manage_employee_update.go")
+	public String employeeUpdateGo(@RequestParam String empl_idx,Model model) {
+		
+		//	employeeService.getbankname();
+		// model.addAllAttributes(null);
+	
+		employeeService.employeeDetail(empl_idx,model);
+		
+		return "manage_employee_update";
 	}
 	
 	@ResponseBody
