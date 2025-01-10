@@ -124,7 +124,9 @@
                             <tfoot>
                             <tr>
                                  <td colspan="5">
-			                        <ul id="pagination" class="pagination-sm pagination"></ul>
+			                        <nav aria-label="Page navigation">
+									   <ul class="pagination" id="pagination"></ul>
+									</nav>
 			                     </td>
                             </tr>
                             </tfoot>
