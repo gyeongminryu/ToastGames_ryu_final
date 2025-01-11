@@ -10,5 +10,6 @@ public interface StatsDAO {
 
     // 게임 목록
     List<StatsDTO> list();
+    String getAddr(int game_idx, int game_market);
 
 }

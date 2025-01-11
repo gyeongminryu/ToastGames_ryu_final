@@ -4,12 +4,10 @@ import com.toast.stats.service.StatsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
-import java.util.Map;
+import java.io.IOException;
 
 @RestController
 public class StatsController {
@@ -23,15 +21,15 @@ public class StatsController {
 
     // 게임 목록
     @GetMapping(value = "/stats_dashboard.go")
-    public ModelAndView stats_dashboard() {
+    public ModelAndView stats_dashboard() throws InterruptedException {
+        ModelAndView mav = new ModelAndView("stats_dashboard");
 
-        return new ModelAndView("stats_dashboard");
+        try {
+            mav.addObject("list", statsService.list());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return mav;
     }
-
-    @PostMapping(value = "/stats_dashboard_list.ajax")
-    public Map<String, Object> list() {
-
-        return statsService.list();
-    }
-
 }

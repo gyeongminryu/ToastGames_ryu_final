@@ -5,7 +5,10 @@
 
     <!-- 게임 목록 -->
     <select id="list" resultType="com.toast.stats.dto.StatsDTO">
-        SELECT game_idx, game_name FROM game_list
+        SELECT game_idx, game_name, game_type FROM game_list
     </select>
 
+    <select id="getAddr" resultType="String">
+        SELECT market_addr FROM game_market_list WHERE game_idx = #{param1} AND game_market = #{param2}
+    </select>
 </mapper>
