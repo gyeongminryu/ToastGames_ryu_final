@@ -287,7 +287,7 @@
                                 </div>
                             </div>
                             <div class="button_container">
-                                <i onclick="tst_modal_call_param('tst_modal_review', '{param}')" class="bi bi-arrow-right-circle"></i>
+                                <i onclick="tst_modal_call_param('tst_modal_review', '{param}')" class="bi bi-arrow-right-circle tst_pointer"></i>
                             </div>
                         </div>
                     </div>
@@ -551,7 +551,7 @@
                                 </div>
                             </div>
                             <div class="button_container">
-                                <i onclick="tst_modal_call_param('tst_modal_review', '{param}')" class="bi bi-arrow-right-circle"></i>
+                                <i onclick="tst_modal_call_param('tst_modal_review', '{param}')" class="bi bi-arrow-right-circle tst_pointer"></i>
                             </div>
                         </div>
                     </div>

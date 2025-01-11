@@ -155,3 +155,13 @@
     color: var(--tst-body-color);
     font-weight: 600;
 }
+
+.comment_container .comment_information h3,
+.comment_container .comment_information p{
+    margin: 0 var(--tst-margin-horizontal) 0 0;
+    display: inline-block;
+}
+
+.comment_container .comment_content{
+    text-align: justify;
+}

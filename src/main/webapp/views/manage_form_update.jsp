@@ -56,7 +56,6 @@
                                 </tr>
                                 </thead>
 
-
                                 <tbody>
                                 <tr>
                                     <th class="td_align_top">문서 양식명</th>
