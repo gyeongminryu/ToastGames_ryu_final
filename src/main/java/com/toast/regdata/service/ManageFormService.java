@@ -1,7 +1,7 @@
-package com.toast.document.service;
+package com.toast.regdata.service;
 
-import com.toast.document.dao.ManageFormDAO;
-import com.toast.document.dto.ManageFormDTO;
+import com.toast.regdata.dao.ManageFormDAO;
+import com.toast.regdata.dto.ManageFormDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

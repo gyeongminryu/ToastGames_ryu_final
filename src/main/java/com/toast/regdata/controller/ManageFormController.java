@@ -1,6 +1,6 @@
-package com.toast.document.controller;
+package com.toast.regdata.controller;
 
-import com.toast.document.service.ManageFormService;
+import com.toast.regdata.service.ManageFormService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;

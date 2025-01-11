@@ -1,6 +1,4 @@
-package com.toast.document.dto;
-
-import org.apache.ibatis.type.Alias;
+package com.toast.regdata.dto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

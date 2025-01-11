@@ -1,6 +1,6 @@
-package com.toast.document.dao;
+package com.toast.regdata.dao;
 
-import com.toast.document.dto.ManageFormDTO;
+import com.toast.regdata.dto.ManageFormDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

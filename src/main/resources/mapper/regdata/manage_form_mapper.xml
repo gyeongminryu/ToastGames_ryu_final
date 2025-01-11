@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toast.document.dao.ManageFormDAO">
+<mapper namespace="com.toast.regdata.dao.ManageFormDAO">
 
     <!-- 문서 양식 목록 -->
     <select id="allCount" resultType="int">
@@ -46,7 +46,7 @@
         </if>
     </select>
 
-    <select id="list" resultType="com.toast.document.dto.ManageFormDTO">
+    <select id="list" resultType="com.toast.regdata.dto.ManageFormDTO">
         SELECT f.form_idx, f.form_subject,
             (SELECT l.dept_idx FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 1) as 'dept_idx_1',
             (SELECT (SELECT d.dept_name FROM department d WHERE d.dept_idx = l.dept_idx) FROM g_approval_line l WHERE l.form_idx = f.form_idx AND l.gline_order = 1) as 'dept_name_1',
@@ -86,7 +86,7 @@
     </select>
 
     <!-- 문서 양식 상세보기 -->
-    <select id="detail" resultType="com.toast.document.dto.ManageFormDTO">
+    <select id="detail" resultType="com.toast.regdata.dto.ManageFormDTO">
         SELECT f.form_idx, f.form_subject, f.form_content, f.form_handler_idx, f.form_writer_idx, f.form_write_date, f.form_updater_idx, f.form_update_date, f.form_state,
         (SELECT e.empl_name FROM employee e WHERE e.empl_idx = f.form_writer_idx) as 'form_writer_name',
         (SELECT d.dept_name FROM department d WHERE d.dept_idx = f.form_writer_dept) as 'form_writer_dept_name',
@@ -123,7 +123,7 @@
         SELECT position_idx FROM appointment WHERE appo_empl_idx = #{param1} ORDER BY appo_idx DESC LIMIT 1
     </select>
 
-    <insert id="write" parameterType="com.toast.document.dto.ManageFormDTO" useGeneratedKeys="true" keyColumn="form_idx" keyProperty="form_idx">
+    <insert id="write" parameterType="com.toast.regdata.dto.ManageFormDTO" useGeneratedKeys="true" keyColumn="form_idx" keyProperty="form_idx">
         INSERT INTO form (form_subject, form_content, form_writer_idx, form_writer_dept, form_writer_position, form_write_date)
             VALUES (#{form_subject}, #{form_content}, #{form_writer_idx}, #{form_writer_dept}, #{form_writer_position}, current_timestamp)
     </insert>
@@ -141,14 +141,14 @@
     </insert>
 
     <!-- 문서 양식 수정하기 -->
-    <update id="update" parameterType="com.toast.document.dto.ManageFormDTO">
+    <update id="update" parameterType="com.toast.regdata.dto.ManageFormDTO">
         UPDATE form SET form_subject = #{form_subject}, form_content = #{form_content}, form_updater_idx = #{form_updater_idx},
                         form_updater_dept = #{form_updater_dept}, form_updater_position = #{form_updater_position}, form_update_date = current_timestamp
         WHERE form_idx = #{form_idx}
     </update>
 
     <!-- 결재선 설정하기 -->
-    <select id="callDept" resultType="com.toast.document.dto.ManageFormDTO">
+    <select id="callDept" resultType="com.toast.regdata.dto.ManageFormDTO">
         SELECT dept_idx, dept_name FROM department WHERE dept_high = #{param1} AND dept_state = 1
     </select>
 

@@ -56,7 +56,7 @@
                 <li class="tst_pointer" onclick="location.href='/board_list.go'">
                     <i class="bi bi-layout-text-window-reverse"></i><h3>전자 게시판</h3>
                 </li>
-                <li class="tst_pointer" onclick="location.href='/'">
+                <li class="tst_pointer" onclick="location.href='/stats_dashboard.go'">
                     <i class="bi bi-bar-chart-line-fill"></i><h3>게임 통계</h3>
                 </li>
                 <li class="tst_pointer" onclick="location.href='/companyinfo_detail.go'">

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.toast.stats.dao.StatsDAO">
+
+    <!-- 게임 목록 -->
+    <select id="list" resultType="com.toast.stats.dto.StatsDTO">
+        SELECT game_idx, game_name FROM game_list
+    </select>
+
+</mapper>
