@@ -5,21 +5,15 @@ import java.util.List;
 
 public class MeetingDTO {
 
+	private int team_idx;
+	private String team_name;
+	private int dept_idx;
+	private String dept_name;
+	private String position_name;
+	private String duty_name;
+	private String empl_profile;
 	private int empl_idx;
 	private String empl_name;
-	
-	public int getEmpl_idx() {
-		return empl_idx;
-	}
-	public void setEmpl_idx(int empl_idx) {
-		this.empl_idx = empl_idx;
-	}
-	public String getEmpl_name() {
-		return empl_name;
-	}
-	public void setEmpl_name(String empl_name) {
-		this.empl_name = empl_name;
-	}
 	private int room_idx;
 	private String room_name;
 	private String room_addr;
@@ -41,6 +35,63 @@ public class MeetingDTO {
 	//private int meet_rent_idx;
 	private int meet_parti_empl_idx;
 	private List<Integer> meet_parti_empl_idxs;
+	public int getTeam_idx() {
+		return team_idx;
+	}
+	public void setTeam_idx(int team_idx) {
+		this.team_idx = team_idx;
+	}
+	public String getTeam_name() {
+		return team_name;
+	}
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
+	}
+	public int getDept_idx() {
+		return dept_idx;
+	}
+	public void setDept_idx(int dept_idx) {
+		this.dept_idx = dept_idx;
+	}
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+	public String getPosition_name() {
+		return position_name;
+	}
+	public void setPosition_name(String position_name) {
+		this.position_name = position_name;
+	}
+	public String getDuty_name() {
+		return duty_name;
+	}
+	public void setDuty_name(String duty_name) {
+		this.duty_name = duty_name;
+	}
+	public String getEmpl_profile() {
+		return empl_profile;
+	}
+	public void setEmpl_profile(String empl_profile) {
+		this.empl_profile = empl_profile;
+	}
+
+	
+	public int getEmpl_idx() {
+		return empl_idx;
+	}
+	public void setEmpl_idx(int empl_idx) {
+		this.empl_idx = empl_idx;
+	}
+	public String getEmpl_name() {
+		return empl_name;
+	}
+	public void setEmpl_name(String empl_name) {
+		this.empl_name = empl_name;
+	}
+
 	
 	
 	public List<Integer> getMeet_parti_empl_idxs() {

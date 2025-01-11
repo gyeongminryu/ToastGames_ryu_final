@@ -8,7 +8,7 @@
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">일정 추가하기</h1>
-            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_write')"></i>
+            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_write'); reset_parti();"></i>
         </div>
         <form>
             <div class="tst_modal_body">
@@ -73,21 +73,11 @@
                                 <th colspan="3">참석자 목록</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
+                            <tbody id="emplTableBody">
+                            <tr id="add-participant-row">
                                 <td colspan="3">
                                     <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_subtle btn_full">참석자 추가하기</button>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><h3>{부서명}</h3></td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급}/{직책})</span></td>
-                                <td class="align_left"><i class="bi bi-dash-circle-dotted" onclick="<!--참석자를 제외하는 함수를 입력하세요-->"></i></td>
-                            </tr>
-                            <tr>
-                                <td><h3>{부서명}</h3></td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급}/{직책})</span></td>
-                                <td class="align_left"><i class="bi bi-dash-circle-dotted" onclick="<!--참석자를 제외하는 함수를 입력하세요-->"></i></td>
                             </tr>
                             </tbody>
                         </table>
@@ -96,13 +86,13 @@
             </div>
             <div class="tst_modal_footer align_left">
                 <ul class="tst_list list_no_desc list_inline">
-                    <li><input type="submit" value="예약하기" class="btn_primary" /></li>
-                    <li><button type="button" class="btn_secondary" onclick="tst_modal_close('tst_modal_write')">취소하기</button></li>
+                    <li><input type="button" value="예약하기" class="btn_primary" id="addMeeting"/></li>
+                    <li><button type="button" class="btn_secondary" onclick="tst_modal_close('tst_modal_write'); reset_parti();">취소하기</button></li>
                 </ul>
             </div>
         </form>
     </div>
-    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_write')"></div>
+    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_write'); reset_parti();"></div>
 </div>
 <!-- //일정 추가하기 -->
 
@@ -118,26 +108,23 @@
             <ul class="list_no_desc list_block">
                 <li>
                     <p class="min font_subtle">회의실</p>
-                    <h3>{회의실}</h3>
+                    <p id="meeting_room_detail"></p>
                 </li>
                 <li>
                     <label class="form_label">회의 주제</label>
-                    <p>{회의 주제}</p>
+                    <p id="meeting_title_detail"></p>
                 </li>
                 <li>
                     <label class="form_label">회의 일시</label>
-                    <p>{회의 시작 일시} ~ {회의 종료 일시}</p><!-- 형식은 yyyy-MM-dd HH:mm 으로 맞춰 주세요 -->
+                    <p id="meeting_start_time_detail"></p> ~ <p id="meeting_end_time_detail"></p>
                 </li>
                 <li>
                     <label class="form_label">회의 내용</label>
-                    <p>{회의 내용}</p>
+                    <p id="meeting_content_detail"></p>
                 </li>
                 <li>
                     <label class="form_label">참석자</label>
-                    <p>
-                        <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer tst_badge_min btn_subtle margin_right">{직원명}</span>
-                        <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer tst_badge_min btn_subtle margin_right">{직원명}</span>
-                        <span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer tst_badge_min btn_subtle margin_right">{직원명}</span>
+                    <p id="meeting_participants_detail">
                     </p>
                 </li>
             </ul>
@@ -175,26 +162,27 @@
                         <ul class="list_no_desc list_block">
                             <li>
                                 <label class="form_label">회의 주제</label>
-                                <input type="text" name="meet_subject" maxlength="1000" value="{회의 주제}" placeholder="회의 주제를 입력하세요" />
+                                <input type="text" id="meeting_title_update" name="meet_subject" maxlength="1000" value="" placeholder="회의 주제를 입력하세요" />
                             </li>
                             <li>
                                 <div class="tst_flex">
                                     <div class="tst_col6">
                                         <label class="form_label">회의 시작 시각</label>
-                                        <input type="datetime-local" name="meet_start_date" value="2024-12-27 10:00" />
+                                        <input type="datetime-local" id="meeting_start_time_update" name="meet_start_date" value="" />
                                     </div>
                                     <div class="tst_col6">
                                         <label class="form_label">회의 종료 시각</label>
-                                        <input type="datetime-local" name="meet_end_date" value="2024-12-27 12:00" />
+                                        <input type="datetime-local" id="meeting_end_time_update" name="meet_end_date" value="" />
                                     </div>
                                 </div>
                             </li>
                             <li>
                                 <p class="min font_subtle">회의실 선택</p>
                                 <div>
-                                    <select id="meeting_room_id_update" name="room_idx" onchange="<!-- 회의실을 선택하면 회의실 정보를 수정하는 함수명을 입력하세요 -->">
-                                        <option value="{회의실 idx}" selected>{회의실 이름}</option>
-                                        <option value="{회의실 idx}">{회의실 이름}</option>
+                                    <select id="meeting_room_idx_update" name="room_idx" onchange="<!-- 회의실을 선택하면 회의실 정보를 수정하는 함수명을 입력하세요 -->">
+										<c:forEach items="${roomList}" var="room">
+									    	<option value="${room.room_idx}">${room.room_name}</option>
+									    </c:forEach>
                                     </select>
                                     <p class="min font_subtle">- 수용 인원: 4~10명</p>
                                     <p class="min font_subtle">- 사용 가능한 기자재: 고정형 빔 프로젝터, 데스크탑, 모니터, 키보드, 마우스, 연단, 콘센트 책상, 레이저포인터 리모컨</p>
@@ -203,7 +191,7 @@
                             </li>
                             <li>
                                 <label class="form_label">회의 내용</label>
-                                <textarea rows="5" name="meet_content" maxlength="1000" placeholder="회의 내용을 입력하세요">{회의 내용}</textarea>
+                                <textarea rows="5" id="meeting_content_update" name="meet_content" maxlength="1000" placeholder="회의 내용을 입력하세요"></textarea>
                             </li>
                         </ul>
                     </div>
@@ -219,21 +207,11 @@
                                 <th colspan="3">참석자 목록</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
+                            <tbody id="empl_update">
+                            <tr id="add-participant-row">
                                 <td colspan="3">
                                     <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_subtle btn_full">참석자 추가하기</button>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><h3>{부서명}</h3></td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급}/{직책})</span></td>
-                                <td class="align_left"><i class="bi bi-dash-circle-dotted" onclick="<!--참석자를 제외하는 함수를 입력하세요-->"></i></td>
-                            </tr>
-                            <tr>
-                                <td><h3>{부서명}</h3></td>
-                                <td><span onclick="tst_view_profile('{직원 번호}')" class="tst_pointer">{직원명} ({직급}/{직책})</span></td>
-                                <td class="align_left"><i class="bi bi-dash-circle-dotted" onclick="<!--참석자를 제외하는 함수를 입력하세요-->"></i></td>
                             </tr>
                             </tbody>
                         </table>
@@ -244,6 +222,7 @@
                 <ul class="tst_list list_no_desc list_inline">
                     <li><input type="submit" value="수정하기" class="btn_primary" /></li>
                     <li><button type="button" class="btn_secondary" onclick="tst_modal_close('tst_modal_update')">취소하기</button></li>
+                    <li><button type="button" class="btn_secondary" onclick="">삭제하기</button></li>
                 </ul>
             </div>
         </form>

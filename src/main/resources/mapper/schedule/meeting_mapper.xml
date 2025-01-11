@@ -29,28 +29,6 @@
 	<select id="meetingGo" resultType="map">
 		SELECT room_idx, room_name FROM meeting_room
 	</select>
-	
-	<!-- 회사 사원 정보 가져오기  사원 직급 직책 부서 추가해야함.......검색도-->
-	<select id="meetingParti" resultType="map">
-	    SELECT 
-	        pos.position_name,
-	        dt.duty_name,
-	        dp.dept_name,
-	        empl.empl_name,
-	        empl.empl_idx
-	    FROM 
-	        appointment AS ap
-	    JOIN 
-	        department AS dp ON ap.dept_idx = dp.dept_idx
-	    JOIN 
-	        position_ AS pos ON ap.position_idx = pos.position_idx
-	    JOIN 
-	        duty AS dt ON ap.duty_idx = dt.duty_idx
-	    JOIN 
-	        employee AS empl ON ap.appo_empl_idx = empl.empl_idx
-	    WHERE 
-	        ap.appo_idx = empl.appolast_idx
-	</select>
 
 	
 	<!-- 회의실 (정보) 추가 -->
@@ -135,15 +113,45 @@
 	
 	<!-- 회의실별 회의 일정보기 --> 
 	<select id="getMeeting" resultType="com.toast.schedule.dto.MeetingDTO">
-		SELECT meet_rent_idx,room_idx, meet_rent_empl_idx, meet_subject, meet_content, meet_start_date, meet_end_date 
-			FROM meeting_rent
-			WHERE room_idx=#{room_idx}
+		SELECT 
+			mt.meet_rent_idx,
+			mr.room_idx, 
+			mr.room_name,
+			mt.meet_rent_empl_idx, 
+			mt.meet_subject, 
+			mt.meet_content, 
+			mt.meet_start_date, 
+			mt.meet_end_date 
+		FROM  
+			meeting_rent mt
+		JOIN 
+			meeting_room mr ON mt.room_idx=mr.room_idx
+		WHERE 
+			mr.room_idx=#{room_idx}
 	</select>
 	
 	<!-- 회의실별 일정 모든 참여자 보기 -->
-	<select id="getAllParti">
-		SELECT meet_parti_empl_idx FROM meeting_participant
-			WHERE meet_rent_idx=#{param1}
+	<select id="getAllParti" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			empl.empl_idx,
+			mp.meet_parti_empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name
+		 FROM 
+		 	meeting_participant mp
+		JOIN 
+			employee empl ON mp.meet_parti_empl_idx=empl.empl_idx
+		JOIN
+			appointment appo ON appo.appo_idx=empl.appolast_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		JOIN
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			position_ pos ON pos.position_idx=appo.position_idx				
+		WHERE meet_rent_idx=#{param1}
 	</select>
 	
 	
@@ -155,7 +163,7 @@
 		    mr.meet_subject, 
 		    mr.meet_content, 
 		    mr.meet_start_date, 
-		    mr.meet_end_date
+		    mr.meet_end_date,
 		FROM 
 		    meeting_rent mr
 		JOIN 
@@ -217,7 +225,7 @@
 	</update>
 	
 	
-	<!-- 회의 참여 인원 수정 -->
+
 	
 	<!-- 회의 일정 삭제-->
 	<delete id="deleteMeeting">
@@ -225,7 +233,167 @@
 	</delete>
 	
 	
-	<!-- 회의 참여 인원 삭제 -->
+	
+	<!-- 부서 가져오기 -->	
+	<select id="getDeptList" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			dept_idx,
+			dept_name
+		FROM
+			department
+	</select>
+
+	<!-- 팀 정보 -->
+	<select id="getTeamList" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			team_idx,
+			team_name
+		FROM 
+			project_team
+	</select>
+	
+	
+		<!-- 부서별 -->
+	<select id="getDeptEmpl" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		WHERE 
+			appo.dept_idx=#{param1}
+	</select>
+	
+	<!-- 팀별  -->
+	<select id="getTeamEmpl" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		JOIN
+			team_members tm ON tm.teammem_empl_idx=empl.empl_idx
+		WHERE 
+			tm.team_idx=#{param1}
+	</select>
+	
+	<!--팀장 -->
+	<select id="getTeamHeadEmpl" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		JOIN
+			project_team pt ON pt.team_head_idx=empl.empl_idx
+		WHERE 
+			pt.team_idx=#{param1}
+	</select>
+
+	<!-- 부서별  검색 -->
+	<select id="takeDeptEmpl" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		WHERE 
+			dept.dept_name LIKE CONCAT('%', #{param1}, '%')
+	</select>
+
+	<!-- 직급별  검색 -->
+	<select id="takePosiEmpl" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		WHERE 
+			pos.position_name LIKE CONCAT('%', #{param1}, '%')
+	</select>
+	
+	<!-- 사원  검색 -->
+	<select id="takeEmpl" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		WHERE 
+			empl.empl_name LIKE CONCAT('%', #{param1}, '%')
+	</select>
 	
 	<!-- 회의 일정 알림-->
 	
