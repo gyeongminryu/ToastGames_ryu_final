@@ -51,7 +51,7 @@
                                             <tbody>
                                             <tr>
                                                 <th>별점</th>
-                                                <td><i class="bi bi-star-fill"></i> ${list.data_google.grade}</td>
+                                                <td><i class="bi bi-star-fill"></i> ${list.data_google.score}</td>
                                             </tr>
                                             <tr>
                                                 <th>리뷰</th>
@@ -75,7 +75,7 @@
                                             <tbody>
                                             <tr>
                                                 <th>별점</th>
-                                                <td><i class="bi bi-star-fill"></i> ${list.data_appmarket.grade}</td>
+                                                <td><i class="bi bi-star-fill"></i> ${list.data_appmarket.score}</td>
                                             </tr>
                                             <tr>
                                                 <th>리뷰</th>
@@ -105,5 +105,5 @@
 <c:import url="stats_dashboard_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
-<!-- <script src="resources/js/stats_dashboard.js"></script> -->
+<script src="resources/js/stats_dashboard.js"></script>
 </html>

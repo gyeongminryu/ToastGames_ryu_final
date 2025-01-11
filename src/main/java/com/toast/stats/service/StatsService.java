@@ -4,7 +4,11 @@ import com.toast.stats.dto.StatsDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import com.toast.stats.dao.StatsDAO;
 import org.slf4j.Logger;
@@ -12,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +65,6 @@ public class StatsService {
         Map<String, Object> data = new HashMap<>();
         Element info;
         Element grade;
-        Element review;
 
         switch (game_market) {
             case 1:
@@ -68,7 +72,7 @@ public class StatsService {
                 grade = doc.getElementsByClass("Te9Tpc").get(0);
                 data.put("cntReview", info.getElementsByClass("g1rdde").get(0).text());
                 data.put("downloads", info.getElementsByClass("ClM7O").get(1).text());
-                data.put("grade", grade.getElementsByClass("jILTFe").get(0).text());
+                data.put("score", grade.getElementsByClass("jILTFe").get(0).text());
                 break;
 
             case 2:
@@ -76,7 +80,7 @@ public class StatsService {
                 grade = doc.getElementsByClass("product-header__list").get(0);
                 data.put("thumbnail", info.getElementsByClass("we-artwork--ios-app-icon").get(0).child(0).attr("srcset").split(" ")[0]);
                 data.put("cntReview", grade.getElementsByClass("we-rating-count").get(0).text().split(" • ")[1]);
-                data.put("grade", grade.getElementsByClass("we-rating-count").get(0).text().split(" • ")[0]);
+                data.put("score", grade.getElementsByClass("we-rating-count").get(0).text().split(" • ")[0]);
                 data.put("ranking", grade.getElementsByClass("inline-list").get(0).text());
                 break;
         }
@@ -87,5 +91,78 @@ public class StatsService {
     public String getAddr(int game_idx, int game_market) {
 
         return statsDAO.getAddr(game_idx, game_market);
+    }
+
+    public Map<String, Object> comment(int game_idx, int game_market) throws IOException {
+        Map<String, Object> data = new HashMap<>();
+        List<String> percentage = new ArrayList<>();
+        List<String> comments = new ArrayList<>();
+        String score = "";
+        List<WebElement> list;
+
+        // Jsoup 설정
+        Elements scorePercentage;
+        Document doc;
+
+        // 셀레니움 설정
+        driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
+
+        switch (game_market) {
+            case 1:
+                doc = Jsoup.connect(getAddr(game_idx, game_market)).get();
+                score = doc.getElementsByClass("jILTFe").get(0).text();
+                scorePercentage = doc.getElementsByClass("RutFAf");
+                //logger.info(scorePercentage.get(0).attr("style").toString().split(" ")[1]);
+
+                for (int i = 0; i < scorePercentage.size(); i++) {
+                    percentage.add(scorePercentage.get(i).attr("style").toString().split(" ")[1]);
+                }
+
+                driver.get(getAddr(game_idx, game_market));
+                driver.findElements(By.className("ksBjEc")).get(3).click();
+                list = driver.findElements(By.className("RHo1pe"));
+
+                for (WebElement elem : list) {
+                    //logger.info(elem.findElements(By.className("X5PpBb")).get(0).getText());
+                    //logger.info(elem.findElements(By.className("bp9Aid")).get(0).getText());
+                    //logger.info(elem.findElements(By.className("h3YV2d")).get(0).getText());
+                    comments.add(elem.findElements(By.className("X5PpBb")).get(0).getText());
+                    comments.add(elem.findElements(By.className("bp9Aid")).get(0).getText());
+                    comments.add(elem.findElements(By.className("h3YV2d")).get(0).getText());
+                }
+                break;
+
+            case 2:
+                doc = Jsoup.connect(getAddr(game_idx, game_market)).get();
+                score = doc.getElementsByClass("we-customer-ratings__averages__display").get(0).text();
+                scorePercentage = doc.getElementsByClass("we-star-bar-graph__bar__foreground-bar");
+                String commentText = "";
+
+                for (int i = 0; i < scorePercentage.size(); i++) {
+                    //logger.info(scorePercentage.get(i).attr("style").toString());
+                    percentage.add(scorePercentage.get(i).attr("style").toString().split(" ")[1]);
+                }
+
+                driver.get(getAddr(game_idx, game_market) + "?see-all=reviews");
+                list = driver.findElements(By.className("we-customer-review"));
+
+                for (WebElement elem : list) {
+                    comments.add(elem.findElements(By.className("we-customer-review__user")).get(0).getText());
+                    comments.add(elem.findElements(By.className("we-customer-review__date")).get(0).getText());
+                    commentText = elem.findElements(By.className("we-customer-review__title")).get(0).getText();
+                    commentText += "<br />";
+                    commentText += elem.findElements(By.className("we-clamp")).get(0).getText();
+                    comments.add(commentText);
+                }
+                break;
+        }
+
+        driver.close();
+
+        data.put("score", score);
+        data.put("percentage", percentage);
+        data.put("list", comments);
+        return data;
     }
 }

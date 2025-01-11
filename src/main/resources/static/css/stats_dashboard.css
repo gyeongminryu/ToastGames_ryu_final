@@ -105,26 +105,11 @@
     padding: 0;
 }
 
-.print_grade .progress_bar_frame{
-    width: 100%;
-    height: 6px;
-    border-radius: 3px;
-    border: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
-    position: relative;
-    top: 4px;
+
+
+.tst_modal.tst_modal_wide .tst_modal_container .tst_modal_body{
+    height: 600px;
 }
-
-.print_grade .progress_bar_fill{
-    width: 60%;
-    height: 6px;
-    border-radius: 3px;
-    border: var(--tst-border-width) var(--tst-border-style) var(--tst-color-dark);
-    background-color: var(--tst-color-dark);
-    position: relative;
-    top: -2px;
-}
-
-
 
 .list_tab{
     width: 100%;
@@ -148,6 +133,50 @@
     font-weight: 600;
 }
 
+.print_percentage{
+    width: 50%;
+    margin: var(--tst-margin-vertical) 0;
+    font-size: 10px;
+}
+
+.print_percentage .print_grade_5 td:first-child{
+    text-align: center;
+}
+
+.print_percentage .progress_bar_frame{
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    border: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+    position: relative;
+    top: 4px;
+}
+
+.print_percentage .progress_bar_fill{
+    width: 0;
+    height: 6px;
+    border-radius: 3px;
+    border: var(--tst-border-width) var(--tst-border-style) var(--tst-color-medium);
+    background-color: var(--tst-color-dark);
+    position: relative;
+    top: -2px;
+}
+
+.waiting{
+    padding: 180px 0 0;
+    text-align: center;
+    font-size: 36px;
+}
+
+.comment_container{
+    padding-top: var(--tst-margin-vertical);
+    border-top: var(--tst-border-width) var(--tst-border-style) var(--tst-border-color);
+}
+
+.comment_container .comment_information{
+    margin: var(--tst-margin-vertical) 0;
+}
+
 .comment_container .comment_information h3,
 .comment_container .comment_information p{
     margin: 0 var(--tst-margin-horizontal) 0 0;
@@ -155,5 +184,6 @@
 }
 
 .comment_container .comment_content{
+    margin-bottom: var(--tst-margin-vertical);
     text-align: justify;
 }
