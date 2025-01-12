@@ -26,7 +26,9 @@ public class ScheduleDTO {
 	private int sche_parti_empl_idx;
 	private List<Integer> sche_parti_empl_idxs;
 	
-	
+	private int team_idx;
+	private String team_name;
+
 	//공용 물품 일정
 	private int appo_empl_idx;
 	private int dept_idx;
@@ -36,6 +38,19 @@ public class ScheduleDTO {
 	private String duty_name;
 	private String dept_name;
 	//private String empl_name;
+	
+	public int getTeam_idx() {
+		return team_idx;
+	}
+	public void setTeam_idx(int team_idx) {
+		this.team_idx = team_idx;
+	}
+	public String getTeam_name() {
+		return team_name;
+	}
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
+	}
 	
 	public int getEmpl_idx() {
 		return empl_idx;

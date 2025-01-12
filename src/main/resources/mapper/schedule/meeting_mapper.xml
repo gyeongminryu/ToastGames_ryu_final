@@ -163,7 +163,7 @@
 		    mr.meet_subject, 
 		    mr.meet_content, 
 		    mr.meet_start_date, 
-		    mr.meet_end_date,
+		    mr.meet_end_date
 		FROM 
 		    meeting_rent mr
 		JOIN 

@@ -1,16 +1,5 @@
+var info_global = {};
 
-
-//회의실 등록링크 관리자 부서 확인
-/*document.addEventListener("DOMContentLoaded", function() {
-	const empl_depart_idx = "${my_dept_idx}";
-	const room_depart_idx = "108"; // 부서 번호가 108일 때만 보여줌
-	const meetingRoomLink = document.getElementById("meetingRoomLink");
-
-	// 부서 번호가 맞지 않으면 링크 숨기기
-	if (empl_depart_idx !== room_depart_idx) {
-		meetingRoomLink.style.display = "none"; // 링크를 숨김
-	}
-});*/
 
 let calendar;
 
@@ -43,7 +32,7 @@ document.getElementById('meeting_room_select').addEventListener('change', functi
 //회의실+내가 포함된 회의
 document.getElementById('meeting_only_mine').addEventListener('change', function () {
     if (calendar) {
-        const is_mine = this.checked;
+        const is_mine = filter.checked;
         console.log(is_mine ? "내가 포함된 회의만 보기 활성화" : "전체 회의 보기");
         calendar.refetchEvents(); // FullCalendar 이벤트 갱신
     } else {
@@ -99,9 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // AJAX 요청으로 일정 데이터 가져오기
             var selectedRoomIdx = document.getElementById('meeting_room_select').value;
             
-            var my_meeting = document.getElementById('meeting_only_mine').checked
-            ? document.getElementById('meeting_only_mine').value 
-            : null;
+            var my_meeting = filter.checked ? filter.value : null;
             
             console.log('my_meeting'+my_meeting);
             $.ajax({
@@ -130,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
         	console.log('arg.start:'+arg.start);
         	console.log('arg.start format:'+meeting_format_local(arg.start));
         	
-        	
+        	selectedEmplList = [];
             // 필드 초기화 및 활성화
             $('#meeting_title').val('');
             $('#meeting_content').val('');
@@ -188,11 +175,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 확인 모달: 기존 일정 확인
 		eventClick: function(info) {
-
-		    console.log(info);
+			info_global=info;
+		    console.log(info_global);
 			// session에서 현재 사용자 empl_idx 값을 가져옵니다 (여기서는 예시로 sessionStorage를 사용)
-    		//var sessionEmplIdx = sessionStorage.getItem('empl_idx');  // session에서 empl_idx 가져오기
-    		var sessionEmplIdx = 10003;  // session에서 empl_idx 가져오기
+    		var sessionEmplIdx = sessionStorage.getItem('empl_idx');  // session에서 empl_idx 가져오기
+    		//var sessionEmplIdx = 10003;  // session에서 empl_idx 가져오기
     
     		console.log(info.event.extendedProps.empl);
     		console.log(sessionEmplIdx);
@@ -325,7 +312,7 @@ function updateMeetingEmpl() {
     var emplTableBody = document.getElementById('empl_update');
 
     // 기존 참석자 행 초기화 (버튼 행 제외)
-    var addRow = document.getElementById('add-participant-row');
+    var addRow = document.getElementById('add-participant-row-update');
     emplTableBody.innerHTML = '';
     emplTableBody.appendChild(addRow);
 
@@ -371,7 +358,7 @@ function removeEmpl(index) {
     selectedEmplList.splice(index, 1);
 
     // 테이블 업데이트
-    updateMeetingEmplTable();
+    updateMeetingEmpl();
 }
 
 //일정 DB 저장(회의일정 추가 + 참여자 추가)
@@ -393,79 +380,47 @@ function meeting_add(allData) {
 }
 
 
-function meeting_update_modal(){
-	tst_modal_close('tst_modal_detail');
-	tst_modal_call('tst_modal_update');
-	
-			    // 기존 데이터 채우기
-		    $('#meeting_title_update').val(info.event.title).prop('readonly', true);
-		    $('#meeting_content_update').val(info.event.extendedProps.description).prop('readonly', true);
-		    $('#meeting_start_time_update').val(meeting_format_date_time(info.event.start));
-		    $('#meeting_end_time_update').val(meeting_format_date_time(info.event.end));
-		    $('#meeting_room_idx_update').val(info.event.extendedProps.room).prop('disabled', true);
-	
-       // 버튼 초기화 및 추가
-    $('#meeting_modal_buttons').empty().append(
-       $('<button>', {
-			text: '수정',
-			id: 'meeting_edit_button',
-			type: 'button',
-			click: function() {
-                        
-			// 버튼 교체: 수정 -> 수정 확인
-				$('#meeting_modal_buttons').empty().append(
-					$('<button>', {
-						text: '수정 확인',
-						id: 'meeting_update_check',
-						type: 'button',
-						click: function() {
-							if (confirm('수정하시겠습니까?')) {
-                                        // 수정 로직
-								info.event.setProp('title', $('#meeting_title').val());
-								info.event.setExtendedProp('description', $('#meeting_content').val());
-								info.event.setExtendedProp('room', $('#meeting_room_id_update').val());
-								info.event.setStart($('#meeting_start_time').val());
-								info.event.setEnd($('#meeting_end_time').val());
-                                        
-                					var meeting_parti = Array.from(
-                						document.querySelectorAll('input[name="meeting_parti"]:checked')
-                					).map(function(input) {
-                						return input.value;
-                					});
-                			            
-                                        // 서버 전송
-								const meeting_update_data = {
-									title: $('#meeting_title').val(),
-                                    content: $('#meeting_content').val(),
-                                    room: $('#meeting_room_select_modal').val(),
-                                    start: meeting_format_local($('#meeting_start_time').val()),
-                                    end: meeting_format_local($('#meeting_end_time').val()),
-                                    rent_idx: info.event._def.extendedProps["meet_rent_idx"],
-                                    meeting_parti:meeting_parti
-                                 };
-                                    meeting_update(meeting_update_data);
+// 수정 로직 함수
+function meeting_update_modal() {
+    // 사용자 확인
+    if (confirm('수정하시겠습니까?')) {
+        // 이벤트 정보 업데이트
+        info_global.event.setProp('title', $('#meeting_title_update').val());
+        info_global.event.setExtendedProp('description', $('#meeting_content_update').val());
+        info_global.event.setExtendedProp('room', $('#meeting_room_idx_update').val());
+        info_global.event.setStart($('#meeting_start_time_update').val());
+        info_global.event.setEnd($('#meeting_end_time_update').val());
 
-                                    meeting_close_modal();
-                          }
-                       }
-                })
-             );
-         }
-    }),
-		$('<button>', {
-			text: '삭제',
-			id: 'meeting_delete_button',
-			type: 'button',
-			click: function() {
-			if (confirm('회의실 예약을 취소하시겠습니까?')) {
-				info.event.remove(); // 이벤트 삭제
-				meeting_delete(info.event._def.extendedProps["meet_rent_idx"]); // 서버로 삭제 요청
-				meeting_close_modal();
-			}
-			}
-		})
-	);	
+        // selectedEmplList에서 empl_idx만 추출하여 배열 생성
+        const emplIdx = selectedEmplList.map(function (empl) {
+            return empl.empl_idx;
+        });
+
+
+		console.log("emplIdx:"+emplIdx);
+		
+        // 서버로 보낼 데이터 구성
+        const meeting_update_data = {
+            title: $('#meeting_title_update').val(),
+            content: $('#meeting_content_update').val(),
+            room: $('#meeting_room_idx_update').val(),
+            start: meeting_format_local($('#meeting_start_time_update').val()),
+            end: meeting_format_local($('#meeting_end_time_update').val()),
+            rent_idx: info_global.event.extendedProps.meet_rent_idx, // 이벤트의 확장 속성에서 rent_idx 가져오기
+            meeting_parti: emplIdx, // 참가자 리스트
+        };
+
+        console.log('수정 데이터:', meeting_update_data);
+
+        // 서버 전송
+        meeting_update(meeting_update_data);
+
+        // 모달 닫기
+        tst_modal_close('tst_modal_update');
+    }
 }
+
+
 
 
 
@@ -488,17 +443,21 @@ function meeting_update(meeting_update_data) {
 
 
 //일정 DB 삭제(회의일정 삭제)
-function meeting_delete(rent_idx) {
+function meeting_delete() {
+	let rent_idx = info_global.event.extendedProps.meet_rent_idx;
     $.ajax({
         url: '/meetingDelete.do',  // 수정된 일정 전송 URL
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(rent_idx), // 수정된 이벤트 데이터 전송
         success: function(data) {
-            console.log('일정 수정 성공:', data);
+            console.log('일정 삭제 성공:', data);
+            // 페이지 새로고침
+            alert('일정이 성공적으로 삭제되었습니다.');
+            location.reload();
         },
         error: function(xhr, status, error) {
-            console.error('일정 수정 요청 실패:', error);
+            console.error('일정 삭제 요청 실패:', error);
         }
     });
 }

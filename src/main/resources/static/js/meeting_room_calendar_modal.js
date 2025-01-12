@@ -107,6 +107,7 @@ function select_meeting_empl(itemData) {
 
         // 테이블 업데이트
         updateMeetingEmplTable();
+        updateMeetingEmpl();
     }
 
     // 모달 닫기

@@ -2,8 +2,6 @@ package com.toast.schedule.controller;
 
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -175,13 +173,19 @@ public class MeetingController {
 		
 	    String room = (String) params.get("room");
 	    logger.info("room:"+room);
-	    String myMeeting = (String) params.get("my_meeting");
+	    String myMeeting = null;
+	    if(params.get("my_meeting") != null) {
+	    	myMeeting = (String) session.getAttribute("empl_idx");
+	    }
+	    Map<String, Object> param = new HashMap<String, Object>();
+	    param.put("room", room);
+	    param.put("my_meeting", myMeeting);
 	    
 	    List<Map<String, Object>> meetings = new ArrayList<Map<String,Object>>();
 		if (myMeeting != null) {
-			meetings = meetingService.getMyMeeting(params);
+			meetings = meetingService.getMyMeeting(param);
 		} else {
-			meetings = meetingService.getMeeting(params);
+			meetings = meetingService.getMeeting(param);
 			logger.info("일정 왜  events없어:"+meetings);
 		}
 		logger.info("meetings의길이:"+meetings.size());
@@ -290,25 +294,38 @@ public class MeetingController {
         } else {
             logger.error("Failed to parse start or end date");
         }
-	    
+	    //int empl_idx=(int) session.getAttribute("empl_idx");
+        int empl_idx= 10003;
 	    // room, empl, rent_idx 값을 Integer로 변환
 	    dto.setRoom_idx(Integer.parseInt((String) params.get("room")));
-	    dto.setMeet_rent_empl_idx(Integer.parseInt((String) params.get("empl")));
+	    dto.setMeet_rent_empl_idx(empl_idx);
 	    dto.setMeet_rent_idx((int) params.get("rent_idx"));
 	    
 	    logger.info("title: " + dto.getMeet_subject());
 
 	    List<Integer> meeting_parti = new ArrayList<>();
 	    
-	    //Object로 넘어오는 타입이 뭔지 몰라 경고 발생으로 데이터가 리스트인지 먼저 확인
 	    Object participantsObj = params.get("meeting_parti");
+	    logger.info("meeting_parti: " + participantsObj);
 	    if (participantsObj instanceof List<?>) {
 	        List<?> partiList = (List<?>) participantsObj;
+	        logger.info("partiList size: " + partiList.size());
+	        logger.info("partiList contents: " + partiList);
+
 	        for (Object parti : partiList) {
-	            if (parti instanceof String) {
-	            	meeting_parti.add(Integer.parseInt((String) parti));
+	            logger.info("parti: " + parti + ", Type: " + (parti != null ? parti.getClass().getName() : "null"));
+
+	            if (parti instanceof Integer) {
+	                // 이미 Integer라면 바로 추가
+	                meeting_parti.add((Integer) parti);
+	            } else if (parti instanceof String) {
+	                // String인 경우 Integer로 변환 후 추가
+	                meeting_parti.add(Integer.parseInt((String) parti));
+	            } else {
+	                logger.warn("Unexpected type for parti: " + parti);
 	            }
 	        }
+
 	    }
 	    dto.setMeet_parti_empl_idxs(meeting_parti);
 	    

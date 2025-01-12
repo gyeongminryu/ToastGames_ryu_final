@@ -81,7 +81,7 @@ public class ScheduleService {
 			list = scheduleDao.getSchedules(dto);
 		}
 		for (ScheduleDTO schedule : list) {
-			List<Integer> partiList = scheduleDao.getAllParti(schedule.getSche_idx());
+			List<ScheduleDTO> partiList = scheduleDao.getAllParti(schedule.getSche_idx());
 			Map<String, Object> map = new HashMap<String, Object>();
 			if(partiList != null) {
 				map.put("parti",partiList);
@@ -168,6 +168,43 @@ public class ScheduleService {
 		return empl_idx;
 	}
 
+
+	// 부서정보
+	public List<ScheduleDTO> getDeptList() {
+		return scheduleDao.getDeptList();
+	}
+
+	// 팀 정보
+	public List<ScheduleDTO> getTeamList() {
+		return scheduleDao.getTeamList();
+	}
+
+	//부서별 사원
+	public List<ScheduleDTO> getDeptEmpl(int deptIdx) {
+		return scheduleDao.getDeptEmpl(deptIdx);
+	}
+
+	
+	//팀별 사원
+	public List<ScheduleDTO> getTeamEmpl(int teamIdx) {
+		List<ScheduleDTO> teamEmpl = scheduleDao.getTeamEmpl(teamIdx);
+		ScheduleDTO headerEmpl = scheduleDao.getTeamHeadEmpl(teamIdx);
+		teamEmpl.add(headerEmpl);
+		return teamEmpl;
+	}
+
+	//인수자 검색
+	public List<ScheduleDTO> emplSearchMeeting(String option, String keyword) {
+		List<ScheduleDTO> emplList = new ArrayList<ScheduleDTO>();
+		if(option.equals("dept_name")) {
+			emplList = scheduleDao.takeDeptEmpl(keyword);
+		}else if(option.equals("position_name")) {
+			emplList = scheduleDao.takePosiEmpl(keyword);
+		}else {
+			emplList = scheduleDao.takeEmpl(keyword);		
+		}
+		return emplList;
+	}
 
 
 

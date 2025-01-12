@@ -170,9 +170,9 @@ public class MeetingService {
 	}
 	
 	//내가 포함된 회의 보기
-	public List<Map<String, Object>> getMyMeeting(Map<String, Object> params) {
-		Integer myMeeting = Integer.parseInt((String) params.get("my_meeting"));
-		Integer roomIdx = Integer.parseInt((String) params.get("room"));
+	public List<Map<String, Object>> getMyMeeting(Map<String, Object> param) {
+		Integer myMeeting = Integer.parseInt((String) param.get("my_meeting"));
+		Integer roomIdx = Integer.parseInt((String) param.get("room"));
 		MeetingDTO searchMeeting = new MeetingDTO();
 		searchMeeting.setMeet_parti_empl_idx(myMeeting);
 		searchMeeting.setRoom_idx(roomIdx);

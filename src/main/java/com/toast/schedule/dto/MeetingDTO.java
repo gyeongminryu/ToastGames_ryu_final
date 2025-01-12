@@ -19,7 +19,7 @@ public class MeetingDTO {
 	private String room_addr;
 	private int room_empl_idx;
 	private String room_info;
-	private String file_key; //실제 프로젝트에서 변경 바람
+	private String file_key;
 	private int room_min;
 	private int room_max;
 	

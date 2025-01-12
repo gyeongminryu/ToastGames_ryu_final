@@ -106,9 +106,28 @@
 	</select>
 	
 	<!-- 일정별 참여자 가져오기 -->
-	<select id="getAllParti">
-		SELECT sche_parti_empl_idx FROM schedule_participant 
-			WHERE sche_idx=#{sche_idx}
+	<select id="getAllParti" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			empl.empl_idx,
+			sp.sche_parti_empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name
+		 FROM 
+		 	schedule_participant sp
+		JOIN 
+			employee empl ON sp.sche_parti_empl_idx=empl.empl_idx
+		JOIN
+			appointment appo ON appo.appo_idx=empl.appolast_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		JOIN
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			position_ pos ON pos.position_idx=appo.position_idx	
+		WHERE 
+			sche_idx=#{sche_idx}
 	</select>
 	
 	
@@ -154,5 +173,168 @@
 		DELETE FROM schedule_participant
 			WHERE sche_idx=#{param1}
 	</delete>
+
+
+
+	<!-- 부서 가져오기 -->	
+	<select id="getDeptList" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			dept_idx,
+			dept_name
+		FROM
+			department
+	</select>
+
+	<!-- 팀 정보 -->
+	<select id="getTeamList" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			team_idx,
+			team_name
+		FROM 
+			project_team
+	</select>
+	
+	
+		<!-- 부서별 -->
+	<select id="getDeptEmpl" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		WHERE 
+			appo.dept_idx=#{param1}
+	</select>
+	
+	<!-- 팀별  -->
+	<select id="getTeamEmpl" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		JOIN
+			team_members tm ON tm.teammem_empl_idx=empl.empl_idx
+		WHERE 
+			tm.team_idx=#{param1}
+	</select>
+	
+	<!--팀장 -->
+	<select id="getTeamHeadEmpl" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		JOIN
+			project_team pt ON pt.team_head_idx=empl.empl_idx
+		WHERE 
+			pt.team_idx=#{param1}
+	</select>
+
+	<!-- 부서별  검색 -->
+	<select id="takeDeptEmpl" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		WHERE 
+			dept.dept_name LIKE CONCAT('%', #{param1}, '%')
+	</select>
+
+	<!-- 직급별  검색 -->
+	<select id="takePosiEmpl" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		WHERE 
+			pos.position_name LIKE CONCAT('%', #{param1}, '%')
+	</select>
+	
+	<!-- 사원  검색 -->
+	<select id="takeEmpl" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			empl.empl_idx,
+			empl.empl_name,
+			dept.dept_name,
+			pos.position_name,
+			du.duty_name,
+			empl.empl_profile
+		FROM 
+			employee empl
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN 
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			duty du ON du.duty_idx=appo.duty_idx
+		JOIN
+			department dept ON dept.dept_idx=appo.dept_idx
+		WHERE 
+			empl.empl_name LIKE CONCAT('%', #{param1}, '%')
+	</select>
 
 </mapper>

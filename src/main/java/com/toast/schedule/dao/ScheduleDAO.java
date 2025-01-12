@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.toast.schedule.dto.MeetingDTO;
 import com.toast.schedule.dto.ScheduleDTO;
 
 @Mapper
@@ -38,7 +39,7 @@ public interface ScheduleDAO {
 	int schedulePartiDelete(int sche_idx);
 	
 	//모든일정에 관한 참여자 가져오기
-	List<Integer> getAllParti(int sche_idx);
+	List<ScheduleDTO> getAllParti(int sche_idx);
 
 	//일정 수정
 	int scheduleUpdate(ScheduleDTO schedule);
@@ -50,7 +51,32 @@ public interface ScheduleDAO {
 	int checkSchedule(int sche_idx);
 
 
+	
+	//부서정보
+	List<ScheduleDTO> getDeptList();
 
+	
+	// 팀 정보
+	List<ScheduleDTO> getTeamList();
+
+	
+	//부서별 사원
+	List<ScheduleDTO> getDeptEmpl(int deptIdx);
+
+	//팀별 사원
+	List<ScheduleDTO> getTeamEmpl(int teamIdx);
+
+	//팀별 사원(팀장)
+	ScheduleDTO getTeamHeadEmpl(int teamIdx);
+
+	//부서검색
+	List<ScheduleDTO> takeDeptEmpl(String keyword);
+	
+	//직급검색
+	List<ScheduleDTO> takePosiEmpl(String keyword);
+	
+	//사원검색
+	List<ScheduleDTO> takeEmpl(String keyword);
 
 
 
