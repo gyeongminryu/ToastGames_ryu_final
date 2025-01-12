@@ -100,10 +100,10 @@ function infoPrint(info) {
     write_date = info.doc_write_date;
     document.getElementsByClassName('send_date')[0].innerHTML = write_date;
 
-    if (info.appr_date_3 != null) {
+    if (info.appr_date_3 != '') {
         document.getElementsByClassName('appr_date')[0].innerHTML = info.appr_date_3;
         //console.log("appr_date_3 is "+info.appr_date_3);
-    } else if (info.appr_date_2 != null) {
+    } else if (info.appr_date_2 != '') {
         document.getElementsByClassName('appr_date')[0].innerHTML = info.appr_date_2;
         //console.log("appr_date_2 is "+info.appr_date_2);
     } else {

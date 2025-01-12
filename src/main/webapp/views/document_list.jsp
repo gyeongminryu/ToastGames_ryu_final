@@ -91,13 +91,13 @@
                         </div>
                         <table class="tst_table tr_hover_subtle table_no_padding">
                             <colgroup>
-                                <col style="width: 80px;" />
-                                <col style="width: 120px;" />
+                                <col style="width: 60px;" />
+                                <col style="width: 110px;" />
                                 <col style="width: auto;" />
                                 <col style="width: 150px;" />
-                                <col style="width: 120px;" />
+                                <col style="width: 95px;" />
                                 <col style="width: 150px;" />
-                                <col style="width: 120px;" />
+                                <col style="width: 95px;" />
                             </colgroup>
                             <thead>
                             <tr>

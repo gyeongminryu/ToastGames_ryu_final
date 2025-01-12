@@ -60,7 +60,7 @@ public class DocumentService {
 			line = documentDAO.line(dto.getDoc_idx());
 			//logger.info(line.toString());
 
-			if (dept_idx == 114) {   // 대표는 모든 문서를 열람할 수 있음
+			if (dept_idx == documentDAO.findPresident()) {   // 대표는 모든 문서를 열람할 수 있음
 				dto.setAuthority(true);
 			} else {
 				for (int idx : line) {
@@ -98,6 +98,43 @@ public class DocumentService {
 	}
 
 	// 문서 열람
+	public boolean authority(int dept_idx, int doc_idx) {
+		boolean result = false;
+
+		// 열람 권한 확인하기
+		List<Integer> dept = documentDAO.deptList(dept_idx); // 하위 부서 목록
+
+		if (dept_idx == documentDAO.findPresident()) {   // 대표는 모든 문서를 열람할 수 있음
+			result = true;
+		} else {
+			List<Integer> line = documentDAO.line(doc_idx); // 문서와 연관된 부서 목록
+			//logger.info(line.toString());
+
+			for (int idx : line) {
+				//logger.info("idx = "+idx);
+				//logger.info("dept_idx = "+dept_idx);
+
+				if (idx == dept_idx) {
+					result = true;
+					break;
+				}
+
+				for (int team : dept) {
+					//logger.info("idx = "+idx);
+					//logger.info("team = "+team);
+
+					if (idx == team){
+						result = true;
+						break;
+					}
+				}
+			}
+		}
+
+		//logger.info("result = "+result);
+		return result;
+	}
+
 	public Map<String, Object> detail(int doc_idx) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("info", documentDAO.detail(doc_idx));
