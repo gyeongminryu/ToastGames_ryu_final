@@ -24,6 +24,33 @@
 			empl.empl_id = #{param1}
 	</select>
 	
+	<!-- 회의 상세정보 -->
+	<select id="getMeetdetail" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			meet_rent_empl_idx,
+			meet_subject,
+			meet_content
+		FROM
+			meeting_rent
+		WHERE 
+			meet_rent_idx=#{param1}
+	</select>
+	
+	<!-- 일정 넣기 -->
+	<insert id="meetingAddNoti" parameterType="com.toast.schedule.dto.MeetingDTO">
+		INSERT INTO 
+			notify(noti_cate_idx, noti_sender_empl_idx, not_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted,noti_link)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{not_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted},#{noti_link})
+	</insert>
+	
+	<!-- 일정 넣기(삭제) -->
+	<insert id="meetdeleteNoti" parameterType="com.toast.schedule.dto.MeetingDTO">
+		INSERT INTO 
+			notify(noti_cate_idx, noti_sender_empl_idx, not_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{not_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted})
+	</insert>
+	
+	
 	
 	<!-- 회의실 정보 일부(회의실 가기) -->
 	<select id="meetingGo" resultType="map">
@@ -394,17 +421,30 @@
 		WHERE 
 			empl.empl_name LIKE CONCAT('%', #{param1}, '%')
 	</select>
+
+	<select id="getMeetingList">
+		SELECT
+			mt.meet_rent_idx,
+			mt.meet_rent_empl_idx,
+			mt.meet_subject,
+			mt.meet_start_date,
+			mr.rood_addr,
+			mp.meet_parti_empl_idx
+		FROM
+			meeting_rent mt
+		JOIN 
+			meeting_participant mp ON mt.meet_rent_idx=mp.meet_rent_idx
+		JOIN
+			meeting_room mr ON mr.room_idx=mt.room_idx 
+	</select>
 	
-	<!-- 회의 일정 알림-->
-	
-	<!-- 회의 일정 추가 알림-->
-	
-	<!-- 회의 일정 수정 알림-->
-	
-	<!-- 회의 일정 삭제 알림-->
 	
 	<!--회의 일정 1시간 전 알림 발송 -->
-	
+	<insert id="meetingStartNoti" parameterType="com.toast.schedule.dto.MeetingDTO">
+		INSERT INTO 
+			notify(noti_cate_idx, noti_sender_empl_idx, not_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{not_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted})
+	</insert>
 
 
 

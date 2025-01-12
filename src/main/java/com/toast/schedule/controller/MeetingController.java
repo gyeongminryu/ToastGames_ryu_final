@@ -219,8 +219,8 @@ public class MeetingController {
         } else {
             logger.error("Failed to parse start or end date");
         }
-	    //int empl_idx=(int) session.getAttribute("empl_idx");
-        int empl_idx= 10003;
+	    int empl_idx=(int) session.getAttribute("empl_idx");
+        //int empl_idx= 10003;
 	    // room, empl 값을 Integer로 변환
 	    dto.setRoom_idx(Integer.parseInt((String) params.get("room")));
 	    dto.setMeet_rent_empl_idx(empl_idx);
@@ -294,8 +294,8 @@ public class MeetingController {
         } else {
             logger.error("Failed to parse start or end date");
         }
-	    //int empl_idx=(int) session.getAttribute("empl_idx");
-        int empl_idx= 10003;
+	    int empl_idx=(int) session.getAttribute("empl_idx");
+        //int empl_idx= 10003;
 	    // room, empl, rent_idx 값을 Integer로 변환
 	    dto.setRoom_idx(Integer.parseInt((String) params.get("room")));
 	    dto.setMeet_rent_empl_idx(empl_idx);

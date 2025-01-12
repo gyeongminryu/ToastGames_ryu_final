@@ -3,6 +3,9 @@ package com.toast.schedule.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.toast.schedule.dao.MeetingDAO;
 import com.toast.schedule.dto.MeetingDTO;
 import com.toast.schedule.dto.MeetingPhotoDTO;
+import com.toast.schedule.dto.ScheduleDTO;
 
 @Service
 public class MeetingService {
@@ -117,7 +122,7 @@ public class MeetingService {
 		String oriFilename = file.getOriginalFilename();
 		
 		//2.기존 파일의 확장자만 분리
-		String ext = oriFilename.substring(oriFilename.lastIndexOf("."));
+		String ext = oriFilename.substring(oriFilename.lastIndexOf(".")+1);
 		
 		//3.새파일명 생성
 		String newFilename = UUID.randomUUID().toString(); //바로 해도됨 +문자는 문자열로 인식
@@ -127,13 +132,13 @@ public class MeetingService {
 		//4. 파일 저장
 		try {
 			byte[] arr = file.getBytes();
-			Path path = Paths.get(uploadLocation+'/'+newFilename);
+			Path path = Paths.get(uploadLocation+'/');
 			Files.write(path, arr);
 			//6.저장 내용 files 테이블에 insert
 			MeetingPhotoDTO photo_dto = new MeetingPhotoDTO();
 			photo_dto.setNew_filename(newFilename);
 			photo_dto.setOri_filename(oriFilename);
-			photo_dto.setFile_addr(uploadLocation);
+			photo_dto.setFile_addr(path.toString());
 			photo_dto.setFile_type(ext);
 			photo_dto.setFile_key(fileKey);
 			photo_dto.setUploader_idx(empl_idx);
@@ -217,10 +222,21 @@ public class MeetingService {
 			logger.info("meet_rent_idx:"+meeting_parti.getMeet_rent_idx());
 			List<Integer> partiList = dto.getMeet_parti_empl_idxs();
 			logger.info("partiList: " + partiList);
+			LocalDate startDate = meeting.getMeet_start_date().toLocalDate();
 			for (Integer parti : partiList) {
 				logger.info("partis"+parti);
 				meeting_parti.setMeet_parti_empl_idx(parti);
 				meetingDAO.addMeetingParti(meeting_parti);
+				MeetingDTO noti = new MeetingDTO();
+				noti.setNoti_cate_idx(14);
+				noti.setNoti_sender_empl_idx(meeting.getMeet_rent_idx());
+				noti.setNoti_receiver_empl_idx(parti);
+				noti.setNoti_subject(startDate.toString()+"에 예정된 새로운 회의가 있습니다.");
+				noti.setNoti_content(meeting.getMeet_subject()+':'+meeting.getMeet_content());
+				noti.setNoti_sent_date(LocalDateTime.now());
+				noti.setNoti_deleted(0);
+				noti.setNoti_link("/meeting.go");
+				meetingDAO.meetingAddNoti(noti);
 			}
 			parti_row=true;
 		}
@@ -244,6 +260,7 @@ public class MeetingService {
 		int row = meetingDAO.updateMeeting(meeting);
 		
 		boolean parti_row=false;
+		LocalDate startDate = meeting.getMeet_start_date().toLocalDate();
 		//성공하면 참여자 설정
 		if(row>0) {
 			meetingDAO.deleteParti(dto.getMeet_rent_idx());
@@ -253,6 +270,16 @@ public class MeetingService {
 			for (Integer parti : partiList) {
 				meeting_parti.setMeet_parti_empl_idx(parti);
 				meetingDAO.addMeetingParti(meeting_parti);
+				MeetingDTO noti = new MeetingDTO();
+				noti.setNoti_cate_idx(15);
+				noti.setNoti_sender_empl_idx(meeting.getMeet_rent_idx());
+				noti.setNoti_receiver_empl_idx(parti);
+				noti.setNoti_subject(startDate.toString()+"에 예정된 회의에 변동이 있습니다.");
+				noti.setNoti_content(meeting.getMeet_subject()+':'+meeting.getMeet_content());
+				noti.setNoti_sent_date(LocalDateTime.now());
+				noti.setNoti_deleted(0);
+				noti.setNoti_link("/meeting.go");
+				meetingDAO.meetingAddNoti(noti);
 			}
 			parti_row=true;
 		}
@@ -263,6 +290,20 @@ public class MeetingService {
 	//회의 일정 삭제
 	@Transactional
 	public int deleteMeeting(int rent_idx) {
+		List<MeetingDTO> dtoList = meetingDAO.getAllParti(rent_idx); //일정 참여자 정보
+		MeetingDTO meet = meetingDAO.getMeetdetail(rent_idx); //일정정보
+		for (MeetingDTO dto : dtoList) {
+			LocalDate startDate = dto.getMeet_start_date().toLocalDate();
+			MeetingDTO noti = new MeetingDTO();
+			noti.setNoti_cate_idx(16);
+			noti.setNoti_sender_empl_idx(meet.getMeet_rent_empl_idx());
+			noti.setNoti_receiver_empl_idx(dto.getMeet_parti_empl_idx());
+			noti.setNoti_subject(startDate.toString()+"에 예정된 일정이 취소되었습니다");
+			noti.setNoti_content(meet.getMeet_subject()+':'+meet.getMeet_content());
+			noti.setNoti_sent_date(LocalDateTime.now());
+			noti.setNoti_deleted(0);
+			meetingDAO.meetdeleteNoti(noti);
+		}
 		meetingDAO.deleteParti(rent_idx);
 		return meetingDAO.deleteMeeting(rent_idx);
 		
@@ -320,8 +361,35 @@ public class MeetingService {
 	
 	
 	//회의 일정 1시간 전 알림 발송
+	@Scheduled(cron = "0 * * * * ?")
+	public void notiMeeting() {
+		List<MeetingDTO> meetingList = meetingDAO.getMeetingList();
+		for (MeetingDTO meeting : meetingList) {
+			
+		    // 현재 시간 가져오기
+		    LocalDateTime now = LocalDateTime.now();
+
+		    // 회의 시작 시간 가져오기
+		    LocalDateTime meetStartTime = meeting.getMeet_start_date();
+
+		    // 현재 시간과 회의 시작 시간의 차이 계산
+		    Duration duration = Duration.between(meetStartTime, now);
+
+		    // 1시간 전에 해당하는지 확인
+		    if (duration.toHours() == -1) { // meetStartTime이 1시간 전이면 -1시간 차이
+		    	MeetingDTO noti = new MeetingDTO();
+		    	noti.setNoti_cate_idx(17);
+		    	noti.setNoti_sender_empl_idx(meeting.getMeet_rent_idx());
+		    	noti.setNoti_receiver_empl_idx(meeting.getMeet_parti_empl_idx());
+		    	noti.setNoti_subject(meeting.getMeet_subject());
+		    	noti.setNoti_content("회의시작 일시:"+meeting.getMeet_start_date()+'/'+"회의실 위치"+meeting.getRoom_addr());
+		    	noti.setNoti_sent_date(LocalDateTime.now());
+		    	noti.setNoti_deleted(0);
+		    	meetingDAO.meetingStartNoti(noti);
+		    }		
+		}
+	}
 	
-	
-	//내가 포함된 회의 수정/ 삭제시 알림 발송
+
 	
 }

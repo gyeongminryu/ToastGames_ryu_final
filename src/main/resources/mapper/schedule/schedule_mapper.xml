@@ -3,34 +3,38 @@
 
 <mapper namespace="com.toast.schedule.dao.ScheduleDAO">
 
+	<!-- 일정 상세정보 -->
+	<select id="getSchedetail" resultType="com.toast.schedule.dto.ScheduleDTO">
+		SELECT 
+			sche_title,
+			sche_content,
+			shce_empl_idx
+		FROM
+			schedule
+		WHERE
+			shce_idx=#{param1}
+	</select>
+	
+	<!-- 일정 넣기 -->
+	<insert id="scheAddNoti" parameterType="com.toast.schedule.dto.ScheduleDTO">
+		INSERT INTO 
+			notify(noti_cate_idx, noti_sender_empl_idx, not_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted,noti_link)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{not_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted},#{noti_link})
+	</insert>
+	
+	<!-- 일정 넣기(삭제) -->
+	<insert id="schedeleteNoti" parameterType="com.toast.schedule.dto.ScheduleDTO">
+		INSERT INTO 
+			notify(noti_cate_idx, noti_sender_empl_idx, not_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{not_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted})
+	</insert>
+	
 	<!-- 내정보 -->
 	<select id="myInfo" resultType="com.toast.schedule.dto.ScheduleDTO">
 		SELECT empl_idx, empl_name FROM employee
 			WHERE empl_id=#{param1}
 	</select>
 
-	<!-- 참여자 가져오기직급 부서 직책 팀 가져와야함 -->
-	<select id="getScheduleParti" resultType="map">
-	    SELECT 
-	        pos.position_name,
-	        dt.duty_name,
-	        dp.dept_name,
-	        empl.empl_name,
-	        empl.empl_idx
-	    FROM 
-	        appointment AS ap
-	    JOIN 
-	        department AS dp ON ap.dept_idx = dp.dept_idx
-	    JOIN 
-	        position_ AS pos ON ap.position_idx = pos.position_idx
-	    JOIN 
-	        duty AS dt ON ap.duty_idx = dt.duty_idx
-	    JOIN 
-	        employee AS empl ON ap.appo_empl_idx = empl.empl_idx
-	    WHERE 
-	        ap.appo_idx = empl.appolast_idx	
-	    GROUP BY empl.empl_idx  
-	</select>
 
 
 	<!-- 내가 참여자인지 확인 -->

@@ -129,10 +129,10 @@ public class ResourceManageController {
 	public String rentManageWrite(Model model) {
 		String loginId = (String) session.getAttribute("loginId");
 		ResourceManageDTO dto =  resourceMgService.getEmplMg(loginId);
-		session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
-		session.setAttribute("dept_idx",dto.getDept_idx());//사원 부서 가져와
+		//session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
+		//session.setAttribute("dept_idx",dto.getDept_idx());//사원 부서 가져와
 		empl_idx = (int) session.getAttribute("empl_idx");  //세션에 저장한 사원idx 가져와
-		//dept_idx = (int) session.getAttribute("empl_idx"); //세션에 저장한 사원 부서idx 가져와
+		//dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
 		dept_idx=122;
 		String page = "rent_list";
 		if(dept_idx == 122) {	
@@ -195,6 +195,7 @@ public class ResourceManageController {
 	                    logger.info("파일 크기: " + file.getSize() + " bytes");
 	                }
 	            } else {
+	            	resourceMgService.prodOnlyWrite(map);
 	                logger.info("유효한 파일이 없습니다.");
 	            }
 	        } else {
@@ -316,6 +317,7 @@ public class ResourceManageController {
 	                    logger.info("파일 크기: " + file.getSize() + " bytes");
 	                }
 	            } else {
+	            	resourceMgService.prodOnlyUpdate(map);
 	                logger.info("유효한 파일이 없습니다.");
 	            }
 	        } else {
@@ -370,11 +372,11 @@ public class ResourceManageController {
 	public String dispoListGo(Model model) {
 		String loginId = (String) session.getAttribute("loginId");
 		ResourceManageDTO dto =  resourceMgService.getEmplMg(loginId);
-		session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
+		//session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
 		//session.setAttribute("dept_idx",dto.getDept_idx());//사원 부서 가져와
 		empl_idx = (int) session.getAttribute("empl_idx");  //세션에 저장한 사원idx 가져와
-		//dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
-		dept_idx=122;
+		dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
+		//dept_idx=122;
 		String page = "rent_list";
 		if(dept_idx == 122) {	
 			List<ResourceManageDTO> categoryList =resourceMgService.resourceCateMg(); //카테고리 가져와
@@ -679,6 +681,30 @@ public class ResourceManageController {
 		}
 	}
 	
+	
+	//물품 반납일정 안내
+	@Scheduled(cron = "0 0 0 * * ?")
+	public void notiReturnDate() {
+		//모든 물품 날짜 확인
+		List<ResourceManageDTO> prodList = resourceMgService.getRentDate();
+		for (ResourceManageDTO product : prodList) {
+			// prodExpDateTime에서 날짜만 추출
+			LocalDate prodExpDateTime = product.getProd_exp_date().toLocalDate();
+
+			// 오늘 날짜 가져오기
+			LocalDate now = LocalDate.now();
+
+			// 오늘 기준으로 1일 전 날짜 계산
+			LocalDate oneDayBeforeExp = prodExpDateTime.minusDays(1);
+
+			// 비교
+			if (now.isEqual(oneDayBeforeExp)) {
+			    // Logger로 출력
+				resourceMgService.notiReturn(product);
+			    logger.info("Product expiration date is 1 day away: {}", prodExpDateTime);
+			}
+		}
+	}
 	
 	
 	//폐기물품 상세보기

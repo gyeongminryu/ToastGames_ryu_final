@@ -78,6 +78,15 @@ public interface ScheduleDAO {
 	//사원검색
 	List<ScheduleDTO> takeEmpl(String keyword);
 
+	//알림 추가
+	int scheAddNoti(ScheduleDTO noti);
+
+	//일정 상세정보
+	ScheduleDTO getSchedetail(int sche_idx);
+	
+	//알림 추가(일정 삭제)
+	int schedeleteNoti(ScheduleDTO noti);
+
 
 
 

@@ -103,6 +103,21 @@ public interface MeetingDAO {
 	//사원검색
 	List<MeetingDTO> takeEmpl(String keyword);
 
+	//회의 상세정보
+	MeetingDTO getMeetdetail(int rent_idx);
+
+	//알림 추가
+	int meetingAddNoti(MeetingDTO noti);
+
+	//알림추가(삭제)
+	int meetdeleteNoti(MeetingDTO noti);
+
+	//meeting일정
+	List<MeetingDTO> getMeetingList();
+
+	//meeting시작알림
+	int meetingStartNoti(MeetingDTO noti);
+
 
 
 
