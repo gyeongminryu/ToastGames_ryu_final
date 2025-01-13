@@ -80,8 +80,8 @@
 		keyColumn="file_key"
 		keyProperty="file_key" 
 		parameterType="com.toast.schedule.dto.MeetingPhotoDTO">
-		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
-			VALUES(#{file_key},#{uploader_idx},#{ori_filename},#{new_filename},#{file_type},#{file_addr})
+		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr,file_size)
+			VALUES(#{file_key},#{uploader_idx},#{ori_filename},#{new_filename},#{file_type},#{file_addr},#{file_size})
 	</insert>
 	
 	<!-- 회의실 정보보기 -->  

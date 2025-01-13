@@ -63,7 +63,7 @@ public class ResourceManageController {
 		empl_idx = (int) session.getAttribute("empl_idx");  //세션에 저장한 사원idx 가져와
 		//dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
 		dept_idx=122;
-		String page = "rent_list";
+		String page = "redirect:/rent_list.go";
 		if(dept_idx == 122) {	
 			List<ResourceManageDTO> categoryList =resourceMgService.resourceCateMg(); //카테고리 가져와
 			model.addAttribute("categoryList", categoryList);

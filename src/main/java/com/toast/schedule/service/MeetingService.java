@@ -122,10 +122,10 @@ public class MeetingService {
 		String oriFilename = file.getOriginalFilename();
 		
 		//2.기존 파일의 확장자만 분리
-		String ext = oriFilename.substring(oriFilename.lastIndexOf(".")+1);
+		String ext = oriFilename.substring(oriFilename.lastIndexOf("."));
 		
 		//3.새파일명 생성
-		String newFilename = UUID.randomUUID().toString(); //바로 해도됨 +문자는 문자열로 인식
+		String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
 		
 		
 		int empl_idx = (int) session.getAttribute("empl_idx");
@@ -142,6 +142,7 @@ public class MeetingService {
 			photo_dto.setFile_type(ext);
 			photo_dto.setFile_key(fileKey);
 			photo_dto.setUploader_idx(empl_idx);
+			photo_dto.setFile_size(file.getSize());
 			meetingDAO.roomFileAdd(photo_dto);
 			meetingDAO.roomKeyAdd(fileKey, room_idx);
 		} catch (Exception e) {
