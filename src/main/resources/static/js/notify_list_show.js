@@ -57,14 +57,23 @@ function open_alert_list(){
                        console.log("결재 반려한 알람");
                        content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-file-earmark-check margin_right"></i>'+noti.noti_cate_name+'</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'"  class="alert_item_body tst_pointer"><p>문서<b>'+noti.noti_subject+'</b> 이/가 결재 반려되었습니다. (결재자:'+ noti.empl_name+')</p></div></div></li>';
                        break;
+
+                   //회의실 및 일정
                    case 11 :
                    case 12 :
-                   case 13 :
                    case 14 :
                    case 15 :
-                   case 16 :
                    case 17 :
                    case 18 :
+                       console.log("회의실 및 일정");
+                       content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-person-video3 margin_right"></i>'+noti.noti_cate_name+'</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'"  class="alert_item_body tst_pointer"><h3>'+noti.noti_subject+'</h3><p class="font_subtle">'+noti.noti_content+'</p></div></div></li>';
+                       break;
+                    //회의실 및 일정 취소
+                   case 13 :
+                   case 16 :
+                       console.log("회의실 및 일정 취소");
+                       content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-person-video3 margin_right"></i>'+noti.noti_cate_name+'</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div class="alert_item_body tst_pointer"><h3>'+noti.noti_subject+'</h3><p class="font_subtle">'+noti.noti_content+'</p></div></div></li>';
+                       break;
                    case 19 :
                        console.log("일정 및 공용 물품");
                         content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-person-video3 margin_right"></i>'+noti.noti_cate_name+'</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'"  class="alert_item_body tst_pointer"><h3>'+noti.noti_subject+'</h3><p class="font_subtle">'+noti.noti_content+'</p></div></div></li>';

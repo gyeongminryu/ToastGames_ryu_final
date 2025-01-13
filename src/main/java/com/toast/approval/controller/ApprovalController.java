@@ -134,13 +134,15 @@ public class ApprovalController {
 
 
 	/*내가 보낸 결재 목록 조회*/
-	@GetMapping (value="/approval_send_list.go")
+	@RequestMapping (value="/approval_send_list.go")
 	public String approval_sent_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
 									 @RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model){
 		//세션 처리
 		List<Map<String,Object>> sent_list = new ArrayList<>();
-		logger.info(filter);
-		logger.info(type);
+		logger.info("approval_send_list.go 컨트롤러 도착");
+
+		logger.info("filter:{}",filter);
+		logger.info("type:{}",type);
 
 		//logger.info("type:{}",type);
 
