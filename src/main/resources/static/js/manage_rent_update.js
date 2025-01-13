@@ -3,7 +3,7 @@ let use_date ='';
 // 에디터 설정하기
 var editor = new RichTextEditor("#div_editor", configDocument);
 
-
+// 에디터 초기화 시 설정할 HTML 코드
 editor.setHTMLCode($('#content').html());
 
 
@@ -124,22 +124,27 @@ function file_upload(event) {
     event.target.value = ''; // 파일 선택 초기화
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    // 페이지 로드 후 필요한 초기화 작업
+    console.log("Page loaded");
 
-
-document.getElementById("product_update_button").addEventListener("click", function () {
-    if (getUpdateStatus()) {
-        submitUpdateForm();
-    } else {
-        alert("수정이 취소되었습니다. 다시 시도해주세요.");
-    }
+    // 버튼 클릭 시 폼 제출 처리
+    document.getElementById("product_update_button").addEventListener("click", function () {
+		if (getUpdateStatus()) {
+	        submitUpdateForm();
+	    } else {
+	        alert("수정이 취소되었습니다. 다시 시도해주세요.");
+	    }
+    });
 });
+
 
 
 
 // 폼 제출 처리 (삭제되지 않은 파일만 전송)
 function submitUpdateForm() {
 
-	let content = editor.getHTMLCode();
+	var content = editor.getHTMLCode();
 	console.log(content);
 
 	console.log(use_date);

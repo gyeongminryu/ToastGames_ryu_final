@@ -82,9 +82,72 @@ public class ResourceManageDTO {
 	
 	private String file_key; 
 
+	//알림
+	private int noti_cate_idx;
+	private int noti_sender_empl_idx;
+	private int noti_receiver_empl_idx;
+	private String noti_subject;
+	private String noti_content;
+	private LocalDateTime noti_sent_date;
+	private LocalDateTime noti_read_date;
+	private int noti_deleted;
+	private String noti_link;
 	
 	
-	
+	public int getNoti_cate_idx() {
+		return noti_cate_idx;
+	}
+	public void setNoti_cate_idx(int noti_cate_idx) {
+		this.noti_cate_idx = noti_cate_idx;
+	}
+	public int getNoti_sender_empl_idx() {
+		return noti_sender_empl_idx;
+	}
+	public void setNoti_sender_empl_idx(int noti_sender_empl_idx) {
+		this.noti_sender_empl_idx = noti_sender_empl_idx;
+	}
+	public int getNoti_receiver_empl_idx() {
+		return noti_receiver_empl_idx;
+	}
+	public void setNoti_receiver_empl_idx(int noti_receiver_empl_idx) {
+		this.noti_receiver_empl_idx = noti_receiver_empl_idx;
+	}
+	public String getNoti_subject() {
+		return noti_subject;
+	}
+	public void setNoti_subject(String noti_subject) {
+		this.noti_subject = noti_subject;
+	}
+	public String getNoti_content() {
+		return noti_content;
+	}
+	public void setNoti_content(String noti_content) {
+		this.noti_content = noti_content;
+	}
+	public LocalDateTime getNoti_sent_date() {
+		return noti_sent_date;
+	}
+	public void setNoti_sent_date(LocalDateTime noti_sent_date) {
+		this.noti_sent_date = noti_sent_date;
+	}
+	public LocalDateTime getNoti_read_date() {
+		return noti_read_date;
+	}
+	public void setNoti_read_date(LocalDateTime noti_read_date) {
+		this.noti_read_date = noti_read_date;
+	}
+	public int getNoti_deleted() {
+		return noti_deleted;
+	}
+	public void setNoti_deleted(int noti_deleted) {
+		this.noti_deleted = noti_deleted;
+	}
+	public String getNoti_link() {
+		return noti_link;
+	}
+	public void setNoti_link(String noti_link) {
+		this.noti_link = noti_link;
+	}
 	public String getFile_key() {
 		return file_key;
 	}

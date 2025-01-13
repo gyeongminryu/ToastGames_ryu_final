@@ -46,17 +46,17 @@
                 <!-- 내가 포함된 회의만 보기 필터 -->
                 <div class="filtering_only_me fc_day align_right">
                     <div class="tst_filtering_container tst_pointer">
-                        <div class="tst_filtering_off" onclick="filtering_on()">
+                        <div class="tst_filtering_off" >
                             <i class="bi bi-toggle-off"></i>
                             <span>내가 포함된 회의만 보기</span>
                         </div>
-                        <div class="tst_filtering_on disp_hide" onclick="filtering_off()">
+                        <div class="tst_filtering_on disp_hide" >
                             <i class="bi bi-toggle-on"></i>
                             <span>내가 포함된 회의만 보기</span>
                         </div>
                     </div>
                     <fieldset class="disp_hide">
-                        <input type="checkbox" name="meeting_mine" id="meeting_only_mine" value="10003" />
+                        <input type="checkbox" name="meeting_mine" id="meeting_only_mine" value="empl_idx" />
                     </fieldset>
                 </div>
                 <!-- //내가 포함된 회의만 보기 필터 -->
@@ -66,11 +66,11 @@
                 <!-- //달력 -->
 
                 <!-- 기능 완성시 삭제해 주세요 -->
-                <ul class="list_no_desc list_no_desc list_inline">
+				<!-- <ul class="list_no_desc list_no_desc list_inline">
                     <li><button class="btn_subtle" onclick="tst_modal_call('tst_modal_write')">예약하기</button></li>
                     <li><button class="btn_subtle" onclick="tst_modal_call('tst_modal_detail')">예약 확인하기</button></li>
                     <li><button class="btn_subtle" onclick="tst_modal_call('tst_modal_update')">예약 수정하기</button></li>
-                </ul>
+                </ul> -->
                 <!-- //기능 완성시 삭제해 주세요 -->
 
             </div>
@@ -82,5 +82,4 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/meeting.js"></script>
 <script src="resources/js/meeting_room_calendar.js"></script>
-<script src="resources/js/approval_send_modal.js"></script>
 </html>

@@ -2,8 +2,6 @@ package com.toast.schedule.controller;
 
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,9 +67,6 @@ public class MeetingController {
 		//회의실
 		List<Map<String, Object>> roomList = meetingService.meetingGo();
 		mv.addObject("roomList", roomList);
-		//사원
-		List<Map<String, Object>> partiList = meetingService.meetingParti();
-		mv.addObject("partiList", partiList);
 		//내 정보
 		//String myId= "peterrabbit165";
 		//String myId= (String) session.getAttribute("loginId");
@@ -78,7 +74,11 @@ public class MeetingController {
 		//int my_empl_idx = my_info.getEmpl_idx();
 		//session.setAttribute("my_idx", my_empl_idx);
 		//mv.addObject("my_empl_idx", my_empl_idx);
-		mv.setViewName("meeting");
+		List<MeetingDTO> deptList = meetingService.getDeptList();
+		List<MeetingDTO> teamList= meetingService.getTeamList();
+		mv.addObject("deptList", deptList);
+		mv.addObject("teamList", teamList);
+		mv.setViewName("meeting_room_calendar");
 		return mv;
 	}
 	
@@ -173,13 +173,19 @@ public class MeetingController {
 		
 	    String room = (String) params.get("room");
 	    logger.info("room:"+room);
-	    String myMeeting = (String) params.get("my_meeting");
+	    String myMeeting = null;
+	    if(params.get("my_meeting") != null) {
+	    	myMeeting = (String) session.getAttribute("empl_idx");
+	    }
+	    Map<String, Object> param = new HashMap<String, Object>();
+	    param.put("room", room);
+	    param.put("my_meeting", myMeeting);
 	    
 	    List<Map<String, Object>> meetings = new ArrayList<Map<String,Object>>();
 		if (myMeeting != null) {
-			meetings = meetingService.getMyMeeting(params);
+			meetings = meetingService.getMyMeeting(param);
 		} else {
-			meetings = meetingService.getMeeting(params);
+			meetings = meetingService.getMeeting(param);
 			logger.info("일정 왜  events없어:"+meetings);
 		}
 		logger.info("meetings의길이:"+meetings.size());
@@ -213,24 +219,43 @@ public class MeetingController {
         } else {
             logger.error("Failed to parse start or end date");
         }
-	    
+	    //int empl_idx=(int) session.getAttribute("empl_idx");
+        int empl_idx= 10003;
 	    // room, empl 값을 Integer로 변환
 	    dto.setRoom_idx(Integer.parseInt((String) params.get("room")));
-	    dto.setMeet_rent_empl_idx(Integer.parseInt((String) params.get("empl")));
+	    dto.setMeet_rent_empl_idx(empl_idx);
 	    
 	    List<Integer> meeting_parti = new ArrayList<>();
 	    
 	    //Object로 넘어오는 타입이 뭔지 몰라 경고 발생으로 데이터가 리스트인지 먼저 확인
 	    Object participantsObj = params.get("meeting_parti");
+	    logger.info("meeting_parti: " + participantsObj);
+
 	    if (participantsObj instanceof List<?>) {
 	        List<?> partiList = (List<?>) participantsObj;
+	        logger.info("partiList size: " + partiList.size());
+	        logger.info("partiList contents: " + partiList);
+
 	        for (Object parti : partiList) {
-	            if (parti instanceof String) {
-	            	meeting_parti.add(Integer.parseInt((String) parti));
+	            logger.info("parti: " + parti + ", Type: " + (parti != null ? parti.getClass().getName() : "null"));
+
+	            if (parti instanceof Integer) {
+	                // 이미 Integer라면 바로 추가
+	                meeting_parti.add((Integer) parti);
+	            } else if (parti instanceof String) {
+	                // String인 경우 Integer로 변환 후 추가
+	                meeting_parti.add(Integer.parseInt((String) parti));
+	            } else {
+	                logger.warn("Unexpected type for parti: " + parti);
 	            }
 	        }
+
 	    }
+
+	    // DTO에 리스트 추가 (빈 리스트라도 설정)
 	    dto.setMeet_parti_empl_idxs(meeting_parti);
+	    logger.info("Final DTO meeting_parti: " + dto.getMeet_parti_empl_idxs());
+
 
 	    
 	    boolean success = false;
@@ -269,25 +294,38 @@ public class MeetingController {
         } else {
             logger.error("Failed to parse start or end date");
         }
-	    
+	    //int empl_idx=(int) session.getAttribute("empl_idx");
+        int empl_idx= 10003;
 	    // room, empl, rent_idx 값을 Integer로 변환
 	    dto.setRoom_idx(Integer.parseInt((String) params.get("room")));
-	    dto.setMeet_rent_empl_idx(Integer.parseInt((String) params.get("empl")));
+	    dto.setMeet_rent_empl_idx(empl_idx);
 	    dto.setMeet_rent_idx((int) params.get("rent_idx"));
 	    
 	    logger.info("title: " + dto.getMeet_subject());
 
 	    List<Integer> meeting_parti = new ArrayList<>();
 	    
-	    //Object로 넘어오는 타입이 뭔지 몰라 경고 발생으로 데이터가 리스트인지 먼저 확인
 	    Object participantsObj = params.get("meeting_parti");
+	    logger.info("meeting_parti: " + participantsObj);
 	    if (participantsObj instanceof List<?>) {
 	        List<?> partiList = (List<?>) participantsObj;
+	        logger.info("partiList size: " + partiList.size());
+	        logger.info("partiList contents: " + partiList);
+
 	        for (Object parti : partiList) {
-	            if (parti instanceof String) {
-	            	meeting_parti.add(Integer.parseInt((String) parti));
+	            logger.info("parti: " + parti + ", Type: " + (parti != null ? parti.getClass().getName() : "null"));
+
+	            if (parti instanceof Integer) {
+	                // 이미 Integer라면 바로 추가
+	                meeting_parti.add((Integer) parti);
+	            } else if (parti instanceof String) {
+	                // String인 경우 Integer로 변환 후 추가
+	                meeting_parti.add(Integer.parseInt((String) parti));
+	            } else {
+	                logger.warn("Unexpected type for parti: " + parti);
 	            }
 	        }
+
 	    }
 	    dto.setMeet_parti_empl_idxs(meeting_parti);
 	    
@@ -379,11 +417,48 @@ public class MeetingController {
 		return success;
 	}
 
+	//부서별 직원 가져오기
+	@GetMapping(value="/getDeptEmplMeeting.ajax")
+	@ResponseBody
+	public Map<String, Object> getDeptEmpl(@RequestParam("dept_idx") String dept_idx) {
+		
+		int deptIdx = Integer.parseInt(dept_idx);
+		List<MeetingDTO> emplList = meetingService.getDeptEmpl(deptIdx);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emplList", emplList);
+		return map;
+	}
 	
-	//회의 일정 1시간 전 알림 발송
+
+	
+	//팀별 직원 가져오기
+	@GetMapping(value="/getTeamEmplMeeting.ajax")
+	@ResponseBody
+	public Map<String, Object> getTeamEmpl(@RequestParam("team_idx") String team_idx) {
+		
+		int teamIdx = Integer.parseInt(team_idx);
+		List<MeetingDTO> emplList = meetingService.getTeamEmpl(teamIdx);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emplList", emplList);
+		return map;
+	}
 	
 	
-	//내가 포함된 회의 수정/ 삭제시 알림 발송
+	//사원 검색
+	@PostMapping(value="/emplSearchMeeting.ajax")
+	@ResponseBody
+	public Map<String, Object> emplSearchMeeting(
+			@RequestParam("option") String option, 
+			@RequestParam("keyword") String keyword) {
+		
+		List<MeetingDTO> emplList = meetingService.emplSearchMeeting(option, keyword);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emplList", emplList);
+		return map;
+		
+	}
+	
+	
 	
 	
 	

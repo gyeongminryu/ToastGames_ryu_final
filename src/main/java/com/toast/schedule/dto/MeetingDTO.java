@@ -5,27 +5,21 @@ import java.util.List;
 
 public class MeetingDTO {
 
+	private int team_idx;
+	private String team_name;
+	private int dept_idx;
+	private String dept_name;
+	private String position_name;
+	private String duty_name;
+	private String empl_profile;
 	private int empl_idx;
 	private String empl_name;
-	
-	public int getEmpl_idx() {
-		return empl_idx;
-	}
-	public void setEmpl_idx(int empl_idx) {
-		this.empl_idx = empl_idx;
-	}
-	public String getEmpl_name() {
-		return empl_name;
-	}
-	public void setEmpl_name(String empl_name) {
-		this.empl_name = empl_name;
-	}
 	private int room_idx;
 	private String room_name;
 	private String room_addr;
 	private int room_empl_idx;
 	private String room_info;
-	private String file_key; //실제 프로젝트에서 변경 바람
+	private String file_key;
 	private int room_min;
 	private int room_max;
 	
@@ -41,6 +35,131 @@ public class MeetingDTO {
 	//private int meet_rent_idx;
 	private int meet_parti_empl_idx;
 	private List<Integer> meet_parti_empl_idxs;
+	
+
+	public int getNoti_cate_idx() {
+		return noti_cate_idx;
+	}
+	public void setNoti_cate_idx(int noti_cate_idx) {
+		this.noti_cate_idx = noti_cate_idx;
+	}
+	public int getNoti_sender_empl_idx() {
+		return noti_sender_empl_idx;
+	}
+	public void setNoti_sender_empl_idx(int noti_sender_empl_idx) {
+		this.noti_sender_empl_idx = noti_sender_empl_idx;
+	}
+	public int getNoti_receiver_empl_idx() {
+		return noti_receiver_empl_idx;
+	}
+	public void setNoti_receiver_empl_idx(int noti_receiver_empl_idx) {
+		this.noti_receiver_empl_idx = noti_receiver_empl_idx;
+	}
+	public String getNoti_subject() {
+		return noti_subject;
+	}
+	public void setNoti_subject(String noti_subject) {
+		this.noti_subject = noti_subject;
+	}
+	public String getNoti_content() {
+		return noti_content;
+	}
+	public void setNoti_content(String noti_content) {
+		this.noti_content = noti_content;
+	}
+	public LocalDateTime getNoti_sent_date() {
+		return noti_sent_date;
+	}
+	public void setNoti_sent_date(LocalDateTime noti_sent_date) {
+		this.noti_sent_date = noti_sent_date;
+	}
+	public LocalDateTime getNoti_read_date() {
+		return noti_read_date;
+	}
+	public void setNoti_read_date(LocalDateTime noti_read_date) {
+		this.noti_read_date = noti_read_date;
+	}
+	public int getNoti_deleted() {
+		return noti_deleted;
+	}
+	public void setNoti_deleted(int noti_deleted) {
+		this.noti_deleted = noti_deleted;
+	}
+	public String getNoti_link() {
+		return noti_link;
+	}
+	public void setNoti_link(String noti_link) {
+		this.noti_link = noti_link;
+	}
+	//알림
+	private int noti_cate_idx;
+	private int noti_sender_empl_idx;
+	private int noti_receiver_empl_idx;
+	private String noti_subject;
+	private String noti_content;
+	private LocalDateTime noti_sent_date;
+	private LocalDateTime noti_read_date;
+	private int noti_deleted;
+	private String noti_link;
+	
+	
+	public int getTeam_idx() {
+		return team_idx;
+	}
+	public void setTeam_idx(int team_idx) {
+		this.team_idx = team_idx;
+	}
+	public String getTeam_name() {
+		return team_name;
+	}
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
+	}
+	public int getDept_idx() {
+		return dept_idx;
+	}
+	public void setDept_idx(int dept_idx) {
+		this.dept_idx = dept_idx;
+	}
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+	public String getPosition_name() {
+		return position_name;
+	}
+	public void setPosition_name(String position_name) {
+		this.position_name = position_name;
+	}
+	public String getDuty_name() {
+		return duty_name;
+	}
+	public void setDuty_name(String duty_name) {
+		this.duty_name = duty_name;
+	}
+	public String getEmpl_profile() {
+		return empl_profile;
+	}
+	public void setEmpl_profile(String empl_profile) {
+		this.empl_profile = empl_profile;
+	}
+
+	
+	public int getEmpl_idx() {
+		return empl_idx;
+	}
+	public void setEmpl_idx(int empl_idx) {
+		this.empl_idx = empl_idx;
+	}
+	public String getEmpl_name() {
+		return empl_name;
+	}
+	public void setEmpl_name(String empl_name) {
+		this.empl_name = empl_name;
+	}
+
 	
 	
 	public List<Integer> getMeet_parti_empl_idxs() {
