@@ -128,8 +128,8 @@ $(function () {
         eventClick: function (info) {
             Alldata = info;
             console.log(Alldata);
-			var sessionEmplIdx = sessionStorage.getItem('empl_idx');  // session에서 empl_idx 가져오기
-            //const sessionEmplIdx = 10003;
+			//var sessionEmplIdx = sessionStorage.getItem('empl_idx');  // session에서 empl_idx 가져오기
+            const sessionEmplIdx = 10003;
 
             if (info.event.extendedProps.empl !== sessionEmplIdx) {
                 $('#schedule_title_detail').text(info.event.title);
