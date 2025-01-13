@@ -39,15 +39,15 @@
 	<!-- 일정 넣기 -->
 	<insert id="meetingAddNoti" parameterType="com.toast.schedule.dto.MeetingDTO">
 		INSERT INTO 
-			notify(noti_cate_idx, noti_sender_empl_idx, not_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted,noti_link)
-			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{not_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted},#{noti_link})
+			notify(noti_cate_idx, noti_sender_empl_idx, noti_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted,noti_link)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{noti_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted},#{noti_link})
 	</insert>
 	
 	<!-- 일정 넣기(삭제) -->
 	<insert id="meetdeleteNoti" parameterType="com.toast.schedule.dto.MeetingDTO">
 		INSERT INTO 
-			notify(noti_cate_idx, noti_sender_empl_idx, not_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted)
-			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{not_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted})
+			notify(noti_cate_idx, noti_sender_empl_idx, noti_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{noti_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted})
 	</insert>
 	
 	
@@ -422,7 +422,7 @@
 			empl.empl_name LIKE CONCAT('%', #{param1}, '%')
 	</select>
 
-	<select id="getMeetingList">
+	<select id="getMeetingList" resultType="com.toast.schedule.dto.MeetingDTO">
 		SELECT
 			mt.meet_rent_idx,
 			mt.meet_rent_empl_idx,
@@ -442,8 +442,8 @@
 	<!--회의 일정 1시간 전 알림 발송 -->
 	<insert id="meetingStartNoti" parameterType="com.toast.schedule.dto.MeetingDTO">
 		INSERT INTO 
-			notify(noti_cate_idx, noti_sender_empl_idx, not_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted)
-			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{not_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted})
+			notify(noti_cate_idx, noti_sender_empl_idx, noti_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{noti_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted})
 	</insert>
 
 

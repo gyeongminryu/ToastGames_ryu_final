@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			    console.log('parti: ' + meeting_parti);
 			
 			    // 입력 값이 모두 채워졌는지 확인
-			    if (title && content && meeting_parti.length > 0) {
+			    if (title.trim() !== '' && content.trim() !== '') {
 			        const meeting_add_data = {
 			            title: title,
 			            start: start,
@@ -161,11 +161,11 @@ document.addEventListener('DOMContentLoaded', function() {
 			            meeting_parti: meeting_parti
 			        };
 			
-			        meeting_add(meeting_add_data); // 서버로 전송
-			        meeting_close_modal(); // 모달 닫기
-			    } else {
-			        alert('제목, 내용, 예약 사원들을 모두 입력해주세요.');
-			    }
+				        meeting_add(meeting_add_data); // 서버로 전송
+				        meeting_close_modal(); // 모달 닫기
+				  } else {
+				        alert('제목, 내용, 예약 사원들을 모두 입력해주세요.');
+				  }
 			});
 
             // 모달 열기

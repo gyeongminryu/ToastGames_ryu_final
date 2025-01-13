@@ -171,7 +171,7 @@ function removeMeetingEmpl(index) {
 
 
 //인수자 검색
-function take_empl_search(event) {
+function meeting_empl_search(event) {
     // 폼 기본 제출 동작 방지
     event.preventDefault();
 

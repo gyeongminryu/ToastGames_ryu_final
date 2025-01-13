@@ -301,7 +301,7 @@
                 <div class="tst_col7">
 
                     <!-- 검색 -->
-                    <form>
+                    <form onsubmit="return calendar_empl_search(event);">
                         <div class="tst_search_container">
                             <div class="tst_search_select">
                                 <select id="tst_search_select_category" name="category">
