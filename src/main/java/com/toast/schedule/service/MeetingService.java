@@ -293,7 +293,7 @@ public class MeetingService {
 		List<MeetingDTO> dtoList = meetingDAO.getAllParti(rent_idx); //일정 참여자 정보
 		MeetingDTO meet = meetingDAO.getMeetdetail(rent_idx); //일정정보
 		for (MeetingDTO dto : dtoList) {
-			LocalDate startDate = dto.getMeet_start_date().toLocalDate();
+			LocalDate startDate = meet.getMeet_start_date().toLocalDate();
 			MeetingDTO noti = new MeetingDTO();
 			noti.setNoti_cate_idx(16);
 			noti.setNoti_sender_empl_idx(meet.getMeet_rent_empl_idx());
@@ -345,7 +345,7 @@ public class MeetingService {
 		return teamEmpl;
 	}
 
-	//인수자 검색
+	//사원 검색
 	public List<MeetingDTO> emplSearchMeeting(String option, String keyword) {
 		List<MeetingDTO> emplList = new ArrayList<MeetingDTO>();
 		if(option.equals("dept_name")) {

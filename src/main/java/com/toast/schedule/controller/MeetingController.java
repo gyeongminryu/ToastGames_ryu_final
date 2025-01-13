@@ -68,7 +68,6 @@ public class MeetingController {
 		List<Map<String, Object>> roomList = meetingService.meetingGo();
 		mv.addObject("roomList", roomList);
 		//내 정보
-		//String myId= "peterrabbit165";
 		//String myId= (String) session.getAttribute("loginId");
 		//MeetingDTO my_info = meetingService.myInfo(myId);
 		//int my_empl_idx = my_info.getEmpl_idx();
@@ -86,7 +85,6 @@ public class MeetingController {
 	@RequestMapping(value="/meetingRoomAdd.go")
 	public ModelAndView meetingAddGo () {
 		ModelAndView mv = new ModelAndView();
-		//String myId= "peterrabbit165";
 		//String myId= (String) session.getAttribute("loginId");
 		//logger.info(myId);
 		//부서번호 가져오기

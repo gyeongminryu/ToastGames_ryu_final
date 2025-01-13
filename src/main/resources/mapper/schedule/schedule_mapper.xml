@@ -8,11 +8,12 @@
 		SELECT 
 			sche_title,
 			sche_content,
-			shce_empl_idx
+			sche_empl_idx,
+			sche_start_date
 		FROM
 			schedule
 		WHERE
-			shce_idx=#{param1}
+			sche_idx=#{param1}
 	</select>
 	
 	<!-- 일정 넣기 -->

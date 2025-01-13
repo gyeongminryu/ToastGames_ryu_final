@@ -14,9 +14,6 @@ public interface ScheduleDAO {
 	//내 정보
 	ScheduleDTO myInfo(String myId);
 	
-	//달력가기 참여자 가져오기
-	List<Map<String, Object>> getScheduleParti();
-	
 	//일정 추가
 	int scheduleAdd(ScheduleDTO scheduleDTO);
 

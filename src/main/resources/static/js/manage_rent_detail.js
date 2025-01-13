@@ -189,18 +189,20 @@ function prod_button(item) {
 	        button_content += '<li>';
 	        button_content += '<button class="btn_primary btn_full" onclick="tst_modal_call(\'tst_modal_return\')">반납 처리하기</button>';
 	        button_content += '</li>';
-	    } else {
-	        // 사용 연한이 지났을 경우
-	    }
-	}
+	    } 
+	} else {
 	
-	// 사용 연한과 상관없이 동일하게 출력하는 버튼들
-	button_content += '<li>';
-	button_content += '<button class="btn_primary btn_full" onclick="location.href=\'/manage_rent_transfer.go?prod_idx=' + prod_idx + '\'">직원에게 인계하기</button>';
-	button_content += '</li>';
-	button_content += '<li>';
-	button_content += '<button class="btn_secondary btn_full" onclick="location.href=\'/manage_rent_dispose.go?prod_idx=' + prod_idx + '\'">폐기하기</button>';
-	button_content += '</li>';
+		if (item.dto.prod_rent !== 0 ) {
+		// 사용 연한과 상관없이 동일하게 출력하는 버튼들
+		button_content += '<li>';
+		button_content += '<button class="btn_primary btn_full" onclick="location.href=\'/manage_rent_transfer.go?prod_idx=' + prod_idx + '\'">직원에게 인계하기</button>';
+		button_content += '</li>';
+		button_content += '<li>';
+		button_content += '<button class="btn_secondary btn_full" onclick="location.href=\'/manage_rent_dispose.go?prod_idx=' + prod_idx + '\'">폐기하기</button>';
+		button_content += '</li>';
+		} 
+	}
+
 	button_content += '<li>';
 	button_content += '<button class="btn_subtle btn_full" onclick="location.href=\'/manage_rent_list.go\'">목록으로 돌아가기</button>';
 	button_content += '</li>';
