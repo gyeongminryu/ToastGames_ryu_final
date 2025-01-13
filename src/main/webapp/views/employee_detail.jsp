@@ -386,7 +386,8 @@
         const previewImage = document.getElementById('newSealPreview'); // 미리보기 이미지 태그
 
       //  displayList.innerHTML = ''; // 이름 초기화
-
+ 
+      
         if (file) {
             // 파일이 있을 경우 미리보기 이미지 표시
             const reader = new FileReader();

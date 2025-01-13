@@ -66,7 +66,7 @@
                                                 <li>
                                                     <label class="form_label">성별</label>
                                                     <div class="tst_flex">
-                                                        <input type="hidden" name="empl_gender" value="${employee.empl_gender ? '여성' : '남성'}" />
+                                                        <input type="hidden" name="empl_gender" value="${employee.empl_gender}" />
                                                         <div class="tst_col6">
                                                             <button type="button" onclick="select_gender('0')" class="btn_full btn_empty gender_0">남</button>
                                                         </div>
@@ -172,7 +172,7 @@
 								<tr>
                                 <td>${fileItem.new_filename} (${fileItem.file_size/1024})</td>
                                 <td>
-                                    <!-- 다운로드 경로를 입력하세요 --><button onclick="delFile('${fileItem.new_filename}','${employee.empl_idx}')" class="btn_min btn_primary">삭제하기</button>
+                                    <!-- 다운로드 경로를 입력하세요 --><button type="button" onclick="delFile('${fileItem.new_filename}','${employee.empl_idx}')" class="btn_min btn_primary">삭제하기</button>
                                 </td>
                             	</tr>
 								</c:forEach>
@@ -180,7 +180,9 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <input type="file" name="files" multiple />
+                                        <input type="file" id="fileInput" name="files" multiple />
+                                         <ul id="attachmentFileList"></ul>
+                                         <button type="submit" class="btn_primary">첨부파일 제출</button>
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -220,8 +222,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            </c:when>
-								            
+                            </c:when>		            
 								  <c:otherwise>
 								    <tr>
 								       <td>
@@ -238,10 +239,10 @@
                                     <form id="emplStampForm" action="empl_stamp_upload.do?empl_idx=${employee.empl_idx}" method="POST" enctype="multipart/form-data">
                                         <div class="tst_flex">
                                             <div class="tst_col12 align_center align_middle">
-                                                <img id="newSealPreview" src="" class="companyinfo_stamp" />
+                                                <img id="newSealPreview" src="" class="companyinfo_stamp" style="display: none;"/>
                                             </div>
                                         </div>
-                                        <input type="file" id="singleFile" name="singleFile" multiple />
+                                        <input type="file" id="singleFile" alt="새로운 직인 미리보기" name="singleFile" multiple />
                                     	<button type="submit" class="btn_primary">직인 변경</button>
                                     </form>
                                     </td>
@@ -265,6 +266,23 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/manage_employee_update.js"></script>
 <script>
+
+//첨부파일 목록 표시
+document.getElementById('fileInput').addEventListener('change', function (event) {
+    var fileList = event.target.files; // 선택된 첨부파일
+    var displayList = document.getElementById('attachmentFileList'); // 첨부파일 목록 표시 영역
+
+    // 화면 초기화
+    displayList.innerHTML = '';
+
+    // 각 첨부파일 이름을 리스트에 추가
+    for (var i = 0; i < fileList.length; i++) {
+        var listItem = document.createElement('li');
+        listItem.textContent = fileList[i].name; // 첨부파일 이름
+        displayList.appendChild(listItem);
+    }
+});
+
 //직인파일 미리보기
 document.getElementById('singleFile').addEventListener('change', function (event) {
     const file = event.target.files[0]; // 단일 파일
@@ -294,6 +312,7 @@ document.getElementById('singleFile').addEventListener('change', function (event
       	
         const url = './empl_file_del.do/' + new_filename + '/' + empl_idx;
         window.location.href = url;  // 해당 URL로 이동하여 다운로드
+        console.log(url);
     }
 </script>
 </html>

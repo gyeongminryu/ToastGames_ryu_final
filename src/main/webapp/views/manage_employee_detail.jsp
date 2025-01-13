@@ -241,6 +241,7 @@
 
                         <hr class="separator" />
 
+
                         <!-- 직인 > 파일이 있을 경우 -->
                         <table class="tst_table table_align_left table_no_padding">
                             <thead>
