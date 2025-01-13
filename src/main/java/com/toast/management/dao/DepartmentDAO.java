@@ -87,6 +87,10 @@ public interface DepartmentDAO {
 
 	List<DepartmentDTO> getdeptHighdept();
 
+	List<DutyDTO> getduty2();
+
+	List<DutyDTO> getduty3();
+
 	
 
 	

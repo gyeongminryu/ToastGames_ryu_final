@@ -152,10 +152,15 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td colspan="4" class="td_align_left td_no_padding">
+                                <td colspan="2" class="td_align_left td_no_padding">
                                     <hr class="separator" />
                                     <button onclick="location.href='./manage_employee_update.go?empl_idx=${employee.empl_idx}'" class="btn_primary">정보 수정하기</button>
+                                	
                                 </td>
+        						<td>
+        						  <hr class="separator" />
+        						<button id="openAppoModal">인사발령</button>
+        						</td>
                             </tr>
                             </tfoot>
                         </table>
@@ -283,7 +288,7 @@
     </div>
     
   <!-- 모달창 -->
-<div id="appoModal" style="display: none; position: fixed; top: 20%; left: 30%; width: 40%; padding: 20px; background-color: #fff; border: 1px solid #000;">
+<div id="appoModal" style="display: none; position: fixed; top: 20%; left: 30%; width: 40%; padding: 20px; background-color: #fff; border: 1px solid #000;" >
     <h3>인사 발령</h3>
     
    <!-- 폼 영역 -->
@@ -303,7 +308,7 @@
         <div>
             <label for="duty">직책:</label>
             <select id="duty" name="duty_idx">
-                <option value="">선택</option>
+                <option value="">부서를 선택 하세요</option>
             </select>
         </div>
         <div>
@@ -321,7 +326,7 @@
        <!-- <input type="hidden" id="hiddenDuty" name="hiddenDuty"> 처리자 empl_idx 넣기 세션아이디로 --> 
         
         <div style="margin-top: 10px;">
-            <button type="submit" id="submitAppo">확인</button>
+            <button type="submit" id="submitAppo" class="btn_primary">확인</button>
             <button type="button" id="closeAppoModal">취소</button>
         </div>
     </form>
@@ -332,6 +337,140 @@
 
 <script src="resources/js/common.js"></script>
 <script>
+$(document).ready(function () {
+    // 인사발령 모달 열기
+    $("#openAppoModal").click(function () {
+        fetchAppoData();
+        $("#appoModal").show();
+    });
+
+    // 모달 닫기
+    $("#closeAppoModal").click(function () {
+        $("#appoModal").hide();
+    });
+	
+ 	
+    
+    // AJAX 호출: 직급, 직책, 부서 데이터를 불러옴
+    function fetchAppoData() {
+        $.ajax({
+            url: "./appo_name_list.ajax", // 경로설정
+            type: "GET",
+            success: function(response) {
+                console.log('Response:', response);
+                populateDropdowns(response);
+            },
+            error: function() {
+                alert('데이터를 불러오는 중 문제가 발생했습니다.');
+            }
+        });
+    }
+
+    // 드롭다운 리스트 채우기
+    function populateDropdowns(data) {
+        const deptSelect = $("#department");
+        const posiSelect = $("#position");
+   //     const dudySelect = $("#duty");
+
+        deptSelect.empty();
+        posiSelect.empty();
+   //     dudySelect.empty();
+
+        data.dept.forEach(item => {
+        	   deptSelect.append('<option value="' + item.dept_idx + '" data-dept-depth="' + item.dept_depth + '">' + item.dept_name + '</option>');
+        });
+
+        data.posi.forEach(item => {
+        	   posiSelect.append('<option value="' + item.position_idx + '">' + item.position_name + '</option>');
+        });
+
+       data.dudy.forEach(item => {
+      	 dudySelect.append('<option value="' + item.duty_idx + '">' + item.duty_name + '</option>');
+      });
+    }
+	 
+    // 확인 버튼 클릭 이벤트
+    $("#submitAppo").click(function () {
+        const selectedDept = $("#department").val();
+        const selectedPosi = $("#position").val();
+        const selectedDuty = $("#duty").val();
+
+     //   alert('부서: ' + selectedDept + '\n직급: ' + selectedPosi + '\n직책: ' + selectedDuty);
+        
+        // 여기에 서버로 데이터를 보내는 AJAX 로직도 추가 가능
+        // 예: $.post("/submitAppoData", { dept: selectedDept, posi: selectedPosi, duty: selectedDuty });
+        
+        $("#appoModal").hide();
+    });
+    
+    // 부서 선택 시 직책(duty) 리스트 가져오기
+    $("#department").on("change", function () {
+    	  const selectedDept = $(this).val(); // 선택된 부서 ID 가져오기
+          const selectedDeptDepth = $(this).find(":selected").data("dept-depth"); // data-dept-depth 속성 가져오기
+        if (selectedDeptDepth) {
+            // AJAX 요청: 선택한 부서의 직책 리스트 가져오기
+            $.ajax({
+                url: "./appo_get_duty_list.ajax", // 서버 API 경로
+                type: "GET",
+                data: { dept_depth: selectedDeptDepth }, // 선택된 부서 ID 전송
+                dataType: "json",
+                success: function (response) {
+                	console.log(response);
+                    populateDutyDropdown(response); // 드롭다운 채우기
+                },
+                error: function () {
+                    alert("직책 데이터를 불러오는 중 문제가 발생했습니다.");
+                }
+            });
+        } else {
+            // 부서 선택 안 됨 -> 직책 초기화
+            $("#duty").empty().append('<option value="">부서를 먼저 선택하세요</option>');
+        }
+    });
+
+    // 직책 드롭다운 채우기
+    function populateDutyDropdown(duties) {
+        const dutySelect = $("#duty");
+        dutySelect.empty(); // 기존 리스트 초기화
+        
+        if (duties && duties.dudy.length > 0) {
+            duties.dudy.forEach(item => {
+            	dutySelect.append('<option value="' + item.duty_idx + '">' + item.duty_name + '</option>');
+            });
+        } else {
+            dutySelect.append('<option value="">해당 부서에 직책이 없습니다.</option>');
+        }
+    }
+    
+});
+
+//직인파일 미리보기
+document.getElementById('singleFile').addEventListener('change', function (event) {
+    const file = event.target.files[0]; // 단일 파일
+  
+    const previewImage = document.getElementById('newSealPreview'); // 미리보기 이미지 태그
+
+  //  displayList.innerHTML = ''; // 이름 초기화
+
+    if (file) {
+        // 파일이 있을 경우 미리보기 이미지 표시
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            previewImage.src = e.target.result; // Base64로 변환된 이미지 데이터 설정
+            previewImage.style.display = 'block'; // 미리보기 이미지 보이기
+        };
+
+        // 이미지 파일 읽기
+        reader.readAsDataURL(file);
+    } else {
+        // 파일이 선택되지 않으면 미리보기 이미지 숨기기
+        previewImage.style.display = 'none';
+    }
+});
+
+
+
 //다운로드 버튼 클릭 시 해당 파일 다운로드
 function downloadFile(filename) {
     const url = './memberDownload/' + filename;  // 다운로드 URL 경로

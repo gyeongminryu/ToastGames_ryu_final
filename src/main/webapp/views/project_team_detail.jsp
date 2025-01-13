@@ -96,7 +96,7 @@
                             <thead>
                             <tr>
                                 <th>번호</th>
-                                <th>조직장</th>
+                                <th>프로젝트 팀장</th>
                                 <th>발령일</th>
                             </tr>
                             </thead>

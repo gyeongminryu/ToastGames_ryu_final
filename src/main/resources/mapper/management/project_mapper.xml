@@ -6,6 +6,7 @@
 
 <select id="searchByTeamName">
 SELECT 
+	t.team_idx, 
     t.team_name,
     t.team_duty,
     t.calup_date,
@@ -35,7 +36,8 @@ GROUP BY
 
 
 <select id="searchByTeamHead">
-SELECT 
+SELECT
+	t.team_idx, 
     t.team_name,
     t.team_duty,
     t.calup_date,
@@ -65,6 +67,7 @@ GROUP BY
 
 <select id="getAllTeams">
 SELECT 
+	t.team_idx, 
     t.team_name,
     t.team_duty,
     t.calup_date,

@@ -67,12 +67,12 @@ public class EmployeeController {
 	}
 	
 	@PostMapping(value="/employee_add.do")
-	public String employeeAddDo(@RequestParam Map<String,String> param) {
+	public String employeeAddDo(@RequestParam(value ="files", required = false) MultipartFile[] files,@RequestParam(value ="singleFile", required = false) MultipartFile singleFile ,@RequestParam Map<String,String> param) {
 		String empl_gender = param.get("gender");
 		
 		param.put("empl_gender", empl_gender);
 		
-		employeeService.employeeAdd(param);
+		employeeService.employeeAdd(files,singleFile,param);
 		
 		return "";
 	}

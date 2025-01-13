@@ -237,6 +237,7 @@ document.getElementById("searchBtn").addEventListener("click", function () {
         method: 'GET',
         data: requestData,
         success: function (response) {
+        	console.log(response);
             const tableBody = $('#teamListTable tbody');
             tableBody.empty();
 
@@ -255,7 +256,7 @@ document.getElementById("searchBtn").addEventListener("click", function () {
                     tableBody.append(
                         '<tr>' +
                             '<td class="td_no_padding td_align_left">' + status + '</td>' +
-                            '<th class="td_align_left tst_pointer" onclick="location.href=\'/project_team_detail.go?' + team.team_idx + '\'">' + team.team_name + '</th>' +
+                            '<th class="td_align_left tst_pointer" onclick="location.href=\'/project_team_detail.go?team_idx=' + team.team_idx + '\'">' + team.team_name + '</th>' +
                             '<td class="td_align_left"><span onclick="tst_view_profile(\'' + team.team_head_idx + '\')" class="tst_pointer">' +
                             team.team_head_name + ' (' + (team.team_head_dept || "소속부서 없음") + '/' + (team.team_head_position || "직급 없음") + ')</span></td>' +
                             '<td>' + (team.head_cmp_phone || "없음") + '</td>' +

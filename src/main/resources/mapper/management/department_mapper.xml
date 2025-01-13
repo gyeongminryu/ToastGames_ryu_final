@@ -24,16 +24,24 @@
 	insert into duty (duty_name) values (#{param1})
 </insert>
 -->
+<select id="getduty2" resultType="com.toast.management.dto.DutyDTO">
+	select * from duty where duty_idx NOT IN (1, 2, 4, 20);
+</select>
+
+<select id="getduty3" resultType="com.toast.management.dto.DutyDTO">
+	select * from duty where duty_idx NOT IN (1, 2, 3, 20);
+</select>
+
 <select id="getduty" resultType="com.toast.management.dto.DutyDTO">
-	select * from duty
+	select * from duty where duty_idx > 2
 </select>
 
 <select id="getdept" resultType="com.toast.management.dto.DepartmentDTO">
-	select * from department
+	select * from department where dept_idx > 2
 </select>
 
 <select id="getposi" resultType="com.toast.management.dto.PositionDTO">
-	select * from position_
+	select * from position_ WHERE position_idx != 7;
 </select>
 
 <select id="getdeptinfo" resultType="com.toast.management.dto.DepartmentDTO">
