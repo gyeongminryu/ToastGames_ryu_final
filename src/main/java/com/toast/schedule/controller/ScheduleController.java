@@ -65,8 +65,6 @@ public class ScheduleController {
 		//String myId= (String) session.getAttribute("loginId");
 		//if(myId != null) { //null이 아니면 로그인 한 것
 			//참여자 정보
-			List<Map<String, Object>> partiList = scheduleService.getScheduleParti();
-			mv.addObject("partiList", partiList);
 			
 			List<ScheduleDTO> deptList = scheduleService.getDeptList();
 			List<ScheduleDTO> teamList= scheduleService.getTeamList();

@@ -28,6 +28,7 @@
 	<select id="getMeetdetail" resultType="com.toast.schedule.dto.MeetingDTO">
 		SELECT 
 			meet_rent_empl_idx,
+			meet_start_date,
 			meet_subject,
 			meet_content
 		FROM
