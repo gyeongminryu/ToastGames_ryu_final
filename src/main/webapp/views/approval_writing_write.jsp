@@ -103,7 +103,7 @@
                                     <td class="td_align_left">
                                         <ul class="list_no_desc list_inline">
                                             <li>
-                                                <button type="button" onclick="approval_save_and_request()" class="btn_primary">상신하기</button>
+                                                <button type="button" onclick="approval_write_request_save()" class="btn_primary">상신하기</button>
                                             </li>
                                             <li>
                                                 <button type="button" onclick="approval_write_save()" class="btn_secondary">임시 저장하기</button>

@@ -15,7 +15,8 @@ import java.util.Map;
 
 @Controller
 public class ApprovalResponseController {
-	int empl_idx = 10002; //세션 적용 후 없애기
+	int empl_idx = 10063; //세션 적용 후 없애기
+	//int empl_idx = 10002; //세션 적용 후 없애기
 	//int empl_idx = 10021; //세션 적용 후 없애기
 	//int empl_idx = 10002; //최종 결재자
 
@@ -31,19 +32,20 @@ public class ApprovalResponseController {
 
 
 	//결재 후
-	@PostMapping (value="save_approved_doc_content.ajax")
+	@PostMapping (value="/save_approved_doc_content.ajax")
 	@ResponseBody
-	public Map<String,Object> save_approved_doc_content(String doc_content, String doc_idx, String line_order){
+	public Map<String,Object> save_approved_doc_content(String doc_content, String doc_idx, String line_order,String appr_date){
 
 
 		Map<String,Object> data = new HashMap<>();
 		logger.info("doc_idx:{}", doc_idx);
 		logger.info("line_order:{}", line_order);
+		logger.info("appr_date:{}", appr_date);
 
 		//폼 양식 html 업데이트
 		//내 결재 상태 - 승인으로 처리 & 처리 일시 업데이트
 		//다음 결재자 show 및 알림 1
-		int target_user = approvalResponseService.update_after_appr(doc_content,doc_idx,line_order,empl_idx);
+		int target_user = approvalResponseService.update_after_appr(doc_content,doc_idx,line_order,empl_idx,appr_date);
 		data.put("target_user",target_user);
 
 		return data;

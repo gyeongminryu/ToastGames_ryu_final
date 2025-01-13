@@ -62,8 +62,8 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <input type="hidden" id = "doc_idx" value = ${doc_info.doc_idx}>
-                                <input type="hidden" id = "empl_idx" value = ${empl_idx}>
+                                <input type="hidden" id = "doc_idx" value = "${doc_info.doc_idx}">
+                                <input type="hidden" id = "empl_idx" value = "${empl_idx}">
 
                                 <th>제목</th>
                                 <th>
