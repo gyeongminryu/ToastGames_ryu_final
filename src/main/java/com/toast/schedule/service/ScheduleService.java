@@ -118,7 +118,7 @@ public class ScheduleService {
 		List<ScheduleDTO> dtoList = scheduleDao.getAllParti(sche_idx); //일정 참여자 정보
 		ScheduleDTO sche = scheduleDao.getSchedetail(sche_idx); //일정정보
 		for (ScheduleDTO dto : dtoList) {
-			LocalDate startDate = dto.getSche_start_date().toLocalDate();
+			LocalDate startDate = sche.getSche_start_date().toLocalDate();
 			ScheduleDTO noti = new ScheduleDTO();
 			noti.setNoti_cate_idx(13);
 			noti.setNoti_sender_empl_idx(sche.getSche_empl_idx());
@@ -136,9 +136,7 @@ public class ScheduleService {
 		return parti;
 	}
 
-	public List<Map<String, Object>> getScheduleParti() {
-		return scheduleDao.getScheduleParti();
-	}
+
 
 	
 
