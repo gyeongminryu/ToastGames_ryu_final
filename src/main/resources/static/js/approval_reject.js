@@ -39,7 +39,7 @@ function approval_reject(){
                 approval_insert_notify(location.pathname+location.search,target_user,empl_idx,doc_subject,doc_content_sub,3);
 
 
-                //location.href = "/approval_received_detail.go?doc_idx="+doc_idx+"&type="+'received';
+                location.href = "/approval_received_detail.go?doc_idx="+doc_idx+"&type="+'received';
 
             },error : function (e){
                 console.log(e);

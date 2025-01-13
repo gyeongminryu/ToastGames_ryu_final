@@ -37,6 +37,7 @@ function approval_doc_get(){
             console.log(data.doc_content);
             console.log(data.doc_idx);
             console.log(data.empl_name);
+            console.log("data.duty_name",data.duty_name);
             //editor.setHTMLCode(data.form_content);//편집기 안의 HTML code 설정
 
             //document.getElementById('form_content').innerHTML =data.doc_content;
@@ -55,8 +56,11 @@ function approval_doc_get(){
             //폼 양식 수정
             $('#document_idx_left').html(data.doc_idx);
             $('#sender_name_left').html(data.empl_name);
-            $('#sender_name_right').html(data.empl_name);
             $('#sender_dept_left').html(data.dept_name);
+
+            $('#sender_name_right').html(data.empl_name);
+            $('#sender_duty_right').html(data.duty_name);
+
 
             //가져온 정보를 html로 보여주는 코드
             //만약에 제목, 마감일시, 보고 내용이 있다면?
@@ -160,7 +164,8 @@ function approval_draw_appr_line(data){
                 $(duty_line_id).val(approval_line.duty_idx);
                 $(position_line_id).val(approval_line.position_idx);
                 getHtmlCode();
-                $('#approval_duty_1').html(approval_line.dept_name+'/'+approval_line.position_name+'/'+approval_line.empl_name);
+                $('#approval_duty_1').html(approval_line.position_name);
+                $('#approval_name_1').html(approval_line.empl_name);
                 setHtmlCode();
 
 
@@ -181,7 +186,10 @@ function approval_draw_appr_line(data){
                 $(duty_line_id).val(approval_line.duty_idx);
                 $(position_line_id).val(approval_line.position_idx);
                 getHtmlCode();
-                $('#approval_duty_2').html(approval_line.dept_name+'/'+approval_line.position_name+'/'+approval_line.empl_name);
+
+                $('#approval_duty_2').html(approval_line.position_name);
+                $('#approval_name_2').html(approval_line.empl_name);
+
                 setHtmlCode();
               /*  $('#approval_2 .empl_name').html(approval_line.empl_name);
                 $('#approval_2 .position').html(approval_line.dept_name+'/'+approval_line.position_name);
@@ -205,7 +213,8 @@ function approval_draw_appr_line(data){
                 $(position_line_id).val(approval_line.position_idx);
 
                 getHtmlCode();
-                $('#approval_duty_3').html(approval_line.dept_name+'/'+approval_line.position_name+'/'+approval_line.empl_name);
+                $('#approval_duty_3').html(approval_line.position_name);
+                $('#approval_name_3').html(approval_line.empl_name);
                 setHtmlCode();
 
                 /*$('#approval_3 .empl_name').html(approval_line.empl_name);

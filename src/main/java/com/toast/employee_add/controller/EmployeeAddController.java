@@ -73,6 +73,8 @@ public class EmployeeAddController {
                model.addAttribute("data",data_list);//make_dataList(workbook,file)
                model.addAttribute("data_col_names",data_col_names);
                model.addAttribute("row_length",row_length);
+                model.addAttribute("col_length",col_length);
+
 
             } else if(extension.equals("xls")) {
                 logger.info("xls 파일");
@@ -159,8 +161,10 @@ public class EmployeeAddController {
         Sheet worksheet = workbook.getSheetAt(0); //엑셀 파일 내에서 시트가 여러개일 수 있다는 가정 하에
         logger.info("worksheet:{}",worksheet);
         logger.info("worksheet row:{}",worksheet.getPhysicalNumberOfRows());
+
         Row first_row = worksheet.getRow(0);
         logger.info("first_row:{}",first_row);
+        logger.info("first_row col:{}",first_row.getPhysicalNumberOfCells());
 
 
 

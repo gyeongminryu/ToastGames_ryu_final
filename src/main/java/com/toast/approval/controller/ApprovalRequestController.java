@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Controller
 public class ApprovalRequestController {
-	int empl_idx = 10002;
+	int empl_idx = 10111;
 	private final ApprovalService approvalService;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -128,7 +128,7 @@ public class ApprovalRequestController {
 
 
 	//결재 문서 저장
-	@PostMapping (value = "approval_doc_write_and_request.ajax")
+	@PostMapping (value = "/approval_doc_write_and_request.ajax")
 	@ResponseBody
 	public Map<String,Object> doc_write_and_request (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]attached_file) {
 		logger.info("결재 문서 저장 ajax 실행");

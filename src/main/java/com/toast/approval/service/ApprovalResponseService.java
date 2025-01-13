@@ -22,27 +22,28 @@ public class ApprovalResponseService {
 	public ApprovalResponseService(ApprovalResponseDAO approvalResponseDAO) {
 		this.approvalResponseDAO = approvalResponseDAO;
 	}
-	public int update_after_appr(String doc_content, String doc_idx,String line_order, int empl_idx) {
+
+	public int update_after_appr(String doc_content, String doc_idx,String line_order, int empl_idx,String appr_date) {
 		logger.info("doc_content:{}",doc_content);
 		logger.info("doc_idx:{}",doc_idx);
 		boolean success = false;
 
-		//처리 일시 업데이트
+		/*//처리 일시 업데이트
 		LocalDate date = LocalDate.now();
 		LocalTime time = LocalTime.now();
 
 
 		//time format
-		String formatted_time = time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+		String formatted_time = time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));*/
 
-		logger.info("formatted_datetime:{}",date+ " "+formatted_time);
-		String formatted_date = date+ " "+formatted_time;
+		//logger.info("formatted_datetime:{}",date+ " "+formatted_time);
+		//String formatted_date = date+ " "+formatted_time;
 
 
 
 		int target_user = 0;
 
-		if(approvalResponseDAO.update_appr_content(doc_content,doc_idx)>0 && approvalResponseDAO.count_update_next_appr(line_order,doc_idx)>0 &&approvalResponseDAO.update_next_appr(line_order,doc_idx)>0&& approvalResponseDAO.update_my_approval_state(empl_idx,doc_idx,formatted_date)>0){
+		if(approvalResponseDAO.update_appr_content(doc_content,doc_idx)>0 && approvalResponseDAO.count_update_next_appr(line_order,doc_idx)>0 &&approvalResponseDAO.update_next_appr(line_order,doc_idx)>0&& approvalResponseDAO.update_my_approval_state(empl_idx,doc_idx,appr_date)>0){
 			target_user = approvalResponseDAO.get_next_appr(line_order,doc_idx);
 		}
 

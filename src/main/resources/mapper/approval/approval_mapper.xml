@@ -200,4 +200,12 @@
     <select id="get_my_appr_name" resultType="String">
         SELECT empl_name FROM employee WHERE empl_idx = #{empl_idx}
     </select>
+
+
+    <!--최근 결재 문서 목록 가져오기-->
+    <select id="get_recent_written" resultType="Map">
+        SELECT d.doc_subject, d.doc_idx,d.form_idx,f.form_subject FROM document d
+               join form f on d.form_idx = f.form_idx
+        order by doc_update_date desc LIMIT 2;
+    </select>
 </mapper>

@@ -69,4 +69,6 @@ public interface ApprovalDAO {
     String get_doc_form_content(int doc_idx);
 
     String get_my_appr_name(int empl_idx);
+
+    List<Map<String, Object>> get_recent_written(int empl_idx);
 }

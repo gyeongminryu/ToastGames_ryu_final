@@ -65,13 +65,16 @@ public class EmployeeAddService {
                 throw new RuntimeException(e);
             }
 
+            //파일 키
+            String file_key = UUID.randomUUID().toString();
+            list.put("file_key", file_key);
 
             //성별 -> int값으로 변환
             String gender = (String) list.get("empl_gender");
-            if(gender.equals("남")){
+            if(gender.equals("남")||gender.equals("남자")){
                 //임시 아이디
                 list.put("empl_gender",0);
-            }else{
+            }else if(gender.equals("여")||gender.equals("여자")){
                 list.put("empl_gender",1);
             }
 
