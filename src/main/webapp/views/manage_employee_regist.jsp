@@ -36,7 +36,7 @@
                     </li>
                 </ul>
                 <!-- //제목 -->
-                <form action="./employee_add.do" method="POST">
+                <form action="./employee_add.do" method="POST" enctype="multipart/form-data">
                     <div class="tst_flex">
                         <div class="tst_col9">
                             <div class="tst_flex tst_flex_block">
@@ -170,7 +170,7 @@
                                     <th colspan="2">첨부 파일</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="attachmentFileList">
                                 <tr>
                                     <td>{파일명 (파일 용량kb)}</td>
                                     <td>
@@ -196,9 +196,10 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <input type="file" name="" multiple />
+                                        <input type="file" id="fileInput" name="files" multiple />
                                     </td>
                                 </tr>
+                                
                                 </tfoot>
                             </table>
                             <!-- //첨부 파일 목록 -->
@@ -218,16 +219,13 @@
                                 </thead>
                                 <tbody>
                                 <tr class="td_no_underline">
-                                    <td>{파일명 (파일 용량kb)}</td>
-                                    <td>
-                                        <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">직인 삭제</button>
-                                    </td>
+                                    <td id="fileInfo"><p class="font_subtle align_center">직인이 없습니다.</p></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
                                         <div class="tst_flex">
                                             <div class="tst_col12 align_center align_middle">
-                                                <img id="employee_stamp" src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" class="companyinfo_stamp" />
+                                                <img id="newSealPreview" src="#" alt="새로운 직인 미리보기" style="display: none; max-width: 200px; max-height: 200px;" />
                                             </div>
                                         </div>
                                     </td>
@@ -236,37 +234,13 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <input type="file" name="" multiple />
+                                        <input type="file" id="singleFile" name="singleFile" onchange="getFileInfo(this)" multiple />
                                     </td>
                                 </tr>
                                 </tfoot>
                             </table>
                             <!-- //직인 > 파일이 있을 경우 -->
 
-                            <!-- 직인 > 파일이 없을 경우 -->
-                            <table class="tst_table table_align_left table_no_padding">
-                                <thead>
-                                <tr>
-                                    <th>직인</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="td_no_underline disp_hide">
-                                    <td colspan="2"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><p class="font_subtle align_center">직인이 없습니다.</p></td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="2">
-                                        <input type="file" name="" onchange="img_preview(this)" multiple />
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                            <!-- //직인 > 파일이 없을 경우 -->
                         </div>
                     </div>
                     
@@ -306,6 +280,91 @@ function select_gender(gender) {
 // DOMContentLoaded 이후에 초기화
 document.addEventListener('DOMContentLoaded', function () {
     scan_gender(); // 초기 성별 버튼 스타일 설정
+});
+
+
+//새 직인 파일 미리보기
+document.getElementById('singleFile').addEventListener('change', function (event) {
+    var file = event.target.files[0]; // 선택된 파일 가져오기
+    var previewImage = document.getElementById('newSealPreview'); // 미리보기 이미지 요소 가져오기
+
+    if (file) {
+        var reader = new FileReader(); // FileReader 객체 생성
+        reader.onload = function (e) {
+            previewImage.src = e.target.result; // FileReader가 생성한 URL로 이미지 src 설정
+            previewImage.style.display = 'block'; // 이미지 표시
+        };
+        reader.readAsDataURL(file); // 선택한 파일을 Data URL로 읽기
+    } else {
+        previewImage.style.display = 'none'; // 파일이 없으면 이미지 숨기기
+    }
+});
+
+//파일 정보 가져오기
+function getFileInfo(input) {
+    const fileInfoElement = document.getElementById('fileInfo');
+    const preview = document.getElementById('newSealPreview');
+    
+    // 파일이 선택되었는지 확인
+    if (input.files && input.files.length > 0) {
+        const file = input.files[0]; // 첫 번째 파일 가져오기
+        const fileName = file.name; // 파일 이름
+        const fileSize = (file.size / 1024).toFixed(2); // 파일 크기 (KB로 변환)
+
+        // 파일 정보 표시
+       fileInfoElement.textContent = fileName + " (" + fileSize + " KB)";
+
+        // 이미지 파일인 경우 미리보기
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none'; // 이미지가 아니면 미리보기 숨김
+        }
+    } else {
+        // 파일이 선택되지 않은 경우
+        fileInfoElement.textContent = '파일을 선택해주세요.';
+        preview.style.display = 'none';
+    }
+}
+
+
+//첨부파일 목록 표시
+document.getElementById('fileInput').addEventListener('change', function (event) {
+    const fileList = event.target.files; // 선택된 첨부파일
+    const displayList = document.getElementById('attachmentFileList'); // 첨부파일 목록 표시 영역
+
+    // 화면 초기화
+    displayList.innerHTML = '';
+
+    // 각 첨부파일 이름과 삭제 버튼을 행으로 추가
+    for (let i = 0; i < fileList.length; i++) {
+        const row = document.createElement('tr');
+
+        // 파일명 및 크기 셀
+        const fileCell = document.createElement('td');
+        const fileSize = (fileList[i].size / 1024).toFixed(2); // KB로 변환
+        fileCell.textContent = fileList[i].name + ' (' + fileSize + ' KB)';
+        row.appendChild(fileCell);
+
+        // 삭제 버튼 셀
+        const buttonCell = document.createElement('td');
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '파일 삭제';
+        deleteButton.type = 'button';
+        deleteButton.className = 'btn_min btn_primary';
+        deleteButton.onclick = function () {
+            tst_modal_call_param('tst_modal_delete', i); // 파일 인덱스 전달
+        };
+        buttonCell.appendChild(deleteButton);
+
+        row.appendChild(buttonCell);
+        displayList.appendChild(row);
+    }
 });
 
 // 직인 파일 입력 시 이미지 미리보기

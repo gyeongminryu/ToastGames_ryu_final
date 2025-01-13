@@ -58,7 +58,7 @@ public class EmployeeService {
 		
 	}
 
-	public void employeeAdd(Map<String, String> param) {
+	public void employeeAdd(MultipartFile[] files,MultipartFile singleFile,Map<String, String> param) {
 		
 		String file_key = UUID.randomUUID().toString();
 		// empl_stamp , empl_profile >> uuid 파일 키 사용안하고 newfilename 넣어서 저장된 이름 경로 사용하기
@@ -92,9 +92,17 @@ public class EmployeeService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		// 직인 업로드
+		String emplstamp = emplStampUpload(singleFile);
+		param.put("empl_stamp", emplstamp);
 		employeeDAO.employeeAdd(param);
 		// 사원등록시 파일 등록하기 추가 ??
+		try {
+			emplfileUploadAdd(files,file_key);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	} // employeeAdd(MultipartFile[] files, Map<String, String> param)
@@ -163,9 +171,9 @@ public class EmployeeService {
 				appolasthead = employeeDAO.employeeAppolast(headidx);
 				int head_appo_idx = appolasthead.getAppo_idx();
 				// 직위변경 넣기 
-				String headdudy = String.valueOf(20);
+				String headdudy = String.valueOf(10);
 				// 가발령 상태로 변환 ?
-				dept_idx = "1";
+			//	dept_idx = "1";
 				// 
 				employeeDAO.employeeAppoDo(headidx,dept_idx,position_idx,headdudy,movein_date,empl_job);
 				// 전출날짜 넣기
@@ -197,6 +205,37 @@ public class EmployeeService {
 		employeeDAO.employeeChangeDo(empl_idx,statement_idx);
 		}
 	}
+	
+	
+	// 업로드 처리 
+		public void emplfileUploadAdd(MultipartFile[] files, String file_key) throws IOException {
+			for (MultipartFile file : files) {
+				if (!file.isEmpty()) {
+					String originalFileName = file.getOriginalFilename();
+					String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
+					String newFileName = UUID.randomUUID().toString() + "." + fileType;
+					String fileAddr = uploadAddr + "/" + newFileName;
+					
+					// 경로 설정 부분. 파일을 서버에 저장함. 필요한가? 이거 어떻게 해야할지 정해야 함..
+					File dest = new File(fileAddr);
+					file.transferTo(dest);
+					long file_size = dest.length();
+			
+					// 첨부 파일 정보를 DTO에 저장.
+					FileDTO fileDTO = new FileDTO();
+					fileDTO.setFile_key(file_key);
+					fileDTO.setOri_filename(originalFileName);
+					fileDTO.setNew_filename(newFileName);
+					fileDTO.setFile_type(fileType);
+					fileDTO.setFile_addr(fileAddr);
+				//	fileDTO.setUploader_idx(int_empl_idx);
+					fileDTO.setFile_size(file_size);
+					// file 테이블에 파일정보 저장.
+					employeeDAO.emplfileUpload(fileDTO);
+				}
+
+			}
+		} // public void emplfileUpload(String empl_idx, MultipartFile[] files)
 	
 	// 업로드 처리 
 	public void emplfileUpload(MultipartFile[] files,String empl_idx) throws IOException {
@@ -239,6 +278,32 @@ public class EmployeeService {
 		return filelist;
 	}
 	
+	// 스탬프 파일 업로드 처리
+	public String emplStampUpload(MultipartFile singleFile) {
+			
+			String originalFileName = singleFile.getOriginalFilename();
+			String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
+			String newFileName = UUID.randomUUID().toString() + "." + fileType;
+			String fileAddr = uploadAddr + "/" + newFileName;
+			
+			File dest = new File(fileAddr);
+			if (!dest.exists()) {
+		        dest.mkdirs();  // 디렉토리가 없으면 생성
+		    }
+			  try {
+			        // 파일을 지정한 경로에 저장
+			        singleFile.transferTo(dest);
+			        logger.info("파일 이름은 : "+newFileName);
+			        // 업로드된 파일 이름을 DB에 저장
+			        
+			   //     employeeDAO.emplStampUpload(newFileName,empl_idx);
+	
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			        throw new RuntimeException("파일 업로드 실패: " + e.getMessage());
+			    }
+			return newFileName;
+		}
 	
 	// 사원 직인 등록
 	public void emplStampUpload(MultipartFile singleFile,String empl_idx) {

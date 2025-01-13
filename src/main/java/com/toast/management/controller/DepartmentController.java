@@ -75,15 +75,30 @@ public class DepartmentController {
 		List<PositionDTO> posi = new ArrayList<>();
 		List<DepartmentDTO> dept = new ArrayList<>();
 		
-		dudy = departmentService.getdudy();
+	//	dudy = departmentService.getdudy();
 		posi = departmentService.getposi();
 		dept = departmentService.getdept();
 		map.put("dept", dept);
 		map.put("posi", posi);
+	//	map.put("dudy", dudy);
+				
+		return map;
+	}
+	
+	@GetMapping(value="/appo_get_duty_list.ajax") // 직급 직책 부서명 가져오기
+	@ResponseBody
+	public Map<String, Object> appogetdutylist(@RequestParam String dept_depth){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<DutyDTO> dudy = new ArrayList<>();	
+		
+		dudy = departmentService.getdudy(dept_depth);
+		
 		map.put("dudy", dudy);
 				
 		return map;
 	}
+	
 	
 	@GetMapping(value="/appo_name_high_list.ajax") // 직급 직책 부서명 가져오기
 	@ResponseBody
@@ -94,12 +109,12 @@ public class DepartmentController {
 		List<PositionDTO> posi = new ArrayList<>();
 		List<DepartmentDTO> dept = new ArrayList<>();
 		
-		dudy = departmentService.getdudy();
+	//	dudy = departmentService.getdudy();
 		posi = departmentService.getposi();
 		dept = departmentService.getdepthigh();
 		map.put("dept", dept);
 		map.put("posi", posi);
-		map.put("dudy", dudy);
+	//	map.put("dudy", dudy);
 				
 		return map;
 	}

@@ -7,8 +7,12 @@
     <title>TOAST Games Groupware</title>
     <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
+        <link rel="stylesheet" type="text/css" href="resources/css/manage_rent.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/module_table.css" />
+        <link rel="stylesheet" type="text/css" href="resources/css/module_search_min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/companyinfo.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />
+        <link rel="stylesheet" type="text/css" href="resources/css/organization.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -59,7 +63,8 @@
                                                         <input type="text" id="ceo" name="ceo" value="${ceo_info.empl_name}/${ceo_info.position_name}/${ceo_info.duty_name}" readonly required />
                                                     </div>
                                                     <div class="tst_col2">
-                                                        <button type="button" id="changeCeoButton" class="btn_secondary btn_full">대표 변경하기</button>
+                                                       
+                                                         <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_secondary btn_full">대표 변경</button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -233,6 +238,215 @@
     </div>
 </div>
 
+
+
+
+
+<!-- 팀장 임명하기 -->
+<div class="tst_modal tst_modal_wide tst_modal_select">
+    <div class="tst_modal_container">
+        <div class="tst_modal_header">
+            <h1 class="tst_modal_title">대표 임명하기</h1>
+            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_select')"></i>
+        </div>
+        <div class="tst_modal_body">
+            <div class="tst_flex">
+                <div class="tst_col5">
+                    <table class="tst_table table_align_left">
+                        <colgroup>
+                            <col style="width: 23px;" />
+                            <col style="width: auto;" />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th colspan="2">부서 선택</th>
+                        </tr>
+                        </thead>
+
+                        <!-- 부서 목록 출력 -->
+                        <tbody class="tst_pointer team_dept"  id="team_dept">
+                        <tr>
+                            <td><i class="bi bi-caret-right-fill" onclick="show_team_list(this)"></i></td><!-- 한꺼번에 불러오실 경우 '부서 번호' 지우시면 됩니다.-->
+                            <!-- 부서 내 직원을 출력하는 함수를 입력하세요 --><td onclick="{함수}" class="tst_pointer">{부서명}</td>
+                        </tr>
+
+                        <!-- 팀 목록 출력 -->
+                        <tr class="disp_hide">
+                            <td></td>
+                            <td>
+                                <table class="tst_table table_align_left table_no_padding">
+                                    <tbody>
+                                    <tr>
+                                        <td onclick="{함수}">{팀명}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <!-- //팀 목록 출력 -->
+
+                        
+
+                        </tbody>
+                        <!-- //부서 목록 출력 -->
+
+                    </table>
+                </div>
+                <div class="tst_col7">
+
+                    <!-- 직원 검색 -->
+                    <!-- //직원 검색 -->
+
+                    <table class="tst_table table_align_left">
+                        <colgroup>
+                            <col style="width: 40px;" />
+                            <col style="width: auto;" />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th colspan="2">직원 선택</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="tst_pointer" id="dept_member">
+  
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tst_modal_footer">
+            <button onclick="tst_modal_close('tst_modal_select')" class="btn_primary">대표 임명하기</button>
+            <button onclick="tst_modal_close('tst_modal_select')" class="btn_secondary">이전 화면으로 돌아가기</button>
+        </div>
+    </div>
+    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_select')"></div>
+</div>
+<!-- //팀장 임명하기 -->
+
+
+
+
+<script>
+// 모달창 스크립트
+//날짜 설정 
+
+
+function fetchAndRenderDeptList() {
+    $.ajax({
+        url: './get_dept_list.ajax', // 아작스 경로
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            renderDeptList(data); // 성공적으로 데이터를 가져왔을 경우 렌더링
+            
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX 요청 실패:', error);
+        }
+    });
+}
+
+//부서 목록 렌더링
+function renderDeptList(data) {
+    var tbody = $('.team_dept'); // jQuery를 사용해 요소 선택
+    tbody.empty(); // 기존 내용을 초기화
+
+    $.each(data, function(key, deptList) {
+        if (deptList.length === 0) return;
+
+        var upperDept = deptList[0]; // 상위 부서
+        var lowerDepts = deptList.slice(1); // 하위 부서들
+
+        // 상위 부서 행 추가
+        tbody.append(
+            '<tr>' +
+            '<td><i class="bi bi-caret-right-fill" onclick="show_team_list(this, \'lower-' + upperDept.dept_idx + '\')"></i></td>' +
+            '<td onclick="fetchDeptMembers(' + upperDept.dept_idx + ')" class="tst_pointer">' + upperDept.dept_name + '</td>' +
+            '</tr>'
+        );
+
+        // 하위 부서 컨테이너 추가
+        var lowerRow = '<tr id="lower-' + upperDept.dept_idx + '" class="disp_hide">' +
+                       '<td></td>' +
+                       '<td>' +
+                       '<table class="tst_table table_align_left table_no_padding">' +
+                       '<tbody>';
+        $.each(lowerDepts, function(index, lowerDept) {
+            lowerRow += '<tr>' +
+                        '<td onclick="fetchDeptMembers(' + lowerDept.dept_idx + ')">' + lowerDept.dept_name + '</td>' +
+                        '</tr>';
+        });
+        lowerRow += '</tbody>' +
+                    '</table>' +
+                    '</td>' +
+                    '</tr>';
+        tbody.append(lowerRow);
+    });
+}
+let isFetching = false; // 중복 요청 방지 플래그
+//부서원 정보 가져오기
+function fetchDeptMembers(deptIdx) {
+	
+    $.ajax({
+        url: './get_dept_members.ajax', // 경로 설정 
+        type: 'GET',
+        data: { dept_idx: deptIdx }, // 서버로 전달할 데이터
+        dataType: 'json',
+        success: function(data) {
+        	console.log(data);
+            renderDeptMembers(data); // 부서원 정보 렌더링 팀장 선택시
+         //   renderAddDeptMembers(data);
+            $('#dept_member').closest('.disp_hide').removeClass('disp_hide'); // 숨김 클래스 제거
+        },
+        error: function(xhr, status, error) {
+            console.error('부서원 정보 가져오기 실패:', error);
+        }
+    });
+}
+
+
+//부서원 정보 렌더링 - 전체 부서워 - 팀장 임명 부서원 목록
+function renderDeptMembers(members) {
+    var membersTable = $('#dept_member'); // 부서원 정보 표시할 테이블
+    membersTable.empty(); // 기존 데이터를 초기화
+
+    $.each(members, function(index, member) {
+    	 var profileImage = member.empl_profile
+         ? '/files/' + member.empl_profile
+         : 'http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png';
+        membersTable.append(
+        		'<tr onclick="updateTeamLeader(\'' + member.empl_idx + '\', \'' + member.empl_name + '\', \'' + member.dept_name + '\', \'' + member.position_name + '\')">' +
+                '<td class="td_align_top td_no_padding">' +
+                '<img src="' + profileImage + '" alt="' + member.empl_idx + '의 프로필 사진" class="approval_profile_image" style="width:50px; height:50px; object-fit:cover;"/>' +
+                '</td>' +
+                '<td>' +
+                '<p>' + member.empl_name + ' (' + member.dept_name + '/' + member.position_name + ')</p>' +
+                '<p class="min font_subtle">' + member.duty_name + '</p>' +
+                '</td>' +
+                '</tr>'
+        );
+    });
+    $('#dept_member').css('display', 'block'); // 강제로 표시
+}
+
+
+// 클릭시 팀장 정보 바꾸기
+function updateTeamLeader(id, name, dept, position) {
+    // 팀장 정보 업데이트
+    document.querySelector("input[name='ceo_idx']").value = id; // 팀장 ID
+    document.querySelector("input[name='ceo']").value = name + " (" + dept + "/" + position + ")"; // 팀장 이름 및 직책
+    console.log("팀장 정보 업데이트: ", id, name, dept, position);
+}
+
+
+
+// 초기 데이터 로드
+fetchAndRenderDeptList();
+
+</script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     var modal = document.getElementById('employeeModal'); // 모달
@@ -279,68 +493,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var filePath = document.getElementById('existingSealPreview').getAttribute('src'); // 이미지의 경로 가져오기
     getFileSize(filePath, 'stampFileSize'); // 크기 표시용 요소에 업데이트
 
-    // 대표 변경하기 버튼 클릭 시 모달 열기
-    changeCeoButton.addEventListener('click', function () {
-        modal.style.display = 'block';
 
-        // AJAX로 직원 리스트 가져오기
-        $.ajax({
-            url: './employee_list.ajax',
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                employeeTableBody.innerHTML = ''; // 기존 데이터 초기화
-
-                response.forEach(function (employee) {
-                    var row = document.createElement('tr');
-                    row.innerHTML =
-                        '<td>' + employee.empl_idx + '</td>' +
-                        '<td>' + employee.empl_name + '</td>' +
-                        '<td>' + ((employee.position_name || '없음') + '/' + (employee.duty_name || '없음')) + '</td>' +
-                        '<td><button type="button" class="selectCeoButton" data-id="' +
-                        employee.empl_idx +
-                        '" data-name="' +
-                        employee.empl_name +
-                        '" data-position="' +
-                        (employee.position_name || '') +
-                        '" data-duty="' +
-                        (employee.duty_name || '') +
-                        '">선택</button></td>';
-                    employeeTableBody.appendChild(row);
-                });
-
-                // 직원 선택 버튼 이벤트 추가
-                var selectCeoButtons = document.querySelectorAll('.selectCeoButton');
-                selectCeoButtons.forEach(function (button) {
-                    button.addEventListener('click', function () {
-                        var emplName = this.getAttribute('data-name');
-                        var positionName = this.getAttribute('data-position') || '없음';
-                        var emplIdx = this.getAttribute('data-id');
-                        var dutyName = this.getAttribute('data-duty') || '없음';
-
-                        document.getElementById('ceo').value = emplName + '/' + positionName + '/' + dutyName;
-                        document.getElementById('ceo_idx').value = emplIdx;
-                        modal.style.display = 'none'; // 모달 닫기
-                    });
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error('직원 리스트를 가져오는 중 오류 발생:', error);
-            }
-        });
-    });
-
-    // 닫기 버튼 클릭 이벤트
-    closeModal.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    // 모달 외부 클릭 시 닫기
-    window.addEventListener('click', function (event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
+  
 
     // 새 직인 파일 미리보기
     document.getElementById('singleFile').addEventListener('change', function (event) {
@@ -374,7 +528,13 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 </script>
+
+
+
+
 <script src="resources/js/common.js"></script>
+<script src="resources/js/approval_send_modal.js"></script>
+<script src="resources/js/module_modal.js"></script>
 
 </body>
 </html>

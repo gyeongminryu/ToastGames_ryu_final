@@ -59,9 +59,18 @@ public class DepartmentService {
 	
 	} // public void organizationAdd(Map<String, String> param)
 
-	public List<DutyDTO> getdudy() {
+	public List<DutyDTO> getdudy(String dept_depth) {
+		List<DutyDTO> deptlist = null;
 		
-		return departmentDAO.getduty();
+		if(dept_depth.equals("2")) { // 뎁스2인 dutylist
+			deptlist =	departmentDAO.getduty2();
+		}
+		else { // 뎁스3인 dutylist
+			deptlist = departmentDAO.getduty3();
+		}
+		
+		
+		return deptlist;
 	}
 
 	public List<PositionDTO> getposi() {
