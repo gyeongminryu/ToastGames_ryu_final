@@ -12,6 +12,14 @@
     <%--폼 양식 css--%>
     <link rel="stylesheet" href="/resources/css/approval_form.css" />
 
+    <%--rich text editor--%>
+    <link rel="stylesheet" href="resources/richtexteditor/rte_theme_default.css" />
+    <script type="text/javascript" src="resources/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src="resources/richtexteditor/plugins/all_plugins.js"></script>
+    <script type='text/javascript' src="resources/richtexteditor/lang/rte-lang-ko.js"></script>
+    <link rel="stylesheet" href="resources/css/module_rte.css" />
+    <script type="text/javascript" src="resources/js/module_rte.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -43,7 +51,7 @@
 
                     <!-- 결재할 문서 상세보기 -->
                     <div class="tst_col9">
-                        <table class="tst_table table_align_left">
+                        <table class="tst_table table_align_left table_no_padding">
                             <colgroup>
                                 <col style="width: 120px" />
                                 <col style="width: auto" />
@@ -57,22 +65,22 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <input type="hidden" id = "doc_idx" value = ${doc_info.doc_idx}>
-                                <input type="hidden" id = "doc_subject" value = ${doc_info.doc_subject}>
-                                <input type="hidden" id = "doc_content_sub" value = ${doc_info.doc_content_sub}>
-                                <input type="hidden" id = "doc_end_date" value = ${doc_info.doc_end_date}>
+                                <input type="hidden" id = "doc_idx" value = "${doc_info.doc_idx}">
+                                <input type="hidden" id = "doc_subject" value = "${doc_info.doc_subject}">
+                               <%-- <input type="hidden" id = "doc_content_sub" value = "${doc_info.doc_content_sub}">--%>
+                                <input type="hidden" id = "doc_end_date" value = "${doc_info.doc_end_date}">
 
                                 <input type="hidden" id="doc_write_empl_idx" value="${doc_info.doc_empl_idx}">
-                                <input type="hidden" id = "doc_write_empl_name" value = ${doc_info.empl_name}>
-                                <input type="hidden" id = "empl_idx" value = ${empl_idx}>
+                                <input type="hidden" id = "doc_write_empl_name" value = "${doc_info.empl_name}">
+                                <input type="hidden" id = "empl_idx" value = "${empl_idx}">
 
-                                <input type="hidden" id = "my_appr_order" value = ${my_appr_order}>
-                                <input type="hidden" id = "my_appr_name" value = ${empl_name}>
+                                <input type="hidden" id = "my_appr_order" value = "${my_appr_order}">
+                                <input type="hidden" id = "my_appr_name" value = "${empl_name}">
 
                                 <th>제목</th>
                                 <th>
                                 <c:if test="${doc_info.doc_subject != null}">
-                                ${doc_info.doc_subject}
+                                    ${doc_info.doc_subject}
                                 </c:if>
                                 <c:if test="${doc_info.doc_subject == null}">
                                     제목 없음
@@ -93,7 +101,7 @@
                                     <c:if test="${doc_info.doc_end_date == null}">
                                         마감 기한 없음
                                     </c:if>
-                                    </td>
+                                </td>
                             </tr>
                             <tr>
                                 <th>내용</th>
@@ -121,14 +129,15 @@
                                         </li>
                                         </c:forEach>
 
-
                                     </ul>
                                     </c:if>
                                 </td>
                             </tr>
                             <tr>
                                 <th>문서</th>
-                                <td id="doc_content" class="doc_content">${doc_info.doc_content}</td>
+                               <%-- <td id="doc_content" class="doc_content">${doc_info.doc_content}</td>--%>
+                                <td id="div_editor"></td>
+                                <div id="div_editor_copy" class="disp_hide"></div>
                             </tr>
                             </tbody>
                         </table>
@@ -207,9 +216,9 @@
 
                             <c:forEach items="${appr_lines}" var="appr_line">
 
-
                                 <c:if test="${appr_line.appr_order!=null}">
-                            <tr>
+                                <c:if test="${appr_line.appr_order!=0}">
+                                <tr>
                                 <td class="td_align_top td_no_padding">
                                     <img src="http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png" alt="{직원명}의 프로필 사진" class="approval_profile_image" />
                                 </td>
@@ -230,6 +239,7 @@
 
                                 </td>
                             </tr>
+                                </c:if>
                                 </c:if>
                             </c:forEach>
                             </tbody>
@@ -299,6 +309,8 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/module_modal.js"></script>
 <script src="resources/js/approval_detail.js"></script>
+<script src="resources/js/approval_rte_setting.js"></script>
+
 <%--<script src="resources/js/approval_sign.js"></script>--%>
 <%--<script src="resources/js/approval_set_notify.js"></script>--%>
 
@@ -313,10 +325,6 @@
         doc_subject = '제목 없음';
     }
 
-
-    var content_sub = '${doc_info.doc_content_sub}';
-
-    var noti_content = content_sub.slice(1,10);
 
 
 </script>

@@ -20,19 +20,18 @@ function approval_write_save(){
 //상신 후 저장 함수
 function approval_write_request_save(){
     console.log("임시 저장 함수 실행");
-    approval_set_save_data('request_save');
     refer_save_doc();
-
+    approval_set_save_data('request_save');
 }
 
-
+var setted = 0;
 //form안에 필요한 값들을 저장 전 세팅해주는 함수
 function approval_set_save_data(type){
     console.log("form 안에 저장 전 데이터 세팅");
     //현재 시간 구하기
     approval_write_current_date();
 
-    //doc_content_sub ( //보고 내용 (*quill 에디터에 작성한 내용)) -> form에 넣어주기
+    //doc_content_sub (작성 내용) -> form에 넣어주기
     var doc_content_sub = editor2.getHTMLCode();
     console.log(doc_content_sub);
     $('input[name="doc_content_sub"]').val(doc_content_sub);
@@ -43,13 +42,13 @@ function approval_set_save_data(type){
     console.log(doc_content);
     $('input[name="doc_content"]').val(doc_content);
 
-    if(type === 'request_save'){
+    setted = 1;
+
+    if(type === 'request_save'&& setted===1){
         approval_save_and_request();
     }else{
         approval_save_data_send();
     }
-
-    approval_sent = 1;
 }
 
 //작성 일자 및 최종 업데이트 일자 구하고 세팅해주기 위한 함수 -> 저장 혹은 임시 저장 클릭 시에만 작동

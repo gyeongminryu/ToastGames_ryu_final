@@ -1,6 +1,5 @@
 var editor1 = new RichTextEditor("#div_editor", configViewNone);
 
-
 window.onload = function initialize(){
 
     //approval_content_none_edit();
@@ -43,8 +42,10 @@ function approval_get_doc_content(){
         dataType : 'JSON',
         success : function (data){
             console.log(data.form_content);
-            document.getElementById('div_editor_copy').setHTMLCode(data.form_content);
+
+            document.getElementById('div_editor_copy').innerHTML = data.form_content;
             setHtmlCode();
+
         },error : function(e){
             console.log(e);
         }

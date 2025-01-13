@@ -24,7 +24,8 @@ public class ApprovalController {
 
 	//세션 처리
 	//보낸 + 작성한
-	int empl_idx = 10002;
+	//int empl_idx = 10111;
+	int empl_idx = 10063;
 
 	public ApprovalController(ApprovalService approvalService) {
 		this.approvalService = approvalService;
@@ -219,4 +220,13 @@ public class ApprovalController {
 		return data;
 	}
 
+	/*최근 작성한 문서 가져오기*/
+	@PostMapping (value="/get_recent_written.ajax")
+	@ResponseBody
+	public Map<String,Object> get_recent_written(){
+		Map<String,Object> data = new HashMap<>();
+		List<Map<String,Object>> recent_doc = approvalService.get_recent_written(empl_idx);
+		data.put("recent_doc",recent_doc);
+		return data;
+	}
 }

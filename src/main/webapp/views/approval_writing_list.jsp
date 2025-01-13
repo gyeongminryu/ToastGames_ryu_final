@@ -209,7 +209,7 @@
                             <!-- 기존에 작성한 문서 양식 불러오기 -->
                             <li>
                                 <h2>기존에 작성한 문서 양식 불러오기</h2>
-                                <ul class="tst_list list_block">
+                                <ul class="tst_list list_block" id="recent_doc_list">
 
                                     <!-- 기존에 작성한 문서 -->
                                     <li>
@@ -263,6 +263,8 @@
 </body>
 <script src="/resources/js/approval_list_filter.js"></script>
 <script src="/resources/js/approval_search.js"></script>
+<script src="/resources/js/approval_writing_list.js"></script>
+
 <script src="resources/js/common.js"></script>
 
 

@@ -260,6 +260,7 @@ public class ApprovalRequestService {
 	public Map<String, Object> doc_get(int doc_idx, int empl_idx) {
 		Map<String, Object> map = approvalRequestDAO.doc_get(doc_idx);
 
+
 		//초기 로딩 때 문서양식 및 결재라인에 필요한 정보들 전달(이름이랑 부서 넣기 위함)
 		map.put("empl_idx", approvalRequestDAO.get_empl_info(empl_idx).get("empl_idx"));
 

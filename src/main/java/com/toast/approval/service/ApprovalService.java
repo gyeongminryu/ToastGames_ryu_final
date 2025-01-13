@@ -441,4 +441,8 @@ public class ApprovalService {
 
 		return approvalDAO.get_doc_form_content(doc_idx);
 	}
+
+	public List<Map<String, Object>> get_recent_written(int empl_idx) {
+		return approvalDAO.get_recent_written(empl_idx);
+	}
 }

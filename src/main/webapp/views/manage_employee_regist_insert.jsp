@@ -42,11 +42,11 @@
                                 <div class="tst_col6">
                                     <h2>
                                         <span onclick="manage_empl_add_row()" class="tst_pointer">+ 열 추가하기 </span>
-                                        <span id="count">(총 ${row_length}건)</span>
+                                        <span id="count">(총 ${row_length-1}건)</span>
                                     </h2>
                                 </div>
                                 <div class="tst_col6">
-                                    <button type="button" onclick="tst_modal_call('tst_modal_insert')" class="btn_primary">직원 일괄 등록하기</button>
+                                    <button type="button" onclick="tst_modal_call_regist('tst_modal_insert','없음')" class="btn_primary">직원 일괄 등록하기</button>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,20 @@
                                 <tr id = "row_${status.index+ 1}">
                                         <td><i class="bi bi-dash-circle-dotted" onclick="tst_modal_call_regist('tst_modal_delete', ${status.index+1})"></i></td>
                                         <c:forEach items="${datas}" var="entry">
-                                            <td><input type="text" name="${entry.key}" value = "${entry.value}" class="empl_info_input"></td>
+                                            <c:choose>
+
+                                                <c:when test="${entry.key=='empl_per_email'}">
+                                                    <td><input type="email" name="${entry.key}" value = "${entry.value}" class="empl_info_input" required></td>
+                                                </c:when>
+                                                <c:when test="${entry.key=='empl_pw'}">
+                                                    <td><input type="password" name="${entry.key}" value = "${entry.value}" class="empl_info_input" required></td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td><input type="text" name="${entry.key}" value = "${entry.value}" class="empl_info_input" required></td>
+                                                </c:otherwise>
+                                            </c:choose>
+
+
                                         </c:forEach>
                                 </tr>
                                 </c:forEach>

@@ -45,10 +45,11 @@ function approval_sign_close(){
 
 function approval_sign_save(){
     //본인의 결재선에 사인 저장
-    var line_url = "approval_name"+my_appr_order;
+    var line_url = "approval_name_"+my_appr_order;
         //"signatureImage"+my_appr_order;
     console.log(line_url);
     const signatureImage = document.getElementById(line_url);
+    console.log("signatureImage",signatureImage);
     //만약 사인된 게 있으면,
 
     //사인된 게 있는지 확인하는 법
@@ -72,23 +73,55 @@ function approval_sign_save(){
             console.log("sign_preview.src:",sign_preview.getAttribute("src"));
             src = sign_preview.getAttribute("src");
         }
+        console.log("src",src);
+        var line_sign_preview = document.getElementById(line_url);
+        console.log("line_sign_preview",line_sign_preview);
+        //line_sign_preview.innerHTML = '<img src='+src+' alt="image" width="70px" height="70px">';
 
-        signatureImage.src = src;
+
+        var img = document.createElement('img');
+
+        //src 속성 설정
+        img.src = src;
+        img.alt = 'image';
+        img.style.maxWidth = '100%';  // td의 너비에 맞게 이미지가 크기를 자동으로 조정
+        img.style.maxHeight = '100%'; // td의 높이에 맞게 이미지가 크기를 자동으로 조정
+
+
+        //부모 요소에 이미지 추기
+        line_sign_preview.appendChild(img);
+
+        //결재된 시간 넣기
+        var appr_date = time_format();
+
+        var date = appr_date.split(' ')[0]; // 공백을 기준으로 나누고 첫 번째 요소는 날짜
+
+        var approval_date ="#approval_date_"+my_appr_order;
+        $(approval_date).html(date);
+
+        //div_copy 내용을 다시 붙여넣기
+        
+
+        setHtmlCode();
+        //signatureImage.src = src;
         //사인된거 혹은 도장이 있을 경우에는
         //signatureImage.style.display = "block";
         //signatureImage.width = 50; // 원하는 너비로 설정
         //signatureImage.height = 50; // 원하는 높이로 설정
-        signatureImage.style.backgroundImage = "url('" +src+"')";
 
+
+        /*signatureImage.style.backgroundImage = "url('" +src+"')";
+        signatureImage.style.backgroundSize = "contain";*/
+
+        console.log("signatureImage",signatureImage);
         //html을 업데이트 해주기 (확인)
+
         //var doc_content = $('.doc_content').html();
-
         var doc_content = editor1.getHTMLCode();
+
         console.log("doc_content",doc_content);
-
-
         // 켜기
-        save_approved_doc_content(doc_content);
+        save_approved_doc_content(doc_content,appr_date);
     }else{
         //직인이 있거나, 도장이 없는 경우 처리 -> alert 띄움
         //아예 서명도 도장도 안된 경우
@@ -99,13 +132,14 @@ function approval_sign_save(){
 
 }
 
-function save_approved_doc_content(doc_content){
+function save_approved_doc_content(doc_content,appr_date){
     var line_order = Number(my_appr_order)+1;
+
 
     $.ajax({
         type : 'POST',
         url : 'save_approved_doc_content.ajax',
-        data : {"doc_content":doc_content,"doc_idx":doc_idx,"line_order": line_order},
+        data : {"doc_content":doc_content,"doc_idx":doc_idx,"line_order": line_order,"appr_date":appr_date},
         dataType : 'JSON',
         success : function (data){
             console.log(data);
@@ -157,3 +191,20 @@ function approval_insert_notify_promise(url, target_user, empl_idx, doc_subject,
     });
 }
 
+function time_format(){
+    let today = new Date(); //오늘 날짜에 대한 전체 정보
+
+    let year = today.getFullYear();//년도 구하기
+    let month = today.getMonth()+1;
+    month = month.toString().padStart(2, '0'); //달 구하기 -> 1월 = 0,12월 = 11
+    let date = today.getDate().toString().padStart(2, '0'); // 일 구하기
+
+    let hours = today.getHours().toString().padStart(2, '0');
+    let minutes = today.getMinutes().toString().padStart(2, '0');
+    let seconds = today.getSeconds().toString().padStart(2, '0');
+
+    //format
+    var doc_date= year+'-'+month+'-'+date+ ' ' + hours+':'+minutes+':'+seconds;
+    console.log("작성 일자:",doc_date);
+    return doc_date;
+}
