@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -32,6 +33,9 @@ import com.toast.schedule.dto.ScheduleDTO;
 @Service
 public class ResourceManageService {
 
+    @Value("${spring.servlet.multipart.location}")
+    private String uploadLocation;
+	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private ResourceManageDAO resourceMgDAO;
@@ -296,12 +300,12 @@ public class ResourceManageService {
 			logger.info(oriFilename);
 			
 			//2.기존 파일의 확장자만 분리
-			String ext = oriFilename.substring(oriFilename.lastIndexOf("."));
+			String ext = oriFilename.substring(oriFilename.lastIndexOf(".")+1);
 			logger.info(ext);
 			
 			
 			//3.새파일명 생성
-			String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
+			String newFilename = UUID.randomUUID().toString(); //바로 해도됨 +문자는 문자열로 인식
 			logger.info(newFilename);
 	
 			
@@ -309,7 +313,7 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get("C:/files/"+newFilename);
+				Path path = Paths.get(uploadLocation+'/');
 				Files.write(path, arr);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
@@ -336,9 +340,11 @@ public class ResourceManageService {
 
 	//물품 등록(파일X)
 	public int prodOnlyWrite(Map<String, Object> param) {
+		logger.info("param"+param);
 		ResourceManageDTO dto = new ResourceManageDTO();
 		dto.setProd_name((String) param.get("subject"));
 		dto.setProd_model((String) param.get("information"));
+		dto.setProd_empl_idx((int) param.get("empl_idx"));
 		dto.setProd_cate_idx(Integer.parseInt((String) param.get("category")));
 		dto.setProd_info((String) param.get("content"));
 		dto.setProd_rent(1); //대여 여부
@@ -455,6 +461,17 @@ public class ResourceManageService {
 	public int permitProd(int prod_idx,int prod_rent_idx) {
 		resourceMgDAO.permitProd(prod_idx);
 		int row = resourceMgDAO.permitProdState(prod_rent_idx);
+		ResourceManageDTO rentInfo = resourceMgDAO.rentInfo(prod_rent_idx);
+		ResourceManageDTO noti = new ResourceManageDTO();
+		noti.setNoti_cate_idx(18);
+		noti.setNoti_sender_empl_idx((int) session.getAttribute("empl_idx")); // 현재 로그인 관리자
+		noti.setNoti_receiver_empl_idx(rentInfo.getProd_rent_empl_idx());
+		noti.setNoti_subject(rentInfo.getProd_name()+"에 대여 요청이 승인되었습니다.");
+		noti.setNoti_content("대여일시:"+formatDateTime(rentInfo.getProd_rent_date())+'/'+"반납일시:"+formatDateTime(rentInfo.getProd_exp_date()));
+		noti.setNoti_sent_date(LocalDateTime.now());
+		noti.setNoti_deleted(0);
+		noti.setNoti_link("/myProdDetail.go?prod_rent_idx="+prod_rent_idx);
+		resourceMgDAO.rentAddNoti(noti);
 		return row;
 		
 	}
@@ -635,12 +652,12 @@ public class ResourceManageService {
 			logger.info(oriFilename);
 			
 			//2.기존 파일의 확장자만 분리
-			String ext = oriFilename.substring(oriFilename.lastIndexOf("."));
+			String ext = oriFilename.substring(oriFilename.lastIndexOf(".") + 1);
 			logger.info(ext);
 			
 			
 			//3.새파일명 생성
-			String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
+			String newFilename = UUID.randomUUID().toString(); //바로 해도됨 +문자는 문자열로 인식
 			logger.info(newFilename);
 
 			
@@ -648,13 +665,13 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get("C:/files/"+newFilename);
+				Path path = Paths.get(uploadLocation+'/');
 				Files.write(path, arr);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
 				photo_dto.setOri_filename(oriFilename);
-				photo_dto.setFile_addr("/files/dispose/");
+				photo_dto.setFile_addr(path.toString());
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
 				photo_dto.setUploader_idx(empl_idx);
@@ -902,5 +919,26 @@ public class ResourceManageService {
 		return resourceMgDAO.updateProdRentState(state,prodRentIdx);
 	}
 
+	//물건 대여 반납일정 가져오기(for알림)
+	public List<ResourceManageDTO> getRentDate() {
+		return resourceMgDAO.getRentDate();
+	}
+
+	//반납알림
+	public void notiReturn(ResourceManageDTO product) {
+		ResourceManageDTO noti = new ResourceManageDTO();
+		noti.setNoti_cate_idx(19);
+		noti.setNoti_sender_empl_idx((int) session.getAttribute("empl_idx")); // 현재 로그인 관리자
+		noti.setNoti_receiver_empl_idx(product.getProd_rent_empl_idx());
+		noti.setNoti_subject(formatDateTime(product.getProd_exp_date())+"에 반납 예정인 물품이 있습니다.");
+		noti.setNoti_content("물품명:"+product.getProd_name()+'/'+"반납일시:"+formatDateTime(product.getProd_exp_date()));
+		noti.setNoti_sent_date(LocalDateTime.now());
+		noti.setNoti_deleted(0);
+		resourceMgDAO.rentReturnNoti(noti);
+		
+	}
+
+	
+	
 
 }

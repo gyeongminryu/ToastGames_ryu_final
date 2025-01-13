@@ -1,5 +1,6 @@
 package com.toast.schedule.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -58,9 +59,20 @@ public class ScheduleService {
 			schedule_parti.setSche_idx(schedule.getSche_idx());
 			schedule_parti.setSche_idx(schedule.getSche_idx());
 			List<Integer> partiList = scheduleDTO.getSche_parti_empl_idxs();
+			LocalDate startDate = scheduleDTO.getSche_start_date().toLocalDate();
 			for (Integer parti : partiList) {
 				schedule_parti.setSche_parti_empl_idx(parti);
 				scheduleDao.scheduleParti(schedule_parti);
+				ScheduleDTO noti = new ScheduleDTO();
+				noti.setNoti_cate_idx(11);
+				noti.setNoti_sender_empl_idx(scheduleDTO.getSche_empl_idx());
+				noti.setNoti_receiver_empl_idx(parti);
+				noti.setNoti_subject(startDate.toString()+"에 예정된 새로운 일정이 있습니다.");
+				noti.setNoti_content(schedule.getSche_title()+':'+schedule.getSche_content());
+				noti.setNoti_sent_date(LocalDateTime.now());
+				noti.setNoti_deleted(0);
+				noti.setNoti_link("/schedule.go");
+				scheduleDao.scheAddNoti(noti);
 			}
 			parti_row=true;
 		}
@@ -81,7 +93,7 @@ public class ScheduleService {
 			list = scheduleDao.getSchedules(dto);
 		}
 		for (ScheduleDTO schedule : list) {
-			List<Integer> partiList = scheduleDao.getAllParti(schedule.getSche_idx());
+			List<ScheduleDTO> partiList = scheduleDao.getAllParti(schedule.getSche_idx());
 			Map<String, Object> map = new HashMap<String, Object>();
 			if(partiList != null) {
 				map.put("parti",partiList);
@@ -103,6 +115,20 @@ public class ScheduleService {
 	//일정 삭제
 	@Transactional
 	public int deleteSchedule(int sche_idx) {
+		List<ScheduleDTO> dtoList = scheduleDao.getAllParti(sche_idx); //일정 참여자 정보
+		ScheduleDTO sche = scheduleDao.getSchedetail(sche_idx); //일정정보
+		for (ScheduleDTO dto : dtoList) {
+			LocalDate startDate = dto.getSche_start_date().toLocalDate();
+			ScheduleDTO noti = new ScheduleDTO();
+			noti.setNoti_cate_idx(13);
+			noti.setNoti_sender_empl_idx(sche.getSche_empl_idx());
+			noti.setNoti_receiver_empl_idx(dto.getSche_parti_empl_idx());
+			noti.setNoti_subject(startDate.toString()+"에 예정된 일정이 취소되었습니다");
+			noti.setNoti_content(sche.getSche_title()+':'+sche.getSche_content());
+			noti.setNoti_sent_date(LocalDateTime.now());
+			noti.setNoti_deleted(0);
+			scheduleDao.schedeleteNoti(noti);
+		}
 		int parti = scheduleDao.schedulePartiDelete(sche_idx);
 		int row = scheduleDao.deleteSchedule(sche_idx);
 		logger.info("row"+row);
@@ -144,10 +170,21 @@ public class ScheduleService {
 			ScheduleDTO schedule_parti = new ScheduleDTO();
 			schedule_parti.setSche_idx(dto.getSche_idx());
 			List<Integer> partiList = dto.getSche_parti_empl_idxs();
+			LocalDate startDate = dto.getSche_start_date().toLocalDate();
 			scheduleDao.schedulePartiDelete(dto.getSche_idx());
 			for (Integer parti : partiList) {
 				schedule_parti.setSche_parti_empl_idx(parti);
 				scheduleDao.scheduleParti(schedule_parti);
+				ScheduleDTO noti = new ScheduleDTO();
+				noti.setNoti_cate_idx(12);
+				noti.setNoti_sender_empl_idx(dto.getSche_empl_idx());
+				noti.setNoti_receiver_empl_idx(parti);
+				noti.setNoti_subject(startDate.toString()+"에 예정된 일정에 변동이 있습니다.");
+				noti.setNoti_content(dto.getSche_title()+':'+dto.getSche_content());
+				noti.setNoti_sent_date(LocalDateTime.now());
+				noti.setNoti_deleted(0);
+				noti.setNoti_link("/schedule.go");
+				scheduleDao.scheAddNoti(noti);
 			}
 			parti_row=true;
 		}
@@ -168,6 +205,43 @@ public class ScheduleService {
 		return empl_idx;
 	}
 
+
+	// 부서정보
+	public List<ScheduleDTO> getDeptList() {
+		return scheduleDao.getDeptList();
+	}
+
+	// 팀 정보
+	public List<ScheduleDTO> getTeamList() {
+		return scheduleDao.getTeamList();
+	}
+
+	//부서별 사원
+	public List<ScheduleDTO> getDeptEmpl(int deptIdx) {
+		return scheduleDao.getDeptEmpl(deptIdx);
+	}
+
+	
+	//팀별 사원
+	public List<ScheduleDTO> getTeamEmpl(int teamIdx) {
+		List<ScheduleDTO> teamEmpl = scheduleDao.getTeamEmpl(teamIdx);
+		ScheduleDTO headerEmpl = scheduleDao.getTeamHeadEmpl(teamIdx);
+		teamEmpl.add(headerEmpl);
+		return teamEmpl;
+	}
+
+	//인수자 검색
+	public List<ScheduleDTO> emplSearchMeeting(String option, String keyword) {
+		List<ScheduleDTO> emplList = new ArrayList<ScheduleDTO>();
+		if(option.equals("dept_name")) {
+			emplList = scheduleDao.takeDeptEmpl(keyword);
+		}else if(option.equals("position_name")) {
+			emplList = scheduleDao.takePosiEmpl(keyword);
+		}else {
+			emplList = scheduleDao.takeEmpl(keyword);		
+		}
+		return emplList;
+	}
 
 
 

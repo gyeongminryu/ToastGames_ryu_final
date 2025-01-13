@@ -3,6 +3,35 @@
 
 <mapper namespace="com.toast.rent.dao.ResourceManageDAO">
 
+	<!-- 대여신청 정보 -->
+	<select id="rentInfo" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			pr.prod_rent_empl_idx,
+			pd.prod_name,
+			pr.prod_rent_date,
+			pr.prod_exp_date		
+		FROM
+			product pd
+		JOIN
+			product_rent pr ON pd.prod_idx=pr.prod_idx
+		WHERE 
+			prod_rent_idx=#{param1}		
+	</select>
+
+	<!-- 일정 넣기 -->
+	<insert id="rentAddNoti" parameterType="com.toast.rent.dto.ResourceManageDTO">
+		INSERT INTO 
+			notify(noti_cate_idx, noti_sender_empl_idx, noti_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted,noti_link)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{noti_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted},#{noti_link})
+	</insert>
+	
+	<!-- 일정 넣기 (반납)-->
+	<insert id="rentReturnNoti" parameterType="com.toast.rent.dto.ResourceManageDTO">
+		INSERT INTO 
+			notify(noti_cate_idx, noti_sender_empl_idx, noti_receiver_empl_idx, noti_subject, noti_content, noti_sent_date,noti_deleted)
+			VALUES(#{noti_cate_idx},#{noti_sender_empl_idx},#{noti_receiver_empl_idx},#{noti_subject},#{noti_content},#{noti_sent_date},#{noti_deleted})
+	</insert>
+
 	<!-- 사원정보 가져오기 -->
 	<select id="getEmplMg" resultType="com.toast.rent.dto.ResourceManageDTO">
 		SELECT 
@@ -1059,4 +1088,22 @@
 		WHERE 
 			prod_rent_idx=#{param2}
 	</update>
+	
+	<!-- //물건 대여 반납일정 가져오기(for알림) -->
+	<select id="getRentDate" resultType="com.toast.rent.dto.ResourceManageDTO">
+		SELECT 
+			pr.prod_exp_date,
+			pr.prod_rent_date,
+			pd.prod_name,
+			pr.prod_rent_empl_idx,
+			pr.prod_rent_idx
+		FROM
+			product pd
+		JOIN
+			product_rent pr ON pd.prod_idx=pr.prod_idx
+		WHERE
+			prod_return_state=0
+	</select>
+	
+	
 </mapper>

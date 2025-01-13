@@ -187,6 +187,18 @@ public interface ResourceManageDAO {
 	//연체시 상태 업뎃(prod_return_state: 2)
 	int updateProdRentState(int state, int prodRentIdx);
 
+	//대여신청 정보 
+	ResourceManageDTO rentInfo(int prod_rent_idx);
+
+	//알림 넣기
+	int rentAddNoti(ResourceManageDTO noti);
+
+	//물건 대여 반납일정 가져오기(for알림)
+	List<ResourceManageDTO> getRentDate();
+
+	//반납알림
+	int rentReturnNoti(ResourceManageDTO noti);
+
 
 	
 	

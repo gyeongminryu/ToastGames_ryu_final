@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.toast.rent.dto.ResourceManageDTO;
 import com.toast.schedule.dto.MeetingDTO;
 import com.toast.schedule.dto.MeetingPhotoDTO;
 
@@ -18,9 +19,6 @@ public interface MeetingDAO {
 	
 	//회의실 가기(회의실 이름+idx)
 	List<Map<String, Object>> meetingGo();
-
-	//사원 정보 가져오기(사원+idx)
-	List<Map<String, Object>> meetingParti();
 	
 	//회의실 (정보) 추가
 	int roomAdd(MeetingDTO dto);
@@ -59,7 +57,7 @@ public interface MeetingDAO {
 	List<MeetingDTO> getMeeting(int room_idx);
 
 	//모든일정에 관한 참여자 가져오기
-	List<Integer> getAllParti(int meet_rent_idx);
+	List<MeetingDTO> getAllParti(int meet_rent_idx);
 	
 	//내가 포함된 회의일정 보기
 	List<MeetingDTO> getMyMeeting(MeetingDTO searchMeeting);
@@ -79,7 +77,46 @@ public interface MeetingDAO {
 	//내 부서 정보
 	int myDept(String myId);
 
+	//부서정보
+	List<MeetingDTO> getDeptList();
 
+	
+	// 팀 정보
+	List<MeetingDTO> getTeamList();
+
+	
+	//부서별 사원
+	List<MeetingDTO> getDeptEmpl(int deptIdx);
+
+	//팀별 사원
+	List<MeetingDTO> getTeamEmpl(int teamIdx);
+
+	//팀별 사원(팀장)
+	MeetingDTO getTeamHeadEmpl(int teamIdx);
+
+	//부서검색
+	List<MeetingDTO> takeDeptEmpl(String keyword);
+	
+	//직급검색
+	List<MeetingDTO> takePosiEmpl(String keyword);
+	
+	//사원검색
+	List<MeetingDTO> takeEmpl(String keyword);
+
+	//회의 상세정보
+	MeetingDTO getMeetdetail(int rent_idx);
+
+	//알림 추가
+	int meetingAddNoti(MeetingDTO noti);
+
+	//알림추가(삭제)
+	int meetdeleteNoti(MeetingDTO noti);
+
+	//meeting일정
+	List<MeetingDTO> getMeetingList();
+
+	//meeting시작알림
+	int meetingStartNoti(MeetingDTO noti);
 
 
 

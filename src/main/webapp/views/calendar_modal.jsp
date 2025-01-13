@@ -4,11 +4,11 @@
 <link rel="stylesheet" type="text/css" href="resources/css/approval_send_modal.css" />
 
 <!-- 일정 추가하기 -->
-<div id="meeting_event_modal" class="tst_modal tst_modal_double tst_modal_write">
+<div id="schedule_event_modal" class="tst_modal tst_modal_double tst_modal_write">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">일정 추가하기</h1>
-            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_write'); reset_parti();"></i>
+            <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_write')"></i>
         </div>
         <form>
             <div class="tst_modal_body">
@@ -21,43 +21,41 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">예약 정보</th>
+                                <th colspan="2">일정</th>
                             </tr>
                             </thead>
                         </table>
                         <ul class="list_no_desc list_block">
                             <li>
-                                <label class="form_label">회의 주제</label>
-                                <input type="text" name="meet_subject" id="meeting_title" maxlength="1000" placeholder="회의 주제를 입력하세요" />
+                                <label class="form_label">제목</label>
+                                <input type="text" id="schedule_title" maxlength="1000" placeholder="일정 제목을 입력하세요" />
+                            </li>
+                            <li>
+                                <label class="form_label">내용</label>
+                                <textarea rows="5" id="schedule_content" maxlength="1000" placeholder="회의 내용을 입력하세요"></textarea>
                             </li>
                             <li>
                                 <div class="tst_flex">
                                     <div class="tst_col6">
-                                        <label class="form_label">회의 시작 시각</label>
-                                        <input type="datetime-local" name="meet_start_date" id="meeting_start_time"/>
+                                        <label class="form_label">일정 시작 시각</label>
+                                        <input type="datetime-local" id="schedule_start_time" />
                                     </div>
                                     <div class="tst_col6">
-                                        <label class="form_label">회의 종료 시각</label>
-                                        <input type="datetime-local" name="meet_end_date" id="meeting_end_time"/>
+                                        <label class="form_label">일정 종료 시각</label>
+                                        <input type="datetime-local" id="schedule_end_time" />
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <p class="min font_subtle">회의실 선택</p>
+                                <p class="min font_subtle">일정 종류</p>
                                 <div>
-						            <select id="meeting_room_select_modal">
-						                <c:forEach items="${roomList}" var="room">
-						                    <option value="${room.room_idx}">${room.room_name}</option>
-						                </c:forEach>
-						            </select>
-                                    <p class="min font_subtle">- 수용 인원: 4~10명</p>
-                                    <p class="min font_subtle">- 사용 가능한 기자재: 고정형 빔 프로젝터, 데스크탑, 모니터, 키보드, 마우스, 연단, 콘센트 책상, 레이저포인터 리모컨</p>
-                                    <p class="min font_subtle">- 담당 부서: 경영지원</p>
+                                    <select name="schedule_type">
+                                        <option value="1" selected>개인</option>
+                                        <option value="2">부서</option>
+                                        <option value="3">프로젝트 팀</option>
+                                        <option value="4">기타</option>
+                                    </select>
                                 </div>
-                            </li>
-                            <li>
-                                <label class="form_label">회의 내용</label>
-                                <textarea rows="5" name="meet_content" maxlength="1000" id="meeting_content" placeholder="회의 내용을 입력하세요"></textarea>
                             </li>
                         </ul>
                     </div>
@@ -86,18 +84,18 @@
             </div>
             <div class="tst_modal_footer align_left">
                 <ul class="tst_list list_no_desc list_inline">
-                    <li><input type="button" value="예약하기" class="btn_primary" id="addMeeting"/></li>
-                    <li><button type="button" class="btn_secondary" onclick="tst_modal_close('tst_modal_write'); reset_parti();">취소하기</button></li>
+                    <li><input type="submit" value="일정 생성" class="btn_primary" id="add_schedule"/></li>
+                    <li><button type="button" class="btn_secondary" onclick="tst_modal_close('tst_modal_write')">취소하기</button></li>
                 </ul>
             </div>
         </form>
     </div>
-    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_write'); reset_parti();"></div>
+    <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_write')"></div>
 </div>
 <!-- //일정 추가하기 -->
 
 <!-- 일정 상세보기 -->
-<div id="meeting_event_modal" class="tst_modal tst_modal_input tst_modal_detail">
+<div id="schedule_event_modal" class="tst_modal tst_modal_input tst_modal_detail">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">일정 상세보기</h1>
@@ -107,24 +105,24 @@
         <div class="tst_modal_body">
             <ul class="list_no_desc list_block">
                 <li>
-                    <p class="min font_subtle">회의실</p>
-                    <p id="meeting_room_detail"></p>
+                    <label class="form_label">제목</label>
+                    <p id="schedule_title_detail"></p>
                 </li>
                 <li>
-                    <label class="form_label">회의 주제</label>
-                    <p id="meeting_title_detail"></p>
+                    <label class="form_label">내용</label>
+                    <p id="schedule_content_detail"></p>
                 </li>
                 <li>
-                    <label class="form_label">회의 일시</label>
-                    <p id="meeting_start_time_detail"></p> ~ <p id="meeting_end_time_detail"></p>
+                    <label class="form_label">일시</label>
+                    <p id="schedule_start_time_detail"></p> ~ <p id="schedule_end_time_detail"></p>
                 </li>
                 <li>
-                    <label class="form_label">회의 내용</label>
-                    <p id="meeting_content_detail"></p>
+                    <p class="min font_subtle">일정 종류</p>
+                    <h3 id="schedule_type_detail"></h3>
                 </li>
                 <li>
                     <label class="form_label">참석자</label>
-                    <p id="meeting_participants_detail">
+                    <p id="schedule_participants_detail">
                     </p>
                 </li>
             </ul>
@@ -138,7 +136,7 @@
 <!-- 일정 상세보기 -->
 
 <!-- 일정 수정하기 -->
-<div id="meeting_event_modal" class="tst_modal tst_modal_double tst_modal_update">
+<div id="schedule_event_modal" class="tst_modal tst_modal_double tst_modal_update">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
             <h1 class="tst_modal_title">일정 수정하기</h1>
@@ -155,43 +153,41 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">예약 정보</th>
+                                <th colspan="2">일정</th>
                             </tr>
                             </thead>
                         </table>
                         <ul class="list_no_desc list_block">
                             <li>
-                                <label class="form_label">회의 주제</label>
-                                <input type="text" id="meeting_title_update" name="meet_subject" maxlength="1000" value="" placeholder="회의 주제를 입력하세요" />
+                                <label class="form_label">제목</label>
+                                <input type="text" id="schedule_title_update" name="" maxlength="1000" value="" placeholder="일정 주제를 입력하세요" />
+                            </li>
+                            <li>
+                                <label class="form_label">내용</label>
+                                <textarea rows="5" name="" id="schedule_content_update" maxlength="1000" placeholder="일정 내용을 입력하세요"></textarea>
                             </li>
                             <li>
                                 <div class="tst_flex">
                                     <div class="tst_col6">
-                                        <label class="form_label">회의 시작 시각</label>
-                                        <input type="datetime-local" id="meeting_start_time_update" name="meet_start_date" value="" />
+                                        <label class="">일정 시작 시각</label>
+                                        <input type="datetime-local" id="schedule_start_time_update" name="" value="" />
                                     </div>
                                     <div class="tst_col6">
-                                        <label class="form_label">회의 종료 시각</label>
-                                        <input type="datetime-local" id="meeting_end_time_update" name="meet_end_date" value="" />
+                                        <label class="form_label">일정 종료 시각</label>
+                                        <input type="datetime-local" id="schedule_end_time_update" name="" value="" />
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <p class="min font_subtle">회의실 선택</p>
+                                <p class="min font_subtle">일정 종류</p>
                                 <div>
-                                    <select id="meeting_room_idx_update" name="room_idx" onchange="<!-- 회의실을 선택하면 회의실 정보를 수정하는 함수명을 입력하세요 -->">
-										<c:forEach items="${roomList}" var="room">
-									    	<option value="${room.room_idx}">${room.room_name}</option>
-									    </c:forEach>
+                                    <select name="schedule_type_update">
+                                        <option value="1" selected>개인</option>
+                                        <option value="2">부서</option>
+                                        <option value="3">프로젝트</option>
+                                        <option value="4">기타</option>
                                     </select>
-                                    <p class="min font_subtle">- 수용 인원: 4~10명</p>
-                                    <p class="min font_subtle">- 사용 가능한 기자재: 고정형 빔 프로젝터, 데스크탑, 모니터, 키보드, 마우스, 연단, 콘센트 책상, 레이저포인터 리모컨</p>
-                                    <p class="min font_subtle">- 담당 부서: 경영지원</p>
                                 </div>
-                            </li>
-                            <li>
-                                <label class="form_label">회의 내용</label>
-                                <textarea rows="5" id="meeting_content_update" name="meet_content" maxlength="1000" placeholder="회의 내용을 입력하세요"></textarea>
                             </li>
                         </ul>
                     </div>
@@ -208,11 +204,11 @@
                             </tr>
                             </thead>
                             <tbody id="empl_update">
-	                            <tr id="add-participant-row-update">
-	                                <td colspan="3">
-	                                    <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_subtle btn_full">참석자 추가하기</button>
-	                                </td>
-	                            </tr>
+                            <tr id="add-participant-row-update">
+                                <td colspan="3">
+                                    <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_subtle btn_full">참석자 추가하기</button>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -220,9 +216,9 @@
             </div>
             <div class="tst_modal_footer align_left">
                 <ul class="tst_list list_no_desc list_inline">
-                    <li><button type="button" onclick="meeting_update_modal()" class="btn_primary">수정하기</button></li>
+                    <li><input type="submit" value="수정하기" class="btn_primary" onclick="schedule_update_modal()"/></li>
                     <li><button type="button" class="btn_secondary" onclick="tst_modal_close('tst_modal_update')">취소하기</button></li>
-                    <li><button type="button" class="btn_secondary" onclick="meeting_delete()">삭제하기</button></li>
+                    <li><button type="button" class="btn_secondary" onclick="schedule_delete()">삭제하기</button></li>
                 </ul>
             </div>
         </form>
@@ -231,7 +227,7 @@
 </div>
 <!-- //일정 수정하기 -->
 
-<!-- 회의 참석자 추가하기 -->
+<!-- 일정 참석자 추가하기 -->
 <div class="tst_modal tst_modal_wide tst_modal_select">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
@@ -305,7 +301,7 @@
                 <div class="tst_col7">
 
                     <!-- 검색 -->
-                    <form onsubmit="return meeting_empl_search(event);">
+                    <form onsubmit="return calendar_empl_search(event);">
                         <div class="tst_search_container">
                             <div class="tst_search_select">
                                 <select id="tst_search_select_category" name="category">
@@ -351,6 +347,6 @@
     </div>
     <div class="tst_modal_backdrop" onclick="tst_modal_close('tst_modal_select')"></div>
 </div>
-<!-- //회의 참석자 추가하기 -->
+<!-- //일정 참석자 추가하기 -->
 
-<script src="resources/js/meeting_room_calendar_modal.js"></script>
+<script src="resources/js/module_modal.js"></script>
