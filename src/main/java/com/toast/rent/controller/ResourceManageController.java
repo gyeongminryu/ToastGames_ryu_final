@@ -56,13 +56,13 @@ public class ResourceManageController {
 	//물품관리 메인 이동
 	@RequestMapping(value="/manage_rent_list.go")
 	public String rentManageMain(Model model) {
-		String loginId = (String) session.getAttribute("loginId");
-		ResourceManageDTO dto =  resourceMgService.getEmplMg(loginId);
-		session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
+		//String loginId = (String) session.getAttribute("loginId");
+		//ResourceManageDTO dto =  resourceMgService.getEmplMg(loginId);
+		//session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
 		//session.setAttribute("dept_idx",dto.getDept_idx());//사원 부서 가져와
 		empl_idx = (int) session.getAttribute("empl_idx");  //세션에 저장한 사원idx 가져와
-		//dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
-		dept_idx=122;
+		dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
+		//dept_idx=122;
 		String page = "redirect:/rent_list.go";
 		if(dept_idx == 122) {	
 			List<ResourceManageDTO> categoryList =resourceMgService.resourceCateMg(); //카테고리 가져와

@@ -121,8 +121,8 @@ public class ScheduleController {
 			}
 			
 			
-		    //int empl_idx=(int) session.getAttribute("empl_idx");
-	        int empl_idx= 10003;
+		    int empl_idx=(int) session.getAttribute("empl_idx");
+	        //int empl_idx= 10003;
 			dto.setSche_empl_idx(empl_idx);
 			logger.info("sche_empl_idx:"+dto.getSche_empl_idx());
 			
@@ -170,8 +170,8 @@ public class ScheduleController {
 		
 		ScheduleDTO dto = new ScheduleDTO();
 		
-		int my_idx = 10003;
-		//int my_idx = (Integer)session.getAttribute("empl_idx");
+		//int my_idx = 10003;
+		int my_idx = (Integer)session.getAttribute("empl_idx");
 		List<Map<String, Object>> schedules = new ArrayList<Map<String,Object>>();
 		//if(session.getAttribute("loginId") != null) {
 			dto.setSche_empl_idx(my_idx);  //현재 로그인한 사원 번호
@@ -227,8 +227,8 @@ public class ScheduleController {
 					logger.error("Failed to parse start or end date");
 				}
 				
-			    //int empl_idx=(int) session.getAttribute("empl_idx");
-		        int empl_idx= 10003;
+			    int empl_idx=(int) session.getAttribute("empl_idx");
+		        //int empl_idx= 10003;
 				dto.setSche_empl_idx(empl_idx);
 				logger.info("sche_empl_idx:"+dto.getSche_empl_idx());
 				
