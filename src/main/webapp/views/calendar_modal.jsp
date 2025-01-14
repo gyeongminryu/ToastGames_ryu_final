@@ -27,27 +27,27 @@
                         </table>
                         <ul class="list_no_desc list_block">
                             <li>
-                                <label class="form_label">제목</label>
+                                <label class="form_label">제목<span class="font_caution"> *</span></label>
                                 <input type="text" id="schedule_title" maxlength="1000" placeholder="일정 제목을 입력하세요" />
                             </li>
                             <li>
-                                <label class="form_label">내용</label>
-                                <textarea rows="5" id="schedule_content" maxlength="1000" placeholder="회의 내용을 입력하세요"></textarea>
+                                <label class="form_label">내용<span class="font_caution"> *</span></label>
+                                <textarea rows="5" id="schedule_content" maxlength="1000" placeholder="일정 내용을 입력하세요"></textarea>
                             </li>
                             <li>
                                 <div class="tst_flex">
                                     <div class="tst_col6">
-                                        <label class="form_label">일정 시작 시각</label>
+                                        <label class="form_label">일정 시작 시각<span class="font_caution"> *</span></label>
                                         <input type="datetime-local" id="schedule_start_time" />
                                     </div>
                                     <div class="tst_col6">
-                                        <label class="form_label">일정 종료 시각</label>
+                                        <label class="form_label">일정 종료 시각<span class="font_caution"> *</span></label>
                                         <input type="datetime-local" id="schedule_end_time" />
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <p class="min font_subtle">일정 종류</p>
+                                <p class="min font_subtle">일정 종류<span class="font_caution"> *</span></p>
                                 <div>
                                     <select name="schedule_type">
                                         <option value="1" selected>개인</option>
@@ -114,7 +114,7 @@
                 </li>
                 <li>
                     <label class="form_label">일시</label>
-                    <p id="schedule_start_time_detail"></p> ~ <p id="schedule_end_time_detail"></p>
+                    <p><span id="schedule_start_time_detail"></span> ~ <span id="schedule_end_time_detail"></span></p>
                 </li>
                 <li>
                     <p class="min font_subtle">일정 종류</p>
@@ -159,27 +159,27 @@
                         </table>
                         <ul class="list_no_desc list_block">
                             <li>
-                                <label class="form_label">제목</label>
+                                <label class="form_label">제목<span class="font_caution"> *</span></label>
                                 <input type="text" id="schedule_title_update" name="" maxlength="1000" value="" placeholder="일정 주제를 입력하세요" />
                             </li>
                             <li>
-                                <label class="form_label">내용</label>
+                                <label class="form_label">내용<span class="font_caution"> *</span></label>
                                 <textarea rows="5" name="" id="schedule_content_update" maxlength="1000" placeholder="일정 내용을 입력하세요"></textarea>
                             </li>
                             <li>
                                 <div class="tst_flex">
                                     <div class="tst_col6">
-                                        <label class="">일정 시작 시각</label>
+                                        <label class="">일정 시작 시각<span class="font_caution"> *</span></label>
                                         <input type="datetime-local" id="schedule_start_time_update" name="" value="" />
                                     </div>
                                     <div class="tst_col6">
-                                        <label class="form_label">일정 종료 시각</label>
+                                        <label class="form_label">일정 종료 시각<span class="font_caution"> *</span></label>
                                         <input type="datetime-local" id="schedule_end_time_update" name="" value="" />
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <p class="min font_subtle">일정 종류</p>
+                                <p class="min font_subtle">일정 종류<span class="font_caution"> *</span></p>
                                 <div>
                                     <select name="schedule_type_update">
                                         <option value="1" selected>개인</option>
@@ -312,7 +312,7 @@
                             </div>
                             <div class="tst_search_input">
                                 <input type="text" name="keyword" maxlength="50" id="search_keyword" placeholder="검색어를 입력하세요" />
-                            </div>
+                            </div>                
                             <div class="tst_search_icon">
                                 <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
                             </div>

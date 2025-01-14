@@ -54,31 +54,31 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th class="td_align_top">물품번호</th>
+                                    <th class="td_align_top">관리번호</th>
                                     <td>
                                         <input type="text" name="number" maxlength="100" value="${detail.product.prod_idx}" readonly/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">물품명</th>
+                                    <th class="td_align_top">물품명<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="text" name="subject" maxlength="100" value="${detail.product.prod_name}" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">물품 정보</th>
+                                    <th class="td_align_top">물품 정보<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="text" name="information" maxlength="1000" value="${detail.product.prod_model}" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">보관 장소</th>
+                                    <th class="td_align_top">보관 장소<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="text" name="place" maxlength="1000"  value="${detail.product.prod_place}"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">물품 설명</th>
+                                    <th class="td_align_top">물품 설명<span class="font_caution"> *</span></th>
                                     <td>
                                         <!-- <textarea name="content" rows="27">${detail.product.prod_info}</textarea> -->
                                     	<!-- rte -->
@@ -125,7 +125,7 @@
                                     <th>카테고리</th>
                                     <td>
                                         <select name="category" onchange="change_category(this)">
-                                            <option value="0">카테고리</option>
+                                            <option value="0">카테고리<span class="font_caution"> *</span></option>
                                             <c:forEach items="${detail.categoryList}" var="category">
                                             	<option value="${category.prod_cate_idx}" data-prod-life="${category.prod_life}"
             										<c:if test="${category.prod_cate_idx == detail.product.prod_cate_idx}">selected</c:if>>
@@ -136,11 +136,11 @@
                                 </tr>
                                 <tr>
                                     <th>내용연수</th>
-                                    <td id="useful_life" class="useful_life">내용연수| ${detail.product.prod_life}년</td>
+                                    <td id="useful_life" class="useful_life">${detail.product.prod_life}년</td>
                                 </tr>
                                 <tr>
                                     <th>사용연한</th>
-                                    <td id="due_date" class="due_date" data-due-date="${detail.prodDispoDate}">사용연한| ${detail.prodDispoDate}
+                                    <td id="due_date" class="due_date" data-due-date="${detail.prodDispoDate}">${detail.prodDispoDate}
                                     </td>
                                 </tr>
                                 <tr>
@@ -166,7 +166,7 @@
                                 </colgroup>
                                 <thead>
                                 <tr>
-                                    <th colspan="2">첨부 파일</th>
+                                    <th colspan="2">설명서</th>
                                 </tr>
                                 </thead>
                                 <tbody id="file_list">
