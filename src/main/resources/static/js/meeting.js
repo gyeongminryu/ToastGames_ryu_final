@@ -178,8 +178,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			info_global=info;
 		    console.log(info_global);
 			// session에서 현재 사용자 empl_idx 값을 가져옵니다 (여기서는 예시로 sessionStorage를 사용)
-    		//var sessionEmplIdx = sessionStorage.getItem('empl_idx');  // session에서 empl_idx 가져오기
-    		var sessionEmplIdx = 10003;  // session에서 empl_idx 가져오기
+    		var sessionEmplIdx = sessionStorage.getItem('empl_idx');  // session에서 empl_idx 가져오기
+    		//var sessionEmplIdx = 10004;  // session에서 empl_idx 가져오기
     
     		console.log(info.event.extendedProps.empl);
     		console.log(sessionEmplIdx);

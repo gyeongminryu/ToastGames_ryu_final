@@ -100,7 +100,7 @@
 <div id="meeting_event_modal" class="tst_modal tst_modal_input tst_modal_detail">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
-            <h1 class="tst_modal_title">일정 상세보기</h1>
+            <h1 class="tst_modal_title">회의 상세보기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_detail')"></i>
         </div>
 
@@ -141,7 +141,7 @@
 <div id="meeting_event_modal" class="tst_modal tst_modal_double tst_modal_update">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
-            <h1 class="tst_modal_title">일정 수정하기</h1>
+            <h1 class="tst_modal_title">회의 수정하기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_update')"></i>
         </div>
         <form>
