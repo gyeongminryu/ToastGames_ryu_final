@@ -300,12 +300,12 @@ public class ResourceManageService {
 			logger.info(oriFilename);
 			
 			//2.기존 파일의 확장자만 분리
-			String ext = oriFilename.substring(oriFilename.lastIndexOf(".")+1);
+			String ext = oriFilename.substring(oriFilename.lastIndexOf("."));
 			logger.info(ext);
 			
 			
 			//3.새파일명 생성
-			String newFilename = UUID.randomUUID().toString(); //바로 해도됨 +문자는 문자열로 인식
+			String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
 			logger.info(newFilename);
 	
 			
@@ -652,12 +652,12 @@ public class ResourceManageService {
 			logger.info(oriFilename);
 			
 			//2.기존 파일의 확장자만 분리
-			String ext = oriFilename.substring(oriFilename.lastIndexOf(".") + 1);
+			String ext = oriFilename.substring(oriFilename.lastIndexOf("."));
 			logger.info(ext);
 			
 			
 			//3.새파일명 생성
-			String newFilename = UUID.randomUUID().toString(); //바로 해도됨 +문자는 문자열로 인식
+			String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
 			logger.info(newFilename);
 
 			

@@ -59,6 +59,20 @@
 	</select>
 
 	
+	<!--meeting의 meetingroom정보  -->
+	<select id="meetingRoomInfo" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			room_idx, 
+			room_name,
+			room_addr
+		FROM
+			meeting_room mr 
+		JOIN 
+			meeting_rent mt ON mr.room_idx=mt.room_idx
+		WHERE 
+			meet_rent_idx=#{param1}	
+	</select>
+	
 	<!-- 회의실 (정보) 추가 -->
 	<insert 
 		id="roomAdd" 
@@ -80,8 +94,8 @@
 		keyColumn="file_key"
 		keyProperty="file_key" 
 		parameterType="com.toast.schedule.dto.MeetingPhotoDTO">
-		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr)
-			VALUES(#{file_key},#{uploader_idx},#{ori_filename},#{new_filename},#{file_type},#{file_addr})
+		INSERT INTO file(file_key, uploader_idx, ori_filename, new_filename, file_type, file_addr,file_size)
+			VALUES(#{file_key},#{uploader_idx},#{ori_filename},#{new_filename},#{file_type},#{file_addr},#{file_size})
 	</insert>
 	
 	<!-- 회의실 정보보기 -->  

@@ -48,8 +48,8 @@ public class ResourceController {
 	@RequestMapping(value="/rent_list.go")
 	public String rentList(Model model) {
 		List<ResourceDTO> categoryList =resourceService.resourceCate();
-		String loginId = (String) session.getAttribute("loginId");
-		session.setAttribute("empl_idx", resourceService.getEmpl(loginId));
+		//String loginId = (String) session.getAttribute("loginId");
+		//session.setAttribute("empl_idx", resourceService.getEmpl(loginId));
 		empl_idx = (int) session.getAttribute("empl_idx");
 		model.addAttribute("categoryList", categoryList);
 		return "rent_list";
