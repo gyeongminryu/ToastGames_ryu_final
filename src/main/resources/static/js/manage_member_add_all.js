@@ -1,6 +1,44 @@
+function manage_empl_exists(){
+    let phone_number = [];
+
+    var empl_per_phone = document.getElementsByName("empl_per_phone");
+    console.log("empl_per_phones",empl_per_phone);
+    for(var a = 0; a <empl_per_phone.length ; a++){
+        console.log("empl_per_phone",empl_per_phone[a]);
+        phone_number.push(empl_per_phone[a].value);
+    }
+    console.log('phone_number',phone_number);
 
 
-function management_set_empldata(){
+    //phone number에 해당하는 값이 있는지
+    $.ajax({
+        url: '/manage_if_member_exists.ajax',
+        type: 'POST', // HTTP 요청 방식
+        contentType: 'application/json', // 전송 데이터 타입
+        data: JSON.stringify({ phone_numbers: phone_number }), // 배열을 JSON 형식으로 전송
+        success: function(data) {
+            console.log("exists:", data.exists);
+            var exist_members = data.exists;
+            if(data.exists){
+                alert('동일한 사원이 이미 존재합니다.');
+                tst_modal_close('tst_modal_insert');
+            }else{
+                manage_set_empldata();
+            }
+
+        },
+        error: function(xhr, status, error) {
+            console.error("요청 실패:", error);
+        }
+    });
+
+}
+
+function manage_set_empldata(){
+    //기존에 있는 사원인지 확인
+        //핸드폰 번호 가져오기
+
+
     let i;
     let save = true;
     console.log("함수 실행");
@@ -103,6 +141,7 @@ function management_save_empldata(data_list){
         success : function (data){
             console.log(data);
             alert('사원이 등록되었습니다.');
+            location.href = '/employee_add_all.go';
         },error : function(e){
             console.log(e);
         }

@@ -10,4 +10,7 @@ public interface EmployeeAddDAO {
     //int saveExcel(List<Map<String, Object>> dataList);
     int empl_add_all(List<Map<String, Object>> list);
 
+    int if_member_exists(String phone_number);
+
+    String get_member_exists(String phone_number);
 }
