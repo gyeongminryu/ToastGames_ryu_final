@@ -16,8 +16,17 @@ import java.util.Map;
 
 @Controller
 public class NotiController {
-	int empl_idx = 10024;
-	//int empl_idx = 10022;
+	//회의실
+	//int empl_idx = 10000;
+
+	//전자게시판 알림
+	//int empl_idx = 10032;
+
+	//결재 알림
+	//int empl_idx = 10063;
+
+	//결재 요청자
+	int empl_idx = 10111;
 
 
 

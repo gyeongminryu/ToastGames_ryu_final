@@ -157,7 +157,7 @@ function save_approved_doc_content(doc_content,appr_date){
 
 
                 //1.결재 요청 알람 -- 다음 결재자
-                approval_insert_notify_promise(location.pathname+location.search,data.target_user,empl_idx,doc_appr_subject,doc_content_sub,2).then(function (){
+                approval_insert_notify_promise(location.pathname+location.search,data.target_user,empl_idx,doc_appr_subject,doc_content_sub,1).then(function (){
                 console.log("첫 번째 알림 완료");
                 //2.결재 승인 알람 -- 결재 요청자
                 //sent 주소로 넣기
@@ -166,7 +166,10 @@ function save_approved_doc_content(doc_content,appr_date){
                     url = '/approval_sent_detail.go?doc_idx='+doc_idx+'&type=sent';
                     console.log(parseInt(doc_write_empl_idx));
 
-                return approval_insert_notify_promise(url,parseInt(doc_write_empl_idx),empl_idx,doc_subject,doc_content_sub,1);
+                    doc_appr_subject =$('#doc_subject').val();
+                    doc_content_sub = $('#my_appr_name').val();
+
+                return approval_insert_notify_promise(url,parseInt(doc_write_empl_idx),empl_idx,doc_subject,doc_content_sub,2);
                 }).then(function (){
                     console.log("두 번째 알림 완료");
                     location.href = "/approval_received_list.go";

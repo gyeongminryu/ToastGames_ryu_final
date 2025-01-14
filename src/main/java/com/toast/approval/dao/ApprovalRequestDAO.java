@@ -34,7 +34,7 @@ public interface ApprovalRequestDAO {
     //이전에 저장된 파일 삭제하기 위함
     int doc_saved_filekey_count(String doc_idx);
 
-    String doc_saved_filekey(String docIdx);
+    String doc_saved_filekey(String doc_idx);
 
     List<Map<String,String>> get_previous_file_addr(String prev_file_key);
 
@@ -133,4 +133,6 @@ public interface ApprovalRequestDAO {
     int count_appr_selected(int approval_dept_idx, int duty_idx);
 
     int appr_line_exists(int doc_idx);
+
+    List<Map<String,Object>> get_files(String file_key);
 }

@@ -74,7 +74,7 @@ public class ApprovalRequestController {
 		model.addAttribute("doc_idx",doc_idx_copied);
 		return "approval_writing_write";
 	}
-	//미리보기에서 수정해서 1차 저장한 결재 문서 가져오기
+	//1차 저장한 결재 문서 가져오기
 	@GetMapping (value = "/approval_doc_get.ajax")
 	@ResponseBody
 	public Map<String,Object> doc_get (int doc_idx) {
