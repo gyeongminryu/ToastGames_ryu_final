@@ -34,6 +34,7 @@ import com.toast.management.dto.EmployeeDetailDTO;
 import com.toast.management.dto.PositionDTO;
 import com.toast.management.service.EmployeeService;
 import com.toast.member.dto.FileDTO;
+import com.toast.member.service.MemberService;
 
 
 
@@ -50,10 +51,12 @@ public class EmployeeController {
     private final DataConfig dataconfig;
 
 	private final EmployeeService employeeService;
+	private final MemberService memberService;
 	
-	public EmployeeController(EmployeeService employeeService,DataConfig dataconfig) {
+	public EmployeeController(EmployeeService employeeService,DataConfig dataconfig,MemberService memberService) {
 		this.employeeService = employeeService;
 		this.dataconfig = dataconfig;
+		this.memberService = memberService;
 	}
 	
 	@GetMapping(value="/employee_add.go")
@@ -191,17 +194,31 @@ public class EmployeeController {
     }
 	
 	@GetMapping(value="/staff_list.go")
-	public String staffListGo(@RequestParam(value ="dept_idx", required = false) String dept_idx,Model model) {
+	public String staffListGo(@RequestParam(value ="dept_idx", required = false) String dept_idx,Model model,HttpSession session) {
 		
-		// dept_idx 로 부서원목록들 가져오기 >> 리스트에 담기?
+		String page = "";
 		
-	//	List<EmployeeDetailDTO> stafflist = new ArrayList<>();
+		// 로그인 세션아이디 가져오기
+		String id = (String) session.getAttribute("loginId");
+		// 로그인 세션아이디로 empl_idx 가져오기
+		int getEmployeeIdx = memberService.getEmployeeIdx(id);
+		String empl_idx = String.valueOf(getEmployeeIdx); 
+		// 부서장이면 부서 정보 가져오기 
+		EmployeeDetailDTO empl_info = employeeService.staffListGo(empl_idx);
+		if(empl_info != null) { // 부서장이면
+			int deptidx =	empl_info.getDept_idx();
+			String dept_idx_ = String.valueOf(deptidx);
+			model.addAttribute("empl_info", empl_info);
+			
+			// 초기 멤버리스트 출력
+			model.addAttribute("dept_info",employeeService.getStaffList(dept_idx_));
+			page = "manage_staff_list";
+		}
+		else { // 부서장이 아니면
+			page = "redirect:/approval_writing_list.go";
+		}
 		
-	//	stafflist = employeeService.getStaffList(dept_idx);
-	//	model.addAttribute("stafflist",stafflist);
-		
-		
-		return "staff_list";
+		return page;
 	}
 	
 	@GetMapping(value="/staff_list.ajax")

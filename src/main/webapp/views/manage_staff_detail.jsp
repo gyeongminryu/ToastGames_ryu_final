@@ -49,7 +49,12 @@
                     </tr>
                     <tr>
                         <th class="td_bg_subtle">성별</th>
-                        <td>${empl_info.empl_gender}</td>
+                        <td>
+                            <c:choose>
+						        <c:when test="${empl_info.empl_gender == 'F'}">남성</c:when>
+						        <c:otherwise>여성</c:otherwise>
+						    </c:choose>
+                        </td>
                         <th class="td_bg_subtle">아이디</th>
                         <td>${empl_info.empl_id}</td>
                     </tr>
