@@ -26,13 +26,14 @@
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
                     <li class="tst_title_item tst_title_item_active">
-                        <h1>회의실 사용 예약 현황</h1>
+                        <h1>회의실 예약</h1>
                     </li>
                 </ul>
                 <!-- //제목 -->
 
                 <!-- 회의실 필터 -->
                 <select id="meeting_room_select" name="room_idx" class="meeting_room_select fc_day btn_primary">
+                	<option value="0">전체 회의 보기</option>
 					<c:forEach items="${roomList}" var="room">
 						<option value="${room.room_idx}">${room.room_name}</option>
 					</c:forEach>
@@ -65,13 +66,7 @@
                 <div id="calendar"></div>
                 <!-- //달력 -->
 
-                <!-- 기능 완성시 삭제해 주세요 -->
-				<!-- <ul class="list_no_desc list_no_desc list_inline">
-                    <li><button class="btn_subtle" onclick="tst_modal_call('tst_modal_write')">예약하기</button></li>
-                    <li><button class="btn_subtle" onclick="tst_modal_call('tst_modal_detail')">예약 확인하기</button></li>
-                    <li><button class="btn_subtle" onclick="tst_modal_call('tst_modal_update')">예약 수정하기</button></li>
-                </ul> -->
-                <!-- //기능 완성시 삭제해 주세요 -->
+
 
             </div>
         </div>

@@ -43,6 +43,13 @@
                                 <div class="tst_search_input">
                                     <input type="text" name="keyword_class" maxlength="50" class="input_min input_underline" id="keyword_category" placeholder="검색어를 입력하세요" />
                                 </div>
+                                
+                                <!-- 초기화 버튼 -->
+						        <div class="tst_search_init font_subtle" onclick="location.href='/manage_dispose_list.go'">
+						            <i class="bi bi-x-circle-fill"></i>
+						        </div>
+						        <!-- //초기화 버튼 -->                                
+                                
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
                                 </div>
@@ -90,6 +97,13 @@
                                 <div class="tst_search_input">
                                     <input type="text" name="keyword" maxlength="50" id="search_keyword" placeholder="검색어를 입력하세요" />
                                 </div>
+                                
+                                <!-- 초기화 버튼 -->
+						        <div class="tst_search_init font_subtle" onclick="location.href='/manage_dispose_list.go'">
+						            <i class="bi bi-x-circle-fill"></i>
+						        </div>
+						        <!-- //초기화 버튼 -->                                
+                                
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
                                 </div>

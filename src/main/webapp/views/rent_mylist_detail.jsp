@@ -53,19 +53,19 @@
 							</c:if>
                             <!-- //연체했을 경우 -->
                             <tr>
-                                <th>제품번호</th>
+                                <th>물품번호</th>
                                 <th id="prod_idx">${detail.prod_idx}</th>
                             </tr>
                             <tr>
-                                <th>제품명</th>
+                                <th>물품명</th>
                                  <th id="prod_name">${detail.prod_name}</th>
                             </tr>
                             <tr>
-                                <th>제품 정보</th>
+                                <th>물품 정보</th>
                                 <td id="prod_model">${detail.prod_model}</td>
                             </tr>
                             <tr>
-                                <th>제품 설명</th>
+                                <th>물품 설명</th>
                                 <td id="prod_info">
                                 	${detail.prod_info}
                                 </td>
@@ -85,7 +85,7 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">첨부 파일</th>
+                                <th colspan="2">설명서</th>
                             </tr>
                             </thead>
                             <tbody>

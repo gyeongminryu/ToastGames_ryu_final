@@ -47,7 +47,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th class="td_align_top">인수자</th>
+                                    <th class="td_align_top">인수자<span class="font_caution"> *</span></th>
                                     <td>
                                         <div class="tst_flex">
                                             <div class="tst_col9">
@@ -60,7 +60,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">사진 첨부</th>
+                                    <th class="td_align_top">사진 첨부<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="file" name="file" id="fileInput" placeholder="첨부할 사진을 등록하세요. 장당 최대 5MB, 총 다섯 장까지 등록 가능합니다." />
                                         <div class="image_preview_container">

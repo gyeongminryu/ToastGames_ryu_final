@@ -171,16 +171,16 @@ public class MeetingController {
 		
 	    String room = (String) params.get("room");
 	    logger.info("room:"+room);
-	    String myMeeting = null;
+	    int myMeeting = 0;
 	    if(params.get("my_meeting") != null) {
-	    	myMeeting = (String) session.getAttribute("empl_idx");
+	    	myMeeting = (int) session.getAttribute("empl_idx");
 	    }
 	    Map<String, Object> param = new HashMap<String, Object>();
 	    param.put("room", room);
 	    param.put("my_meeting", myMeeting);
 	    
 	    List<Map<String, Object>> meetings = new ArrayList<Map<String,Object>>();
-		if (myMeeting != null) {
+		if (myMeeting != 0) {
 			meetings = meetingService.getMyMeeting(param);
 		} else {
 			meetings = meetingService.getMeeting(param);
@@ -217,6 +217,7 @@ public class MeetingController {
         } else {
             logger.error("Failed to parse start or end date");
         }
+        
 	    int empl_idx=(int) session.getAttribute("empl_idx");
         //int empl_idx= 10003;
 	    // room, empl 값을 Integer로 변환
