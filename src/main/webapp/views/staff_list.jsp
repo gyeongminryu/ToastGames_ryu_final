@@ -105,7 +105,7 @@
 
         // 이벤트 핸들링
         document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("dept_idx").addEventListener("change", fetchStaffList); // 부서 변경 시 호출
+         //   document.getElementById("dept_idx").addEventListener("change", fetchStaffList); // 부서 변경 시 호출
             document.getElementById("searchBtn").addEventListener("click", fetchStaffList); // 검색 버튼 클릭 시 호출
         });
     </script>

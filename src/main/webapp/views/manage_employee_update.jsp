@@ -16,8 +16,11 @@
 <c:import url="layout_topnav.jsp" />
 <div class="tst_container">
     <c:import url="layout_leftnav.jsp" />
+    
     <div class="tst_container_right">
+    
         <div class="tst_contents">
+        
             <div class="tst_contents_inner">
 
                 <!-- 제목 -->
@@ -36,9 +39,11 @@
                     </li>
                 </ul>
                 <!-- //제목 -->
+                 
                 <form>
-                <input type="hidden" name="empl_idx" value="${employee.empl_idx}" />
                     <div class="tst_flex">
+                   
+                   <input type="hidden" name="empl_idx" value="${employee.empl_idx}" />
                         <div class="tst_col9">
                             <div class="tst_flex tst_flex_block">
                                 <div class="tst_col12">
@@ -61,7 +66,7 @@
                                                 <li>
                                                     <label class="form_label">성별</label>
                                                     <div class="tst_flex">
-                                                        <input type="hidden" name="empl_gender" value="${employee.empl_gender ? '여성' : '남성'}" />
+                                                        <input type="hidden" name="empl_gender" value="${employee.empl_gender}" />
                                                         <div class="tst_col6">
                                                             <button type="button" onclick="select_gender('0')" class="btn_full btn_empty gender_0">남</button>
                                                         </div>
@@ -147,8 +152,10 @@
                                 </div>
                             </div>
                         </div>
+                        </form>
                         <div class="tst_col3">
-
+                        
+							<form id="emplStampForm" action="empl_file_upload.do?empl_idx=${employee.empl_idx}" method="POST" enctype="multipart/form-data">
                             <!-- 첨부 파일 목록 -->
                             <table class="tst_table table_align_left table_no_padding">
                                 <colgroup>
@@ -161,31 +168,30 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>{파일명 (파일 용량kb)}</td>
-                                    <td>
-                                        <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{파일명 (파일 용량kb)}</td>
-                                    <td>
-                                        <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
-                                    </td>
-                                </tr>
+                                <c:forEach var="fileItem" items="${file}" varStatus="status">
+								<tr>
+                                <td>${fileItem.new_filename} (${fileItem.file_size/1024})</td>
+                                <td>
+                                    <!-- 다운로드 경로를 입력하세요 --><button type="button" onclick="delFile('${fileItem.new_filename}','${employee.empl_idx}')" class="btn_min btn_primary">삭제하기</button>
+                                </td>
+                            	</tr>
+								</c:forEach>
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <input type="file" name="" multiple />
+                                        <input type="file" id="fileInput" name="files" multiple />
+                                         <ul id="attachmentFileList"></ul>
+                                         <button type="submit" class="btn_primary">첨부파일 제출</button>
                                     </td>
                                 </tr>
                                 </tfoot>
                             </table>
                             <!-- //첨부 파일 목록 -->
+                            </form>
 
                             <hr class="separator" />
-
+							
                             <!-- 직인 > 파일이 있을 경우 -->
                             <table class="tst_table table_align_left table_no_padding">
                                 <colgroup>
@@ -199,65 +205,114 @@
                                 </thead>
                                 <tbody>
                                 <tr class="td_no_underline">
-                                    <td>{파일명 (파일 용량kb)}</td>
-                                    <td>
-                                        <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">직인 삭제</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div class="tst_flex">
-                                            <div class="tst_col12 align_center align_middle">
-                                                <img id="employee_stamp" src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" class="companyinfo_stamp" />
-                                            </div>
+                                    <c:choose>
+								           
+								            <c:when test="${not empty employee.empl_stamp}">
+                            <tr class="td_no_underline">
+                            <td>${employee.empl_stamp}<p id="stampFileSize"></p> </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tst_flex">
+                                        <div class="tst_col12 align_center align_middle">
+                                        	<!-- 파일 크기 표시용 -->
+                                            <img src="/files/${employee.empl_stamp}" id="stampFile" class="companyinfo_stamp" />
+                                       		
                                         </div>
-                                    </td>
+                                    </div>
+                                </td>
+                            </tr>
+                            </c:when>		            
+								  <c:otherwise>
+								    <tr>
+								       <td>
+								          <p class="font_subtle align_center">직인이 없습니다.</p>
+								            </td>
+								     </tr>
+								     </c:otherwise>
+								</c:choose>
                                 </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <input type="file" name="" multiple />
+                                    <form id="emplStampForm" action="empl_stamp_upload.do?empl_idx=${employee.empl_idx}" method="POST" enctype="multipart/form-data">
+                                        <div class="tst_flex">
+                                            <div class="tst_col12 align_center align_middle">
+                                                <img id="newSealPreview" src="" class="companyinfo_stamp" style="display: none;"/>
+                                            </div>
+                                        </div>
+                                        <input type="file" id="singleFile" alt="새로운 직인 미리보기" name="singleFile" multiple />
+                                    	<button type="submit" class="btn_primary">직인 변경</button>
+                                    </form>
                                     </td>
                                 </tr>
                                 </tfoot>
                             </table>
                             <!-- //직인 > 파일이 있을 경우 -->
 
-                            <!-- 직인 > 파일이 없을 경우 -->
-                            <table class="tst_table table_align_left table_no_padding">
-                                <thead>
-                                <tr>
-                                    <th>직인</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="td_no_underline disp_hide">
-                                    <td colspan="2"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><p class="font_subtle align_center">직인이 없습니다.</p></td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="2">
-                                        <input type="file" name="" onchange="img_preview(this)" multiple />
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                            <!-- //직인 > 파일이 없을 경우 -->
-
+                         
+							
                         </div>
 
                     </div>
-                </form>
+                
             </div>
         </div>
     </div>
+  </div>  
     <c:import url="manage_employee_update_modal.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/manage_employee_update.js"></script>
+<script>
+
+//첨부파일 목록 표시
+document.getElementById('fileInput').addEventListener('change', function (event) {
+    var fileList = event.target.files; // 선택된 첨부파일
+    var displayList = document.getElementById('attachmentFileList'); // 첨부파일 목록 표시 영역
+
+    // 화면 초기화
+    displayList.innerHTML = '';
+
+    // 각 첨부파일 이름을 리스트에 추가
+    for (var i = 0; i < fileList.length; i++) {
+        var listItem = document.createElement('li');
+        listItem.textContent = fileList[i].name; // 첨부파일 이름
+        displayList.appendChild(listItem);
+    }
+});
+
+//직인파일 미리보기
+document.getElementById('singleFile').addEventListener('change', function (event) {
+    const file = event.target.files[0]; // 단일 파일
+  
+    const previewImage = document.getElementById('newSealPreview'); // 미리보기 이미지 태그
+
+  //  displayList.innerHTML = ''; // 이름 초기화
+
+    if (file) {
+        // 파일이 있을 경우 미리보기 이미지 표시
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            previewImage.src = e.target.result; // Base64로 변환된 이미지 데이터 설정
+            previewImage.style.display = 'block'; // 미리보기 이미지 보이기
+        };
+
+        // 이미지 파일 읽기
+        reader.readAsDataURL(file);
+    } else {
+        // 파일이 선택되지 않으면 미리보기 이미지 숨기기
+        previewImage.style.display = 'none';
+    }
+});
+//삭제버튼 클릭시 삭제 
+	function delFile(new_filename,empl_idx) {
+      	
+        const url = './empl_file_del.do/' + new_filename + '/' + empl_idx;
+        window.location.href = url;  // 해당 URL로 이동하여 다운로드
+        console.log(url);
+    }
+</script>
 </html>
