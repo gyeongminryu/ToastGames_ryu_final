@@ -9,9 +9,15 @@ public class MeetingPhotoDTO {
 	private String new_filename;
 	private String file_type;
 	private String file_addr;
+	private long file_size;
 	
 	
-	
+	public long getFile_size() {
+		return file_size;
+	}
+	public void setFile_size(long l) {
+		this.file_size = l;
+	}
 	public int getFile_idx() {
 		return file_idx;
 	}

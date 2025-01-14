@@ -122,10 +122,10 @@ public class MeetingService {
 		String oriFilename = file.getOriginalFilename();
 		
 		//2.기존 파일의 확장자만 분리
-		String ext = oriFilename.substring(oriFilename.lastIndexOf(".")+1);
+		String ext = oriFilename.substring(oriFilename.lastIndexOf("."));
 		
 		//3.새파일명 생성
-		String newFilename = UUID.randomUUID().toString(); //바로 해도됨 +문자는 문자열로 인식
+		String newFilename = UUID.randomUUID().toString()+ext; //바로 해도됨 +문자는 문자열로 인식
 		
 		
 		int empl_idx = (int) session.getAttribute("empl_idx");
@@ -142,6 +142,7 @@ public class MeetingService {
 			photo_dto.setFile_type(ext);
 			photo_dto.setFile_key(fileKey);
 			photo_dto.setUploader_idx(empl_idx);
+			photo_dto.setFile_size(file.getSize());
 			meetingDAO.roomFileAdd(photo_dto);
 			meetingDAO.roomKeyAdd(fileKey, room_idx);
 		} catch (Exception e) {
@@ -218,7 +219,8 @@ public class MeetingService {
 		//성공하면 참여자 설정
 		if(row>0) {
 			MeetingDTO meeting_parti = new MeetingDTO();
-			meeting_parti.setMeet_rent_idx(meeting.getMeet_rent_idx());
+			meeting_parti.setMeet_rent_idx(meeting.getMeet_rent_idx());		
+			MeetingDTO meetingRoom = meetingDAO.meetingRoomInfo(meeting.getMeet_rent_idx());
 			logger.info("meet_rent_idx:"+meeting_parti.getMeet_rent_idx());
 			List<Integer> partiList = dto.getMeet_parti_empl_idxs();
 			logger.info("partiList: " + partiList);
@@ -231,8 +233,8 @@ public class MeetingService {
 				noti.setNoti_cate_idx(14);
 				noti.setNoti_sender_empl_idx(meeting.getMeet_rent_idx());
 				noti.setNoti_receiver_empl_idx(parti);
-				noti.setNoti_subject(startDate.toString()+"에 예정된 새로운 회의가 있습니다.");
-				noti.setNoti_content(meeting.getMeet_subject()+':'+meeting.getMeet_content());
+				noti.setNoti_subject(meeting.getMeet_subject());
+				noti.setNoti_content(startDate.toString()+'/'+meetingRoom.getRoom_name()+'('+meetingRoom.getRoom_addr()+')');
 				noti.setNoti_sent_date(LocalDateTime.now());
 				noti.setNoti_deleted(0);
 				noti.setNoti_link("/meeting.go");
