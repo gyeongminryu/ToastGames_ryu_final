@@ -60,7 +60,7 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <button onclick="management_set_empldata()" class="btn_primary btn_full">일괄 등록하기</button>
+                    <button onclick="manage_empl_exists()" class="btn_primary btn_full">일괄 등록하기</button>
                 </div>
                 <div class="tst_col6">
                     <button onclick="tst_modal_close('tst_modal_insert')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
