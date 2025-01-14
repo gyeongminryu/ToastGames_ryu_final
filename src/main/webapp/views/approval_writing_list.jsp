@@ -43,12 +43,6 @@
                             <li class="tst_tablist_item tst_tablist_item_active" onclick="location.href='/approval_writing_list.go'">
                                 <h3>전체 보기</h3>
                             </li>
-                            <li class="tst_tablist_item" onclick="approval_list_filter('0','탭','writing',this)">
-                                <h3>작성중인 문서</h3>
-                            </li>
-                            <li class="tst_tablist_item" onclick="approval_list_filter('2','탭','writing',this)">
-                                <h3>삭제한 문서</h3>
-                            </li>
                             <li class="tst_tablist_item">
                                 <!-- 문서 검색 -->
                                 <form>

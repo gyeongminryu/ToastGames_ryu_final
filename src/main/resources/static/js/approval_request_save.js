@@ -20,8 +20,35 @@ function approval_write_save(){
 //상신 후 저장 함수
 function approval_write_request_save(){
     console.log("임시 저장 함수 실행");
-    refer_save_doc();
-    approval_set_save_data('request_save');
+
+    //결재자 제대로 선택했는지 확인
+    //중복을 허용하지 않는 SET을 사용
+    var empl_lines = [
+        $('#empl_line0').val(),
+        $('#empl_line1').val(),
+        $('#empl_line2').val(),
+        $('#empl_line3').val()
+    ];
+
+   /* var empl_line0 = $('#empl_line0').val(); //결재 요청자
+    var empl_line1 = $('#empl_line1').val(); // 1차 결재자
+    var empl_line2 = $('#empl_line2').val(); // 2차 결재자
+    var empl_line3 = $('#empl_line3').val(); // 3차 결재자*/
+
+    if (new Set(empl_lines).size === empl_lines.length) {
+        // 모든 값이 다를 경우 처리
+        //new Set(empl_lines).size = 중복을 없애고 반환한 내용의 크기
+        //empl_lines.length = 중복까지 포함한 길이
+
+        console.log("모든 값이 다릅니다.");
+        refer_save_doc();
+        approval_set_save_data('request_save');
+    } else {
+        // 값이 중복되는 경우 처리
+        console.log("값이 중복됩니다.");
+        alert('본인을 결재선으로 등록하거나 동일한 결재선을 두번 등록할 수 없습니다.');
+    }
+
 }
 
 var setted = 0;
