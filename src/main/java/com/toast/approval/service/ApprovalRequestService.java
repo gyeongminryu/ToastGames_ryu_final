@@ -86,121 +86,119 @@ public class ApprovalRequestService {
 					approval_dept_idx = (int) g_approval_line.get("dept_idx");
 
 					//approval_empl_idx 및 position은 아래 로직에서 가져와야 함 -> g_line_order에 없음
+					if(duty_idx !=2) {
+						if (approval_dept_idx == 0) {
+							//자신의 부서인 경우
+							//1_만약 상위 부서값이 있으면(select count(*))
+							//상위 부서 값은 필수로 있음
+							//다만 상위 부서가 2인지, 아닌지에 따라 부서인지, 팀인지 나뉨
+							if (approvalRequestDAO.get_high_dept_count(dept_idx) > 0) {
+								//상위 부서의 idx의 값 가져오기
+								int high_dept_idx = approvalRequestDAO.get_high_dept(dept_idx);
+								//그리고 그 상위 부서 값이 2가 아니면
+								if (high_dept_idx != 2) {
+									logger.info("팀에 소속된 팀원임");
 
-					if(approval_dept_idx==0){
-						//자신의 부서인 경우
-						//1_만약 상위 부서값이 있으면(select count(*))
-						//상위 부서 값은 필수로 있음
-						//다만 상위 부서가 2인지, 아닌지에 따라 부서인지, 팀인지 나뉨
-						if(approvalRequestDAO.get_high_dept_count(dept_idx)>0){
-							//상위 부서의 idx의 값 가져오기
-							int high_dept_idx = approvalRequestDAO.get_high_dept(dept_idx);
-							//그리고 그 상위 부서 값이 2가 아니면
-							if(high_dept_idx !=2){
-								logger.info("팀에 소속된 팀원임");
-
-								//if duty_idx == 3 부서장인 경우
-								if(duty_idx ==3){
-									logger.info("부서장");
+									//if duty_idx == 3 부서장인 경우
+									if (duty_idx == 3) {
+										logger.info("부서장");
 
 
+										//부서장이 있는지 확인
+										if (approvalRequestDAO.get_high_dept_head_count(high_dept_idx, duty_idx) > 0) {
+											logger.info("부서장 있음");
 
-									//부서장이 있는지 확인
-									if(approvalRequestDAO.get_high_dept_head_count(high_dept_idx, duty_idx)>0) {
-										logger.info("부서장 있음");
+											//자기 부서의 상위 부서의 부서장 가져옴 (get_high_dept_head())
+											//	- dept_idx = 상위부서
+											Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(high_dept_idx, duty_idx);
+											approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
+											approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
+											approval_position_idx = (int) get_high_dept_head.get("position_idx");
 
-										//자기 부서의 상위 부서의 부서장 가져옴 (get_high_dept_head())
-										//	- dept_idx = 상위부서
-										Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(high_dept_idx, duty_idx);
-										approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
-										approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
-										approval_position_idx = (int) get_high_dept_head.get("position_idx");
+											logger.info("파라메터 만드는 메소드 실행 전");
+											//파라메터 만드는 메소드 실행
+											set_approval_init_param(approval_initial_write_param, doc_idx, line_order, approval_dept_idx, duty_idx, approval_empl_idx, approval_position_idx);
 
-										logger.info("파라메터 만드는 메소드 실행 전");
-										//파라메터 만드는 메소드 실행
-										set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,approval_position_idx);
+											line_order++;
+										} else {
+											logger.info("부서장 없음");
+										}
 
-										line_order++;
-									}else{
-										logger.info("부서장 없음");
+									} else if (duty_idx == 4) {//if duty_idx == 4 팀장인 경우
+										//팀장이 있는지 확인
+										logger.info("팀장");
+
+										if (approvalRequestDAO.get_team_head_count(dept_idx, duty_idx) > 0) {
+											logger.info("팀장 있음");
+
+											//자기 부서의 팀장 정보 가져옴
+											//자기 부서의 팀장 가져옴
+											//- dept_idx = 자기부서
+											Map<String, Object> get_team_head = approvalRequestDAO.get_team_head(dept_idx, duty_idx);
+											approval_empl_idx = (int) get_team_head.get("empl_idx");
+											approval_dept_idx = (int) get_team_head.get("dept_idx");
+											approval_position_idx = (int) get_team_head.get("position_idx");
+
+											//파라메터 만드는 메소드 실행
+											logger.info("파라메터 만드는 메소드 실행");
+
+											set_approval_init_param(approval_initial_write_param, doc_idx, line_order, approval_dept_idx, duty_idx, approval_empl_idx, approval_position_idx);
+											line_order++;
+
+										} else {
+											logger.info("팀장 없음");
+										}
 									}
-
-								}else if(duty_idx==4){//if duty_idx == 4 팀장인 경우
-									//팀장이 있는지 확인
-									logger.info("팀장");
-
-									if(approvalRequestDAO.get_team_head_count(dept_idx, duty_idx)>0){
-										logger.info("팀장 있음");
-
-										//자기 부서의 팀장 정보 가져옴
-										//자기 부서의 팀장 가져옴
-										//- dept_idx = 자기부서
-										Map<String, Object> get_team_head = approvalRequestDAO.get_team_head(dept_idx,duty_idx);
-										approval_empl_idx = (int) get_team_head.get("empl_idx");
-										approval_dept_idx = (int) get_team_head.get("dept_idx");
-										approval_position_idx = (int) get_team_head.get("position_idx");
-
-										//파라메터 만드는 메소드 실행
-										logger.info("파라메터 만드는 메소드 실행");
-
-										set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,approval_position_idx);
-										line_order++;
-
-									}else{
-										logger.info("팀장 없음");
+								} else {
+									logger.info("부서에 소속된 부서원임");
+									if (duty_idx == 4) {
+										logger.info("부서에 소속된 부서원이라 팀장이 존재하지 않음");
 									}
-								}
-							}else{
-								logger.info("부서에 소속된 부서원임");
-								if(duty_idx ==4){
-									logger.info("부서에 소속된 부서원이라 팀장이 존재하지 않음");
-								}
-								//=============================================
-								//2_만약 상위 부서값이 없으면
-								//본인 idx
-								//duty_idx == 3 부서장인 경우
-								if(duty_idx ==3){
-									//부서장이 있는지 확인
-									if(approvalRequestDAO.get_high_dept_head_count(dept_idx, duty_idx)>0) {
-										//자기 부서 부서장 가져옴
-										// dept_idx = 자기부서
-										logger.info("부서장 있음");
-										Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(dept_idx, duty_idx);
-										approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
-										approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
-										approval_position_idx = (int) get_high_dept_head.get("position_idx");
+									//=============================================
+									//2_만약 상위 부서값이 없으면
+									//본인 idx
+									//duty_idx == 3 부서장인 경우
+									if (duty_idx == 3) {
+										//부서장이 있는지 확인
+										if (approvalRequestDAO.get_high_dept_head_count(dept_idx, duty_idx) > 0) {
+											//자기 부서 부서장 가져옴
+											// dept_idx = 자기부서
+											logger.info("부서장 있음");
+											Map<String, Object> get_high_dept_head = approvalRequestDAO.get_high_dept_head(dept_idx, duty_idx);
+											approval_empl_idx = (int) get_high_dept_head.get("empl_idx");
+											approval_dept_idx = (int) get_high_dept_head.get("dept_idx");
+											approval_position_idx = (int) get_high_dept_head.get("position_idx");
 
-										//파라메터 만드는 메소드 실행
-										set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,approval_position_idx);
+											//파라메터 만드는 메소드 실행
+											set_approval_init_param(approval_initial_write_param, doc_idx, line_order, approval_dept_idx, duty_idx, approval_empl_idx, approval_position_idx);
 
-										line_order++;
-									}else{
-										logger.info("부서장 없음");
+											line_order++;
+										} else {
+											logger.info("부서장 없음");
+										}
 									}
 								}
 							}
+						} else { //부서 가져온 것이 숫자가 있으면 해당 값을 바로 insert 시키기
+							logger.info("g_line에 부서 있음");
+							//approval_empl_idx 및 position 찾기 -> approval_dept_idx 및 approval_duty_idx 기반
+
+							//결재선을 지정했을 때, 그 부서와 직급의 사람이 없는 경우 line_order에 insert 되지 않게 구현
+							if (approvalRequestDAO.count_appr_selected(approval_dept_idx, duty_idx) > 0) {
+								Map<String, Object> appr_selected_info = approvalRequestDAO.get_appr_selected_info(approval_dept_idx, duty_idx);
+
+								approval_empl_idx = (int) appr_selected_info.get("empl_idx");
+								approval_position_idx = (int) appr_selected_info.get("position_idx");
+
+
+								set_approval_init_param(approval_initial_write_param, doc_idx, line_order, approval_dept_idx, duty_idx, approval_empl_idx, approval_position_idx);
+								line_order++;
+							} else {
+								logger.info("결재선에 해당하는 사람이 없음");
+							}
 						}
-					}else{ //부서 가져온 것이 숫자가 있으면 해당 값을 바로 insert 시키기
-						logger.info("g_line에 부서 있음");
-						//approval_empl_idx 및 position 찾기 -> approval_dept_idx 및 approval_duty_idx 기반
 
-						//결재선을 지정했을 때, 그 부서와 직급의 사람이 없는 경우 line_order에 insert 되지 않게 구현
-						if(approvalRequestDAO.count_appr_selected(approval_dept_idx,duty_idx)>0){
-							Map<String,Object> appr_selected_info= approvalRequestDAO.get_appr_selected_info(approval_dept_idx,duty_idx);
-
-							approval_empl_idx= (int) appr_selected_info.get("empl_idx");
-							approval_position_idx= (int) appr_selected_info.get("position_idx");
-
-
-							set_approval_init_param(approval_initial_write_param,doc_idx,line_order,approval_dept_idx,duty_idx,approval_empl_idx,approval_position_idx);
-							line_order++;
-						}else{
-							logger.info("결재선에 해당하는 사람이 없음");
-						}
-					}
-
-
-					if(duty_idx ==2){
+					}else{
 						logger.info("사장 가져오기");
 
 						//사장 작업 중
@@ -258,6 +256,7 @@ public class ApprovalRequestService {
 
 	//1차 저장한 문서 가져오기
 	public Map<String, Object> doc_get(int doc_idx, int empl_idx) {
+		//문서 정보 가져오기
 		Map<String, Object> map = approvalRequestDAO.doc_get(doc_idx);
 
 
@@ -278,6 +277,20 @@ public class ApprovalRequestService {
 		//position idx
 		map.put("position_idx",approvalRequestDAO.get_empl_info(empl_idx).get("position_idx"));
 		map.put("position_name",approvalRequestDAO.get_empl_info(empl_idx).get("position_name"));
+		
+		
+		//파일 가져오기
+		//만약 doc_idx에 file_key가 있으면
+		if(approvalRequestDAO.doc_saved_filekey_count(String.valueOf(doc_idx))>0){
+			//파일키 가져오기
+			String file_key = approvalRequestDAO.doc_saved_filekey(String.valueOf(doc_idx));
+
+			//해당 파일키를 가진 파일들의 이름 및 용량 모두 가져오기
+			List<Map<String,Object>> files = approvalRequestDAO.get_files(file_key);
+			map.put("files",files);
+		}
+
+
 
 		return map;
 	}
@@ -373,7 +386,7 @@ public class ApprovalRequestService {
 						String file_type = ori_filename.substring(file_type_split);
 						String new_filename = UUID.randomUUID().toString() + file_type;
 
-						String file_addr = "C:/files/" + new_filename;
+						String file_addr = "/files/approval/";
 						//파일에 먼저 저장하기
 						//1.byte
 						try {

@@ -17,13 +17,17 @@ import java.util.Map;
 @Controller
 public class NotiController {
 	//회의실
-	int empl_idx = 10000;
+	//int empl_idx = 10000;
 
 	//전자게시판 알림
-	//int empl_idx = 10000;
+	//int empl_idx = 10032;
 
 	//결재 알림
 	//int empl_idx = 10063;
+
+	//결재 요청자
+	int empl_idx = 10111;
+
 
 
 	Logger logger = LoggerFactory.getLogger(getClass());

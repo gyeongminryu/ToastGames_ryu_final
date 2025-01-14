@@ -24,8 +24,8 @@ public class ApprovalController {
 
 	//세션 처리
 	//보낸 + 작성한
-	//int empl_idx = 10111;
-	int empl_idx = 10063;
+	int empl_idx = 10111;
+	//int empl_idx = 10063;
 
 	public ApprovalController(ApprovalService approvalService) {
 		this.approvalService = approvalService;

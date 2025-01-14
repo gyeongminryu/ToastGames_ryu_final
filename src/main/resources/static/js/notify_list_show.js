@@ -44,18 +44,18 @@ function open_alert_list(){
                //날짜 format 바꾸기
 
                switch (category){
-                   case 1 :
+                   case 1:
                        console.log("결재 요청한 알람");
                        content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-megaphone margin_right"></i>결재 요청</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'"  class="alert_item_body tst_pointer"><p>'+noti.noti_subject+'</p></div></div></li>';
                        break;
                    case 2:
                        console.log("결재 승인한 알람");
-                       content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-file-earmark-check margin_right"></i>' + noti.noti_cate_name + '</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>' + date + '</span><span><i onclick="noti_delete(this,' + noti.noti_idx + ')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'" class="alert_item_body tst_pointer"><p>문서<b>' + noti.noti_subject + '</b> 이/가 결재되었습니다. (결재자:' + noti.empl_name + ')</p></div></div></li>';
+                       content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-file-earmark-check margin_right"></i>' + noti.noti_cate_name + '</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>' + date + '</span><span><i onclick="noti_delete(this,' + noti.noti_idx + ')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'" class="alert_item_body tst_pointer"><p><b>' + noti.noti_subject + '</b> 이/가 결재되었습니다. (결재자:' + noti.empl_name + ')</p></div></div></li>';
                        console.log("content:",content);
                        break;
                    case 3 :
                        console.log("결재 반려한 알람");
-                       content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-file-earmark-check margin_right"></i>'+noti.noti_cate_name+'</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'"  class="alert_item_body tst_pointer"><p>문서<b>'+noti.noti_subject+'</b> 이/가 결재 반려되었습니다. (결재자:'+ noti.empl_name+')</p></div></div></li>';
+                       content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-file-earmark-check margin_right"></i>'+noti.noti_cate_name+'</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'"  class="alert_item_body tst_pointer"><p><b>'+noti.noti_subject+'</b> 이/가 결재 반려되었습니다. (결재자:'+ noti.empl_name+')</p></div></div></li>';
                        break;
 
                    //회의실 및 일정
@@ -86,8 +86,8 @@ function open_alert_list(){
 
                    case 22 :
                    case 23 :
-                       console.log("공지사항");
-                       content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-megaphone margin_right"></i>'+noti.dept_name+'공지사항</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'"  class="alert_item_body tst_pointer"><h3>'+noti.noti_subject+'</h3><p class="single_line_paragraph">'+noti.noti_content+'</p></div></div></li>';
+                       console.log("부서 공지사항");
+                       content += '<li><div class="alert_item"><div class="alert_item_header tst_flex"><div class="tst_col6"><p><i class="bi bi-megaphone margin_right"></i>'+noti.dept_name+' 공지사항</p></div><div class="tst_col6 align_right"><p class="min font_subtle"><span>'+date+'</span><span><i onclick="noti_delete(this,'+noti.noti_idx+')" class="bi bi-dash-circle-dotted margin_left tst_pointer"></i></span></p></div></div><div onclick="location.href=\'' + noti.noti_link + '\'"  class="alert_item_body tst_pointer"><h3>'+noti.noti_subject+'</h3><p class="single_line_paragraph">'+noti.noti_content+'</p></div></div></li>';
                        break;
                }
 
