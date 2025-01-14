@@ -62,13 +62,20 @@
                             <div class="tst_search_container">
                                 <div class="tst_search_select">
                                     <select id="tst_search_select_category" name="category" onchange="search_category()">
-                                    	<option value="prod_name">제품명</option>
-                                        <option value="prod_info">제품정보</option>
+                                    	<option value="prod_name">물품명</option>
+                                        <option value="prod_info">물품정보</option>
                                     </select>
                                 </div>
                                 <div class="tst_search_input">
                                     <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
                                 </div>
+                                
+                                <!-- 초기화 버튼 -->
+						        <div class="tst_search_init font_subtle" onclick="location.href='/rent_mylist.go'">
+						            <i class="bi bi-x-circle-fill"></i>
+						        </div>
+						        <!-- //초기화 버튼 -->
+
                                 <div class="tst_search_icon">
                                     <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
                                 </div>
@@ -87,10 +94,10 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th>번호</th>
+                                <th>관리번호</th>
                                 <th>분류</th>
-                                <th>제품명</th>
-                                <th>제품 정보</th>
+                                <th>물품명</th>
+                                <th>물품 정보</th>
                                 <th>상태</th>
                                 <th>반납 예정 일시</th>
                             </tr>

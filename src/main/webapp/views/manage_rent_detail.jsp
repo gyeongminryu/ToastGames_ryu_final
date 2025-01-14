@@ -53,7 +53,7 @@
 							</tr>
 							<!-- //사용연한이 지났을 경우 -->
 							<tr>
-                                <th>물품번호</th>
+                                <th>관리번호</th>
                                 <th id="prod_idx">${detail.dto.prod_idx}</th>
                             </tr>
                             <tr>
@@ -135,7 +135,7 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">첨부 파일</th>
+                                <th colspan="2">설명서</th>
                             </tr>
                             </thead>
                             <tbody>

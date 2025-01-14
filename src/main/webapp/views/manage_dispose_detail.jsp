@@ -123,7 +123,7 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th colspan="2">첨부 파일</th>
+                                <th colspan="2">설명서</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -211,9 +211,10 @@
 							        <th>폐기사유</th>
 							        <td>${dispDetail.disp_reason}</td>
 							    </tr>
+							    <!-- 처리자 이름 출력 -->
 							    <tr>
 							        <th>처리자</th>
-							        <td id="disp_empl_idx">${dispDetail.disp_empl_idx}</td>
+							        <td id="disp_empl_idx">${dispDetail.empl_name}(${dispDetail.dept_name}/${dispDetail.position_name})</td>
 							    </tr>
 							    <tr>
 							        <th>처리일시</th>

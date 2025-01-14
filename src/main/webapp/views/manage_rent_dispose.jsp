@@ -45,13 +45,13 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th class="td_align_top">폐기 사유</th>
+                                    <th class="td_align_top">폐기 사유<span class="font_caution"> *</span></th>
                                     <td>
                                         <textarea name="disp_reason" rows="5" maxlength="1000" placeholder="폐기 사유를 입력하세요"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">사진 첨부</th>
+                                    <th class="td_align_top">사진 첨부<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="file" name="file" id="fileInput" placeholder="첨부할 사진을 등록하세요. 장당 최대 5MB, 총 다섯 장까지(25MB) 등록 가능합니다." accept="image/*" multiple/>
                                         <div class="image_preview_container">
@@ -94,7 +94,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th>물품번호</th>
+                                    <th>관리번호</th>
                                     <td id="prod_idx" class="prod_idx">${detail.prod_idx}</td>
                                 </tr>
                                 <tr>
