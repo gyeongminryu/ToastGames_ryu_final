@@ -118,6 +118,9 @@ public interface MeetingDAO {
 	//meeting시작알림
 	int meetingStartNoti(MeetingDTO noti);
 
+	//meeting의 meetingroom정보
+	MeetingDTO meetingRoomInfo(int meet_rent_idx);
+
 
 
 
