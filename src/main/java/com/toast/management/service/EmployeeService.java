@@ -92,13 +92,21 @@ public class EmployeeService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// 직인 업로드
-		String emplstamp = emplStampUpload(singleFile);
-		param.put("empl_stamp", emplstamp);
-		employeeDAO.employeeAdd(param);
+		
 		// 사원등록시 파일 등록하기 추가 ??
 		try {
-			emplfileUploadAdd(files,file_key);
+			
+			// 직인 업로드
+			if(singleFile!=null  && !singleFile.isEmpty()) { // 직인 파일이 있으면
+			String emplstamp = emplStampUpload(singleFile);
+			param.put("empl_stamp", emplstamp);
+			employeeDAO.employeeAdd(param);
+			}
+			
+			if(files != null  && files.length > 0) {
+				emplfileUploadAdd(files,file_key);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -377,6 +385,18 @@ public class EmployeeService {
 	public List<EmployeeDetailDTO> emplresignAllList() {
 		// TODO Auto-generated method stub
 		return employeeDAO.emplresignAllList();
+	}
+
+	public EmployeeDetailDTO staffListGo(String empl_idx) {
+		
+		if(	employeeDAO.deptheadcheck(empl_idx) >0) {
+			return employeeDAO.getStaffDetail(empl_idx);
+		}
+		else {
+			return null;
+		}
+		
+		
 	}
 	
 }
