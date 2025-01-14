@@ -231,7 +231,7 @@
 <div class="tst_modal tst_modal_wide tst_modal_select">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
-            <h1 class="tst_modal_title">회의 참석자 추가하기</h1>
+            <h1 class="tst_modal_title">일정 참석자 추가하기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_select')"></i>
         </div>
         <div class="tst_modal_body">
