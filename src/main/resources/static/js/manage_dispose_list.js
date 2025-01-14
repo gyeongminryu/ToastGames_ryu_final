@@ -203,7 +203,7 @@ function dispose_list_print(list) {
             content += '<td>' + formatDateTime(item.prod_purch_date) + '</td>'; // 등록일
             content += '<td>' + (item.prod_dispo_date ? formatDateTime(item.prod_dispo_date) : 'N/A') + '</td>'; // 사용연한
             content += '<td><span class="tst_badge_min wide btn_subtle">' + (item.prod_dispo_date > item.disp_date ? '사용연한 전' : '사용연한 후') + '</span></td>'; // 상태
-            content += '<td><span onclick="tst_view_profile(\'' + item.empl_idx + '\')" class="tst_pointer">' + item.empl_name + ' (' + item.position_name + ')</span></td>'; // 직원명
+            content += '<td><span onclick="tst_view_profile(\'' + item.empl_idx + '\')" class="tst_pointer">' + item.empl_name + ' (' + item.dept_name+'/'+item.position_name + ')</span></td>'; // 직원명
             content += '</tr>';
         }
     } else {

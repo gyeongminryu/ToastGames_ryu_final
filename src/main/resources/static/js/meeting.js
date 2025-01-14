@@ -217,6 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			                    ${participant.empl_name}
 			                </span>`;
 			            participantsContainer.append(participantElement);
+			            
 			        });
 			    } else {
 			        // 참가자가 없을 경우 메시지 표시

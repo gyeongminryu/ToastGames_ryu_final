@@ -87,7 +87,7 @@
                             </div>
                             <div class="tst_search_input">
                                 <input type="text" name="keyword" id="search_keyword" maxlength="50" placeholder="검색어를 입력하세요" />
-                            </div>
+                            </div>                                                    
                             <div class="tst_search_icon">
                                 <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
                             </div>
@@ -147,7 +147,7 @@
                     <h3><span id="prod_name" class="prod_name">${detail.prod_name}</span><!--  ▶ <span id="empl_name" class="empl_name"></span> --></h3>
                 </li>
                 <li>
-                    <p>물품을 인계하시겠습니까?</p>
+                    <p>해당 물품을 인계하시겠습니까?</p>
                 </li>
                 <li>
                     <hr class="separator" />
