@@ -15,11 +15,11 @@ public class MailService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	// 설정(SMTP 서버의 정보로, 이메일을 전송할 때 필요한 인증 정보).
-	private static final String SENDER_EMAIL = "beomhihan@gmail.com"; // 발신자 이메일
+	private static final String SENDER_EMAIL = "toastgamehq@gmail.com"; // 발신자 이메일
     private static final String SMTP_HOST = "smtp.gmail.com"; // SMTP 서버 주소
     private static final int SMTP_PORT = 587; // SMTP 서버 포트
-    private static final String SMTP_USER = "beomhihan@gmail.com"; // 이메일 계정 (사용자)
-    private static final String SMTP_PASSWORD = "ewul hfoc blan tuqg"; // 이메일 비밀번호 (비밀)
+    private static final String SMTP_USER = "toastgamehq@gmail.com"; // 이메일 계정 (사용자)
+    private static final String SMTP_PASSWORD = "sddp qbkf zerb goyn"; // 이메일 비밀번호 (비밀)
 
     public void sendPwMail(String email, String tempPw) {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl(); // JavaMailSenderImpl을 사용하여 이메일을 보낼 준비
