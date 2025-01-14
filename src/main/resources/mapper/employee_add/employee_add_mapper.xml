@@ -14,4 +14,13 @@
     <select id="find_bank_idx" resultType="int">
         SELECT * FROM bank WHERE bank
     </select>
+
+    <!--중복 사원 등록인지 검사-->
+    <select id="if_member_exists" resultType="int">
+        SELECT count(*) FROM employee WHERE empl_per_phone = #{phone_number}
+    </select>
+    
+    <select id="get_member_exists" resultType="String">
+        SELECT empl_name FROM employee WHERE empl_per_phone = #{phone_number}
+    </select>
 </mapper>

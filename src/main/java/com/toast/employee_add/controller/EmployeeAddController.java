@@ -261,6 +261,22 @@ public class EmployeeAddController {
         Map<String,Object> map = new HashMap<>();
         return map;
     }
+
+
+    //일괄 등록 전 이미 존재하는 사원인지 확인하기
+
+    @RequestMapping(value="/manage_if_member_exists.ajax")
+    @ResponseBody
+    public Map<String,Object> manage_if_member_exists(@RequestBody Map<String,Object> param){
+        Map<String,Object> data = new HashMap<>();
+        logger.info("param:{}",param);
+        List<String> phone_numbers = (List<String>) param.get("phone_numbers");
+        logger.info("phone:{}",phone_numbers);
+
+
+        data.put("exists",employeeAddService.if_member_exists(phone_numbers));
+        return data;
+    }
 }
 
 

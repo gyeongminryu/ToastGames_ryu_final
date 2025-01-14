@@ -41,7 +41,7 @@
                             <div>
                                 <label class="form_label">일괄 등록할 파일</label>
                                 <input type="file" name="file" id="file" />
-                                <p class="align_left">.xlsx 또는 .csv 파일 한 개만 등록할 수 있습니다.</p>
+                                <p class="align_left">.xlsx 또는 .xls 파일 한 개만 등록할 수 있습니다.</p>
 
                                 <!-- 백엔드 작업시 아래 버튼을 삭제하세요 -->
                                 <button type="submit">파일 등록하기</button>
@@ -83,7 +83,7 @@
                                 <tbody>
                                 <tr>
                                     <td>김직원</td>
-                                    <td>identification</td>
+                                    <td>임시 아이디</td>
                                     <td>PASSWORDS</td>
                                     <td>여</td>
                                     <td>1990-01-01</td>
@@ -102,7 +102,7 @@
                                 </tr>
                                 <tr>
                                     <td>이직원</td>
-                                    <td>identification</td>
+                                    <td>임시 아이디</td>
                                     <td>PASSWORDS</td>
                                     <td>남</td>
                                     <td>1990-01-01</td>
@@ -121,7 +121,7 @@
                                 </tr>
                                 <tr>
                                     <td>최직원</td>
-                                    <td>identification</td>
+                                    <td>임시 아이디</td>
                                     <td>PASSWORDS</td>
                                     <td>여</td>
                                     <td>1990-01-01</td>
@@ -140,7 +140,7 @@
                                 </tr>
                                 <tr>
                                     <td>한직원</td>
-                                    <td>identification</td>
+                                    <td>임시 아이디</td>
                                     <td>PASSWORDS</td>
                                     <td>남</td>
                                     <td>1990-01-01</td>

@@ -1,6 +1,5 @@
 package com.toast.employee_add.service;
 
-import com.toast.approval.dao.ApprovalRequestDAO;
 import com.toast.dataconfig.DataConfig;
 import com.toast.employee_add.dao.EmployeeAddDAO;
 import org.slf4j.Logger;
@@ -91,5 +90,20 @@ public class EmployeeAddService {
         }
 
         return success;
+    }
+
+    public boolean if_member_exists(List<String> phone_numbers) {
+        boolean exists = false;
+        List<String> exist = new ArrayList<>();
+
+        for(String phone_number: phone_numbers){
+            if(employee_add_DAO.if_member_exists(phone_number)>0){
+                exists = true;
+            }
+        }
+
+        logger.info("exists:{}",exists);
+
+        return exists;
     }
 }

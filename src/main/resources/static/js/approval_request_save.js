@@ -24,16 +24,18 @@ function approval_write_request_save(){
     //결재자 제대로 선택했는지 확인
     //중복을 허용하지 않는 SET을 사용
     var empl_lines = [
-        $('#empl_line0').val(),
         $('#empl_line1').val(),
         $('#empl_line2').val(),
         $('#empl_line3').val()
     ];
+    console.log("empl_lines",empl_lines);
 
-   /* var empl_line0 = $('#empl_line0').val(); //결재 요청자
-    var empl_line1 = $('#empl_line1').val(); // 1차 결재자
-    var empl_line2 = $('#empl_line2').val(); // 2차 결재자
-    var empl_line3 = $('#empl_line3').val(); // 3차 결재자*/
+    //빈 문자열이 들어가서 빈 문자열의 길이도 세고 있었음
+    //결재선이 하나만 들어갈 때 동일한 결재선을 두번 등록할 수 없음으로 뜸
+
+
+
+    //동일한 결재선 등록 방지
 
     if (new Set(empl_lines).size === empl_lines.length) {
         // 모든 값이 다를 경우 처리
@@ -41,13 +43,29 @@ function approval_write_request_save(){
         //empl_lines.length = 중복까지 포함한 길이
 
         console.log("모든 값이 다릅니다.");
-        refer_save_doc();
-        approval_set_save_data('request_save');
+
+        //제목 및 문서 내용을 필수 항목으로 (기재했는지 확인)
+        var doc_subject= $('input[name="doc_subject"]').val();
+        var doc_content_sub= editor2.getHTMLCode();
+        console.log("doc_content_sub",doc_content_sub);
+        if(doc_subject==''){
+            alert('문서 제목은 필수로 입력해야 합니다.');
+        }else if(doc_content_sub ==''){
+            alert('보고 내용은 필수로 입력해야 합니다.');
+        }else{
+            refer_save_doc();
+            approval_set_save_data('request_save');
+        }
     } else {
-        // 값이 중복되는 경우 처리
         console.log("값이 중복됩니다.");
-        alert('본인을 결재선으로 등록하거나 동일한 결재선을 두번 등록할 수 없습니다.');
+        alert('결재선을 비우거나, 동일한 결재선을 두번 등록할 수 없습니다.');
     }
+    // 값이 중복되는 경우 & 결재선이 비었을 때 처리
+
+
+
+
+
 
 }
 
