@@ -43,7 +43,7 @@
 		            if (data.error) {
 		                alert(data.error);
 		            } else {
-		                drawList(data.list);
+               		 drawList(data.list, (page - 1) * itemsPerPage); // 페이지 시작 인덱스 계산
                 		if (data.totalpages !== lastTotalPages) { // 페이지네이션 초기화가 한 번만 수행되도록 수정!!! 이렇게 해야 무한루프가 안돈다!!!
 		                    $('#pagination').twbsPagination('destroy');  // 기존 페이지네이션을 제거 !!!
 		                    $('#pagination').twbsPagination({
@@ -65,21 +65,24 @@
 		    });
 		}
 		
-		function drawList(list) {
+function drawList(list, startIndex) {
     var content = '';
     if (list.length === 0) {
         content = '<tr><td colspan="6" style="text-align: center;">작성된 게시글이 없습니다.</td></tr>'; // 데이터가 없을 경우 메시지 추가
     } else {
-        list.forEach(function(b) {
+        list.forEach(function(b, index) {
             if (b) {
+                // 각 페이지마다 인덱스를 1부터 시작하도록 설정
+                var displayIndex = list.length - index;
+
                 content += '<tr>';
-                content += '<td>' + b.board_idx + '</td>'; // 인덱스
+                content += '<td>' + displayIndex + '</td>'; // 인덱스
                 content += '<td class="td_align_center">' + b.dept_name + '</td>'; // 부서
                 
-               content += '<td class="td_align_left">';
-			   content += '<span class="tst_pointer" onclick="location.href=\'board_detail.go?board_idx=' + b.board_idx + '\'">' 
-         	   + '[' + b.board_type_name + ']' + b.board_title 
-          	   + ' (' + b.commentCount + ')</span>';
+                content += '<td class="td_align_left">';
+                content += '<span class="tst_pointer" onclick="location.href=\'board_detail.go?board_idx=' + b.board_idx + '\'">' 
+                    + '[' + b.board_type_name + ']' + b.board_title 
+                    + ' (' + b.commentCount + ')</span>';
                 
                 // 첨부파일 아이콘 추가 (파일이 있을 경우)
                 if (b.file_key) {
@@ -88,7 +91,7 @@
                 
                 content += '</td>';
                 
-				content += `<td><span onclick="tst_view_profile('${b.board_empl_idx}')" class="tst_pointer">`
+                content += `<td><span onclick="tst_view_profile('${b.board_empl_idx}')" class="tst_pointer">`
                           + b.empl_name + ' (' + b.empl_id + ')</span></td>'; // 이름
                 content += '<td>' + b.board_view_cnt + '</td>'; // 조회수
                 content += '<td>' + b.board_write_date + '</td>'; // 작성일자
