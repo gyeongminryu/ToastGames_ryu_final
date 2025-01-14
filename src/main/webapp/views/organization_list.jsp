@@ -224,7 +224,7 @@
             dataType: 'json',
             success: function(response) {
                 console.log(response.deptlist);
-         
+                populateDropdowns(response);
                 // 서버로부터 받은 데이터를 Google OrgChart 데이터 테이블에 반영
                 response.deptlist.forEach(function(dept) {
  						var dept_duty = '';
