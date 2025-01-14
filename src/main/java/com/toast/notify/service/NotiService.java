@@ -67,15 +67,25 @@ public class NotiService {
 			for(Map<String,Object> noti : all_noti){
 				noti_cate = (int) noti.get("noti_cate_idx");
 				if(noti_cate == 22){ //부서
+
+					//만약 sender_empl_idx의 부서와 receiver_empl_idx의 부서 혹은 상위 부서가 같은 경우
+					//int sender_empl_idx = (int) noti.get("noti_sender_empl_idx");
+					int receiver_empl_idx= (int) noti.get("noti_receiver_empl_idx");
+					logger.info("receiver_empl_idx = " + receiver_empl_idx);
+
+
 				//부서 가져와서 넣기
 					//empl_idx가 속한 부서 idx 및 depth, 상위 부서 idx 가져오기
-					Map<String,Object> dept_info = notiDAO.get_empl_dept_info(empl_idx);
+					Map<String,Object> dept_info = notiDAO.get_empl_dept_info(receiver_empl_idx);
 					//1. 만약 상위 부서면
-					if(dept_info.get("dept_depth").equals('2')){ //
+					logger.info("dept_depth= " + dept_info.get("dept_depth"));
+					int dept_depth= (int) dept_info.get("dept_depth");
+					if(dept_depth == 2){
 						//해당 부서 명 가져오기
 						noti.put("dept_name",notiDAO.get_dept_name(dept_info.get("dept_idx")));
 						//2. 만약 하위 팀이면
-					}else if (dept_info.get("dept_depth").equals('3')){
+					}else if (dept_depth == 3){
+						logger.info("dept_high" + dept_info.get("dept_high"));
 						// 상위 부서 idx 넣어서 부서명 가져오기
 						noti.put("dept_name",notiDAO.get_dept_name(dept_info.get("dept_high")));
 					}
@@ -87,6 +97,7 @@ public class NotiService {
 					Map<String,Object> dept_info = notiDAO.get_empl_dept_info(empl_idx);
 					noti.put("dept_name",notiDAO.get_dept_name(dept_info.get("dept_idx")));
 				}
+				logger.info("noti:{}",noti);
 				noti_info.add(noti);
 			}
 

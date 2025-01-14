@@ -1,12 +1,12 @@
 var search = document.getElementById('search');
 
 //console.log(search);
-
+var search_val ='';
 search.addEventListener('keyup',function(e){
 
-    /*if(e.key === 'Enter'){ *///keyCode 대신 대체
-        var search_val = $('#search').val();
-        console.log(search_val);
+    if(e.key === 'Enter'){ //keyCode 대신 대체
+       /* var search_val = $('#search').val();
+        console.log(search_val);*/
 
 
         console.log(location.pathname); //hostname(도메인)을 제외한 나머지 주소
@@ -15,23 +15,23 @@ search.addEventListener('keyup',function(e){
         switch (location.pathname){
             //결재 양식 찾을 경우
             case '/approval_form_list.go':
-                approval_form_search(search_val);
+                approval_form_search();
                 break;
-            case '/approval_sent_list.go':
-                approval_list(search_val,'sent');
+            case '/approval_send_list.go':
+                approval_list('sent');
                 break;
             case '/approval_received_list.go':
-                approval_list(search_val,'received');
+                approval_list('received');
                 break;
             case '/approval_writing_list.go':
-                approval_list(search_val,'writing');
+                approval_list('writing');
                 break;
         }
-    /*}*/
+    }
 });
 
 //폼 양식 검색 함수
-function approval_form_search(search_val){
+function approval_form_search(){
     search_val = $('#search').val();
     console.log("폼 양식 검색 함수 실행!");
     $.ajax({
@@ -51,9 +51,9 @@ function approval_form_search(search_val){
 
 
 //내가 보낸 결재 검색 함수
-function approval_list(search_val,list_type){
+function approval_list(list_type){
+    search_val = $('#search').val();
     console.log("내가 보낸 결재 검색 함수 실행!",search_val);
-
-    approval_list_filter(search_val,"검색",);
+    approval_list_filter(search_val,"검색",list_type);
 
 }

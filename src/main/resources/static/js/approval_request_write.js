@@ -38,6 +38,13 @@ function approval_doc_get(){
             console.log(data.doc_idx);
             console.log(data.empl_name);
             console.log("data.duty_name",data.duty_name);
+            console.log("data.files",data.files);
+            if(data.files != undefined){
+                console.log("files",data.files);
+                for(var file of data.files){
+                    console.log("file",file);
+                }
+            }
             //editor.setHTMLCode(data.form_content);//편집기 안의 HTML code 설정
 
             //document.getElementById('form_content').innerHTML =data.doc_content;

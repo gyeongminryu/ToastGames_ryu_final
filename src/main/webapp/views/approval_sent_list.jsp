@@ -62,7 +62,7 @@
                   <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" id = "search"/>
                 </div>
                 <div class="tst_search_icon">
-                  <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                  <button type="button" onclick="approval_list('sent')" class="btn_icon"><i class="bi bi-search"></i></button>
                 </div>
               </div>
             </form>

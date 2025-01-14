@@ -308,5 +308,10 @@
         INSERT INTO approval_line (doc_idx,line_order,dept_idx,duty_idx,empl_idx, position_idx)
             VALUES (#{doc_idx},#{line_order},#{dept_idx},#{duty_idx},#{empl_idx}, #{position_idx})
     </insert>
+
+    <!--get_files-->
+    <select id="get_files" resultType="Map">
+        SELECT ori_filename,file_size FROM file WHERE file_key=#{file_key};
+    </select>
     
 </mapper>

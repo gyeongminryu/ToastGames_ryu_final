@@ -340,7 +340,10 @@ public class ApprovalService {
 				break;
 			case "검색":
 				logger.info("검색");
-				if(list_param.get("form_subject").equals(filter)){
+				String doc_subject = (String) list_param.get("doc_subject");
+				logger.info("doc_subject :{}",doc_subject);
+
+				if(doc_subject.contains(filter)){ //만약 filter 문자열을 포함하고 있으면,
 					list_params.add(list_param);
 				}
 				break;
