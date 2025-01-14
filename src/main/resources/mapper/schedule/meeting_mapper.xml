@@ -59,6 +59,20 @@
 	</select>
 
 	
+	<!--meeting의 meetingroom정보  -->
+	<select id="meetingRoomInfo" resultType="com.toast.schedule.dto.MeetingDTO">
+		SELECT 
+			room_idx, 
+			room_name,
+			room_addr
+		FROM
+			meeting_room mr 
+		JOIN 
+			meeting_rent mt ON mr.room_idx=mt.room_idx
+		WHERE 
+			meet_rent_idx=#{param1}	
+	</select>
+	
 	<!-- 회의실 (정보) 추가 -->
 	<insert 
 		id="roomAdd" 
