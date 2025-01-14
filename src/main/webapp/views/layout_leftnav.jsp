@@ -65,7 +65,7 @@
                 <li class="tst_pointer" onclick="location.href='/organization_list.go'">
                     <i class="bi bi-diagram-3-fill"></i><h3>조직 관리</h3>
                 </li>
-                <li class="tst_pointer" onclick="location.href='/'">
+                <li class="tst_pointer" onclick="location.href='/manage_employee_list.go'">
                     <i class="bi bi-person-lines-fill"></i><h3>인사 관리</h3>
                 </li>
                 <li class="tst_pointer" onclick="location.href='/manage_form_list.go'">
@@ -77,7 +77,7 @@
                 <li class="tst_pointer" onclick="location.href='/staff_list.go'">
                     <i class="bi bi-people-fill"></i><h3>구성원 관리</h3>
                 </li>
-                <li class="tst_pointer" onclick="location.href='/'">
+                <li class="tst_pointer" onclick="location.href='/work_record.go'">
                     <i class="bi bi-stopwatch-fill"></i><h3>근태 관리</h3>
                 </li>
                 <li class="tst_pointer" onclick="location.href='/mypage.go'">
