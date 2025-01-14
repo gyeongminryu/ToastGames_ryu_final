@@ -125,9 +125,9 @@
                             <tbody>
                             <tr>
                                 <th class="td_bg_subtle">이번 주 근무 시간</th>
-                                <td>{이번 주 근무 시간}/52시간</td>
+                                <td>25시간/52시간</td>
                                 <th class="td_bg_subtle">초과 근무 여부</th>
-                                <td>대상 아님|초과 근무중</td>
+                                <td>대상 아님</td>
                             </tr>
                             <!-- <tr>
                                 <th class="td_bg_subtle">잔여 연차</th>

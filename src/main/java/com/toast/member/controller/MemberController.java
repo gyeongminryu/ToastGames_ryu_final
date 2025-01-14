@@ -338,4 +338,13 @@ public class MemberController {
 	    }
 	}
 	
+	@ResponseBody
+	@GetMapping(value = "/layout_memberInfo", produces = "application/json")
+	public MemberDTO layoutMemberInfo(HttpSession session) {
+	    String id = (String) session.getAttribute("loginId");
+	    MemberDTO memberInfo = memberService.memberInfo(id).get(0);
+	    logger.info("memberInfo: " + memberInfo);
+	    return memberInfo;  // Returning memberInfo as JSON
+	}
+	
 }

@@ -2,56 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 	<mapper namespace="com.toast.work.dao.WorkDAO">
-
-		<!--   근무 시작 시간 저장   -->
-		<insert id="saveStartTime"> 
-			INSERT INTO attendance (empl_idx, attend_date, work_date) 
-			VALUES (#{empl_idx}, #{attend_date}, #{sqlDate}) 
-		</insert>
-		
-		<!--   근무 일지 저장   -->
-		<update id="updateWorkDay"> 
-			UPDATE attendance 
-			SET leave_date = #{leave_date}, 
-			total_hours = #{total_hours}, 
-			overtime_hours = #{overtime_hours} 
-			WHERE empl_idx = #{empl_idx} AND attend_date = #{attend_date} 
-		</update>
-		
-		<!--   일일 근무시간 조회   -->
-		<select id="getDailyWorkTimes"> 
-			SELECT attend_date, leave_date, work_date 
-			FROM attendance 
-			WHERE empl_idx = #{empl_idx} 
-			ORDER BY start_time DESC 
-		</select>
-		
-		<!--   주간 근무시간 조회   -->
-		<select id="getWeeklyWorkTime"> 
-			SELECT SUM(work_time) 
-			FROM attendance 
-			WHERE empl_idx = #{empl_idx} AND WEEK(attend_date) = WEEK(CURDATE()) 
-		</select>
-		
-		<!--   최근 출근 시각 조회   -->
-		<select id="getStartTimeForEmployee"> 
-			SELECT attend_date 
-			FROM attendance 
-			WHERE empl_idx = #{empl_idx} 
-			ORDER BY attend_date DESC 
-			LIMIT 1 
-		</select>
-		
-		<select id="getWorkRecord" resultType="map"> 
-			SELECT attend_date, leave_date, work_date, total_hours, overtime_hours 
-			FROM attendance 
-			WHERE empl_idx = #{empl_idx} 
-		</select>
-		
-		<select id="getWorkDate" parameterType="int">
-			SELECT work_date
-			FROM attendance
-			WHERE empl_idx = #{empl_idx}
-		</select>
-		
-	</mapper>
+<!--    근무 시작 시간 저장    -->
+<insert id="saveStartTime"> INSERT INTO attendance (empl_idx, attend_date, work_date) VALUES (#{empl_idx}, #{attend_date}, #{sqlDate}) </insert>
+<!--    근무 일지 저장    -->
+<update id="updateWorkDay"> UPDATE attendance SET leave_date = #{leave_date}, total_hours = #{total_hours}, overtime_hours = #{overtime_hours} WHERE empl_idx = #{empl_idx} AND attend_date = #{attend_date} </update>
+<!--    최근 출근 시각 조회    -->
+<select id="getStartTimeForEmployee"> SELECT attend_date FROM attendance WHERE empl_idx = #{empl_idx} ORDER BY attendance_idx DESC LIMIT 1 </select>
+<!--  일주일치 근무 기록을 가져옴.  -->
+<select id="getWorkRecord" resultType="map"> SELECT attend_date, leave_date, work_date, total_hours, overtime_hours FROM attendance WHERE empl_idx = #{empl_idx} AND work_date BETWEEN #{startDate} AND #{startDate} + INTERVAL 6 DAY ORDER BY work_date ASC </select>
+<!--  일주일치 근무 기록을 합산  -->
+<select id="getSumWork" resultType="map"> SELECT SUM(total_hours + overtime_hours) AS weekly_total_work_hours, SUM(total_hours) AS required_work_hours, SUM(overtime_hours) AS total_overtime_hours FROM attendance WHERE empl_idx = #{empl_idx} AND work_date BETWEEN #{startDate} AND #{startDate} + INTERVAL 6 DAY </select>
+<select id="getWorkDate" parameterType="int"> SELECT work_date FROM attendance WHERE empl_idx = #{empl_idx} </select>
+<!--  모든 사원의 ID를 가져오는 쿼리  -->
+<select id="getAllEmployeeIds" resultType="int"> SELECT empl_idx FROM employee </select>
+<insert id="insertWorkRecord" parameterType="map"> INSERT INTO attendance (empl_idx, work_date) VALUES (#{empl_idx}, #{workDate}) </insert>
+<!--  출근 기록이 존재하는지 확인  -->
+<select id="checkWorkRecordExists" resultType="Boolean"> SELECT COUNT(*) FROM attendance WHERE empl_idx = #{empl_idx} AND work_date = #{workDate} </select>
+<update id="saveAttendanceStatus"> UPDATE attendance SET is_logged_in = #{isLoggedIn} WHERE empl_idx = #{empl_idx} AND work_date = CURRENT_DATE; </update>
+<select id="getAttendanceStatus" resultType="boolean"> SELECT is_logged_in FROM attendance WHERE empl_idx = #{empl_idx} AND work_date = CURRENT_DATE; </select>
+</mapper>

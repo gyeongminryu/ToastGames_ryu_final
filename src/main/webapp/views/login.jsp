@@ -49,21 +49,7 @@
                     <input type="button" value="Exception => {ID|비밀번호 찾기}" class="btn_full btn_text" onclick="location.href='findId.go'"/>
                 </li>
             </ul>
-        </form>
-        <!-- 테스트용 로그인!!! 나중에 삭제 예정!!! -->
-        <form action="testLogin.do" method="post">
-		    <input type="hidden" name="idx" value="10016">
-		    <button type="submit">idx = 10,016</button>
-		</form>      
-		<form action="testLogin.do" method="post">
-		    <input type="hidden" name="idx" value="10003">
-		    <button type="submit">idx = 10,003</button>
-		</form>
-		<form action="testLogin.do" method="post">
-		    <input type="hidden" name="idx" value="10001">
-		    <button type="submit">idx = 10,001</button>
-		</form> 
-		<!-- 테스트용 로그인!!! 나중에 삭제 예정!!! -->		
+        </form>	
     </div>
 </div>
 </body>
