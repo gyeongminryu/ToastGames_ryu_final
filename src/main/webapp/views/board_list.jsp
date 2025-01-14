@@ -70,10 +70,8 @@
 													
 							<!-- 전 직원 조회 (필터링 초기화) -->
                         	<button onclick="location.href='board_list.go'" class="btn_empty btn_full" >필터 초기화</button>
-                        	<!-- //전 직원 조회 (필터링 초기화) -->						
-													
-                    </div>
-
+                        	<!-- //전 직원 조회 (필터링 초기화) -->																			
+                    </div>							
                     <div class="tst_col10">
 
                         <!-- 게시판 검색 -->
@@ -90,6 +88,11 @@
                                 <div class="tst_search_input">
                                     <input type="text" id="searchKeyword" maxlength="50" placeholder="검색어를 입력하세요" />
                                 </div>
+                                <!-- 초기화 버튼 -->
+								<div class="tst_search_init font_subtle" onclick="location.href='<!-- 페이지 경로를 입력하세요 -->'">
+									<i class="bi bi-x-circle-fill"></i>
+								</div>
+								<!-- //초기화 버튼 -->
                                 <div class="tst_search_icon">
                                     <button onclick="searchPosts()" class="btn_icon"><i class="bi bi-search"></i></button>
                                 </div>

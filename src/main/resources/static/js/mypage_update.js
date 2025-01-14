@@ -209,7 +209,7 @@ function submitPasswordChange() {
 
 // 마이페이지에서 개인정보 수정할 때, 유효성 검사.
 function validateForm() {
-
+    console.log("폼 유효성 검사 시작");
     // 전화번호 패턴: 010-xxxx-xxxx 형태
     var phoneRegex = /^010-\d{4}-\d{4}$/;
     // 이메일 패턴: 기본적인 이메일 형식
@@ -217,6 +217,8 @@ function validateForm() {
 
     // 사내 유선번호 검사
     var emplCmpPhone = document.getElementById('empl_cmp_phone').value;
+    console.log('사내 유선번호:' + emplCmpPhone);
+    
     if (!emplCmpPhone.trim()) {  // 입력이 없으면
         alert("사내 유선번호를 입력해주세요.");
         return false;  // 유효하지 않으면 폼 제출 중단
@@ -263,9 +265,28 @@ function validateForm() {
 function previewProfileImage() {
     var fileInput = document.getElementById('profileImageInput');
     var previewImage = document.getElementById('profileImagePreview');
-
+    
     // 파일이 선택되었을 경우
     if (fileInput.files && fileInput.files[0]) {
+        var file = fileInput.files[0];
+        var fileType = file.type;
+        var fileSize = file.size;
+
+        // 파일 형식 검증 (jpg, png, gif 만 허용)
+        if (fileType !== 'image/png' && fileType !== 'image/jpeg' && fileType !== 'image/gif') {
+            alert("이미지 파일은 jpg, png, gif 형식만 허용됩니다.");
+            fileInput.value = ''; // 잘못된 파일 선택 시 파일 입력창 초기화
+            return; // 함수 종료
+        }
+
+        // 파일 크기 제한 (2MB 이하)
+        var maxSize = 2 * 1024 * 1024; // 2MB
+        if (fileSize > maxSize) {
+            alert("파일 크기는 2MB 이하로 업로드 가능합니다.");
+            fileInput.value = ''; // 잘못된 파일 선택 시 파일 입력창 초기화
+            return; // 함수 종료
+        }
+
         var reader = new FileReader();
 
         // 파일 읽기를 성공적으로 완료하면 미리보기 이미지를 업데이트
@@ -274,6 +295,6 @@ function previewProfileImage() {
         }
 
         // 파일 읽기 시작
-        reader.readAsDataURL(fileInput.files[0]);
+        reader.readAsDataURL(file);
     }
 }

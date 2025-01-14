@@ -5,18 +5,18 @@
         <div class="tst_contents_inner">
             <div class="tst_flex">
                 <div class="tst_col4 leftnav_profile_left">
-                    <img src="https://images3.theispot.com/1024x1024/a4140a1012.jpg?v=210305105300" alt="{직원명}의 프로필 사진" class="leftnav_profile_image" />
+                    <img id="profileImage" src="" alt="{직원명}의 프로필 사진" class="leftnav_profile_image" />
                 </div>
                 <div class="tst_col8 leftnav_profile_right">
-                    <h3>{직원명}</h3>
-                    <h4 class="font_subtle">({부서}/{직급})</h4>
+                    <h3 id="memberName"></h3>
+                    <h4 id="memberDept" class="font_subtle"></h4>
                 </div>
             </div>
             <hr class="separator" />
 
             <div class="tst_flex leftnav_attendance">
                 <div class="tst_col12">
-                    <button onclick="location.href=''" class="btn_primary btn_full">출근하기</button>
+       				<button id="attendanceButton" onclick="toggleAttendance()" class="btn_primary btn_full">출근하기</button>
                 </div>
             </div>
             <hr class="separator" />
@@ -87,3 +87,5 @@
         </div>
     </div>
 </div>
+<script src="resources/js/layout_leftnav.js"></script>
+<script src="resources/js/work_record.js"></script>
