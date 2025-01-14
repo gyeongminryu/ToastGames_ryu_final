@@ -68,7 +68,7 @@
 
                                 <tbody>
                                 <tr>
-                                    <th class="td_align_top">문서 제목</th>
+                                    <th class="td_align_top">문서 제목<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="text" name="doc_subject" maxlength="100" placeholder="문서 제목을 입력하세요" />
                                     </td>
@@ -81,7 +81,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">보고 내용</th>
+                                    <th class="td_align_top">보고 내용<span class="font_caution"> *</span></th>
 
                                     <td id="div_editor_content_sub"></td>
                                         <%--<textarea name="content" rows="5" maxlength="1000" placeholder="보고할 내용을 입력하세요"></textarea>--%>
