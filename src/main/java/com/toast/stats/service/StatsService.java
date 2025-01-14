@@ -27,7 +27,7 @@ public class StatsService {
 
     private final StatsDAO statsDAO;
     String driver_id = "webdriver.chrome.driver";
-    String driver_path = "/home/opc/driver/chromedriver.exe";
+    String driver_path = "/usr/local/tomcat/driver/chromedriver.exe";
 
     WebDriver driver = null;
     ChromeOptions options = null;

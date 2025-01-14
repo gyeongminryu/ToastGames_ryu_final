@@ -58,13 +58,13 @@
 
                                 <tbody>
                                 <tr>
-                                    <th class="td_align_top">문서 양식명</th>
+                                    <th class="td_align_top">문서 양식명<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="text" onkeyup="syncTitleToEditor(this)" name="subject" maxlength="100" placeholder="문서 제목을 입력하세요" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">문서 양식</th>
+                                    <th class="td_align_top">문서 양식<span class="font_caution"> *</span></th>
                                     <td>
                                         <p class="msg min font_subtle">2분마다 자동으로 저장됩니다.</p>
 

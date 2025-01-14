@@ -28,10 +28,10 @@
                 <li>
                     <ul class="list_block list_leftnav_sub">
                         <li class="tst_pointer" onclick="location.href='/approval_received_list.go'">
-                            <h3 class="font_subtle">내가 받은 업무</h3>
+                            <h3 class="font_subtle">수신함</h3>
                         </li>
                         <li class="tst_pointer" onclick="location.href='/approval_send_list.go'">
-                            <h3 class="font_subtle">내가 보낸 업무</h3>
+                            <h3 class="font_subtle">발신함</h3>
                         </li>
                         <li class="tst_pointer" onclick="location.href='/approval_writing_list.go'">
                             <h3 class="font_subtle">작성중인 문서</h3>

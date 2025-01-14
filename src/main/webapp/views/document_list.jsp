@@ -61,11 +61,11 @@
                                         <div class="tst_search_input">
                                             <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
                                         </div>
+                                        <div class="tst_search_init font_subtle" onclick="location.href='/document_list.go'">
+                                            <i class="bi bi-x-circle-fill"></i>
+                                        </div>
                                         <div class="tst_search_icon">
                                             <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
-                                        </div>
-                                        <div class="tst_search_icon disp_hide">
-                                            <button type="button" onclick="location.href='/document_list.go'" class="btn_min btn_subtle" style="margin-left: 10px;">초기화</button>
                                         </div>
                                     </div>
                                 </form>
