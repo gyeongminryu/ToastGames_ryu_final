@@ -58,25 +58,25 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th class="td_align_top">물품명</th>
+                                    <th class="td_align_top">물품명<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="text" name="subject" maxlength="100" placeholder="물품명을 입력하세요" value=""/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">물품 정보</th>
+                                    <th class="td_align_top">물품 정보<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="text" name="information" maxlength="1000" placeholder="물품 정보를 입력하세요" value=""/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">보관 장소</th>
+                                    <th class="td_align_top">보관 장소<span class="font_caution"> *</span></th>
                                     <td>
                                         <input type="text" name="place" maxlength="1000" placeholder="물품 보관장소를 입력하세요" value=""/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="td_align_top">물품 설명</th>
+                                    <th class="td_align_top">물품 설명<span class="font_caution"> *</span></th>
                                     <td>
                                         <!-- <textarea name="content" rows="27" placeholder="물품 설명을 입력하세요"></textarea> -->
                                     	<!-- rte -->
@@ -119,7 +119,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th>카테고리</th>
+                                    <th>카테고리<span class="font_caution"> *</span></th>
                                     <td>
                                         <select name="category" onchange="change_category_life(this)">
                                             <option value="0">카테고리</option>
@@ -132,11 +132,11 @@
                                 </tr>
                                 <tr>
                                     <th>내용연수</th>
-                                    <td id="useful_life" class="useful_life">내용연수| ${category.prod_life}년</td>
+                                    <td id="useful_life" class="useful_life">${category.prod_life}년</td>
                                 </tr>
                                 <tr>
                                     <th>사용연한</th>
-                                    <td id="due_date" class="due_date">사용연한|
+                                    <td id="due_date" class="due_date">
                                     	<input type="hidden" name="prod_date" id="due_date_input" value="">
                                     </td>
                                 </tr>
@@ -154,7 +154,7 @@
                                 </colgroup>
                                 <thead>
                                 <tr>
-                                    <th colspan="2">첨부 파일</th>
+                                    <th colspan="2">설명서</th>
                                 </tr>
                                 </thead>
                                 <tbody id="file_list">

@@ -7,7 +7,7 @@
 <div id="meeting_event_modal" class="tst_modal tst_modal_double tst_modal_write">
     <div class="tst_modal_container">
         <div class="tst_modal_header">
-            <h1 class="tst_modal_title">일정 추가하기</h1>
+            <h1 class="tst_modal_title">회의 추가하기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_write'); reset_parti();"></i>
         </div>
         <form>
@@ -27,23 +27,23 @@
                         </table>
                         <ul class="list_no_desc list_block">
                             <li>
-                                <label class="form_label">회의 주제</label>
+                                <label class="form_label">회의 주제<span class="font_caution"> *</span></label>
                                 <input type="text" name="meet_subject" id="meeting_title" maxlength="1000" placeholder="회의 주제를 입력하세요" />
                             </li>
                             <li>
                                 <div class="tst_flex">
                                     <div class="tst_col6">
-                                        <label class="form_label">회의 시작 시각</label>
+                                        <label class="form_label">회의 시작 시각<span class="font_caution"> *</span></label>
                                         <input type="datetime-local" name="meet_start_date" id="meeting_start_time"/>
                                     </div>
                                     <div class="tst_col6">
-                                        <label class="form_label">회의 종료 시각</label>
+                                        <label class="form_label">회의 종료 시각<span class="font_caution"> *</span></label>
                                         <input type="datetime-local" name="meet_end_date" id="meeting_end_time"/>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <p class="min font_subtle">회의실 선택</p>
+                                <p class="min font_subtle">회의실 선택<span class="font_caution"> *</span></p>
                                 <div>
 						            <select id="meeting_room_select_modal">
 						                <c:forEach items="${roomList}" var="room">
@@ -56,7 +56,7 @@
                                 </div>
                             </li>
                             <li>
-                                <label class="form_label">회의 내용</label>
+                                <label class="form_label">회의 내용<span class="font_caution"> *</span></label>
                                 <textarea rows="5" name="meet_content" maxlength="1000" id="meeting_content" placeholder="회의 내용을 입력하세요"></textarea>
                             </li>
                         </ul>
@@ -116,7 +116,7 @@
                 </li>
                 <li>
                     <label class="form_label">회의 일시</label>
-                    <p id="meeting_start_time_detail"></p> ~ <p id="meeting_end_time_detail"></p>
+                    <p><span id="meeting_start_time_detail"></span>~<span id="meeting_end_time_detail"></span></p>
                 </li>
                 <li>
                     <label class="form_label">회의 내용</label>
@@ -161,23 +161,23 @@
                         </table>
                         <ul class="list_no_desc list_block">
                             <li>
-                                <label class="form_label">회의 주제</label>
+                                <label class="form_label">회의 주제<span class="font_caution"> *</span></label>
                                 <input type="text" id="meeting_title_update" name="meet_subject" maxlength="1000" value="" placeholder="회의 주제를 입력하세요" />
                             </li>
                             <li>
                                 <div class="tst_flex">
                                     <div class="tst_col6">
-                                        <label class="form_label">회의 시작 시각</label>
+                                        <label class="form_label">회의 시작 시각<span class="font_caution"> *</span></label>
                                         <input type="datetime-local" id="meeting_start_time_update" name="meet_start_date" value="" />
                                     </div>
                                     <div class="tst_col6">
-                                        <label class="form_label">회의 종료 시각</label>
+                                        <label class="form_label">회의 종료 시각<span class="font_caution"> *</span></label>
                                         <input type="datetime-local" id="meeting_end_time_update" name="meet_end_date" value="" />
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <p class="min font_subtle">회의실 선택</p>
+                                <p class="min font_subtle">회의실 선택<span class="font_caution"> *</span></p>
                                 <div>
                                     <select id="meeting_room_idx_update" name="room_idx" onchange="<!-- 회의실을 선택하면 회의실 정보를 수정하는 함수명을 입력하세요 -->">
 										<c:forEach items="${roomList}" var="room">
@@ -190,7 +190,7 @@
                                 </div>
                             </li>
                             <li>
-                                <label class="form_label">회의 내용</label>
+                                <label class="form_label">회의 내용<span class="font_caution"> *</span></label>
                                 <textarea rows="5" id="meeting_content_update" name="meet_content" maxlength="1000" placeholder="회의 내용을 입력하세요"></textarea>
                             </li>
                         </ul>
@@ -316,7 +316,7 @@
                             </div>
                             <div class="tst_search_input">
                                 <input type="text" name="keyword" maxlength="50" id="search_keyword" placeholder="검색어를 입력하세요" />
-                            </div>
+                            </div>                      
                             <div class="tst_search_icon">
                                 <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
                             </div>

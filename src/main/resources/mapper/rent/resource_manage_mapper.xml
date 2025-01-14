@@ -798,7 +798,8 @@
 			dp.disp_empl_idx,
 			pos.position_name,
 			empl.empl_idx,
-			empl.empl_name
+			empl.empl_name,
+			dept.dept_name
 		FROM
 			disposed_product dp
 		JOIN
@@ -811,6 +812,8 @@
 			appointment appo ON empl.appolast_idx=appo.appo_idx
 		JOIN
 			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			department dept ON appo.dept_idx=dept.dept_idx
 		ORDER BY disp_prod_idx DESC 
 			LIMIT #{param1} OFFSET #{param2}	
 	</select>
@@ -841,7 +844,8 @@
 			dp.disp_empl_idx,
 			pos.position_name,
 			empl.empl_idx,
-			empl.empl_name
+			empl.empl_name,
+			dept.dept_name
 		FROM
 			disposed_product dp
 		JOIN
@@ -854,6 +858,8 @@
 			appointment appo ON empl.appolast_idx=appo.appo_idx
 		JOIN
 			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			department dept ON appo.dept_idx=dept.dept_idx
 		WHERE pc.prod_cate_idx=#{category}
 		ORDER BY disp_prod_idx DESC 
 			LIMIT #{limit} OFFSET #{offset}	
@@ -900,7 +906,8 @@
 			dp.disp_empl_idx,
 			pos.position_name,
 			empl.empl_idx,
-			empl.empl_name
+			empl.empl_name,
+			dept.dept_name
 		FROM
 			disposed_product dp
 		JOIN
@@ -913,6 +920,8 @@
 			appointment appo ON empl.appolast_idx=appo.appo_idx
 		JOIN
 			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			department dept ON appo.dept_idx=dept.dept_idx
 		WHERE
 		<choose>
 		    <when test="option == 'prod_name'">
@@ -977,7 +986,8 @@
 			dp.disp_empl_idx,
 			pos.position_name,
 			empl.empl_idx,
-			empl.empl_name
+			empl.empl_name,
+			dept.dept_name
 		FROM
 			disposed_product dp
 		JOIN
@@ -990,6 +1000,8 @@
 			appointment appo ON empl.appolast_idx=appo.appo_idx
 		JOIN
 			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			department dept ON appo.dept_idx=dept.dept_idx
 		WHERE
 		<choose>
 		    <when test="option == 'prod_name'">
@@ -1026,13 +1038,24 @@
 			dp.disp_empl_idx,
 			dp.disp_date,
 			dp.file_key,
-			dp.disp_state
+			dp.disp_state,
+			empl.empl_name,
+			pos.position_name,
+			dept.dept_name
 		FROM
 			product pd
 		JOIN 
 			disposed_product dp ON dp.prod_idx=pd.prod_idx
 		JOIN 
 			product_category pc ON pc.prod_cate_idx=pd.prod_cate_idx
+		JOIN
+			employee empl ON empl.empl_idx=dp.disp_empl_idx
+		JOIN
+			appointment appo ON empl.appolast_idx=appo.appo_idx
+		JOIN
+			position_ pos ON pos.position_idx=appo.position_idx
+		JOIN 
+			department dept ON appo.dept_idx=dept.dept_idx
 		WHERE 
 			pd.prod_idx=#{param1}
 	</select>
