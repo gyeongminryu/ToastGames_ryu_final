@@ -77,7 +77,7 @@ public class EmployeeController {
 		
 		employeeService.employeeAdd(files,singleFile,param);
 		
-		return "";
+		return "redirect:/manage_employee_list.go";
 	}
 	
 	@GetMapping(value="/employee_detail.go")
@@ -154,7 +154,7 @@ public class EmployeeController {
 		// 처리한사원번호 >> 세션추가하고 세션아이디넣기 > 세션아이디로 사원번호 가져오기
 		employeeService.employeeAppoDo(empl_idx,dept_idx,position_idx,duty_idx,movein_date,empl_duty);
 		
-		return "redirect:/employee_detail?empl_idx="+empl_idx;
+		return "redirect:/employee_detail.go?empl_idx="+empl_idx;
 	}
 	
 	// 사원 근무상태 변경
@@ -168,7 +168,7 @@ public class EmployeeController {
 		
 		employeeService.employeeChangeDo(empl_idx,statement_idx);
 		
-		return "redirect:/employee_detail?empl_idx="+empl_idx;
+		return "redirect:/employee_detail.go?empl_idx="+empl_idx;
 	}
 	
 	// 파일 삭제

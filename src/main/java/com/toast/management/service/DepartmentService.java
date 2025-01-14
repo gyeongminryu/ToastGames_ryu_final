@@ -52,8 +52,8 @@ public class DepartmentService {
 	public void organizationAdd(Map<String, String> param) {
 		String dept_high =	param.get("dept_high");
 		logger.info("dept_high : ",dept_high);
-		String dept_name = param.get("dept_name");
-		String duty_name = dept_name + "장";
+	//	String dept_name = param.get("dept_name");
+	//	String duty_name = dept_name + "장";
 		departmentDAO.organizationAdd(param);
 	//	departmentDAO.organizationDudyAdd(duty_name);
 	

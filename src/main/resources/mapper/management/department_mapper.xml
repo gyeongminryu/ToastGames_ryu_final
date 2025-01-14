@@ -9,15 +9,7 @@
         #{dept_duty},
         #{dept_addr},
         #{dept_depth},
-        <choose>
-            <when test="dept_high !=1">
-                #{dept_high}
-            </when>
-            <otherwise>
-                NULL
-            </otherwise>
-        </choose>
-    );
+        #{dept_high});
 </insert>
 <!--  
 <insert id="organizationDudyAdd">

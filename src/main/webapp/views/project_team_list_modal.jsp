@@ -10,18 +10,19 @@
             <h1 class="tst_modal_title">프로젝트 팀 추가하기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_write')"></i>
         </div>
-        <form>
+        <form action="project_team_add.do" method="POST">
             <div class="tst_modal_body">
                 <ul class="list_no_desc list_block">
                     <li>
                         <label class="form_label">프로젝트 팀명</label>
-                        <input type="text" name="" maxlength="100" placeholder="프로젝트 팀명을 입력하세요" />
+                        <input type="text" name="team_name" maxlength="100" placeholder="프로젝트 팀명을 입력하세요" />
                     </li>
                     <li>
                         <label class="form_label">팀장</label>
                         <div class="tst_flex">
                             <div class="tst_col8">
-                                <input type="text" name="" maxlength="100" placeholder="팀장을 선택하세요" readonly />
+                            	<input type="hidden" id="team_head_idx" name="team_head_idx" value="" />
+                                <input type="text" id="team_head_name" name="team_head_name" maxlength="100" placeholder="팀장을 선택하세요" readonly />
                             </div>
                             <div class="tst_col4">
                                 <button type="button" onclick="tst_modal_call('tst_modal_select')" class="btn_secondary btn_full">팀장 임명하기</button>
@@ -32,11 +33,11 @@
                         <div class="tst_flex">
                             <div class="tst_col6">
                                 <label class="form_label">운영 시작일</label>
-                                <input type="date" name="" />
+                                <input type="date" name="calup_date" />
                             </div>
                             <div class="tst_col6">
                                 <label class="form_label">운영 종료일</label>
-                                <input type="date" name="" />
+                                <input type="date" name="deletion_date" />
                             </div>
                         </div>
                     </li>
@@ -167,7 +168,7 @@
             </div>
         </div>
         <div class="tst_modal_footer">
-            <button onclick="<!-- 직원을 팀장으로 등록하는 함수를 입력하세요 -->" class="btn_primary">팀장 임명하기</button>
+            <button onclick="tst_modal_close('tst_modal_select')" class="btn_primary">팀장 임명하기</button>
             <button onclick="tst_modal_close('tst_modal_select')" class="btn_secondary">이전 화면으로 돌아가기</button>
         </div>
     </div>
@@ -282,8 +283,8 @@ function renderDeptMembers(members) {
 //클릭시 팀장 정보 바꾸기
 function updateTeamLeader(id, name, dept, position) {
  // 팀장 정보 업데이트
- document.querySelector("input[name='ceo_idx']").value = id; // 팀장 ID
- document.querySelector("input[name='ceo']").value = name + " (" + dept + "/" + position + ")"; // 팀장 이름 및 직책
+ document.querySelector("input[name='team_head_idx']").value = id; // 팀장 ID
+ document.querySelector("input[name='team_head_name']").value = name + " (" + dept + "/" + position + ")"; // 팀장 이름 및 직책
  console.log("팀장 정보 업데이트: ", id, name, dept, position);
 }
 

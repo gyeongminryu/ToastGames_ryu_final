@@ -57,7 +57,8 @@ public class EmployeeService {
 		this.dataconfig = dataconfig;
 		
 	}
-
+	
+	@Transactional
 	public void employeeAdd(MultipartFile[] files,MultipartFile singleFile,Map<String, String> param) {
 		
 		String file_key = UUID.randomUUID().toString();
@@ -91,28 +92,21 @@ public class EmployeeService {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			//  throw new RuntimeException("주민등록번호 암호화 실패", e);
 		}
-		
+		// 직인 업로드		
+		String emplstamp = emplStampUploadAdd(singleFile);
+		param.put("empl_stamp", emplstamp);
+		employeeDAO.employeeAdd(param);	
 		// 사원등록시 파일 등록하기 추가 ??
-		try {
 			
-			// 직인 업로드
-			if(singleFile!=null  && !singleFile.isEmpty()) { // 직인 파일이 있으면
-			String emplstamp = emplStampUpload(singleFile);
-			param.put("empl_stamp", emplstamp);
-			employeeDAO.employeeAdd(param);
-			}
-			
-			if(files != null  && files.length > 0) {
-				emplfileUploadAdd(files,file_key);
-			}
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+				try {
+					emplfileUploadAdd(files,file_key);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 	} // employeeAdd(MultipartFile[] files, Map<String, String> param)
 	
 	// 직원 상세보기 
@@ -216,7 +210,7 @@ public class EmployeeService {
 	
 	
 	// 업로드 처리 
-		public void emplfileUploadAdd(MultipartFile[] files, String file_key) throws IOException {
+		public void emplfileUploadAdd(MultipartFile[] files, String file_key) throws Exception {
 			for (MultipartFile file : files) {
 				if (!file.isEmpty()) {
 					String originalFileName = file.getOriginalFilename();
@@ -285,33 +279,45 @@ public class EmployeeService {
 		List<FileDTO> filelist = employeeDAO.getemplUploadedFiles(file_key);
 		return filelist;
 	}
-	
-	// 스탬프 파일 업로드 처리
-	public String emplStampUpload(MultipartFile singleFile) {
-			
-			String originalFileName = singleFile.getOriginalFilename();
-			String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
-			String newFileName = UUID.randomUUID().toString() + "." + fileType;
-			String fileAddr = uploadAddr + "/" + newFileName;
-			
-			File dest = new File(fileAddr);
-			if (!dest.exists()) {
-		        dest.mkdirs();  // 디렉토리가 없으면 생성
-		    }
-			  try {
-			        // 파일을 지정한 경로에 저장
-			        singleFile.transferTo(dest);
-			        logger.info("파일 이름은 : "+newFileName);
-			        // 업로드된 파일 이름을 DB에 저장
-			        
-			   //     employeeDAO.emplStampUpload(newFileName,empl_idx);
-	
-			    } catch (IOException e) {
-			        e.printStackTrace();
-			        throw new RuntimeException("파일 업로드 실패: " + e.getMessage());
-			    }
-			return newFileName;
-		}
+	// 직인 등록
+	public String emplStampUploadAdd(MultipartFile singleFile) {
+	    try {
+	        // 1. 파일 검증
+	        if (singleFile == null || singleFile.isEmpty()) {
+	           
+	            return null; 
+	        }
+
+	        String originalFileName = singleFile.getOriginalFilename();
+	        if (originalFileName == null || !originalFileName.contains(".")) {
+	        	return null; 
+	        }
+
+	        // 2. 확장자 추출 및 파일명 생성
+	        String fileType = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
+	        String newFileName = UUID.randomUUID().toString() + "." + fileType;
+	        String fileAddr = uploadAddr + "/" + newFileName;
+
+	        // 3. 디렉토리 확인 및 생성
+	        File dest = new File(fileAddr);
+	        if (!dest.getParentFile().exists()) {
+	            dest.getParentFile().mkdirs();
+	        }
+
+	        // 4. 파일 저장
+	        singleFile.transferTo(dest);
+	        logger.info("파일 업로드 성공, 저장된 파일 이름: " + newFileName);
+
+	        return newFileName; // 성공 시 새 파일 이름 반환
+	    } catch (IllegalArgumentException e) {
+	        logger.error("유효성 검증 실패: " + e.getMessage());
+	        return "유효하지 않은 요청: " + e.getMessage(); // 사용자 친화적 메시지 반환
+	    } catch (IOException e) {
+	        logger.error("파일 업로드 중 오류 발생: " + e.getMessage());
+	       
+	        return null; 
+	    }
+	}
 	
 	// 사원 직인 등록
 	public void emplStampUpload(MultipartFile singleFile,String empl_idx) {
