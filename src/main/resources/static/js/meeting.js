@@ -116,19 +116,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         let color;
                         switch (event.room) {
                             case 5:
-                                color = '#77DD77'; // 개인
+                                color = '#77DD77'; //회의실1
                                 break;
                             case 8:
-                                color = 'skyblue'; // 부서
+                                color = 'skyblue'; //회의실2
                                 break;
                             case 9:
-                                color = 'orange'; // 프로젝트
+                                color = 'orange'; // 회의실3
                                 break;
                             case 10:
-                                color = 'purple'; // 기타
+                                color = 'lightpurple'; //회의실4
                                 break;
                             case 11:
-                                color = 'gray'; // 기타
+                                color = 'gray'; // 회의실5
                                 break;
                         }
 
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			    console.log('parti: ' + meeting_parti);
 			
 			    // 입력 값이 모두 채워졌는지 확인
-			    if (title.trim() !== '' && content.trim() !== '') {
+			    if (title.trim() !== '' && content.trim() !== '' && Number(room) !== 0) {
 			        const meeting_add_data = {
 			            title: title,
 			            start: start,
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		        // rent_empl_idx가 session의 empl_idx와 다르면 수정 모달 열기
 		        // 예를 들어, 수정용 모달을 열 때 필드에 기존 값 채우기
 		        $('#meeting_title_update').val(info.event.title);
-		        $('#meeting_room_update').val(info.event.extendedProps.roomName);
+		        $('#meeting_room_update').val(info.event.extendedProps.room);
 		        $('#meeting_start_time_update').val(meeting_format_date_time(info.event.start));
 		        $('#meeting_end_time_update').val(meeting_format_date_time(info.event.end));
 		        $('#meeting_content_update').val(info.event.extendedProps.description);

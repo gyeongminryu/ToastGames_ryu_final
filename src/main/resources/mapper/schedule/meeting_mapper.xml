@@ -352,8 +352,8 @@
 			tm.team_idx=#{param1}
 	</select>
 	
-	<!--팀장 -->
-	<select id="getTeamHeadEmpl" resultType="com.toast.schedule.dto.MeetingDTO">
+ 	<!--팀장 -->
+	<!--<select id="getTeamHeadEmpl" resultType="com.toast.schedule.dto.MeetingDTO">
 		SELECT 
 			empl.empl_idx,
 			empl.empl_name,
@@ -375,7 +375,7 @@
 			project_team pt ON pt.team_head_idx=empl.empl_idx
 		WHERE 
 			pt.team_idx=#{param1}
-	</select>
+	</select> -->
 
 	<!-- 부서별  검색 -->
 	<select id="takeDeptEmpl" resultType="com.toast.schedule.dto.MeetingDTO">

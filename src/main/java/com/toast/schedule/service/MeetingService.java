@@ -342,8 +342,6 @@ public class MeetingService {
 	//팀별 사원
 	public List<MeetingDTO> getTeamEmpl(int teamIdx) {
 		List<MeetingDTO> teamEmpl = meetingDAO.getTeamEmpl(teamIdx);
-		MeetingDTO headerEmpl = meetingDAO.getTeamHeadEmpl(teamIdx);
-		teamEmpl.add(headerEmpl);
 		return teamEmpl;
 	}
 

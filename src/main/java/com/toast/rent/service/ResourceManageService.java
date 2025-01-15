@@ -724,8 +724,6 @@ public class ResourceManageService {
 	//팀별 사원
 	public List<ResourceManageDTO> getTeamEmpl(int teamIdx) {
 		List<ResourceManageDTO> teamEmpl = resourceMgDAO.getTeamEmpl(teamIdx);
-		ResourceManageDTO headerEmpl = resourceMgDAO.getTeamHeadEmpl(teamIdx);
-		teamEmpl.add(headerEmpl);
 		return teamEmpl;
 	}
 
