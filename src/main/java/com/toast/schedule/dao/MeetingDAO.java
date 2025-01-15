@@ -91,9 +91,6 @@ public interface MeetingDAO {
 	//팀별 사원
 	List<MeetingDTO> getTeamEmpl(int teamIdx);
 
-	//팀별 사원(팀장)
-	MeetingDTO getTeamHeadEmpl(int teamIdx);
-
 	//부서검색
 	List<MeetingDTO> takeDeptEmpl(String keyword);
 	

@@ -207,7 +207,12 @@ function resource_list_print(list) {
                 content += '<td class="td_align_left">';
                 content += '<span onclick="location.href=\'/prodDetail.go?prod_idx=' + item.prod_idx + '\'" class="tst_pointer">' + item.prod_model + '</span>';
                 content += '</td>';
-                content += '<td><span class="tst_badge_min btn_secondary">' + item.prod_rent_str + '</span></td>';
+				content += '<td><span class="' + 
+				           (item.prod_rent == 2 ? 'tst_badge_min btn_primary' : 
+				            item.prod_rent == 4 ? 'tst_badge_min btn_caution' : 
+				            item.prod_rent == 3 ? 'tst_badge_min btn_subtle' : 
+				            'tst_badge_min btn_secondary') + 
+				           '">' + item.prod_rent_str + '</span></td>';
                 content += '<td>' + (item.prod_exp_date == null || item.prod_rent == 1? '없음' : formatDateTime(item.prod_exp_date)) + '</td>';
                 content += '</tr>';
             }

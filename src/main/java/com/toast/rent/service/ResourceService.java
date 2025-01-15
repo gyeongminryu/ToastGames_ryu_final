@@ -149,7 +149,7 @@ public class ResourceService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -192,7 +192,7 @@ public class ResourceService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -243,7 +243,7 @@ public class ResourceService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");

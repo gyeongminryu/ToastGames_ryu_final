@@ -46,6 +46,7 @@
                                 <p class="min font_subtle">회의실 선택<span class="font_caution"> *</span></p>
                                 <div>
 						            <select id="meeting_room_select_modal">
+						           		<option value="0">전체 회의 보기</option>
 						                <c:forEach items="${roomList}" var="room">
 						                    <option value="${room.room_idx}">${room.room_name}</option>
 						                </c:forEach>

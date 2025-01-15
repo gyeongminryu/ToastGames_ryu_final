@@ -54,6 +54,18 @@ document.addEventListener('DOMContentLoaded', function() {
 		editable:true,
 		selectable: true,
 		locale: 'ko',
+		businessHours: [
+	        {
+	            daysOfWeek: [0, 1, 2, 3, 4, 5, 6, 7], // 월~금
+	            startTime: '09:00',           // 시작 시간
+	            endTime: '12:00'              // 오전 업무 시간
+	        },
+	        {
+	            daysOfWeek: [0, 1, 2, 3, 4, 5, 6], // 월~금
+	            startTime: '13:00',           // 오후 업무 시간 시작
+	            endTime: '18:00'              // 오후 업무 시간 종료
+	        }
+    	],
 		//contentHeight: 'auto',
 	    slotLabelFormat: {
 	        hour: '2-digit',    // 시간 두 자리로 표시
@@ -100,7 +112,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 	my_meeting: my_meeting}), 
                 success: function(data) {
                     console.log(data);
-                    successCallback(data); // FullCalendar에 일정 데이터 추가
+                    const events = data.map(function (event) {
+                        let color;
+                        switch (event.room) {
+                            case 5:
+                                color = '#77DD77'; //회의실1
+                                break;
+                            case 8:
+                                color = 'skyblue'; //회의실2
+                                break;
+                            case 9:
+                                color = 'orange'; // 회의실3
+                                break;
+                            case 10:
+                                color = 'lightpurple'; //회의실4
+                                break;
+                            case 11:
+                                color = 'gray'; // 회의실5
+                                break;
+                        }
+
+                        return {
+                        	meet_rent_idx:event.meet_rent_idx,
+                            room: event.room,
+                            title: event.title,
+                            start: event.start,
+                            end: event.end,
+                            description: event.description,
+                            parti: event.parti,
+                            backgroundColor: color,
+                            borderColor: color,
+                            empl: event.empl
+                        };
+                    });
+                    
+                    
+                    successCallback(events); // FullCalendar에 일정 데이터 추가
+                    //successCallback(data); // FullCalendar에 일정 데이터 추가
                 },
                 error: function(xhr, status, error) {
                     alert('일정 데이터를 불러오는 중 오류가 발생했습니다.');
@@ -151,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			    console.log('parti: ' + meeting_parti);
 			
 			    // 입력 값이 모두 채워졌는지 확인
-			    if (title.trim() !== '' && content.trim() !== '') {
+			    if (title.trim() !== '' && content.trim() !== '' && Number(room) !== 0) {
 			        const meeting_add_data = {
 			            title: title,
 			            start: start,
@@ -177,14 +225,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		eventClick: function(info) {
 			info_global=info;
 		    console.log(info_global);
-			// session에서 현재 사용자 empl_idx 값을 가져옵니다 (여기서는 예시로 sessionStorage를 사용)
-    		var sessionEmplIdx = sessionStorage.getItem('empl_idx');  // session에서 empl_idx 가져오기
-    		//var sessionEmplIdx = 10004;  // session에서 empl_idx 가져오기
-    
+
+
     		console.log(info.event.extendedProps.empl);
     		console.log(sessionEmplIdx);
     		// info.event.rent_empl_idx와 session에서 가져온 empl_idx 비교
-    		if (info.event.extendedProps.empl !== sessionEmplIdx) {
+    		if (Number(info.event.extendedProps.empl) !== Number(sessionEmplIdx)) {
 		    
 
 			    // 회의실 정보
@@ -230,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		        // rent_empl_idx가 session의 empl_idx와 다르면 수정 모달 열기
 		        // 예를 들어, 수정용 모달을 열 때 필드에 기존 값 채우기
 		        $('#meeting_title_update').val(info.event.title);
-		        $('#meeting_room_update').val(info.event.extendedProps.roomName);
+		        $('#meeting_room_update').val(info.event.extendedProps.room);
 		        $('#meeting_start_time_update').val(meeting_format_date_time(info.event.start));
 		        $('#meeting_end_time_update').val(meeting_format_date_time(info.event.end));
 		        $('#meeting_content_update').val(info.event.extendedProps.description);
