@@ -25,6 +25,15 @@ public class EmployeeDTO {
 	private String empl_changepw;
 	private String file_key;
 	private String appolast_idx;
+	
+	private String bank_name;
+	
+	public String getBank_name() {
+		return bank_name;
+	}
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
+	}
 	public String getAppolast_idx() {
 		return appolast_idx;
 	}

@@ -41,7 +41,7 @@
                             <select id="searchKey" onchange="<!-- 분류 선택시 실행할 함수를 입력하세요 -->">
                                 <option value="">검색 분류</option>
                                 <option value="empl_name">이름</option>
-                				<option value="empl_cmp_email">이메일</option>
+                				<option value="empl_cmp_email">ID</option>
                             </select>
                         </div>
                         <div class="tst_search_input">

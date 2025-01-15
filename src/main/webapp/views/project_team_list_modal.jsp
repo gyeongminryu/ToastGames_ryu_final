@@ -43,7 +43,7 @@
                     </li>
                     <li>
                         <label class="form_label">직무</label>
-                        <textarea rows="5" name="" maxlength="1000" placeholder="담당 직무를 입력하세요"></textarea>
+                        <textarea rows="5" name="team_duty" maxlength="1000" placeholder="담당 직무를 입력하세요"></textarea>
                     </li>
                 </ul>
             </div>

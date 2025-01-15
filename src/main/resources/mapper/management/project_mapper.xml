@@ -14,6 +14,7 @@ SELECT
     e.empl_name AS team_head_name,
     e.empl_cmp_phone AS head_cmp_phone,
     e.empl_cmp_email AS head_cmp_email,
+    de.dept_name as team_head_dept,
     p.position_name,
     d.duty_name,
     COUNT(tm.teammem_empl_idx) AS team_member_count
@@ -21,6 +22,7 @@ FROM project_team t
 JOIN employee e ON t.team_head_idx = e.empl_idx
 JOIN appointment a ON a.appo_idx = e.appolast_idx
 JOIN duty d ON d.duty_idx = a.duty_idx
+join department de on de.dept_idx = a.dept_idx
 JOIN position_ p ON p.position_idx = a.position_idx
 LEFT JOIN team_members tm ON tm.team_idx = t.team_idx
 WHERE t.team_name LIKE CONCAT('%', #{param1}, '%') and tm.transfer_date is null
@@ -45,6 +47,7 @@ SELECT
     e.empl_name AS team_head_name,
     e.empl_cmp_phone AS head_cmp_phone,
     e.empl_cmp_email AS head_cmp_email,
+    de.dept_name as team_head_dept,
     p.position_name,
     d.duty_name,
     COUNT(tm.teammem_empl_idx) AS team_member_count
@@ -52,6 +55,7 @@ FROM project_team t
 JOIN employee e ON t.team_head_idx = e.empl_idx
 JOIN appointment a ON a.appo_idx = e.appolast_idx
 JOIN duty d ON d.duty_idx = a.duty_idx
+join department de on de.dept_idx = a.dept_idx
 JOIN position_ p ON p.position_idx = a.position_idx
 LEFT JOIN team_members tm ON tm.team_idx = t.team_idx
 WHERE e.empl_name LIKE CONCAT('%', #{param1}, '%') and tm.transfer_date is null
@@ -75,12 +79,14 @@ SELECT
     e.empl_name AS team_head_name,
     e.empl_cmp_phone AS head_cmp_phone,
     e.empl_cmp_email AS head_cmp_email,
+    de.dept_name as team_head_dept,
     p.position_name,
     d.duty_name,
     COUNT(tm.teammem_empl_idx) AS team_member_count
 FROM project_team t
 JOIN employee e ON t.team_head_idx = e.empl_idx
 JOIN appointment a ON a.appo_idx = e.appolast_idx
+join department de on de.dept_idx = a.dept_idx
 JOIN duty d ON d.duty_idx = a.duty_idx
 JOIN position_ p ON p.position_idx = a.position_idx
 LEFT JOIN team_members tm ON tm.team_idx = t.team_idx
