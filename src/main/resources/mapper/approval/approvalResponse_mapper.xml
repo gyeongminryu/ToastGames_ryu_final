@@ -22,12 +22,12 @@
 
     <update id="update_my_approval_state">
         UPDATE approval
-        SET appr_state = 1, appr_date = #{formatted_date} WHERE doc_idx = #{doc_idx} AND appr_receiver_idx = #{empl_idx}
+        SET appr_state = 1, appr_date = #{formatted_date} WHERE doc_idx = #{doc_idx} AND appr_receiver_idx = #{empl_idx} AND appr_order != 0
     </update>
 
     <update id="appr_reject_state">
         UPDATE approval SET appr_state = 2,appr_reason = #{reject_reason}
-                            WHERE doc_idx=#{doc_idx} AND appr_receiver_idx = #{empl_idx}
+                            WHERE doc_idx=#{doc_idx} AND appr_receiver_idx = #{empl_idx} AND appr_order != 0
     </update>
 
     <!--reject_time_update-->

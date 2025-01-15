@@ -135,4 +135,8 @@ public interface ApprovalRequestDAO {
     int appr_line_exists(int doc_idx);
 
     List<Map<String,Object>> get_files(String file_key);
+
+    int approval_file_delete(String file_idx);
+
+    String get_approval_file_name(String file_idx);
 }

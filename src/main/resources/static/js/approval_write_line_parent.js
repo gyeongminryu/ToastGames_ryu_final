@@ -20,6 +20,10 @@ var win;
 
 //자식창에서 받은 값을 토대로 이름 및 직급/직책 가져와서 보여주기
 function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i,position_n,step,selected){
+
+
+    getHtmlCode();//먼저 작성했던 내용 copy에 옮기기
+
     console.log("empl_i 자식창에서 전달 받음",empl_i);
     console.log("dept_i 자식창에서 전달 받음",dept_i);
     console.log("duty_i 자식창에서 전달 받음",duty_i);
@@ -30,6 +34,33 @@ function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i
     console.log("position 자식창에서 전달 받음",position_n);
     console.log("duty 자식창에서 전달 받음",duty_n);
     console.log("step 자식창에서 전달 받음",step);
+
+    //결재선이 없어졌을 때 CSS처리
+    var approval_line = 'approval_'+step;
+    console.log("approval_line",approval_line);
+    //id approval_3 display none ->
+    //만약 none이면 display none으로 바꾸기
+
+    var approval_box= document.getElementById(approval_line);
+
+    if(empl_i !==0){
+        approval_box.style.display = "";
+    }else{
+        approval_box.style.display = "none";
+    }
+
+
+    //결재자가 바뀌었을 때 처리
+    var approval_name = 'approval_name_'+step;
+    document.getElementById(approval_name).innerHTML= empl_n;
+    console.log("approval_name",approval_name);
+
+    var approval_duty = 'approval_duty_'+step;
+    console.log("approval_duty",approval_duty);
+    document.getElementById(approval_duty).innerHTML= duty_n;
+
+    //copy 내용을 rich text editor에 옮기기
+    setHtmlCode();
 
     var step_num = parseInt(step)+1;
     //empl_i == null && empl_n == null

@@ -15,7 +15,8 @@ import java.util.Map;
 
 @Controller
 public class ApprovalResponseController {
-	int empl_idx = 10263; //세션 적용 후 없애기
+	//int empl_idx = 10286; //세션 적용 후 없애기
+	int empl_idx = 10111; //세션 적용 후 없애기
 
 	private final ApprovalService approvalService;
 	Logger logger = LoggerFactory.getLogger(getClass());

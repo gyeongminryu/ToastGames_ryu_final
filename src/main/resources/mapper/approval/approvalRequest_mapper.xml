@@ -5,8 +5,8 @@
 
     <!--미리보기로 양식 선택 후 최초 저장-->
     <insert id="doc_write_initial" useGeneratedKeys="true" keyColumn="doc_idx" keyProperty="doc_idx" parameterType="com.toast.approval.dto.ApprovalRequestDTO">
-        INSERT INTO document(doc_empl_idx,doc_content,form_idx,doc_state)
-        VALUES(#{doc_empl_idx},#{doc_content},#{form_idx},0)
+        INSERT INTO document(doc_empl_idx,doc_content,form_idx,doc_state,file_key)
+        VALUES(#{doc_empl_idx},#{doc_content},#{form_idx},0,#{file_key})
     </insert>
 
 
@@ -311,7 +311,17 @@
 
     <!--get_files-->
     <select id="get_files" resultType="Map">
-        SELECT ori_filename,file_size FROM file WHERE file_key=#{file_key};
+        SELECT ori_filename,file_size,file_idx FROM file WHERE file_key=#{file_key};
     </select>
+
+    <select id="get_approval_file_name" resultType="String">
+        SELECT new_filename FROM file WHERE file_idx= #{file_idx}
+    </select>
+
+    <delete id="approval_file_delete">
+        DELETE FROM file WHERE file_idx = #{file_idx}
+    </delete>
+
+
     
 </mapper>
