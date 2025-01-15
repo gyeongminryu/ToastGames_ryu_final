@@ -31,9 +31,6 @@ public class DocumentController {
 
 	@PostMapping(value = "/document_list.ajax")
 	public Map<String, Object> document_list(HttpSession session, String page, String cnt, String opt, String keyword, String dept1, String dept2, String accessible_filtering) {
-		session.setAttribute("loginId", "tndls0110");
-		session.setAttribute("empl_idx", "10001");
-		session.setAttribute("dept_idx", "122");
 		int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
 		//logger.info("dept_idx = " + dept_idx);
 
@@ -62,11 +59,6 @@ public class DocumentController {
 	public ModelAndView document_detail(HttpSession session, String doc_idx) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("manage_form_unauthorized");
-
-		// 세션 임의 지정
-		session.setAttribute("loginId", "tndls0110");
-		session.setAttribute("empl_idx", "10001");
-		session.setAttribute("dept_idx", "122");
 
 		int dept_idxInt = Integer.parseInt(session.getAttribute("dept_idx").toString());
 		int doc_idxInt = Integer.parseInt(doc_idx);

@@ -126,7 +126,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>4.0.0-alpha-1</version>
+			<version>4.1.0</version>
 		</dependency>
 
 		<!-- JSOUP 라이브러리 -->
@@ -136,6 +136,7 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.15.3</version>
 		</dependency>
+
 
 
 
