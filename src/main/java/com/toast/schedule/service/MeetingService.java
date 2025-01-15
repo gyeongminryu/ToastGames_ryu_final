@@ -132,7 +132,7 @@ public class MeetingService {
 		//4. 파일 저장
 		try {
 			byte[] arr = file.getBytes();
-			Path path = Paths.get(uploadLocation+'/');
+			Path path = Paths.get(uploadLocation+"files/");
 			Files.write(path, arr);
 			//6.저장 내용 files 테이블에 insert
 			MeetingPhotoDTO photo_dto = new MeetingPhotoDTO();
@@ -342,8 +342,6 @@ public class MeetingService {
 	//팀별 사원
 	public List<MeetingDTO> getTeamEmpl(int teamIdx) {
 		List<MeetingDTO> teamEmpl = meetingDAO.getTeamEmpl(teamIdx);
-		MeetingDTO headerEmpl = meetingDAO.getTeamHeadEmpl(teamIdx);
-		teamEmpl.add(headerEmpl);
 		return teamEmpl;
 	}
 

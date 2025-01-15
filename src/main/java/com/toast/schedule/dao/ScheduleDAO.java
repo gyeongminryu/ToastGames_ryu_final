@@ -63,9 +63,6 @@ public interface ScheduleDAO {
 	//팀별 사원
 	List<ScheduleDTO> getTeamEmpl(int teamIdx);
 
-	//팀별 사원(팀장)
-	ScheduleDTO getTeamHeadEmpl(int teamIdx);
-
 	//부서검색
 	List<ScheduleDTO> takeDeptEmpl(String keyword);
 	

@@ -77,4 +77,11 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/meeting.js"></script>
 <script src="resources/js/meeting_room_calendar.js"></script>
+
+<script>
+    // 서버 세션 값을 JavaScript 변수로 설정
+    const sessionEmplIdx = '<%= session.getAttribute("empl_idx") %>';
+    console.log('sessionEmplIdx:', sessionEmplIdx);
+
+</script>
 </html>

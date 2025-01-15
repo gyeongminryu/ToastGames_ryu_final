@@ -174,7 +174,7 @@ public class ResourceManageService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -228,7 +228,7 @@ public class ResourceManageService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -313,7 +313,7 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation+'/');
+				Path path = Paths.get(uploadLocation+"files/");
 				Files.write(path, arr);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
@@ -382,7 +382,7 @@ public class ResourceManageService {
 			dto.setProd_rent_str("대여 가능");
 			break;
 		case 2:
-			dto.setProd_rent_str("대여 신청중");
+			dto.setProd_rent_str("대여신청중");
 			break;
 		case 3:
 			dto.setProd_rent_str("대여 중");
@@ -665,7 +665,7 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation+'/');
+				Path path = Paths.get(uploadLocation+"files/");
 				Files.write(path, arr);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
@@ -724,8 +724,6 @@ public class ResourceManageService {
 	//팀별 사원
 	public List<ResourceManageDTO> getTeamEmpl(int teamIdx) {
 		List<ResourceManageDTO> teamEmpl = resourceMgDAO.getTeamEmpl(teamIdx);
-		ResourceManageDTO headerEmpl = resourceMgDAO.getTeamHeadEmpl(teamIdx);
-		teamEmpl.add(headerEmpl);
 		return teamEmpl;
 	}
 

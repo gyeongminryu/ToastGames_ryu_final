@@ -8,7 +8,7 @@
             <h1 class="tst_modal_title">물품 대여 신청하기</h1>
             <i class="bi bi-dash-circle-dotted" onclick="tst_modal_close('tst_modal_detail')"></i>
         </div>
-        <form action="/rentRequest.do" method="post">
+        <form action="/rentRequest.do" method="post" onsubmit="return validateForm(event);">
             <div class="tst_modal_body">
                 <ul class="list_no_desc list_block">
                     <li>
@@ -18,11 +18,11 @@
                     </li>
                     <li>
                         <label class="form_label">반납 예정일</label>
-                        <input type="date" name="prod_exp_date" />
+                        <input type="date" name="prod_exp_date" id="prod_exp_date"/>
                     </li>
                     <li>
                         <label class="form_label">대여 사유</label>
-                        <textarea rows="5" maxlength="1000" name="prod_rent_reason"></textarea>
+                        <textarea rows="5" maxlength="1000" name="prod_rent_reason" id="prod_rent_reason"></textarea>
                     </li>
                 </ul>
             </div>
