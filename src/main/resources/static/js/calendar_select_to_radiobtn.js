@@ -82,7 +82,11 @@ function empl_list(emplList) {
         	const itemData = encodeURIComponent(JSON.stringify(item));
             content += '<tr onclick="select_schedule_empl(\'' + itemData + '\')">';
             content += '<td class="td_align_top td_no_padding">';
-            content += '<img src="' + (item.profile_img || 'http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png') + '" ';
+			content += '<img src="' + 
+			           (item.profile_img 
+			                ? '/usr/local/tomcat/webapps/files/' + item.profile_img 
+			                : 'http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png') + 
+			           '" ';
             content += 'alt="' + item.empl_name + '의 프로필 사진" ';
             content += 'class="approval_profile_image" />';
             content += '</td>';

@@ -98,13 +98,24 @@
 		ON 
 		    sd.sche_idx = sp.sche_idx
 		WHERE 
-		    (
-		        (sd.sche_empl_idx = #{sche_empl_idx} AND sd.sche_type = #{sche_type})
-		    )
-		    OR 
-		    (
-		        (sp.sche_parti_empl_idx = #{sche_parti_empl_idx} AND sd.sche_type = #{sche_type})
-		    )
+	        <choose>
+	            <!-- sche_type이 0일 때 -->
+	            <when test="sche_type == 0">
+	                (
+	                    sd.sche_empl_idx = #{sche_empl_idx}
+	                    OR 
+	                    sp.sche_parti_empl_idx = #{sche_parti_empl_idx}
+	                )
+	            </when>
+	            <!-- sche_type이 0이 아닐 때 -->
+	            <otherwise>
+	                (
+	                    (sd.sche_empl_idx = #{sche_empl_idx} AND sd.sche_type = #{sche_type})
+	                    OR 
+	                    (sp.sche_parti_empl_idx = #{sche_parti_empl_idx} AND sd.sche_type = #{sche_type})
+	                )
+	            </otherwise>
+	        </choose>
 		GROUP BY 
     		sche_idx, sche_type, sche_empl_idx;
 
@@ -249,7 +260,7 @@
 	</select>
 	
 	<!--팀장 -->
-	<select id="getTeamHeadEmpl" resultType="com.toast.schedule.dto.ScheduleDTO">
+<!-- 	<select id="getTeamHeadEmpl" resultType="com.toast.schedule.dto.ScheduleDTO">
 		SELECT 
 			empl.empl_idx,
 			empl.empl_name,
@@ -271,7 +282,7 @@
 			project_team pt ON pt.team_head_idx=empl.empl_idx
 		WHERE 
 			pt.team_idx=#{param1}
-	</select>
+	</select> -->
 
 	<!-- 부서별  검색 -->
 	<select id="takeDeptEmpl" resultType="com.toast.schedule.dto.ScheduleDTO">
