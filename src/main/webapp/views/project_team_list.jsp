@@ -124,7 +124,8 @@
                     <tfoot>
                     <tr>
                         <td colspan="7">
-                            <ul id="pagination" class="pagination-sm pagination">
+                        <nav aria-label="Page navigation">
+                            <ul id="pagination" class="pagination">
                                 <li class="page-item first disabled">
                                     <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
                                 </li>
@@ -168,6 +169,7 @@
                                     <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
                                 </li>
                             </ul>
+                            </nav>
                         </td>
                     </tr>
                     </tfoot>
@@ -188,12 +190,15 @@
 <script>
 
 
+let allMembers = []; // 전체 데이터 배열
+let currentPage = 1; // 현재 페이지 번호
+const rowsPerPage = 10; // 한 페이지에 표시할 데이터 수
 
+// 검색 선택 항목 업데이트
 function updateInputNameAndParam() {
-    const selectBox = document.getElementById("tst_search_select_category");
-    const keywordInput = document.getElementById("searchKeyword") || document.getElementById("searchValueInput");
+    var selectBox = document.getElementById("tst_search_select_category");
+    var keywordInput = document.getElementById("searchKeyword");
 
-    // 선택된 카테고리 값에 따라 name 속성을 업데이트
     if (selectBox && keywordInput) {
         keywordInput.name = selectBox.value || ""; // 선택된 값으로 name 설정 또는 초기화
     } else {
@@ -201,79 +206,138 @@ function updateInputNameAndParam() {
     }
 }
 
+// 페이징 UI 설정 함수
+function setupPagination(totalItems) {
+    var totalPages = Math.ceil(totalItems / rowsPerPage); // 총 페이지 수
+    var pagination = document.getElementById("pagination");
+
+    pagination.innerHTML = ""; // 기존 페이지 버튼 초기화
+
+    // 이전 버튼
+    var prevButton = document.createElement("li");
+    prevButton.className = "page-item prev" + (currentPage === 1 ? " disabled" : "");
+    prevButton.innerHTML = '<a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>';
+    prevButton.onclick = function () {
+        if (currentPage > 1) {
+            currentPage--;
+            renderCurrentPage();
+        }
+    };
+    pagination.appendChild(prevButton);
+
+    // 페이지 번호 버튼 생성
+    for (var i = 1; i <= totalPages; i++) {
+        var pageButton = document.createElement("li");
+        pageButton.className = "page-item" + (i === currentPage ? " active" : "");
+        pageButton.innerHTML = '<a href="#" class="page-link">' + i + '</a>';
+        pageButton.onclick = (function (page) {
+            return function () {
+                currentPage = page;
+                renderCurrentPage();
+            };
+        })(i);
+        pagination.appendChild(pageButton);
+    }
+
+    // 다음 버튼
+    var nextButton = document.createElement("li");
+    nextButton.className = "page-item next" + (currentPage === totalPages ? " disabled" : "");
+    nextButton.innerHTML = '<a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>';
+    nextButton.onclick = function () {
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderCurrentPage();
+        }
+    };
+    pagination.appendChild(nextButton);
+}
+
+// 현재 페이지 렌더링
+function renderCurrentPage() {
+    var tableBody = document.getElementById("teamListTable").querySelector("tbody");
+    tableBody.innerHTML = ""; // 테이블 초기화
+
+    var startIndex = (currentPage - 1) * rowsPerPage;
+    var endIndex = startIndex + rowsPerPage;
+
+    var pageData = allMembers.slice(startIndex, endIndex); // 현재 페이지 데이터
+
+    if (pageData.length > 0) {
+        pageData.forEach(function (team) {
+            var currentDate = new Date();
+            var deletionDate = new Date(team.deletion_date);
+
+            var status =
+                deletionDate < currentDate
+                    ? '<span class="tst_badge_min btn_subtle">운영 종료</span>'
+                    : '<span class="tst_badge_min btn_secondary">운영중</span>';
+
+            // 테이블 행 추가
+            var row = "<tr>";
+            row += '<td class="td_no_padding td_align_left">' + status + "</td>";
+            row += '<th class="td_align_left tst_pointer" onclick="location.href=\'/project_team_detail.go?team_idx=' + team.team_idx + '\'">' + team.team_name + "</th>";
+            row += '<td class="td_align_left"><span onclick="tst_view_profile(\'' + team.team_head_idx + '\')" class="tst_pointer">' + team.team_head_name + " (" + (team.team_head_dept || "소속부서 없음") + "/" + (team.position_name || "직급 없음") + ")</span></td>";
+            row += "<td>" + (team.head_cmp_phone || "없음") + "</td>";
+            row += "<td>" + (team.head_cmp_email || "없음") + "</td>";
+            row += "<td>" + (team.team_member_count || "0") + "명</td>";
+            row += '<td class="td_align_left">' + (team.team_duty || "직무 없음") + "</td>";
+            row += "</tr>";
+            tableBody.innerHTML += row;
+        });
+    } else {
+        tableBody.innerHTML = '<tr><td colspan="7">검색 결과가 없습니다.</td></tr>';
+    }
+}
+
+// 팀 전체 목록 로드
 function teamAllList() {
-	 $.ajax({
-	     url: './empl_resign_all_list.ajax', // 요청 경로
-	     type: 'GET',
-	     dataType: 'json',
-	     success: function(data) {
-	        // renderDeptMembers(data); // 부서원 정보 렌더링
-	         allMembers = data; // 전체 데이터를 저장
-	         setupPagination(allMembers.length); // 페이지네이션 설정
-	         renderCurrentPage(); // 첫 페이지 렌더링
-	     },
-	     error: function(xhr, status, error) {
-	         console.error('부서원 정보 가져오기 실패:', error);
-	     }
-	 });
-	}
+    $.ajax({
+        url: './search_team_all_list.ajax', // 요청 경로
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+        	console.log(data);
+            allMembers = data.team_list || []; // 전체 데이터를 저장
+            setupPagination(allMembers.length); // 페이지네이션 설정
+            renderCurrentPage(); // 첫 페이지 렌더링
+        },
+        error: function (xhr, status, error) {
+            console.error('데이터를 가져오는 중 오류 발생:', error);
+        }
+    });
+}
 
-//검색 버튼 클릭 시 Ajax 요청
+// 검색 버튼 클릭 시
 document.getElementById("searchBtn").addEventListener("click", function () {
-    const form = document.getElementById("searchForm");
-    const formData = new FormData(form);
+    var form = document.getElementById("searchForm");
+    var formData = new FormData(form);
 
-    // Ajax 요청 데이터 생성
-    const requestData = {};
-    formData.forEach((value, key) => {
+    var requestData = {};
+    formData.forEach(function (value, key) {
         if (value) {
             requestData[key] = value;
         }
     });
 
-    // Ajax 요청
     $.ajax({
         url: './search_team_list.ajax',
         method: 'GET',
         data: requestData,
         success: function (response) {
-        	console.log(response);
-            const tableBody = $('#teamListTable tbody');
-            tableBody.empty();
-
-            if (response.team_list && response.team_list.length > 0) {
-                response.team_list.forEach(function (team) {
-                    // 현재 날짜와 운영 종료 날짜 비교
-                    const currentDate = new Date();
-                    const deletionDate = new Date(team.deletion_date);
-
-                    const status =
-                        deletionDate < currentDate
-                            ? '<span class="tst_badge_min btn_subtle">운영 종료</span>'
-                            : '<span class="tst_badge_min btn_secondary">운영중</span>';
-
-                    // 테이블 행 추가
-                    tableBody.append(
-                        '<tr>' +
-                            '<td class="td_no_padding td_align_left">' + status + '</td>' +
-                            '<th class="td_align_left tst_pointer" onclick="location.href=\'/project_team_detail.go?team_idx=' + team.team_idx + '\'">' + team.team_name + '</th>' +
-                            '<td class="td_align_left"><span onclick="tst_view_profile(\'' + team.team_head_idx + '\')" class="tst_pointer">' +
-                            team.team_head_name + ' (' + (team.team_head_dept || "소속부서 없음") + '/' + (team.team_head_position || "직급 없음") + ')</span></td>' +
-                            '<td>' + (team.head_cmp_phone || "없음") + '</td>' +
-                            '<td>' + (team.head_cmp_email || "없음") + '</td>' +
-                            '<td>' + (team.team_member_count || "0") + '명</td>' +
-                            '<td class="td_align_left">' + (team.team_duty || "직무 없음") + '</td>' +
-                        '</tr>'
-                    );
-                });
-            } else {
-                tableBody.append('<tr><td colspan="7">검색 결과가 없습니다.</td></tr>');
-            }
+            console.log(response);
+            allMembers = response.team_list || []; // 검색된 데이터 저장
+            setupPagination(allMembers.length); // 페이지네이션 설정
+            renderCurrentPage(); // 첫 페이지 렌더링
         },
         error: function (err) {
             console.error("데이터를 가져오는 중 오류 발생:", err);
-        },
+        }
     });
+});
+
+//페이지 로드 시 초기 데이터 표시
+document.addEventListener("DOMContentLoaded", function () {
+    teamAllList(); // 초기 데이터 로드
 });
 
 </script>

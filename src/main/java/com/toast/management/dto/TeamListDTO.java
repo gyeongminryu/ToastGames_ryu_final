@@ -12,7 +12,20 @@ public class TeamListDTO {
 	private String   team_member_count;
 	private String head_cmp_phone;
 	private String head_cmp_email;
+	private String team_head_dept;
 	
+	public String getHead_cmp_email() {
+		return head_cmp_email;
+	}
+	public void setHead_cmp_email(String head_cmp_email) {
+		this.head_cmp_email = head_cmp_email;
+	}
+	public String getTeam_head_dept() {
+		return team_head_dept;
+	}
+	public void setTeam_head_dept(String team_head_dept) {
+		this.team_head_dept = team_head_dept;
+	}
 	public String getHead_cmp_phone() {
 		return head_cmp_phone;
 	}

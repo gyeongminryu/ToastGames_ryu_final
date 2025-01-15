@@ -63,6 +63,8 @@ public interface EmployeeDAO {
 
 	List<EmployeeDetailDTO> emplresignAllList();
 
+	Double getweekWorkRecord(String empl_idx);
+
 	
 
 	

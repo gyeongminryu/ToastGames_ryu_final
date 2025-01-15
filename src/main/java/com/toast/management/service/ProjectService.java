@@ -98,5 +98,11 @@ public class ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.searchProjectTeamMembers(team_idx,category,keyword);
 	}
+	
+	// 모든 팀 리스트 가져오기
+	public List<TeamListDTO> searchDeptAllMember() {
+		// TODO Auto-generated method stub
+		return projectDAO.getAllTeams();
+	}
 
 }

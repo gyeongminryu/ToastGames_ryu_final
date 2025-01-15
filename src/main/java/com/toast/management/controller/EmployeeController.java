@@ -251,6 +251,9 @@ public class EmployeeController {
 			e.printStackTrace();
 		}
 		
+		Double weekWork = employeeService.getweekWorkRecord(empl_idx);
+		
+		model.addAttribute("weekWork",weekWork);
 		model.addAttribute("empl_info",employee);
 		return "manage_staff_detail";
 	}

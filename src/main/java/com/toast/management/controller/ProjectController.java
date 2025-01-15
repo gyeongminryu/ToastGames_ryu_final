@@ -52,6 +52,17 @@ public class ProjectController {
 		return map;
 	}
 	
+	@GetMapping(value="/search_team_all_list.ajax")
+	@ResponseBody
+	public Map<String, Object>searchDeptAllMember(){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<TeamListDTO> team_list = new ArrayList<>();
+		team_list = projectService.searchDeptAllMember();
+		map.put("team_list", team_list);	
+		
+		return map;
+	}
 	
 	@GetMapping(value="/project_team_add.go")
 	public String projectTeamAddGO() {

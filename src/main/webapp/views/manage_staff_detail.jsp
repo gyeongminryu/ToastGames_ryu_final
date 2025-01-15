@@ -122,9 +122,9 @@
                     <tbody>
                     <tr>
                         <th class="td_bg_subtle">이번 주 근무 시간</th>
-                        <td>{이번 주 근무 시간}/52시간 <button onclick="location.href='/work_record?'" class="btn_min btn_primary">상세보기</button></td>
+                        <td id="convertedTime">${weekWork}/52시간 <button onclick="location.href='/work_record.go?'" class="btn_min btn_primary">상세보기</button></td>
                         <th class="td_bg_subtle">초과 근무 여부</th>
-                        <td>대상 아님|초과 근무중</td>
+                        <td id="conTime">대상 아님</td>
                     </tr>
                     <!-- <tr>
                         <th class="td_bg_subtle">잔여 연차</th>
@@ -151,4 +151,16 @@
 </body>
 
 <script src="resources/js/common.js"></script>
+<script>
+const weekWork = ${weekWork}; // 받아온 값
+const hours = Math.floor(weekWork); // 정수 부분 (시간)
+const minutes = Math.round((weekWork - hours) * 60); // 소수점 -> 분 변환
+document.getElementById('convertedTime').innerHTML =
+    hours + "시간 " + minutes + "분/52시간  " +
+    '<button onclick="location.href=\'/member_work_record.go?emplidx=${empl_info.empl_idx}\'" class="btn_min btn_primary">상세보기</button>';
+
+if(weekWork>52){
+	document.getElementById('conTime').textContent = "초과 근무중";
+}
+</script>
 </html>

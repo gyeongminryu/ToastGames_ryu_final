@@ -117,6 +117,15 @@ public class EmployeeService {
 		List<MainFileDTO> file = new ArrayList<>();
 		// 직원 정보 
 		employee = employeeDAO.employeeDetail(empl_idx);
+		try {
+			String ssn2 = dataconfig.aesCBCDecode(employee.getEmpl_ssn2());
+			employee.setEmpl_ssn2(ssn2);
+			logger.info("복호화 주민번호 : "+ssn2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//  throw new RuntimeException("주민등록번호 암호화 실패", e);
+		}
 		// 직원 직급 직책 부서 가져오기 - 발령정보중 가장 최근꺼 가져오기
 		appolast = employeeDAO.employeeAppolast(empl_idx);
 		// 직원 발령정보
@@ -124,7 +133,9 @@ public class EmployeeService {
 		// 직원 첨부파일 가져오기 >> employeeDAO.employeeDetail(empl_idx); 에서 가져온 파일키 넣기
 		String file_key =employee.getFile_key();
 		file = employeeDAO.employeeFile(file_key);
+		Double weekWork = getweekWorkRecord(empl_idx);
 		
+		model.addAttribute("weekWork",weekWork);
 		  model.addAttribute("employee", employee);
 	        model.addAttribute("appoLast", appolast);
 	        model.addAttribute("appoList", appoList);
@@ -402,6 +413,11 @@ public class EmployeeService {
 			return null;
 		}
 		
+		
+	}
+	// 이번주 근무 시간 총합
+	public Double getweekWorkRecord(String empl_idx) {
+		return employeeDAO.getweekWorkRecord(empl_idx);
 		
 	}
 	
