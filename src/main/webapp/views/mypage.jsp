@@ -21,7 +21,7 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/mypage'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/mypage.go'">
                         <h1>내 정보</h1>
                     </li>
                 </ul>
@@ -125,7 +125,7 @@
                             <tbody>
                             <tr>
                                 <th class="td_bg_subtle">이번 주 근무 시간</th>
-                                <td>25시간/52시간</td>
+                                <td>${totalHours}시간/52시간</td>
                                 <th class="td_bg_subtle">초과 근무 여부</th>
                                 <td>대상 아님</td>
                             </tr>

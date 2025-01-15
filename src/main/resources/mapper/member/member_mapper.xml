@@ -113,8 +113,8 @@
 		ROW_NUMBER() OVER (ORDER BY a.appo_idx ASC) AS appo_idx,
 		a.dept_idx, a.position_idx, a.duty_idx, a.appo_idx,
 		IFNULL(a.empl_job,'아직 직무가 없습니다.') AS empl_job,
-		DATE_FORMAT(a.movein_date, '%Y-%m-%d %H:%i') AS movein_date,
-		IFNULL(DATE_FORMAT(a.transfer_date, '%Y-%m-%d %H:%i'), '진행중') AS transfer_date,
+		DATE_FORMAT(a.movein_date, '%Y-%m-%d') AS movein_date,
+		IFNULL(DATE_FORMAT(a.transfer_date, '%Y-%m-%d'), '진행중') AS transfer_date,
 		p.position_name, dt.duty_name, d.dept_name
 		FROM appointment a
 		JOIN employee e ON a.appo_empl_idx = e.empl_idx
@@ -206,6 +206,12 @@
 		WHERE empl_id = #{id} 
 		ORDER BY a.appo_idx DESC
 		LIMIT 1
+	</select>
+	
+	<select id="weekWorkRecord">
+		SELECT SUM(total_hours + overtime_hours) AS total_hours
+		FROM attendance 
+		WHERE empl_idx = #{empl_idx} AND work_date BETWEEN #{startDate} AND #{startDate} + INTERVAL 6 DAY 
 	</select>
 
 </mapper>

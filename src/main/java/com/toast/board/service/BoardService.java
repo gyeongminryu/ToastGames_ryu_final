@@ -62,14 +62,11 @@ public class BoardService {
 				if (!file.isEmpty()) {
 					String ori_filename = file.getOriginalFilename();
 					String file_type = ori_filename.substring(ori_filename.lastIndexOf("."));
-					String new_filename = UUID.randomUUID().toString() + "." + file_type;
-					String file_addr = uploadAddr + "/" + new_filename;
+					logger.info("file_type" + file_type);
+					String new_filename = UUID.randomUUID().toString() + file_type;
+					String file_addr = uploadAddr + "files/"; // uploadAddr = usr/local/tomcat/webapps/
 	                long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
-
-
-					File dest = new File(file_addr);
-					file.transferTo(dest);
-					
+				
 					 Map<String, Object> fileParams = new HashMap<>();
 					    fileParams.put("file_key", file_key);
 					    fileParams.put("uploader_idx", uploader_idx);
@@ -200,12 +197,9 @@ public class BoardService {
 				String originalFileName = file.getOriginalFilename();
 				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 				String newFileName = UUID.randomUUID().toString() + "." + fileType;
-				String fileAddr = uploadAddr + "/" + newFileName;
-                long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
+				String fileAddr = uploadAddr + "files/"; // uploadAddr = usr/local/tomcat/webapps/
 
-				// 경로 설정 부분. 파일을 서버에 저장함. 필요한가? 이거 어떻게 해야할지 정해야 함..
-				File dest = new File(fileAddr);
-				file.transferTo(dest);
+                long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
 
 				// 첨부 파일 정보를 DTO에 저장.
 				FileDTO fileDTO = new FileDTO();

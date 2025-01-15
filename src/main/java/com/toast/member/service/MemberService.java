@@ -2,6 +2,7 @@ package com.toast.member.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,7 +134,7 @@ public class MemberService {
 		String originalFileName = file.getOriginalFilename(); // ori name.
 		String fileType = originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자 명
 		String newFileName = UUID.randomUUID().toString(); // new name.
-		String fileAddr = uploadAddr + "/" + newFileName + fileType; // 프로퍼티즈 값이 C:/files 라서 + "/" 한것!!!
+		String fileAddr = uploadAddr + "files/" + newFileName + fileType; // uploadAddr = usr/local/tomcat/webapps/
 
 		// 파일을 서버에 저장..
 		File dest = new File(fileAddr);
@@ -149,7 +150,7 @@ public class MemberService {
 				String originalFileName = file.getOriginalFilename();
 				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 				String newFileName = UUID.randomUUID().toString() + "." + fileType;
-				String fileAddr = uploadAddr + "/" + newFileName;
+				String fileAddr = uploadAddr + "files/" + newFileName; // uploadAddr = usr/local/tomcat/webapps/
 
 				// 경로 설정 부분. 파일을 서버에 저장함. 필요한가? 이거 어떻게 해야할지 정해야 함..
 				File dest = new File(fileAddr);
@@ -180,6 +181,14 @@ public class MemberService {
 
 	public int getDeptIdx(String id) {
 		return memberDAO.getDeptIdx(id);
+	}
+
+	public int weekWorkRecord(int empl_idx) {
+		String startDate = null;
+		LocalDate today = LocalDate.now();
+        LocalDate monday = today.with(java.time.DayOfWeek.MONDAY);
+        startDate = monday.toString();
+		return memberDAO.weekWorkRecord(empl_idx, startDate);
 	}
 	
 }

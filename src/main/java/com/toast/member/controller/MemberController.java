@@ -50,15 +50,6 @@ public class MemberController {
 	@Value("${spring.servlet.multipart.location}")
 	private String uploadAddr;
 
-	// 테스트용 로그인!!! 나중에 삭제 할 예정!!!
-	@PostMapping(value = "/testLogin.do")
-	public String testLogin(@RequestParam("idx") int idx, HttpSession session) {
-		Map<String, Object> testUser = memberService.getUserByIdx(idx);
-		String id = (String)testUser.get("empl_id");
-		session.setAttribute("loginId", id);
-		return "redirect:/approval_writing_list.go";
-	}
-	
 	// 로그인 페이지 이동
 	@GetMapping(value = "/login.go")
 	public String loginView() {
@@ -66,34 +57,35 @@ public class MemberController {
 	}
 
 	// 로그인
-	@PostMapping(value = "/login.do")
-	public String login(HttpSession session, Model model, String id, String pw) {
-		String page = "login";
-		boolean isValidId = memberService.isValidId(id); // DB에 저장된 아이디와 일치하는가? + 대소문자 구분하는 코드 필요!!!
-		if (!isValidId) { // 1. 아이디가 존재하지 않는 경우
-			model.addAttribute("idError", "아이디를 확인하세요."); // 아이디 오류 메시지 전달
-		} else { // 2. 아이디가 존재 하는 경우
-			if (memberService.login(id, pw)) { // 3. 아이디와 비밀번호가 일치한 경우.
-				int changePwCheck = memberService.changePwCheck(id); // 3-1. 비밀번호 변경했는지 여부를 가져옴.
-				int getEmployeeIdx = memberService.getEmployeeIdx(id); // id로 해당 사원의 idx를 가져온다.
-				int getDeptIdx = memberService.getDeptIdx(id); // id로 해당 dept_idx를 가져온다.
-				session.setAttribute("loginId", id);
-				session.setAttribute("empl_idx", getEmployeeIdx);
-				session.setAttribute("dept_idx", getDeptIdx);
-				// 사원 idx , 부서 dept_idx 세션에 넣어야 함..
-				if (changePwCheck != 0) { // 3-2. 비밀번호 변경한 경우.
-					return "redirect:/approval_writing_list.go"; // !!!나중에 다른 jsp로 수정필요!!!
-				} else { // 3-3. 비밀번호 변경을 안한 경우.
-					model.addAttribute("msg", "보안을 위해 비밀번호를 변경해주세요.");
-					page = "redirect:/mypage_update.go";
+		@PostMapping(value = "/login.do")
+		public String login(HttpSession session, Model model, String id, String pw) {
+			String page = "login";
+			boolean isValidId = memberService.isValidId(id); // DB에 저장된 아이디와 일치하는가? + 대소문자 구분하는 코드 필요!!!
+			if (!isValidId) { // 1. 아이디가 존재하지 않는 경우
+				model.addAttribute("idError", "아이디를 확인하세요."); // 아이디 오류 메시지 전달
+			} else { // 2. 아이디가 존재 하는 경우
+				if (memberService.login(id, pw)) { // 3. 아이디와 비밀번호가 일치한 경우.
+					int changePwCheck = memberService.changePwCheck(id); // 3-1. 비밀번호 변경했는지 여부를 가져옴.
+					int getEmployeeIdx = memberService.getEmployeeIdx(id); // id로 해당 사원의 idx를 가져온다.
+					int getDeptIdx = memberService.getDeptIdx(id); // id로 해당 dept_idx를 가져온다.		
+					logger.info("getDeptIdx?" + getDeptIdx);
+					session.setAttribute("loginId", id);
+					session.setAttribute("empl_idx", getEmployeeIdx);
+					session.setAttribute("dept_idx", getDeptIdx);
+					// 사원 idx , 부서 dept_idx 세션에 넣어야 함..
+					if (changePwCheck != 0) { // 3-2. 비밀번호 변경한 경우.
+						return "redirect:/approval_writing_list.go"; // !!!나중에 다른 jsp로 수정필요!!!
+					} else { // 3-3. 비밀번호 변경을 안한 경우.
+						model.addAttribute("msg", "보안을 위해 비밀번호를 변경해주세요.");
+						page = "redirect:/mypage_update.go?msg=changePw";
+					}
+				} else { // 4. 아이디는 맞으나, 비밀번호가 틀린 경우.
+					model.addAttribute("pwError", "비밀번호를 확인하세요."); // 비밀번호 오류 메시지 전달
 				}
-			} else { // 4. 아이디는 맞으나, 비밀번호가 틀린 경우.
-				model.addAttribute("pwError", "비밀번호를 확인하세요."); // 비밀번호 오류 메시지 전달
 			}
+			model.addAttribute("inputId", id); // 아이디 및 비밀번호가 틀려도 사용자가 입력한 아이디는 남김(편의성).
+			return page;
 		}
-		model.addAttribute("inputId", id); // 아이디 및 비밀번호가 틀려도 사용자가 입력한 아이디는 남김(편의성).
-		return page;
-	}
 
 	// 로그아웃
 	@GetMapping(value = "/logOut.do")
@@ -181,8 +173,11 @@ public class MemberController {
 		MemberDTO memberInfo = memberService.memberInfo(id).get(0); // 리스트 형태로 가져옴. 해당 id에 맞는 사용자 정보를 가져옴.
 		String file_key = memberInfo.getFile_key(); // employee에 저장된 file_key를 가져오기 위함.
 		List<FileDTO> fileList = memberService.getFileList(id, file_key); // 사용자가 첨부한 파일 리스트만 불러온다.
+		int empl_idx = (int)session.getAttribute("empl_idx");
+		int weekWorkRecord = memberService.weekWorkRecord(empl_idx);
 		model.addAttribute("memberInfo", memberInfo); // 인포에 직인 정보도 포함!!!
 		model.addAttribute("fileList", fileList); // 사용자가 첨부한 파일리스트를 불러온다.
+		model.addAttribute("totalHours", weekWorkRecord);
 		return "mypage";
 	}
 
@@ -201,7 +196,7 @@ public class MemberController {
 	// 다운로드 요청이 들어오면 작동되는 메서드.
 	@GetMapping(value = "/memberDownload/{filename}") 
 	public ResponseEntity<Resource> downloadFile(@PathVariable String filename) throws Exception {
-		Resource resource = new FileSystemResource(uploadAddr + "/" + filename); // 경로 설정
+		Resource resource = new FileSystemResource(uploadAddr + "files/" + filename); // 경로 설정
 		if (resource.exists()) { // 파일이 존재 한다면.
 			String originalFileName = memberService.originalFileName(filename); // 기존 이름을 가져온다.
 			String fileName = URLEncoder.encode(originalFileName, "UTF-8"); // 이걸 써야 한글로된 파일을 다운 받을 때, 오류 X.
@@ -216,7 +211,7 @@ public class MemberController {
 	// 이미지 파일 요청이 들어오면 작동되는 메서드.
 	@GetMapping(value = "/memberFiles/{filename}")
 	public ResponseEntity<Resource> Image(@PathVariable String filename) {
-		Path filePath = Paths.get(uploadAddr + "/" + filename);
+		Path filePath = Paths.get(uploadAddr + "files/" + filename); // uploadAddr = /usr/local/tomcat/webapps/
 		if (Files.exists(filePath)) { // 파일이 존재하는지 확인
 			Resource resource = new FileSystemResource(filePath); // 파일을 Resource로 반환
 			return ResponseEntity.ok() // Content-Type을 자동으로 설정하고 파일을 반환
@@ -329,7 +324,6 @@ public class MemberController {
 	    try {
 	        String id = memberService.getIdByIdx(employeeIdx);
 	        MemberDTO memberInfo = memberService.memberInfo(id).get(0);
-	        logger.info("memberInfo?" + memberInfo);
 	        // 응답으로 JSON 데이터 반환
 	        return ResponseEntity.ok(memberInfo);
 	    } catch (Exception e) {
@@ -343,7 +337,6 @@ public class MemberController {
 	public MemberDTO layoutMemberInfo(HttpSession session) {
 	    String id = (String) session.getAttribute("loginId");
 	    MemberDTO memberInfo = memberService.memberInfo(id).get(0);
-	    logger.info("memberInfo: " + memberInfo);
 	    return memberInfo;  // Returning memberInfo as JSON
 	}
 	

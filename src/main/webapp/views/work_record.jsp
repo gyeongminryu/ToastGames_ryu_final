@@ -25,7 +25,7 @@
 					<!-- 제목 -->
 					<ul class="tst_title list_no_desc list_inline">
 						<li class="tst_title_item tst_title_item_active"
-							onclick="location.href='/board_list'">
+							onclick="location.href='/work_record.go'">
 							<h1>근태 관리</h1>
 						</li>
 					</ul>
