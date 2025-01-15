@@ -42,14 +42,16 @@
                         <div class="tst_search_container">
                             <div class="tst_search_select">
                                 <select id="tst_search_select_category" name="category">
-                                    <option value="{검색 분류}">검색 분류</option>
+                                    <option value="전체">검색 분류</option>
+                                    <option value="부서">부서</option>
+                                    <option value="이름">이름</option>
                                 </select>
                             </div>
                             <div class="tst_search_input">
-                                <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" />
+                                <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" id = "search"/>
                             </div>
                             <div class="tst_search_icon">
-                                <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                <button type="button" class="btn_icon"><i class="bi bi-search"></i></button>
                             </div>
                         </div>
                     </form>
@@ -132,3 +134,4 @@
 <script src="resources/js/module_modal.js"></script>
 <script src="/resources/js/approval_write_line_child.js"></script>
 <script src="/resources/js/approval_write_line_parent.js"></script>
+<script src="/resources/js/approval_search.js"></script>

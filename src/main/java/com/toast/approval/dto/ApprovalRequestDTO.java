@@ -13,6 +13,7 @@ public class ApprovalRequestDTO {
     private Date doc_write_date;
     private Date doc_update_date;
     private String doc_end_date;
+    private String file_key;
 
     public int getDoc_idx() {
         return doc_idx;
@@ -92,5 +93,13 @@ public class ApprovalRequestDTO {
 
     public void setDoc_end_date(String doc_end_date) {
         this.doc_end_date = doc_end_date;
+    }
+
+    public String getFile_key() {
+        return file_key;
+    }
+
+    public void setFile_key(String file_key) {
+        this.file_key = file_key;
     }
 }

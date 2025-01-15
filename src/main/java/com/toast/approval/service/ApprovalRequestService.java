@@ -3,6 +3,7 @@ package com.toast.approval.service;
 import com.toast.approval.dto.ApprovalRequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.toast.approval.dao.ApprovalRequestDAO;
@@ -18,9 +19,11 @@ import java.util.*;
 @Service
 public class ApprovalRequestService {
 	Logger logger = LoggerFactory.getLogger(getClass());
-	
+	//application property의 경로 가져와서 사용하는 방법
+	@Value("${spring.servlet.multipart.location}")
+	private String uploadAddr;
 	private final ApprovalRequestDAO approvalRequestDAO;
-	
+
 	public ApprovalRequestService(ApprovalRequestDAO approvalRequestDAO) {
 		this.approvalRequestDAO = approvalRequestDAO;
 	}
@@ -42,6 +45,10 @@ public class ApprovalRequestService {
 		app_dto.setForm_idx(form_idx);
 		app_dto.setDoc_content(form_content_copy);
 		app_dto.setDoc_empl_idx(empl_idx);
+		//파일 키를 작성할 때 넣어주기
+		String file_key = UUID.randomUUID().toString();
+		app_dto.setFile_key(file_key);
+
 
 
 		//만약 true이면
@@ -348,94 +355,89 @@ public class ApprovalRequestService {
 		//doc write
 		//이미 작성한 doc idx를 아니까 DTO 사용하지 않음
 		boolean success = false;
-		boolean file_empty = false;
 		String empl_idx = param.get("empl_idx");
 
-		String file_key = UUID.randomUUID().toString();
-		//logger.info("첫 file_key 생성:{}",file_key);
 
 		//(글쓰기 - file_key 없이)
 		//만약 글쓰기가 끝나면,
 		if(approvalRequestDAO.doc_write(param)>0) {
-
-			//(파일이 있는지 확인하기)
-			for (MultipartFile file : files) {
-				file_empty = file.isEmpty();
-				//logger.info("파일 파라메터 값이 있는가?{}:", file_empty);
-			}
-
-			String doc_idx = param.get("doc_idx");
-			// 새로운 파일 있음
-			if(!file_empty){
-				//저장된 파일키가 있을 경우 = 이전 파일 및 파일 경로 안의 파일 삭제 메소드
-				approval_filekey_exist(doc_idx);
-
-				//파일키 없거나 파일키 삭제되면
-				// 파일 분리해서 새로운 파일 저장 및 document의 file_key update
-
-				for (MultipartFile file : files) {
-					//ori_filename -> new_filename 설정
-
-					String ori_filename = file.getOriginalFilename();
-					//.확장자가 있는지 확인
-					int file_type_split = ori_filename.lastIndexOf(".");
-					//logger.info("파일 확장자 여부 :{}", file_type_split);
-
-					//만약 확장자가 있으면
-					if (file_type_split > 0) {
-						String file_type = ori_filename.substring(file_type_split);
-						String new_filename = UUID.randomUUID().toString() + file_type;
-
-						String file_addr = "/files/approval/";
-						//파일에 먼저 저장하기
-						//1.byte
-						try {
-							byte[] bytes = file.getBytes();
-							//2.path
-							Path path = Paths.get(file_addr);
-
-							//3. file write
-							Files.write(path, bytes);
-
-							//4. 파일 크기 알아보기
-							double file_size = Files.size(path)/1024.0;  // 파일 크기 반환 (바이트 단위)
-							String file_size_format = String.format("%.2f", file_size);  // 소수점 두 자리로 포맷팅
-
-
-							//DB에 새로운 파일 업로드
-							if(approvalRequestDAO.approval_doc_file_write(doc_idx,ori_filename,new_filename,file_key, Integer.parseInt(empl_idx),file_type,file_addr,file_size_format)>0){
-								//logger.info("DB에 저장한 file_key:{}",file_key);
-
-
-								//logger.info("파일 입력 성공");
-
-								//document에 file key update
-								approvalRequestDAO.doc_write_file_key(doc_idx,file_key);
-
-							}
-						} catch (Exception e) {
-							throw new RuntimeException(e);
-						}
-
-
-					}
-
-				}
-
-				// ===========================================================================================================
-				//(파일이 있는지 확인하기)
-				// 새로운 파일 없음
-			}else{
-				//저장된 파일키가 있을 경우 = 이전 파일 및 파일 경로 안의 파일 삭제 메소드
-				approval_filekey_exist(doc_idx);
-				//document의 file_key = ''로 업데이트하기
-				approvalRequestDAO.doc_filekey_delete(doc_idx);
-			}
-
 			success = true;
 		}
 		return success;
 	}
+
+	//파일 저장 메서드
+	public List<Map<String, Object>> save_files(MultipartFile[] files, String doc_idx, int empl_idx) {
+		boolean success = false;
+		//(파일이 있는지 확인하기)
+		boolean file_empty = false;
+
+			//파일 전달해줄 파라메터
+			List<Map<String,Object>> file_list = new ArrayList<>();
+
+			String file_key = "";
+
+			//doc_idx에 저장되어 있는 file_key
+			file_key = approvalRequestDAO.doc_saved_filekey(String.valueOf(doc_idx));
+			logger.info("file_key:{}",file_key);
+
+			for (MultipartFile file : files) {
+				//ori_filename -> new_filename 설정
+
+				String ori_filename = file.getOriginalFilename();
+				//.확장자가 있는지 확인
+				int file_type_split = ori_filename.lastIndexOf(".");
+				//logger.info("파일 확장자 여부 :{}", file_type_split);
+
+				//만약 확장자가 있으면
+				if (file_type_split > 0) {
+					String file_type = ori_filename.substring(file_type_split);
+					String new_filename = UUID.randomUUID().toString() + file_type;
+
+					String file_addr = uploadAddr+ "/" + new_filename;
+					//파일에 먼저 저장하기
+					//1.byte
+					try {
+						byte[] bytes = file.getBytes();
+						//2.path
+						Path path = Paths.get(file_addr);
+
+						//3. file write
+						Files.write(path, bytes);
+
+						//4. 파일 크기 알아보기
+						double file_size = Files.size(path)/1024.0;  // 파일 크기 반환 (바이트 단위)
+						String file_size_format = String.format("%.2f", file_size);  // 소수점 두 자리로 포맷팅
+
+						//DB에 새로운 파일 업로드
+						if(approvalRequestDAO.approval_doc_file_write(doc_idx,ori_filename,new_filename,file_key, empl_idx,file_type,file_addr,file_size_format)>0){
+							logger.info("파일 저장 완료");
+						}
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+
+			//file_key
+			file_list = approvalRequestDAO.get_files(file_key);
+
+
+			// ===========================================================================================================
+			//(파일이 있는지 확인하기)
+			// 새로운 파일 없음
+//		}else{
+//			//저장된 파일키가 있을 경우 = 이전 파일 및 파일 경로 안의 파일 삭제 메소드
+//			approval_filekey_exist(doc_idx);
+//			//document의 file_key = ''로 업데이트하기
+//			approvalRequestDAO.doc_filekey_delete(doc_idx);
+//		}
+
+		success = true;
+
+        return file_list;
+    }
+
 
 	//선택한 결재선 저장
 	public boolean save_approval_line(Map<String, String> param) {
@@ -655,5 +657,32 @@ public class ApprovalRequestService {
 			// 2. 얻은 doc_idx 전달
 
 			return doc_idx_copied;
+	}
+
+	public boolean approval_file_delete(String file_idx) {
+		logger.info("approval_file_delete:{}",file_idx);
+		boolean success = false;
+
+		//file_idx의 주소를 가져오기
+		String file_name = approvalRequestDAO.get_approval_file_name(file_idx);
+		logger.info("file_name:{}",file_name);
+
+		//실제 경로의 파일 지우기
+		File file = new File(uploadAddr+"/"+file_name);
+
+		if(!file.exists()){
+			boolean path_file_deleted = file.delete();
+			logger.info("이전에 있던 파일 삭제되었음:{}",path_file_deleted);
+		}
+
+		if(approvalRequestDAO.approval_file_delete(file_idx)>0){
+			success = true;
+		};
+		return success;
+	}
+
+	public List<Map<String,Object>> get_file_infos(String doc_idx) {
+		String file_key = approvalRequestDAO.doc_saved_filekey(String.valueOf(doc_idx));
+        return approvalRequestDAO.get_files(file_key);
 	}
 }

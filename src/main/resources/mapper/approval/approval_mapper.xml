@@ -137,7 +137,7 @@
 
     <!--doc_info-->
     <select id="get_doc_info" resultType="Map">
-        SELECT d.doc_idx,d.doc_empl_idx,e.empl_name,dp.dept_name,p.position_name, d.doc_update_date, d.doc_subject,d.doc_content,d.doc_content_sub,DATE_FORMAT(doc_end_date, '%Y-%m-%d %H:%i:%s') AS doc_end_date
+        SELECT d.doc_idx,d.doc_empl_idx,e.empl_name,dp.dept_name,p.position_name, DATE_FORMAT(d.doc_update_date, '%Y-%m-%d %H:%i:%s') AS doc_update_date, d.doc_subject,d.doc_content,d.doc_content_sub,DATE_FORMAT(doc_end_date, '%Y-%m-%d %H:%i:%s') AS doc_end_date
         FROM document d
                  join employee e on d.doc_empl_idx  = e.empl_idx
                  join appointment a on a.appo_idx = e.appolast_idx
@@ -155,7 +155,7 @@
 
     <!--appr_line-->
     <select id="get_all_appr_line" resultType="Map">
-        SELECT al.appr_order,al.appr_receiver_idx,e.empl_name,dp.dept_name,p.position_name,d.duty_name, al.appr_state,al.appr_reason,al.appr_date FROM approval al
+        SELECT al.appr_order,al.appr_receiver_idx,e.empl_name,dp.dept_name,p.position_name,d.duty_name, al.appr_state,al.appr_reason,DATE_FORMAT(al.appr_date, '%Y-%m-%d %H:%i:%s') AS appr_date FROM approval al
           join employee e on al.appr_receiver_idx = e.empl_idx
           join appointment a on a.appo_idx = e.appolast_idx
           join department dp on dp.dept_idx = a.dept_idx

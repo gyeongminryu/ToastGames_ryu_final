@@ -10,7 +10,6 @@ window.onload = function initialize(){
     //문서 가져오기
         approval_doc_get();
 
-    //저장된 파일 있으면 가져오기
 
 
     notification_data={
@@ -95,12 +94,42 @@ function approval_doc_get(){
 
             //저장된 참조선 가져오기
             refer_line_get();
+
+            //저장된 파일 있으면 가져오기
+            var doc_idx = $('.hidden_doc_idx').val();
+            console.log("doc_idx",doc_idx);
+
+           approval_get_file_infos(doc_idx);
+
         },
         error : function(e){
             console.log(e);
         }
     });
 }
+
+//저장된 파일 가져오는 함수
+function approval_get_file_infos(doc_idx){
+    console.log("doc_idx",doc_idx);
+    $.ajax({
+        type : 'POST',
+        url : 'approval_get_file_infos.ajax',
+        data : {'doc_idx':doc_idx},
+        dataType : 'JSON',
+        success: function(data){
+            console.log(data);
+            console.log("data.file",data.file);
+            content = approval_file_draw(data.file);
+            $('#file_preview').html(content);
+        },error : function (e){
+            console.log(data);
+        }
+
+
+    })
+
+}
+
 
 //저장된 결재선 가져오는 함수
 function approval_line_get(){

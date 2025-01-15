@@ -220,9 +220,9 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="2">
-                                            <input type="file" id = "file_input" name="attached_file" multiple="multiple" onchange="approval_read_file(this)"/>
-                                        </td>
+                                            <td colspan="2">
+                                                <input type="file" id = "file_input" name="attached_file" multiple="multiple" onchange="approval_read_file(this)"/>
+                                            </td>
                                     </tr>
 
                                 </tfoot>
