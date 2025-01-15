@@ -25,15 +25,20 @@ public class ManageFormController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("manage_form_unauthorized");
 
-        // 세션 내 부서 번호 인출
-        int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
+        // 세션이 존재하는지 확인
+        if (session.getAttribute("loginId") != null) {
+            // 세션 내 부서 번호 인출
+            int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
 
-        // 부서 번호 확인
-        if (dept_idx == 122 || (dept_idx >= 152 && dept_idx <= 157)) {
-            logger.info("Valid dept_idx = " + dept_idx);
-            mav.setViewName(addr);
+            // 부서 번호 확인
+            if (dept_idx == 122 || (dept_idx >= 152 && dept_idx <= 157)) {
+                //logger.info("Valid dept_idx = " + dept_idx);
+                mav.setViewName(addr);
+            } else {
+                //logger.warn("Invalid dept_idx = " + dept_idx);
+            }
         } else {
-            logger.warn("Invalid dept_idx = " + dept_idx);
+            mav.setViewName("login");
         }
 
         return mav;
@@ -116,9 +121,6 @@ public class ManageFormController {
     public ModelAndView manage_form_write(HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
-        session.setAttribute("loginId", "tndls0110");
-        session.setAttribute("empl_idx", "10001");
-        session.setAttribute("dept_idx", "153");
         String writer = session.getAttribute("loginId").toString();
         int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
         int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
@@ -145,9 +147,6 @@ public class ManageFormController {
     public Map<String, Object> manage_form_detail(HttpSession session, String form_idx, String form_subject, String form_content) {
         Map<String,Object> map = new HashMap<String, Object>();
 
-        session.setAttribute("loginId", "tndls0110");
-        session.setAttribute("empl_idx", "10001");
-        session.setAttribute("dept_idx", "153");
         String updater = session.getAttribute("loginId").toString();
         int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
         int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
@@ -176,7 +175,7 @@ public class ManageFormController {
 
     @PostMapping (value = "/manage_form_call_name.ajax")
     public Map<String, Object> manage_form_call_name(String dept_idx) {
-        logger.info("dept_idx = "+dept_idx);
+        //logger.info("dept_idx = "+dept_idx);
         int dept_idxInt = Integer.parseInt(dept_idx);
 
         return manageFormService.callDeptname(dept_idxInt);
@@ -184,7 +183,7 @@ public class ManageFormController {
 
     @RequestMapping (value = "/manage_form_set_line.do")
     public ModelAndView manage_form_set_line(@RequestParam Map<String, String> params) {
-        //logger.info("params: {}", params);
+        logger.info("params: {}", params);
         manageFormService.setLine(params);
 
         return new ModelAndView("redirect:/manage_form_update.go?form_idx=" + params.get("form_idx_modal"));
@@ -235,9 +234,6 @@ public class ManageFormController {
     public ModelAndView manage_form_copy(HttpSession session, String form_idx_ori) {
         ModelAndView mav = new ModelAndView();
 
-        session.setAttribute("loginId", "tndls0110");
-        session.setAttribute("empl_idx", "10001");
-        session.setAttribute("dept_idx", "153");
         String writer = session.getAttribute("loginId").toString();
         int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
         int dept_idx = Integer.parseInt(session.getAttribute("dept_idx").toString());
