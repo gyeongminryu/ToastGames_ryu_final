@@ -149,6 +149,11 @@ public class StatsService {
                 list = driver.findElements(By.className("we-customer-review"));
                 String commentText = "";
 
+                doc = Jsoup.connect(getAddr(game_idx, game_market)).get();
+                score = doc.getElementsByClass("we-customer-ratings__averages__display").get(0).text();
+                scorePercentage = doc.getElementsByClass("we-star-bar-graph__bar__foreground-bar");
+                //logger.info("scorePercentage is " + scorePercentage);
+
                 for (WebElement elem : list) {
                     comments.add(elem.findElements(By.className("we-customer-review__user")).get(0).getText());
                     comments.add(elem.findElements(By.className("we-customer-review__date")).get(0).getText());
@@ -158,13 +163,9 @@ public class StatsService {
                     comments.add(commentText);
                 }
 
-                doc = Jsoup.connect(getAddr(game_idx, game_market)).get();
-                score = doc.getElementsByClass("we-customer-ratings__averages__display").get(0).text();
-                scorePercentage = doc.getElementsByClass("we-star-bar-graph__bar__foreground-bar");
-
                 for (int i = 0; i < scorePercentage.size(); i++) {
                     //logger.info(scorePercentage.get(i).attr("style").toString());
-                    percentage.add(scorePercentage.get(i).attr("style").toString().split(" ")[1]);
+                    percentage.add(scorePercentage.get(i).attr("style").split(" ")[1].split(";")[0]);
                 }
 
                 break;
