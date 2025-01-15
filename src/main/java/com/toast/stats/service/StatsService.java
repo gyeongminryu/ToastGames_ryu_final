@@ -61,7 +61,7 @@ public class StatsService {
 
         for (StatsDTO item : list) {
             // 구글 스토어 데이터 수집
-            doc = Jsoup.connect(getAddr(item.getGame_idx(), 1)).get();
+            doc = Jsoup.connect(getAddr(item.getGame_idx(), 1)).header("Accept-Language", "ko-KR").get();
             item.setData_google(getData(doc, 1));
 
             // 앱마켓 데이터 수집
@@ -92,7 +92,11 @@ public class StatsService {
                 data.put("thumbnail", info.getElementsByClass("we-artwork--ios-app-icon").get(0).child(0).attr("srcset").split(" ")[0]);
                 data.put("cntReview", grade.getElementsByClass("we-rating-count").get(0).text().split(" • ")[1]);
                 data.put("score", grade.getElementsByClass("we-rating-count").get(0).text().split(" • ")[0]);
-                data.put("ranking", grade.getElementsByClass("inline-list").get(0).text());
+                if (grade.getElementsByClass("inline-list").get(0).text().contains("•")) {
+                    data.put("ranking", "");
+                } else {
+                    data.put("ranking", grade.getElementsByClass("inline-list").get(0).text());
+                }
                 break;
         }
 
