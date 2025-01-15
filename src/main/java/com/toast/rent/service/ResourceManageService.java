@@ -313,7 +313,7 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation+'/');
+				Path path = Paths.get(uploadLocation+"files/");
 				Files.write(path, arr);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
@@ -665,7 +665,7 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation+'/');
+				Path path = Paths.get(uploadLocation+"files/");
 				Files.write(path, arr);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
