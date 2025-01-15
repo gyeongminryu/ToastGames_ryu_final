@@ -223,8 +223,6 @@ public class ScheduleService {
 	//팀별 사원
 	public List<ScheduleDTO> getTeamEmpl(int teamIdx) {
 		List<ScheduleDTO> teamEmpl = scheduleDao.getTeamEmpl(teamIdx);
-		ScheduleDTO headerEmpl = scheduleDao.getTeamHeadEmpl(teamIdx);
-		teamEmpl.add(headerEmpl);
 		return teamEmpl;
 	}
 

@@ -130,9 +130,6 @@ public interface ResourceManageDAO {
 	//팀별 인수자
 	List<ResourceManageDTO> getTeamEmpl(int teamIdx);
 
-	//팀장 인수자
-	ResourceManageDTO getTeamHeadEmpl(int teamIdx);
-
 	//부서검색
 	List<ResourceManageDTO> takeDeptEmpl(String keyword);
 	

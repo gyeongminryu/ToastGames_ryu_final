@@ -41,6 +41,8 @@ document.getElementById('schedule_end_time').addEventListener('change', function
     console.log('종료 시간:', this.value); // ISO 형식(예: 2024-12-19T11:30)
 });
 
+//
+const currentUserIdx = '<%= session.getAttribute("user_idx") %>';
 
 let calendar = null;
 let Alldata = {};
@@ -128,10 +130,8 @@ $(function () {
         eventClick: function (info) {
             Alldata = info;
             console.log(Alldata);
-			var sessionEmplIdx = sessionStorage.getItem('empl_idx');  // session에서 empl_idx 가져오기
-            //const sessionEmplIdx = 10003;
 
-            if (info.event.extendedProps.empl !== sessionEmplIdx) {
+            if (Number(info.event.extendedProps.empl) !== Number(sessionEmplIdx)) {
                 $('#schedule_title_detail').text(info.event.title);
                 $('#schedule_start_time_detail').text(schedule_format_date_time(info.event.start));
                 $('#schedule_end_time_detail').text(schedule_format_date_time(info.event.end));
@@ -141,20 +141,18 @@ $(function () {
                 const scheduleTypeElement = document.getElementById('schedule_type_detail');
 
                 switch (scheType) {
-                    case '1':
+                    case 1:
                         scheduleTypeElement.innerHTML = '개인 일정';
                         break;
-                    case '2':
+                    case 2:
                         scheduleTypeElement.innerHTML = '부서 일정';
                         break;
-                    case '3':
+                    case 3:
                         scheduleTypeElement.innerHTML = '프로젝트 팀 일정';
                         break;
-                    case '4':
+                    case 4:
                         scheduleTypeElement.innerHTML = '기타 일정';
                         break;
-                    default:
-                        scheduleTypeElement.innerHTML = '알 수 없는 일정 유형';
                 }
 
                 const participants = info.event.extendedProps.parti;
@@ -191,6 +189,18 @@ $(function () {
             }
         },
         eventDrop: function (obj) {
+        
+        
+        	const eventOwnerIdx = obj.event.extendedProps.empl_idx;
+        	
+		            // 소유자가 현재 사용자와 다르면 차단
+		    if (eventOwnerIdx !== currentUserIdx) {
+		        alert("이 일정을 변경할 권한이 없습니다.");
+		        obj.revert(); // 드래그를 취소
+		        return;
+		    }
+        
+        
             $.ajax({
                 url: '/scheduleDrop.do',
                 type: 'post',
@@ -264,7 +274,7 @@ $(function () {
 
                 console.log('Collected Data:', { title, content, emplIdx, sche_type, start, end, sche_parti });
 
-                if (title && content && emplIdx.length && sche_type) {
+                if (title && content && sche_type) {
                     const scheduleData = {
                         title:title,
                         content:content,
