@@ -24,22 +24,13 @@ public class ApprovalController {
 
 	//세션 처리
 	//보낸 + 작성한
-	//int empl_idx = 10111;
+	int empl_idx = 10111;
 
 	//결재 요청
-	int empl_idx = 10263;
-
+	//int empl_idx = 10286;
 	public ApprovalController(ApprovalService approvalService) {
 		this.approvalService = approvalService;
 	}
-
-	/*결재 작성 관련*/
-
-	//결재 목록 조회 - 옮기기
-	/*@RequestMapping(value = "/approval_writing_list.go")
-	public String approval_writing_list() {
-		return "approval_writing_list";
-	}*/
 
 	//결재 양식 목록 조회 - 옮기기
 	@RequestMapping (value = "/approval_form_list.go")
@@ -48,15 +39,7 @@ public class ApprovalController {
 		return "approval_writing_select_form";
 	}
 
-	//결재 목록 양식 제목들 가져오기 - 옮기기
-	/*@GetMapping(value = "/approval_form_list.ajax")
-	@ResponseBody
-	public Map<String, Object> approval_form_list() {
-		Map<String, Object> data = new HashMap<>();
-		data.put("forms",approvalService.form_list());
-		return data;
-	}
-*/
+
 	//선택한 결재 목록 양식 가져오기 - 옮기기
 	@GetMapping (value = "/approval_form.ajax")
 	@ResponseBody
@@ -174,6 +157,9 @@ public class ApprovalController {
 		}else{
 			logger.info("받은 목록 조건 조회");
 		}
+		logger.info("empl_idx:{}",empl_idx);
+		logger.info("empl_idx:{}",filter);
+		logger.info("type:{}",type);
 
 		received_list=approvalService.approval_received_list(empl_idx,filter,type);
 		//empl_idx 전달 → 보낸 문서가 있는지 확인

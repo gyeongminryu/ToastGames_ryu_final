@@ -152,7 +152,37 @@ public class ApprovalRequestController {
 		return data;
 	}
 
+	@PostMapping (value="/approval_file_save.ajax")
+	@ResponseBody
+	public Map<String,Object> approval_file_save (@RequestParam("doc_idx") String doc_idx,@RequestParam("files") MultipartFile[] files) {
+		logger.info("file controller 도착");
+		Map<String,Object> data = new HashMap<>();
 
+		data.put("file",approvalRequestService.save_files(files,doc_idx,empl_idx));
+		return data;
+	}
+
+	@PostMapping(value="/approval_get_file_infos.ajax")
+	@ResponseBody
+	public Map<String,Object> approval_get_file_infos (String doc_idx) {
+		logger.info("file controller 도착");
+		Map<String,Object> data = new HashMap<>();
+
+		data.put("file",approvalRequestService.get_file_infos(doc_idx));
+		return data;
+	}
+
+
+
+	@PostMapping(value="/approval_file_delete.ajax")
+	@ResponseBody
+	public Map<String,Object> approval_file_delete (String file_idx) {
+		logger.info("file_idx: " + file_idx);
+		Map<String,Object> data = new HashMap<>();
+		approvalRequestService.approval_file_delete(file_idx);
+
+		return data;
+	}
 	@PostMapping (value="/refer_save_doc.ajax")
 	@ResponseBody
 	public Map<String,Object> refer_save(@RequestBody Map<String, Object> payload){

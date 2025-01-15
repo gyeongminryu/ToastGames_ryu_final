@@ -32,10 +32,10 @@
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
                     <li class="tst_title_item" onclick="location.href='/approval_received_list'">
-                        <h1>내게 온 업무 요청</h1>
+                        <h1>수신함</h1>
                     </li>
                     <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_sent_list'">
-                        <h1>내가 보낸 업무 요청</h1>
+                        <h1>발신함</h1>
                     </li>
                     <li class="tst_title_item" onclick="location.href='/approval_writing_list'">
                         <h1>작성중인 문서</h1>

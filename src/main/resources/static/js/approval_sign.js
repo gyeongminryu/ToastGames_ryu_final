@@ -47,7 +47,7 @@ function approval_sign_save(){
     //본인의 결재선에 사인 저장
     var line_url = "approval_name_"+my_appr_order;
         //"signatureImage"+my_appr_order;
-    console.log(line_url);
+    console.log("line_url",line_url);
     const signatureImage = document.getElementById(line_url);
     console.log("signatureImage",signatureImage);
     //만약 사인된 게 있으면,
@@ -134,6 +134,7 @@ function approval_sign_save(){
 
 function save_approved_doc_content(doc_content,appr_date){
     var line_order = Number(my_appr_order)+1;
+    console.log("결재 후 line_order 값",line_order);
 
 
     $.ajax({

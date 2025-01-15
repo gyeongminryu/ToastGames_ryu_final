@@ -27,10 +27,10 @@
                         <!-- 제목 -->
                         <ul class="tst_title list_no_desc list_inline">
                             <li class="tst_title_item" onclick="location.href='/approval_received_list.go'">
-                                <h1>내게 온 업무 요청</h1>
+                                <h1>수신함</h1>
                             </li>
                             <li class="tst_title_item" onclick="location.href='/approval_send_list.go'">
-                                <h1>내가 보낸 업무 요청</h1>
+                                <h1>발신함</h1>
                             </li>
                             <li class="tst_title_item tst_title_item_active" onclick="location.href='/approval_writing_list.go'">
                                 <h1>작성중인 문서</h1>
@@ -40,8 +40,7 @@
 
                         <!-- 게시물 분류 -->
                         <ul class="tst_tablist list_no_desc list_inline">
-                            <li class="tst_tablist_item tst_tablist_item_active" onclick="location.href='/approval_writing_list.go'">
-                                <h3>전체 보기</h3>
+                            <li class="tst_tablist_item tst_tablist_item_active">
                             </li>
                             <li class="tst_tablist_item">
                                 <!-- 문서 검색 -->
@@ -81,22 +80,24 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${writing_lists}" var="writing_list">
-
                                 <!-- //작성중인 문서 목록 -->
-                                <c:if test="${writing_list.size()<=0}">
-                                <!-- 작성중인 전자 문서가 없을 경우 -->
-                                <tr class="approval_received_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
-                                    <td colspan="7" class="td_no_data">
-                                        <p>
-                                            <i class="bi bi-file-earmark-break"></i>
-                                        </p>
-                                        <h3>결재 요청한 문서가 없습니다.</h3>
-                                    </td>
-                                </tr>
-                                <!-- //작성중인 전자 문서가 없을 경우 -->
+                                <c:if test="${writing_lists.size()<=0}">
+                                    <!-- 작성중인 전자 문서가 없을 경우 -->
+                                    <tr class="approval_received_no_data"><!-- 데이터가 있을 경우 클래스 disp_hide를 추가하세요. -->
+                                        <td colspan="7" class="td_no_data">
+                                            <p>
+                                                <i class="bi bi-file-earmark-break"></i>
+                                            </p>
+                                            <h3>작성 중인 문서가 없습니다.</h3>
+                                        </td>
+                                    </tr>
+                                    <!-- //작성중인 전자 문서가 없을 경우 -->
                                 </c:if>
-                                <c:if test="${writing_list.size()>0}">
+
+
+
+                                <c:if test="${writing_lists.size()>0}">
+                                    <c:forEach items="${writing_lists}" var="writing_list">
                                     <!-- 기본 -->
                                     <tr>
                                         <td class="td_align_left td_no_padding">
@@ -124,61 +125,20 @@
 
                                     </tr>
                                     <!-- //기본 -->
-
-                                </c:if>
+                                </c:forEach>
+                            </c:if>
 
                             <!-- 예시 -->
-                        </c:forEach>
+
 
 
                             <!-- pagination -->
                             <tfoot>
                             <tr>
                                 <td colspan="7">
-                                    <ul id="pagination" class="pagination-sm pagination">
-                                        <li class="page-item first disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item prev disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">6</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">7</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">8</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">9</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">10</a>
-                                        </li>
-                                        <li class="page-item next">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
-                                        </li>
-                                        <li class="page-item last">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-                                        </li>
-                                    </ul>
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination" id="pagination"></ul>
+                                    </nav>
                                 </td>
                             </tr>
                             </tfoot>

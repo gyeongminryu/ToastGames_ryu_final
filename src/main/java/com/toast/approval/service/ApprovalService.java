@@ -401,9 +401,12 @@ public class ApprovalService {
 
 		//결재자 정보 (appr_line) - 만약 sent면 모두, received면
 		List<Map<String,Object>> appr_lines =approvalDAO.get_all_appr_line(doc_idx);
+		logger.info("appr_lines:{}",appr_lines);
+
 		model.addAttribute("appr_lines",appr_lines);
 		for(Map<String,Object> appr_line : appr_lines){
-			if((int)appr_line.get("appr_receiver_idx") == empl_idx){
+			logger.info("appr_line:{}",appr_line);
+			if((int)appr_line.get("appr_receiver_idx") == empl_idx && (int)appr_line.get("appr_order")!=0){
 				model.addAttribute("my_appr_order",(int)appr_line.get("appr_order"));
 			}
 		}
