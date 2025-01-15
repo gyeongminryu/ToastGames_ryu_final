@@ -69,9 +69,6 @@ public class ManageFormController {
 
     @PostMapping (value = "/manage_form_list.ajax")
     public Map<String, Object> manage_form_list(HttpSession session, String page, String cnt, String opt, String keyword, String sort) {
-        session.setAttribute("loginId", "tndls0110");
-        session.setAttribute("empl_idx", "10001");
-        session.setAttribute("dept_idx", "100");
         int form_writer_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
 
         int pageInt = Integer.parseInt(page);
