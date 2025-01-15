@@ -17,6 +17,8 @@ function approval_write_save(){
 
 }
 
+
+
 //상신 후 저장 함수
 function approval_write_request_save(){
     console.log("임시 저장 함수 실행");
@@ -33,6 +35,11 @@ function approval_write_request_save(){
     //빈 문자열이 들어가서 빈 문자열의 길이도 세고 있었음
     //결재선이 하나만 들어갈 때 동일한 결재선을 두번 등록할 수 없음으로 뜸
 
+    // 빈 문자열을 제외한 결재선 배열 만들기
+        var filtered_empl_lines = empl_lines.filter(function(value) {
+            return value !== "";  // 빈 값을 제외
+        });
+
 
 
     //동일한 결재선 등록 방지
@@ -48,26 +55,29 @@ function approval_write_request_save(){
         var doc_subject= $('input[name="doc_subject"]').val();
         var doc_content_sub= editor2.getHTMLCode();
         console.log("doc_content_sub",doc_content_sub);
-        if(doc_subject==''){
-            alert('문서 제목은 필수로 입력해야 합니다.');
-        }else if(doc_content_sub ==''){
-            alert('보고 내용은 필수로 입력해야 합니다.');
-        }else{
-            refer_save_doc();
-            approval_set_save_data('request_save');
-        }
+
+        approval_last_setting(doc_subject,doc_content_sub);
+
     } else {
         console.log("값이 중복됩니다.");
         alert('결재선을 비우거나, 동일한 결재선을 두번 등록할 수 없습니다.');
     }
     // 값이 중복되는 경우 & 결재선이 비었을 때 처리
 
-
-
-
-
-
 }
+
+//알럿 및 상신 함수
+function approval_last_setting(doc_subject, doc_content_sub) {
+    if(doc_subject==''){
+        alert('문서 제목은 필수로 입력해야 합니다.');
+    }else if(doc_content_sub ==''){
+        alert('보고 내용은 필수로 입력해야 합니다.');
+    }else{
+        refer_save_doc();
+        approval_set_save_data('request_save');
+    }
+}
+
 
 var setted = 0;
 //form안에 필요한 값들을 저장 전 세팅해주는 함수

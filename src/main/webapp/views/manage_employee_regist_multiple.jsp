@@ -53,7 +53,7 @@
                                     <h2>파일 예시</h2>
                                 </div>
                                 <div class="tst_col6">
-                                    <button type="button" class="btn_primary">예시 파일 다운로드</button>
+                                    <button type="button" class="btn_primary" onclick="location.href='https://docs.google.com/spreadsheets/d/1SAWoFea_gBhNu62j5zNDW3UhHQuWzFUuKrdxClabzMQ/edit?usp=sharing'">예시 파일 다운로드</button>
                                 </div>
                             </div>
                         </div>

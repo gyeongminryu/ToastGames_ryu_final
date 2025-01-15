@@ -1,4 +1,12 @@
 window.onload = function initialize(){
+
+    /*list 보여주기
+    function_list_show('write');
+    function_list_show('sent');
+    function_list_show('received');
+*/
+
+
     //기존에 작성한 문서 limit 2
     $.ajax({
         type : 'POST',
