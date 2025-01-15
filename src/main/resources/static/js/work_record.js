@@ -186,6 +186,7 @@ function startWork() {
             }
         },
         error: function(xhr, status, error) {
+            alert(result.message);  // 실패 시 경고창
             console.error("출근 처리 중 오류 발생: " + error);
         }
     });

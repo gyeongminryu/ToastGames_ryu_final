@@ -22,7 +22,7 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/mypage'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/mypage.go'">
                         <h1>내 정보</h1>
                     </li>
                 </ul>
@@ -244,7 +244,17 @@
         </div>
     </div>
 </div> 
+
 <c:import url="mypage_update_modal.jsp" />
+
+<c:if test="${not empty param.msg}">
+    <script type="text/javascript">
+        var msg = "${param.msg}";
+        if (msg === "changePw") {
+            alert("보안을 위해 비밀번호를 변경해주세요.");
+        }
+    </script>
+</c:if>
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/mypage_update.js"></script>

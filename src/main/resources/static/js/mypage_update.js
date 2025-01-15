@@ -1,4 +1,4 @@
-// 이름 정정 신청하기
+	// 이름 정정 신청하기
 function mypage_change_name(no) {
     // no: 사원번호
 }
@@ -211,12 +211,13 @@ function submitPasswordChange() {
 function validateForm() {
     console.log("폼 유효성 검사 시작");
     // 전화번호 패턴: 010-xxxx-xxxx 형태
-    var phoneRegex = /^010-\d{4}-\d{4}$/;
+    var phoneRegex = /^02-\d{3}-\d{4}$/;
+    var phoneRege = /^010-\d{4}-\d{4}$/;
     // 이메일 패턴: 기본적인 이메일 형식
     var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     // 사내 유선번호 검사
-    var emplCmpPhone = document.getElementById('empl_cmp_phone').value;
+	var emplCmpPhone = document.getElementsByName('empl_cmp_phone')[0].value;
     console.log('사내 유선번호:' + emplCmpPhone);
     
     if (!emplCmpPhone.trim()) {  // 입력이 없으면
@@ -224,23 +225,23 @@ function validateForm() {
         return false;  // 유효하지 않으면 폼 제출 중단
     }
     if (!phoneRegex.test(emplCmpPhone.trim())) {  // 형식이 잘못되었으면
-        alert("사내 유선번호는 010-xxxx-xxxx 형태로 입력해주세요.");
+        alert("사내 유선번호는 02-xxx-xxxx 형태로 입력해주세요.");
         return false;
     }
 
     // 비상 연락처 검사
-    var emplPerPhone = document.getElementById('empl_per_phone').value;
+    var emplPerPhone = document.getElementsByName('empl_per_phone')[0].value;
     if (!emplPerPhone.trim()) {  // 입력이 없으면
         alert("비상 연락처를 입력해주세요.");
         return false;
     }
-    if (!phoneRegex.test(emplPerPhone.trim())) {  // 형식이 잘못되었으면
+    if (!phoneRege.test(emplPerPhone.trim())) {  // 형식이 잘못되었으면
         alert("비상 연락처는 010-xxxx-xxxx 형태로 입력해주세요.");
         return false;
     }
 
     // 개인 이메일 검사
-    var emplPerEmail = document.getElementById('empl_per_email').value;
+    var emplPerEmail = document.getElementsByName('empl_per_email')[0].value;
     if (!emplPerEmail.trim()) {  // 입력이 없으면
         alert("개인 이메일을 입력해주세요.");
         return false;
@@ -251,7 +252,7 @@ function validateForm() {
     }
 
     // 주소 검사
-    var emplAddr = document.getElementById('empl_addr').value;
+    var emplAddr = document.getElementsByName('empl_addr')[0].value;
     if (!emplAddr.trim()) {  // 입력이 없으면
         alert("주소를 입력해주세요.");
         return false;

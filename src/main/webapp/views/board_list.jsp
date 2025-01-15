@@ -89,7 +89,7 @@
                                     <input type="text" id="searchKeyword" maxlength="50" placeholder="검색어를 입력하세요" />
                                 </div>
                                 <!-- 초기화 버튼 -->
-								<div class="tst_search_init font_subtle" onclick="location.href='<!-- 페이지 경로를 입력하세요 -->'">
+								<div class="tst_search_init font_subtle" onclick="location.href='board_list'">
 									<i class="bi bi-x-circle-fill"></i>
 								</div>
 								<!-- //초기화 버튼 -->

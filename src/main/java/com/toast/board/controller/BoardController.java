@@ -228,7 +228,7 @@ public class BoardController {
 	// 다운로드 요청이 들어오면 작동되는 메서드.
 	@GetMapping(value = "/boardDownload/{filename}") 
 	public ResponseEntity<Resource> downloadFile(@PathVariable String filename) throws Exception {
-		Resource resource = new FileSystemResource(uploadAddr + "/" + filename); // 경로 설정
+		Resource resource = new FileSystemResource(uploadAddr + "files/" +filename); // uploadAddr = usr/local/tomcat/webapps/
 		if (resource.exists()) { // 파일이 존재 한다면.
 			String originalFileName = boardService.originalFileName(filename); // 기존 이름을 가져온다.
 			String fileName = URLEncoder.encode(originalFileName, "UTF-8"); // 이걸 써야 한글로된 파일을 다운 받을 때, 오류 X.
