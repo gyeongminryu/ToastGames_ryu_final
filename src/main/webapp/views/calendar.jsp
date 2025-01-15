@@ -33,8 +33,8 @@
 
                 <!-- 일정 종류 필터링 -->
                 <select onchange="calendar_select_to_radiobtn(this)" class="meeting_room_select fc_month">
-                	<option value="0">전체일정</option>
-                    <option value="1" selected>개인 일정</option>
+                	<option value="0" selected>전체일정</option>
+                    <option value="1" >개인 일정</option>
                     <option value="2">부서 일정</option>
                     <option value="3">프로젝트 팀 일정</option>
                     <option value="4">기타 일정</option>
@@ -42,8 +42,8 @@
 
                 <fieldset id="schedule_category" class="disp_hide">
                     <label id="schedule_category_name">
-                    	<input type="radio" name="schedule_type_name" value="0">
-                        <input type="radio" name="schedule_type_name" value="1" checked><!-- 개인 -->
+                    	<input type="radio" name="schedule_type_name" value="0" checked>
+                        <input type="radio" name="schedule_type_name" value="1" ><!-- 개인 -->
                         <input type="radio" name="schedule_type_name" value="2"><!-- 부서 -->
                         <input type="radio" name="schedule_type_name" value="3"><!-- 프로젝트 -->
                         <input type="radio" name="schedule_type_name" value="4"><!-- 기타 -->
@@ -74,4 +74,10 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/calendar_month.js"></script>
 <script src="resources/js/calendar_select_to_radiobtn.js"></script>
+<script>
+    // 서버 세션 값을 JavaScript 변수로 설정
+    const sessionEmplIdx = '<%= session.getAttribute("empl_idx") %>';
+    console.log('sessionEmplIdx:', sessionEmplIdx);
+
+</script>
 </html>

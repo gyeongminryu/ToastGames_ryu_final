@@ -54,6 +54,18 @@ document.addEventListener('DOMContentLoaded', function() {
 		editable:true,
 		selectable: true,
 		locale: 'ko',
+		businessHours: [
+	        {
+	            daysOfWeek: [0, 1, 2, 3, 4, 5, 6, 7], // 월~금
+	            startTime: '09:00',           // 시작 시간
+	            endTime: '12:00'              // 오전 업무 시간
+	        },
+	        {
+	            daysOfWeek: [0, 1, 2, 3, 4, 5, 6], // 월~금
+	            startTime: '13:00',           // 오후 업무 시간 시작
+	            endTime: '18:00'              // 오후 업무 시간 종료
+	        }
+    	],
 		//contentHeight: 'auto',
 	    slotLabelFormat: {
 	        hour: '2-digit',    // 시간 두 자리로 표시
@@ -100,7 +112,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 	my_meeting: my_meeting}), 
                 success: function(data) {
                     console.log(data);
-                    successCallback(data); // FullCalendar에 일정 데이터 추가
+                    const events = data.map(function (event) {
+                        let color;
+                        switch (event.room) {
+                            case 5:
+                                color = '#77DD77'; // 개인
+                                break;
+                            case 8:
+                                color = 'skyblue'; // 부서
+                                break;
+                            case 9:
+                                color = 'orange'; // 프로젝트
+                                break;
+                            case 10:
+                                color = 'purple'; // 기타
+                                break;
+                            case 11:
+                                color = 'gray'; // 기타
+                                break;
+                        }
+
+                        return {
+                        	meet_rent_idx:event.meet_rent_idx,
+                            room: event.room,
+                            title: event.title,
+                            start: event.start,
+                            end: event.end,
+                            description: event.description,
+                            parti: event.parti,
+                            backgroundColor: color,
+                            borderColor: color,
+                            empl: event.empl
+                        };
+                    });
+                    
+                    
+                    successCallback(events); // FullCalendar에 일정 데이터 추가
+                    //successCallback(data); // FullCalendar에 일정 데이터 추가
                 },
                 error: function(xhr, status, error) {
                     alert('일정 데이터를 불러오는 중 오류가 발생했습니다.');
@@ -177,14 +225,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		eventClick: function(info) {
 			info_global=info;
 		    console.log(info_global);
-			// session에서 현재 사용자 empl_idx 값을 가져옵니다 (여기서는 예시로 sessionStorage를 사용)
-    		var sessionEmplIdx = sessionStorage.getItem('empl_idx');  // session에서 empl_idx 가져오기
-    		//var sessionEmplIdx = 10004;  // session에서 empl_idx 가져오기
-    
+
+
     		console.log(info.event.extendedProps.empl);
     		console.log(sessionEmplIdx);
     		// info.event.rent_empl_idx와 session에서 가져온 empl_idx 비교
-    		if (info.event.extendedProps.empl !== sessionEmplIdx) {
+    		if (Number(info.event.extendedProps.empl) !== Number(sessionEmplIdx)) {
 		    
 
 			    // 회의실 정보

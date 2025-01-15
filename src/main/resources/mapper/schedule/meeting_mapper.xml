@@ -169,7 +169,16 @@
 		JOIN 
 			meeting_room mr ON mt.room_idx=mr.room_idx
 		WHERE 
-			mr.room_idx=#{room_idx}
+	        <choose>
+	            <!-- room_idx가 0일 때 -->
+	            <when test="room_idx == 0">
+	               	1=1
+	            </when>
+	            <!-- room_idx가 0이 아닐 때 -->
+	            <otherwise>
+	                mr.room_idx = #{room_idx}
+	            </otherwise>
+	        </choose>
 	</select>
 	
 	<!-- 회의실별 일정 모든 참여자 보기 -->
