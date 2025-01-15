@@ -74,7 +74,16 @@
 		FROM 
 			schedule
 		WHERE 
-			sche_empl_idx = #{sche_empl_idx} AND sche_type = #{sche_type}
+		 <choose>
+	            <!-- sche_type이 0일 때 -->
+	            <when test="sche_type == 0">
+	                sche_empl_idx = #{sche_empl_idx}
+	            </when>
+	            <!-- sche_type이 0이 아닐 때 -->
+	            <otherwise>
+					sche_empl_idx = #{sche_empl_idx} AND sche_type = #{sche_type}
+	            </otherwise>
+	        </choose>
 		GROUP BY 
     		sche_idx, sche_type, sche_empl_idx;
 	</select>

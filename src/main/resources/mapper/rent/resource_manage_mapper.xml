@@ -474,10 +474,7 @@
 				#{sche_write_date})
 	</insert>
 	
-	
-	
-	
-	
+
 	
 	<!-- 반납예정일시 가져오기 -->
 	<select id="getExpDate">

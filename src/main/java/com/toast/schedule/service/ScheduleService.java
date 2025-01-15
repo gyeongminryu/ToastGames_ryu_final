@@ -84,7 +84,7 @@ public class ScheduleService {
 	public List<Map<String, Object>> getSchedules(ScheduleDTO dto) {
 		logger.info("dto.empl"+dto.getSche_empl_idx());
 		logger.info("dto.type"+dto.getSche_type());
-		logger.info("dto.type"+dto.getSche_parti_empl_idx());
+		logger.info("dto.parti"+dto.getSche_parti_empl_idx());
 		List<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
 		List<Map<String, Object>> scheduleList = new ArrayList<Map<String,Object>>();
 		if(dto.getSche_parti_empl_idx() != 0) {
