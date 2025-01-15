@@ -37,6 +37,8 @@ public interface ProjectDAO {
 
 	List<ProjectMemberDetailDTO> searchProjectTeamMembers(String team_idx, String category, String keyword);
 
+	List<TeamListDTO> searchDeptAllMember();
+
 	
 
 	

@@ -9,7 +9,35 @@
 </insert>
 
 <select id="employeeDetail" resultType="com.toast.management.dto.EmployeeDTO">
-	select * from employee where empl_idx = #{param1}
+	select 
+	e.empl_idx,
+	e.empl_name,
+	e.empl_id,
+	e.empl_pw,
+	e.empl_gender,
+	e.empl_birth,
+	e.empl_ssn1,
+	e.empl_ssn2,
+	e.bank_idx,
+	e.empl_account,
+	 e.empl_cmp_email,
+ 	e.empl_cmp_phone,
+ 	e.empl_per_email,
+	  e.empl_per_phone,
+	  e.empl_addr,
+	  e.statement_idx,
+	  e.empl_join_date,
+	  e.empl_resig_date,
+	  e.empl_job,
+	 e.empl_stamp,
+	  e.empl_profile,
+	  e.empl_changepw,
+	  e.file_key,
+	  e.appolast_idx,
+	  b.bank_name
+	from employee e
+	join bank b on b.bank_idx = e.bank_idx
+	where empl_idx = #{param1}
 </select>
 
 <select id="employeeAppolast" resultType="com.toast.management.dto.AppointmentDTO">
@@ -456,5 +484,13 @@ b.bank_name
              WHERE 
             e.statement_idx = 3
 </select>
+
+<select id="getweekWorkRecord">
+    SELECT SUM(total_hours + overtime_hours) AS total_hours
+FROM attendance
+WHERE empl_idx = #{param1}
+AND work_date BETWEEN DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+                  AND DATE_ADD(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 6 DAY);
+   </select>
 
 </mapper>
