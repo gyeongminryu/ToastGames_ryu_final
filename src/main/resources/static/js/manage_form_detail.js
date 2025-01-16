@@ -97,10 +97,12 @@ function printInfo(info) {
 function updateForm() {
     location.href = '/manage_form_update.go?form_idx=' + form_idx;
 }
+
 // 양식 복사하기
 function copyForm() {
     location.href = '/manage_form_copy.do?form_idx_ori=' + form_idx;
 }
+
 // 양식 삭제하기
 function disuseForm() {
     location.href = '/manage_form_disuse.do?form_idx=' + form_idx;
