@@ -2,6 +2,7 @@ package com.toast.approval.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +23,10 @@ import java.util.*;
 @Service
 public class ApprovalService {
 	Logger logger = LoggerFactory.getLogger(getClass());
-	
+
+	@Value("${spring.servlet.multipart.location}")
+	private String uploadAddr;
+
 	private final ApprovalDAO approvalDAO;
 	
 	public ApprovalService(ApprovalDAO approvalDAO) {
@@ -480,7 +484,7 @@ public class ApprovalService {
 		HttpHeaders header = new HttpHeaders();
 
 		//2.본문 - FileSystem을 통해 특정 위치의 파일 가져오기
-		Resource resource = new FileSystemResource("/files/"+new_filename);
+		Resource resource = new FileSystemResource(uploadAddr+"files/"+new_filename);
 
 		//한글 명인 파일 깨지지 않게 처리
         try {
@@ -501,5 +505,11 @@ public class ApprovalService {
 
 	public List<Map<String, Object>> get_recent_written(int empl_idx) {
 		return approvalDAO.get_recent_written(empl_idx);
+	}
+
+	public String get_stamp(String approval_empl_idx) {
+		logger.info("approval_empl_idx:{}",approval_empl_idx);
+		String stamp_url = uploadAddr+"files/"+approvalDAO.get_approval_stamp(approval_empl_idx);
+		return stamp_url;
 	}
 }

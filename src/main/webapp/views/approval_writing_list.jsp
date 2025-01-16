@@ -261,6 +261,8 @@
 <script src="/resources/js/approval_writing_list.js"></script>
 
 <script src="resources/js/common.js"></script>
-
+<script>
+    var filter = "${filter}";
+</script>
 
 </html>

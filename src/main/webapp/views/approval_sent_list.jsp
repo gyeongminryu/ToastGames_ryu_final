@@ -39,19 +39,19 @@
 
         <!-- 게시물 분류 -->
         <ul class="tst_tablist list_no_desc list_inline">
-          <li class="tst_tablist_item tst_tablist_item_active" onclick="location.href='/approval_send_list.go'">
+          <li class="tst_tablist_item all tst_tablist_item_active" onclick="approval_list_filter('전체','탭','sent',this)">
             <h3>전체 보기</h3>
           </li>
-          <li class="tst_tablist_item" onclick="approval_list_filter('결재 대기','탭','sent',this)">
+          <li class="tst_tablist_item unread" onclick="approval_list_filter('결재 대기','탭','sent',this)">
             <h3>읽지 않음</h3>
           </li>
-          <li class="tst_tablist_item" onclick="approval_list_filter('결재 진행','탭','sent',this)">
+          <li class="tst_tablist_item continue" onclick="approval_list_filter('결재 진행','탭','sent',this)">
             <h3>결재중</h3>
           </li>
-          <li class="tst_tablist_item" onclick="approval_list_filter('최종 승인','탭','sent',this)">
+          <li class="tst_tablist_item approved" onclick="approval_list_filter('최종 승인','탭','sent',this)">
             <h3>결재 승인</h3>
           </li>
-          <li class="tst_tablist_item" onclick="approval_list_filter('반려','탭','sent',this)">
+          <li class="tst_tablist_item reject" onclick="approval_list_filter('반려','탭','sent',this)">
             <h3>결재 반려</h3>
           </li>
           <li class="tst_tablist_item">
@@ -222,5 +222,6 @@
 
 <script>
   var sent_list = "${sent_list}";
+  var filter = "${filter}";
 </script>
 </html>
