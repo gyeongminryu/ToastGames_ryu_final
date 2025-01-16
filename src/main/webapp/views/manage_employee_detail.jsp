@@ -69,13 +69,13 @@
                                 <th class="td_bg_subtle">생년월일</th>
                                 <td>${employee.empl_birth}</td>
                                 <th class="td_bg_subtle">부서</th>
-                                <td>${appoLast.dept_name} </td><!-- 부서장인 경우에는 팀을 기재하지 않습니다 -->
+                                <td>${empty appoLast.dept_name ? '없음' : appoLast.dept_name} </td><!-- 부서장인 경우에는 팀을 기재하지 않습니다 -->
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">주민등록번호</th>
                                 <td>${employee.empl_ssn1}-${employee.empl_ssn2}</td>
                                 <th class="td_bg_subtle">직급/직책</th>
-                                <td>${appoLast.position_name}/${appoLast.duty_name}</td>
+                                <td>${empty appoLast.position_name ? '없음' : appoLast.position_name}/${empty appoLast.duty_name ? '없음' : appoLast.duty_name}</td>
                             </tr>
                             <tr>
                                 <th class="td_bg_subtle">급여 입금 계좌</th>
@@ -139,7 +139,7 @@
                             <tbody>
                             <tr>
                                 <th class="td_bg_subtle">이번 주 근무 시간</th>
-                                <td id="convertedTime">{이번 주 근무 시간}/52시간 <button onclick="location.href='/member_work_record.go?emplidx='${employee.empl_idx}" class="btn_min btn_primary">상세보기</button></td>
+                                <td id="convertedTime">없음/52시간 <button onclick="location.href='/member_work_record.go?emplidx='${employee.empl_idx}" class="btn_min btn_primary">상세보기</button></td>
                                 <th class="td_bg_subtle">초과 근무 여부</th>
                                 <td id="conTime">대상 아님</td>
                             </tr>
@@ -154,12 +154,19 @@
                             <tr>
                                 <td colspan="2" class="td_align_left td_no_padding">
                                     <hr class="separator" />
+                                    <c:choose>
+									    <c:when test="${employee.statement_idx != 3}">
                                     <button onclick="location.href='./manage_employee_update.go?empl_idx=${employee.empl_idx}'" class="btn_primary">정보 수정하기</button>
-                                	
+                                	   </c:when>
+									</c:choose>
                                 </td>
         						<td>
         						  <hr class="separator" />
-        						<button id="openAppoModal">인사발령</button>
+	        						<c:choose>
+									    <c:when test="${employee.statement_idx != 3}">
+									        <button id="openAppoModal">인사발령</button>
+									    </c:when>
+									</c:choose>
         						</td>
                             </tr>
                             </tfoot>
