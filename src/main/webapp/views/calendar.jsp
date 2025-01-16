@@ -32,23 +32,14 @@
                 <!-- //제목 -->
 
                 <!-- 일정 종류 필터링 -->
-                <select onchange="calendar_select_to_radiobtn(this)" class="meeting_room_select fc_month">
-                	<option value="0" selected>전체일정</option>
-                    <option value="1" >개인 일정</option>
-                    <option value="2">부서 일정</option>
-                    <option value="3">프로젝트 팀 일정</option>
-                    <option value="4">기타 일정</option>
-                </select>
+				<select id="schedule_category_name" class="meeting_room_select fc_month">
+				    <option value="0" selected>전체일정</option>
+				    <option value="1">개인 일정</option>
+				    <option value="2">부서 일정</option>
+				    <option value="3">프로젝트 팀 일정</option>
+				    <option value="4">기타 일정</option>
+				</select>
 
-                <fieldset id="schedule_category" class="disp_hide">
-                    <label id="schedule_category_name">
-                    	<input type="radio" name="schedule_type_name" value="0" checked>
-                        <input type="radio" name="schedule_type_name" value="1" ><!-- 개인 -->
-                        <input type="radio" name="schedule_type_name" value="2"><!-- 부서 -->
-                        <input type="radio" name="schedule_type_name" value="3"><!-- 프로젝트 -->
-                        <input type="radio" name="schedule_type_name" value="4"><!-- 기타 -->
-                    </label>
-                </fieldset>
                 <!-- //일정 종류 필터링 -->
 
                 <!-- 달력 -->
