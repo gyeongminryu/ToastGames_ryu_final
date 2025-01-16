@@ -20,6 +20,7 @@ function approval_get_stamp(){
         success : function(data){
             console.log(data);
             console.log(data.stamp);
+            //src 넣을 때는 webapps 넣지 말기
             document.getElementById('sign_preview').src = data.stamp;
 
         },error : function(e){
