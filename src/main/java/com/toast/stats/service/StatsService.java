@@ -46,7 +46,7 @@ public class StatsService {
         // 한국어 설정
         options.addArguments("--lang=ko");
 
-        // 도커는 GUI가 아니므로 반드시 아래 옵션을 추가해야 한다.
+        // 우분투 리눅스는 GUI가 아니므로 반드시 아래 옵션을 추가해야 한다.
         options.addArguments("--headless");  // 헤드리스 모드
         options.addArguments("--no-sandbox");  // 샌드박스 비활성화
         options.addArguments("--disable-dev-shm-usage");  // 공유 메모리 사용 비활성화
