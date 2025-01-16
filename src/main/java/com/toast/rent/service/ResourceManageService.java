@@ -85,7 +85,7 @@ public class ResourceManageService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청 중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -125,7 +125,7 @@ public class ResourceManageService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청 중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -288,6 +288,7 @@ public class ResourceManageService {
 
 	
 	//물품 파일 등록
+	@Transactional
 	private int prodFileAdd( List<MultipartFile> files, int prod_idx) {
 		
 		//0. 첨부파일 키 생성
@@ -313,13 +314,13 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation+"files/");
+				Path path = Paths.get(uploadLocation);
 				Files.write(path, arr);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
 				photo_dto.setOri_filename(oriFilename);
-				photo_dto.setFile_addr(path.toString());
+				photo_dto.setFile_addr("files/");
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
 				photo_dto.setUploader_idx(empl_idx);
@@ -641,6 +642,7 @@ public class ResourceManageService {
 	
 	
 	//물품 파일 등록
+	@Transactional
 	private int dispFileAdd( List<MultipartFile> files, int prod_idx) {
 		//0. 첨부파일 키 생성
 		String fileKey = UUID.randomUUID().toString();
@@ -665,13 +667,13 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation+"files/");
+				Path path = Paths.get(uploadLocation);
 				Files.write(path, arr);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
 				photo_dto.setOri_filename(oriFilename);
-				photo_dto.setFile_addr(path.toString());
+				photo_dto.setFile_addr("files/");
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
 				photo_dto.setUploader_idx(empl_idx);
