@@ -112,15 +112,13 @@ public class ManageFormController {
     @PostMapping (value = "/manage_form_detail.ajax")
     public Map<String, Object> manage_form_detail(String form_idx) {
         //logger.info("This is controller. The form idx is: "+form_idx);
-        int form_idxInt = Integer.parseInt(form_idx);
 
-        return manageFormService.detail(form_idxInt);
+        return manageFormService.detail(Integer.parseInt(form_idx));
     }
 
     // 문서 양식 작성하기
     @RequestMapping (value = "/manage_form_write.do")
     public ModelAndView manage_form_write(HttpSession session) {
-        ModelAndView mav = new ModelAndView();
 
         String writer = session.getAttribute("loginId").toString();
         int empl_idx = Integer.parseInt(session.getAttribute("empl_idx").toString());
@@ -131,7 +129,7 @@ public class ManageFormController {
         if (form_idx < 0) {
             viewName = "redirect:/manage_form_list.go";
         } else {
-            viewName = "redirect:/manage_form_update.go?form_idx="+form_idx;
+            viewName = "redirect:/manage_form_wip_update.go?form_idx="+form_idx;
         }
 
         return authorize(session, viewName);

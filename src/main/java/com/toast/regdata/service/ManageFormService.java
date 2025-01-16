@@ -211,6 +211,7 @@ public class ManageFormService {
         dto.setForm_updater_idx(empl_idx);
         dto.setForm_updater_dept(dept_idx);
         dto.setForm_updater_position(manageFormDAO.getPositIdx(empl_idx));
+        //logger.info("dto: {}", dto.toString());
 
         if (manageFormDAO.update(dto) > 0) {
             success = true;

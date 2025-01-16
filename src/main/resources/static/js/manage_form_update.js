@@ -365,7 +365,7 @@ function saveValues() {
 function registWIP() {
     const subject = document.getElementsByName('subject')[0].value;
     const content = editor.getHTMLCode();
-    //console.log('input value: ' + subject + '/' + content);
+    console.log('input value: ' + subject + '/' + content);
 
     if (subject != null && subject != '' && subject != 'null') {
         $.ajax({
@@ -379,7 +379,7 @@ function registWIP() {
             dataType: 'json',
             success: function(data) {
                 //console.log(data.success);
-                console.log("저장 완료");
+                //console.log("저장 완료");
                 location.href='/manage_form_register.do?form_idx=' + form_idx;
             },
             error: function(e) {
