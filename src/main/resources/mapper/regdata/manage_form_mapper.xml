@@ -169,7 +169,11 @@
 
     <!-- 작성중인 문서 양식 등록하기 -->
     <update id="register">
-        UPDATE form SET form_state = 1 WHERE form_idx = #{param1}
+        UPDATE form SET
+            form_state = 1,
+            form_updater_idx = (SELECT empl_idx FROM employee WHERE empl_id = #{param2}),
+            form_update_date = current_timestamp
+        WHERE form_idx = #{param1}
     </update>
 
     <!-- 작성중인 문서 양식 삭제하기 -->

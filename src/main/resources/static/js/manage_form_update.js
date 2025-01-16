@@ -165,7 +165,7 @@ function saveForm() {
             dataType: 'json',
             success: function(data) {
                 //console.log(data.success);
-                console.log("저장 완료");
+                //console.log("저장 완료");
                 saveMsg();
             },
             error: function(e) {
@@ -363,8 +363,30 @@ function saveValues() {
 
 // 작성중인 문서 등록하기
 function registWIP() {
-    saveForm();
-    //location.href='/manage_form_register.do?form_idx=' + form_idx;
+    const subject = document.getElementsByName('subject')[0].value;
+    const content = editor.getHTMLCode();
+    //console.log('input value: ' + subject + '/' + content);
+
+    if (subject != null && subject != '' && subject != 'null') {
+        $.ajax({
+            type: 'post',
+            url: 'manage_form_update.ajax',
+            data: {
+                'form_idx': form_idx,
+                'form_subject': subject,
+                'form_content': content
+            },
+            dataType: 'json',
+            success: function(data) {
+                //console.log(data.success);
+                console.log("저장 완료");
+                location.href='/manage_form_register.do?form_idx=' + form_idx;
+            },
+            error: function(e) {
+                //console.log(e);
+            }
+        });
+    }
 }
 
 // 작성중인 문서 삭제하기

@@ -128,8 +128,13 @@ public class ManageFormDTO {
         return form_updater_position_name;
     }
 
-    public LocalDateTime getForm_update_date() {
-        return form_update_date;
+    public String getForm_update_date() {
+        if (form_update_date == null) {
+            return "";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return form_update_date.format(formatter);
+        }
     }
 
     public int getForm_state() {

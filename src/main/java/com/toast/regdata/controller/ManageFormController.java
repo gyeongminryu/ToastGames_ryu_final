@@ -200,9 +200,9 @@ public class ManageFormController {
 
     // 작성중인 문서 양식 등록하기
     @RequestMapping (value = "/manage_form_register.do")
-    public ModelAndView manage_form_register(String form_idx) {
+    public ModelAndView manage_form_register(HttpSession session, String form_idx) {
         //logger.info("form_idx = "+form_idx);
-        manageFormService.register(Integer.parseInt(form_idx));
+        manageFormService.register(Integer.parseInt(form_idx), session.getAttribute("loginId").toString());
 
         return new ModelAndView("redirect:/manage_form_detail.go?form_idx=" + form_idx);
     }
@@ -231,7 +231,7 @@ public class ManageFormController {
     @RequestMapping (value = "/manage_form_restore.do")
     public ModelAndView manage_form_restore(HttpSession session, String form_idx) {
         //logger.info("form_idx = "+form_idx);
-        manageFormService.register(Integer.parseInt(form_idx));
+        manageFormService.register(Integer.parseInt(form_idx), session.getAttribute("loginId").toString());
 
         return new ModelAndView("redirect:/manage_form_detail.go?form_idx=" + form_idx);
     }

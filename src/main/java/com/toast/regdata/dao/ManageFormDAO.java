@@ -35,7 +35,7 @@ public interface ManageFormDAO {
     int getState(int form_idx);
 
     // 작성중인 문서 양식 등록하기
-    void register(int form_idx);
+    void register(int form_idx, String updater_id);
 
     // 작성중인 문서 양식 삭제하기
     void deleteForm(int form_idx);

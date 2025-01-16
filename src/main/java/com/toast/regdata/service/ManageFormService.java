@@ -264,8 +264,8 @@ public class ManageFormService {
     }
 
     // 작성중인 문서 양식 등록하기
-    public void register(int form_idx) {
-        manageFormDAO.register(form_idx);
+    public void register(int form_idx, String updater_id) {
+        manageFormDAO.register(form_idx, updater_id);
     }
 
     // 작성중인 문서 양식 삭제하기
