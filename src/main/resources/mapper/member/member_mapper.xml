@@ -213,5 +213,15 @@
 		FROM attendance 
 		WHERE empl_idx = #{empl_idx} AND work_date BETWEEN #{startDate} AND #{startDate} + INTERVAL 6 DAY 
 	</select>
+	
+	<select id="layoutMemberInfo" parameterType="String" resultType="com.toast.member.dto.MemberDTO">
+		SELECT e.empl_name, e.empl_profile, d.dept_name, d2.duty_name
+		FROM employee e
+		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
+		JOIN department d ON a.dept_idx = d.dept_idx
+		JOIN duty d2 ON a.duty_idx = d2.duty_idx
+		WHERE e.empl_id = #{id}
+		ORDER BY appo_idx DESC LIMIT 1 
+	</select>
 
 </mapper>

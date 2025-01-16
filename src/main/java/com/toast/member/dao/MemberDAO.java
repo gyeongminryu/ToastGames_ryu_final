@@ -57,6 +57,8 @@ public interface MemberDAO {
 	int getDeptIdx(String id);
 
 	int weekWorkRecord(int empl_idx, String startDate);
+
+	MemberDTO layoutMemberInfo(String id);
 	
 }
 

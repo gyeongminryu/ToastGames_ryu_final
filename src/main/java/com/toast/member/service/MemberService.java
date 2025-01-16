@@ -190,5 +190,9 @@ public class MemberService {
         startDate = monday.toString();
 		return memberDAO.weekWorkRecord(empl_idx, startDate);
 	}
+
+	public MemberDTO layoutMemberInfo(String id) {
+		return memberDAO.layoutMemberInfo(id);
+	}
 	
 }
