@@ -176,8 +176,7 @@
 						                    ${file.ori_filename} (${file.file_size / 1024} KB)
 						                </td>
 						                <td>
-						                    <button onclick="location.href='download.do?new_filename=${file.new_filename}&ori_filename=${file.ori_filename}'" 
-						                            class="btn_min btn_primary">다운로드</button>
+						                    <button type="button" onclick="delete_attach(this, '${file.ori_filename}')" class="btn_primary btn_min">삭제하기</button>
 						                </td>
 						            </tr>
 						        </c:forEach>
