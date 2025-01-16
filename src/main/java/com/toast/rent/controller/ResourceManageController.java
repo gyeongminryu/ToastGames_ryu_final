@@ -70,7 +70,7 @@ public class ResourceManageController {
 	        model.addAttribute("categoryList", categoryList);
 	        page = "manage_rent_list";
 	    } else {
-	        redirectAttributes.addFlashAttribute("alertMessage", "권한이 없습니다.");
+	        redirectAttributes.addFlashAttribute("alertMessage", "권한이 없습니다. 공용물품 대여 페이지로 이동합니다.");
 	    }
 	    return page;
 	}
