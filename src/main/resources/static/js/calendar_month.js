@@ -129,7 +129,7 @@ $(function () {
                             backgroundColor: color,
                             borderColor: color,
                             allDay: event.allDay,
-                            empl: event.empl,
+                            empl: event.empl
                         };
                     });
                     successCallback(events); // FullCalendar에 일정 데이터 추가
@@ -205,10 +205,12 @@ $(function () {
         eventDrop: function (obj) {
         
         
-        	const eventOwnerIdx = obj.event.extendedProps.empl_idx;
+        	const eventOwnerIdx = obj.event.extendedProps.empl;
+        	console.log(sessionEmplIdx);
+        	console.log(eventOwnerIdx);
         	
-		            // 소유자가 현재 사용자와 다르면 차단
-		    if (eventOwnerIdx !== currentUserIdx) {
+		     // 소유자가 현재 사용자와 다르면 차단
+		    if (eventOwnerIdx !== Number(sessionEmplIdx)) {
 		        alert("이 일정을 변경할 권한이 없습니다.");
 		        obj.revert(); // 드래그를 취소
 		        return;
@@ -234,6 +236,19 @@ $(function () {
             });
         },
         eventResize: function (obj) {
+        
+            const eventOwnerIdx = obj.event.extendedProps.empl;
+        	console.log(sessionEmplIdx);
+        	console.log(eventOwnerIdx);
+        
+        
+        	if (eventOwnerIdx !== Number(sessionEmplIdx)) {
+		        alert("이 일정을 변경할 권한이 없습니다.");
+		        obj.revert(); // 드래그를 취소
+		        return;
+		    }
+        
+        
             $.ajax({
                 url: '/scheduleResize.do',
                 type: 'post',
