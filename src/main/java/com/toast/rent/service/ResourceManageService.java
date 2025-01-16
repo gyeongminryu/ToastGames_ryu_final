@@ -1,5 +1,6 @@
 package com.toast.rent.service;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -313,14 +314,17 @@ public class ResourceManageService {
 			int empl_idx = (int) session.getAttribute("empl_idx");
 			//5. 파일 저장
 			try {
-				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation);
-				Files.write(path, arr);
+				//byte[] arr = file.getBytes();
+				String path = uploadLocation+"files/"+ newFilename;
+				//Path path = Paths.get(uploadLocation+"files/");
+				//Files.write(path, arr);
+			     File dest = new File(path);
+			     file.transferTo(dest);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
 				photo_dto.setOri_filename(oriFilename);
-				photo_dto.setFile_addr("files/");
+				photo_dto.setFile_addr(path);
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
 				photo_dto.setUploader_idx(empl_idx);
@@ -666,14 +670,18 @@ public class ResourceManageService {
 			int empl_idx = (int) session.getAttribute("empl_idx");
 			//5. 파일 저장
 			try {
-				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation);
-				Files.write(path, arr);
+				//byte[] arr = file.getBytes();
+				String path = uploadLocation+"files/"+ newFilename;
+				//Path path = Paths.get(uploadLocation+"files/");
+				//Files.write(path, arr);
+			     File dest = new File(path);
+			     file.transferTo(dest);
+
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
 				photo_dto.setOri_filename(oriFilename);
-				photo_dto.setFile_addr("files/");
+				photo_dto.setFile_addr(path);
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
 				photo_dto.setUploader_idx(empl_idx);
