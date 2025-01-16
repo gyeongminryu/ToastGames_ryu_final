@@ -65,6 +65,8 @@ public interface EmployeeDAO {
 
 	Double getweekWorkRecord(String empl_idx);
 
+	boolean isIdDuplicate(String emplId);
+
 	
 
 	
