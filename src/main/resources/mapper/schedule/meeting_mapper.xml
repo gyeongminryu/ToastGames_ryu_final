@@ -176,7 +176,7 @@
 	            </when>
 	            <!-- room_idx가 0이 아닐 때 -->
 	            <otherwise>
-	                mr.room_idx = #{room_idx}
+	                mr.room_idx = #{param1}
 	            </otherwise>
 	        </choose>
 	</select>
@@ -207,7 +207,9 @@
 	
 	
 	<!-- 회의실 내가 포함된 회의 보기 -->
-	<select id="getMyMeeting" resultType="com.toast.schedule.dto.MeetingDTO">
+	<select id="getMyMeeting" 
+	parameterType="com.toast.schedule.dto.MeetingDTO" 
+	resultType="com.toast.schedule.dto.MeetingDTO">
 		SELECT DISTINCT
 		    mr.room_idx, 
 		    mr.meet_rent_empl_idx, 
@@ -217,16 +219,29 @@
 		    mr.meet_end_date
 		FROM 
 		    meeting_rent mr
-		JOIN 
+		LEFT JOIN 
 		    meeting_participant mp
 		ON 
 		    mr.meet_rent_idx = mp.meet_rent_idx
 	    WHERE 
+		<choose>
+            <!-- room_idx가 0일 때 -->
+            <when test="room_idx == 0">
+	        (
+	            (mp.meet_parti_empl_idx = #{meet_parti_empl_idx})
+	            OR 
+	            (mr.meet_rent_empl_idx = #{meet_rent_empl_idx})
+	        )
+            </when>
+            <!-- room_idx가 0이 아닐 때 -->
+            <otherwise>
 	        (
 	            (mp.meet_parti_empl_idx = #{meet_parti_empl_idx} AND mr.room_idx = #{room_idx})
 	            OR 
 	            (mr.meet_rent_empl_idx = #{meet_rent_empl_idx} AND mr.room_idx = #{room_idx})
 	        )
+            </otherwise>
+        </choose>   
 	</select> 
 
 

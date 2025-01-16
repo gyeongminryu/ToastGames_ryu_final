@@ -27,6 +27,7 @@ public class StatsService {
 
     private final StatsDAO statsDAO;
     String driver_id = "webdriver.chrome.driver";
+    //String driver_path = "C:/STUDY/driver/chromedriver-win64/chromedriver.exe";
     String driver_path = "/usr/local/drivers/chromedriver";
 
     WebDriver driver = null;
@@ -41,6 +42,16 @@ public class StatsService {
         // 옵션 활성화
         options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
+
+        // 한국어 설정
+        options.addArguments("--lang=ko");
+
+        // 우분투 리눅스는 GUI가 아니므로 반드시 아래 옵션을 추가해야 한다.
+        options.addArguments("--headless");  // 헤드리스 모드
+        options.addArguments("--no-sandbox");  // 샌드박스 비활성화
+        options.addArguments("--disable-dev-shm-usage");  // 공유 메모리 사용 비활성화
+        options.addArguments("--remote-debugging-port=9222");  // 디버깅 포트 설정
+        options.addArguments("--disable-gpu");  // GPU 비활성화
     }
 
     // 게임 목록
@@ -50,7 +61,7 @@ public class StatsService {
 
         for (StatsDTO item : list) {
             // 구글 스토어 데이터 수집
-            doc = Jsoup.connect(getAddr(item.getGame_idx(), 1)).get();
+            doc = Jsoup.connect(getAddr(item.getGame_idx(), 1)).header("Accept-Language", "ko-KR").get();
             item.setData_google(getData(doc, 1));
 
             // 앱마켓 데이터 수집
@@ -81,7 +92,11 @@ public class StatsService {
                 data.put("thumbnail", info.getElementsByClass("we-artwork--ios-app-icon").get(0).child(0).attr("srcset").split(" ")[0]);
                 data.put("cntReview", grade.getElementsByClass("we-rating-count").get(0).text().split(" • ")[1]);
                 data.put("score", grade.getElementsByClass("we-rating-count").get(0).text().split(" • ")[0]);
-                data.put("ranking", grade.getElementsByClass("inline-list").get(0).text());
+                if (grade.getElementsByClass("inline-list").get(0).text().contains("•")) {
+                    data.put("ranking", "");
+                } else {
+                    data.put("ranking", grade.getElementsByClass("inline-list").get(0).text());
+                }
                 break;
         }
 
@@ -110,6 +125,10 @@ public class StatsService {
 
         switch (game_market) {
             case 1:
+                driver.get(getAddr(game_idx, game_market));
+                driver.findElements(By.className("ksBjEc")).get(3).click();
+                list = driver.findElements(By.className("RHo1pe"));
+
                 doc = Jsoup.connect(getAddr(game_idx, game_market)).get();
                 score = doc.getElementsByClass("jILTFe").get(0).text();
                 scorePercentage = doc.getElementsByClass("RutFAf");
@@ -118,10 +137,6 @@ public class StatsService {
                 for (int i = 0; i < scorePercentage.size(); i++) {
                     percentage.add(scorePercentage.get(i).attr("style").toString().split(" ")[1]);
                 }
-
-                driver.get(getAddr(game_idx, game_market));
-                driver.findElements(By.className("ksBjEc")).get(3).click();
-                list = driver.findElements(By.className("RHo1pe"));
 
                 for (WebElement elem : list) {
                     //logger.info(elem.findElements(By.className("X5PpBb")).get(0).getText());
@@ -134,18 +149,14 @@ public class StatsService {
                 break;
 
             case 2:
+                driver.get(getAddr(game_idx, game_market) + "?see-all=reviews");
+                list = driver.findElements(By.className("we-customer-review"));
+                String commentText = "";
+
                 doc = Jsoup.connect(getAddr(game_idx, game_market)).get();
                 score = doc.getElementsByClass("we-customer-ratings__averages__display").get(0).text();
                 scorePercentage = doc.getElementsByClass("we-star-bar-graph__bar__foreground-bar");
-                String commentText = "";
-
-                for (int i = 0; i < scorePercentage.size(); i++) {
-                    //logger.info(scorePercentage.get(i).attr("style").toString());
-                    percentage.add(scorePercentage.get(i).attr("style").toString().split(" ")[1]);
-                }
-
-                driver.get(getAddr(game_idx, game_market) + "?see-all=reviews");
-                list = driver.findElements(By.className("we-customer-review"));
+                //logger.info("scorePercentage is " + scorePercentage);
 
                 for (WebElement elem : list) {
                     comments.add(elem.findElements(By.className("we-customer-review__user")).get(0).getText());
@@ -155,6 +166,12 @@ public class StatsService {
                     commentText += elem.findElements(By.className("we-clamp")).get(0).getText();
                     comments.add(commentText);
                 }
+
+                for (int i = 0; i < scorePercentage.size(); i++) {
+                    //logger.info(scorePercentage.get(i).attr("style").toString());
+                    percentage.add(scorePercentage.get(i).attr("style").split(" ")[1].split(";")[0]);
+                }
+
                 break;
         }
 

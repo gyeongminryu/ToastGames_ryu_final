@@ -1,36 +1,51 @@
-function calendar_select_to_radiobtn(elem) {
+/*function calendar_select_to_radiobtn(elem) {
+	console.log(elem.value);
     switch (elem.value) {
-        case '1':
-            document.getElementsByName('schedule_type_name')[0].checked = true;
-            break;
-        case '2':
+        case '0':
             document.getElementsByName('schedule_type_name')[1].checked = true;
             break;
-        case '3':
+        case '1':
             document.getElementsByName('schedule_type_name')[2].checked = true;
             break;
-        case '4':
+        case '2':
             document.getElementsByName('schedule_type_name')[3].checked = true;
+            break;
+        case '3':
+            document.getElementsByName('schedule_type_name')[4].checked = true;
+            break;
+        case '4':
+            document.getElementsByName('schedule_type_name')[5].checked = true;
             break;
     }
     calendar.refetchEvents();
-}
+}*/
+
+
 
 
 
 //나의 일정 종류별 보기
-document.getElementById('schedule_category_name').addEventListener('change', function () {
+/*document.getElementById('schedule_category_name').addEventListener('change', function () {
     if (calendar) {
         const is_schedule = this.checked;
-        console.log(is_schedule ? "내가 포함된 회의만 보기 활성화" : "전체 회의 보기");
+        console.log(is_schedule);
+        calendar.refetchEvents(); // FullCalendar 이벤트 갱신
+    } else {
+        console.error('FullCalendar 인스턴스가 초기화되지 않았습니다.');
+    }
+});*/
+
+
+document.getElementById('schedule_category_name').addEventListener('change', function () {
+    const selectedValue = this.value; // 선택된 값 가져오기
+    console.log('선택된 값:', selectedValue);
+
+    if (calendar) {
         calendar.refetchEvents(); // FullCalendar 이벤트 갱신
     } else {
         console.error('FullCalendar 인스턴스가 초기화되지 않았습니다.');
     }
 });
-
-
-
 
 
 document.getElementById('schedule_start_time').addEventListener('change', function () {
@@ -41,8 +56,7 @@ document.getElementById('schedule_end_time').addEventListener('change', function
     console.log('종료 시간:', this.value); // ISO 형식(예: 2024-12-19T11:30)
 });
 
-//
-const currentUserIdx = '<%= session.getAttribute("user_idx") %>';
+
 
 let calendar = null;
 let Alldata = {};
@@ -75,7 +89,7 @@ $(function () {
             hour12: false, // 24시간 형식 사용
         },
         events: function (fetchInfo, successCallback, failureCallback) {
-            const schedule_type_name = $('input[name="schedule_type_name"]:checked').val();
+            const schedule_type_name = $('#schedule_category_name').val();
             console.log(schedule_type_name);
 
             $.ajax({
@@ -88,19 +102,19 @@ $(function () {
                         let color;
                         switch (event.sche_type) {
                             case 1:
-                                color = 'green'; // 개인
+                                color = '#3CB371'; // 개인
                                 break;
                             case 2:
-                                color = 'skyblue'; // 부서
+                                color = '#6495ED'; // 부서
                                 break;
                             case 3:
                                 color = 'orange'; // 프로젝트
                                 break;
                             case 4:
-                                color = 'purple'; // 기타
+                                color = 'lightpink'; // 기타
                                 break;
                             default:
-                                color = 'gray';
+                                color = 'lightgray';
                                 break;
                         }
 
@@ -228,7 +242,7 @@ $(function () {
                     sche_idx: obj.event._def.extendedProps.sche_idx,
                     start: schedule_format_local(obj.event.start),
                     end: schedule_format_local(obj.event.end),
-                    allday: obj.event._def.allDay,
+                    allday: obj.event._def.allDay
                 }),
                 success: function (data) {
                     console.log(data);
@@ -262,7 +276,7 @@ $(function () {
                 $('#schedule_allday').prop('checked', false);
             }
 
-            $('#add_schedule').click(function () {
+            $('#add_schedule').off('click').click(function () {
                 const title = $('#schedule_title').val();
                 const content = $('#schedule_content').val();
                 const sche_type = $('select[name="schedule_type"]').val();
@@ -282,7 +296,7 @@ $(function () {
                         start:start,
                         end:end,
                         allday: arg.allDay,
-                        sche_parti:sche_parti,
+                        sche_parti:sche_parti
                     };
 
                     schedule_add(scheduleData);

@@ -125,7 +125,7 @@
                             <tbody>
                             <tr>
                                 <th class="td_bg_subtle">이번 주 근무 시간</th>
-                                <td>${totalHours}시간/52시간</td>
+                                <td>${totalHours}시간 / 52시간</td>
                                 <th class="td_bg_subtle">초과 근무 여부</th>
                                 <td>대상 아님</td>
                             </tr>

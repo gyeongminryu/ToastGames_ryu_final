@@ -319,8 +319,8 @@ function saveValues() {
     let msgBox = document.getElementsByClassName('tst_modal_select_msg')[0]
 
     if (finalDeptIdx === '-1' && finalTeamIdx === '-1') {
-        document.getElementsByName('select_dept')[0].value = 0;
-        document.getElementsByName('select_team')[0].value = 0;
+        //document.getElementsByName('select_dept')[0].value = 0;
+        //document.getElementsByName('select_team')[0].value = 0;
         document.getElementsByName('duty_idx_modal')[0].value = '0';
         msgBox.innerHTML = '결재선을 비우시겠습니까? 이후 결재선까지 같이 비워집니다.';
     } else if (finalTeamIdx === '2') {

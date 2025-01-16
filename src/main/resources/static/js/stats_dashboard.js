@@ -1,6 +1,6 @@
 function tst_modal_call_param(cls, idx) {
     document.getElementsByClassName(cls)[0].style.display = 'flex';
-    getData(idx, 1);
+    getData(idx, 2);
 }
 
 function tst_modal_close(cls) {
@@ -84,7 +84,7 @@ function getData(game_idx, game_market) {
 function percentagePrint(per) {
     //console.log(per);
     for (var i = 0; i < per.length; i++) {
-        //console.log(per[i]);
+        console.log(per[i]);
         //console.log(document.getElementsByClassName('print_percentage_graph')[i].getElementsByClassName('progress_bar_fill')[0]);
         document.getElementsByClassName('print_percentage_graph')[i].getElementsByClassName('progress_bar_fill')[0].style.width = per[i];
     }

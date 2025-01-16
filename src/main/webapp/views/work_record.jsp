@@ -107,16 +107,43 @@
 								</thead>
 								<tbody>
 									<tr>
-										<th>총 근무 시간</th>
-										<th>${weeklyTotalWorkHours}/52시간</th>
+									    <th>총 근무 시간</th>
+									    <th>
+									        <c:choose>
+									            <c:when test="${empty weeklyTotalWorkHours}">
+									                0시간 0분 / 52시간
+									            </c:when>
+									            <c:otherwise>
+									                ${weeklyTotalWorkHours} / 52시간
+									            </c:otherwise>
+									        </c:choose>
+									    </th>
 									</tr>
 									<tr>
-										<th>필수 근무 시간</th>
-										<td><b>${requiredWorkHours}</b> / 40시간</td>
+									    <th>필수 근무 시간</th>
+									    <td>
+									        <c:choose>
+									            <c:when test="${empty requiredWorkHours}">
+									                0시간 0분 / 40시간
+									            </c:when>
+									            <c:otherwise>
+									                <b>${requiredWorkHours}</b> / 40시간
+									            </c:otherwise>
+									        </c:choose>
+									    </td>
 									</tr>
 									<tr>
-										<th>초과 근무 시간</th>
-										<td><b>${totalOvertimeHours}</b> / 12시간</td>
+									    <th>초과 근무 시간</th>
+									    <td>
+									        <c:choose>
+									            <c:when test="${empty totalOvertimeHours}">
+									                0시간 0분 / 12시간
+									            </c:when>
+									            <c:otherwise>
+									                <b>${totalOvertimeHours}</b> / 12시간
+									            </c:otherwise>
+									        </c:choose>
+									    </td>
 									</tr>
 								</tbody>
 							</table>
