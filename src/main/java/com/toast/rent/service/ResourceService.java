@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -24,9 +25,15 @@ import com.toast.rent.dao.ResourceDAO;
 import com.toast.rent.dto.ResourceDTO;
 import com.toast.rent.dto.ResourcePhotoDTO;
 
+
+
 @Service
 public class ResourceService {
 	Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@Value("${spring.servlet.multipart.location}")
+	private String uploadLocation;
+	
 	
 	private final ResourceDAO resourceDAO;
 	
@@ -69,7 +76,7 @@ public class ResourceService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청 중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -109,7 +116,7 @@ public class ResourceService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청 중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -274,7 +281,7 @@ public class ResourceService {
 	public ResponseEntity<Resource> fileDownload(String new_filename, String ori_filename) {
 		
 		//body
-		Resource res = new FileSystemResource("C:/files/"+new_filename);
+		Resource res = new FileSystemResource(uploadLocation+"/files/"+new_filename);
 		
 		//header
 		HttpHeaders header = new HttpHeaders();
@@ -329,7 +336,7 @@ public class ResourceService {
 					dto.setProd_return_state_str("연체 반납");
 					break;
 				case 4:
-					dto.setProd_return_state_str("대여 신청 중");
+					dto.setProd_return_state_str("대여신청중");
 					break;
 				default:
 					dto.setProd_return_state_str("알 수 없음");
@@ -384,7 +391,7 @@ public class ResourceService {
 				dto.setProd_return_state_str("연체 반납");
 				break;
 			case 4:
-				dto.setProd_return_state_str("대여 신청 중");
+				dto.setProd_return_state_str("대여신청중");
 				break;
 			default:
 				dto.setProd_return_state_str("알 수 없음");
@@ -413,7 +420,7 @@ public class ResourceService {
 			detail.setProd_return_state_str("연체 반납");
 			break;
 		case 4:
-			detail.setProd_return_state_str("대여 신청 중");
+			detail.setProd_return_state_str("대여신청중");
 			break;
 		default:
 			detail.setProd_return_state_str("알 수 없음");
