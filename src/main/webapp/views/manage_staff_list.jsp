@@ -103,7 +103,11 @@
 				                </td>
 				                <td class="td_align_left">${employee.position_name}/${employee.duty_name}</td>
 				                <td class="td_align_left">${employee.empl_job}</td>
-				                <td>${employee.empl_join_date}</td>
+				                <td><script>
+				                    // JSP에서 데이터를 JavaScript로 처리하여 날짜만 표시
+				                    document.write('${employee.empl_join_date}'.split(' ')[0]);
+				               		 </script>
+				                </td>
 				            </tr>
 				        </c:forEach>
 				    </c:if>
@@ -124,33 +128,7 @@
                                 <li class="page-item active">
                                     <a href="#" class="page-link">1</a>
                                 </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">4</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">5</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">6</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">7</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">8</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">9</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">10</a>
-                                </li>
+                          
                                 <li class="page-item next">
                                     <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
                                 </li>
@@ -208,12 +186,12 @@ function fetchStaffList() {
                 var row = "<tr>";
                 row += "<td>" + (i + 1) + "</td>";
                 row += "<td class='td_align_left'>"; 
-                row += "<span onclick=\"location.href='/organization_detail.go?dept_idx='\" class='tst_pointer'>" 
+                row += "<span onclick=\"location.href='/organization_detail.go?dept_idx=${employee.dept_idx}'\" class='tst_pointer'>" 
                 		+ (employee.dept_name || "N/A")+"</td>";
                
                 
                 row += "<td class='td_align_left'>";
-                row += "<h3 onclick=\"location.href='/manage_staff_detail?'\" class='tst_pointer'>" 
+                row += "<h3 onclick=\"location.href='/manage_staff_detail.go?empl_idx="+ employee.empl_idx + "'\" class='tst_pointer'>" 
                        + (employee.empl_name || "N/A") 
                        + " (" + (employee.empl_id || "N/A") + ")</h3>";
                 row += "</td>";

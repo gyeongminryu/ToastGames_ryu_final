@@ -50,7 +50,8 @@
                                                 </li>
                                                 <li>
                                                     <label class="form_label">ID</label>
-                                                    <input type="text" name="empl_id" maxlength="100" required placeholder="ID를 입력하세요" />
+                                                    <input type="text" id="empl_id" name="empl_id" maxlength="100" required placeholder="ID를 입력하세요" />
+                                                	<span id="id_check" class="font_caution"></span>
                                                 </li>
                                                 <li>
                                                     <label class="form_label">비밀번호</label>
@@ -97,10 +98,10 @@
                                                 </li>
                                                 <li>
                                                     <label class="form_label">
-                                                        비상 연락처
+                                                        연락처
                                                         <span class="font_caution">* 비상시 연락할 수 있는 전화번호를 입력하세요.</span>
                                                     </label>
-                                                    <input type="text" name="empl_per_phone" maxlength="100" placeholder="비상 연락처를 입력하세요" />
+                                                    <input type="text" name="empl_per_phone" required maxlength="100" placeholder="비상 연락처를 입력하세요" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">
@@ -111,7 +112,7 @@
                                                 </li>
                                                 <li>
                                                     <label class="form_label">입사일</label>
-                                                    <input type="date" name="empl_join_date" maxlength="100" />
+                                                    <input type="date" name="empl_join_date" required maxlength="100" />
                                                 </li>
                                                 <li>
                                                     <label class="form_label">
@@ -141,7 +142,7 @@
                                 </div>
                                 <div class="tst_col12">
                                     <label class="form_label">주소</label>
-                                    <input type="text" name="" maxlength="100" placeholder="주소를 입력하세요" />
+                                    <input type="text" name="empl_addr" maxlength="100" placeholder="주소를 입력하세요" />
                                     <hr class="separator" />
                                 </div>
                                 <div class="tst_col12">
@@ -171,18 +172,7 @@
                                 </tr>
                                 </thead>
                                 <tbody id="attachmentFileList">
-                                <tr>
-                                    <td>{파일명 (파일 용량kb)}</td>
-                                    <td>
-                                        <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{파일명 (파일 용량kb)}</td>
-                                    <td>
-                                        <button onclick="tst_modal_call_param('tst_modal_delete', '{파일idx}')" type="button" class="btn_min btn_primary">파일 삭제</button>
-                                    </td>
-                                </tr>
+                                
 
                                 <!-- 첨부 파일이 없는 경우 아래와 같이 입력하세요 -->
                                 <tr>
@@ -371,6 +361,32 @@ document.getElementById('fileInput').addEventListener('change', function (event)
 function img_preview(elem) {
     // 이미지 미리보기 로직 구현 (필요 시)
 }
+
+$(document).ready(function () {
+    // 아이디 입력 필드에서 포커스아웃 이벤트 처리
+    $("#empl_id").on("focusout", function () {
+        const userId = $(this).val().trim(); // 입력된 아이디 가져오기
+
+       
+
+        // AJAX 요청
+        $.ajax({
+            url: './check_duplicate_id.ajax', // 서버에서 처리할 URL
+            method: 'GET',
+            data: { empl_id: userId }, // 서버로 전송할 데이터
+            success: function (response) {
+                if (response.isDuplicate) {
+                    $("#id_check").text("이미 사용 중인 아이디입니다.").css("color", "red");
+                } else {
+                    $("#id_check").text("사용 가능한 아이디입니다.").css("color", "green");
+                }
+            },
+            error: function () {
+                $("#id_check").text("아이디 확인 중 오류가 발생했습니다.").css("color", "red");
+            }
+        });
+    });
+});
 </script>
     <c:import url="manage_employee_update_modal.jsp" />
 </body>

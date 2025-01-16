@@ -2,6 +2,7 @@ package com.toast.management.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -303,5 +304,17 @@ public class EmployeeController {
         employees = employeeService.emplresignAllList();
 
         return employees;
+    }
+	
+	@GetMapping(value="/check_duplicate_id.ajax")
+	@ResponseBody
+	 public Map<String, Boolean> checkDuplicateId(@RequestParam("empl_id") String emplId) {
+        // 서비스 레이어에서 중복 체크
+        boolean isDuplicate = employeeService.isIdDuplicate(emplId);
+
+        // 결과 반환
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isDuplicate", isDuplicate); // true: 중복됨, false: 사용 가능
+        return response;
     }
 }

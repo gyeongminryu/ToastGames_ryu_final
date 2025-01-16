@@ -227,7 +227,7 @@ public class EmployeeService {
 					String originalFileName = file.getOriginalFilename();
 					String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 					String newFileName = UUID.randomUUID().toString() + "." + fileType;
-					String fileAddr = uploadAddr + "/" + newFileName;
+					String fileAddr = uploadAddr + "files/" + newFileName;
 					
 					// 경로 설정 부분. 파일을 서버에 저장함. 필요한가? 이거 어떻게 해야할지 정해야 함..
 					File dest = new File(fileAddr);
@@ -259,7 +259,7 @@ public class EmployeeService {
 				String originalFileName = file.getOriginalFilename();
 				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 				String newFileName = UUID.randomUUID().toString() + "." + fileType;
-				String fileAddr = uploadAddr + "/" + newFileName;
+				String fileAddr = uploadAddr + "files/" + newFileName;
 				
 				// 경로 설정 부분. 파일을 서버에 저장함. 필요한가? 이거 어떻게 해야할지 정해야 함..
 				File dest = new File(fileAddr);
@@ -307,7 +307,7 @@ public class EmployeeService {
 	        // 2. 확장자 추출 및 파일명 생성
 	        String fileType = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
 	        String newFileName = UUID.randomUUID().toString() + "." + fileType;
-	        String fileAddr = uploadAddr + "/" + newFileName;
+	        String fileAddr = uploadAddr + "files/" + newFileName;
 
 	        // 3. 디렉토리 확인 및 생성
 	        File dest = new File(fileAddr);
@@ -336,7 +336,7 @@ public class EmployeeService {
 		String originalFileName = singleFile.getOriginalFilename();
 		String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 		String newFileName = UUID.randomUUID().toString() + "." + fileType;
-		String fileAddr = uploadAddr + "/" + newFileName;
+		String fileAddr = uploadAddr + "files/" + newFileName;
 		
 		File dest = new File(fileAddr);
 		if (!dest.exists()) {
@@ -361,7 +361,7 @@ public class EmployeeService {
 		// new_filename으로 file db 삭제 + 저장경로의 파일 삭제
 		boolean success = false;
 		employeeDAO.emplFileDel(new_filename);
-		File file = new File(uploadAddr + "/" + new_filename);
+		File file = new File(uploadAddr + "files/" + new_filename);
 		if(file.exists()) {
 			 success = file.delete();
 			
@@ -419,6 +419,11 @@ public class EmployeeService {
 	public Double getweekWorkRecord(String empl_idx) {
 		return employeeDAO.getweekWorkRecord(empl_idx);
 		
+	}
+
+	public boolean isIdDuplicate(String emplId) {
+		// TODO Auto-generated method stub
+		return employeeDAO.isIdDuplicate(emplId);
 	}
 	
 }

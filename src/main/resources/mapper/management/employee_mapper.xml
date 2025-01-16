@@ -492,5 +492,13 @@ WHERE empl_idx = #{param1}
 AND work_date BETWEEN DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
                   AND DATE_ADD(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 6 DAY);
    </select>
+   
+   <select id="isIdDuplicate" parameterType="string" resultType="boolean">
+        SELECT EXISTS (
+            SELECT 1
+            FROM employee
+            WHERE empl_id = #{param1}
+        )
+    </select>
 
 </mapper>
