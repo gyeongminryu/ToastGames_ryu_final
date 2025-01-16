@@ -166,6 +166,13 @@
     </div>
 </div>
 </body>
+<script>
+	// alertMessage가 전달되었을 경우 alert 띄우기
+	let alertMessage = "${alertMessage}";
+	if (alertMessage) {
+		alert(alertMessage);
+	}
+</script>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/rent_list.js"></script>
 </html>

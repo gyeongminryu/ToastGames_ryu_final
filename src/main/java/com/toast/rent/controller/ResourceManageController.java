@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.toast.rent.dto.ResourceDTO;
 import com.toast.rent.dto.ResourceManageDTO;
@@ -55,7 +56,7 @@ public class ResourceManageController {
 	/*공용 물품 관리*/ //-- -관리자 확인 해야함(로그인 & 부서 확인일듯)--------
 	//물품관리 메인 이동
 	@RequestMapping(value="/manage_rent_list.go")
-	public String rentManageMain(Model model) {
+	public String rentManageMain(Model model, RedirectAttributes redirectAttributes) {
 		//String loginId = (String) session.getAttribute("loginId");
 		//ResourceManageDTO dto =  resourceMgService.getEmplMg(loginId);
 		//session.setAttribute("empl_idx",dto.getEmpl_idx()); //사원 idx가져와
@@ -64,12 +65,14 @@ public class ResourceManageController {
 		dept_idx = (int) session.getAttribute("dept_idx"); //세션에 저장한 사원 부서idx 가져와
 		//dept_idx=122;
 		String page = "redirect:/rent_list.go";
-		if(dept_idx == 122) {	
-			List<ResourceManageDTO> categoryList =resourceMgService.resourceCateMg(); //카테고리 가져와
-			model.addAttribute("categoryList", categoryList);
-			page = "manage_rent_list";
-		}
-		return page;
+	    if (dept_idx == 122) {
+	        List<ResourceManageDTO> categoryList = resourceMgService.resourceCateMg(); // 카테고리 가져오기
+	        model.addAttribute("categoryList", categoryList);
+	        page = "manage_rent_list";
+	    } else {
+	        redirectAttributes.addFlashAttribute("alertMessage", "권한이 없습니다.");
+	    }
+	    return page;
 	}
 	
 	//카테고리 검색 목록 가져오기//get
