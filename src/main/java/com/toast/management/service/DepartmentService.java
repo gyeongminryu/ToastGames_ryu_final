@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -237,7 +238,7 @@ public class DepartmentService {
 		
 		return departmentDAO.getemplinfo(ceo_idx);
 	}
-
+	@Transactional
 	public void companyinfoUpdateDo(Map<String, String> param) {
 		
 		String file_key = UUID.randomUUID().toString();
@@ -284,7 +285,7 @@ public class DepartmentService {
 	
 		if(before_ceo!= 0) { // 사장이 이미 존재한다면
 			employeeDAO.deptheadmoveout(before_ceo_idx); // 대표부서에서 이전 부서장 null 처리
-			dept_idx = "1"; // 부서 없음 처리
+			dept_idx = "2"; // 부서 없음 처리 1 >> 2 대표로 처리
 			duty_idx = "1"; // 직책 없음 처리
 			empl_job = "사장직위 변경"; // 
 			
@@ -307,7 +308,7 @@ public class DepartmentService {
 			String originalFileName = singleFile.getOriginalFilename();
 			String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 			String newFileName = UUID.randomUUID().toString() + "." + fileType;
-			String fileAddr = uploadAddr + "/" + newFileName;
+			String fileAddr = uploadAddr + "files/" + newFileName;
 			
 			File dest = new File(fileAddr);
 			if (!dest.exists()) {
@@ -343,7 +344,7 @@ public class DepartmentService {
 				String originalFileName = multipartFile.getOriginalFilename();
 				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 				String newFileName = UUID.randomUUID().toString() + "." + fileType;
-				String fileAddr = uploadAddr + "/" + newFileName;
+				String fileAddr = uploadAddr + "files/" + newFileName;
 				
 				FileDTO filedto = new FileDTO();
 				File dest = new File(fileAddr);
@@ -378,7 +379,7 @@ public class DepartmentService {
 		public boolean compStampDel(String new_filename) {
 			boolean success = false;
 			departmentDAO.compStampDel();
-			File file = new File(uploadAddr + "/" + new_filename);
+			File file = new File(uploadAddr + "files/" + new_filename);
 			if(file.exists()) {
 				 success = file.delete();
 				
