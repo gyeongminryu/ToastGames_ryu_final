@@ -16,17 +16,29 @@ var step =0;
         document.getElementsByClassName('tst_modal_select')[0].style.display = 'flex';
         console.log('부모창에 전달 받은 값',param);
         step= param;
-        approval_get_all_empl();
+        approval_get_all_empl('없음','없음');
         approval_get_high_dept();
     }
 
+
+    //검색
+function approval_filter_empl(){
+    var filter = $('#tst_search_select_category').val();
+    var search_val = $('#search').val();
+    approval_get_all_empl(filter,search_val);
+}
+
     //회사 내 모든 직원 가져오기
-function approval_get_all_empl(){
-    console.log("approval_get_all_empl 함수 실행");
+function approval_get_all_empl(option,search){
+        console.log("option",option);
+        console.log("search",search);
+
+        //filter,search val
+        console.log("approval_get_all_empl 함수 실행");
         $.ajax({
         type : 'GET',
         url : 'approval_company_get_allempl.ajax',
-        data : {},
+        data : {'filter':option,'search':search},
         dataType : 'JSON',
         success : function(data){
 

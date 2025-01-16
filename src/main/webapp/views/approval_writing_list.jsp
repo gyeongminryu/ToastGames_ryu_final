@@ -136,9 +136,50 @@
                             <tfoot>
                             <tr>
                                 <td colspan="7">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination" id="pagination"></ul>
-                                    </nav>
+                                    <ul id="pagination" class="pagination-sm pagination">
+                                        <li class="page-item first disabled">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+                                        </li>
+                                        <li class="page-item prev disabled">
+                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
+                                        </li>
+                                        <li class="page-item active">
+                                            <a href="#" class="page-link">1</a>
+                                        </li>
+                                        <%--<li class="page-item">
+                                            <a href="#" class="page-link">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">3</a>
+                                        </li>
+                                    <li class="page-item">
+                                      <a href="#" class="page-link">4</a>
+                                    </li>
+                                    <li class="page-item">
+                                      <a href="#" class="page-link">5</a>
+                                    </li>
+                                    <li class="page-item">
+                                      <a href="#" class="page-link">6</a>
+                                    </li>
+                                    <li class="page-item">
+                                      <a href="#" class="page-link">7</a>
+                                    </li>
+                                    <li class="page-item">
+                                      <a href="#" class="page-link">8</a>
+                                    </li>
+                                    <li class="page-item">
+                                      <a href="#" class="page-link">9</a>
+                                    </li>
+                                    <li class="page-item">
+                                      <a href="#" class="page-link">10</a>
+                                    </li>--%>
+                                    <li class="page-item next">
+                                      <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
+                                    </li>
+                                    <li class="page-item last">
+                                      <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+                                    </li>
+                                    </ul>
                                 </td>
                             </tr>
                             </tfoot>
