@@ -102,19 +102,19 @@ $(function () {
                         let color;
                         switch (event.sche_type) {
                             case 1:
-                                color = 'green'; // 개인
+                                color = '#3CB371'; // 개인
                                 break;
                             case 2:
-                                color = 'skyblue'; // 부서
+                                color = '#6495ED'; // 부서
                                 break;
                             case 3:
                                 color = 'orange'; // 프로젝트
                                 break;
                             case 4:
-                                color = 'purple'; // 기타
+                                color = 'lightpink'; // 기타
                                 break;
                             default:
-                                color = 'gray';
+                                color = 'lightgray';
                                 break;
                         }
 
