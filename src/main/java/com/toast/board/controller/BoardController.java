@@ -126,7 +126,8 @@ public class BoardController {
 	    
 	    // 게시글이 삭제된 경우 처리
 	    if ((int) board.get("board_deleted") == 1) {
-	        return "board_list";
+	    	model.addAttribute("msg", "삭제된 게시글 입니다.");
+	        return "redirect:/board_list.go?msg=deleteBoard";
 	    }
 	    
 	    // 개인이 소속된 dept를 가져오는 메서드

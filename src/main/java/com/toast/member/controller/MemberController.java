@@ -56,7 +56,7 @@ public class MemberController {
 		return "login";
 	}
 
-	// 로그인
+	// 	로그인
 		@PostMapping(value = "/login.do")
 		public String login(HttpSession session, Model model, String id, String pw) {
 			String page = "login";
