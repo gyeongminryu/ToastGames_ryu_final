@@ -45,6 +45,7 @@ public class ApprovalRequestService {
 		app_dto.setForm_idx(form_idx);
 		app_dto.setDoc_content(form_content_copy);
 		app_dto.setDoc_empl_idx(empl_idx);
+
 		//파일 키를 작성할 때 넣어주기
 		String file_key = UUID.randomUUID().toString();
 		app_dto.setFile_key(file_key);
@@ -394,7 +395,12 @@ public class ApprovalRequestService {
 					String file_type = ori_filename.substring(file_type_split);
 					String new_filename = UUID.randomUUID().toString() + file_type;
 
+					//웹서버에서만 됨
 					String file_addr = uploadAddr+ "files/" + new_filename; //파일 붙이기
+
+					//나중에 웹서버 아닐 때는 files/ 빼고 해보기
+
+					logger.info("file_addr:{}",file_addr);
 					//파일에 먼저 저장하기
 					//1.byte
 					try {
@@ -643,7 +649,11 @@ public class ApprovalRequestService {
 			app_dto.setDoc_content((String) doc_info.get("doc_content"));
 			app_dto.setDoc_content_sub((String) doc_info.get("doc_content_sub"));
 			app_dto.setDoc_empl_idx(empl_idx);
+			//파일 키를 작성할 때 넣어주기
+			String file_key = UUID.randomUUID().toString();
+			app_dto.setFile_key(file_key);
 
+			//방금 작성한 문서 idx 가져오기
 			if(approvalRequestDAO.copy_doc_info(app_dto)>0){
 				doc_idx_copied = app_dto.getDoc_idx();
 			}
