@@ -84,7 +84,8 @@
         SELECT DISTINCT(a.doc_idx),d.doc_subject,d.doc_state,DATE_FORMAT(d.doc_write_date, '%Y-%m-%d %H:%i:%s') AS write_date,DATE_FORMAT(d.doc_update_date, '%Y-%m-%d %H:%i:%s') AS update_date,DATE_FORMAT(d.doc_end_date, '%Y-%m-%d %H:%i:%s') AS end_date,d.form_idx,f.form_subject FROM document d
           join approval a on d.doc_idx = a.doc_idx
           join form f on d.form_idx = f.form_idx
-          WHERE doc_empl_idx = #{r_empl_idx} ORDER BY d.doc_write_date DESC
+          WHERE doc_empl_idx = #{r_empl_idx} ORDER BY d.doc_write_date DESC LIMIT 10
+                                             /*limit 10 빼기*/
     </select>
 
     <!--받은 리스트에 대한 정보 가져오기-->
