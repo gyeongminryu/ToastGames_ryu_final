@@ -67,9 +67,60 @@ public class ApprovalService {
 	public List<Map<String,Object>> team_allempl(int team_idx) {
 		return approvalDAO.team_allempl(team_idx);
 	}
-	public List<Map<String,Object>> approval_company_get_allempl() {
+	public List<Map<String,Object>> approval_company_get_allempl(String filter,String search) {
+		List<Map<String,Object>> all_empl = approvalDAO.approval_company_get_allempl();
+		List<Map<String,Object>> empl_filtered = new ArrayList<>();
+		logger.info("all_empl{}",all_empl);
 
-		return approvalDAO.approval_company_get_allempl();
+			if(filter.equals("전체")){
+				for (Map<String,Object> empl : all_empl){
+					logger.info("empl:{}",empl);
+					String dept_name = (String) empl.get("dept_name");
+					String empl_name = (String) empl.get("empl_name");
+					logger.info("empl:{}",empl_name);
+					logger.info("dept_name:{}",dept_name);
+
+					logger.info("성공:{}",dept_name.contains(search));
+					logger.info("성공:{}",empl_name.contains(search));
+					if(dept_name.contains(search)||empl_name.contains(search)){
+						empl_filtered.add(empl);
+						logger.info("empl_filtered:{}",empl_filtered);
+					}
+				}
+			}else if(filter.equals("부서")){
+				for (Map<String,Object> empl : all_empl){
+					logger.info("empl:{}",empl);
+					String dept_name = (String) empl.get("dept_name");
+					logger.info("dept_name:{}",dept_name);
+
+					if(dept_name.contains(search)){
+						empl_filtered.add(empl);
+						logger.info("empl_filtered:{}",empl_filtered);
+					}
+				}
+			}else if(filter.equals("이름")){
+				for (Map<String,Object> empl : all_empl){
+					String empl_name = (String) empl.get("empl_name");
+					logger.info("empl_name:{}",empl_name);
+					if(empl_name.contains(search)){
+						empl_filtered.add(empl);
+						logger.info("empl_filtered:{}",empl_filtered);
+					}
+				}
+			}else{
+				empl_filtered = all_empl;
+			}
+
+
+
+
+
+
+
+
+		logger.info("empl_filtered:{}",empl_filtered);
+
+		return empl_filtered;
 	}
 
 
@@ -429,7 +480,7 @@ public class ApprovalService {
 		HttpHeaders header = new HttpHeaders();
 
 		//2.본문 - FileSystem을 통해 특정 위치의 파일 가져오기
-		Resource resource = new FileSystemResource("C:/files/"+new_filename);
+		Resource resource = new FileSystemResource("/files/"+new_filename);
 
 		//한글 명인 파일 깨지지 않게 처리
         try {

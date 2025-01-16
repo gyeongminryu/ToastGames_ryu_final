@@ -174,7 +174,7 @@
                 </li>
                 <li class="page-item">
                   <a href="#" class="page-link">3</a>
-                </li>
+                </li><%--
                 <li class="page-item">
                   <a href="#" class="page-link">4</a>
                 </li>
@@ -195,7 +195,7 @@
                 </li>
                 <li class="page-item">
                   <a href="#" class="page-link">10</a>
-                </li>
+                </li>--%>
                 <li class="page-item next">
                   <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
                 </li>
