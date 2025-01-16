@@ -218,7 +218,7 @@ public class MemberController {
 					// .contentType(MediaType.IMAGE_JPEG) // 이미지의 경우 예시로 JPEG 사용, 실제 이미지 타입에 맞게 설정
 					.body(resource);
 		} else {
-			return ResponseEntity.notFound().build(); // 파일이 존재하지 않으면 404 반환
+	        return ResponseEntity.ok().build(); // 또는 다른 응답 처리를 할 수 있음. 그런데 이거는 파일 없어도 404보고 싶지않아서 ok처리함..
 		}
 	}
 
