@@ -38,7 +38,7 @@
                 <div class="tst_col7">
 
                     <!-- 검색 -->
-                    <form>
+
                         <div class="tst_search_container">
                             <div class="tst_search_select">
                                 <select id="tst_search_select_category" name="category">
@@ -51,10 +51,9 @@
                                 <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" id = "search"/>
                             </div>
                             <div class="tst_search_icon">
-                                <button type="button" class="btn_icon"><i class="bi bi-search"></i></button>
+                                <button type="button" onclick="approval_filter_empl()" class="btn_icon"><i class="bi bi-search"></i></button>
                             </div>
                         </div>
-                    </form>
                     <!-- //검색 -->
 
                     <table class="tst_table table_align_left">

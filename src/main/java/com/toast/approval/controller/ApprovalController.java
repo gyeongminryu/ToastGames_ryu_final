@@ -110,9 +110,11 @@ public class ApprovalController {
 	//회사내 모든 사원 가져오기
 	@RequestMapping (value="/approval_company_get_allempl.ajax")
 	@ResponseBody
-	public Map<String,Object> approval_company_get_allempl(){
+	public Map<String,Object> approval_company_get_allempl(String filter, String search){
+		logger.info("filter:{}",filter);
+		logger.info("search:{}",search);
 		Map<String,Object> data = new HashMap<>();
-		data.put("company_empl",approvalService.approval_company_get_allempl());
+		data.put("company_empl",approvalService.approval_company_get_allempl(filter,search));
 		return data;
 	}
 
