@@ -63,12 +63,12 @@ public class BoardService {
 					String ori_filename = file.getOriginalFilename();
 					String file_type = ori_filename.substring(ori_filename.lastIndexOf("."));
 					String new_filename = UUID.randomUUID().toString() + file_type;
-					String file_addr = "files/"; // uploadAddr = usr/local/tomcat/webapps/
-					String ServerFileAddr = uploadAddr + "files/";
+					String file_addr = uploadAddr + "files/" + new_filename; 
+					//String ServerFileAddr = uploadAddr + "files/"; // uploadAddr = usr/local/tomcat/webapps/
 					long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
 				
 	        		// 파일을 서버에 저장하는 코드
-	        		File dest = new File(ServerFileAddr);
+	        		File dest = new File(file_addr);
 	        		file.transferTo(dest);
 	               
 					 Map<String, Object> fileParams = new HashMap<>();
@@ -201,13 +201,13 @@ public class BoardService {
 				String originalFileName = file.getOriginalFilename();
 				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
 				String newFileName = UUID.randomUUID().toString() + fileType;
-				String fileAddr = "files/"; // uploadAddr = usr/local/tomcat/webapps/
-				String ServerFileAddr = uploadAddr + "files/"; 
+				String file_addr = uploadAddr + "files/" + newFileName; 
+				//String ServerFileAddr = uploadAddr + "files/"; 
 				
-                long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
+                long file_size = file.getSize(); // 파일 크기를 바이트 단위로 가져옵니다.
 
                 // 파일을 서버에 저장하는 코드
-        		File dest = new File(ServerFileAddr);
+        		File dest = new File(file_addr);
         		file.transferTo(dest);
                 
 				// 첨부 파일 정보를 DTO에 저장.
@@ -216,7 +216,7 @@ public class BoardService {
 				fileDTO.setOri_filename(originalFileName);
 				fileDTO.setNew_filename(newFileName);
 				fileDTO.setFile_type(fileType);
-				fileDTO.setFile_addr(fileAddr);
+				fileDTO.setFile_addr(file_addr);
 				fileDTO.setUploader_idx(empl_idx);
 				fileDTO.setFile_size(file_size);
 				// file 테이블에 파일정보 저장.
