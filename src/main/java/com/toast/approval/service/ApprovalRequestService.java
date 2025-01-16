@@ -394,7 +394,7 @@ public class ApprovalRequestService {
 					String file_type = ori_filename.substring(file_type_split);
 					String new_filename = UUID.randomUUID().toString() + file_type;
 
-					String file_addr = uploadAddr+ "/" + new_filename;
+					String file_addr = uploadAddr+ "files/" + new_filename; //파일 붙이기
 					//파일에 먼저 저장하기
 					//1.byte
 					try {

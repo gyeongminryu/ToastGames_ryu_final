@@ -156,6 +156,7 @@ public class ApprovalRequestController {
 	@ResponseBody
 	public Map<String,Object> approval_file_save (@RequestParam("doc_idx") String doc_idx,@RequestParam("files") MultipartFile[] files) {
 		logger.info("file controller 도착");
+		logger.info("doc_idx:{}",doc_idx);
 		Map<String,Object> data = new HashMap<>();
 
 		data.put("file",approvalRequestService.save_files(files,doc_idx,empl_idx));

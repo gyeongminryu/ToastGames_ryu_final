@@ -40,11 +40,9 @@ function approval_write_request_save(){
             return value !== "";  // 빈 값을 제외
         });
 
-
-
     //동일한 결재선 등록 방지
 
-    if (new Set(empl_lines).size === empl_lines.length) {
+    if (new Set(filtered_empl_lines).size === filtered_empl_lines.length) {
         // 모든 값이 다를 경우 처리
         //new Set(empl_lines).size = 중복을 없애고 반환한 내용의 크기
         //empl_lines.length = 중복까지 포함한 길이
