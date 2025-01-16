@@ -3,7 +3,7 @@
 <div class="tst_topnav">
     <div class="tst_wrapper tst_flex align_middle">
         <div class="tst_col2 logo align_middle">
-            <img src="/resources/img/logo.jpg" alt="" />
+            <img src="/resources/img/logo.jpg" onclick="location.href='/login.go'" class="tst_pointer" alt="" />
         </div>
         <ul class="tst_col8 align_center list_no_desc list_inline">
             <li onclick="location.href='/approval_writing_list.go'" class="tst_pointer">
