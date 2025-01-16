@@ -1,5 +1,6 @@
 package com.toast.rent.service;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -314,8 +315,11 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation);
-				Files.write(path, arr);
+				String path = uploadLocation+"/files/"+ newFilename;
+				//Path path = Paths.get(uploadLocation+"files/");
+				//Files.write(path, arr);
+			     File dest = new File(path);
+			     file.transferTo(dest);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
@@ -667,8 +671,12 @@ public class ResourceManageService {
 			//5. 파일 저장
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation);
-				Files.write(path, arr);
+				String path = uploadLocation+"/files/"+ newFilename;
+				//Path path = Paths.get(uploadLocation+"files/");
+				//Files.write(path, arr);
+			     File dest = new File(path);
+			     file.transferTo(dest);
+
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
