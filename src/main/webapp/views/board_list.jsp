@@ -143,6 +143,14 @@
     </div>
 </div>
 </body>
+<c:if test="${not empty param.msg}">
+    <script type="text/javascript">
+        var msg = "${param.msg}";
+        if (msg === "deleteBoard") {
+            alert("삭제된 게시물 입니다.");
+        }
+    </script>
+</c:if>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/board_list.js"></script>
 </html>
