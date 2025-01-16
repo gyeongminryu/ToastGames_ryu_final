@@ -3,6 +3,7 @@ package com.toast.regdata.controller;
 import com.toast.regdata.service.ManageFormService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -183,18 +184,25 @@ public class ManageFormController {
 
     @RequestMapping (value = "/manage_form_set_line.do")
     public ModelAndView manage_form_set_line(@RequestParam Map<String, String> params) {
-        logger.info("params: {}", params);
+        ModelAndView mav = new ModelAndView();
+        //logger.info("params: {}", params);
         manageFormService.setLine(params);
+        int form_state = manageFormService.getState(Integer.parseInt(params.get("form_idx_modal")));
 
-        return new ModelAndView("redirect:/manage_form_update.go?form_idx=" + params.get("form_idx_modal"));
+        if (form_state == 1) {
+            mav.setViewName("redirect:/manage_form_update.go?form_idx=" + params.get("form_idx_modal"));
+        } else if (form_state == 2) {
+            mav.setViewName("redirect:/manage_form_wip_update.go?form_idx=" + params.get("form_idx_modal"));
+        }
+
+        return mav;
     }
 
     // 작성중인 문서 양식 등록하기
     @RequestMapping (value = "/manage_form_register.do")
     public ModelAndView manage_form_register(String form_idx) {
         //logger.info("form_idx = "+form_idx);
-        int form_idxInt = Integer.parseInt(form_idx);
-        manageFormService.register(form_idxInt);
+        manageFormService.register(Integer.parseInt(form_idx));
 
         return new ModelAndView("redirect:/manage_form_detail.go?form_idx=" + form_idx);
     }
@@ -221,10 +229,9 @@ public class ManageFormController {
 
     // 양식 복구하기
     @RequestMapping (value = "/manage_form_restore.do")
-    public ModelAndView manage_form_restore(String form_idx) {
+    public ModelAndView manage_form_restore(HttpSession session, String form_idx) {
         //logger.info("form_idx = "+form_idx);
-        int form_idxInt = Integer.parseInt(form_idx);
-        manageFormService.register(form_idxInt);
+        manageFormService.register(Integer.parseInt(form_idx));
 
         return new ModelAndView("redirect:/manage_form_detail.go?form_idx=" + form_idx);
     }

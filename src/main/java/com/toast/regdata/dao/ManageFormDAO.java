@@ -32,6 +32,7 @@ public interface ManageFormDAO {
     List<ManageFormDTO> callDept(int dept_high);
     String callDeptName(int dept_idx);
     void setLine(Map<String, Integer> params);
+    int getState(int form_idx);
 
     // 작성중인 문서 양식 등록하기
     void register(int form_idx);

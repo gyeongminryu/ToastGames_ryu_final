@@ -165,6 +165,7 @@ function saveForm() {
             dataType: 'json',
             success: function(data) {
                 //console.log(data.success);
+                console.log("저장 완료");
                 saveMsg();
             },
             error: function(e) {
@@ -174,9 +175,9 @@ function saveForm() {
     }
 }
 
-// 문서 양식을 저장할 시 메시지 출력
+// 자동 저장시 메시지 출력
 function saveMsg() {
-    console.log('자동 저장 완료');
+    //console.log('자동 저장 완료');
     document.getElementsByClassName('msg')[0].innerHTML = '<span class="font_caution">문서 양식을 저장했습니다.</span>';
     setTimeout(function() {
         document.getElementsByClassName('msg')[0].innerHTML = '2분마다 자동으로 저장됩니다.';
@@ -362,7 +363,8 @@ function saveValues() {
 
 // 작성중인 문서 등록하기
 function registWIP() {
-    location.href='/manage_form_register.do?form_idx=' + form_idx;
+    saveForm();
+    //location.href='/manage_form_register.do?form_idx=' + form_idx;
 }
 
 // 작성중인 문서 삭제하기

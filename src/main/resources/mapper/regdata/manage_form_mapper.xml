@@ -163,6 +163,10 @@
             duty_idx = #{duty_idx} WHERE form_idx = #{form_idx} AND gline_order = #{gline_order}
     </update>
 
+    <select id="getState" resultType="int">
+        SELECT form_state FROM form WHERE form_idx = #{param1}
+    </select>
+
     <!-- 작성중인 문서 양식 등록하기 -->
     <update id="register">
         UPDATE form SET form_state = 1 WHERE form_idx = #{param1}

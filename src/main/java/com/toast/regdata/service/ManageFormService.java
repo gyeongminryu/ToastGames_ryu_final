@@ -240,22 +240,27 @@ public class ManageFormService {
         newParams.put("gline_order", Integer.parseInt(params.get("tst_modal_param")));
         newParams.put("dept_idx", Integer.parseInt(params.get("select_team")));
         newParams.put("duty_idx", Integer.parseInt(params.get("duty_idx_modal")));
-        logger.info("params: {}", params);
+        //logger.info("params: {}", params);
 
         if (newParams.get("dept_idx") == -1 && newParams.get("duty_idx") == 0) {
             int i = newParams.get("gline_order");
-            logger.info("i="+i);
+            //logger.info("i="+i);
 
             while (i < 4) {
                 manageFormDAO.setLine(newParams);
                 i++;
-                logger.info("i="+i);
+                //logger.info("i="+i);
                 newParams.put("gline_order", i);
             }
 
         } else {
             manageFormDAO.setLine(newParams);
         }
+    }
+
+    public int getState(int form_idx) {
+
+        return manageFormDAO.getState(form_idx);
     }
 
     // 작성중인 문서 양식 등록하기
