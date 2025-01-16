@@ -62,11 +62,15 @@ public class BoardService {
 				if (!file.isEmpty()) {
 					String ori_filename = file.getOriginalFilename();
 					String file_type = ori_filename.substring(ori_filename.lastIndexOf("."));
-					logger.info("file_type" + file_type);
 					String new_filename = UUID.randomUUID().toString() + file_type;
-					String file_addr = uploadAddr + "files/"; // uploadAddr = usr/local/tomcat/webapps/
-	                long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
+					String file_addr = "files/"; // uploadAddr = usr/local/tomcat/webapps/
+					String ServerFileAddr = uploadAddr + "files/";
+					long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
 				
+	        		// 파일을 서버에 저장하는 코드
+	        		File dest = new File(ServerFileAddr);
+	        		file.transferTo(dest);
+	               
 					 Map<String, Object> fileParams = new HashMap<>();
 					    fileParams.put("file_key", file_key);
 					    fileParams.put("uploader_idx", uploader_idx);
@@ -196,11 +200,16 @@ public class BoardService {
 			if (!file.isEmpty()) {
 				String originalFileName = file.getOriginalFilename();
 				String fileType = originalFileName.substring(originalFileName.lastIndexOf("."));
-				String newFileName = UUID.randomUUID().toString() + "." + fileType;
-				String fileAddr = uploadAddr + "files/"; // uploadAddr = usr/local/tomcat/webapps/
-
+				String newFileName = UUID.randomUUID().toString() + fileType;
+				String fileAddr = "files/"; // uploadAddr = usr/local/tomcat/webapps/
+				String ServerFileAddr = uploadAddr + "files/"; 
+				
                 long file_size = file.getSize();  // 파일 크기를 바이트 단위로 가져옵니다.
 
+                // 파일을 서버에 저장하는 코드
+        		File dest = new File(ServerFileAddr);
+        		file.transferTo(dest);
+                
 				// 첨부 파일 정보를 DTO에 저장.
 				FileDTO fileDTO = new FileDTO();
 				fileDTO.setFile_key(file_key);
