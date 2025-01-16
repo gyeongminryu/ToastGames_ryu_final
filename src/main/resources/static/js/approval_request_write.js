@@ -25,6 +25,7 @@ window.onload = function initialize(){
 
 //저장된 문서 가져오는 함수
 function approval_doc_get(){
+    console.log("문서 가져올 때 받은 doc_idx",doc_idx);
     $.ajax({
         type : 'get',
         url : 'approval_doc_get.ajax',
@@ -53,7 +54,7 @@ function approval_doc_get(){
             }
 
             document.getElementById('div_editor_copy').innerHTML = data.doc_content;
-            setHtmlCode();
+            //setHtmlCode();
 
             //문서 정보란에 1차 정보 기입 (문서번호, 작성자, 부서명* -> 추가예정)
             $('.hidden_doc_idx').val(data.doc_idx);

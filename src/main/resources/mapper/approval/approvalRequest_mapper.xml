@@ -300,8 +300,8 @@
 
     <!--copy_doc_info-->
     <insert id="copy_doc_info" useGeneratedKeys="true" keyColumn="doc_idx" keyProperty="doc_idx" parameterType="com.toast.approval.dto.ApprovalRequestDTO">
-        INSERT INTO document(doc_empl_idx,doc_subject,doc_content,doc_content_sub,form_idx,doc_state)
-        VALUES(#{doc_empl_idx},#{doc_subject},#{doc_content},#{doc_content_sub},#{form_idx},0)
+        INSERT INTO document(doc_empl_idx,doc_subject,doc_content,doc_content_sub,form_idx,doc_state,file_key)
+        VALUES(#{doc_empl_idx},#{doc_subject},#{doc_content},#{doc_content_sub},#{form_idx},0,#{file_key})
     </insert>
 
     <insert id="copy_doc_line_info">

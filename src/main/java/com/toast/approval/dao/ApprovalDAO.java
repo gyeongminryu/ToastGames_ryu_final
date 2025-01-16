@@ -71,4 +71,6 @@ public interface ApprovalDAO {
     String get_my_appr_name(int empl_idx);
 
     List<Map<String, Object>> get_recent_written(int empl_idx);
+
+    String get_approval_stamp(String approval_empl_idx);
 }
