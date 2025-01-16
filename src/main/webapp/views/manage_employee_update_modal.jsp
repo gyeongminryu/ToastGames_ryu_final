@@ -11,7 +11,7 @@
         <div class="tst_modal_body">
             <ul class="tst_list list_no_desc list_block">
                 <li>
-                    <h3 id="employee_name" class="employee_name">{직원명}</h3>
+                    <h3 id="employee_name" class="employee_name">${employee.empl_name}</h3>
                 </li>
                 <li>
                     <p>위 직원에게 임시 비밀번호를 발급하시겠습니까?</p>
@@ -24,7 +24,7 @@
         <div class="tst_modal_footer">
             <div class="tst_flex">
                 <div class="tst_col6">
-                    <button onclick="<!-- 임시 비밀번호를 발급하는 함수를 입력하세요 -->" class="btn_primary btn_full">임시 비밀번호 발급하기</button>
+                    <button onclick="tst_modal_close('tst_modal_password')" class="btn_primary btn_full">임시 비밀번호 발급하기</button>
                 </div>
                 <div class="tst_col6">
                     <button onclick="tst_modal_close('tst_modal_password')" class="btn_secondary btn_full">이전 화면으로 돌아가기</button>
