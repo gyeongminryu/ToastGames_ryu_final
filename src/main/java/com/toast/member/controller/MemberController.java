@@ -336,7 +336,7 @@ public class MemberController {
 	@GetMapping(value = "/layout_memberInfo", produces = "application/json")
 	public MemberDTO layoutMemberInfo(HttpSession session) {
 	    String id = (String) session.getAttribute("loginId");
-	    MemberDTO memberInfo = memberService.memberInfo(id).get(0);
+	    MemberDTO memberInfo = memberService.layoutMemberInfo(id);
 	    return memberInfo;  // Returning memberInfo as JSON
 	}
 	
