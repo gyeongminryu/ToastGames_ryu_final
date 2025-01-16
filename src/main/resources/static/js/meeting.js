@@ -296,6 +296,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         eventDrop: function(obj) {
 
+
+        	const eventOwnerIdx = obj.event.extendedProps.empl;
+        	console.log(sessionEmplIdx);
+        	console.log(eventOwnerIdx);
+        	
+		     // 소유자가 현재 사용자와 다르면 차단
+		    if (eventOwnerIdx !== Number(sessionEmplIdx)) {
+		        alert("이 일정을 변경할 권한이 없습니다.");
+		        obj.revert(); // 드래그를 취소
+		        return;
+		    }
+		    
         	// 드래그 후 이벤트의 날짜 변경 처리 로직
             // 선택한 이벤트 정보
             let event = obj.event;
@@ -320,6 +332,20 @@ document.addEventListener('DOMContentLoaded', function() {
             
         },
         eventResize: function(obj) {
+        
+       
+        	const eventOwnerIdx = obj.event.extendedProps.empl;
+        	console.log(sessionEmplIdx);
+        	console.log(eventOwnerIdx);
+        	
+		     // 소유자가 현재 사용자와 다르면 차단
+		    if (eventOwnerIdx !== Number(sessionEmplIdx)) {
+		        alert("이 일정을 변경할 권한이 없습니다.");
+		        obj.revert(); // 드래그를 취소
+		        return;
+		    }
+		    
+		    
         	// 드래그 후 이벤트의 날짜 변경 처리 로직
             // 선택한 이벤트 정보
            let event = obj.event;
