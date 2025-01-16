@@ -84,7 +84,7 @@
                     <!-- 직인 이미지 -->
                     <p id="stamp">
                        <%-- <i class="bi bi-c-circle" style="color: var(--tst-color-warning); font-size: 48px;"></i>--%>
-                        <img id="sign_preview" width="70" src = "/files/f652e837-4cd6-45db-800b-5d8f771100af.png"/>'
+                        <img id="sign_preview" width="70" src = ""/>
                         <%--직인도 불러오는 코드로 대체하기--%>
                     </p>
                     <!-- //직인 이미지 -->

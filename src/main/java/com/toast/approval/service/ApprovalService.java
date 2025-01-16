@@ -509,7 +509,7 @@ public class ApprovalService {
 
 	public String get_stamp(String approval_empl_idx) {
 		logger.info("approval_empl_idx:{}",approval_empl_idx);
-		String stamp_url = uploadAddr+"files/"+approvalDAO.get_approval_stamp(approval_empl_idx);
+		String stamp_url = "/files/"+approvalDAO.get_approval_stamp(approval_empl_idx);
 		return stamp_url;
 	}
 }
