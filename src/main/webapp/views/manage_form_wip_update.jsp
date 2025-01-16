@@ -40,7 +40,7 @@
                 </ul>
                 <!-- //제목 -->
 
-                <<form>
+                <form>
                 <div class="tst_flex">
 
                     <!-- 문서 양식 수정하기 -->

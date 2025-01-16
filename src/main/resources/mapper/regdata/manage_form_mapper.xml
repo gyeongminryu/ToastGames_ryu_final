@@ -157,7 +157,10 @@
     </select>
 
     <update id="setLine" parameterType="map">
-        UPDATE g_approval_line SET dept_idx = #{dept_idx}, duty_idx = #{duty_idx} WHERE form_idx = #{form_idx} AND gline_order = #{gline_order}
+        UPDATE g_approval_line SET dept_idx =
+            <if test="dept_idx == -1">0</if>
+            <if test="dept_idx >= 0">#{dept_idx}</if>,
+            duty_idx = #{duty_idx} WHERE form_idx = #{form_idx} AND gline_order = #{gline_order}
     </update>
 
     <!-- 작성중인 문서 양식 등록하기 -->

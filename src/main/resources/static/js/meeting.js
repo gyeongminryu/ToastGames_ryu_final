@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 color = 'orange'; // 회의실3
                                 break;
                             case 10:
-                                color = 'lightpurple'; //회의실4
+                                color = 'lightpink'; //회의실4
                                 break;
                             case 11:
                                 color = 'gray'; // 회의실5
@@ -161,11 +161,17 @@ document.addEventListener('DOMContentLoaded', function() {
         select: function(arg) {
         	
         	console.log(selectedEmplList);
+        	    // 배열을 안전하게 초기화
+		    if (Array.isArray(selectedEmplList)) {
+		        selectedEmplList.length = 0; // 기존 배열 비우기
+		    } else {
+		        selectedEmplList = []; // 새로운 배열 생성
+		    }
         	
         	console.log('arg.start:'+arg.start);
         	console.log('arg.start format:'+meeting_format_local(arg.start));
         	
-        	selectedEmplList = [];
+        	
             // 필드 초기화 및 활성화
             $('#meeting_title').val('');
             $('#meeting_content').val('');
@@ -174,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
             $('#meeting_room_select_modal').prop('disabled', false).val($('#meeting_room_select').val());
             
             // 버튼 초기화 및 추가
-			$('#addMeeting').click(function() {
+			$('#addMeeting').off('click').click(function() {
 			    // 예약 처리 로직
 			    const title = $('#meeting_title').val();
 			    const content = $('#meeting_content').val();
@@ -418,6 +424,7 @@ function meeting_add(allData) {
         data: JSON.stringify(allData),
         success: function(data) {
             console.log('서버 응답:', data);
+            selectedEmplList = [];
             calendar.refetchEvents();
         },
         error: function(xhr, status, error) {
@@ -450,7 +457,7 @@ function meeting_update_modal() {
         const meeting_update_data = {
             title: $('#meeting_title_update').val(),
             content: $('#meeting_content_update').val(),
-            room: $('#meeting_room_idx_update').val(),
+            room: $('#meeting_room_update').val(),
             start: meeting_format_local($('#meeting_start_time_update').val()),
             end: meeting_format_local($('#meeting_end_time_update').val()),
             rent_idx: info_global.event.extendedProps.meet_rent_idx, // 이벤트의 확장 속성에서 rent_idx 가져오기

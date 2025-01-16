@@ -1,5 +1,6 @@
 package com.toast.rent.service;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -85,7 +86,7 @@ public class ResourceManageService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청 중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -125,7 +126,7 @@ public class ResourceManageService {
 				dto.setProd_rent_str("대여 가능");
 				break;
 			case 2:
-				dto.setProd_rent_str("대여 신청 중");
+				dto.setProd_rent_str("대여신청중");
 				break;
 			case 3:
 				dto.setProd_rent_str("대여 중");
@@ -288,6 +289,7 @@ public class ResourceManageService {
 
 	
 	//물품 파일 등록
+	@Transactional
 	private int prodFileAdd( List<MultipartFile> files, int prod_idx) {
 		
 		//0. 첨부파일 키 생성
@@ -312,14 +314,17 @@ public class ResourceManageService {
 			int empl_idx = (int) session.getAttribute("empl_idx");
 			//5. 파일 저장
 			try {
-				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation+"files/");
-				Files.write(path, arr);
+				//byte[] arr = file.getBytes();
+				String path = uploadLocation+"files/"+ newFilename;
+				//Path path = Paths.get(uploadLocation+"files/");
+				//Files.write(path, arr);
+			     File dest = new File(path);
+			     file.transferTo(dest);
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
 				photo_dto.setOri_filename(oriFilename);
-				photo_dto.setFile_addr(path.toString());
+				photo_dto.setFile_addr(path);
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
 				photo_dto.setUploader_idx(empl_idx);
@@ -641,6 +646,7 @@ public class ResourceManageService {
 	
 	
 	//물품 파일 등록
+	@Transactional
 	private int dispFileAdd( List<MultipartFile> files, int prod_idx) {
 		//0. 첨부파일 키 생성
 		String fileKey = UUID.randomUUID().toString();
@@ -664,14 +670,18 @@ public class ResourceManageService {
 			int empl_idx = (int) session.getAttribute("empl_idx");
 			//5. 파일 저장
 			try {
-				byte[] arr = file.getBytes();
-				Path path = Paths.get(uploadLocation+"files/");
-				Files.write(path, arr);
+				//byte[] arr = file.getBytes();
+				String path = uploadLocation+"files/"+ newFilename;
+				//Path path = Paths.get(uploadLocation+"files/");
+				//Files.write(path, arr);
+			     File dest = new File(path);
+			     file.transferTo(dest);
+
 				//6.저장 내용 files 테이블에 insert
 				ResourcePhotoDTO photo_dto = new ResourcePhotoDTO();
 				photo_dto.setNew_filename(newFilename);
 				photo_dto.setOri_filename(oriFilename);
-				photo_dto.setFile_addr(path.toString());
+				photo_dto.setFile_addr(path);
 				photo_dto.setFile_type(ext);
 				photo_dto.setFile_key(fileKey);
 				photo_dto.setUploader_idx(empl_idx);

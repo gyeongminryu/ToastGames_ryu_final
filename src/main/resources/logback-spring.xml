@@ -33,7 +33,7 @@
 	<!-- 로그의 파일 저장 -->
 	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- 저장 위치 -->
-		<file>C:/logs/server.log</file>
+		<file>/usr/local/logs/server.log</file>
 		<!-- 출력 패턴 -->
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>${LOG_PATTERN}</pattern> 		

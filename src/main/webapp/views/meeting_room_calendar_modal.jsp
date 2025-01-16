@@ -180,7 +180,7 @@
                             <li>
                                 <p class="min font_subtle">회의실 선택<span class="font_caution"> *</span></p>
                                 <div>
-                                    <select id="meeting_room_idx_update" name="room_idx" onchange="<!-- 회의실을 선택하면 회의실 정보를 수정하는 함수명을 입력하세요 -->">
+                                    <select id="meeting_room_update" name="room_idx" onchange="<!-- 회의실을 선택하면 회의실 정보를 수정하는 함수명을 입력하세요 -->">
 										<c:forEach items="${roomList}" var="room">
 									    	<option value="${room.room_idx}">${room.room_name}</option>
 									    </c:forEach>
