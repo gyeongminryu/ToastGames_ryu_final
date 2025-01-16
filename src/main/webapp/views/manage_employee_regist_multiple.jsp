@@ -44,7 +44,7 @@
                                 <p class="align_left">.xlsx 또는 .xls 파일 한 개만 등록할 수 있습니다.</p>
 
                                 <!-- 백엔드 작업시 아래 버튼을 삭제하세요 -->
-                                <button type="submit">파일 등록하기</button>
+                                <button type="submit" class="btn_primary" >파일 등록하기</button>
                             </div>
                         </div>
                         <div class="tst_col12 title_container">

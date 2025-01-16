@@ -142,6 +142,7 @@ public class ApprovalController {
 		sent_list =approvalService.approval_sent_list(empl_idx,filter,type);
 		//empl_idx 전달 → 보낸 문서가 있는지 확인
 		model.addAttribute("sent_list",sent_list);
+		model.addAttribute("filter",filter);
 		return "approval_sent_list";
 	}
 
@@ -166,6 +167,7 @@ public class ApprovalController {
 		received_list=approvalService.approval_received_list(empl_idx,filter,type);
 		//empl_idx 전달 → 보낸 문서가 있는지 확인
 		model.addAttribute("received_lists",received_list);
+		model.addAttribute("filter",filter);
 		return "approval_received_list";
 	}
 
@@ -176,6 +178,7 @@ public class ApprovalController {
 										@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model){
 		List<Map<String,Object>> writing_list = approvalService.get_approval_writing_list(empl_idx,filter,type);
 		model.addAttribute("writing_lists",writing_list);
+		model.addAttribute("filter",filter);
 		return "approval_writing_list";
 	}
 
@@ -193,7 +196,16 @@ public class ApprovalController {
 		return "approval_"+type+"_detail";
 	}
 
-
+	/*도장 가져오기*/
+	@PostMapping(value = "/approval_get_stamp.ajax")
+	@ResponseBody
+	public Map<String,Object> approval_get_stamp(String approval_empl_idx){
+		Map<String,Object> data = new HashMap<>();
+		logger.info("도장 controller 도착 :{}",approval_empl_idx);
+		String stamp =approvalService.get_stamp(approval_empl_idx);
+		data.put("stamp",stamp);
+		return data;
+	}
 	/*file_다운로드*/
 	@RequestMapping (value ="/approval_download.do")
 	public ResponseEntity<Resource> download(String new_filename,String ori_filename){

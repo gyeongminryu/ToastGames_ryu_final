@@ -146,6 +146,11 @@
         WHERE doc_idx = #{doc_idx}
     </select>
 
+    <!--stamp-->
+    <select id="get_approval_stamp" resultType="String">
+        SELECT empl_stamp FROM employee WHERE empl_idx = #{approval_empl_idx}
+    </select>
+
     <!--form_info-->
     <select id="get_form_info" resultType="Map">
        SELECT f.form_idx,f.form_subject FROM document d
