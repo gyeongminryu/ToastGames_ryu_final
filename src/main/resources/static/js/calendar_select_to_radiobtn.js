@@ -83,8 +83,8 @@ function empl_list(emplList) {
             content += '<tr onclick="select_schedule_empl(\'' + itemData + '\')">';
             content += '<td class="td_align_top td_no_padding">';
 			content += '<img src="' + 
-			           (item.empl_profile 
-			                ? '/usr/local/tomcat/webapps/files/' + item.empl_profile 
+			           (item.empl_profile
+			                ? 'memberFiles/' + item.empl_profile 
 			                : 'http://t1.daumcdn.net/brunch/service/user/hgs3/image/9JOYw3gnSsO-4srSbvW4LaGayQg.png') + 
 			           '" ';
             content += 'alt="' + item.empl_name + '의 프로필 사진" ';
