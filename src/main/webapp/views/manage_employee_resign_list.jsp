@@ -25,16 +25,16 @@
 
                 <!-- 제목 -->
                 <ul class="tst_title list_no_desc list_inline">
-                    <li class="tst_title_item" onclick="location.href='/manage_employee_list.go'">
+                    <li class="tst_title_item" onclick="location.href='/manage_employee_list'">
                         <h1>인사 관리</h1>
                     </li>
-                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_resign_list.go'">
+                    <li class="tst_title_item tst_title_item_active" onclick="location.href='/manage_employee_resign_list'">
                         <h1>퇴사자 관리</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_employee_regist.go'">
+                    <li class="tst_title_item" onclick="location.href='/manage_employee_regist'">
                         <h1>직원 등록</h1>
                     </li>
-                    <li class="tst_title_item" onclick="location.href='/manage_employee_regist_multiple.go'">
+                    <li class="tst_title_item" onclick="location.href='/manage_employee_regist_multiple'">
                         <h1>직원 일괄 등록</h1>
                     </li>
                 </ul>
