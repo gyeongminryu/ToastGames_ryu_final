@@ -63,7 +63,7 @@ public class DepartmentController {
 		param.put("dept_depth", dept_depth);
 		departmentService.organizationAdd(param);
 		
-		return "";
+		return "redirect:/organization_list.go";
 	}
 	
 	@GetMapping(value="/appo_name_list.ajax") // 직급 직책 부서명 가져오기
