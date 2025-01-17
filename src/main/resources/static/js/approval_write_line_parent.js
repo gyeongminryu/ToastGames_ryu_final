@@ -34,20 +34,24 @@ function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i
     console.log("position 자식창에서 전달 받음",position_n);
     console.log("duty 자식창에서 전달 받음",duty_n);
     console.log("step 자식창에서 전달 받음",step);
+    var approval_line='';
+    if(step!==0){
+        //결재선이 없어졌을 때 CSS처리
+        approval_line= 'approval_'+step;
+        console.log("approval_line",approval_line);
+        //id approval_3 display none ->
+        //만약 none이면 display none으로 바꾸기
+        var approval_box= document.getElementById(approval_line);
 
-    //결재선이 없어졌을 때 CSS처리
-    var approval_line = 'approval_'+step;
-    console.log("approval_line",approval_line);
-    //id approval_3 display none ->
-    //만약 none이면 display none으로 바꾸기
+        if(empl_i !==0){
+            approval_box.style.display = "";
+        }else{
+            approval_box.style.display = "none";
+        }
 
-    var approval_box= document.getElementById(approval_line);
 
-    if(empl_i !==0){
-        approval_box.style.display = "";
-    }else{
-        approval_box.style.display = "none";
-    }
+
+
 
 
     //결재자가 바뀌었을 때 처리
@@ -66,7 +70,8 @@ function approval_get_lines(empl_i,empl_n,dept_i,dept_n,duty_i,duty_n,position_i
     //empl_i == null && empl_n == null
     //만약 전달 받은 값이 null
     console.log(selected);
-    
+    }
+
     //step이 0이 아닐 때는 approval에 추가
     if(step !==0){
         if(selected === 1){
