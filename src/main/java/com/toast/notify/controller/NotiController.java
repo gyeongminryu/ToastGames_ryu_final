@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.server.ServerEndpoint;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 public class NotiController {
-	//회의실
+	/*//회의실
 	//int empl_idx = 10000;
 
 	//전자게시판 알림
@@ -27,7 +28,7 @@ public class NotiController {
 
 	//결재 요청자
 	int empl_idx = 10111;
-
+*/
 
 
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -50,8 +51,10 @@ public class NotiController {
 
 	@PostMapping (value="/get_noti_list.ajax")
 	@ResponseBody
-	public Map <String,Object> get_noti_list() {
+	public Map <String,Object> get_noti_list(HttpSession session) {
 		//세션 처리
+		int empl_idx = (int) session.getAttribute("empl_idx");
+
 		Map<String,Object> data = new HashMap<String,Object>();
 		data.put("all_noti",notiService.get_all_noti(empl_idx));
 		return data;

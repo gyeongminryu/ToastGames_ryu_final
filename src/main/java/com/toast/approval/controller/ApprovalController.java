@@ -10,6 +10,7 @@ import com.toast.approval.service.ApprovalService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,7 @@ public class ApprovalController {
 
 	//세션 처리
 	//보낸 + 작성한
-	int empl_idx = 10111;
+	//int empl_idx = 10111;
 
 	//결재 요청
 	//int empl_idx = 10286;
@@ -123,8 +124,10 @@ public class ApprovalController {
 	/*내가 보낸 결재 목록 조회*/
 	@RequestMapping (value="/approval_send_list.go")
 	public String approval_sent_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
-									 @RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model){
+									 @RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model, HttpSession session){
 		//세션 처리
+		int empl_idx = (int) session.getAttribute("empl_idx");
+
 		List<Map<String,Object>> sent_list = new ArrayList<>();
 		logger.info("approval_send_list.go 컨트롤러 도착");
 
@@ -149,8 +152,9 @@ public class ApprovalController {
 	/*내가 받은 결재 목록 조회*/
 	@GetMapping (value= "/approval_received_list.go")
 	public String approval_received_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
-									 	@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model){
+									 	@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model,HttpSession session){
 		//세션 처리
+		int empl_idx = (int) session.getAttribute("empl_idx");
 		List<Map<String,Object>> received_list = new ArrayList<>();
 		logger.info("filter:{}",filter);
 		logger.info("type:{}",type);
@@ -175,7 +179,8 @@ public class ApprovalController {
 	/*작성 중인 목록 조회*/
 	@GetMapping (value = "/approval_writing_list.go")
 	public String approval_writing_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
-										@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model){
+										@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model,HttpSession session){
+		int empl_idx = (int) session.getAttribute("empl_idx");
 		List<Map<String,Object>> writing_list = approvalService.get_approval_writing_list(empl_idx,filter,type);
 		model.addAttribute("writing_lists",writing_list);
 		model.addAttribute("filter",filter);
@@ -185,7 +190,8 @@ public class ApprovalController {
 
 	/*detail 상세보기*/
 	@RequestMapping (value={"/approval_sent_detail.go","/approval_received_detail.go"})
-	public String approval_received_detail(int doc_idx,String type, Model model){
+	public String approval_received_detail(int doc_idx,String type, Model model,HttpSession session){
+		int empl_idx = (int) session.getAttribute("empl_idx");
 		logger.info("doc_idx:{}", doc_idx);
 		logger.info("type:{}", type);
 		logger.info("approval_"+type+"_detail");
@@ -227,7 +233,8 @@ public class ApprovalController {
 	/*최근 작성한 문서 가져오기*/
 	@PostMapping (value="/get_recent_written.ajax")
 	@ResponseBody
-	public Map<String,Object> get_recent_written(){
+	public Map<String,Object> get_recent_written(HttpSession session){
+		int empl_idx = (int) session.getAttribute("empl_idx");
 		Map<String,Object> data = new HashMap<>();
 		List<Map<String,Object>> recent_doc = approvalService.get_recent_written(empl_idx);
 		data.put("recent_doc",recent_doc);
