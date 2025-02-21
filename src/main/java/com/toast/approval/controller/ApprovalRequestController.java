@@ -10,13 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 public class ApprovalRequestController {
-	int empl_idx = 10111;
+	//int empl_idx = 10111;
 	private final ApprovalService approvalService;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -39,7 +40,9 @@ public class ApprovalRequestController {
 
 	//결재 작성하기 페이지로 이동 + 최초 저장 //+ 문서양식만 복사
 	@RequestMapping(value = "/approval_write.go")
-	public String approval_write_go (Model model, String form_idx) {
+	public String approval_write_go (Model model, String form_idx, HttpSession session) {
+		int empl_idx = (int) session.getAttribute("empl_idx");
+
 		logger.info("approvalWrite_go 컨트롤러 도착");
 		logger.info("idx:{}", form_idx);
 
@@ -59,8 +62,9 @@ public class ApprovalRequestController {
 
 	//문서 doc 복사하기
 	@RequestMapping(value="/approval_copy_doc.do")
-	public String approval_copy_doc (int doc_idx,int form_idx,Model model) {
+	public String approval_copy_doc (int doc_idx,int form_idx,Model model,HttpSession session) {
 		//세션 처리
+		int empl_idx = (int) session.getAttribute("empl_idx");
 
 		logger.info("doc_idx:{}",doc_idx);
 		logger.info("form_idx:{}",form_idx);
@@ -77,8 +81,10 @@ public class ApprovalRequestController {
 	//1차 저장한 결재 문서 가져오기
 	@GetMapping (value = "/approval_doc_get.ajax")
 	@ResponseBody
-	public Map<String,Object> doc_get (int doc_idx) {
+	public Map<String,Object> doc_get (int doc_idx,HttpSession session) {
+
 		//세션 처리
+		int empl_idx = (int) session.getAttribute("empl_idx");
 
 		logger.info("doc_get.ajax 컨트롤러 도착");
 		logger.info("doc_idx: " + doc_idx);
@@ -105,9 +111,12 @@ public class ApprovalRequestController {
 	//결재 문서 저장
 	@PostMapping (value = "/approval_doc_write.ajax")
 	@ResponseBody
-	public Map<String,Object> doc_write_do (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]attached_file) {
+	public Map<String,Object> doc_write_do (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]attached_file,HttpSession session) {
 		logger.info("결재 문서 저장 ajax 실행");
+
 		//세션 처리
+		int empl_idx = (int) session.getAttribute("empl_idx");
+
 		String success = "결재 문서 저장 실패";
 		param.put("empl_idx", String.valueOf(empl_idx));
 		Map<String,Object> data = new HashMap<>();
@@ -130,9 +139,11 @@ public class ApprovalRequestController {
 	//결재 문서 저장
 	@PostMapping (value = "/approval_doc_write_and_request.ajax")
 	@ResponseBody
-	public Map<String,Object> doc_write_and_request (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]attached_file) {
+	public Map<String,Object> doc_write_and_request (@RequestParam Map<String,String> param,@RequestParam MultipartFile[]attached_file,HttpSession session) {
 		logger.info("결재 문서 저장 ajax 실행");
 		//세션 처리
+		int empl_idx = (int) session.getAttribute("empl_idx");
+
 		String success = "결재 문서 저장 실패";
 		param.put("empl_idx", String.valueOf(empl_idx));
 		Map<String,Object> data = new HashMap<>();
@@ -154,7 +165,9 @@ public class ApprovalRequestController {
 
 	@PostMapping (value="/approval_file_save.ajax")
 	@ResponseBody
-	public Map<String,Object> approval_file_save (@RequestParam("doc_idx") String doc_idx,@RequestParam("files") MultipartFile[] files) {
+	public Map<String,Object> approval_file_save (@RequestParam("doc_idx") String doc_idx,@RequestParam("files") MultipartFile[] files,HttpSession session) {
+		int empl_idx = (int) session.getAttribute("empl_idx");
+
 		logger.info("file controller 도착");
 		logger.info("doc_idx:{}",doc_idx);
 		Map<String,Object> data = new HashMap<>();

@@ -18,7 +18,7 @@ public interface ApprovalRequestDAO {
 
     //폼 양식에 저장할 값 가져오기
     String doc_empl_name(int empl_idx);
-    Map doc_dept_info(int empl_idx);
+    Map<String,Object> doc_dept_info(int empl_idx);
 
 
     //문서 작성, 문서 파일 작성,문서 파일키 작성

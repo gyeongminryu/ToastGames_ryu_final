@@ -60,6 +60,7 @@ public class ApprovalRequestService {
 			//방금 작성한 doc_idx 기반으로 결재선에 값 저장하기 =======================================================
 				//1.form_idx의 결재선 가져오기
 				List<Map<String,Object>> g_approval_lines = approvalRequestDAO.get_g_approval_line(form_idx);
+
 				//2. 사원의 부서 가져오기
 				int dept_idx = (int) approvalRequestDAO.doc_dept_info(empl_idx).get("dept_idx");
 				logger.info("본인 부서 idx:{}",dept_idx);
@@ -430,15 +431,6 @@ public class ApprovalRequestService {
 			file_list = approvalRequestDAO.get_files(file_key);
 
 
-			// ===========================================================================================================
-			//(파일이 있는지 확인하기)
-			// 새로운 파일 없음
-//		}else{
-//			//저장된 파일키가 있을 경우 = 이전 파일 및 파일 경로 안의 파일 삭제 메소드
-//			approval_filekey_exist(doc_idx);
-//			//document의 file_key = ''로 업데이트하기
-//			approvalRequestDAO.doc_filekey_delete(doc_idx);
-//		}
 
 		success = true;
 

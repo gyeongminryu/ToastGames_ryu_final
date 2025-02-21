@@ -127,7 +127,7 @@ function open_alert_list(){
     //전체 알림 삭제 함수
     function noti_delete_all(){
         console.log("empl_idx:",empl_idx);
-
+        tst_modal_close('tst_modal_delete_all');
         $.ajax({
             type : 'POST',
             url : 'delete_noti_all.ajax',

@@ -93,7 +93,6 @@
                                     <td id="div_editor_content"></td>
                                     <div id="div_editor_copy" class="disp_hide"></div>
                                     <input type = "hidden" name = "doc_content"/>
-
                                 </tr>
                                 </tbody>
 

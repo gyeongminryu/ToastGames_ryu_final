@@ -84,9 +84,9 @@ function approval_sign_save(){
         //src 속성 설정
         img.src = src;
         img.alt = 'image';
-        img.style.maxWidth = '100%';  // td의 너비에 맞게 이미지가 크기를 자동으로 조정
-        img.style.maxHeight = '100%'; // td의 높이에 맞게 이미지가 크기를 자동으로 조정
-
+        img.style.display = 'block';
+        img.style.width = '40px';
+        img.style.placeSelf = 'center';
 
         //부모 요소에 이미지 추기
         line_sign_preview.appendChild(img);

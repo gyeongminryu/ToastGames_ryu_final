@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 public class ApprovalResponseController {
 	//int empl_idx = 10286; //세션 적용 후 없애기
-	int empl_idx = 10111; //세션 적용 후 없애기
+	//int empl_idx = 10111; //세션 적용 후 없애기
 
 	private final ApprovalService approvalService;
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -32,7 +33,8 @@ public class ApprovalResponseController {
 	//결재 후
 	@PostMapping (value="/save_approved_doc_content.ajax")
 	@ResponseBody
-	public Map<String,Object> save_approved_doc_content(String doc_content, String doc_idx, String line_order,String appr_date){
+	public Map<String,Object> save_approved_doc_content(String doc_content, String doc_idx, String line_order, String appr_date, HttpSession session){
+		int empl_idx = (int) session.getAttribute("empl_idx");
 
 
 		Map<String,Object> data = new HashMap<>();
@@ -52,7 +54,9 @@ public class ApprovalResponseController {
 	//반려 후
 	@RequestMapping (value="/approval_reject.ajax")
 	@ResponseBody
-	public Map<String,Object> approval_reject(String doc_idx,String reject_reason,String line_order){
+	public Map<String,Object> approval_reject(String doc_idx,String reject_reason,String line_order,HttpSession session){
+		int empl_idx = (int) session.getAttribute("empl_idx");
+
 		logger.info("doc_idx:{}", doc_idx);
 		logger.info("reject_reason:{}", reject_reason);
 		logger.info("line_order:{}", line_order);
