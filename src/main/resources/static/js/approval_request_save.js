@@ -188,8 +188,9 @@ function approval_save_and_request(){
 
             // 제목
             var doc_subject = $('input[name="doc_subject"]').val();
+            doc_subject += ' ';
             doc_subject += $('.hidden_empl_name').val();
-            doc_subject += '가 결재를 요청한 문서가 있습니다. (결재 마감일시 : ';
+            doc_subject += '가 결재를 요청한 문서가 있습니다. (결재 마감일시 = ';
             doc_subject += $('#doc_end_date').val();
             doc_subject += ')';
 

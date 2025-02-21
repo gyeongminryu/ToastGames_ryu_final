@@ -152,11 +152,12 @@ function save_approved_doc_content(doc_content,appr_date){
                 //결재 요청자 가져오기
                 doc_appr_subject ='';
                 doc_appr_subject += $('#doc_write_empl_name').val();
-                doc_appr_subject += '가 결재를 요청한 문서가 있습니다. (결재 마감일시 : ';
+                doc_appr_subject += '가 결재를 요청한 문서가 있습니다. (결재 마감일시 = ';
                 doc_appr_subject+= $('#doc_end_date').val();
                 doc_appr_subject+=')';
 
 
+                //웹소켓
                 //1.결재 요청 알람 -- 다음 결재자
                 approval_insert_notify_promise(location.pathname+location.search,data.target_user,empl_idx,doc_appr_subject,doc_content_sub,1).then(function (){
                 console.log("첫 번째 알림 완료");

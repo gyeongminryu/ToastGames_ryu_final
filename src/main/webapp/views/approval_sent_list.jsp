@@ -215,6 +215,7 @@
     </div>
   </div>
 </div>
+<c:import url="notify_all.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 <script src="/resources/js/approval_list_filter.js"></script>

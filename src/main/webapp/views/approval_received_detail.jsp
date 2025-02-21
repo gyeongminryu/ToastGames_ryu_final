@@ -305,6 +305,7 @@
     <!-- //결재 반려사유 기재하는 모달 -->
 
 </div>
+<c:import url="notify_all.jsp" />
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/module_modal.js"></script>

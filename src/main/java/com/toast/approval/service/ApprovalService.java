@@ -484,7 +484,9 @@ public class ApprovalService {
 		HttpHeaders header = new HttpHeaders();
 
 		//2.본문 - FileSystem을 통해 특정 위치의 파일 가져오기
-		Resource resource = new FileSystemResource(uploadAddr+"files/"+new_filename);
+
+		Resource resource = new FileSystemResource(uploadAddr+new_filename);
+		//Resource resource = new FileSystemResource(uploadAddr+"files/"+new_filename);
 
 		//한글 명인 파일 깨지지 않게 처리
         try {

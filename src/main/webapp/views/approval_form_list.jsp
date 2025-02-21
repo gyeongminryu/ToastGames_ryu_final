@@ -32,6 +32,7 @@
     <div id = "button_wrapper">
     </div>
 </div>
+<c:import url="notify_all.jsp" />
 </body>
 
 <script src="/resources/js/approval_request_form_row.js"></script>

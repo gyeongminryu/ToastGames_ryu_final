@@ -35,8 +35,10 @@ function approval_reject(){
                 //approval_set_notify(data.target,location.pathname);
                 alert('반려되었습니다.');
 
+
                 //반려 - 이전 결재자 모두
                 approval_insert_notify(location.pathname+location.search,target_user,empl_idx,doc_subject,doc_content_sub,3);
+
 
 
                 location.href = "/approval_received_detail.go?doc_idx="+doc_idx+"&type="+'received';

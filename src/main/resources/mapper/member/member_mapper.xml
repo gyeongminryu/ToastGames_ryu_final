@@ -215,7 +215,7 @@
 	</select>
 	
 	<select id="layoutMemberInfo" parameterType="String" resultType="com.toast.member.dto.MemberDTO">
-		SELECT e.empl_name, e.empl_profile, d.dept_name, d2.duty_name
+		SELECT e.empl_name, e.empl_profile, d.dept_name, d2.duty_name,e.empl_idx
 		FROM employee e
 		JOIN appointment a ON e.empl_idx = a.appo_empl_idx
 		JOIN department d ON a.dept_idx = d.dept_idx

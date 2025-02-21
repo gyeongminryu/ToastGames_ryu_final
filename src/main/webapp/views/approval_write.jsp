@@ -124,6 +124,7 @@
 
 
 </form>
+<c:import url="notify_all.jsp" />
 </body>
 
 <%--기능 script--%>

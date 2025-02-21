@@ -48,6 +48,19 @@ function approval_insert_notify(url,target_users,sender_idx,doc_subject,doc_cont
     param.notify_category = type;
     console.log("param:{}",param);
     var success = false;
+
+    var noti_cate ='';
+    if(type ===1){
+        noti_cate = '결재 요청';
+    }else if(type===2){
+        noti_cate = '결재 승인';
+    }else if(type===3){
+        noti_cate = '결재 반려';
+    }
+    //웹소켓
+    sendNoti(receiver_list,noti_cate, doc_subject,doc_date);
+
+
     $.ajax({
         type : 'POST',
         url : 'approval_noti_insert.ajax',

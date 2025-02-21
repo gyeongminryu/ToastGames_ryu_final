@@ -43,7 +43,7 @@
                     <hr class="separator" />
                 </li>
                 <li>
-                    <input type="submit" value="Login => {work}" class="btn_full btn_primary" />
+                    <input type="submit" value="Login => {work}" class="btn_full btn_primary"/>
                 </li>
                 <li>
                     <input type="button" value="Exception => {ID|비밀번호 찾기}" class="btn_full btn_text" onclick="location.href='findId.go'"/>

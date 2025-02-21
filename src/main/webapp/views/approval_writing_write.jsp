@@ -237,6 +237,8 @@
     </div>
 </div>
 <c:import url="approval_writing_write_modal.jsp" />
+<c:import url="notify_all.jsp" />
+
 </body>
 <script src="resources/js/common.js"></script>
 <script src="resources/js/approval_send_modal.js"></script>

@@ -396,7 +396,8 @@ public class ApprovalRequestService {
 					String new_filename = UUID.randomUUID().toString() + file_type;
 
 					//웹서버에서만 됨
-					String file_addr = uploadAddr+ "files/" + new_filename; //파일 붙이기
+					//String file_addr = uploadAddr+ "files/" + new_filename; //파일 붙이기
+					String file_addr = uploadAddr + new_filename; //파일 붙이기
 
 					//나중에 웹서버 아닐 때는 files/ 빼고 해보기
 
@@ -624,6 +625,8 @@ public class ApprovalRequestService {
 		approvalRequestDAO.update_approval_doc_state(doc_idx);
 		//첫번째 결재자 보이는 상태 1
 		approvalRequestDAO.update_first_approval_line(doc_idx);
+
+
 		var target_user_id = approvalRequestDAO.get_first_approval_line(doc_idx);
 		logger.info("target_user_id:{}",target_user_id);
 		return target_user_id;
