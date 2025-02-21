@@ -34,9 +34,4 @@ function show_next_notification(){
         notification_que.shift();
         show_next_notification();
     },10000);
-
-
-
-
-
 }
