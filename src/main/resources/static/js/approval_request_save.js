@@ -195,6 +195,14 @@ function approval_save_and_request(){
                 doc_subject += $('#doc_end_date').val().replace('T',' ');
                 doc_subject += ')';
             }
+            var doc_subject = "'"+ $('input[name="doc_subject"]').val() + '\' 제목의 ';
+            doc_subject += $('.hidden_empl_name').val();
+            doc_subject += '이/가 결재를 요청한 문서가 있습니다. (결재 마감일시 : ';
+
+            var end_date = $('#doc_end_date').val();
+            doc_subject += end_date.split('T')[0]+" "+ end_date.split('T')[1]
+            doc_subject += ')';
+
 
             // 결재 요청했으면 received 그걸로 넣기
             approval_insert_notify('/approval_received_detail.go?doc_idx=' + doc_idx + '&type=received', data.target_user, sender_idx, doc_subject, '', 1);
