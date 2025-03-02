@@ -129,7 +129,7 @@ public class ApprovalService {
 
 
 	//내가 보낸 업무 목록 조회
-	public List<Map<String, Object>> approval_sent_list(int empl_idx, String filter, String type) {
+	public List<Map<String, Object>> approval_sent_list(int empl_idx) {
 
 		// 전달할 파라메터
 		List<Map<String, Object>> sent_list_params = new ArrayList<>();
@@ -139,7 +139,7 @@ public class ApprovalService {
 			logger.info("문서 작성한 사원임");
 			Map<String, Object> sent_empl_info = approvalDAO.get_empl_info(empl_idx);
 
-			sent_list_params = get_list_info(sent_empl_info,filter,type,sent_list_params,"보낸 결재");
+			sent_list_params = get_list_info(sent_empl_info,sent_list_params,"보낸 결재");
 
 		}
 		return sent_list_params;
@@ -149,7 +149,7 @@ public class ApprovalService {
 
 
 	//내가 받은 업무 목록 조회
-	public List<Map<String,Object>> approval_received_list(int empl_idx, String filter, String type){
+	public List<Map<String,Object>> approval_received_list(int empl_idx){
 		//최종 전달 파라메터
 		List<Map<String,Object>> received_list_params = new ArrayList<>();
 		//approval receiver idx에 있는지 확인
@@ -157,7 +157,7 @@ public class ApprovalService {
 		if(approvalDAO.receiver_empl_count(empl_idx)>0){
 			logger.info("문서 받은 사원임");
 			Map<String, Object> receiver_empl_info = approvalDAO.get_empl_info(empl_idx);
-			received_list_params = get_list_info(receiver_empl_info,filter,type,received_list_params,"받은 결재");
+			received_list_params = get_list_info(receiver_empl_info,received_list_params,"받은 결재");
 
 		}
 
@@ -165,7 +165,7 @@ public class ApprovalService {
 	}
 
 	//내가 작성 중인 목록
-	public List<Map<String, Object>> get_approval_writing_list(int empl_idx, String filter, String type) {
+	public List<Map<String, Object>> get_approval_writing_list(int empl_idx) {
 		List<Map<String,Object>> written_list_params = new ArrayList<>();
 		//approval receiver idx에 있는지 확인
 		//있으면 정보 가져오기
@@ -173,14 +173,14 @@ public class ApprovalService {
 			logger.info("작성한 목록 조회, 사원임");
 			Map<String, Object> empl_info = approvalDAO.get_empl_info(empl_idx);
 
-			written_list_params = get_list_info(empl_info,filter,type,written_list_params,"작성 중인 결재");
+			written_list_params = get_list_info(empl_info,written_list_params,"작성 중인 결재");
 
 		}
 		return written_list_params;
 	}
 
 	//(공용) 직원 정보 및 문서 정보 및 문서 상태 가져오는 함수
-	public List<Map<String, Object>> get_list_info(Map<String, Object> get_empl_info,String filter,String type,List<Map<String,Object>> list_params, String list_type) {
+	public List<Map<String, Object>> get_list_info(Map<String, Object> get_empl_info,List<Map<String,Object>> list_params, String list_type) {
 
 		//공용 코드
 		// 사원번호 기반으로 사원 이름/ 부서/ 직급 가져오기
@@ -344,11 +344,10 @@ public class ApprovalService {
 				}
 			}
 
-
 			// 탭 처리 + 검색 처리 위해 -> 결과 리스트에 추가하는 로직에서 분기처리
-			distinct_list_filter(filter,type,list_param,list_params,list_type);
-
-			//logger.info("sent_list_params:{}", list_params);
+			//distinct_list_filter(filter,type,list_param,list_params,list_type);
+			list_params.add(list_param);
+			logger.info("sent_list_params:{}", list_params);
 		}
         return list_params;
     }

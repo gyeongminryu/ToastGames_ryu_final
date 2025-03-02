@@ -39,33 +39,30 @@
 
         <!-- 게시물 분류 -->
         <ul class="tst_tablist list_no_desc list_inline">
-          <li class="tst_tablist_item all tst_tablist_item_active" onclick="approval_list_filter('전체','탭','sent',this)">
+          <li class="tst_tablist_item all tst_tablist_item_active" onclick="approval_list_filter(1,'전체','탭')">
             <h3>전체 보기</h3>
           </li>
-          <li class="tst_tablist_item unread" onclick="approval_list_filter('결재 대기','탭','sent',this)">
+          <li class="tst_tablist_item unread" onclick="approval_pageCall(1,'결재 대기','탭')">
             <h3>읽지 않음</h3>
           </li>
-          <li class="tst_tablist_item continue" onclick="approval_list_filter('결재 진행','탭','sent',this)">
+          <li class="tst_tablist_item continue" onclick="approval_pageCall(1,'결재 진행','탭')">
             <h3>결재중</h3>
           </li>
-          <li class="tst_tablist_item approved" onclick="approval_list_filter('최종 승인','탭','sent',this)">
+          <li class="tst_tablist_item approved" onclick="approval_pageCall(1,'최종 승인','탭')">
             <h3>결재 승인</h3>
           </li>
-          <li class="tst_tablist_item reject" onclick="approval_list_filter('반려','탭','sent',this)">
+          <li class="tst_tablist_item reject" onclick="approval_pageCall(1,'반려','탭')">
             <h3>결재 반려</h3>
           </li>
           <li class="tst_tablist_item">
-            <!-- 문서 검색 -->
-            <form>
               <div class="tst_search_container">
                 <div class="tst_search_input">
                   <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" id = "search"/>
                 </div>
                 <div class="tst_search_icon">
-                  <button type="button" onclick="approval_list('sent')" class="btn_icon"><i class="bi bi-search"></i></button>
+                  <button type="button" onclick="approval_list()" class="btn_icon"><i class="bi bi-search"></i></button>
                 </div>
               </div>
-            </form>
             <!-- //문서 검색 -->
           </li>
         </ul>
@@ -219,6 +216,7 @@
 </body>
 <script src="resources/js/common.js"></script>
 <script src="/resources/js/approval_list_filter.js"></script>
+<script src="/resources/js/list_initialize.js"></script>
 <script src="/resources/js/approval_search.js"></script>
 
 <script>

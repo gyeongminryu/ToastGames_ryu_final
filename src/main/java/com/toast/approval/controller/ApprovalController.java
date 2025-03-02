@@ -119,72 +119,68 @@ public class ApprovalController {
 		return data;
 	}
 
-
-
-	/*내가 보낸 결재 목록 조회*/
-	@RequestMapping (value="/approval_send_list.go")
-	public String approval_sent_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
-									 @RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model, HttpSession session){
-		//세션 처리
-		int empl_idx = (int) session.getAttribute("empl_idx");
-
-		List<Map<String,Object>> sent_list = new ArrayList<>();
-		logger.info("approval_send_list.go 컨트롤러 도착");
-
-		logger.info("filter:{}",filter);
-		logger.info("type:{}",type);
-
-		//logger.info("type:{}",type);
-
-		if(filter.equals("전체") && type.equals("전체")){
-			logger.info("전체 보낸 목록 조회");
-		}else{
-			logger.info("보낸 목록 조건 조회");
-		}
-
-		sent_list =approvalService.approval_sent_list(empl_idx,filter,type);
-		//empl_idx 전달 → 보낸 문서가 있는지 확인
-		model.addAttribute("sent_list",sent_list);
-		model.addAttribute("filter",filter);
+	@RequestMapping(value="/approval_send_list.go")
+	public String approval_sent_list(){
 		return "approval_sent_list";
 	}
 
-	/*내가 받은 결재 목록 조회*/
-	@GetMapping (value= "/approval_received_list.go")
-	public String approval_received_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
-									 	@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model,HttpSession session){
+	@RequestMapping(value="/approval_received_list.go")
+	public String approval_received_list(){
+		return "approval_received_list";
+	}
+
+	@RequestMapping(value="/approval_writing_list.go")
+	public String approval_writing_list(){
+		return "approval_writing_list";
+	}
+
+	/*내가 보낸 결재 목록 조회*/
+	@RequestMapping (value="/approval_send_list.ajax")
+	@ResponseBody
+	public Map<String, Object> approval_sent_list(HttpSession session){
 		//세션 처리
 		int empl_idx = (int) session.getAttribute("empl_idx");
-		List<Map<String,Object>> received_list = new ArrayList<>();
-		logger.info("filter:{}",filter);
-		logger.info("type:{}",type);
 
-		if(filter.equals("전체") && type.equals("전체")){
-			logger.info("전체 받은 목록 조회");
-		}else{
-			logger.info("받은 목록 조건 조회");
-		}
-		logger.info("empl_idx:{}",empl_idx);
-		logger.info("empl_idx:{}",filter);
-		logger.info("type:{}",type);
+		Map<String, Object> data = new HashMap<>();
+		logger.info("approval_send_list.go 컨트롤러 도착");
+		List<Map<String, Object>> list = approvalService.approval_sent_list(empl_idx);
+		data.put("list",list);
+		return data;
+	}
 
-		received_list=approvalService.approval_received_list(empl_idx,filter,type);
-		//empl_idx 전달 → 보낸 문서가 있는지 확인
-		model.addAttribute("received_lists",received_list);
-		model.addAttribute("filter",filter);
-		return "approval_received_list";
+	/*내가 받은 결재 목록 조회*/
+	@GetMapping (value= "/approval_received_list.ajax")
+	@ResponseBody
+	public Map<String, Object> approval_received_list(HttpSession session){
+		//세션 처리
+		int empl_idx = (int) session.getAttribute("empl_idx");
+
+		Map<String, Object> data = new HashMap<>();
+		List<Map<String, Object>> list = new ArrayList<>();
+		logger.info("approval_send_list.go 컨트롤러 도착");
+
+		list = approvalService.approval_received_list(empl_idx);
+		data.put("list",list);
+
+
+		return data;
 	}
 
 
 	/*작성 중인 목록 조회*/
-	@GetMapping (value = "/approval_writing_list.go")
-	public String approval_writing_list(@RequestParam(value = "filter", required = false, defaultValue = "전체") String filter,
-										@RequestParam(value = "type", required = false, defaultValue = "전체") String type, Model model,HttpSession session){
+	@GetMapping (value = "/approval_writing_list.ajax")
+	@ResponseBody
+	public Map<String, Object> approval_writing_list(HttpSession session){
+		//세션 처리
 		int empl_idx = (int) session.getAttribute("empl_idx");
-		List<Map<String,Object>> writing_list = approvalService.get_approval_writing_list(empl_idx,filter,type);
-		model.addAttribute("writing_lists",writing_list);
-		model.addAttribute("filter",filter);
-		return "approval_writing_list";
+
+		Map<String, Object> data = new HashMap<>();
+		List<Map<String, Object>> list = new ArrayList<>();
+		logger.info("approval_send_list.go 컨트롤러 도착");
+
+		list = approvalService.get_approval_writing_list(empl_idx);
+		data.put("list",list);
+		return data;
 	}
 
 

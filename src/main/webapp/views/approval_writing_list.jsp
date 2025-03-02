@@ -44,16 +44,14 @@
                             </li>
                             <li class="tst_tablist_item">
                                 <!-- 문서 검색 -->
-                                <form>
                                     <div class="tst_search_container">
                                         <div class="tst_search_input">
                                             <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" id="search"/>
                                         </div>
                                         <div class="tst_search_icon">
-                                            <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                            <button type="button" class="btn_icon" onclick="approval_list('write')"><i class="bi bi-search"></i></button>
                                         </div>
                                     </div>
-                                </form>
                                 <!-- //문서 검색 -->
                             </li>
                         </ul>
@@ -137,48 +135,7 @@
                             <tr>
                                 <td colspan="7">
                                     <ul id="pagination" class="pagination-sm pagination">
-                                        <li class="page-item first disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item prev disabled">
-                                            <a href="#" class="page-link"><i class="bi bi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <%--<li class="page-item">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                    <li class="page-item">
-                                      <a href="#" class="page-link">4</a>
-                                    </li>
-                                    <li class="page-item">
-                                      <a href="#" class="page-link">5</a>
-                                    </li>
-                                    <li class="page-item">
-                                      <a href="#" class="page-link">6</a>
-                                    </li>
-                                    <li class="page-item">
-                                      <a href="#" class="page-link">7</a>
-                                    </li>
-                                    <li class="page-item">
-                                      <a href="#" class="page-link">8</a>
-                                    </li>
-                                    <li class="page-item">
-                                      <a href="#" class="page-link">9</a>
-                                    </li>
-                                    <li class="page-item">
-                                      <a href="#" class="page-link">10</a>
-                                    </li>--%>
-                                    <li class="page-item next">
-                                      <a href="#" class="page-link"><i class="bi bi-chevron-right"></i></a>
-                                    </li>
-                                    <li class="page-item last">
-                                      <a href="#" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-                                    </li>
+
                                     </ul>
                                 </td>
                             </tr>
@@ -260,6 +217,7 @@
 <script src="/resources/js/approval_list_filter.js"></script>
 <script src="/resources/js/approval_search.js"></script>
 <script src="/resources/js/approval_writing_list.js"></script>
+<script src="/resources/js/list_initialize.js"></script>
 
 <script src="resources/js/common.js"></script>
 <script>

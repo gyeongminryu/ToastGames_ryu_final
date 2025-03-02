@@ -51,9 +51,8 @@ function approval_form_search(){
 
 
 //내가 보낸 결재 검색 함수
-function approval_list(list_type){
+function approval_list(){
     search_val = $('#search').val();
     console.log("내가 보낸 결재 검색 함수 실행!",search_val);
-    approval_list_filter(search_val,"검색",list_type);
-
+    approval_pageCall(1,search_val,"검색");
 }
