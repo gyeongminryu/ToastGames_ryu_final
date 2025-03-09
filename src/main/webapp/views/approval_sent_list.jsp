@@ -43,7 +43,7 @@
             <h3>전체 보기</h3>
           </li>
           <li class="tst_tablist_item unread" onclick="approval_pageCall(1,'결재 대기','탭')">
-            <h3>읽지 않음</h3>
+            <h3>결재 대기</h3>
           </li>
           <li class="tst_tablist_item continue" onclick="approval_pageCall(1,'결재 진행','탭')">
             <h3>결재중</h3>

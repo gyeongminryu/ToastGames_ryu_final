@@ -146,6 +146,7 @@ function save_approved_doc_content(doc_content,appr_date){
             console.log(data);
             console.log(location.pathname+location.search); //hostname(도메인)을 제외한 나머지 주소
 
+                //최종 결재면 안 진행
                 //결재 다음 사람에게 요청
                 console.log("타겟 유저",data.target_user);
                 //가져올 필요 없음

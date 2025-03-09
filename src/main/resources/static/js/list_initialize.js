@@ -104,6 +104,8 @@ function approval_list_filter(){
 
         var appr_state='';
         if(type ==='탭'){
+
+            approval_change_tab_css();
         //type
             //탭
                 //만약 list_cate = send
@@ -354,4 +356,39 @@ function approval_list_draw(lists){
     $('tbody').html(content);
 }
 
+function approval_change_tab_css(){
 
+    console.log("filter",filter);
+    var class_name = '';
+
+
+        $('.tst_tablist_item_active').removeClass('tst_tablist_item_active');
+
+        switch (filter){
+            case '전체':
+                class_name='.all'
+                break;
+
+            case '읽지 않음':
+            case '결재 대기':
+                class_name = '.unread'
+                break;
+
+            case '결재중':
+            case '결재 진행':
+                class_name = '.continue';
+                break;
+
+            case '승인':
+            case '최종 승인':
+                class_name = '.approved';
+                break;
+
+            case '반려':
+                class_name = '.reject';
+                break;
+
+        }
+        $(class_name).addClass('tst_tablist_item_active');
+
+}

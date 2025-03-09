@@ -53,16 +53,14 @@
                     </li>
                     <li class="tst_tablist_item">
                         <!-- 문서 검색 -->
-                        <form>
                             <div class="tst_search_container">
                                 <div class="tst_search_input">
                                     <input type="text" name="keyword" maxlength="50" placeholder="검색어를 입력하세요" id="search"/>
                                 </div>
                                 <div class="tst_search_icon">
-                                    <button type="submit" class="btn_icon"><i class="bi bi-search"></i></button>
+                                    <button type="button" class="btn_icon" onclick="approval_list()"><i class="bi bi-search"></i></button>
                                 </div>
                             </div>
-                        </form>
                         <!-- //문서 검색 -->
                     </li>
                 </ul>
